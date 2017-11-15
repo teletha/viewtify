@@ -11,7 +11,15 @@ package viewtify;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -93,8 +101,51 @@ public class Viewtify {
      * Terminate application.
      */
     public static void terminate() {
-        for (Disposable disposable : View.terminators) {
+        for (Disposable disposable : terminators) {
             disposable.dispose();
         }
+    }
+
+    /** The terminate helper. */
+    private static final List<Disposable> terminators = new ArrayList();
+
+    /** The thread pool. */
+    private static final ExecutorService pool = Executors.newCachedThreadPool(new ThreadFactory() {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Thread newThread(Runnable runnable) {
+            Thread thread = new Thread(runnable);
+            thread.setDaemon(true);
+            return thread;
+        }
+    });
+
+    /** Executor for UI Thread. */
+    public static final Consumer<Runnable> UIThread = Platform::runLater;
+
+    /** Executor for Worker Thread. */
+    public static final Consumer<Runnable> WorkerThread = pool::submit;
+
+    /**
+     * Execute task in pooled-background-worker thread.
+     * 
+     * @param process
+     */
+    public static void inWorker(Runnable process) {
+        pool.submit(process);
+    }
+
+    /**
+     * Execute task in pooled-background-worker thread.
+     * 
+     * @param process
+     */
+    public static void inWorker(Supplier<Disposable> process) {
+        pool.submit(() -> {
+            terminators.add(process.get());
+        });
     }
 }

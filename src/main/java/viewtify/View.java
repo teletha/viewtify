@@ -11,13 +11,7 @@ package viewtify;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,7 +20,6 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.SpinnerValueFactory.ListSpinnerValueFactory;
 import javafx.util.StringConverter;
 
-import kiss.Disposable;
 import kiss.Extensible;
 import kiss.Signal;
 
@@ -35,53 +28,10 @@ import kiss.Signal;
  */
 public abstract class View implements Extensible {
 
-    /** The terminate helper. */
-    static final List<Disposable> terminators = new ArrayList();
-
-    /** The thread pool. */
-    private static final ExecutorService pool = Executors.newCachedThreadPool(new ThreadFactory() {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Thread newThread(Runnable runnable) {
-            Thread thread = new Thread(runnable);
-            thread.setDaemon(true);
-            return thread;
-        }
-    });
-
-    /** Executor for UI Thread. */
-    protected final Consumer<Runnable> UIThread = Platform::runLater;
-
-    /** Executor for Worker Thread. */
-    protected final Consumer<Runnable> WorkerThread = pool::submit;
-
     /**
      * Initialize this view.
      */
     protected abstract void initialize();
-
-    /**
-     * Execute task in pooled-background-worker thread.
-     * 
-     * @param process
-     */
-    protected void inWorker(Runnable process) {
-        pool.submit(process);
-    }
-
-    /**
-     * Execute task in pooled-background-worker thread.
-     * 
-     * @param process
-     */
-    protected void inWorker(Supplier<Disposable> process) {
-        pool.submit(() -> {
-            terminators.add(process.get());
-        });
-    }
 
     /**
      * Observe the specified value.
