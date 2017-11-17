@@ -13,6 +13,8 @@ import java.util.Objects;
 
 import javafx.scene.control.TextField;
 
+import kiss.I;
+
 /**
  * @version 2017/11/15 9:54:15
  */
@@ -44,5 +46,19 @@ public class UIText extends UI<UIText, TextField> {
     public UIText text(Object text) {
         ui.setText(Objects.toString(text));
         return this;
+    }
+
+    /**
+     * Get text as the specified type.
+     * 
+     * @return
+     */
+    public <T> T valueOr(T defaultValue) {
+        try {
+            return I.transform(text(), (Class<T>) defaultValue.getClass());
+        } catch (Throwable e) {
+            return defaultValue;
+
+        }
     }
 }

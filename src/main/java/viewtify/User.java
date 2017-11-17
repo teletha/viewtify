@@ -10,6 +10,7 @@
 package viewtify;
 
 import javafx.event.EventType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
 /**
@@ -25,4 +26,10 @@ public class User {
 
     /** User Action */
     public static EventType<ScrollEvent> ScrollFinish = ScrollEvent.SCROLL_FINISHED;
+
+    /** User Action */
+    public static EventType<MouseEvent> Click = MouseEvent.MOUSE_CLICKED;
+
+    /** User Action */
+    public static EventType<MouseEvent> ClickSafely = new EventType<MouseEvent>(MouseEvent.ANY, "MOUSE_CLICKED_SAFELY");
 }

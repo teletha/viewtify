@@ -9,11 +9,11 @@
  */
 package viewtify.ui;
 
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.binding.BooleanExpression;
 import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -23,6 +23,7 @@ import javafx.scene.control.Control;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
+import kiss.Signal;
 import kiss.WiseBiConsumer;
 import kiss.WiseTriConsumer;
 
@@ -60,9 +61,50 @@ public class UI<Self extends UI, W extends Node> {
      * @param listener
      * @return
      */
+    public <E extends Event> Signal<E> when(EventType<E> actionType) {
+        return new Signal<E>((observer, disposer) -> {
+            EventHandler<E> listener = observer::accept;
+
+            ui.addEventHandler(actionType, listener);
+
+            return disposer.add(() -> {
+                ui.removeEventHandler(actionType, listener);
+            });
+        });
+    }
+
+    /**
+     * Helper to listen user action event.
+     * 
+     * @param actionType
+     * @param listener
+     * @return
+     */
+    public <T extends Event> Self when(EventType<T> actionType, Runnable listener) {
+        return when(actionType, e -> listener.run());
+    }
+
+    /**
+     * Helper to listen user action event.
+     * 
+     * @param actionType
+     * @param listener
+     * @return
+     */
     public <T extends Event> Self when(EventType<T> actionType, EventHandler<T> listener) {
         ui.addEventHandler(actionType, listener);
         return (Self) this;
+    }
+
+    /**
+     * Helper to listen user action event.
+     * 
+     * @param actionType
+     * @param listener
+     * @return
+     */
+    public <T extends Event, A> Self when(EventType<T> actionType, Consumer<A> listener, A context) {
+        return when(actionType, e -> listener.accept(context));
     }
 
     /**
@@ -119,23 +161,10 @@ public class UI<Self extends UI, W extends Node> {
     /**
      * Validation helper.
      */
-    public Self disableWhen(ReadOnlyBooleanProperty... conditions) {
-        if (conditions.length != 0) {
-            BooleanExpression base = BooleanExpression.booleanExpression(conditions[0]);
-
-            for (int i = 1; i < conditions.length; i++) {
-                base = base.or(conditions[i]);
-            }
-            ui.disableProperty().bind(base);
+    public Self disableWhen(ObservableValue<? extends Boolean> condition) {
+        if (condition != null) {
+            ui.disableProperty().bind(condition);
         }
-        return (Self) this;
-    }
-
-    /**
-     * Validation helper.
-     */
-    public Self disableWhen(BooleanBinding condition) {
-        ui.disableProperty().bind(condition);
         return (Self) this;
     }
 }
