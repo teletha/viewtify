@@ -10,12 +10,15 @@
 package viewtify.ui;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.util.StringConverter;
 
 import kiss.I;
 import kiss.Signal;
@@ -122,5 +125,50 @@ public class UISpinner<T> extends UI<UISpinner<T>, Spinner<T>> {
     public UISpinner<T> value(T value) {
         ui.getValueFactory().setValue(value);
         return this;
+    }
+
+    public UISpinner<T> observe(Consumer<T> listener) {
+        ui.getValueFactory().valueProperty().addListener((p, o, n) -> listener.accept(n));
+        return this;
+    }
+
+    public UISpinner<T> text(Function<T, String> converter) {
+        ui.getValueFactory().setConverter(new Converter(converter));
+        ui.getEditor().setText(converter.apply(ui.getValue()));
+
+        return this;
+    }
+
+    /**
+     * @version 2017/11/18 15:12:07
+     */
+    private class Converter extends StringConverter<T> {
+
+        private final Function<T, String> converter;
+
+        /**
+         * @param converter
+         */
+        private Converter(Function<T, String> converter) {
+            this.converter = converter;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString(T object) {
+            return converter.apply(object);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public T fromString(String string) {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error("Don't call!");
+        }
     }
 }
