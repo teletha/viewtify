@@ -148,4 +148,24 @@ public class Viewtify {
             terminators.add(process.get());
         });
     }
+
+    /**
+     * Execute task in UI thread.
+     * 
+     * @param process
+     */
+    public static void inUI(Runnable process) {
+        Platform.runLater(process::run);
+    }
+
+    /**
+     * Execute task in UI thread.
+     * 
+     * @param process
+     */
+    public static void inUI(Supplier<Disposable> process) {
+        Platform.runLater(() -> {
+            terminators.add(process.get());
+        });
+    }
 }

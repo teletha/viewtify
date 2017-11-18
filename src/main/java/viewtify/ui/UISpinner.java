@@ -127,11 +127,23 @@ public class UISpinner<T> extends UI<UISpinner<T>, Spinner<T>> {
         return this;
     }
 
+    /**
+     * Observe the value modification.
+     * 
+     * @param listener
+     * @return
+     */
     public UISpinner<T> observe(Consumer<T> listener) {
         ui.getValueFactory().valueProperty().addListener((p, o, n) -> listener.accept(n));
         return this;
     }
 
+    /**
+     * Set value-display converter.
+     * 
+     * @param converter
+     * @return
+     */
     public UISpinner<T> text(Function<T, String> converter) {
         ui.getValueFactory().setConverter(new Converter(converter));
         ui.getEditor().setText(converter.apply(ui.getValue()));

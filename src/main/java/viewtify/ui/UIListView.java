@@ -50,4 +50,8 @@ public class UIListView<T> extends UI<UIListView, ListView<T>> {
         ui.scrollTo(index);
         return this;
     }
+
+    public UIListView<T> add(T value) {
+        return this;
+    }
 }
