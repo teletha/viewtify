@@ -12,6 +12,7 @@ package viewtify.ui;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -23,6 +24,7 @@ import javafx.scene.control.Control;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
+import kiss.I;
 import kiss.Signal;
 import kiss.WiseBiConsumer;
 import kiss.WiseTriConsumer;
@@ -32,11 +34,17 @@ import kiss.WiseTriConsumer;
  */
 public class UI<Self extends UI, W extends Node> {
 
+    /** User configuration for UI. */
+    private static final Preference preference = I.make(Preference.class).restore();
+
     /** The actual view. */
     public final W ui;
 
     /** The validatiors. */
     private ValidationSupport validations;
+
+    /** Do restore oonly once. */
+    private boolean restored = false;
 
     /**
      * @param ui
@@ -166,5 +174,30 @@ public class UI<Self extends UI, W extends Node> {
             ui.disableProperty().bind(condition);
         }
         return (Self) this;
+    }
+
+    protected final <T> void restore(Property<T> property, T value) {
+        if (value == null || restored) {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+        restored = true;
+
+        String id = ui.getId();
+
+        property.addListener((p, o, n) -> {
+            preference.put(id, I.transform(n, String.class));
+            preference.store();
+        });
+
+        if (id != null) {
+            String stored = preference.get(id);
+
+            if (stored != null) {
+                value = (T) I.transform(stored, value.getClass());
+            }
+        }
+        property.setValue(value);
     }
 }

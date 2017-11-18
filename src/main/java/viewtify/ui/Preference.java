@@ -7,14 +7,17 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify;
+package viewtify.ui;
+
+import java.util.HashMap;
 
 import kiss.Manageable;
 import kiss.Singleton;
+import kiss.Storable;
 
 /**
  * @version 2017/11/17 23:23:06
  */
 @Manageable(lifestyle = Singleton.class)
-public abstract class Preference {
+class Preference extends HashMap<String, String> implements Storable<Preference> {
 }

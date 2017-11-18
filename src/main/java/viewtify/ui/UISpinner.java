@@ -100,7 +100,27 @@ public class UISpinner<T> extends UI<UISpinner<T>, Spinner<T>> {
      * @return
      */
     public UISpinner<T> initial(T initialValue) {
-        ui.getValueFactory().setValue(initialValue);
+        restore(ui.getValueFactory().valueProperty(), initialValue);
+        return this;
+    }
+
+    /**
+     * Get current value.
+     * 
+     * @return
+     */
+    public T value() {
+        return ui.getValue();
+    }
+
+    /**
+     * Set current value.
+     * 
+     * @param value
+     * @return
+     */
+    public UISpinner<T> value(T value) {
+        ui.getValueFactory().setValue(value);
         return this;
     }
 }
