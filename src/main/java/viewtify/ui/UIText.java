@@ -49,6 +49,17 @@ public class UIText extends UI<UIText, TextField> {
     }
 
     /**
+     * Set initial value.
+     * 
+     * @param initialValue
+     * @return
+     */
+    public UIText initial(String initialValue) {
+        restore(ui.textProperty(), initialValue);
+        return this;
+    }
+
+    /**
      * Get text as the specified type.
      * 
      * @return
