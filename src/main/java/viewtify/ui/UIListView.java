@@ -15,8 +15,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
-import kiss.I;
-
 /**
  * @version 2017/11/15 9:54:15
  */
@@ -36,8 +34,8 @@ public class UIListView<T> extends UI<UIListView, ListView<T>> {
         return this;
     }
 
-    public UIListView<T> cell(Class<? extends ListCell<T>> factory) {
-        ui.setCellFactory(e -> I.make(factory));
+    public UIListView<T> cell(ListCell<T> cell) {
+        ui.setCellFactory(e -> cell);
         return this;
     }
 
