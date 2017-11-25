@@ -13,6 +13,7 @@ public class Project extends bee.api.Project {
         product("npc", "viewtify", "1.0");
 
         require("com.github.teletha", "sinobu", "1.0");
+        require("com.github.teletha", "antibug", "0.3");
         require("org.controlsfx", "controlsfx", "8.40.14");
     }
 }
