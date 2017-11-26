@@ -11,11 +11,9 @@ package viewtify.bind;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.stream.Collector;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.WeakInvalidationListener;
 import javafx.beans.binding.ObjectBinding;
@@ -172,42 +170,6 @@ public class ListBindingBuilder<E> {
                 });
                 invalidate();
             }
-        }
-    }
-
-    /**
-     * @version 2017/11/26 22:05:44
-     */
-    private static class ObservableVariable implements Observable {
-
-        private final CopyOnWriteArrayList<InvalidationListener> listeners = new CopyOnWriteArrayList();
-
-        /**
-         * @param var
-         * @param listeners
-         */
-        private ObservableVariable(Variable var) {
-            var.observe().to(v -> {
-                for (InvalidationListener listener : listeners) {
-                    listener.invalidated(this);
-                }
-            });
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void addListener(InvalidationListener listener) {
-            listeners.add(listener);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void removeListener(InvalidationListener listener) {
-            listeners.remove(listener);
         }
     }
 

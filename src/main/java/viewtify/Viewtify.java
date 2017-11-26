@@ -58,9 +58,11 @@ import kiss.Manageable;
 import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.Variable;
 import kiss.WiseBiFunction;
 import kiss.model.Model;
 import viewtify.bind.ListBindingBuilder;
+import viewtify.bind.ObservableVariable;
 
 /**
  * @version 2017/11/15 9:52:40
@@ -542,5 +544,13 @@ public abstract class Viewtify extends Application {
 
             return locator;
         }
+    }
+
+    /**
+     * @param side
+     * @return
+     */
+    public static <V> ObservableValue<V> wrap(Variable<V> var) {
+        return new ObservableVariable(var);
     }
 }
