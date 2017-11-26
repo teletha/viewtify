@@ -34,8 +34,11 @@ import java.util.function.Supplier;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.WeakInvalidationListener;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -55,7 +58,9 @@ import kiss.Manageable;
 import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.WiseBiFunction;
 import kiss.model.Model;
+import viewtify.bind.ListBindingBuilder;
 
 /**
  * @version 2017/11/15 9:52:40
@@ -287,6 +292,54 @@ public abstract class Viewtify extends Application {
      */
     public static final void shutdown(Class<? extends Viewtify> application) {
         Platform.exit();
+    }
+
+    /**
+     * Binding utility for {@link ObservableList}.
+     * 
+     * @param list A {@link ObservableList} source to bind.
+     * @return A binding builder.
+     */
+    public static final <E> ListBindingBuilder<E> bind(ObservableList<E> list) {
+        return new ListBindingBuilder<>(list);
+    }
+
+    /**
+     * Create new {@link ObjectBinding} between two sources.
+     * 
+     * @param sourceA
+     * @param sourceB
+     * @param calculator
+     * @return
+     */
+    public static <A, B, R> ObjectBinding<R> bind(ObservableValue<A> sourceA, ObservableValue<B> sourceB, WiseBiFunction<A, B, R> calculator) {
+        return new ObjectBinding<R>() {
+
+            /** The observer. */
+            private final WeakInvalidationListener listener = new WeakInvalidationListener(obs -> invalidate());
+
+            {
+                sourceA.addListener(listener);
+                sourceB.addListener(listener);
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void dispose() {
+                sourceA.removeListener(listener);
+                sourceB.removeListener(listener);
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            protected R computeValue() {
+                return calculator.apply(sourceA.getValue(), sourceB.getValue());
+            }
+        };
     }
 
     /**
