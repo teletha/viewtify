@@ -11,12 +11,21 @@ package viewtify;
 
 import static java.util.concurrent.TimeUnit.*;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.WatchEvent;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -36,6 +45,7 @@ import javafx.stage.Stage;
 
 import org.controlsfx.tools.ValueExtractor;
 
+import filer.Filer;
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -80,6 +90,9 @@ public abstract class Viewtify extends Application {
     /** Executor for Worker Thread. */
     public static final Consumer<Runnable> WorkerThread = pool::submit;
 
+    /** The application holder. */
+    private static final ConcurrentHashMap<Class<? extends Viewtify>, Stage> applications = new ConcurrentHashMap();
+
     /**
      * Find the location of application FXML.
      * 
@@ -88,10 +101,94 @@ public abstract class Viewtify extends Application {
     protected abstract URL findFXML();
 
     /**
+     * Select {@link ActivationPolicy} for applicaiton.
+     * 
+     * @return
+     */
+    protected ActivationPolicy policy() {
+        return ActivationPolicy.Latest;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("resource")
+    @Override
+    public final void init() throws Exception {
+        // =====================================================================
+        // Validation Policy
+        // =====================================================================
+        if (policy() != ActivationPolicy.Multiple) {
+            try {
+                // create application specified directory for lock
+                Path root = Filer.locate(System.getProperty("java.io.tmpdir")).resolve(getClass().getName());
+
+                if (Files.notExists(root)) {
+                    Files.createDirectory(root);
+                }
+
+                // try to retrieve lock to validate
+                FileChannel channel = new RandomAccessFile(root.resolve("lock").toFile(), "rw").getChannel();
+                FileLock lock = channel.tryLock();
+
+                if (lock == null) {
+                    // another application is activated
+                    if (policy() == ActivationPolicy.Earliest) {
+                        // make the window active
+                        touch(root.resolve("active"));
+
+                        throw new RuntimeException("Application is running already.");
+                    } else {
+                        // close the window
+                        touch(root.resolve("close"));
+
+                        // wait for shutdown previous application
+                        channel.lock();
+                    }
+                }
+
+                // observe lock directory for next application
+                Filer.observe(root).map(WatchEvent::context).to(path -> {
+                    switch (path.getFileName().toString()) {
+                    case "active":
+                        activate(getClass());
+                        break;
+
+                    case "close":
+                        shutdown(getClass());
+                        break;
+                    }
+                });
+            } catch (Exception e) {
+                throw I.quiet(e);
+            }
+        }
+    }
+
+    /**
+     * <p>
+     * Implements the same behaviour as the "touch" utility on Unix. It creates a new file with size
+     * 0 or, if the file exists already, it is opened and closed without modifying it, but updating
+     * the file date and time.
+     * </p>
+     * 
+     * @param path
+     */
+    private void touch(Path path) throws IOException {
+        if (Files.exists(path)) {
+            Files.setLastModifiedTime(path, FileTime.fromMillis(System.currentTimeMillis()));
+        } else {
+            Files.createFile(path);
+        }
+    }
+
+    /**
      * Initialize {@link Viewtify} application.
      */
     @Override
     public final void start(Stage stage) throws Exception {
+        applications.put(getClass(), stage);
+
         // load FXML
         FXMLLoader loader = new FXMLLoader(findFXML());
 
@@ -162,6 +259,27 @@ public abstract class Viewtify extends Application {
                 }
             });
         }
+    }
+
+    /**
+     * Activate the specified application.
+     */
+    public static final void activate(Class<? extends Viewtify> application) {
+        inUI(() -> {
+            Stage stage = applications.get(application);
+
+            if (stage != null && !stage.isAlwaysOnTop()) {
+                stage.setAlwaysOnTop(true);
+                stage.setAlwaysOnTop(false);
+            }
+        });
+    }
+
+    /**
+     * Shutdown the specified application.
+     */
+    public static final void shutdown(Class<? extends Viewtify> application) {
+        Platform.exit();
     }
 
     /**
