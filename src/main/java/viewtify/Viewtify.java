@@ -38,9 +38,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TreeTableColumn;
 import javafx.stage.Stage;
 
 import org.controlsfx.tools.ValueExtractor;
@@ -98,7 +99,7 @@ public abstract class Viewtify extends Application {
      * 
      * @return
      */
-    protected abstract URL findFXML();
+    protected abstract URL fxml();
 
     /**
      * Select {@link ActivationPolicy} for applicaiton.
@@ -190,7 +191,7 @@ public abstract class Viewtify extends Application {
         applications.put(getClass(), stage);
 
         // load FXML
-        FXMLLoader loader = new FXMLLoader(findFXML());
+        FXMLLoader loader = new FXMLLoader(fxml());
 
         // trace window size and position
         I.make(WindowLocator.class).restore().locate("MainWindow", stage);
@@ -205,7 +206,7 @@ public abstract class Viewtify extends Application {
             for (Field field : view.getClass().getDeclaredFields()) {
                 if (field.isAnnotationPresent(FXML.class)) {
                     String id = "#" + field.getName();
-                    Node node = stage.getScene().lookup(id);
+                    Object node = stage.getScene().lookup(id);
 
                     if (node == null) {
                         // If this exception will be thrown, it is bug of this program. So we must
@@ -215,6 +216,12 @@ public abstract class Viewtify extends Application {
                         field.setAccessible(true);
 
                         Class<?> type = field.getType();
+
+                        if (type == TableColumn.class || type == TreeTableColumn.class) {
+                            // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
+                            // so we must unwrap to javafx.scene.control.TreeTableColumn
+                            node = ((com.sun.javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
+                        }
 
                         if (type.getName().startsWith("viewtify.ui.")) {
                             // viewtify ui
@@ -248,7 +255,7 @@ public abstract class Viewtify extends Application {
     /**
      * Enhance Node.
      */
-    private static void enhanceNode(Node node) {
+    private static void enhanceNode(Object node) {
         if (node instanceof Spinner) {
             Spinner spinner = (Spinner) node;
             spinner.setOnScroll(e -> {
