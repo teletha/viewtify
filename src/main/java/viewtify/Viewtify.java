@@ -312,7 +312,7 @@ public abstract class Viewtify extends Application {
      * @param calculator
      * @return
      */
-    public static <A, B, R> ObjectBinding<R> bind(ObservableValue<A> sourceA, ObservableValue<B> sourceB, WiseBiFunction<A, B, R> calculator) {
+    public static final <A, B, R> ObjectBinding<R> bind(ObservableValue<A> sourceA, ObservableValue<B> sourceB, WiseBiFunction<A, B, R> calculator) {
         return new ObjectBinding<R>() {
 
             /** The observer. */
