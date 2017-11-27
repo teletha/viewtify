@@ -20,7 +20,9 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
+import javafx.scene.control.MenuItem;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -252,5 +254,23 @@ public class UI<Self extends UI, W extends Node> {
             }
         }
         property.setValue(value);
+    }
+
+    /**
+     * Create new menu item.
+     * 
+     * @return
+     */
+    public static final UIMenuItem menuItem() {
+        return new UIMenuItem(new MenuItem());
+    }
+
+    /**
+     * Create new menu item.
+     * 
+     * @return
+     */
+    public static final UIContextMenu contextMenu() {
+        return new UIContextMenu(new ContextMenu());
     }
 }

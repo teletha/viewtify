@@ -41,8 +41,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableColumn;
@@ -216,17 +216,27 @@ public abstract class Viewtify extends Application {
             // inject FXML defined components
             for (Field field : view.getClass().getDeclaredFields()) {
                 if (field.isAnnotationPresent(FXML.class)) {
+                    field.setAccessible(true);
+
                     String id = "#" + field.getName();
-                    Object node = stage.getScene().lookup(id);
+                    Class<?> type = field.getType();
 
-                    if (node == null) {
-                        // If this exception will be thrown, it is bug of this program. So we must
-                        // rethrow the wrapped error in here.
-                        throw new Error("Node [" + id + "] is not found.");
+                    if (View.class.isAssignableFrom(type)) {
+                        // viewtify view
+                        for (View v : views) {
+                            if (type.isInstance(v)) {
+                                field.set(view, v);
+                                break;
+                            }
+                        }
                     } else {
-                        field.setAccessible(true);
+                        Object node = stage.getScene().lookup(id);
 
-                        Class<?> type = field.getType();
+                        if (node == null) {
+                            // If this exception will be thrown, it is bug of this program. So we
+                            // must rethrow the wrapped error in here.
+                            throw new Error("Node [" + id + "] is not found.");
+                        }
 
                         if (type == TableColumn.class || type == TreeTableColumn.class) {
                             // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
@@ -234,15 +244,7 @@ public abstract class Viewtify extends Application {
                             node = ((com.sun.javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
                         }
 
-                        if (View.class.isAssignableFrom(type)) {
-                            // viewtify view
-                            for (View v : views) {
-                                if (type.isInstance(v)) {
-                                    field.set(view, v);
-                                    break;
-                                }
-                            }
-                        } else if (type.getName().startsWith("viewtify.ui.")) {
+                        if (type.getName().startsWith("viewtify.ui.")) {
                             // viewtify ui widget
                             Constructor constructor = Model.collectConstructors(type)[0];
                             constructor.setAccessible(true);
@@ -570,7 +572,7 @@ public abstract class Viewtify extends Application {
      * @param orderStateRow
      * @return
      */
-    public static UI wrap(Node ui) {
+    public static UI wrap(Control ui) {
         return new UI(ui);
     }
 }
