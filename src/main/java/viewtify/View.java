@@ -10,10 +10,13 @@
 package viewtify;
 
 import kiss.Extensible;
+import kiss.Manageable;
+import kiss.Singleton;
 
 /**
  * @version 2017/11/13 20:39:23
  */
+@Manageable(lifestyle = Singleton.class)
 public abstract class View implements Extensible {
 
     /**

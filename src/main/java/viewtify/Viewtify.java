@@ -208,7 +208,9 @@ public abstract class Viewtify extends Application {
         stage.setScene(scene);
         stage.show();
 
-        for (View view : I.find(View.class)) {
+        List<View> views = I.find(View.class);
+
+        for (View view : views) {
             // inject FXML defined components
             for (Field field : view.getClass().getDeclaredFields()) {
                 if (field.isAnnotationPresent(FXML.class)) {
@@ -230,8 +232,16 @@ public abstract class Viewtify extends Application {
                             node = ((com.sun.javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
                         }
 
-                        if (type.getName().startsWith("viewtify.ui.")) {
-                            // viewtify ui
+                        if (View.class.isAssignableFrom(type)) {
+                            // viewtify view
+                            for (View v : views) {
+                                if (type.isInstance(v)) {
+                                    field.set(view, v);
+                                    break;
+                                }
+                            }
+                        } else if (type.getName().startsWith("viewtify.ui.")) {
+                            // viewtify ui widget
                             Constructor constructor = Model.collectConstructors(type)[0];
                             constructor.setAccessible(true);
 
