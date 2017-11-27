@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -26,6 +27,7 @@ import org.controlsfx.validation.Validator;
 
 import kiss.I;
 import kiss.Signal;
+import kiss.Variable;
 import kiss.WiseBiConsumer;
 import kiss.WiseTriConsumer;
 
@@ -49,7 +51,7 @@ public class UI<Self extends UI, W extends Node> {
     /**
      * @param ui
      */
-    protected UI(W ui) {
+    public UI(W ui) {
         this.ui = ui;
     }
 
@@ -60,6 +62,57 @@ public class UI<Self extends UI, W extends Node> {
      */
     public UI parent() {
         return new UI(ui.getParent());
+    }
+
+    /**
+     * Apply single state class by the specified enum.
+     * 
+     * @param node
+     * @param state
+     */
+    public <E extends Enum<E>> Self style(E state) {
+        if (state != null) {
+            ObservableList<String> classes = ui.getStyleClass();
+
+            for (Enum value : state.getClass().getEnumConstants()) {
+                String name = value.name();
+
+                if (state == value) {
+                    if (!classes.contains(name)) {
+                        classes.add(name);
+                    }
+                } else {
+                    classes.remove(name);
+                }
+            }
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Apply single state class by the specified enum.
+     * 
+     * @param node
+     * @param state
+     */
+    public <E extends Enum<E>> Self style(Variable<E> state) {
+        return style(state.get());
+    }
+
+    /**
+     * Clear all style for the specified enum type.
+     * 
+     * @param class1
+     */
+    public <E extends Enum<E>> Self unstyle(Class<E> style) {
+        if (style != null) {
+            ObservableList<String> classes = ui.getStyleClass();
+
+            for (Enum value : style.getEnumConstants()) {
+                classes.remove(value.name());
+            }
+        }
+        return (Self) this;
     }
 
     /**

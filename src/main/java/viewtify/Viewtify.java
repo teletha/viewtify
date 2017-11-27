@@ -64,6 +64,7 @@ import kiss.WiseBiFunction;
 import kiss.model.Model;
 import viewtify.bind.ListBindingBuilder;
 import viewtify.bind.ObservableVariable;
+import viewtify.ui.UI;
 
 /**
  * @version 2017/11/15 9:52:40
@@ -566,24 +567,10 @@ public abstract class Viewtify extends Application {
     }
 
     /**
-     * Apply single state class by the specified enum.
-     * 
-     * @param node
-     * @param state
+     * @param orderStateRow
+     * @return
      */
-    public static <E extends Enum<E>> void style(Node node, E state) {
-        ObservableList<String> classes = node.getStyleClass();
-
-        for (Enum value : state.getClass().getEnumConstants()) {
-            String name = value.name();
-
-            if (state == value) {
-                if (!classes.contains(name)) {
-                    classes.add(name);
-                }
-            } else {
-                classes.remove(name);
-            }
-        }
+    public static UI wrap(Node ui) {
+        return new UI(ui);
     }
 }
