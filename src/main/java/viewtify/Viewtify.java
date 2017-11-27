@@ -41,6 +41,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
@@ -562,5 +563,27 @@ public abstract class Viewtify extends Application {
      */
     public static <V> ObservableValue<V> wrap(Variable<V> var) {
         return new ObservableVariable(var);
+    }
+
+    /**
+     * Apply single state class by the specified enum.
+     * 
+     * @param node
+     * @param state
+     */
+    public static <E extends Enum<E>> void style(Node node, E state) {
+        ObservableList<String> classes = node.getStyleClass();
+
+        for (Enum value : state.getClass().getEnumConstants()) {
+            String name = value.name();
+
+            if (state == value) {
+                if (!classes.contains(name)) {
+                    classes.add(name);
+                }
+            } else {
+                classes.remove(name);
+            }
+        }
     }
 }
