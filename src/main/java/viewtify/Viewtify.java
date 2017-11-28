@@ -11,7 +11,6 @@ package viewtify;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.Files;
@@ -85,11 +84,11 @@ public abstract class Viewtify implements Extensible {
     static Stage stage;
 
     /**
-     * Find the location of application FXML.
+     * Select the root view.
      * 
      * @return
      */
-    protected abstract URL fxml();
+    protected abstract Class<? extends Viewty> view();
 
     /**
      * Select {@link ActivationPolicy} for applicaiton. Default is {@link ActivationPolicy#Latest}.
@@ -203,6 +202,13 @@ public abstract class Viewtify implements Extensible {
                 stage.setAlwaysOnTop(false);
             }
         });
+    }
+
+    public static final <V extends Viewty> V create(Class<V> viewty) {
+        V view = I.make(viewty);
+        view.initialize();
+
+        return view;
     }
 
     /**
