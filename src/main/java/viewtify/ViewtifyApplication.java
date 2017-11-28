@@ -11,16 +11,8 @@ package viewtify;
 
 import static java.util.concurrent.TimeUnit.*;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.WatchEvent;
-import java.nio.file.attribute.FileTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,9 +27,7 @@ import javafx.stage.Stage;
 
 import org.controlsfx.tools.ValueExtractor;
 
-import filer.Filer;
 import kiss.Decoder;
-import kiss.Disposable;
 import kiss.Encoder;
 import kiss.I;
 import kiss.Manageable;
@@ -45,7 +35,6 @@ import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.model.Model;
-import viewtify.Viewtify.ActivationPolicy;
 
 /**
  * Singleton managed JavaFX application.
@@ -55,81 +44,7 @@ import viewtify.Viewtify.ActivationPolicy;
 public final class ViewtifyApplication extends Application {
 
     static {
-        I.load(Location.class, false);
-
         ValueExtractor.addObservableValueExtractor(c -> c instanceof Spinner, c -> ((Spinner) c).valueProperty());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void init() throws Exception {
-        // =====================================================================
-        // Validation Policy
-        // =====================================================================
-        if (Viewtify.viewtify.policy() != ActivationPolicy.Multiple) {
-            try {
-                // create application specified directory for lock
-                Path root = Filer.locate(System.getProperty("java.io.tmpdir")).resolve(getClass().getName());
-
-                if (Files.notExists(root)) {
-                    Files.createDirectory(root);
-                }
-
-                // try to retrieve lock to validate
-                FileChannel channel = new RandomAccessFile(root.resolve("lock").toFile(), "rw").getChannel();
-                FileLock lock = channel.tryLock();
-
-                if (lock == null) {
-                    // another application is activated
-                    if (Viewtify.viewtify.policy() == ActivationPolicy.Earliest) {
-                        // make the window active
-                        touch(root.resolve("active"));
-
-                        throw new RuntimeException("Application is running already.");
-                    } else {
-                        // close the window
-                        touch(root.resolve("close"));
-
-                        // wait for shutdown previous application
-                        channel.lock();
-                    }
-                }
-
-                // observe lock directory for next application
-                Filer.observe(root).map(WatchEvent::context).to(path -> {
-                    switch (path.getFileName().toString()) {
-                    case "active":
-                        Viewtify.activate(Viewtify.viewtify.getClass());
-                        break;
-
-                    case "close":
-                        Viewtify.shutdown(Viewtify.viewtify.getClass());
-                        break;
-                    }
-                });
-            } catch (Exception e) {
-                throw I.quiet(e);
-            }
-        }
-    }
-
-    /**
-     * <p>
-     * Implements the same behaviour as the "touch" utility on Unix. It creates a new file with size
-     * 0 or, if the file exists already, it is opened and closed without modifying it, but updating
-     * the file date and time.
-     * </p>
-     * 
-     * @param path
-     */
-    private void touch(Path path) throws IOException {
-        if (Files.exists(path)) {
-            Files.setLastModifiedTime(path, FileTime.fromMillis(System.currentTimeMillis()));
-        } else {
-            Files.createFile(path);
-        }
     }
 
     /**
@@ -209,9 +124,7 @@ public final class ViewtifyApplication extends Application {
      */
     @Override
     public void stop() throws Exception {
-        for (Disposable disposable : Viewtify.terminators) {
-            disposable.dispose();
-        }
+        Viewtify.deactivate();
     }
 
     /**
@@ -304,7 +217,7 @@ public final class ViewtifyApplication extends Application {
     /**
      * @version 2017/11/25 23:31:06
      */
-    private static class Location implements Decoder<Location>, Encoder<Location> {
+    static class Location implements Decoder<Location>, Encoder<Location> {
 
         /** The window location. */
         public double x;

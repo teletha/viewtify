@@ -11,7 +11,7 @@ package viewtify;
 
 import org.junit.Test;
 
-import viewtify.Viewtify.Location;
+import viewtify.ViewtifyApplication.Location;
 
 /**
  * @version 2017/11/25 12:05:43

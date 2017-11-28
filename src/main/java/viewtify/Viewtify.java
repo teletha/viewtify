@@ -9,7 +9,15 @@
  */
 package viewtify;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.URL;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.WatchEvent;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -28,7 +36,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Control;
 import javafx.stage.Stage;
 
+import filer.Filer;
 import kiss.Disposable;
+import kiss.Extensible;
 import kiss.I;
 import kiss.Manageable;
 import kiss.Signal;
@@ -43,10 +53,10 @@ import viewtify.ui.UI;
  * @version 2017/11/15 9:52:40
  */
 @Manageable(lifestyle = Singleton.class)
-public abstract class Viewtify {
+public abstract class Viewtify implements Extensible {
 
     /** The terminate helper. */
-    static final List<Disposable> terminators = new ArrayList();
+    private static final List<Disposable> terminators = new ArrayList();
 
     /** The thread pool. */
     private static final ExecutorService pool = Executors.newCachedThreadPool(new ThreadFactory() {
@@ -82,7 +92,7 @@ public abstract class Viewtify {
     protected abstract URL fxml();
 
     /**
-     * Select {@link ActivationPolicy} for applicaiton.
+     * Select {@link ActivationPolicy} for applicaiton. Default is {@link ActivationPolicy#Latest}.
      * 
      * @return
      */
@@ -91,33 +101,108 @@ public abstract class Viewtify {
     }
 
     /**
-     * Launch {@link Viewtify} application.
-     * 
-     * @param application
+     * Activate the specified {@link Viewtify} application.
      */
-    protected static void launch(Class<? extends Viewtify> application) {
+    public static final void activate(Class<? extends Viewtify> application) {
+        // create singleton application instance
         viewtify = I.make(application);
 
+        // =====================================================================
+        // Validate ActivationPolicy
+        // =====================================================================
+        if (viewtify.policy() != ActivationPolicy.Multiple) {
+            try {
+                // create application specified directory for lock
+                Path root = Filer.locate(System.getProperty("java.io.tmpdir")).resolve(application.getName());
+
+                if (Files.notExists(root)) {
+                    Files.createDirectory(root);
+                }
+
+                // try to retrieve lock to validate
+                FileChannel channel = new RandomAccessFile(root.resolve("lock").toFile(), "rw").getChannel();
+                FileLock lock = channel.tryLock();
+
+                if (lock == null) {
+                    // another application is activated
+                    if (viewtify.policy() == ActivationPolicy.Earliest) {
+                        // make the window active
+                        touch(root.resolve("active"));
+
+                        throw new RuntimeException("Application is running already.");
+                    } else {
+                        // close the window
+                        touch(root.resolve("close"));
+
+                        // wait for shutdown previous application
+                        channel.lock();
+                    }
+                }
+
+                // observe lock directory for next application
+                Filer.observe(root).map(WatchEvent::context).to(path -> {
+                    switch (path.getFileName().toString()) {
+                    case "active":
+                        show();
+                        break;
+
+                    case "close":
+                        deactivate();
+                        break;
+                    }
+                });
+            } catch (Exception e) {
+                throw I.quiet(e);
+            }
+        }
+
+        // load extensions in application package
+        I.load(application, false);
+
+        // load extensions in viewtify package
+        I.load(Viewtify.class, false);
+
+        // launch JavaFX UI
         Application.launch(ViewtifyApplication.class);
     }
 
     /**
-     * Activate the specified application.
+     * <p>
+     * Implements the same behaviour as the "touch" utility on Unix. It creates a new file with size
+     * 0 or, if the file exists already, it is opened and closed without modifying it, but updating
+     * the file date and time.
+     * </p>
+     * 
+     * @param path
      */
-    public static final void activate(Class<? extends Viewtify> application) {
+    private static void touch(Path path) throws IOException {
+        if (Files.exists(path)) {
+            Files.setLastModifiedTime(path, FileTime.fromMillis(System.currentTimeMillis()));
+        } else {
+            Files.createFile(path);
+        }
+    }
+
+    /**
+     * Deactivate the current application.
+     */
+    public static final void deactivate() {
+        for (Disposable disposable : Viewtify.terminators) {
+            disposable.dispose();
+        }
+        Platform.exit();
+    }
+
+    /**
+     * Force to show the current application on top of display.
+     */
+    public static final void show() {
         inUI(() -> {
             if (stage != null && !stage.isAlwaysOnTop()) {
                 stage.setAlwaysOnTop(true);
                 stage.setAlwaysOnTop(false);
             }
         });
-    }
-
-    /**
-     * Shutdown the specified application.
-     */
-    public static final void shutdown(Class<? extends Viewtify> application) {
-        Platform.exit();
     }
 
     /**
@@ -246,27 +331,5 @@ public abstract class Viewtify {
      */
     public static UI wrap(Control ui) {
         return new UI(ui);
-    }
-
-    /**
-     * @version 2017/11/26 8:33:23
-     */
-    protected static enum ActivationPolicy {
-
-        /**
-         * Continue to process the earliest application. The subsequent applications will not start
-         * up.
-         */
-        Earliest,
-
-        /**
-         * Application has multiple processes.
-         */
-        Multiple,
-
-        /**
-         * Terminate the prior applications immediately, then the latest application will start up.
-         */
-        Latest;
     }
 }
