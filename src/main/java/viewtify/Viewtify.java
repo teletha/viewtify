@@ -37,11 +37,8 @@ import javafx.stage.Stage;
 
 import filer.Filer;
 import kiss.Disposable;
-import kiss.Extensible;
 import kiss.I;
-import kiss.Manageable;
 import kiss.Signal;
-import kiss.Singleton;
 import kiss.Variable;
 import kiss.WiseBiFunction;
 import viewtify.bind.ListBindingBuilder;
@@ -51,8 +48,7 @@ import viewtify.ui.UI;
 /**
  * @version 2017/11/15 9:52:40
  */
-@Manageable(lifestyle = Singleton.class)
-public abstract class Viewtify implements Extensible {
+public final class Viewtify {
 
     /** The terminate helper. */
     private static final List<Disposable> terminators = new ArrayList();
@@ -77,39 +73,40 @@ public abstract class Viewtify implements Extensible {
     /** Executor for Worker Thread. */
     public static final Consumer<Runnable> WorkerThread = pool::submit;
 
-    /** The singleton application. */
-    static Viewtify viewtify;
+    /** The root view class. */
+    private static Class<? extends Viewty> rootViewClass;
+
+    /** The root view instance for cache. */
+    private static Viewty rootView;
 
     /** The singleton FX stage. */
     static Stage stage;
 
     /**
-     * Select the root view.
-     * 
-     * @return
+     * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      */
-    protected abstract Class<? extends Viewty> view();
-
-    /**
-     * Select {@link ActivationPolicy} for applicaiton. Default is {@link ActivationPolicy#Latest}.
-     * 
-     * @return
-     */
-    protected ActivationPolicy policy() {
-        return ActivationPolicy.Latest;
+    public static final void activate(Class<? extends Viewty> application) {
+        activate(application, null);
     }
 
     /**
      * Activate the specified {@link Viewtify} application.
      */
-    public static final void activate(Class<? extends Viewtify> application) {
-        // create singleton application instance
-        viewtify = I.make(application);
+    public static final synchronized void activate(Class<? extends Viewty> application, ActivationPolicy policy) {
+        if (rootViewClass != null) {
+            return; // ignore duplicated call
+        }
+
+        rootViewClass = application;
+
+        if (policy == null) {
+            policy = ActivationPolicy.Latest;
+        }
 
         // =====================================================================
         // Validate ActivationPolicy
         // =====================================================================
-        if (viewtify.policy() != ActivationPolicy.Multiple) {
+        if (policy != ActivationPolicy.Multiple) {
             try {
                 // create application specified directory for lock
                 Path root = Filer.locate(System.getProperty("java.io.tmpdir")).resolve(application.getName());
@@ -124,7 +121,7 @@ public abstract class Viewtify implements Extensible {
 
                 if (lock == null) {
                     // another application is activated
-                    if (viewtify.policy() == ActivationPolicy.Earliest) {
+                    if (policy == ActivationPolicy.Earliest) {
                         // make the window active
                         touch(root.resolve("active"));
 
@@ -155,11 +152,11 @@ public abstract class Viewtify implements Extensible {
             }
         }
 
+        // load extensions in viewtify package
+        I.load(ViewtifyApplication.Location.class, false);
+
         // load extensions in application package
         I.load(application, false);
-
-        // load extensions in viewtify package
-        I.load(Viewtify.class, false);
 
         // launch JavaFX UI
         Application.launch(ViewtifyApplication.class);
@@ -204,11 +201,29 @@ public abstract class Viewtify implements Extensible {
         });
     }
 
+    /**
+     * Create new {@link Viewty}.
+     * 
+     * @param viewty
+     * @return
+     */
     public static final <V extends Viewty> V create(Class<V> viewty) {
         V view = I.make(viewty);
         view.initialize();
 
         return view;
+    }
+
+    /**
+     * Retrieve the root view.
+     * 
+     * @return
+     */
+    public static final <V extends Viewty> V root() {
+        if (rootView == null) {
+            rootView = create(rootViewClass);
+        }
+        return (V) rootView;
     }
 
     /**

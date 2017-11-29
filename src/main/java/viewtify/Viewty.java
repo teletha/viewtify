@@ -12,29 +12,38 @@ package viewtify;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 
+import kiss.Extensible;
 import kiss.I;
 
 /**
  * @version 2017/11/29 8:22:19
  */
-public interface Viewty {
+public abstract class Viewty implements Extensible {
+
+    /** The associated root node. */
+    private final Node root;
 
     /**
-     * Select your designed FXML.
-     * 
-     * @return
+     * Use class name as view name.
      */
-    default String design() {
-        return getClass().getSimpleName() + ".fxml";
+    protected Viewty() {
+        this(null);
     }
 
     /**
-     * Compute root container.
+     * View name.
+     * 
+     * @param name
      */
-    default <Container> Container root() {
+    protected Viewty(String name) {
+        if (name == null || name.isEmpty()) {
+            name = getClass().getSimpleName();
+        }
+
         try {
-            return new FXMLLoader(ClassLoader.getSystemResource(design())).load();
+            this.root = new FXMLLoader(ClassLoader.getSystemResource(name + ".fxml")).load();
         } catch (IOException e) {
             throw I.quiet(e);
         }
@@ -43,5 +52,14 @@ public interface Viewty {
     /**
      * Describe your initialization.
      */
-    void initialize();
+    protected abstract void initialize();
+
+    /**
+     * Retrieve the root node.
+     * 
+     * @return
+     */
+    public final <N extends Node> N root() {
+        return (N) root;
+    }
 }

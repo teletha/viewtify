@@ -46,14 +46,11 @@ public final class ViewtifyApplication extends Application {
     public void start(Stage stage) throws Exception {
         Viewtify.stage = stage;
 
-        // load root view
-        Viewty viewty = I.make(Viewtify.viewtify.view());
-
         // trace window size and position
         I.make(WindowLocator.class).restore().locate("MainWindow", stage);
 
         // show window
-        Scene scene = new Scene(viewty.root());
+        Scene scene = new Scene(Viewtify.root().root());
         stage.setScene(scene);
         stage.show();
 
