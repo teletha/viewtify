@@ -14,6 +14,7 @@ import java.util.function.Predicate;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -232,6 +233,10 @@ public class UI<Self extends UI, W extends Node> {
     }
 
     protected final <T> void restore(Property<T> property, T value) {
+        restore(property, property::setValue, value);
+    }
+
+    protected final <T> void restore(ReadOnlyProperty<T> property, Consumer<T> writer, T value) {
         if (value == null || restored) {
             // If this exception will be thrown, it is bug of this program. So we must rethrow the
             // wrapped error in here.
@@ -253,7 +258,7 @@ public class UI<Self extends UI, W extends Node> {
                 value = (T) I.transform(stored, value.getClass());
             }
         }
-        property.setValue(value);
+        writer.accept(value);
     }
 
     /**
