@@ -208,22 +208,9 @@ public final class Viewtify {
      */
     public static final <V extends Viewty> V root() {
         if (rootView == null) {
-            rootView = create(rootViewClass);
+            rootView = I.make(rootViewClass);
         }
         return (V) rootView;
-    }
-
-    /**
-     * Create new {@link Viewty}.
-     * 
-     * @param viewtyType
-     * @return
-     */
-    public static final <V extends Viewty> V create(Class<V> viewtyType) {
-        V view = I.make(viewtyType);
-        view.init();
-
-        return view;
     }
 
     /**

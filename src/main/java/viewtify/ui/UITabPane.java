@@ -9,8 +9,13 @@
  */
 package viewtify.ui;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
+
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
+import kiss.I;
 import viewtify.Viewty;
 
 /**
@@ -35,6 +40,38 @@ public class UITabPane<T> extends UI<UITabPane, TabPane> {
      */
     public UITabPane initial(int initialSelectedIndex) {
         restore(ui.getSelectionModel().selectedIndexProperty(), v -> ui.getSelectionModel().select((int) v), initialSelectedIndex);
+        return this;
+    }
+
+    /**
+     * Load tab with the specified view.
+     * 
+     * @param label A tab label.
+     * @param loadingViewType A view type to load.
+     * @return
+     */
+    public <V extends Viewty> UITabPane load(String label, Class<V> loadingViewType) {
+        return load(label, () -> I.make(loadingViewType));
+    }
+
+    /**
+     * Load tab with the specified view.
+     * 
+     * @param label A tab label.
+     * @param loadingViewType A view type to load.
+     * @return
+     */
+    public <V extends Viewty> UITabPane load(String label, Supplier<V> view) {
+        Tab tab = new Tab(label);
+        AtomicBoolean loaded = new AtomicBoolean();
+
+        tab.selectedProperty().addListener(change -> {
+            if (loaded.getAndSet(true) == false) {
+                tab.setContent(view.get().root());
+            }
+        });
+
+        ui.getTabs().add(tab);
         return this;
     }
 }
