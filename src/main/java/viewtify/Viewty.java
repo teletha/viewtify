@@ -11,6 +11,8 @@ package viewtify;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.util.Deque;
+import java.util.LinkedList;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,8 +30,11 @@ import kiss.model.Model;
  */
 public abstract class Viewty implements Extensible {
 
+    /** The view call stack. */
+    private static final Deque<Viewty> viewStack = new LinkedList();
+
     /** The associated root node. */
-    private final Node root;
+    private Node root;
 
     /**
      * Use class name as view name.
@@ -37,7 +42,14 @@ public abstract class Viewty implements Extensible {
     protected Viewty() {
         try {
             this.root = new FXMLLoader(ClassLoader.getSystemResource(getClass().getSimpleName() + ".fxml")).load();
+        } catch (Exception e) {
+            // FXML for this view is not found, use parent view's root
+            this.root = viewStack.getLast().root;
+        }
 
+        viewStack.addLast(this);
+
+        try {
             // Inject various types
             for (Field field : getClass().getDeclaredFields()) {
                 if (field.isAnnotationPresent(FXML.class)) {
@@ -56,7 +68,7 @@ public abstract class Viewty implements Extensible {
                         if (node == null) {
                             // If this exception will be thrown, it is bug of this program. So
                             // we must rethrow the wrapped error in here.
-                            throw new Error("Node [" + id + "] is not found.");
+                            throw new Error(id() + ": Node [" + id + "] is not found.");
                         }
 
                         if (type == TableColumn.class || type == TreeTableColumn.class) {
@@ -82,6 +94,8 @@ public abstract class Viewty implements Extensible {
             }
         } catch (Exception e) {
             throw I.quiet(e);
+        } finally {
+            viewStack.removeLast();
         }
     }
 
