@@ -53,59 +53,6 @@ public final class ViewtifyApplication extends Application {
         Scene scene = new Scene(Viewtify.root().root());
         stage.setScene(scene);
         stage.show();
-
-        // List<View> views = I.find(View.class);
-        //
-        // for (View view : views) {
-        // // inject FXML defined components
-        // for (Field field : view.getClass().getDeclaredFields()) {
-        // if (field.isAnnotationPresent(FXML.class)) {
-        // field.setAccessible(true);
-        //
-        // String id = "#" + field.getName();
-        // Class<?> type = field.getType();
-        //
-        // if (View.class.isAssignableFrom(type)) {
-        // // viewtify view
-        // for (View v : views) {
-        // if (type.isInstance(v)) {
-        // field.set(view, v);
-        // break;
-        // }
-        // }
-        // } else {
-        // Object node = stage.getScene().lookup(id);
-        //
-        // if (node == null) {
-        // // If this exception will be thrown, it is bug of this program. So
-        // // we
-        // // must rethrow the wrapped error in here.
-        // throw new Error("Node [" + id + "] is not found.");
-        // }
-        //
-        // if (type == TableColumn.class || type == TreeTableColumn.class) {
-        // // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
-        // // so we must unwrap to javafx.scene.control.TreeTableColumn
-        // node = ((com.sun.javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
-        // }
-        //
-        // if (type.getName().startsWith("viewtify.ui.")) {
-        // // viewtify ui widget
-        // Constructor constructor = Model.collectConstructors(type)[0];
-        // constructor.setAccessible(true);
-        //
-        // field.set(view, constructor.newInstance(node));
-        // } else {
-        // // javafx ui
-        // field.set(view, node);
-        //
-        // enhanceNode(node);
-        // }
-        // }
-        // }
-        // }
-        // view.initialize();
-        // }
     }
 
     /**
@@ -114,22 +61,6 @@ public final class ViewtifyApplication extends Application {
     @Override
     public void stop() throws Exception {
         Viewtify.deactivate();
-    }
-
-    /**
-     * Enhance Node.
-     */
-    private void enhanceNode(Object node) {
-        if (node instanceof Spinner) {
-            Spinner spinner = (Spinner) node;
-            spinner.setOnScroll(e -> {
-                if (e.getDeltaY() > 0) {
-                    spinner.increment();
-                } else if (e.getDeltaY() < 0) {
-                    spinner.decrement();
-                }
-            });
-        }
     }
 
     /**
