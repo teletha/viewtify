@@ -21,7 +21,7 @@ import javafx.scene.control.ListCell;
 
 import kiss.I;
 import kiss.Signal;
-import viewtify.Viewty;
+import viewtify.View;
 
 /**
  * @version 2017/11/15 9:54:15
@@ -33,7 +33,7 @@ public class UIComboBox<T> extends UI<UIComboBox, ComboBox<T>> {
      * 
      * @param ui
      */
-    private UIComboBox(ComboBox<T> ui, Viewty view) {
+    private UIComboBox(ComboBox<T> ui, View view) {
         super(ui, view);
     }
 

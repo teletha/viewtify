@@ -14,7 +14,7 @@ import java.util.Objects;
 import javafx.scene.control.TextField;
 
 import kiss.I;
-import viewtify.Viewty;
+import viewtify.View;
 
 /**
  * @version 2017/11/15 9:54:15
@@ -26,7 +26,7 @@ public class UIText extends UI<UIText, TextField> {
      * 
      * @param ui
      */
-    private UIText(TextField ui, Viewty view) {
+    private UIText(TextField ui, View view) {
         super(ui, view);
     }
 

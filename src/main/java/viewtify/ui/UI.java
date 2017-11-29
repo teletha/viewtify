@@ -33,7 +33,7 @@ import kiss.Signal;
 import kiss.Variable;
 import kiss.WiseBiConsumer;
 import kiss.WiseTriConsumer;
-import viewtify.Viewty;
+import viewtify.View;
 
 /**
  * @version 2017/11/15 10:31:50
@@ -47,7 +47,7 @@ public class UI<Self extends UI, W extends Node> {
     public final W ui;
 
     /** The associated view. */
-    private final Viewty view;
+    private final View view;
 
     /** The validatiors. */
     private ValidationSupport validations;
@@ -58,7 +58,7 @@ public class UI<Self extends UI, W extends Node> {
     /**
      * @param ui
      */
-    public UI(W ui, Viewty view) {
+    public UI(W ui, View view) {
         this.ui = ui;
         this.view = view;
     }

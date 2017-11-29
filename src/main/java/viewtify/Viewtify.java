@@ -74,10 +74,10 @@ public final class Viewtify {
     public static final Consumer<Runnable> WorkerThread = pool::submit;
 
     /** The root view class. */
-    private static Class<? extends Viewty> rootViewClass;
+    private static Class<? extends View> rootViewClass;
 
     /** The root view instance for cache. */
-    private static Viewty rootView;
+    private static View rootView;
 
     /** The singleton FX stage. */
     static Stage stage;
@@ -85,14 +85,14 @@ public final class Viewtify {
     /**
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      */
-    public static final void activate(Class<? extends Viewty> application) {
+    public static final void activate(Class<? extends View> application) {
         activate(application, null);
     }
 
     /**
      * Activate the specified {@link Viewtify} application.
      */
-    public static final synchronized void activate(Class<? extends Viewty> application, ActivationPolicy policy) {
+    public static final synchronized void activate(Class<? extends View> application, ActivationPolicy policy) {
         if (rootViewClass != null) {
             return; // ignore duplicated call
         }
@@ -206,7 +206,7 @@ public final class Viewtify {
      * 
      * @return
      */
-    public static final <V extends Viewty> V root() {
+    public static final <V extends View> V root() {
         if (rootView == null) {
             rootView = I.make(rootViewClass);
         }
@@ -333,7 +333,7 @@ public final class Viewtify {
         return new ObservableVariable(var);
     }
 
-    public static UI wrap(Control ui, Viewty view) {
+    public static UI wrap(Control ui, View view) {
         return new UI(ui, view);
     }
 }

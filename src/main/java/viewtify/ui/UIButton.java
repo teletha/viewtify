@@ -11,7 +11,7 @@ package viewtify.ui;
 
 import javafx.scene.control.Button;
 
-import viewtify.Viewty;
+import viewtify.View;
 
 /**
  * @version 2017/11/15 9:54:15
@@ -23,7 +23,7 @@ public class UIButton extends UILabeled<UIButton, Button> {
      * 
      * @param ui
      */
-    private UIButton(Button ui, Viewty view) {
+    private UIButton(Button ui, View view) {
         super(ui, view);
     }
 }

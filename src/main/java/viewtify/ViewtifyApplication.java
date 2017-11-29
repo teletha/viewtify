@@ -49,7 +49,6 @@ public final class ViewtifyApplication extends Application {
         // trace window size and position
         I.make(WindowLocator.class).restore().locate("MainWindow", stage);
 
-        // show window
         Scene scene = new Scene(Viewtify.root().root());
         stage.setScene(scene);
         stage.show();

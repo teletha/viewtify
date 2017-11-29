@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
-import viewtify.Viewty;
+import viewtify.View;
 
 /**
  * @version 2017/11/15 9:54:15
@@ -27,7 +27,7 @@ public class UIListView<T> extends UI<UIListView, ListView<T>> {
      * 
      * @param ui
      */
-    private UIListView(ListView<T> ui, Viewty view) {
+    private UIListView(ListView<T> ui, View view) {
         super(ui, view);
     }
 

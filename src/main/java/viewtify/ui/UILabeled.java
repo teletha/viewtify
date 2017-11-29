@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import javafx.scene.control.Labeled;
 
-import viewtify.Viewty;
+import viewtify.View;
 
 /**
  * @version 2017/11/15 9:54:15
@@ -25,7 +25,7 @@ public abstract class UILabeled<Self extends UILabeled, W extends Labeled> exten
      * 
      * @param ui
      */
-    protected UILabeled(W ui, Viewty view) {
+    protected UILabeled(W ui, View view) {
         super(ui, view);
     }
 

@@ -16,7 +16,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
 import kiss.I;
-import viewtify.Viewty;
+import viewtify.View;
 
 /**
  * @version 2017/11/29 10:12:34
@@ -28,7 +28,7 @@ public class UITabPane<T> extends UI<UITabPane, TabPane> {
      * 
      * @param ui
      */
-    private UITabPane(TabPane ui, Viewty view) {
+    private UITabPane(TabPane ui, View view) {
         super(ui, view);
     }
 
@@ -50,7 +50,7 @@ public class UITabPane<T> extends UI<UITabPane, TabPane> {
      * @param loadingViewType A view type to load.
      * @return
      */
-    public <V extends Viewty> UITabPane load(String label, Class<V> loadingViewType) {
+    public <V extends View> UITabPane load(String label, Class<V> loadingViewType) {
         return load(label, () -> I.make(loadingViewType));
     }
 
@@ -61,7 +61,18 @@ public class UITabPane<T> extends UI<UITabPane, TabPane> {
      * @param loadingViewType A view type to load.
      * @return
      */
-    public <V extends Viewty> UITabPane load(String label, Supplier<V> view) {
+    public <V extends View> UITabPane load(String label, V view) {
+        return load(label, () -> view);
+    }
+
+    /**
+     * Load tab with the specified view.
+     * 
+     * @param label A tab label.
+     * @param loadingViewType A view type to load.
+     * @return
+     */
+    public <V extends View> UITabPane load(String label, Supplier<V> view) {
         Tab tab = new Tab(label);
         AtomicBoolean loaded = new AtomicBoolean();
 
