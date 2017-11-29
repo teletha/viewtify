@@ -98,7 +98,7 @@ public abstract class Viewty implements Extensible {
                                 Constructor constructor = Model.collectConstructors(type)[0];
                                 constructor.setAccessible(true);
 
-                                field.set(this, constructor.newInstance(node));
+                                field.set(this, constructor.newInstance(node, this));
                             } else {
                                 // javafx ui
                                 field.set(this, node);
@@ -137,6 +137,15 @@ public abstract class Viewty implements Extensible {
      * Describe your initialization.
      */
     protected abstract void initialize();
+
+    /**
+     * Compute identifier for this view. Default is class name.
+     * 
+     * @return
+     */
+    public String id() {
+        return getClass().getSimpleName();
+    }
 
     /**
      * Retrieve the root node.

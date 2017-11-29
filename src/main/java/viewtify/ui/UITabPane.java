@@ -11,6 +11,8 @@ package viewtify.ui;
 
 import javafx.scene.control.TabPane;
 
+import viewtify.Viewty;
+
 /**
  * @version 2017/11/29 10:12:34
  */
@@ -21,8 +23,8 @@ public class UITabPane<T> extends UI<UITabPane, TabPane> {
      * 
      * @param ui
      */
-    private UITabPane(TabPane ui) {
-        super(ui);
+    private UITabPane(TabPane ui, Viewty view) {
+        super(ui, view);
     }
 
     /**

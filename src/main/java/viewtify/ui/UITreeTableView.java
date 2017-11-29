@@ -13,6 +13,8 @@ import javafx.scene.Node;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.text.Text;
 
+import viewtify.Viewty;
+
 /**
  * @version 2017/11/15 9:54:15
  */
@@ -23,8 +25,8 @@ public class UITreeTableView<T> extends UI<UITreeTableView, TreeTableView<T>> {
      * 
      * @param ui
      */
-    private UITreeTableView(TreeTableView<T> ui) {
-        super(ui);
+    private UITreeTableView(TreeTableView<T> ui, Viewty view) {
+        super(ui, view);
     }
 
     public UITreeTableView placeholder(String text) {

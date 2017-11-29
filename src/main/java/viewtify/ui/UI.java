@@ -33,6 +33,7 @@ import kiss.Signal;
 import kiss.Variable;
 import kiss.WiseBiConsumer;
 import kiss.WiseTriConsumer;
+import viewtify.Viewty;
 
 /**
  * @version 2017/11/15 10:31:50
@@ -45,6 +46,9 @@ public class UI<Self extends UI, W extends Node> {
     /** The actual view. */
     public final W ui;
 
+    /** The associated view. */
+    private final Viewty view;
+
     /** The validatiors. */
     private ValidationSupport validations;
 
@@ -54,8 +58,9 @@ public class UI<Self extends UI, W extends Node> {
     /**
      * @param ui
      */
-    public UI(W ui) {
+    public UI(W ui, Viewty view) {
         this.ui = ui;
+        this.view = view;
     }
 
     /**
@@ -64,7 +69,7 @@ public class UI<Self extends UI, W extends Node> {
      * @return
      */
     public UI parent() {
-        return new UI(ui.getParent());
+        return new UI(ui.getParent(), view);
     }
 
     /**
@@ -232,10 +237,23 @@ public class UI<Self extends UI, W extends Node> {
         return (Self) this;
     }
 
+    /**
+     * Restore UI related settings.
+     * 
+     * @param property
+     * @param value
+     */
     protected final <T> void restore(Property<T> property, T value) {
         restore(property, property::setValue, value);
     }
 
+    /**
+     * Restore UI related settings.
+     * 
+     * @param property
+     * @param writer
+     * @param value
+     */
     protected final <T> void restore(ReadOnlyProperty<T> property, Consumer<T> writer, T value) {
         if (value == null || restored) {
             // If this exception will be thrown, it is bug of this program. So we must rethrow the
@@ -244,14 +262,14 @@ public class UI<Self extends UI, W extends Node> {
         }
         restored = true;
 
-        String id = ui.getId();
+        String id = view.id() + "#" + ui.getId();
 
         property.addListener((p, o, n) -> {
             preference.put(id, I.transform(n, String.class));
             preference.store();
         });
 
-        if (id != null) {
+        if (ui.getId() != null) {
             String stored = preference.get(id);
 
             if (stored != null) {

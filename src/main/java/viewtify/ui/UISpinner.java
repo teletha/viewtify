@@ -22,6 +22,7 @@ import javafx.util.StringConverter;
 
 import kiss.I;
 import kiss.Signal;
+import viewtify.Viewty;
 
 /**
  * @version 2017/11/18 1:30:40
@@ -33,8 +34,8 @@ public class UISpinner<T> extends UI<UISpinner<T>, Spinner<T>> {
      * 
      * @param ui
      */
-    private UISpinner(Spinner ui) {
-        super(ui);
+    private UISpinner(Spinner ui, Viewty view) {
+        super(ui, view);
 
         ui.setOnScroll(e -> {
             if (e.getDeltaY() > 0) {

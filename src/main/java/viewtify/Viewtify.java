@@ -346,11 +346,7 @@ public final class Viewtify {
         return new ObservableVariable(var);
     }
 
-    /**
-     * @param orderStateRow
-     * @return
-     */
-    public static UI wrap(Control ui) {
-        return new UI(ui);
+    public static UI wrap(Control ui, Viewty view) {
+        return new UI(ui, view);
     }
 }
