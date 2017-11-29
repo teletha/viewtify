@@ -35,21 +35,8 @@ public abstract class Viewty implements Extensible {
      * Use class name as view name.
      */
     protected Viewty() {
-        this(null);
-    }
-
-    /**
-     * View name.
-     * 
-     * @param name
-     */
-    protected Viewty(String name) {
-        if (name == null || name.isEmpty()) {
-            name = getClass().getSimpleName();
-        }
-
         try {
-            this.root = new FXMLLoader(ClassLoader.getSystemResource(name + ".fxml")).load();
+            this.root = new FXMLLoader(ClassLoader.getSystemResource(getClass().getSimpleName() + ".fxml")).load();
 
             // Inject various types
             for (Field field : getClass().getDeclaredFields()) {
