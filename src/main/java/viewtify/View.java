@@ -11,8 +11,6 @@ package viewtify;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.Deque;
-import java.util.LinkedList;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,12 +24,9 @@ import kiss.I;
 import kiss.model.Model;
 
 /**
- * @version 2017/11/29 8:22:19
+ * @version 2017/11/30 12:43:32
  */
 public abstract class View implements Extensible {
-
-    /** The view call stack. */
-    private static final Deque<View> views = new LinkedList();
 
     /** The associated root node. */
     private Node root;
@@ -46,29 +41,15 @@ public abstract class View implements Extensible {
      * Use class name as view name.
      */
     protected View() {
-        this.parent = views.peekLast();
-        System.out.println(parent + "  ->  " + this);
-
-        if (this.getClass().getName().contains("Console")) {
-            new Error().printStackTrace();
-        }
-
+        // initialize UI structure
         try {
             this.root = new FXMLLoader(ClassLoader.getSystemResource(getClass().getSimpleName() + ".fxml")).load();
         } catch (Exception e) {
             // FXML for this view is not found, use parent view's root
-            this.root = views.getLast().root;
         }
 
-        // initialize lazily
+        // initialize user system lazily
         Viewtify.inUI(this::init);
-    }
-
-    private View findViewFromParent(Class type) {
-        if (parent != null) {
-            View findViewFromParent = parent.findViewFromParent(type);
-        }
-        return null;
     }
 
     /**
@@ -79,8 +60,6 @@ public abstract class View implements Extensible {
             initialized = true;
 
             try {
-                views.add(this);
-
                 // Inject various types
                 for (Field field : getClass().getDeclaredFields()) {
                     if (field.isAnnotationPresent(FXML.class)) {
@@ -89,12 +68,18 @@ public abstract class View implements Extensible {
                         Class<?> type = field.getType();
 
                         if (View.class.isAssignableFrom(type)) {
-                            // viewtify view
-                            field.set(this, I.make((Class<? extends View>) type));
+                            // check from call stack
+                            View view = findViewFromParent(type);
+
+                            if (view == null) {
+                                view = I.make((Class<View>) type);
+                                view.parent = this;
+                            }
+                            field.set(this, view);
                         } else {
                             String id = "#" + field.getName();
 
-                            Object node = root.lookup(id);
+                            Object node = root().lookup(id);
 
                             if (node == null) {
                                 // If this exception will be thrown, it is bug of this program. So
@@ -126,10 +111,21 @@ public abstract class View implements Extensible {
                 initialize();
             } catch (Exception e) {
                 throw I.quiet(e);
-            } finally {
-                views.removeLast();
             }
         }
+    }
+
+    /**
+     * Find the specified typed view from parent view stack.
+     * 
+     * @param type A target type.
+     * @return
+     */
+    private <V extends View> V findViewFromParent(Class type) {
+        if (type.isInstance(this)) {
+            return (V) this;
+        }
+        return parent == null ? null : parent.findViewFromParent(type);
     }
 
     /**
@@ -168,6 +164,6 @@ public abstract class View implements Extensible {
      * @return
      */
     public final <N extends Node> N root() {
-        return (N) root;
+        return root != null ? (N) root : parent != null ? parent.root() : (N) Viewtify.stage.getScene().getRoot();
     }
 }
