@@ -28,6 +28,9 @@ import kiss.model.Model;
  */
 public abstract class View implements Extensible {
 
+    /** The human-readable ID separator. */
+    public static final String IDSeparator = " ➝ ";
+
     /** The associated root node. */
     private Node root;
 
@@ -84,7 +87,7 @@ public abstract class View implements Extensible {
                             if (node == null) {
                                 // If this exception will be thrown, it is bug of this program. So
                                 // we must rethrow the wrapped error in here.
-                                throw new Error(id() + ": Node [" + id + "] is not found.");
+                                throw new Error(name() + ": Node [" + id + "] is not found.");
                             }
 
                             if (type == TableColumn.class || type == TreeTableColumn.class) {
@@ -150,12 +153,21 @@ public abstract class View implements Extensible {
     protected abstract void initialize();
 
     /**
-     * Compute identifier for this view. Default is class name.
+     * Compute human-readable name for this view. Default is simple class name.
      * 
      * @return
      */
-    public String id() {
+    public String name() {
         return getClass().getSimpleName();
+    }
+
+    /**
+     * Compute computer-awarable identifier for this view.
+     * 
+     * @return
+     */
+    public final String id() {
+        return parent == null ? name() : parent.name() + IDSeparator + name();
     }
 
     /**

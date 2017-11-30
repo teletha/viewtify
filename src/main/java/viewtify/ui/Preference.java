@@ -9,15 +9,15 @@
  */
 package viewtify.ui;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import kiss.Manageable;
 import kiss.Singleton;
 import kiss.Storable;
 
 /**
- * @version 2017/11/17 23:23:06
+ * @version 2017/11/30 13:00:16
  */
 @Manageable(lifestyle = Singleton.class)
-class Preference extends HashMap<String, String> implements Storable<Preference> {
+class Preference extends TreeMap<String, String> implements Storable<Preference> {
 }

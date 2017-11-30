@@ -9,6 +9,8 @@
  */
 package viewtify.ui;
 
+import static java.util.concurrent.TimeUnit.*;
+
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -34,6 +36,7 @@ import kiss.Variable;
 import kiss.WiseBiConsumer;
 import kiss.WiseTriConsumer;
 import viewtify.View;
+import viewtify.Viewtify;
 
 /**
  * @version 2017/11/15 10:31:50
@@ -262,13 +265,9 @@ public class UI<Self extends UI, W extends Node> {
         }
         restored = true;
 
-        String id = view.id() + "#" + ui.getId();
+        String id = view.id() + " 🔄 " + ui.getId();
 
-        property.addListener((p, o, n) -> {
-            preference.put(id, I.transform(n, String.class));
-            preference.store();
-        });
-
+        // restore
         if (ui.getId() != null) {
             String stored = preference.get(id);
 
@@ -277,6 +276,13 @@ public class UI<Self extends UI, W extends Node> {
             }
         }
         writer.accept(value);
+
+        // prepare for store
+        Viewtify.signal(property).debounce(1000, MILLISECONDS).to(change -> {
+            System.out.println(" write " + change);
+            preference.put(id, I.transform(change, String.class));
+            preference.store();
+        });
     }
 
     /**
