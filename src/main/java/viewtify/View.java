@@ -37,9 +37,6 @@ public abstract class View implements Extensible {
     /** The parent view. */
     private View parent;
 
-    /** The initialization flag. */
-    private boolean initialized = false;
-
     /**
      * Use class name as view name.
      */
@@ -59,62 +56,58 @@ public abstract class View implements Extensible {
      * Initialization for system.
      */
     final synchronized void init() {
-        if (initialized == false) {
-            initialized = true;
+        try {
+            // Inject various types
+            for (Field field : getClass().getDeclaredFields()) {
+                if (field.isAnnotationPresent(FXML.class)) {
+                    field.setAccessible(true);
 
-            try {
-                // Inject various types
-                for (Field field : getClass().getDeclaredFields()) {
-                    if (field.isAnnotationPresent(FXML.class)) {
-                        field.setAccessible(true);
+                    Class<?> type = field.getType();
 
-                        Class<?> type = field.getType();
+                    if (View.class.isAssignableFrom(type)) {
+                        // check from call stack
+                        View view = findViewFromParent(type);
 
-                        if (View.class.isAssignableFrom(type)) {
-                            // check from call stack
-                            View view = findViewFromParent(type);
+                        if (view == null) {
+                            view = I.make((Class<View>) type);
+                            view.parent = this;
+                        }
+                        field.set(this, view);
+                    } else {
+                        String id = "#" + field.getName();
 
-                            if (view == null) {
-                                view = I.make((Class<View>) type);
-                                view.parent = this;
-                            }
-                            field.set(this, view);
+                        Object node = root().lookup(id);
+
+                        if (node == null) {
+                            // If this exception will be thrown, it is bug of this program. So
+                            // we must rethrow the wrapped error in here.
+                            throw new Error(name() + ": Node [" + id + "] is not found.");
+                        }
+
+                        if (type == TableColumn.class || type == TreeTableColumn.class) {
+                            // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
+                            // so we must unwrap to javafx.scene.control.TreeTableColumn
+                            node = ((com.sun.javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
+                        }
+
+                        if (type.getName().startsWith("viewtify.ui.")) {
+                            // viewtify ui widget
+                            Constructor constructor = Model.collectConstructors(type)[0];
+                            constructor.setAccessible(true);
+
+                            field.set(this, constructor.newInstance(node, this));
                         } else {
-                            String id = "#" + field.getName();
+                            // javafx ui
+                            field.set(this, node);
 
-                            Object node = root().lookup(id);
-
-                            if (node == null) {
-                                // If this exception will be thrown, it is bug of this program. So
-                                // we must rethrow the wrapped error in here.
-                                throw new Error(name() + ": Node [" + id + "] is not found.");
-                            }
-
-                            if (type == TableColumn.class || type == TreeTableColumn.class) {
-                                // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
-                                // so we must unwrap to javafx.scene.control.TreeTableColumn
-                                node = ((com.sun.javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
-                            }
-
-                            if (type.getName().startsWith("viewtify.ui.")) {
-                                // viewtify ui widget
-                                Constructor constructor = Model.collectConstructors(type)[0];
-                                constructor.setAccessible(true);
-
-                                field.set(this, constructor.newInstance(node, this));
-                            } else {
-                                // javafx ui
-                                field.set(this, node);
-
-                                enhanceNode(node);
-                            }
+                            enhanceNode(node);
                         }
                     }
                 }
-                initialize();
-            } catch (Exception e) {
-                throw I.quiet(e);
             }
+            initialize();
+        } catch (Exception e) {
+            throw I.quiet(e);
         }
     }
 
