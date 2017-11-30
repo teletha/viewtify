@@ -11,6 +11,7 @@ package viewtify.ui;
 
 import static java.util.concurrent.TimeUnit.*;
 
+import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -31,7 +32,10 @@ import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
 import kiss.I;
+import kiss.Manageable;
 import kiss.Signal;
+import kiss.Singleton;
+import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseBiConsumer;
 import kiss.WiseTriConsumer;
@@ -301,5 +305,13 @@ public class UI<Self extends UI, W extends Node> {
      */
     public static final UIContextMenu contextMenu() {
         return new UIContextMenu(new ContextMenu());
+    }
+
+    /**
+     * @version 2017/11/30 14:03:31
+     */
+    @SuppressWarnings("serial")
+    @Manageable(lifestyle = Singleton.class)
+    private static class Preference extends TreeMap<String, String> implements Storable<Preference> {
     }
 }
