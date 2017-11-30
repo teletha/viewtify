@@ -157,7 +157,7 @@ public abstract class View implements Extensible {
      * 
      * @return
      */
-    public String name() {
+    protected String name() {
         return getClass().getSimpleName();
     }
 
