@@ -52,6 +52,16 @@ public class UISpinner<T> extends UI<UISpinner<T>, Spinner<T>> {
      * @param values
      * @return
      */
+    public <E extends Enum> UISpinner<T> values(Class<E> enums) {
+        return values((T[]) enums.getEnumConstants());
+    }
+
+    /**
+     * Set values.
+     * 
+     * @param values
+     * @return
+     */
     public UISpinner<T> values(T... values) {
         return values(I.signal(values));
     }

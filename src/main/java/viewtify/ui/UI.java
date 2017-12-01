@@ -283,7 +283,6 @@ public class UI<Self extends UI, W extends Node> {
 
         // prepare for store
         Viewtify.signal(property).debounce(1000, MILLISECONDS).to(change -> {
-            System.out.println(" write " + change);
             preference.put(id, I.transform(change, String.class));
             preference.store();
         });
