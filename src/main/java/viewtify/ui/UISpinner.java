@@ -140,6 +140,18 @@ public class UISpinner<T> extends UI<UISpinner<T>, Spinner<T>> {
     }
 
     /**
+     * Observe the value modification.
+     * 
+     * @param listener
+     * @return
+     */
+    public UISpinner<T> observeNow(Consumer<T> listener) {
+        observe(listener);
+        listener.accept(ui.getValue());
+        return this;
+    }
+
+    /**
      * Set value-display converter.
      * 
      * @param converter
