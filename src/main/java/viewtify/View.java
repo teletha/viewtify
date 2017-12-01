@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableColumn;
@@ -117,7 +118,7 @@ public abstract class View implements Extensible {
      * @param type A target type.
      * @return
      */
-    private <V extends View> V findViewFromParent(Class type) {
+    <V extends View> V findViewFromParent(Class type) {
         if (type.isInstance(this)) {
             return (V) this;
         }
@@ -168,7 +169,7 @@ public abstract class View implements Extensible {
      * 
      * @return
      */
-    public final <N extends Node> N root() {
+    public final <N extends Parent> N root() {
         return root != null ? (N) root : parent != null ? parent.root() : (N) Viewtify.stage.getScene().getRoot();
     }
 }

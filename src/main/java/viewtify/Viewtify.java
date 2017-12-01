@@ -17,8 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.nio.file.attribute.FileTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -46,12 +44,12 @@ import viewtify.bind.ObservableVariable;
 import viewtify.ui.UI;
 
 /**
- * @version 2017/11/15 9:52:40
+ * @version 2017/12/01 18:25:44
  */
 public final class Viewtify {
 
-    /** The terminate helper. */
-    private static final List<Disposable> terminators = new ArrayList();
+    /** The dispose on exit. */
+    public static final Disposable Terminator = Disposable.empty();
 
     /** The thread pool. */
     private static final ExecutorService pool = Executors.newCachedThreadPool(new ThreadFactory() {
@@ -183,9 +181,8 @@ public final class Viewtify {
      * Deactivate the current application.
      */
     public static final void deactivate() {
-        for (Disposable disposable : Viewtify.terminators) {
-            disposable.dispose();
-        }
+        Terminator.dispose();
+
         Platform.exit();
     }
 
@@ -277,7 +274,7 @@ public final class Viewtify {
      */
     public static void inWorker(Supplier<Disposable> process) {
         pool.submit(() -> {
-            terminators.add(process.get());
+            Terminator.add(process.get());
         });
     }
 
@@ -297,7 +294,7 @@ public final class Viewtify {
      */
     public static void inUI(Supplier<Disposable> process) {
         Platform.runLater(() -> {
-            terminators.add(process.get());
+            Terminator.add(process.get());
         });
     }
 

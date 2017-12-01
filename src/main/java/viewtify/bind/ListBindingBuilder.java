@@ -101,6 +101,25 @@ public class ListBindingBuilder<E> {
     }
 
     /**
+     * Create new indexed item binding.
+     * 
+     * @param index
+     * @return
+     */
+    public MonadicBinding<E> item(int index) {
+        return new PreboundBinding<E>(list) {
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            protected E computeValue() {
+                return list.size() <= index ? null : list.get(index);
+            }
+        };
+    }
+
+    /**
      * @version 2017/11/26 23:01:52
      */
     private class ListBinding<R> extends ObjectBinding<R> {
