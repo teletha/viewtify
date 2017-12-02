@@ -23,6 +23,7 @@ import javafx.scene.control.TreeTableColumn;
 import kiss.Extensible;
 import kiss.I;
 import kiss.model.Model;
+import viewtify.ui.UITreeTableColumn;
 
 /**
  * @version 2017/11/30 12:43:32
@@ -85,7 +86,7 @@ public abstract class View implements Extensible {
                             throw new Error(name() + ": Node [" + id + "] is not found.");
                         }
 
-                        if (type == TableColumn.class || type == TreeTableColumn.class) {
+                        if (type == TableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
                             // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
                             // so we must unwrap to javafx.scene.control.TreeTableColumn
                             node = ((com.sun.javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
