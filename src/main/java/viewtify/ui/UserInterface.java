@@ -9,21 +9,14 @@
  */
 package viewtify.ui;
 
-import javafx.scene.control.Button;
-
-import viewtify.View;
-
 /**
- * @version 2017/11/15 9:54:15
+ * @version 2017/12/02 18:28:48
  */
-public class UIButton extends UI<UIButton, Button> implements UILabeled<UIButton, Button> {
-
+public interface UserInterface<U> {
     /**
-     * Enchanced view.
+     * Return the associated user interface.
      * 
-     * @param ui
+     * @return
      */
-    private UIButton(Button ui, View view) {
-        super(ui, view);
-    }
+    U ui();
 }

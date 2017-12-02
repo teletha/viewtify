@@ -19,7 +19,6 @@ import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -36,7 +35,6 @@ import kiss.Manageable;
 import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
-import kiss.Variable;
 import kiss.WiseBiConsumer;
 import kiss.WiseTriConsumer;
 import viewtify.View;
@@ -45,7 +43,7 @@ import viewtify.Viewtify;
 /**
  * @version 2017/11/15 10:31:50
  */
-public class UI<Self extends UI, W extends Node> {
+public class UI<Self extends UI, W extends Node> implements UIStylable<Self, W> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
@@ -71,63 +69,20 @@ public class UI<Self extends UI, W extends Node> {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public W ui() {
+        return ui;
+    }
+
+    /**
      * Select parent {@link Node}.
      * 
      * @return
      */
     public UI parent() {
         return new UI(ui.getParent(), view);
-    }
-
-    /**
-     * Apply single state class by the specified enum.
-     * 
-     * @param node
-     * @param state
-     */
-    public <E extends Enum<E>> Self style(E state) {
-        if (state != null) {
-            ObservableList<String> classes = ui.getStyleClass();
-
-            for (Enum value : state.getClass().getEnumConstants()) {
-                String name = value.name();
-
-                if (state == value) {
-                    if (!classes.contains(name)) {
-                        classes.add(name);
-                    }
-                } else {
-                    classes.remove(name);
-                }
-            }
-        }
-        return (Self) this;
-    }
-
-    /**
-     * Apply single state class by the specified enum.
-     * 
-     * @param node
-     * @param state
-     */
-    public <E extends Enum<E>> Self style(Variable<E> state) {
-        return style(state.get());
-    }
-
-    /**
-     * Clear all style for the specified enum type.
-     * 
-     * @param class1
-     */
-    public <E extends Enum<E>> Self unstyle(Class<E> style) {
-        if (style != null) {
-            ObservableList<String> classes = ui.getStyleClass();
-
-            for (Enum value : style.getEnumConstants()) {
-                classes.remove(value.name());
-            }
-        }
-        return (Self) this;
     }
 
     /**

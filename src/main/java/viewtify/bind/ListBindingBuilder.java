@@ -75,6 +75,16 @@ public class ListBindingBuilder<E> {
      * @param mapper List mapper.
      * @return
      */
+    public <R> ListBindingBuilder<R> flatVariable(Function<E, Variable<R>> mapper) {
+        return new ListBindingBuilder<>(new MappedList<>(list, e -> mapper.apply(e).v));
+    }
+
+    /**
+     * Create new mapped {@link ListBindingBuilder}.
+     * 
+     * @param mapper List mapper.
+     * @return
+     */
     public <R> ListBindingBuilder<R> map(Function<E, R> mapper) {
         return new ListBindingBuilder(new MappedList(list, mapper));
     }
@@ -151,6 +161,7 @@ public class ListBindingBuilder<E> {
          */
         @Override
         protected R computeValue() {
+            System.out.println("re-compute list");
             return computer.apply(list);
         }
 
@@ -174,21 +185,28 @@ public class ListBindingBuilder<E> {
          */
         private void onChanged(Change<? extends E> change) {
             while (change.next()) {
-                // for removed elements
-                change.getRemoved().forEach(e -> {
-                    for (Function<E, Observable> property : extractors) {
-                        property.apply(e).removeListener(forElement);
+                if (change.wasPermutated()) {
+                    for (int i = change.getFrom(); i < change.getTo(); ++i) {
+                        // permutate
                     }
-                });
-
-                // for added elements
-                change.getAddedSubList().forEach(e -> {
-                    for (Function<E, Observable> property : extractors) {
-                        property.apply(e).addListener(forElement);
+                } else if (change.wasUpdated()) {
+                    // update item
+                } else {
+                    for (E e : change.getRemoved()) {
+                        System.out.println("removed");
+                        for (Function<E, Observable> property : extractors) {
+                            property.apply(e).removeListener(forElement);
+                        }
                     }
-                });
-                invalidate();
+                    for (E e : change.getAddedSubList()) {
+                        System.out.println("added");
+                        for (Function<E, Observable> property : extractors) {
+                            property.apply(e).addListener(forElement);
+                        }
+                    }
+                }
             }
+            invalidate();
         }
     }
 

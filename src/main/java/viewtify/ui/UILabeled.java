@@ -13,29 +13,18 @@ import java.util.Objects;
 
 import javafx.scene.control.Labeled;
 
-import viewtify.View;
-
 /**
  * @version 2017/11/15 9:54:15
  */
-public abstract class UILabeled<Self extends UILabeled, W extends Labeled> extends UI<Self, W> {
-
-    /**
-     * Enchanced view.
-     * 
-     * @param ui
-     */
-    protected UILabeled(W ui, View view) {
-        super(ui, view);
-    }
+public interface UILabeled<Self extends UILabeled, W extends Labeled> extends UIStylable<Self, W> {
 
     /**
      * Get text.
      * 
      * @param text
      */
-    public String text() {
-        return ui.getText();
+    default String text() {
+        return ui().getText();
     }
 
     /**
@@ -43,8 +32,8 @@ public abstract class UILabeled<Self extends UILabeled, W extends Labeled> exten
      * 
      * @param text
      */
-    public Self text(Object text) {
-        ui.setText(Objects.toString(text));
+    default Self text(Object text) {
+        ui().setText(Objects.toString(text));
         return (Self) this;
     }
 }

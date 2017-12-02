@@ -11,13 +11,17 @@ package viewtify.ui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 
 import kiss.I;
+import kiss.Variable;
+import kiss.WiseFunction;
 import viewtify.View;
 
 /**
@@ -28,6 +32,7 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
     /** The actual widget. */
     private final TreeTableColumn<RowValue, ColumnValue> ui;
 
+    /** The value provider utility. */
     private TypeMappingProvider mappingProvider;
 
     /**
@@ -40,24 +45,34 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
     }
 
     /**
-     * Set value provider.
+     * Add value provider.
      * 
      * @param provider
      * @return
      */
-    public <OneRowType> UITreeTableColumn<RowValue, ColumnValue> providerValue(Class<OneRowType> type, Function<OneRowType, ColumnValue> provider) {
-        return provider(type, row -> new SimpleObjectProperty(provider.apply(row)));
+    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> provideVariable(Class<Type> type, WiseFunction<Type, Variable<ColumnValue>> provider) {
+        return provideProperty(type, row -> new SimpleObjectProperty(provider.apply(row).get()));
     }
 
     /**
-     * Set value provider.
+     * Add value provider.
      * 
      * @param provider
      * @return
      */
-    public <OneRowType> UITreeTableColumn<RowValue, ColumnValue> provider(Class<OneRowType> type, Function<OneRowType, ObservableValue<ColumnValue>> provider) {
+    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> provideValue(Class<Type> type, WiseFunction<Type, ColumnValue> provider) {
+        return provideProperty(type, row -> new SimpleObjectProperty(provider.apply(row)));
+    }
+
+    /**
+     * Add value provider.
+     * 
+     * @param provider
+     * @return
+     */
+    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> provideProperty(Class<Type> type, Function<Type, ObservableValue<ColumnValue>> provider) {
         if (mappingProvider == null) {
-            provider(mappingProvider = new TypeMappingProvider());
+            provide(mappingProvider = new TypeMappingProvider());
         }
         mappingProvider.mapper.put(type, provider);
 
@@ -65,22 +80,22 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
     }
 
     /**
-     * Set value provider.
+     * Add value provider.
      * 
      * @param provider
      * @return
      */
-    public <P extends Function<RowValue, ObservableValue<ColumnValue>>> UITreeTableColumn<RowValue, ColumnValue> provider(Class<P> provider) {
-        return provider(I.make(provider));
+    public <P extends Function<RowValue, ObservableValue<ColumnValue>>> UITreeTableColumn<RowValue, ColumnValue> provide(Class<P> provider) {
+        return provide(I.make(provider));
     }
 
     /**
-     * Set value provider.
+     * Add value provider.
      * 
      * @param provider
      * @return
      */
-    public UITreeTableColumn<RowValue, ColumnValue> provider(Function<RowValue, ObservableValue<ColumnValue>> provider) {
+    public UITreeTableColumn<RowValue, ColumnValue> provide(Function<RowValue, ObservableValue<ColumnValue>> provider) {
         ui.setCellValueFactory(data -> provider.apply(data.getValue().getValue()));
         return this;
     }
@@ -98,6 +113,70 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
         @Override
         public ObservableValue<ColumnValue> apply(T value) {
             return mapper.get(value.getClass()).apply(value);
+        }
+    }
+
+    /**
+     * Set cell renderer.
+     * 
+     * @param renderer
+     * @return
+     */
+    public UITreeTableColumn<RowValue, ColumnValue> render(Function<TreeTableColumn<RowValue, ColumnValue>, TreeTableCell<RowValue, ColumnValue>> renderer) {
+        ui.setCellFactory(table -> renderer.apply(table));
+        return this;
+    }
+
+    /**
+     * Set cell renderer.
+     * 
+     * @param renderer
+     * @return
+     */
+    public UITreeTableColumn<RowValue, ColumnValue> render(BiConsumer<UITreeTableCell, ColumnValue> renderer) {
+        ui.setCellFactory(table -> new UITreeTableCell(renderer).ui);
+        return this;
+    }
+
+    /**
+     * @version 2017/12/02 18:11:59
+     */
+    public class UITreeTableCell implements UILabeled<UITreeTableCell, TreeTableCell<RowValue, ColumnValue>> {
+
+        /** The user renderer. */
+        private final BiConsumer<UITreeTableCell, ColumnValue> renderer;
+
+        /** The actual widget. */
+        private final TreeTableCell<RowValue, ColumnValue> ui = new TreeTableCell<RowValue, ColumnValue>() {
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            protected void updateItem(ColumnValue item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    renderer.accept(UITreeTableCell.this, item);
+                }
+            }
+        };
+
+        /**
+         * @param renderer
+         */
+        private UITreeTableCell(BiConsumer<UITreeTableCell, ColumnValue> renderer) {
+            this.renderer = renderer;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public TreeTableCell ui() {
+            return ui;
         }
     }
 }
