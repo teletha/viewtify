@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.bind;
+package viewtify.calculation;
 
 import java.util.function.Function;
 

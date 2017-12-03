@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.bind;
+package viewtify.calculation;
 
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;

@@ -7,12 +7,12 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.bind;
+package viewtify.calculation;
 
 import javafx.beans.binding.Binding;
 
 /**
  * @version 2017/12/02 0:50:42
  */
-public interface MonadicBinding<T> extends Binding<T>, Bind<T> {
+public interface MonadicBinding<T> extends Binding<T>, Calculatable<T> {
 }

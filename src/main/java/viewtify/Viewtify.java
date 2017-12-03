@@ -25,18 +25,12 @@ import java.util.function.Supplier;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.binding.Binding;
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Control;
 import javafx.stage.Stage;
-
-import com.sun.javafx.collections.ImmutableObservableList;
 
 import filer.Filer;
 import kiss.Disposable;
@@ -44,10 +38,13 @@ import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import kiss.WiseBiFunction;
+import kiss.WiseFunction;
 import kiss.WiseSupplier;
-import viewtify.bind.Bind;
-import viewtify.bind.ListBindingBuilder;
-import viewtify.bind.ObservableVariable;
+import kiss.WiseTriFunction;
+import viewtify.calculation.Calculatable;
+import viewtify.calculation.Calculation;
+import viewtify.calculation.ListCalculationBuilder;
+import viewtify.calculation.ObservableVariable;
 import viewtify.ui.UI;
 
 /**
@@ -231,35 +228,35 @@ public final class Viewtify {
      * @param list A {@link ObservableList} source to bind.
      * @return A binding builder.
      */
-    public static final <E> ListBindingBuilder<E> bind(ObservableList<E> list) {
-        return new ListBindingBuilder<>(list);
+    public static final <E> ListCalculationBuilder<E> calculate(ObservableList<E> list) {
+        return new ListCalculationBuilder<>(list);
     }
 
     /**
-     * Create {@link Binding}.
+     * Create {@link Calculatable}.
      * 
      * @param o1 A {@link Observable} target.
      * @param calculation A calculation.
      * @return A lazy evaluated calculation.
      */
-    public static final <E> Bind<E> bind(Observable o1, WiseSupplier<E> calculation) {
-        return new BindWith(calculation, o1);
+    public static final <E> Calculatable<E> calculate(Observable o1, WiseSupplier<E> calculation) {
+        return calculate(o1, null, calculation);
     }
 
     /**
-     * Create {@link Binding}.
+     * Create {@link Calculatable}.
      * 
      * @param o1 A {@link Observable} target.
      * @param o2 A {@link Observable} target.
      * @param calculation A calculation.
      * @return A lazy evaluated calculation.
      */
-    public static final <E> Bind<E> bind(Observable o1, Observable o2, WiseSupplier<E> calculation) {
-        return new BindWith(calculation, o1, o2);
+    public static final <E> Calculatable<E> calculate(Observable o1, Observable o2, WiseSupplier<E> calculation) {
+        return calculate(o1, o2, null, calculation);
     }
 
     /**
-     * Create {@link Binding}.
+     * Create {@link Calculatable}.
      * 
      * @param o1 A {@link Observable} target.
      * @param o2 A {@link Observable} target.
@@ -267,12 +264,12 @@ public final class Viewtify {
      * @param calculation A calculation.
      * @return A lazy evaluated calculation.
      */
-    public static final <E> Bind<E> bind(Observable o1, Observable o2, Observable o3, WiseSupplier<E> calculation) {
-        return new BindWith(calculation, o1, o2, o3);
+    public static final <E> Calculatable<E> calculate(Observable o1, Observable o2, Observable o3, WiseSupplier<E> calculation) {
+        return calculate(o1, o2, o3, null, calculation);
     }
 
     /**
-     * Create {@link Binding}.
+     * Create {@link Calculatable}.
      * 
      * @param o1 A {@link Observable} target.
      * @param o2 A {@link Observable} target.
@@ -281,46 +278,63 @@ public final class Viewtify {
      * @param calculation A calculation.
      * @return A lazy evaluated calculation.
      */
-    public static final <E> Bind<E> bind(Observable o1, Observable o2, Observable o3, Observable o4, WiseSupplier<E> calculation) {
-        return new BindWith(calculation, o1, o2, o3, o4);
+    public static final <E> Calculatable<E> calculate(Observable o1, Observable o2, Observable o3, Observable o4, WiseSupplier<E> calculation) {
+        return new Calculation<E>(o1, o2, o3, o4) {
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            protected E calculate() {
+                return calculation.get();
+            }
+        };
     }
 
     /**
-     * Create new {@link ObjectBinding} between two sources.
+     * Create {@link Calculatable}.
      * 
-     * @param sourceA
-     * @param sourceB
-     * @param calculator
-     * @return
+     * @param o1 A {@link Observable} target.
+     * @return A lazy evaluated calculation.
      */
-    public static final <A, B, R> ObjectBinding<R> bind(ObservableValue<A> sourceA, ObservableValue<B> sourceB, WiseBiFunction<A, B, R> calculator) {
-        return new ObjectBinding<R>() {
+    public static final <A> Calculatable<A> calculate(ObservableValue<A> o1) {
+        return calculate(o1, () -> o1.getValue());
+    }
 
-            /** The observer. */
-            private final InvalidationListener listener = o -> invalidate();
+    /**
+     * Create {@link Calculatable}.
+     * 
+     * @param o1 A {@link Observable} target.
+     * @param calculation A calculation.
+     * @return A lazy evaluated calculation.
+     */
+    public static final <A, R> Calculatable<R> calculate(ObservableValue<A> o1, WiseFunction<A, R> calculator) {
+        return calculate(o1, () -> calculator.apply(o1.getValue()));
+    }
 
-            {
-                sourceA.addListener(listener);
-                sourceB.addListener(listener);
-            }
+    /**
+     * Create {@link Calculatable}.
+     * 
+     * @param o1 A {@link Observable} target.
+     * @param o2 A {@link Observable} target.
+     * @param calculation A calculation.
+     * @return A lazy evaluated calculation.
+     */
+    public static final <A, B, R> Calculatable<R> calculate(ObservableValue<A> o1, ObservableValue<B> o2, WiseBiFunction<A, B, R> calculator) {
+        return calculate(o1, o2, () -> calculator.apply(o1.getValue(), o2.getValue()));
+    }
 
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void dispose() {
-                sourceA.removeListener(listener);
-                sourceB.removeListener(listener);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected R computeValue() {
-                return calculator.apply(sourceA.getValue(), sourceB.getValue());
-            }
-        };
+    /**
+     * Create {@link Calculatable}.
+     * 
+     * @param o1 A {@link Observable} target.
+     * @param o2 A {@link Observable} target.
+     * @param o3 A {@link Observable} target.
+     * @param calculation A calculation.
+     * @return A lazy evaluated calculation.
+     */
+    public static final <A, B, C, R> Calculatable<R> calculate(ObservableValue<A> o1, ObservableValue<B> o2, ObservableValue<C> o3, WiseTriFunction<A, B, C, R> calculator) {
+        return calculate(o1, o2, o3, () -> calculator.apply(o1.getValue(), o2.getValue(), o3.getValue()));
     }
 
     /**
@@ -397,53 +411,6 @@ public final class Viewtify {
 
     public static UI wrap(Control ui, View view) {
         return new UI(ui, view);
-    }
-
-    /**
-     * @version 2017/12/03 11:41:00
-     */
-    private static class BindWith<T> extends ObjectBinding<T> implements Bind<T> {
-
-        /** The actual calculation. */
-        private final WiseSupplier<T> calculation;
-
-        /** Store for {@link #dispose()}. */
-        private final Observable[] dependencies;
-
-        /**
-         * @param calculation
-         * @param dependencies
-         */
-        private BindWith(WiseSupplier<T> calculation, Observable... dependencies) {
-            this.calculation = calculation;
-            bind(this.dependencies = dependencies);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void dispose() {
-            unbind(dependencies);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected T computeValue() {
-            return calculation.get();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public ObservableList<?> getDependencies() {
-            return ((dependencies == null) || (dependencies.length == 0)) ? FXCollections.emptyObservableList()
-                    : (dependencies.length == 1) ? FXCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
-        }
     }
 
 }

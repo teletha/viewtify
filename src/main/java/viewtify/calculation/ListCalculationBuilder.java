@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.bind;
+package viewtify.calculation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +29,9 @@ import kiss.WiseBiFunction;
 import viewtify.Viewtify;
 
 /**
- * @version 2017/11/26 22:01:18
+ * @version 2017/12/03 13:19:49
  */
-public class ListBindingBuilder<E> {
+public class ListCalculationBuilder<E> {
 
     /** The source list. */
     private final ObservableList<E> list;
@@ -44,7 +44,7 @@ public class ListBindingBuilder<E> {
      * 
      * @param list A {@link ObservableList} source.
      */
-    public ListBindingBuilder(ObservableList<E> list) {
+    public ListCalculationBuilder(ObservableList<E> list) {
         this.list = list;
     }
 
@@ -54,7 +54,7 @@ public class ListBindingBuilder<E> {
      * @param propertyExtractor
      * @return
      */
-    public ListBindingBuilder<E> observe(Function<E, Observable> propertyExtractor) {
+    public ListCalculationBuilder<E> observe(Function<E, Observable> propertyExtractor) {
         extractors.add(propertyExtractor);
         return this;
     }
@@ -65,29 +65,29 @@ public class ListBindingBuilder<E> {
      * @param propertyExtractor
      * @return
      */
-    public ListBindingBuilder<E> observeVariable(Function<E, Variable> propertyExtractor) {
+    public ListCalculationBuilder<E> observeVariable(Function<E, Variable> propertyExtractor) {
         extractors.add(e -> new ObservableVariable(propertyExtractor.apply(e)));
         return this;
     }
 
     /**
-     * Create new mapped {@link ListBindingBuilder}.
+     * Create new mapped {@link ListCalculationBuilder}.
      * 
      * @param mapper List mapper.
      * @return
      */
-    public <R> ListBindingBuilder<R> flatVariable(Function<E, Variable<R>> mapper) {
-        return new ListBindingBuilder<>(new MappedList<>(list, e -> mapper.apply(e).v));
+    public <R> ListCalculationBuilder<R> flatVariable(Function<E, Variable<R>> mapper) {
+        return new ListCalculationBuilder<>(new MappedList<>(list, e -> mapper.apply(e).v));
     }
 
     /**
-     * Create new mapped {@link ListBindingBuilder}.
+     * Create new mapped {@link ListCalculationBuilder}.
      * 
      * @param mapper List mapper.
      * @return
      */
-    public <R> ListBindingBuilder<R> map(Function<E, R> mapper) {
-        return new ListBindingBuilder(new MappedList(list, mapper));
+    public <R> ListCalculationBuilder<R> map(Function<E, R> mapper) {
+        return new ListCalculationBuilder(new MappedList(list, mapper));
     }
 
     /**
@@ -97,8 +97,8 @@ public class ListBindingBuilder<E> {
      * @param accumulator
      * @return
      */
-    public <R> Bind<R> reduce(R init, WiseBiFunction<R, E, R> accumulator) {
-        return new ListBinding<R>(l -> I.signal(list).scan(init, accumulator).to().v);
+    public <R> Calculatable<R> reduce(R init, WiseBiFunction<R, E, R> accumulator) {
+        return new ListCalculation<R>(l -> I.signal(list).scan(init, accumulator).to().v);
     }
 
     /**
@@ -108,7 +108,7 @@ public class ListBindingBuilder<E> {
      * @return
      */
     public <R, A> ObjectBinding<R> collect(Collector<? super E, A, R> collector) {
-        return new ListBinding<R>(l -> l.stream().collect(collector));
+        return new ListCalculation<R>(l -> l.stream().collect(collector));
     }
 
     /**
@@ -117,14 +117,14 @@ public class ListBindingBuilder<E> {
      * @param index
      * @return
      */
-    public Bind<E> item(int index) {
-        return Viewtify.bind(list, () -> index < list.size() ? list.get(index) : null);
+    public Calculatable<E> item(int index) {
+        return Viewtify.calculate(list, () -> index < list.size() ? list.get(index) : null);
     }
 
     /**
-     * @version 2017/11/26 23:01:52
+     * @version 2017/12/03 13:19:44
      */
-    private class ListBinding<R> extends ObjectBinding<R> implements Bind<R> {
+    private class ListCalculation<R> extends ObjectBinding<R> implements Calculatable<R> {
 
         /** The element observer. */
         private final InvalidationListener forElement = o -> invalidate();
@@ -137,7 +137,7 @@ public class ListBindingBuilder<E> {
         /**
          * 
          */
-        private ListBinding(Function<List<E>, R> computer) {
+        private ListCalculation(Function<List<E>, R> computer) {
             this.computer = computer;
 
             list.addListener(forList);
