@@ -31,7 +31,7 @@ import viewtify.Viewtify;
 /**
  * @version 2017/12/03 13:19:49
  */
-public class ListCalculationBuilder<E> {
+public class CalculatableList<E> {
 
     /** The source list. */
     private final ObservableList<E> list;
@@ -44,7 +44,7 @@ public class ListCalculationBuilder<E> {
      * 
      * @param list A {@link ObservableList} source.
      */
-    public ListCalculationBuilder(ObservableList<E> list) {
+    public CalculatableList(ObservableList<E> list) {
         this.list = list;
     }
 
@@ -54,7 +54,7 @@ public class ListCalculationBuilder<E> {
      * @param propertyExtractor
      * @return
      */
-    public ListCalculationBuilder<E> observe(Function<E, Observable> propertyExtractor) {
+    public CalculatableList<E> observe(Function<E, Observable> propertyExtractor) {
         extractors.add(propertyExtractor);
         return this;
     }
@@ -65,29 +65,29 @@ public class ListCalculationBuilder<E> {
      * @param propertyExtractor
      * @return
      */
-    public ListCalculationBuilder<E> observeVariable(Function<E, Variable> propertyExtractor) {
-        extractors.add(e -> new ObservableVariable(propertyExtractor.apply(e)));
+    public CalculatableList<E> observeVariable(Function<E, Variable> propertyExtractor) {
+        extractors.add(e -> new VariableBinding(propertyExtractor.apply(e)));
         return this;
     }
 
     /**
-     * Create new mapped {@link ListCalculationBuilder}.
+     * Create new mapped {@link CalculatableList}.
      * 
      * @param mapper List mapper.
      * @return
      */
-    public <R> ListCalculationBuilder<R> flatVariable(Function<E, Variable<R>> mapper) {
-        return new ListCalculationBuilder<>(new MappedList<>(list, e -> mapper.apply(e).v));
+    public <R> CalculatableList<R> flatVariable(Function<E, Variable<R>> mapper) {
+        return new CalculatableList<>(new MappedList<>(list, e -> mapper.apply(e).v));
     }
 
     /**
-     * Create new mapped {@link ListCalculationBuilder}.
+     * Create new mapped {@link CalculatableList}.
      * 
      * @param mapper List mapper.
      * @return
      */
-    public <R> ListCalculationBuilder<R> map(Function<E, R> mapper) {
-        return new ListCalculationBuilder(new MappedList(list, mapper));
+    public <R> CalculatableList<R> map(Function<E, R> mapper) {
+        return new CalculatableList(new MappedList(list, mapper));
     }
 
     /**
@@ -107,7 +107,7 @@ public class ListCalculationBuilder<E> {
      * @param collector
      * @return
      */
-    public <R, A> ObjectBinding<R> collect(Collector<? super E, A, R> collector) {
+    public <R, A> Calculatable<R> collect(Collector<? super E, A, R> collector) {
         return new ListCalculation<R>(l -> l.stream().collect(collector));
     }
 

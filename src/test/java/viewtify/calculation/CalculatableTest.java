@@ -16,6 +16,7 @@ import javafx.beans.property.StringProperty;
 
 import org.junit.Test;
 
+import kiss.Variable;
 import viewtify.Viewtify;
 
 /**
@@ -78,15 +79,39 @@ public class CalculatableTest {
     public void flatMap() throws Exception {
         Nest nest = new Nest("TEST");
         ObjectProperty<Nest> p = new SimpleObjectProperty(nest);
-        Calculatable<String> calc = Viewtify.calculate(p).flatMap(v -> v.text);
+        Calculatable<String> calc = Viewtify.calculate(p).flatMap(v -> v.property);
         assert calc.get().equals("TEST");
 
         // change inner value
-        nest.text.set("CHANGE");
+        nest.property.set("CHANGE");
         assert calc.get().equals("CHANGE");
 
         // inner null
-        nest.text.set(null);
+        nest.property.set(null);
+        assert calc.get() == null;
+
+        // change outer value
+        p.set(new Nest("OUTER"));
+        assert calc.get().equals("OUTER");
+
+        // outer null
+        p.set(null);
+        assert calc.get() == null;
+    }
+
+    @Test
+    public void flatVariable() throws Exception {
+        Nest nest = new Nest("TEST");
+        ObjectProperty<Nest> p = new SimpleObjectProperty(nest);
+        Calculatable<String> calc = Viewtify.calculate(p).flatVariable(v -> v.variable);
+        assert calc.get().equals("TEST");
+
+        // change inner value
+        nest.variable.set("CHANGE");
+        assert calc.get().equals("CHANGE");
+
+        // inner null
+        nest.variable.set((String) null);
         assert calc.get() == null;
 
         // change outer value
@@ -103,10 +128,13 @@ public class CalculatableTest {
      */
     private static class Nest {
 
-        private StringProperty text = new SimpleStringProperty();
+        private StringProperty property = new SimpleStringProperty();
+
+        private Variable<String> variable = Variable.empty();
 
         private Nest(String text) {
-            this.text.set(text);
+            this.property.set(text);
+            this.variable.set(text);
         }
     }
 }

@@ -73,7 +73,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * @param mapper function to map the value held by this ObservableValue.
      */
     default <R> Calculatable<R> flatVariable(Function<? super T, Variable<R>> mapper) {
-        return new FlatMapBinding<>(this, a -> Viewtify.wrap(mapper.apply(a)));
+        return flatMap(v -> new VariableBinding(mapper.apply(v)));
     }
 
     /**

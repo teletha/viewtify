@@ -36,15 +36,13 @@ import filer.Filer;
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
-import kiss.Variable;
 import kiss.WiseBiFunction;
 import kiss.WiseFunction;
 import kiss.WiseSupplier;
 import kiss.WiseTriFunction;
 import viewtify.calculation.Calculatable;
 import viewtify.calculation.Calculation;
-import viewtify.calculation.ListCalculationBuilder;
-import viewtify.calculation.ObservableVariable;
+import viewtify.calculation.CalculatableList;
 import viewtify.ui.UI;
 
 /**
@@ -228,8 +226,8 @@ public final class Viewtify {
      * @param list A {@link ObservableList} source to bind.
      * @return A binding builder.
      */
-    public static final <E> ListCalculationBuilder<E> calculate(ObservableList<E> list) {
-        return new ListCalculationBuilder<>(list);
+    public static final <E> CalculatableList<E> calculate(ObservableList<E> list) {
+        return new CalculatableList<>(list);
     }
 
     /**
@@ -399,14 +397,6 @@ public final class Viewtify {
                 }
             });
         });
-    }
-
-    /**
-     * @param side
-     * @return
-     */
-    public static <V> ObservableValue<V> wrap(Variable<V> var) {
-        return new ObservableVariable(var);
     }
 
     public static UI wrap(Control ui, View view) {
