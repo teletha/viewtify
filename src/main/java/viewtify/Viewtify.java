@@ -21,14 +21,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.WeakInvalidationListener;
-import javafx.beans.binding.Binding;
-import javafx.beans.binding.Bindings;
+import javafx.beans.InvalidationListener;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -217,8 +214,8 @@ public final class Viewtify {
      * @param sub
      * @param object
      */
-    public static <E, R> Binding<R> bind(ObservableList<E> list, Function<Signal<E>, R> calculation) {
-        return Bindings.createObjectBinding(() -> calculation.apply(I.signal(list)), list);
+    public static <E> Signal<E> signal(ObservableList<E> list) {
+        return null;
     }
 
     /**
@@ -243,7 +240,7 @@ public final class Viewtify {
         return new ObjectBinding<R>() {
 
             /** The observer. */
-            private final WeakInvalidationListener listener = new WeakInvalidationListener(obs -> invalidate());
+            private final InvalidationListener listener = o -> invalidate();
 
             {
                 sourceA.addListener(listener);

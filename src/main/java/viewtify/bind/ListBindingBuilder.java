@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collector;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.WeakInvalidationListener;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
-import javafx.collections.WeakListChangeListener;
 import javafx.collections.transformation.TransformationList;
 
 import kiss.I;
@@ -135,10 +135,10 @@ public class ListBindingBuilder<E> {
     private class ListBinding<R> extends ObjectBinding<R> {
 
         /** The element observer. */
-        private final WeakInvalidationListener forElement = new WeakInvalidationListener(obs -> invalidate());
+        private final InvalidationListener forElement = o -> invalidate();
 
         /** The list observer. */
-        private final WeakListChangeListener<E> forList = new WeakListChangeListener<>(this::onChanged);
+        private final ListChangeListener<E> forList = this::onChanged;
 
         private final Function<List<E>, R> computer;
 
@@ -161,7 +161,6 @@ public class ListBindingBuilder<E> {
          */
         @Override
         protected R computeValue() {
-            System.out.println("re-compute list");
             return computer.apply(list);
         }
 
@@ -185,28 +184,18 @@ public class ListBindingBuilder<E> {
          */
         private void onChanged(Change<? extends E> change) {
             while (change.next()) {
-                if (change.wasPermutated()) {
-                    for (int i = change.getFrom(); i < change.getTo(); ++i) {
-                        // permutate
-                    }
-                } else if (change.wasUpdated()) {
-                    // update item
-                } else {
-                    for (E e : change.getRemoved()) {
-                        System.out.println("removed");
-                        for (Function<E, Observable> property : extractors) {
-                            property.apply(e).removeListener(forElement);
-                        }
-                    }
-                    for (E e : change.getAddedSubList()) {
-                        System.out.println("added");
-                        for (Function<E, Observable> property : extractors) {
-                            property.apply(e).addListener(forElement);
-                        }
+                for (E e : change.getRemoved()) {
+                    for (Function<E, Observable> property : extractors) {
+                        property.apply(e).removeListener(forElement);
                     }
                 }
+                for (E e : change.getAddedSubList()) {
+                    for (Function<E, Observable> property : extractors) {
+                        property.apply(e).addListener(forElement);
+                    }
+                }
+                invalidate();
             }
-            invalidate();
         }
     }
 
