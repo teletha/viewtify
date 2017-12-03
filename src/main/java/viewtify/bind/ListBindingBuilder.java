@@ -26,6 +26,7 @@ import javafx.collections.transformation.TransformationList;
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseBiFunction;
+import viewtify.Viewtify;
 
 /**
  * @version 2017/11/26 22:01:18
@@ -96,7 +97,7 @@ public class ListBindingBuilder<E> {
      * @param accumulator
      * @return
      */
-    public <R> ObjectBinding<R> reduce(R init, WiseBiFunction<R, E, R> accumulator) {
+    public <R> Bind<R> reduce(R init, WiseBiFunction<R, E, R> accumulator) {
         return new ListBinding<R>(l -> I.signal(list).scan(init, accumulator).to().v);
     }
 
@@ -116,23 +117,14 @@ public class ListBindingBuilder<E> {
      * @param index
      * @return
      */
-    public MonadicBinding<E> item(int index) {
-        return new PreboundBinding<E>(list) {
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected E computeValue() {
-                return list.size() <= index ? null : list.get(index);
-            }
-        };
+    public Bind<E> item(int index) {
+        return Viewtify.bind(list, () -> index < list.size() ? list.get(index) : null);
     }
 
     /**
      * @version 2017/11/26 23:01:52
      */
-    private class ListBinding<R> extends ObjectBinding<R> {
+    private class ListBinding<R> extends ObjectBinding<R> implements Bind<R> {
 
         /** The element observer. */
         private final InvalidationListener forElement = o -> invalidate();

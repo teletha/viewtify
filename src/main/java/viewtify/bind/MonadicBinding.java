@@ -14,5 +14,5 @@ import javafx.beans.binding.Binding;
 /**
  * @version 2017/12/02 0:50:42
  */
-public interface MonadicBinding<T> extends Binding<T>, MonadicObservableValue<T> {
+public interface MonadicBinding<T> extends Binding<T>, Bind<T> {
 }

@@ -26,12 +26,17 @@ import java.util.function.Supplier;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.binding.Binding;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Control;
 import javafx.stage.Stage;
+
+import com.sun.javafx.collections.ImmutableObservableList;
 
 import filer.Filer;
 import kiss.Disposable;
@@ -39,6 +44,8 @@ import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import kiss.WiseBiFunction;
+import kiss.WiseSupplier;
+import viewtify.bind.Bind;
 import viewtify.bind.ListBindingBuilder;
 import viewtify.bind.ObservableVariable;
 import viewtify.ui.UI;
@@ -229,6 +236,56 @@ public final class Viewtify {
     }
 
     /**
+     * Create {@link Binding}.
+     * 
+     * @param o1 A {@link Observable} target.
+     * @param calculation A calculation.
+     * @return A lazy evaluated calculation.
+     */
+    public static final <E> Bind<E> bind(Observable o1, WiseSupplier<E> calculation) {
+        return new BindWith(calculation, o1);
+    }
+
+    /**
+     * Create {@link Binding}.
+     * 
+     * @param o1 A {@link Observable} target.
+     * @param o2 A {@link Observable} target.
+     * @param calculation A calculation.
+     * @return A lazy evaluated calculation.
+     */
+    public static final <E> Bind<E> bind(Observable o1, Observable o2, WiseSupplier<E> calculation) {
+        return new BindWith(calculation, o1, o2);
+    }
+
+    /**
+     * Create {@link Binding}.
+     * 
+     * @param o1 A {@link Observable} target.
+     * @param o2 A {@link Observable} target.
+     * @param o3 A {@link Observable} target.
+     * @param calculation A calculation.
+     * @return A lazy evaluated calculation.
+     */
+    public static final <E> Bind<E> bind(Observable o1, Observable o2, Observable o3, WiseSupplier<E> calculation) {
+        return new BindWith(calculation, o1, o2, o3);
+    }
+
+    /**
+     * Create {@link Binding}.
+     * 
+     * @param o1 A {@link Observable} target.
+     * @param o2 A {@link Observable} target.
+     * @param o3 A {@link Observable} target.
+     * @param o4 A {@link Observable} target.
+     * @param calculation A calculation.
+     * @return A lazy evaluated calculation.
+     */
+    public static final <E> Bind<E> bind(Observable o1, Observable o2, Observable o3, Observable o4, WiseSupplier<E> calculation) {
+        return new BindWith(calculation, o1, o2, o3, o4);
+    }
+
+    /**
      * Create new {@link ObjectBinding} between two sources.
      * 
      * @param sourceA
@@ -341,4 +398,52 @@ public final class Viewtify {
     public static UI wrap(Control ui, View view) {
         return new UI(ui, view);
     }
+
+    /**
+     * @version 2017/12/03 11:41:00
+     */
+    private static class BindWith<T> extends ObjectBinding<T> implements Bind<T> {
+
+        /** The actual calculation. */
+        private final WiseSupplier<T> calculation;
+
+        /** Store for {@link #dispose()}. */
+        private final Observable[] dependencies;
+
+        /**
+         * @param calculation
+         * @param dependencies
+         */
+        private BindWith(WiseSupplier<T> calculation, Observable... dependencies) {
+            this.calculation = calculation;
+            bind(this.dependencies = dependencies);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void dispose() {
+            unbind(dependencies);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected T computeValue() {
+            return calculation.get();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public ObservableList<?> getDependencies() {
+            return ((dependencies == null) || (dependencies.length == 0)) ? FXCollections.emptyObservableList()
+                    : (dependencies.length == 1) ? FXCollections.singletonObservableList(dependencies[0])
+                            : new ImmutableObservableList<Observable>(dependencies);
+        }
+    }
+
 }
