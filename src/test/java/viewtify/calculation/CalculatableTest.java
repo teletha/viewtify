@@ -53,9 +53,9 @@ public class CalculatableTest {
     }
 
     @Test
-    public void filter() throws Exception {
+    public void take() throws Exception {
         StringProperty p = new SimpleStringProperty("TEST");
-        Calculatable<String> calc = Viewtify.calculate(p).filter(v -> v.contains("S"));
+        Calculatable<String> calc = Viewtify.calculate(p).take(v -> v.contains("S"));
         assert calc.get().equals("TEST");
 
         p.set("NOOO");
@@ -76,10 +76,10 @@ public class CalculatableTest {
     }
 
     @Test
-    public void flatMap() throws Exception {
+    public void calculateProperty() throws Exception {
         Nest nest = new Nest("TEST");
         ObjectProperty<Nest> p = new SimpleObjectProperty(nest);
-        Calculatable<String> calc = Viewtify.calculate(p).flatMap(v -> v.property);
+        Calculatable<String> calc = Viewtify.calculate(p).calculateProperty(v -> v.property);
         assert calc.get().equals("TEST");
 
         // change inner value
@@ -100,10 +100,10 @@ public class CalculatableTest {
     }
 
     @Test
-    public void flatVariable() throws Exception {
+    public void calculateVariable() throws Exception {
         Nest nest = new Nest("TEST");
         ObjectProperty<Nest> p = new SimpleObjectProperty(nest);
-        Calculatable<String> calc = Viewtify.calculate(p).flatVariable(v -> v.variable);
+        Calculatable<String> calc = Viewtify.calculate(p).calculateVariable(v -> v.variable);
         assert calc.get().equals("TEST");
 
         // change inner value
