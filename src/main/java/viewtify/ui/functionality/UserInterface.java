@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.ui;
+package viewtify.ui.functionality;
 
 /**
  * @version 2017/12/02 18:28:48

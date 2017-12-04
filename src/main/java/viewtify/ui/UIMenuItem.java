@@ -11,16 +11,19 @@ package viewtify.ui;
 
 import java.util.function.Consumer;
 
-import javafx.beans.value.ObservableValue;
+import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 
+import viewtify.ui.functionality.Disable;
+import viewtify.ui.functionality.Theme;
+
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UIMenuItem {
+public class UIMenuItem implements Theme<UIMenuItem, MenuItem>, Disable<UIMenuItem> {
 
     /** The actual ui. */
     public final MenuItem ui;
@@ -32,6 +35,22 @@ public class UIMenuItem {
      */
     UIMenuItem(MenuItem ui) {
         this.ui = ui;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public MenuItem ui() {
+        return ui;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Property<Boolean> disable() {
+        return ui.disableProperty();
     }
 
     /**
@@ -77,15 +96,5 @@ public class UIMenuItem {
      */
     public <T extends Event, A> UIMenuItem whenUserClick(Consumer<A> listener, A context) {
         return whenUserClick(e -> listener.accept(context));
-    }
-
-    /**
-     * Validation helper.
-     */
-    public UIMenuItem disableWhen(ObservableValue<? extends Boolean> condition) {
-        if (condition != null) {
-            ui.disableProperty().bind(condition);
-        }
-        return this;
     }
 }

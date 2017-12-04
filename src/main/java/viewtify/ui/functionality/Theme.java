@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.ui;
+package viewtify.ui.functionality;
 
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
@@ -17,7 +17,7 @@ import kiss.Variable;
 /**
  * @version 2017/12/02 18:19:15
  */
-public interface UIStylable<Self extends UIStylable, S extends Styleable> extends UserInterface<S> {
+public interface Theme<Self extends Theme, S extends Styleable> extends UserInterface<S> {
 
     /**
      * Apply single state class by the specified enum.

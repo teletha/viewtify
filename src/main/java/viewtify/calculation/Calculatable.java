@@ -9,19 +9,31 @@
  */
 package viewtify.calculation;
 
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javafx.beans.value.ObservableObjectValue;
 import javafx.beans.value.ObservableValue;
 
+import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
 
 /**
- * Adds monadic operations to {@link ObservableValue}.
+ * @version 2017/12/04 10:12:20
  */
 public interface Calculatable<T> extends ObservableObjectValue<T> {
+
+    /**
+     * Type filtering.
+     * 
+     * @param type
+     * @return
+     */
+    default <R> Calculatable<R> as(Class<R> type) {
+        return (Calculatable<R>) take(v -> type.isInstance(v));
+    }
 
     /**
      * Returns an {@code Variable} describing the value currently held by this ObservableValue, or
@@ -32,55 +44,10 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
     }
 
     /**
-     * Returns a new ObservableValue that holds the value held by this ObservableValue, or
-     * {@code other} when this ObservableValue is empty.
-     */
-    default Calculatable<T> or(T other) {
-        return Viewtify.calculate(this, () -> asVariable().or(other).v);
-    }
-
-    /**
-     * Returns a new ObservableValue that holds the value held by this ObservableValue, or the value
-     * held by {@code other} when this ObservableValue is empty.
-     */
-    default Calculatable<T> or(ObservableValue<T> other) {
-        return Viewtify.calculate(this, other, () -> asVariable().or(other::getValue).v);
-    }
-
-    /**
-     * Returns a new ObservableValue that holds the same value as this ObservableValue when the
-     * value satisfies the predicate and is empty when this ObservableValue is empty or its value
-     * does not satisfy the given predicate.
-     */
-    default Calculatable<T> filter(Predicate<T> condition) {
-        return Viewtify.calculate(this, () -> asVariable().is(condition, Function.identity()).v);
-    }
-
-    /**
-     * Returns a new ObservableValue that holds a mapping of the value held by this ObservableValue,
-     * and is empty when this ObservableValue is empty.
-     * 
-     * @param mapper function to map the value held by this ObservableValue.
-     */
-    default <R> Calculatable<R> map(Function<? super T, ? extends R> mapper) {
-        return Viewtify.calculate(this, () -> asVariable().map(mapper).v);
-    }
-
-    /**
-     * Returns a new ObservableValue that holds a mapping of the value held by this ObservableValue,
-     * and is empty when this ObservableValue is empty.
-     * 
-     * @param mapper function to map the value held by this ObservableValue.
-     */
-    default <R> Calculatable<R> flatVariable(Function<? super T, Variable<R>> mapper) {
-        return flatMap(v -> new VariableBinding(mapper.apply(v)));
-    }
-
-    /**
      * Returns a new ObservableValue that, when this ObservableValue holds value {@code x}, holds
      * the value held by {@code f(x)}, and is empty when this ObservableValue is empty.
      */
-    default <R> Calculatable<R> flatMap(Function<? super T, ObservableValue<R>> mapper) {
+    default <R> Calculatable<R> calculateProperty(Function<? super T, ObservableValue<R>> mapper) {
         return new Calculation<R>(this) {
 
             /** The latest mapper value. */
@@ -105,5 +72,90 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
                 }
             }
         };
+    }
+
+    /**
+     * Returns a new ObservableValue that holds a mapping of the value held by this ObservableValue,
+     * and is empty when this ObservableValue is empty.
+     * 
+     * @param mapper function to map the value held by this ObservableValue.
+     */
+    default <R> Calculatable<R> calculateVariable(Function<? super T, Variable<R>> mapper) {
+        return calculateProperty(v -> new VariableBinding(mapper.apply(v)));
+    }
+
+    /**
+     * Eqyality check.
+     * 
+     * @param active
+     * @return
+     */
+    default Calculatable<Boolean> is(T... values) {
+        return isNot(I.set(values));
+    }
+
+    /**
+     * Eqyality check.
+     * 
+     * @param active
+     * @return
+     */
+    default Calculatable<Boolean> is(Set<T> values) {
+        return map(v -> values.contains(v));
+    }
+
+    /**
+     * Eqyality check.
+     * 
+     * @param active
+     * @return
+     */
+    default Calculatable<Boolean> isNot(T... values) {
+        return isNot(I.set(values));
+    }
+
+    /**
+     * Eqyality check.
+     * 
+     * @param active
+     * @return
+     */
+    default Calculatable<Boolean> isNot(Set<T> values) {
+        return map(v -> !values.contains(v));
+    }
+
+    /**
+     * Returns a new ObservableValue that holds a mapping of the value held by this ObservableValue,
+     * and is empty when this ObservableValue is empty.
+     * 
+     * @param mapper function to map the value held by this ObservableValue.
+     */
+    default <R> Calculatable<R> map(Function<? super T, ? extends R> mapper) {
+        return Viewtify.calculate(this, () -> asVariable().map(mapper).v);
+    }
+
+    /**
+     * Returns a new ObservableValue that holds the value held by this ObservableValue, or
+     * {@code other} when this ObservableValue is empty.
+     */
+    default Calculatable<T> or(T other) {
+        return Viewtify.calculate(this, () -> asVariable().or(other).v);
+    }
+
+    /**
+     * Returns a new ObservableValue that holds the value held by this ObservableValue, or the value
+     * held by {@code other} when this ObservableValue is empty.
+     */
+    default Calculatable<T> or(ObservableValue<T> other) {
+        return Viewtify.calculate(this, other, () -> asVariable().or(other::getValue).v);
+    }
+
+    /**
+     * Returns a new ObservableValue that holds the same value as this ObservableValue when the
+     * value satisfies the predicate and is empty when this ObservableValue is empty or its value
+     * does not satisfy the given predicate.
+     */
+    default Calculatable<T> take(Predicate<T> condition) {
+        return Viewtify.calculate(this, () -> asVariable().is(condition, Function.identity()).v);
     }
 }

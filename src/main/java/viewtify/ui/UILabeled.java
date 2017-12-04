@@ -13,10 +13,12 @@ import java.util.Objects;
 
 import javafx.scene.control.Labeled;
 
+import viewtify.ui.functionality.Theme;
+
 /**
  * @version 2017/11/15 9:54:15
  */
-public interface UILabeled<Self extends UILabeled, W extends Labeled> extends UIStylable<Self, W> {
+public interface UILabeled<Self extends UILabeled, W extends Labeled> extends Theme<Self, W> {
 
     /**
      * Get text.

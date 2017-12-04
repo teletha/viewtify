@@ -39,11 +39,13 @@ import kiss.WiseBiConsumer;
 import kiss.WiseTriConsumer;
 import viewtify.View;
 import viewtify.Viewtify;
+import viewtify.ui.functionality.Disable;
+import viewtify.ui.functionality.Theme;
 
 /**
  * @version 2017/11/15 10:31:50
  */
-public class UI<Self extends UI, W extends Node> implements UIStylable<Self, W> {
+public class UI<Self extends UI, W extends Node> implements Theme<Self, W>, Disable<Self> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
@@ -74,6 +76,14 @@ public class UI<Self extends UI, W extends Node> implements UIStylable<Self, W> 
     @Override
     public W ui() {
         return ui;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Property<Boolean> disable() {
+        return ui.disableProperty();
     }
 
     /**
@@ -187,16 +197,6 @@ public class UI<Self extends UI, W extends Node> implements UIStylable<Self, W> 
             validations = new ValidationSupport();
         }
         return validations.invalidProperty();
-    }
-
-    /**
-     * Validation helper.
-     */
-    public Self disableWhen(ObservableValue<? extends Boolean> condition) {
-        if (condition != null) {
-            ui.disableProperty().bind(condition);
-        }
-        return (Self) this;
     }
 
     /**

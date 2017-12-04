@@ -17,7 +17,7 @@ import kiss.Variable;
 /**
  * @version 2017/12/03 20:01:46
  */
-class VariableBinding<V> extends ObjectBinding<V> {
+public class VariableBinding<V> extends ObjectBinding<V> {
 
     /** The variable delegator. */
     private final Variable<V> variable;
@@ -29,7 +29,7 @@ class VariableBinding<V> extends ObjectBinding<V> {
      * @param variable
      * @param listeners
      */
-    VariableBinding(Variable<V> variable) {
+    public VariableBinding(Variable<V> variable) {
         this.variable = variable;
         this.disposer = variable.observe().to(v -> invalidate());
     }
