@@ -41,8 +41,8 @@ import kiss.WiseFunction;
 import kiss.WiseSupplier;
 import kiss.WiseTriFunction;
 import viewtify.calculation.Calculatable;
-import viewtify.calculation.Calculation;
 import viewtify.calculation.CalculatableList;
+import viewtify.calculation.Calculation;
 import viewtify.ui.UI;
 
 /**
@@ -68,7 +68,7 @@ public final class Viewtify {
     });
 
     /** Executor for UI Thread. */
-    public static final Consumer<Runnable> UIThread = Platform::runLater;
+    public static final Consumer<Runnable> UIThread = Viewtify::inUI;
 
     /** Executor for Worker Thread. */
     public static final Consumer<Runnable> WorkerThread = pool::submit;
@@ -361,7 +361,11 @@ public final class Viewtify {
      * @param process
      */
     public static void inUI(Runnable process) {
-        Platform.runLater(process::run);
+        if (Platform.isFxApplicationThread()) {
+            process.run();
+        } else {
+            Platform.runLater(process::run);
+        }
     }
 
     /**
@@ -370,9 +374,13 @@ public final class Viewtify {
      * @param process
      */
     public static void inUI(Supplier<Disposable> process) {
-        Platform.runLater(() -> {
+        if (Platform.isFxApplicationThread()) {
             Terminator.add(process.get());
-        });
+        } else {
+            Platform.runLater(() -> {
+                Terminator.add(process.get());
+            });
+        }
     }
 
     /**

@@ -85,7 +85,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
     }
 
     /**
-     * Eqyality check.
+     * Equality check.
      * 
      * @param active
      * @return
@@ -95,7 +95,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
     }
 
     /**
-     * Eqyality check.
+     * Equality check.
      * 
      * @param active
      * @return
@@ -105,7 +105,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
     }
 
     /**
-     * Eqyality check.
+     * Equality check.
      * 
      * @param active
      * @return
@@ -115,13 +115,27 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
     }
 
     /**
-     * Eqyality check.
+     * Equality check.
      * 
      * @param active
      * @return
      */
     default Calculatable<Boolean> isNot(Set<T> values) {
         return map(v -> !values.contains(v));
+    }
+
+    /**
+     * Equality check.
+     */
+    default Calculatable<Boolean> isAbsent() {
+        return map(v -> v == null);
+    }
+
+    /**
+     * Equality check.
+     */
+    default Calculatable<Boolean> isPresent() {
+        return map(v -> v != null);
     }
 
     /**
@@ -132,6 +146,16 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      */
     default <R> Calculatable<R> map(Function<? super T, ? extends R> mapper) {
         return Viewtify.calculate(this, () -> asVariable().map(mapper).v);
+    }
+
+    /**
+     * Returns a new ObservableValue that holds a mapping of the value held by this ObservableValue,
+     * and is empty when this ObservableValue is empty.
+     * 
+     * @param mapper function to map the value held by this ObservableValue.
+     */
+    default <R> Calculatable<R> mapTo(R constant) {
+        return Viewtify.calculate(this, () -> constant);
     }
 
     /**

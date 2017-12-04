@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 
 import kiss.Variable;
+import viewtify.Viewtify;
 import viewtify.calculation.VariableBinding;
 
 /**
@@ -29,19 +30,21 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> exte
      */
     default <E extends Enum<E>> Self style(E state) {
         if (state != null) {
-            ObservableList<String> classes = ui().getStyleClass();
+            Viewtify.inUI(() -> {
+                ObservableList<String> classes = ui().getStyleClass();
 
-            for (Enum value : state.getClass().getEnumConstants()) {
-                String name = value.name();
+                for (Enum value : state.getClass().getEnumConstants()) {
+                    String name = value.name();
 
-                if (state == value) {
-                    if (!classes.contains(name)) {
-                        classes.add(name);
+                    if (state == value) {
+                        if (!classes.contains(name)) {
+                            classes.add(name);
+                        }
+                    } else {
+                        classes.remove(name);
                     }
-                } else {
-                    classes.remove(name);
                 }
-            }
+            });
         }
         return (Self) this;
     }
@@ -74,11 +77,13 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> exte
      */
     default <E extends Enum<E>> Self unstyle(Class<E> style) {
         if (style != null) {
-            ObservableList<String> classes = ui().getStyleClass();
+            Viewtify.inUI(() -> {
+                ObservableList<String> classes = ui().getStyleClass();
 
-            for (Enum value : style.getEnumConstants()) {
-                classes.remove(value.name());
-            }
+                for (Enum value : style.getEnumConstants()) {
+                    classes.remove(value.name());
+                }
+            });
         }
         return (Self) this;
     }

@@ -12,6 +12,7 @@ package viewtify.ui;
 import java.util.function.Function;
 
 import javafx.scene.Node;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
@@ -52,13 +53,16 @@ public class UITreeTableView<T> extends UI<UITreeTableView, TreeTableView<T>> {
     }
 
     /**
-     * Specifies whether the root {@code TreeItem} should be shown within this TreeTableView.
-     *
-     * @param value If true, the root TreeItem will be shown, and if false it will be hidden.
+     * <p>
+     * Specifies the selection mode to use in this selection model. The selection mode specifies how
+     * many items in the underlying data model can be selected at any one time.
+     * <p>
+     * By default, the selection mode is <code>SelectionMode.SINGLE</code>.
      */
-    public UITreeTableView<T> showRoot(boolean show) {
-        ui.setShowRoot(show);
-
+    public UITreeTableView<T> selectionMode(SelectionMode mode) {
+        if (mode != null) {
+            ui.getSelectionModel().setSelectionMode(mode);
+        }
         return this;
     }
 

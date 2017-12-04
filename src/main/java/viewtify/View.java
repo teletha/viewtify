@@ -12,6 +12,7 @@ package viewtify;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -51,7 +52,7 @@ public abstract class View implements Extensible {
         }
 
         // initialize user system lazily
-        Viewtify.inUI(this::init);
+        Platform.runLater(this::init);
     }
 
     /**
