@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.ui.functionality;
+package viewtify.ui.helper;
 
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
@@ -18,7 +18,7 @@ import viewtify.calculation.VariableBinding;
 /**
  * @version 2017/12/04 9:11:19
  */
-public interface Disable<Self extends Disable> {
+public interface DisableHelper<Self extends DisableHelper> {
 
     /**
      * Select disable property.

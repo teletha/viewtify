@@ -39,13 +39,13 @@ import kiss.WiseBiConsumer;
 import kiss.WiseTriConsumer;
 import viewtify.View;
 import viewtify.Viewtify;
-import viewtify.ui.functionality.Disable;
-import viewtify.ui.functionality.Theme;
+import viewtify.ui.helper.DisableHelper;
+import viewtify.ui.helper.StyleHelper;
 
 /**
  * @version 2017/11/15 10:31:50
  */
-public class UI<Self extends UI, W extends Node> implements Theme<Self, W>, Disable<Self> {
+public class UI<Self extends UI, W extends Node> implements StyleHelper<Self, W>, DisableHelper<Self> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();

@@ -7,17 +7,19 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.ui.functionality;
+package viewtify.ui.helper;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 
 import kiss.Variable;
+import viewtify.calculation.VariableBinding;
 
 /**
  * @version 2017/12/02 18:19:15
  */
-public interface Theme<Self extends Theme, S extends Styleable> extends UserInterface<S> {
+public interface StyleHelper<Self extends StyleHelper, S extends Styleable> extends UserInterface<S> {
 
     /**
      * Apply single state class by the specified enum.
@@ -51,7 +53,18 @@ public interface Theme<Self extends Theme, S extends Styleable> extends UserInte
      * @param state
      */
     default <E extends Enum<E>> Self style(Variable<E> state) {
-        return style(state.get());
+        return style(new VariableBinding<>(state));
+    }
+
+    /**
+     * Apply single state class by the specified enum.
+     * 
+     * @param node
+     * @param state
+     */
+    default <E extends Enum<E>> Self style(ObservableValue<E> state) {
+        state.addListener(o -> style(state.getValue()));
+        return (Self) this;
     }
 
     /**

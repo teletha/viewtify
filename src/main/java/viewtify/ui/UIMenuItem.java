@@ -17,13 +17,13 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 
-import viewtify.ui.functionality.Disable;
-import viewtify.ui.functionality.Theme;
+import viewtify.ui.helper.DisableHelper;
+import viewtify.ui.helper.StyleHelper;
 
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UIMenuItem implements Theme<UIMenuItem, MenuItem>, Disable<UIMenuItem> {
+public class UIMenuItem implements StyleHelper<UIMenuItem, MenuItem>, DisableHelper<UIMenuItem> {
 
     /** The actual ui. */
     public final MenuItem ui;

@@ -9,8 +9,11 @@
  */
 package viewtify.ui;
 
+import java.util.function.Function;
+
 import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.text.Text;
 
@@ -21,6 +24,9 @@ import viewtify.View;
  */
 public class UITreeTableView<T> extends UI<UITreeTableView, TreeTableView<T>> {
 
+    /** The root item. */
+    private final UITreeItem root;
+
     /**
      * Enchanced view.
      * 
@@ -28,26 +34,20 @@ public class UITreeTableView<T> extends UI<UITreeTableView, TreeTableView<T>> {
      */
     private UITreeTableView(TreeTableView<T> ui, View view) {
         super(ui, view);
+
+        TreeItem item = new TreeItem();
+        ui.setRoot(item);
+        ui.setShowRoot(false);
+
+        root = new UITreeItem(item);
     }
 
-    public UITreeTableView placeholder(String text) {
+    public UITreeTableView<T> placeholder(String text) {
         return placeholder(new Text(text));
     }
 
-    public UITreeTableView placeholder(Node node) {
+    public UITreeTableView<T> placeholder(Node node) {
         ui.setPlaceholder(node);
-        return this;
-    }
-
-    /**
-     * Sets the root node in this TreeTableView. See the {@link TreeItem} class level documentation
-     * for more details.
-     *
-     * @param value The {@link TreeItem} that will be placed at the root of the TreeTableView.
-     */
-    public UITreeTableView root(TreeItem<T> value) {
-        ui.setRoot(value);
-
         return this;
     }
 
@@ -56,9 +56,28 @@ public class UITreeTableView<T> extends UI<UITreeTableView, TreeTableView<T>> {
      *
      * @param value If true, the root TreeItem will be shown, and if false it will be hidden.
      */
-    public UITreeTableView showRoot(boolean show) {
+    public UITreeTableView<T> showRoot(boolean show) {
         ui.setShowRoot(show);
 
         return this;
+    }
+
+    /**
+     * Specifies ROW renderer.
+     */
+    public UITreeTableView<T> render(Function<UITreeTableView<T>, TreeTableRow<T>> renderer) {
+        ui.setRowFactory(table -> renderer.apply(this));
+
+        return this;
+    }
+
+    /**
+     * Add item to root child.
+     * 
+     * @param item
+     * @return
+     */
+    public <R> UITreeItem<R> createItem(R item) {
+        return root.createItem(item);
     }
 }
