@@ -45,6 +45,7 @@ import kiss.WiseTriFunction;
 import viewtify.calculation.Calculatable;
 import viewtify.calculation.CalculatableList;
 import viewtify.calculation.Calculation;
+import viewtify.calculation.ListCalculation;
 import viewtify.ui.UI;
 
 /**
@@ -237,13 +238,22 @@ public final class Viewtify {
     }
 
     /**
-     * Binding utility for {@link ObservableList}.
+     * Binding utility for {@link CalculatableList}.
      * 
      * @param list A {@link ObservableList} source to bind.
      * @return A binding builder.
      */
-    public static final <E> CalculatableList<E> calculate(ObservableList<E> list) {
-        return new CalculatableList<>(list);
+    public static <E> CalculatableList<E> calculate(ObservableList<E> list) {
+        return new ListCalculation<E, E>(list) {
+    
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            protected ObservableList<E> computeValue() {
+                return list;
+            }
+        };
     }
 
     /**
