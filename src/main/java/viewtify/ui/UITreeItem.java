@@ -11,8 +11,9 @@ package viewtify.ui;
 
 import java.util.function.Function;
 
-import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableView;
 
 import kiss.Signal;
 import viewtify.Viewtify;
@@ -22,6 +23,8 @@ import viewtify.Viewtify;
  */
 public class UITreeItem<T> {
 
+    private final TreeTableView<T> table;
+
     /** The actual tree item. */
     private final TreeItem<T> ui;
 
@@ -30,7 +33,8 @@ public class UITreeItem<T> {
      * 
      * @param item
      */
-    UITreeItem(TreeItem item) {
+    UITreeItem(TreeTableView<T> table, TreeItem item) {
+        this.table = table;
         this.ui = item;
     }
 
@@ -39,7 +43,8 @@ public class UITreeItem<T> {
      * 
      * @param value
      */
-    private UITreeItem(T value) {
+    private UITreeItem(TreeTableView<T> table, T value) {
+        this.table = table;
         this.ui = new TreeItem<>(value);
     }
 
@@ -59,7 +64,7 @@ public class UITreeItem<T> {
      * @return A created item.
      */
     public <R extends T> UITreeItem<R> createItem(R value) {
-        UITreeItem child = new UITreeItem(value);
+        UITreeItem child = new UITreeItem(table, value);
         ui.getChildren().add(child.ui);
 
         return child;
@@ -88,7 +93,18 @@ public class UITreeItem<T> {
      * @return
      */
     public UITreeItem<T> removeWhen(Signal timing) {
-        timing.take(1).on(Viewtify.UIThread).to(() -> ui.getParent().getChildren().remove(ui));
+        timing.take(1).on(Viewtify.UIThread).to(() -> {
+            // if this item is selected, clear selection too
+            for (int index : table.getSelectionModel().getSelectedIndices()) {
+                if (table.getTreeItem(index) == ui) {
+                    table.getSelectionModel().clearSelection(index);
+                    break;
+                }
+            }
+
+            // remove from tree item model
+            ui.getParent().getChildren().remove(ui);
+        });
 
         return this;
     }
@@ -106,21 +122,9 @@ public class UITreeItem<T> {
     /**
      * Remove this item from parent when this item has no child.
      * 
-     * @param timing
      * @return
      */
     public UITreeItem<T> removeWhenEmpty() {
-        ui.getChildren().addListener((ListChangeListener) c -> {
-            while (c.next()) {
-                if (c.wasRemoved()) {
-                    if (ui.getChildren().isEmpty()) {
-                        Viewtify.inUI(() -> {
-                            ui.getParent().getChildren().remove(ui);
-                        });
-                    }
-                }
-            }
-        });
-        return this;
+        return removeWhen(Viewtify.signal(ui.getChildren()).take(Change::wasRemoved).take(c -> ui.getChildren().isEmpty()));
     }
 }

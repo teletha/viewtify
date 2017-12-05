@@ -28,6 +28,8 @@ import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Control;
 import javafx.stage.Stage;
@@ -213,11 +215,25 @@ public final class Viewtify {
     }
 
     /**
-     * @param sub
-     * @param object
+     * Observe list change evnet.
+     * 
+     * @param list
+     * @return
      */
-    public static <E> Signal<E> signal(ObservableList<E> list) {
-        return null;
+    public static <E> Signal<Change<? extends E>> signal(ObservableList<E> list) {
+        return new Signal<>((observer, disposer) -> {
+            ListChangeListener<E> listener = change -> {
+                while (change.next()) {
+                    observer.accept(change);
+                }
+            };
+
+            list.addListener(listener);
+
+            return disposer.add(() -> {
+                list.removeListener(listener);
+            });
+        });
     }
 
     /**

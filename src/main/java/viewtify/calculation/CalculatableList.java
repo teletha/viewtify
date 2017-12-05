@@ -13,11 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
@@ -46,6 +48,33 @@ public class CalculatableList<E> {
      */
     public CalculatableList(ObservableList<E> list) {
         this.list = list;
+    }
+
+    public <R> CalculatableList<R> as(Class<R> type) {
+        return (CalculatableList<R>) this;
+    }
+
+    public ObservableList<E> asList() {
+        return FXCollections.observableList(collect(Collectors.toList()).get());
+    }
+
+    /**
+     * @param active
+     * @return
+     */
+    public Calculatable<Boolean> has(E value) {
+        return new ListCalculation<Boolean>(l -> l.contains(value));
+    }
+
+    /**
+     * @return
+     */
+    public Calculatable<Boolean> isEmpty() {
+        return new ListCalculation<Boolean>(List<E>::isEmpty);
+    }
+
+    public Calculatable<Boolean> isNot(E value) {
+        return new ListCalculation<Boolean>(l -> !l.contains(value));
     }
 
     /**
@@ -77,7 +106,8 @@ public class CalculatableList<E> {
      * @return
      */
     public <R> CalculatableList<R> flatVariable(Function<E, Variable<R>> mapper) {
-        return new CalculatableList<>(new MappedList<>(list, e -> mapper.apply(e).v));
+        extractors.add(e -> new VariableBinding(mapper.apply(e)));
+        return new ListCalculation<>(e -> mapper.apply(e).v);
     }
 
     /**

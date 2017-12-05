@@ -256,18 +256,10 @@ public class UI<Self extends UI, W extends Node> implements StyleHelper<Self, W>
      * 
      * @return
      */
-    public static final UIContextMenu contextMenu() {
-        return new UIContextMenu(new ContextMenu());
-    }
-
-    /**
-     * Create new menu item.
-     * 
-     * @return
-     */
     public static final UIContextMenu contextMenu(Consumer<UIContextMenu> builder) {
         UIContextMenu menu = new UIContextMenu(new ContextMenu());
         builder.accept(menu);
+
         return menu;
     }
 

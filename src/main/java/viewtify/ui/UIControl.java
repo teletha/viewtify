@@ -1,0 +1,44 @@
+/*
+ * Copyright (C) 2017 Nameless Production Committee
+ *
+ * Licensed under the MIT License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *          http://opensource.org/licenses/mit-license.php
+ */
+package viewtify.ui;
+
+import java.util.function.Consumer;
+
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Control;
+
+import viewtify.View;
+
+/**
+ * @version 2017/12/05 16:14:25
+ */
+public class UIControl<Self extends UIControl, W extends Control> extends UI<Self, W> {
+
+    private UIContextMenu context;
+
+    /**
+     * @param ui
+     * @param view
+     */
+    protected UIControl(W ui, View view) {
+        super(ui, view);
+    }
+
+    public Self context(Consumer<UIContextMenu> builder) {
+        if (context == null) {
+            ContextMenu root = new ContextMenu();
+            ui.setContextMenu(root);
+
+            context = new UIContextMenu(root);
+            builder.accept(context);
+        }
+        return (Self) this;
+    }
+}

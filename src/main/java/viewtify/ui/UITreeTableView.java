@@ -19,11 +19,13 @@ import javafx.scene.control.TreeTableView;
 import javafx.scene.text.Text;
 
 import viewtify.View;
+import viewtify.Viewtify;
+import viewtify.calculation.CalculatableList;
 
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UITreeTableView<T> extends UI<UITreeTableView, TreeTableView<T>> {
+public class UITreeTableView<T> extends UIControl<UITreeTableView, TreeTableView<T>> {
 
     /** The root item. */
     private final UITreeItem root;
@@ -40,7 +42,11 @@ public class UITreeTableView<T> extends UI<UITreeTableView, TreeTableView<T>> {
         ui.setRoot(item);
         ui.setShowRoot(false);
 
-        root = new UITreeItem(item);
+        root = new UITreeItem(ui, item);
+
+        ui.setOnContextMenuRequested(e -> {
+            System.out.println(e);
+        });
     }
 
     public UITreeTableView<T> placeholder(String text) {
@@ -83,5 +89,14 @@ public class UITreeTableView<T> extends UI<UITreeTableView, TreeTableView<T>> {
      */
     public <R> UITreeItem<R> createItem(R item) {
         return root.createItem(item);
+    }
+
+    /**
+     * Get all selected values.
+     * 
+     * @return
+     */
+    public CalculatableList<T> getSelected() {
+        return Viewtify.calculate(ui.getSelectionModel().getSelectedItems()).map(item -> item.getValue());
     }
 }
