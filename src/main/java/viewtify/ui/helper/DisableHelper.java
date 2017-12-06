@@ -13,7 +13,7 @@ import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 
 import kiss.Variable;
-import viewtify.VariableBinding;
+import viewtify.Viewtify;
 
 /**
  * @version 2017/12/04 9:11:19
@@ -31,7 +31,7 @@ public interface DisableHelper<Self extends DisableHelper> {
      * Validation helper.
      */
     default Self disableWhen(Variable<? extends Boolean> condition) {
-        return disableWhen(new VariableBinding<>(condition));
+        return disableWhen(Viewtify.calculate(condition));
     }
 
     /**

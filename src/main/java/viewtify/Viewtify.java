@@ -38,6 +38,7 @@ import filer.Filer;
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
+import kiss.Variable;
 import kiss.WiseBiFunction;
 import kiss.WiseFunction;
 import kiss.WiseSupplier;
@@ -234,13 +235,37 @@ public final class Viewtify {
     }
 
     /**
-     * Binding utility for {@link CalculatableList}.
+     * Binding utility for {@link CalculationList}.
      * 
      * @param list A {@link ObservableList} source to bind.
      * @return A binding builder.
      */
-    public static <E> CalculatableList<E> calculate(ObservableList<E> list) {
-        return new CalculatableList<E>(list) {
+    public static <E> Calculation<E> calculate(Variable<E> variable) {
+        return new Calculation<E>(variable::get) {
+
+            /** The binding disposer. */
+            private final Disposable disposer = variable.observe().to(v -> invalidate());
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void dispose() {
+                super.dispose();
+
+                disposer.dispose();
+            }
+        };
+    }
+
+    /**
+     * Binding utility for {@link CalculationList}.
+     * 
+     * @param list A {@link ObservableList} source to bind.
+     * @return A binding builder.
+     */
+    public static <E> CalculationList<E> calculate(ObservableList<E> list) {
+        return new CalculationList<E>(list) {
 
             /**
              * {@inheritDoc}
@@ -253,30 +278,30 @@ public final class Viewtify {
     }
 
     /**
-     * Create {@link Calculatable}.
+     * Create {@link Calculation}.
      * 
      * @param o1 A {@link Observable} target.
      * @param calculation A calculation.
      * @return A lazy evaluated calculation.
      */
-    public static final <E> Calculatable<E> calculate(Observable o1, WiseSupplier<E> calculation) {
+    public static final <E> Calculation<E> calculate(Observable o1, WiseSupplier<E> calculation) {
         return calculate(o1, null, calculation);
     }
 
     /**
-     * Create {@link Calculatable}.
+     * Create {@link Calculation}.
      * 
      * @param o1 A {@link Observable} target.
      * @param o2 A {@link Observable} target.
      * @param calculation A calculation.
      * @return A lazy evaluated calculation.
      */
-    public static final <E> Calculatable<E> calculate(Observable o1, Observable o2, WiseSupplier<E> calculation) {
+    public static final <E> Calculation<E> calculate(Observable o1, Observable o2, WiseSupplier<E> calculation) {
         return calculate(o1, o2, null, calculation);
     }
 
     /**
-     * Create {@link Calculatable}.
+     * Create {@link Calculation}.
      * 
      * @param o1 A {@link Observable} target.
      * @param o2 A {@link Observable} target.
@@ -284,12 +309,12 @@ public final class Viewtify {
      * @param calculation A calculation.
      * @return A lazy evaluated calculation.
      */
-    public static final <E> Calculatable<E> calculate(Observable o1, Observable o2, Observable o3, WiseSupplier<E> calculation) {
+    public static final <E> Calculation<E> calculate(Observable o1, Observable o2, Observable o3, WiseSupplier<E> calculation) {
         return calculate(o1, o2, o3, null, calculation);
     }
 
     /**
-     * Create {@link Calculatable}.
+     * Create {@link Calculation}.
      * 
      * @param o1 A {@link Observable} target.
      * @param o2 A {@link Observable} target.
@@ -298,54 +323,45 @@ public final class Viewtify {
      * @param calculation A calculation.
      * @return A lazy evaluated calculation.
      */
-    public static final <E> Calculatable<E> calculate(Observable o1, Observable o2, Observable o3, Observable o4, WiseSupplier<E> calculation) {
-        return new Calculatable<E>(o1, o2, o3, o4) {
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected E calculate() {
-                return calculation.get();
-            }
-        };
+    public static final <E> Calculation<E> calculate(Observable o1, Observable o2, Observable o3, Observable o4, WiseSupplier<E> calculation) {
+        return new Calculation<E>(calculation::get, o1, o2, o3, o4);
     }
 
     /**
-     * Create {@link Calculatable}.
+     * Create {@link Calculation}.
      * 
      * @param o1 A {@link Observable} target.
      * @return A lazy evaluated calculation.
      */
-    public static final <A> Calculatable<A> calculate(ObservableValue<A> o1) {
+    public static final <A> Calculation<A> calculate(ObservableValue<A> o1) {
         return calculate(o1, () -> o1.getValue());
     }
 
     /**
-     * Create {@link Calculatable}.
+     * Create {@link Calculation}.
      * 
      * @param o1 A {@link Observable} target.
      * @param calculation A calculation.
      * @return A lazy evaluated calculation.
      */
-    public static final <A, R> Calculatable<R> calculate(ObservableValue<A> o1, WiseFunction<A, R> calculator) {
+    public static final <A, R> Calculation<R> calculate(ObservableValue<A> o1, WiseFunction<A, R> calculator) {
         return calculate(o1, () -> calculator.apply(o1.getValue()));
     }
 
     /**
-     * Create {@link Calculatable}.
+     * Create {@link Calculation}.
      * 
      * @param o1 A {@link Observable} target.
      * @param o2 A {@link Observable} target.
      * @param calculation A calculation.
      * @return A lazy evaluated calculation.
      */
-    public static final <A, B, R> Calculatable<R> calculate(ObservableValue<A> o1, ObservableValue<B> o2, WiseBiFunction<A, B, R> calculator) {
+    public static final <A, B, R> Calculation<R> calculate(ObservableValue<A> o1, ObservableValue<B> o2, WiseBiFunction<A, B, R> calculator) {
         return calculate(o1, o2, () -> calculator.apply(o1.getValue(), o2.getValue()));
     }
 
     /**
-     * Create {@link Calculatable}.
+     * Create {@link Calculation}.
      * 
      * @param o1 A {@link Observable} target.
      * @param o2 A {@link Observable} target.
@@ -353,7 +369,7 @@ public final class Viewtify {
      * @param calculation A calculation.
      * @return A lazy evaluated calculation.
      */
-    public static final <A, B, C, R> Calculatable<R> calculate(ObservableValue<A> o1, ObservableValue<B> o2, ObservableValue<C> o3, WiseTriFunction<A, B, C, R> calculator) {
+    public static final <A, B, C, R> Calculation<R> calculate(ObservableValue<A> o1, ObservableValue<B> o2, ObservableValue<C> o3, WiseTriFunction<A, B, C, R> calculator) {
         return calculate(o1, o2, o3, () -> calculator.apply(o1.getValue(), o2.getValue(), o3.getValue()));
     }
 
@@ -432,5 +448,4 @@ public final class Viewtify {
     public static UI wrap(Control ui, View view) {
         return new UI(ui, view);
     }
-
 }

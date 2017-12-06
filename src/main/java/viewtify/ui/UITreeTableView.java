@@ -18,7 +18,7 @@ import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.text.Text;
 
-import viewtify.CalculatableList;
+import viewtify.CalculationList;
 import viewtify.View;
 import viewtify.Viewtify;
 
@@ -96,7 +96,7 @@ public class UITreeTableView<T> extends UIControl<UITreeTableView, TreeTableView
      * 
      * @return
      */
-    public CalculatableList<T> getSelected() {
+    public CalculationList<T> getSelected() {
         return Viewtify.calculate(ui.getSelectionModel().getSelectedItems()).map(item -> item.getValue());
     }
 }

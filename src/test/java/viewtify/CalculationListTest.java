@@ -17,19 +17,16 @@ import javafx.collections.ObservableList;
 import org.junit.Test;
 
 import kiss.Variable;
-import viewtify.Calculatable;
-import viewtify.CalculatableList;
-import viewtify.Viewtify;
 
 /**
  * @version 2017/12/05 23:45:03
  */
-public class CalculatableListTest {
+public class CalculationListTest {
 
     @Test
     public void map() throws Exception {
         ObservableList<String> source = FXCollections.observableArrayList("one", "two", "three");
-        CalculatableList<String> result = Viewtify.calculate(source).map(v -> v.toUpperCase());
+        CalculationList<String> result = Viewtify.calculate(source).map(v -> v.toUpperCase());
         assert result.size() == 3;
         assert result.get().get(0).equals("ONE");
         assert result.get().get(1).equals("TWO");
@@ -49,7 +46,7 @@ public class CalculatableListTest {
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
         ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
-        CalculatableList<String> result = Viewtify.calculate(source).flatObservable(v -> v.property);
+        CalculationList<String> result = Viewtify.calculate(source).flatObservable(v -> v.property);
         assert result.size() == 3;
         assert result.get().get(0).equals("one");
         assert result.get().get(1).equals("two");
@@ -87,7 +84,7 @@ public class CalculatableListTest {
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
         ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
-        CalculatableList<String> result = Viewtify.calculate(source).flatObservable(v -> v.property).map(String::toUpperCase);
+        CalculationList<String> result = Viewtify.calculate(source).flatObservable(v -> v.property).map(String::toUpperCase);
         assert result.size() == 3;
         assert result.get().get(0).equals("ONE");
         assert result.get().get(1).equals("TWO");
@@ -125,7 +122,7 @@ public class CalculatableListTest {
         Value<Integer> v2 = Value.of(2);
         Value<Integer> v3 = Value.of(3);
         ObservableList<Value<Integer>> source = FXCollections.observableArrayList(v1, v2, v3);
-        Calculatable<Integer> result = Viewtify.calculate(source).flatObservable(v -> v.property).reduce(0, (p, q) -> p + q);
+        Calculation<Integer> result = Viewtify.calculate(source).flatObservable(v -> v.property).reduce(0, (p, q) -> p + q);
         assert result.get() == 6;
 
         // add to source list
@@ -148,7 +145,7 @@ public class CalculatableListTest {
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
         ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
-        CalculatableList<String> result = Viewtify.calculate(source).flatVariable(v -> v.variable);
+        CalculationList<String> result = Viewtify.calculate(source).flatVariable(v -> v.variable);
         assert result.size() == 3;
         assert result.get().get(0).equals("one");
         assert result.get().get(1).equals("two");
@@ -186,7 +183,7 @@ public class CalculatableListTest {
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
         ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
-        CalculatableList<String> result = Viewtify.calculate(source).flatVariable(v -> v.variable).map(String::toUpperCase);
+        CalculationList<String> result = Viewtify.calculate(source).flatVariable(v -> v.variable).map(String::toUpperCase);
         assert result.size() == 3;
         assert result.get().get(0).equals("ONE");
         assert result.get().get(1).equals("TWO");
@@ -224,14 +221,12 @@ public class CalculatableListTest {
         Value<Integer> v2 = Value.of(2);
         Value<Integer> v3 = Value.of(3);
         ObservableList<Value<Integer>> source = FXCollections.observableArrayList(v1, v2, v3);
-        Calculatable<Integer> result = Viewtify.calculate(source).flatVariable(v -> v.variable).reduce(0, (p, q) -> p + q);
+        Calculation<Integer> result = Viewtify.calculate(source).flatVariable(v -> v.variable).reduce(0, (p, q) -> p + q);
         assert result.get() == 6;
 
         // add to source list
         Value<Integer> v4 = Value.of(4);
         source.add(v4);
-        assert result.get() == 10;
-        assert result.get() == 10;
         assert result.get() == 10;
 
         // change on source list

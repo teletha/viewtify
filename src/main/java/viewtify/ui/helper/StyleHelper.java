@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 
 import kiss.Variable;
-import viewtify.VariableBinding;
 import viewtify.Viewtify;
 
 /**
@@ -56,7 +55,7 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> exte
      * @param state
      */
     default <E extends Enum<E>> Self style(Variable<E> state) {
-        return style(new VariableBinding<>(state));
+        return style(Viewtify.calculate(state));
     }
 
     /**
