@@ -9,6 +9,8 @@
  */
 package viewtify;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
@@ -18,10 +20,6 @@ import java.util.function.Supplier;
 import javafx.beans.Observable;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import com.sun.javafx.collections.ImmutableObservableList;
 
 import kiss.I;
 import kiss.Variable;
@@ -41,9 +39,20 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param calculation
      * @param dependencies
      */
-    protected Calculation(Supplier calculation, Observable... dependencies) {
+    protected Calculation(Supplier calculation, Calculation outer, Observable... dependencies) {
         this.calculation = calculation;
-        bind(this.dependencies = I.signal(dependencies).skipNull().toList().toArray(new Observable[0]));
+
+        List<Observable> list = new ArrayList();
+        if (outer != null) {
+            list.add(outer);
+        }
+
+        for (Observable observable : dependencies) {
+            if (observable != null) {
+                list.add(observable);
+            }
+        }
+        bind(this.dependencies = list.toArray(new Observable[list.size()]));
     }
 
     /**
@@ -60,16 +69,6 @@ public class Calculation<T> extends ObjectBinding<T> {
     @Override
     public void dispose() {
         unbind(dependencies);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final ObservableList<?> getDependencies() {
-        return ((dependencies == null) || (dependencies.length == 0)) ? FXCollections.emptyObservableList()
-                : (dependencies.length == 1) ? FXCollections.singletonObservableList(dependencies[0])
-                        : new ImmutableObservableList<Observable>(dependencies);
     }
 
     /**
@@ -155,6 +154,35 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param active
      * @return
      */
+    public Calculation<Boolean> is(ObservableValue<T>... values) {
+        return new Calculation<>(() -> {
+            T now = get();
+
+            for (ObservableValue<T> value : values) {
+                if (Objects.equals(now, value.getValue())) {
+                    return true;
+                }
+            }
+            return false;
+        }, this, values);
+    }
+
+    /**
+     * Equality check.
+     * 
+     * @param active
+     * @return
+     */
+    public Calculation<Boolean> is(Variable<T>... values) {
+        return is(Viewtify.calculate(values));
+    }
+
+    /**
+     * Equality check.
+     * 
+     * @param active
+     * @return
+     */
     public Calculation<Boolean> isNot(T... values) {
         return isNot(I.set(values));
     }
@@ -167,6 +195,35 @@ public class Calculation<T> extends ObjectBinding<T> {
      */
     public Calculation<Boolean> isNot(Set<T> values) {
         return map(v -> !values.contains(v));
+    }
+
+    /**
+     * Equality check.
+     * 
+     * @param active
+     * @return
+     */
+    public Calculation<Boolean> isNot(ObservableValue<T>... values) {
+        return new Calculation<>(() -> {
+            T now = get();
+
+            for (ObservableValue<T> value : values) {
+                if (Objects.equals(now, value.getValue())) {
+                    return false;
+                }
+            }
+            return true;
+        }, this, values);
+    }
+
+    /**
+     * Equality check.
+     * 
+     * @param active
+     * @return
+     */
+    public Calculation<Boolean> isNot(Variable<T>... values) {
+        return isNot(Viewtify.calculate(values));
     }
 
     /**

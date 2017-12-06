@@ -235,13 +235,13 @@ public final class Viewtify {
     }
 
     /**
-     * Binding utility for {@link CalculationList}.
+     * Create {@link Calculation} from {@link Variable}.
      * 
-     * @param list A {@link ObservableList} source to bind.
-     * @return A binding builder.
+     * @param variable A {@link Variable}.
+     * @return A new created {@link Calculation}.
      */
     public static <E> Calculation<E> calculate(Variable<E> variable) {
-        return new Calculation<E>(variable::get) {
+        return new Calculation<E>(variable::get, null) {
 
             /** The binding disposer. */
             private final Disposable disposer = variable.observe().to(v -> invalidate());
@@ -256,6 +256,21 @@ public final class Viewtify {
                 disposer.dispose();
             }
         };
+    }
+
+    /**
+     * Create {@link Calculation} from {@link Variable}.
+     * 
+     * @param variables A list of {@link Variable}.
+     * @return A new created {@link Calculation} list.
+     */
+    public static <E> Calculation<E>[] calculate(Variable<E>... variables) {
+        Calculation<E>[] calculations = new Calculation[variables.length];
+
+        for (int i = 0; i < calculations.length; i++) {
+            calculations[i] = calculate(variables[i]);
+        }
+        return calculations;
     }
 
     /**
@@ -324,7 +339,7 @@ public final class Viewtify {
      * @return A lazy evaluated calculation.
      */
     public static final <E> Calculation<E> calculate(Observable o1, Observable o2, Observable o3, Observable o4, WiseSupplier<E> calculation) {
-        return new Calculation<E>(calculation::get, o1, o2, o3, o4);
+        return new Calculation<E>(calculation::get, null, o1, o2, o3, o4);
     }
 
     /**

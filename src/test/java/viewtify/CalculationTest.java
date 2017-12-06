@@ -11,8 +11,10 @@ package viewtify;
 
 import java.util.Map;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -124,6 +126,62 @@ public class CalculationTest {
     }
 
     @Test
+    public void isObservable() throws Exception {
+        IntegerProperty source = new SimpleIntegerProperty(10);
+        IntegerProperty tester1 = new SimpleIntegerProperty(10);
+        IntegerProperty tester2 = new SimpleIntegerProperty(20);
+
+        Calculation<Boolean> calculation = Viewtify.calculate(source).is(tester1, tester2);
+        assert calculation.get() == true;
+        assert calculation.isValid() == true;
+
+        // change on soruce
+        source.set(15);
+        assert calculation.isValid() == false;
+        assert calculation.get() == false;
+        assert calculation.isValid() == true;
+
+        source.set(20);
+        assert calculation.isValid() == false;
+        assert calculation.get() == true;
+        assert calculation.isValid() == true;
+
+        // change on tester
+        tester2.set(30);
+        assert calculation.isValid() == false;
+        assert calculation.get() == false;
+        assert calculation.isValid() == true;
+    }
+
+    @Test
+    public void isVariable() throws Exception {
+        Variable<Integer> source = Variable.of(10);
+        Variable<Integer> tester1 = Variable.of(10);
+        Variable<Integer> tester2 = Variable.of(20);
+
+        Calculation<Boolean> calculation = Viewtify.calculate(source).is(tester1, tester2);
+        assert calculation.get() == true;
+        assert calculation.isValid() == true;
+
+        // change on soruce
+        source.set(15);
+        assert calculation.isValid() == false;
+        assert calculation.get() == false;
+        assert calculation.isValid() == true;
+
+        source.set(20);
+        assert calculation.isValid() == false;
+        assert calculation.get() == true;
+        assert calculation.isValid() == true;
+
+        // change on tester
+        tester2.set(30);
+        assert calculation.isValid() == false;
+        assert calculation.get() == false;
+        assert calculation.isValid() == true;
+    }
+
+    @Test
     public void isNot() throws Exception {
         Variable<Integer> variable = Variable.of(10);
 
@@ -158,6 +216,62 @@ public class CalculationTest {
         variable.set(20);
         assert calculation.isValid() == false;
         assert calculation.get() == false;
+        assert calculation.isValid() == true;
+    }
+
+    @Test
+    public void isNotObservable() throws Exception {
+        IntegerProperty source = new SimpleIntegerProperty(10);
+        IntegerProperty tester1 = new SimpleIntegerProperty(10);
+        IntegerProperty tester2 = new SimpleIntegerProperty(20);
+
+        Calculation<Boolean> calculation = Viewtify.calculate(source).isNot(tester1, tester2);
+        assert calculation.get() == false;
+        assert calculation.isValid() == true;
+
+        // change on soruce
+        source.set(15);
+        assert calculation.isValid() == false;
+        assert calculation.get() == true;
+        assert calculation.isValid() == true;
+
+        source.set(20);
+        assert calculation.isValid() == false;
+        assert calculation.get() == false;
+        assert calculation.isValid() == true;
+
+        // change on tester
+        tester2.set(30);
+        assert calculation.isValid() == false;
+        assert calculation.get() == true;
+        assert calculation.isValid() == true;
+    }
+
+    @Test
+    public void isNotVariable() throws Exception {
+        Variable<Integer> source = Variable.of(10);
+        Variable<Integer> tester1 = Variable.of(10);
+        Variable<Integer> tester2 = Variable.of(20);
+
+        Calculation<Boolean> calculation = Viewtify.calculate(source).isNot(tester1, tester2);
+        assert calculation.get() == false;
+        assert calculation.isValid() == true;
+
+        // change on soruce
+        source.set(15);
+        assert calculation.isValid() == false;
+        assert calculation.get() == true;
+        assert calculation.isValid() == true;
+
+        source.set(20);
+        assert calculation.isValid() == false;
+        assert calculation.get() == false;
+        assert calculation.isValid() == true;
+
+        // change on tester
+        tester2.set(30);
+        assert calculation.isValid() == false;
+        assert calculation.get() == true;
         assert calculation.isValid() == true;
     }
 

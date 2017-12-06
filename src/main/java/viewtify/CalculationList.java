@@ -110,7 +110,7 @@ public abstract class CalculationList<E> extends ListBinding<E> {
     }
 
     public Calculation<Boolean> isNot(E value) {
-        return new Calculation<Boolean>(() -> get().contains(value), this);
+        return new Calculation<Boolean>(() -> get().contains(value), null, this);
     }
 
     public <R> CalculationList<R> map(Function<E, R> mapper) {
@@ -151,7 +151,7 @@ public abstract class CalculationList<E> extends ListBinding<E> {
      * @return
      */
     public <R> Calculation<R> reduce(R init, WiseBiFunction<R, E, R> accumulator) {
-        return new Calculation<R>(() -> I.signal(this).scan(init, accumulator).to().v, this);
+        return new Calculation<R>(() -> I.signal(this).scan(init, accumulator).to().v, null, this);
     }
 
     /**
