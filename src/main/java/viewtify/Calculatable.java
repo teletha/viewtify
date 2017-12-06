@@ -7,23 +7,69 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.calculation;
+package viewtify;
 
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import javafx.beans.value.ObservableObjectValue;
+import javafx.beans.Observable;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import com.sun.javafx.collections.ImmutableObservableList;
 
 import kiss.I;
 import kiss.Variable;
-import viewtify.Viewtify;
 
 /**
- * @version 2017/12/04 10:12:20
+ * @version 2017/12/06 13:25:40
  */
-public interface Calculatable<T> extends ObservableObjectValue<T> {
+public abstract class Calculatable<T> extends ObjectBinding<T> {
+
+    /** Store for {@link #dispose()}. */
+    private final Observable[] dependencies;
+
+    /**
+     * @param dependencies
+     */
+    public Calculatable(Observable... dependencies) {
+        bind(this.dependencies = I.signal(dependencies).skipNull().toList().toArray(new Observable[0]));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        unbind(dependencies);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected final T computeValue() {
+        try {
+            return calculate();
+        } catch (Throwable e) {
+            return null;
+        }
+    }
+
+    protected abstract T calculate();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final ObservableList<?> getDependencies() {
+        return ((dependencies == null) || (dependencies.length == 0)) ? FXCollections.emptyObservableList()
+                : (dependencies.length == 1) ? FXCollections.singletonObservableList(dependencies[0])
+                        : new ImmutableObservableList<Observable>(dependencies);
+    }
 
     /**
      * Type filtering.
@@ -31,7 +77,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * @param type
      * @return
      */
-    default <R> Calculatable<R> as(Class<R> type) {
+    public <R> Calculatable<R> as(Class<R> type) {
         return (Calculatable<R>) take(v -> type.isInstance(v));
     }
 
@@ -39,7 +85,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * Returns an {@code Variable} describing the value currently held by this ObservableValue, or
      * and empty {@code Variable} if this ObservableValue is empty.
      */
-    default Variable<T> asVariable() {
+    public Variable<T> asVariable() {
         return Variable.of(getValue());
     }
 
@@ -47,8 +93,8 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * Returns a new ObservableValue that, when this ObservableValue holds value {@code x}, holds
      * the value held by {@code f(x)}, and is empty when this ObservableValue is empty.
      */
-    default <R> Calculatable<R> calculateProperty(Function<? super T, ObservableValue<R>> mapper) {
-        return new Calculation<R>(this) {
+    public <R> Calculatable<R> calculateProperty(Function<? super T, ObservableValue<R>> mapper) {
+        return new Calculatable<R>(this) {
 
             /** The latest mapper value. */
             private ObservableValue<R> latest;
@@ -80,7 +126,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * 
      * @param mapper function to map the value held by this ObservableValue.
      */
-    default <R> Calculatable<R> calculateVariable(Function<? super T, Variable<R>> mapper) {
+    public <R> Calculatable<R> calculateVariable(Function<? super T, Variable<R>> mapper) {
         return calculateProperty(v -> new VariableBinding(mapper.apply(v)));
     }
 
@@ -90,7 +136,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * @param active
      * @return
      */
-    default Calculatable<Boolean> is(T... values) {
+    public Calculatable<Boolean> is(T... values) {
         return isNot(I.set(values));
     }
 
@@ -100,7 +146,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * @param active
      * @return
      */
-    default Calculatable<Boolean> is(Set<T> values) {
+    public Calculatable<Boolean> is(Set<T> values) {
         return map(v -> values.contains(v));
     }
 
@@ -110,7 +156,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * @param active
      * @return
      */
-    default Calculatable<Boolean> isNot(T... values) {
+    public Calculatable<Boolean> isNot(T... values) {
         return isNot(I.set(values));
     }
 
@@ -120,21 +166,21 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * @param active
      * @return
      */
-    default Calculatable<Boolean> isNot(Set<T> values) {
+    public Calculatable<Boolean> isNot(Set<T> values) {
         return map(v -> !values.contains(v));
     }
 
     /**
      * Equality check.
      */
-    default Calculatable<Boolean> isAbsent() {
+    public Calculatable<Boolean> isAbsent() {
         return map(v -> v == null);
     }
 
     /**
      * Equality check.
      */
-    default Calculatable<Boolean> isPresent() {
+    public Calculatable<Boolean> isPresent() {
         return map(v -> v != null);
     }
 
@@ -144,7 +190,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * 
      * @param mapper function to map the value held by this ObservableValue.
      */
-    default <R> Calculatable<R> map(Function<? super T, ? extends R> mapper) {
+    public <R> Calculatable<R> map(Function<? super T, ? extends R> mapper) {
         return Viewtify.calculate(this, () -> asVariable().map(mapper).v);
     }
 
@@ -154,7 +200,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * 
      * @param mapper function to map the value held by this ObservableValue.
      */
-    default <R> Calculatable<R> mapTo(R constant) {
+    public <R> Calculatable<R> mapTo(R constant) {
         return Viewtify.calculate(this, () -> constant);
     }
 
@@ -162,7 +208,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * Returns a new ObservableValue that holds the value held by this ObservableValue, or
      * {@code other} when this ObservableValue is empty.
      */
-    default Calculatable<T> or(T other) {
+    public Calculatable<T> or(T other) {
         return Viewtify.calculate(this, () -> asVariable().or(other).v);
     }
 
@@ -170,7 +216,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * Returns a new ObservableValue that holds the value held by this ObservableValue, or the value
      * held by {@code other} when this ObservableValue is empty.
      */
-    default Calculatable<T> or(ObservableValue<T> other) {
+    public Calculatable<T> or(ObservableValue<T> other) {
         return Viewtify.calculate(this, other, () -> asVariable().or(other::getValue).v);
     }
 
@@ -179,7 +225,7 @@ public interface Calculatable<T> extends ObservableObjectValue<T> {
      * value satisfies the predicate and is empty when this ObservableValue is empty or its value
      * does not satisfy the given predicate.
      */
-    default Calculatable<T> take(Predicate<T> condition) {
+    public Calculatable<T> take(Predicate<T> condition) {
         return Viewtify.calculate(this, () -> asVariable().is(condition, Function.identity()).v);
     }
 }

@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.calculation;
+package viewtify;
 
 import java.util.ArrayList;
 import java.util.List;

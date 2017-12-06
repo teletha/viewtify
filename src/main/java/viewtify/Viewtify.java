@@ -42,10 +42,6 @@ import kiss.WiseBiFunction;
 import kiss.WiseFunction;
 import kiss.WiseSupplier;
 import kiss.WiseTriFunction;
-import viewtify.calculation.Calculatable;
-import viewtify.calculation.CalculatableList;
-import viewtify.calculation.Calculation;
-import viewtify.calculation.ListCalculation;
 import viewtify.ui.UI;
 
 /**
@@ -244,8 +240,8 @@ public final class Viewtify {
      * @return A binding builder.
      */
     public static <E> CalculatableList<E> calculate(ObservableList<E> list) {
-        return new ListCalculation<E, E>(list) {
-    
+        return new CalculatableList<E>(list) {
+
             /**
              * {@inheritDoc}
              */
@@ -303,7 +299,7 @@ public final class Viewtify {
      * @return A lazy evaluated calculation.
      */
     public static final <E> Calculatable<E> calculate(Observable o1, Observable o2, Observable o3, Observable o4, WiseSupplier<E> calculation) {
-        return new Calculation<E>(o1, o2, o3, o4) {
+        return new Calculatable<E>(o1, o2, o3, o4) {
 
             /**
              * {@inheritDoc}

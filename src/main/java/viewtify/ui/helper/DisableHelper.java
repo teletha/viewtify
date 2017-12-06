@@ -13,7 +13,7 @@ import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 
 import kiss.Variable;
-import viewtify.calculation.VariableBinding;
+import viewtify.VariableBinding;
 
 /**
  * @version 2017/12/04 9:11:19

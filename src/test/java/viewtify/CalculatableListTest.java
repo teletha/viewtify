@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.calculation;
+package viewtify;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,6 +17,8 @@ import javafx.collections.ObservableList;
 import org.junit.Test;
 
 import kiss.Variable;
+import viewtify.Calculatable;
+import viewtify.CalculatableList;
 import viewtify.Viewtify;
 
 /**
@@ -228,6 +230,8 @@ public class CalculatableListTest {
         // add to source list
         Value<Integer> v4 = Value.of(4);
         source.add(v4);
+        assert result.get() == 10;
+        assert result.get() == 10;
         assert result.get() == 10;
 
         // change on source list

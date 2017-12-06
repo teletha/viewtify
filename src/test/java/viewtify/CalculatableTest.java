@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.calculation;
+package viewtify;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,6 +17,7 @@ import javafx.beans.property.StringProperty;
 import org.junit.Test;
 
 import kiss.Variable;
+import viewtify.Calculatable;
 import viewtify.Viewtify;
 
 /**

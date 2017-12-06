@@ -14,8 +14,8 @@ import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 
 import kiss.Variable;
+import viewtify.VariableBinding;
 import viewtify.Viewtify;
-import viewtify.calculation.VariableBinding;
 
 /**
  * @version 2017/12/02 18:19:15
