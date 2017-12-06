@@ -52,7 +52,11 @@ class MappedList<Out, In> extends TransformationList<Out, In> {
      */
     @Override
     public Out get(int index) {
-        return mapper.apply(getSource().get(index));
+        try {
+            return mapper.apply(getSource().get(index));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**

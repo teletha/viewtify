@@ -97,6 +97,9 @@ public class UITreeTableView<T> extends UIControl<UITreeTableView, TreeTableView
      * @return
      */
     public CalculationList<T> getSelected() {
-        return Viewtify.calculate(ui.getSelectionModel().getSelectedItems()).map(item -> item.getValue());
+        return Viewtify.calculate(ui.getSelectionModel().getSelectedItems()).map(item -> {
+            System.out.println(item.getValue());
+            return item.getValue();
+        });
     }
 }

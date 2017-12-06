@@ -31,13 +31,16 @@ public class CalculationListTest {
         assert result.get().get(0).equals("ONE");
         assert result.get().get(1).equals("TWO");
         assert result.get().get(2).equals("THREE");
+        assert result.isValid() == true;
 
         source.add("four");
+        assert result.isValid() == false;
         assert result.size() == 4;
         assert result.get().get(0).equals("ONE");
         assert result.get().get(1).equals("TWO");
         assert result.get().get(2).equals("THREE");
         assert result.get().get(3).equals("FOUR");
+        assert result.isValid() == true;
     }
 
     @Test
@@ -89,31 +92,38 @@ public class CalculationListTest {
         assert result.get().get(0).equals("ONE");
         assert result.get().get(1).equals("TWO");
         assert result.get().get(2).equals("THREE");
+        assert result.isValid() == true;
 
         // add to source list
         Value<String> v4 = Value.of("four");
         source.add(v4);
+        assert result.isValid() == false;
         assert result.size() == 4;
         assert result.get().get(0).equals("ONE");
         assert result.get().get(1).equals("TWO");
         assert result.get().get(2).equals("THREE");
         assert result.get().get(3).equals("FOUR");
+        assert result.isValid() == true;
 
         // change on source list
         source.set(0, Value.of("change"));
+        assert result.isValid() == false;
         assert result.size() == 4;
         assert result.get().get(0).equals("CHANGE");
         assert result.get().get(1).equals("TWO");
         assert result.get().get(2).equals("THREE");
         assert result.get().get(3).equals("FOUR");
+        assert result.isValid() == true;
 
         // change on source item
         v2.property.set("property");
+        assert result.isValid() == false;
         assert result.size() == 4;
         assert result.get().get(0).equals("CHANGE");
         assert result.get().get(1).equals("PROPERTY");
         assert result.get().get(2).equals("THREE");
         assert result.get().get(3).equals("FOUR");
+        assert result.isValid() == true;
     }
 
     @Test
@@ -150,31 +160,38 @@ public class CalculationListTest {
         assert result.get().get(0).equals("one");
         assert result.get().get(1).equals("two");
         assert result.get().get(2).equals("three");
+        assert result.isValid() == true;
 
         // add to source list
         Value<String> v4 = Value.of("four");
         source.add(v4);
+        assert result.isValid() == false;
         assert result.size() == 4;
         assert result.get().get(0).equals("one");
         assert result.get().get(1).equals("two");
         assert result.get().get(2).equals("three");
         assert result.get().get(3).equals("four");
+        assert result.isValid() == true;
 
         // change on source list
         source.set(0, Value.of("change"));
+        assert result.isValid() == false;
         assert result.size() == 4;
         assert result.get().get(0).equals("change");
         assert result.get().get(1).equals("two");
         assert result.get().get(2).equals("three");
         assert result.get().get(3).equals("four");
+        assert result.isValid() == true;
 
         // change on source item
         v2.variable.set("variable");
+        assert result.isValid() == false;
         assert result.size() == 4;
         assert result.get().get(0).equals("change");
         assert result.get().get(1).equals("variable");
         assert result.get().get(2).equals("three");
         assert result.get().get(3).equals("four");
+        assert result.isValid() == true;
     }
 
     @Test
@@ -188,31 +205,38 @@ public class CalculationListTest {
         assert result.get().get(0).equals("ONE");
         assert result.get().get(1).equals("TWO");
         assert result.get().get(2).equals("THREE");
+        assert result.isValid() == true;
 
         // add to source list
         Value<String> v4 = Value.of("four");
         source.add(v4);
+        assert result.isValid() == false;
         assert result.size() == 4;
         assert result.get().get(0).equals("ONE");
         assert result.get().get(1).equals("TWO");
         assert result.get().get(2).equals("THREE");
         assert result.get().get(3).equals("FOUR");
+        assert result.isValid() == true;
 
         // change on source list
         source.set(0, Value.of("change"));
+        assert result.isValid() == false;
         assert result.size() == 4;
         assert result.get().get(0).equals("CHANGE");
         assert result.get().get(1).equals("TWO");
         assert result.get().get(2).equals("THREE");
         assert result.get().get(3).equals("FOUR");
+        assert result.isValid() == true;
 
         // change on source item
         v2.variable.set("variable");
+        assert result.isValid() == false;
         assert result.size() == 4;
         assert result.get().get(0).equals("CHANGE");
         assert result.get().get(1).equals("VARIABLE");
         assert result.get().get(2).equals("THREE");
         assert result.get().get(3).equals("FOUR");
+        assert result.isValid() == true;
     }
 
     @Test

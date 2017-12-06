@@ -88,8 +88,8 @@ public abstract class CalculationList<E> extends ListBinding<E> {
                     property.apply(e).addListener(forElement);
                 }
             }
-            invalidate();
         }
+        invalidate();
     }
 
     public <R> CalculationList<R> as(Class<R> type) {
@@ -110,7 +110,10 @@ public abstract class CalculationList<E> extends ListBinding<E> {
     }
 
     public Calculation<Boolean> isNot(E value) {
-        return new Calculation<Boolean>(() -> get().contains(value), null, this);
+        return new Calculation<Boolean>(() -> {
+            System.out.println(get() + "  " + value);
+            return !get().contains(value);
+        }, null, this);
     }
 
     public <R> CalculationList<R> map(Function<E, R> mapper) {
