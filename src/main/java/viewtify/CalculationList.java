@@ -29,7 +29,10 @@ import kiss.WiseBiFunction;
 public abstract class CalculationList<E> extends ListBinding<E> {
 
     /** The element observer. */
-    private final InvalidationListener forElement = o -> invalidate();
+    private final InvalidationListener forElement = o -> {
+        System.out.println("Element change " + o);
+        invalidate();
+    };
 
     /** The list observer. */
     private final ListChangeListener<E> forList = this::onChanged;
@@ -80,26 +83,38 @@ public abstract class CalculationList<E> extends ListBinding<E> {
         while (change.next()) {
             if (change.wasRemoved()) {
                 for (E e : change.getRemoved()) {
+                    System.out.println("remove " + e + " from " + getClass().getName() + "#" + hashCode());
                     for (Function<E, ObservableValue> property : extractors) {
                         property.apply(e).removeListener(forElement);
                     }
                 }
-                invalidate();
             }
 
             if (change.wasAdded()) {
                 for (E e : change.getAddedSubList()) {
+                    System.out.println("add " + e + " to " + getClass().getName() + "#" + hashCode());
                     for (Function<E, ObservableValue> property : extractors) {
                         property.apply(e).addListener(forElement);
                     }
                 }
-                invalidate();
             }
         }
+        invalidate();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ObservableList<E> computeValue() {
+        return null;
     }
 
     public <R> CalculationList<R> as(Class<R> type) {
-        return (CalculationList<R>) take(e -> type.isInstance(e));
+        return (CalculationList<R>) take(e -> {
+            System.out.println("Call in MappedList#get  " + e);
+            return type.isInstance(e);
+        });
     }
 
     public CalculationList<E> take(Predicate<E> condition) {
@@ -110,13 +125,17 @@ public abstract class CalculationList<E> extends ListBinding<E> {
              */
             @Override
             protected ObservableList<E> computeValue() {
+                System.out.println("CaclList#take ");
                 return new MappedList<>(CalculationList.this, e -> condition.test(e) ? e : null);
             }
         };
     }
 
     public Calculation<Boolean> isNot(E value) {
-        return new Calculation<Boolean>(() -> !get().contains(value), null, this);
+        return new Calculation<Boolean>(() -> {
+            System.out.println("CaclList#isNot   " + value);
+            return !contains(value);
+        }, null, this);
     }
 
     public <R> CalculationList<R> map(Function<E, R> mapper) {
@@ -127,6 +146,7 @@ public abstract class CalculationList<E> extends ListBinding<E> {
              */
             @Override
             protected ObservableList<R> computeValue() {
+                System.out.println("CalcList#map ");
                 return new MappedList<>(CalculationList.this, mapper);
             }
         };
@@ -140,13 +160,18 @@ public abstract class CalculationList<E> extends ListBinding<E> {
              */
             @Override
             protected ObservableList<R> computeValue() {
-                return new MappedList<>(CalculationList.this, e -> mapper.apply(e).getValue());
+                return new MappedList<>(CalculationList.this, e -> {
+                    System.out.println("CalcList#flatObservable " + e);
+                    return mapper.apply(e).getValue();
+                });
             }
         };
     }
 
     public <R> CalculationList<R> flatVariable(Function<E, Variable<R>> mapper) {
-        return flatObservable(e -> Viewtify.calculate(mapper.apply(e)));
+        return flatObservable(e -> {
+            return Viewtify.calculate(mapper.apply(e));
+        });
     }
 
     /**
@@ -157,7 +182,10 @@ public abstract class CalculationList<E> extends ListBinding<E> {
      * @return
      */
     public <R> Calculation<R> reduce(R init, WiseBiFunction<R, E, R> accumulator) {
-        return new Calculation<R>(() -> I.signal(this).scan(init, accumulator).to().v, null, this);
+        return new Calculation<R>(() -> {
+            System.out.println("CalcList#reduce");
+            return I.signal(this).scan(init, accumulator).to().v;
+        }, null, this);
     }
 
     /**
