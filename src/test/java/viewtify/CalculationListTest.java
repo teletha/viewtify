@@ -79,6 +79,15 @@ public class CalculationListTest {
         assert result.get().get(1).equals("TWO");
         assert result.get().get(2).equals("three");
         assert result.get().get(3).equals("four");
+
+        // dispose
+        result.dispose();
+        v2.property.set("No Effect");
+        assert result.isValid() == true;
+        source.remove(0);
+        assert result.isValid() == true;
+        source.add(0, v1);
+        assert result.isValid() == true;
     }
 
     @Test
@@ -124,6 +133,15 @@ public class CalculationListTest {
         assert result.get().get(2).equals("THREE");
         assert result.get().get(3).equals("FOUR");
         assert result.isValid() == true;
+
+        // dispose
+        result.dispose();
+        v2.property.set("No Effect");
+        assert result.isValid() == true;
+        source.remove(0);
+        assert result.isValid() == true;
+        source.add(0, v1);
+        assert result.isValid() == true;
     }
 
     @Test
@@ -147,6 +165,15 @@ public class CalculationListTest {
         // change on source item
         v2.property.set(5);
         assert result.get() == 22;
+
+        // dispose
+        result.dispose();
+        v2.property.set(1000);
+        assert result.isValid() == true;
+        source.remove(0);
+        assert result.isValid() == true;
+        source.add(0, v1);
+        assert result.isValid() == true;
     }
 
     @Test
@@ -191,6 +218,15 @@ public class CalculationListTest {
         assert result.get().get(1).equals("variable");
         assert result.get().get(2).equals("three");
         assert result.get().get(3).equals("four");
+        assert result.isValid() == true;
+
+        // dispose
+        result.dispose();
+        v2.variable.set("No Effect");
+        assert result.isValid() == true;
+        source.remove(0);
+        assert result.isValid() == true;
+        source.add(0, v1);
         assert result.isValid() == true;
     }
 
@@ -237,6 +273,15 @@ public class CalculationListTest {
         assert result.get().get(2).equals("THREE");
         assert result.get().get(3).equals("FOUR");
         assert result.isValid() == true;
+
+        // dispose
+        result.dispose();
+        v2.variable.set("No Effect");
+        assert result.isValid() == true;
+        source.remove(0);
+        assert result.isValid() == true;
+        source.add(0, v1);
+        assert result.isValid() == true;
     }
 
     @Test
@@ -247,19 +292,35 @@ public class CalculationListTest {
         ObservableList<Value<Integer>> source = FXCollections.observableArrayList(v1, v2, v3);
         Calculation<Integer> result = Viewtify.calculate(source).flatVariable(v -> v.variable).reduce(0, (p, q) -> p + q);
         assert result.get() == 6;
+        assert result.isValid() == true;
 
         // add to source list
         Value<Integer> v4 = Value.of(4);
         source.add(v4);
+        assert result.isValid() == false;
         assert result.get() == 10;
+        assert result.isValid() == true;
 
         // change on source list
         source.set(0, Value.of(10));
+        assert result.isValid() == false;
         assert result.get() == 19;
+        assert result.isValid() == true;
 
         // change on source item
         v2.variable.set(5);
+        assert result.isValid() == false;
         assert result.get() == 22;
+        assert result.isValid() == true;
+
+        // dispose
+        result.dispose();
+        v2.variable.set(10000);
+        assert result.isValid() == true;
+        source.remove(0);
+        assert result.isValid() == true;
+        source.add(0, v1);
+        assert result.isValid() == true;
     }
 
     /**

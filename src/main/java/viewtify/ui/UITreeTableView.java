@@ -43,10 +43,6 @@ public class UITreeTableView<T> extends UIControl<UITreeTableView, TreeTableView
         ui.setShowRoot(false);
 
         root = new UITreeItem(ui, item);
-
-        ui.setOnContextMenuRequested(e -> {
-            System.out.println(e);
-        });
     }
 
     public UITreeTableView<T> placeholder(String text) {
@@ -97,9 +93,6 @@ public class UITreeTableView<T> extends UIControl<UITreeTableView, TreeTableView
      * @return
      */
     public CalculationList<T> getSelected() {
-        return Viewtify.calculate(ui.getSelectionModel().getSelectedItems()).map(item -> {
-            System.out.println(item.getValue());
-            return item.getValue();
-        });
+        return Viewtify.calculate(ui.getSelectionModel().getSelectedItems()).map(TreeItem<T>::getValue);
     }
 }

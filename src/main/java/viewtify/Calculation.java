@@ -60,7 +60,11 @@ public class Calculation<T> extends ObjectBinding<T> {
      */
     @Override
     protected T computeValue() {
-        return calculation.get();
+        try {
+            return calculation.get();
+        } catch (Throwable e) {
+            return null;
+        }
     }
 
     /**
@@ -253,13 +257,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param mapper function to map the value held by this ObservableValue.
      */
     public <R> Calculation<R> map(Function<? super T, ? extends R> mapper) {
-        return new Calculation(() -> {
-            try {
-                return mapper.apply(get());
-            } catch (Exception e) {
-                return null;
-            }
-        }, this);
+        return new Calculation(() -> mapper.apply(get()), this);
     }
 
     /**
