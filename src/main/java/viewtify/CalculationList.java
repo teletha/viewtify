@@ -29,10 +29,7 @@ import kiss.WiseBiFunction;
 public abstract class CalculationList<E> extends ListBinding<E> {
 
     /** The element observer. */
-    private final InvalidationListener forElement = o -> {
-        System.out.println("Element change " + o);
-        invalidate();
-    };
+    private final InvalidationListener forElement = o -> invalidate();
 
     /** The list observer. */
     private final ListChangeListener<E> forList = this::onChanged;
@@ -62,6 +59,22 @@ public abstract class CalculationList<E> extends ListBinding<E> {
     }
 
     /**
+     * Wrap {@link CalculationList}.
+     */
+    private CalculationList(CalculationList<E> source, Function<E, ObservableValue>... extractors) {
+        this.source = source;
+        this.extractors = extractors;
+
+        source.addListener(forList);
+        source.addListener(forElement);
+        source.forEach(e -> {
+            for (Function<E, ObservableValue> property : extractors) {
+                property.apply(e).addListener(forElement);
+            }
+        });
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -71,6 +84,7 @@ public abstract class CalculationList<E> extends ListBinding<E> {
                 property.apply(e).removeListener(forElement);
             }
         });
+        source.removeListener(forElement);
         source.removeListener(forList);
     }
 
@@ -83,7 +97,6 @@ public abstract class CalculationList<E> extends ListBinding<E> {
         while (change.next()) {
             if (change.wasRemoved()) {
                 for (E e : change.getRemoved()) {
-                    System.out.println("remove " + e + " from " + getClass().getName() + "#" + hashCode());
                     for (Function<E, ObservableValue> property : extractors) {
                         property.apply(e).removeListener(forElement);
                     }
@@ -92,22 +105,16 @@ public abstract class CalculationList<E> extends ListBinding<E> {
 
             if (change.wasAdded()) {
                 for (E e : change.getAddedSubList()) {
-                    System.out.println("add " + e + " to " + getClass().getName() + "#" + hashCode());
                     for (Function<E, ObservableValue> property : extractors) {
                         property.apply(e).addListener(forElement);
                     }
                 }
             }
-        }
-        invalidate();
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ObservableList<E> computeValue() {
-        return null;
+            if (isValid()) {
+                invalidate();
+            }
+        }
     }
 
     public <R> CalculationList<R> as(Class<R> type) {
@@ -118,6 +125,8 @@ public abstract class CalculationList<E> extends ListBinding<E> {
     }
 
     public CalculationList<E> take(Predicate<E> condition) {
+        MappedList<E, E> mapped = new MappedList<>(this, e -> condition.test(e) ? e : null);
+
         return new CalculationList<E>(this) {
 
             /**
@@ -125,20 +134,20 @@ public abstract class CalculationList<E> extends ListBinding<E> {
              */
             @Override
             protected ObservableList<E> computeValue() {
-                System.out.println("CaclList#take ");
-                return new MappedList<>(CalculationList.this, e -> condition.test(e) ? e : null);
+                return mapped;
             }
         };
     }
 
     public Calculation<Boolean> isNot(E value) {
         return new Calculation<Boolean>(() -> {
-            System.out.println("CaclList#isNot   " + value);
             return !contains(value);
         }, null, this);
     }
 
     public <R> CalculationList<R> map(Function<E, R> mapper) {
+        MappedList<R, E> mapped = new MappedList<>(this, mapper);
+
         return new CalculationList(this) {
 
             /**
@@ -146,13 +155,14 @@ public abstract class CalculationList<E> extends ListBinding<E> {
              */
             @Override
             protected ObservableList<R> computeValue() {
-                System.out.println("CalcList#map ");
-                return new MappedList<>(CalculationList.this, mapper);
+                return mapped;
             }
         };
     }
 
     public <R> CalculationList<R> flatObservable(Function<E, ObservableValue<R>> mapper) {
+        MappedList<R, E> mapped = new MappedList<>(this, e -> mapper.apply(e).getValue());
+
         return new CalculationList(this, mapper) {
 
             /**
@@ -160,10 +170,7 @@ public abstract class CalculationList<E> extends ListBinding<E> {
              */
             @Override
             protected ObservableList<R> computeValue() {
-                return new MappedList<>(CalculationList.this, e -> {
-                    System.out.println("CalcList#flatObservable " + e);
-                    return mapper.apply(e).getValue();
-                });
+                return mapped;
             }
         };
     }

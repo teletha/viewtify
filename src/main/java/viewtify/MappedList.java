@@ -18,7 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.TransformationList;
 
 /**
- * @version 2017/11/26 23:13:46
+ * @version 2017/12/08 19:44:44
  */
 class MappedList<Out, In> extends TransformationList<Out, In> {
 

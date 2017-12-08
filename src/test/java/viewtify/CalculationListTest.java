@@ -323,6 +323,25 @@ public class CalculationListTest {
         assert result.isValid() == true;
     }
 
+    @Test
+    public void complex() throws Exception {
+        Value<String> v1 = Value.of("one");
+        Value<String> v2 = Value.of("two");
+        ObservableList<Box> source = FXCollections.observableArrayList(new Box(v1), new Box(v2));
+
+        Calculation<Boolean> result = Viewtify.calculate(source).map(box -> box.item).flatVariable(v -> v.variable).isNot("ACTIVE");
+        assert result.isValid() == false;
+        assert result.get() == true;
+        assert result.isValid() == true;
+
+        Value<String> v3 = Value.of("ACTIVE");
+        source.add(new Box(v3));
+        source.remove(0);
+        assert result.isValid() == false;
+        assert result.get() == false;
+        assert result.isValid() == true;
+    }
+
     /**
      * @version 2017/12/06 1:26:43
      */
@@ -345,5 +364,21 @@ public class CalculationListTest {
 
             return v;
         }
+    }
+
+    /**
+     * @version 2017/12/09 1:43:04
+     */
+    private static class Box {
+
+        private Value<String> item;
+
+        /**
+         * @param item
+         */
+        private Box(Value<String> item) {
+            this.item = item;
+        }
+
     }
 }

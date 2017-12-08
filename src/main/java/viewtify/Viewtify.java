@@ -287,7 +287,6 @@ public final class Viewtify {
              */
             @Override
             protected ObservableList<E> computeValue() {
-                System.out.println("Viewtify#calculate " + list);
                 return list;
             }
         };
