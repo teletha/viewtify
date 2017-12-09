@@ -177,6 +177,14 @@ class MappedList<Out, In> extends TransformationList<Out, In> {
             public void reset() {
                 change.reset();
             }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public String toString() {
+                return change.toString() + "  on MappedList - " + getSource();
+            }
         });
     }
 }
