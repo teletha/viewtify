@@ -20,8 +20,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import kiss.I;
-
 /**
  * @version 2017/12/10 15:38:58
  */
@@ -103,7 +101,7 @@ public abstract class BindingBase<E> implements Binding<E> {
         }
     }
 
-    protected final synchronized void dependOn(Observable dependency) {
+    protected final synchronized void bind(Observable dependency) {
         if (dependency != null) {
             if (dependencies == null) {
                 dependencies = new CopyOnWriteArrayList();
@@ -114,7 +112,7 @@ public abstract class BindingBase<E> implements Binding<E> {
         }
     }
 
-    protected final synchronized void independFrom(Observable dependency) {
+    protected final synchronized void unbind(Observable dependency) {
         if (dependency != null && dependencies != null) {
             dependencies.remove(dependency);
             dependency.removeListener(dependencyListener);
@@ -140,7 +138,7 @@ public abstract class BindingBase<E> implements Binding<E> {
         }
 
         if (dependencies != null) {
-            dependencies.forEach(this::independFrom);
+            dependencies.forEach(this::unbind);
         }
         reference = null;
     }
@@ -169,6 +167,8 @@ public abstract class BindingBase<E> implements Binding<E> {
         Viewtify.inUI(() -> {
             if (validity.compareAndSet(true, false)) {
                 reference = null;
+
+                System.out.println(this + " is invalid now");
 
                 if (invalidationListeners != null) {
                     for (InvalidationListener listener : invalidationListeners) {

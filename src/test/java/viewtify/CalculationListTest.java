@@ -16,13 +16,11 @@ import javafx.collections.ObservableList;
 
 import org.junit.Test;
 
-import antibug.powerassert.PowerAssertOff;
 import kiss.Variable;
 
 /**
  * @version 2017/12/05 23:45:03
  */
-@PowerAssertOff
 public class CalculationListTest {
 
     @Test
@@ -446,7 +444,6 @@ public class CalculationListTest {
 
         // change on source item
         v2.variable.set("variable");
-        assert result.isValid() == false;
         assert result.getValue().size() == 4;
         assert result.getValue().get(0).equals("CHANGE");
         assert result.getValue().get(1).equals("VARIABLE");
@@ -519,26 +516,120 @@ public class CalculationListTest {
     }
 
     @Test
-    public void complex() throws Exception {
-        Value<String> v1 = Value.of("one");
-        Value<String> v2 = Value.of("two");
-        ObservableList<Box> source = FXCollections.observableArrayList(new Box(v1), new Box(v2));
-
-        Calculation<Boolean> result = Viewtify.calculate(source).map(box -> box.item).flatVariable(v -> v.variable).isNot("ACTIVE");
+    public void skip() throws Exception {
+        ObservableList<String> source = FXCollections.observableArrayList("one", "two", "three");
+        CalculationList<String> result = Viewtify.calculate(source).skip(v -> v.contains("w"));
         assert result.isValid() == false;
-        assert result.getValue() == true;
+        assert result.getValue().size() == 2;
+        assert result.getValue().get(0).equals("one");
+        assert result.getValue().get(1).equals("three");
         assert result.isValid() == true;
 
-        Value<String> v3 = Value.of("ACTIVE");
-        source.add(new Box(v3));
+        // add
+        source.add("four");
+        assert result.isValid() == false;
+        assert result.getValue().size() == 3;
+        assert result.getValue().get(0).equals("one");
+        assert result.getValue().get(1).equals("three");
+        assert result.getValue().get(2).equals("four");
+        assert result.isValid() == true;
+
+        // remove
         source.remove(0);
         assert result.isValid() == false;
-        assert result.getValue() == false;
+        assert result.getValue().size() == 2;
+        assert result.getValue().get(0).equals("three");
+        assert result.getValue().get(1).equals("four");
         assert result.isValid() == true;
 
-        v3.variable.set("NOT ACTIVE");
+        // replace
+        source.set(0, "ok");
+        source.set(1, "wow");
         assert result.isValid() == false;
-        assert result.getValue() == true;
+        assert result.getValue().size() == 2;
+        assert result.getValue().get(0).equals("ok");
+        assert result.getValue().get(1).equals("four");
+        assert result.isValid() == true;
+    }
+
+    @Test
+    public void take() throws Exception {
+        ObservableList<String> source = FXCollections.observableArrayList("one", "two", "three");
+        CalculationList<String> result = Viewtify.calculate(source).take(v -> v.contains("o"));
+        assert result.isValid() == false;
+        assert result.getValue().size() == 2;
+        assert result.getValue().get(0).equals("one");
+        assert result.getValue().get(1).equals("two");
+        assert result.isValid() == true;
+
+        // add
+        source.add("four");
+        assert result.isValid() == false;
+        assert result.getValue().size() == 3;
+        assert result.getValue().get(0).equals("one");
+        assert result.getValue().get(1).equals("two");
+        assert result.getValue().get(2).equals("four");
+        assert result.isValid() == true;
+
+        // remove
+        source.remove(0);
+        assert result.isValid() == false;
+        assert result.getValue().size() == 2;
+        assert result.getValue().get(0).equals("two");
+        assert result.getValue().get(1).equals("four");
+        assert result.isValid() == true;
+
+        // replace
+        source.set(1, "ok");
+        source.set(2, "ng");
+        assert result.isValid() == false;
+        assert result.getValue().size() == 2;
+        assert result.getValue().get(0).equals("two");
+        assert result.getValue().get(1).equals("ok");
+        assert result.isValid() == true;
+    }
+
+    @Test
+    public void takeWithPropertyCheck() throws Exception {
+        Value<String> v1 = Value.of("one");
+        Value<String> v2 = Value.of("two");
+        Value<String> v3 = Value.of("three");
+        ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
+        CalculationList<String> result = Viewtify.calculate(source).flatObservable(v -> v.property).take(v -> v.contains("o"));
+        assert result.isValid() == false;
+        assert result.getValue().size() == 2;
+        assert result.getValue().get(0).equals("one");
+        assert result.getValue().get(1).equals("two");
+        assert result.isValid() == true;
+
+        // add
+        Value<String> v4 = Value.of("four");
+        source.add(v4);
+        System.out.println("add");
+        assert result.isValid() == false;
+        assert result.getValue().size() == 3;
+        assert result.getValue().get(0).equals("one");
+        assert result.getValue().get(1).equals("two");
+        assert result.getValue().get(2).equals("four");
+        assert result.isValid() == true;
+
+        // remove
+        source.remove(0);
+        System.out.println("remove");
+        assert result.isValid() == false;
+        assert result.getValue().size() == 2;
+        assert result.getValue().get(0).equals("two");
+        assert result.getValue().get(1).equals("four");
+        assert result.isValid() == true;
+
+        // change on item
+        v2.property.set("ng");
+        v3.property.set("ok");
+        System.out.println("change");
+        assert result.isValid() == false;
+        assert result.getValue().size() == 2;
+        assert result.getValue().get(0).equals("ok");
+        assert result.getValue().get(1).equals("four");
         assert result.isValid() == true;
     }
 
@@ -576,21 +667,5 @@ public class CalculationListTest {
         public String toString() {
             return "Value [variable=" + variable + ", property=" + property + "]";
         }
-    }
-
-    /**
-     * @version 2017/12/09 1:43:04
-     */
-    private static class Box {
-
-        private Value<String> item;
-
-        /**
-         * @param item
-         */
-        private Box(Value<String> item) {
-            this.item = item;
-        }
-
     }
 }

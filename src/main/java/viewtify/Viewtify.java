@@ -50,10 +50,21 @@ import viewtify.ui.UI;
  */
 public final class Viewtify {
 
+    /** The runtime info. */
+    private static final boolean inTest;
+
     static {
         Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
             e.printStackTrace();
         });
+
+        inTest = I.signal(new Error().getStackTrace())
+                .take(e -> e.getClassName().startsWith("org.junit."))
+                .take(1)
+                .mapTo(true)
+                .startWith(false)
+                .to()
+                .get();
     }
 
     /** The dispose on exit. */
@@ -421,7 +432,7 @@ public final class Viewtify {
      * @param process
      */
     public static void inUI(Runnable process) {
-        if (Platform.isFxApplicationThread()) {
+        if (Platform.isFxApplicationThread() || inTest) {
             process.run();
         } else {
             Platform.runLater(process::run);
