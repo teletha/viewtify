@@ -91,7 +91,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * Returns a new ObservableValue that, when this ObservableValue holds value {@code x}, holds
      * the value held by {@code f(x)}, and is empty when this ObservableValue is empty.
      */
-    public <R> Calculation<R> calculateProperty(Function<? super T, ObservableValue<R>> mapper) {
+    public <R> Calculation<R> flatObservable(Function<? super T, ObservableValue<R>> mapper) {
         return new Calculation<R>(null, this) {
 
             /** The latest mapper value. */
@@ -102,21 +102,24 @@ public class Calculation<T> extends ObjectBinding<T> {
              */
             @Override
             protected R computeValue() {
-                try {
-                    if (latest != null) {
-                        unbind(latest);
-                    }
+                if (latest != null) {
+                    unbind(latest);
+                }
 
-                    latest = mapper.apply(Calculation.this.get());
+                T value = Calculation.this.get();
 
-                    if (latest == null) {
-                        return null;
-                    } else {
-                        bind(latest);
-                        return latest.getValue();
-                    }
-                } catch (Throwable e) {
+                if (value == null) {
+                    latest = null;
                     return null;
+                }
+
+                latest = mapper.apply(Calculation.this.get());
+
+                if (latest == null) {
+                    return null;
+                } else {
+                    bind(latest);
+                    return latest.getValue();
                 }
             }
         };
@@ -128,8 +131,8 @@ public class Calculation<T> extends ObjectBinding<T> {
      * 
      * @param mapper function to map the value held by this ObservableValue.
      */
-    public <R> Calculation<R> calculateVariable(Function<? super T, Variable<R>> mapper) {
-        return calculateProperty(v -> Viewtify.calculate(mapper.apply(v)));
+    public <R> Calculation<R> flatVariable(Function<? super T, Variable<R>> mapper) {
+        return flatObservable(v -> Viewtify.calculate(mapper.apply(v)));
     }
 
     /**

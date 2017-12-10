@@ -50,6 +50,12 @@ import viewtify.ui.UI;
  */
 public final class Viewtify {
 
+    static {
+        Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
+            e.printStackTrace();
+        });
+    }
+
     /** The dispose on exit. */
     public static final Disposable Terminator = Disposable.empty();
 
@@ -235,6 +241,26 @@ public final class Viewtify {
     }
 
     /**
+     * Binding utility for {@link CalculationList}.
+     * 
+     * @param list A {@link ObservableList} source to bind.
+     * @return A binding builder.
+     */
+    public static <E> CalculationList<E> calculate(ObservableList<E> list, Observable... dependencies) {
+        return calculate("root", list, dependencies);
+    }
+
+    /**
+     * Binding utility for {@link CalculationList}.
+     * 
+     * @param list A {@link ObservableList} source to bind.
+     * @return A binding builder.
+     */
+    public static <E> CalculationList<E> calculate(String name, ObservableList<E> list, Observable... dependencies) {
+        return list instanceof CalculationList ? (CalculationList) list : new CalculationList(name, list, dependencies);
+    }
+
+    /**
      * Create {@link Calculation} from {@link Variable}.
      * 
      * @param variable A {@link Variable}.
@@ -271,25 +297,6 @@ public final class Viewtify {
             calculations[i] = calculate(variables[i]);
         }
         return calculations;
-    }
-
-    /**
-     * Binding utility for {@link CalculationList}.
-     * 
-     * @param list A {@link ObservableList} source to bind.
-     * @return A binding builder.
-     */
-    public static <E> CalculationList<E> calculate(ObservableList<E> list) {
-        return new CalculationList<E>(list) {
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected ObservableList<E> computeValue() {
-                return list;
-            }
-        };
     }
 
     /**

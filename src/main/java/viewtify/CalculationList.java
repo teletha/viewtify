@@ -9,14 +9,13 @@
  */
 package viewtify;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.binding.ListBinding;
+import javafx.beans.Observable;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 
 import kiss.I;
@@ -24,161 +23,130 @@ import kiss.Variable;
 import kiss.WiseBiFunction;
 
 /**
- * @version 2017/12/06 14:31:36
+ * @version 2017/12/09 13:14:23
  */
-public abstract class CalculationList<E> extends ListBinding<E> {
+public class CalculationList<E> extends BindingBase<ObservableList<E>> {
 
-    /** The element observer. */
-    private final InvalidationListener forElement = o -> invalidate();
+    private final String name;
 
-    /** The list observer. */
-    private final ListChangeListener<E> forList = this::onChanged;
+    /** The source list. */
+    private final ObservableList<E> list;
 
-    /** The source binding. */
-    private final ObservableList<E> source;
+    /** The selector list. */
+    private List<Function<E, ? extends Observable>> observableSelectors;
 
-    /** The nested observable extractors. */
-    private final Function<E, ObservableValue>[] extractors;
+    /** The item change observer. */
+    private final ListChangeListener<E> itemChangeListener = change -> {
+        while (change.next()) {
+            if (observableSelectors != null) {
+                if (change.wasRemoved()) {
+                    change.getRemoved().forEach(e -> observableSelectors.forEach(s -> independFrom(s.apply(e))));
+                }
+
+                if (change.wasAdded()) {
+                    change.getAddedSubList().forEach(e -> observableSelectors.forEach(s -> dependOn(s.apply(e))));
+                }
+            }
+        }
+    };
 
     /**
-     * Create.
-     * 
-     * @param source
-     * @param extractors
+     * @param list
      */
-    protected CalculationList(ObservableList<E> source, Function<E, ObservableValue>... extractors) {
-        this.source = source;
-        this.extractors = extractors;
+    CalculationList(String name, ObservableList<E> list, Observable... dependencies) {
+        this.name = name;
+        this.list = list;
 
-        source.addListener(forList);
-        source.forEach(e -> {
-            for (Function<E, ObservableValue> property : extractors) {
-                property.apply(e).addListener(forElement);
-            }
-        });
-    }
+        dependOn(list);
 
-    /**
-     * Wrap {@link CalculationList}.
-     */
-    private CalculationList(CalculationList<E> source, Function<E, ObservableValue>... extractors) {
-        this.source = source;
-        this.extractors = extractors;
-
-        source.addListener(forList);
-        source.addListener(forElement);
-        source.forEach(e -> {
-            for (Function<E, ObservableValue> property : extractors) {
-                property.apply(e).addListener(forElement);
-            }
-        });
+        for (Observable dependnecy : dependencies) {
+            dependOn(dependnecy);
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void dispose() {
-        source.forEach(e -> {
-            for (Function<E, ObservableValue> property : extractors) {
-                property.apply(e).removeListener(forElement);
-            }
-        });
-        source.removeListener(forElement);
-        source.removeListener(forList);
+    protected ObservableList<E> computeValue() {
+        System.out.println(list);
+        return list;
     }
 
     /**
-     * Called after a change has been made to an ObservableList.
-     *
-     * @param change an object representing the change that was done
+     * Register {@link Observable} property selector.
+     * 
+     * @param selector
+     * @return
      */
-    private void onChanged(Change<? extends E> change) {
-        while (change.next()) {
-            if (change.wasRemoved()) {
-                for (E e : change.getRemoved()) {
-                    for (Function<E, ObservableValue> property : extractors) {
-                        property.apply(e).removeListener(forElement);
-                    }
-                }
+    public final synchronized CalculationList<E> checkObservable(Function<E, ? extends Observable> selector) {
+        if (selector != null) {
+            if (observableSelectors == null) {
+                observableSelectors = new CopyOnWriteArrayList<>();
+                list.addListener(itemChangeListener);
             }
 
-            if (change.wasAdded()) {
-                for (E e : change.getAddedSubList()) {
-                    for (Function<E, ObservableValue> property : extractors) {
-                        property.apply(e).addListener(forElement);
-                    }
-                }
-            }
-
-            if (isValid()) {
-                invalidate();
+            if (!observableSelectors.contains(selector)) {
+                observableSelectors.add(selector);
+                list.forEach(e -> {
+                    dependOn(selector.apply(e));
+                });
             }
         }
+        return this;
     }
 
-    public <R> CalculationList<R> as(Class<R> type) {
-        return (CalculationList<R>) take(e -> {
-            System.out.println("Call in MappedList#get  " + e);
-            return type.isInstance(e);
-        });
+    /**
+     * Create mapped {@link CalculationList} for {@link ObservableValue}.
+     * 
+     * @param mapper
+     * @return
+     */
+    public <R> CalculationList<R> flatObservable(Function<E, ObservableValue<R>> mapper) {
+        checkObservable(mapper);
+        return Viewtify.calculate("flatObservable", new MappedList<>(this, e -> mapper.apply(e).getValue()), this);
     }
 
-    public CalculationList<E> take(Predicate<E> condition) {
-        MappedList<E, E> mapped = new MappedList<>(this, e -> condition.test(e) ? e : null);
-
-        return new CalculationList<E>(this) {
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected ObservableList<E> computeValue() {
-                return mapped;
-            }
-        };
+    /**
+     * Create mapped {@link CalculationList} for {@link Variable}.
+     * 
+     * @param mapper
+     * @return
+     */
+    public <R> CalculationList<R> flatVariable(Function<E, Variable<R>> mapper) {
+        checkObservable(mapper);
+        return Viewtify.calculate("flatVariable", new MappedList<>(this, e -> {
+            return mapper.apply(e).get();
+        }));
     }
 
     public Calculation<Boolean> isNot(E value) {
         return new Calculation<Boolean>(() -> {
-            return !contains(value);
+            return !getValue().contains(value);
         }, null, this);
     }
 
-    public <R> CalculationList<R> map(Function<E, R> mapper) {
-        MappedList<R, E> mapped = new MappedList<>(this, mapper);
-
-        return new CalculationList(this) {
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected ObservableList<R> computeValue() {
-                return mapped;
-            }
-        };
-    }
-
-    public <R> CalculationList<R> flatObservable(Function<E, ObservableValue<R>> mapper) {
-        MappedList<R, E> mapped = new MappedList<>(this, e -> mapper.apply(e).getValue());
-
-        return new CalculationList(this, mapper) {
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected ObservableList<R> computeValue() {
-                return mapped;
-            }
-        };
-    }
-
-    public <R> CalculationList<R> flatVariable(Function<E, Variable<R>> mapper) {
-        return flatObservable(e -> {
-            return Viewtify.calculate(mapper.apply(e));
+    /**
+     * Create new indexed item binding.
+     * 
+     * @param index
+     * @return
+     */
+    public Calculation<E> item(int index) {
+        return Viewtify.calculate(this, () -> {
+            ObservableList<E> value = getValue();
+            return index < value.size() ? value.get(index) : null;
         });
+    }
+
+    /**
+     * Create mapped {@link CalculationList}.
+     * 
+     * @param mapper
+     * @return
+     */
+    public <R> CalculationList<R> map(Function<E, R> mapper) {
+        return Viewtify.calculate("map", new MappedList<>(this, mapper));
     }
 
     /**
@@ -190,18 +158,15 @@ public abstract class CalculationList<E> extends ListBinding<E> {
      */
     public <R> Calculation<R> reduce(R init, WiseBiFunction<R, E, R> accumulator) {
         return new Calculation<R>(() -> {
-            System.out.println("CalcList#reduce");
-            return I.signal(this).scan(init, accumulator).to().v;
+            return I.signal(getValue()).scan(init, accumulator).to().v;
         }, null, this);
     }
 
     /**
-     * Create new indexed item binding.
-     * 
-     * @param index
-     * @return
+     * {@inheritDoc}
      */
-    public Calculation<E> item(int index) {
-        return Viewtify.calculate(this, () -> index < size() ? get(index) : null);
+    @Override
+    public String toString() {
+        return "CalcList[" + name + "]";
     }
 }

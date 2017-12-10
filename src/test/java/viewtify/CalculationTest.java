@@ -389,10 +389,10 @@ public class CalculationTest {
     }
 
     @Test
-    public void calculateProperty() throws Exception {
+    public void flatObservable() throws Exception {
         Nest nest = new Nest("TEST");
         ObjectProperty<Nest> p = new SimpleObjectProperty(nest);
-        Calculation<String> calc = Viewtify.calculate(p).calculateProperty(v -> v.property);
+        Calculation<String> calc = Viewtify.calculate(p).flatObservable(v -> v.property);
         assert calc.get().equals("TEST");
 
         // change inner value
@@ -413,11 +413,13 @@ public class CalculationTest {
     }
 
     @Test
-    public void calculateVariable() throws Exception {
+    public void flatVariable() throws Exception {
         Nest nest = new Nest("TEST");
         ObjectProperty<Nest> p = new SimpleObjectProperty(nest);
-        Calculation<String> calc = Viewtify.calculate(p).calculateVariable(v -> v.variable);
+        Calculation<String> calc = Viewtify.calculate(p).flatVariable(v -> v.variable);
+        assert calc.isValid() == false;
         assert calc.get().equals("TEST");
+        assert calc.isValid() == true;
 
         // change inner value
         nest.variable.set("CHANGE");
@@ -441,9 +443,9 @@ public class CalculationTest {
      */
     private static class Nest {
 
-        private StringProperty property = new SimpleStringProperty();
+        private final StringProperty property = new SimpleStringProperty();
 
-        private Variable<String> variable = Variable.empty();
+        private final Variable<String> variable = Variable.empty();
 
         private Nest(String text) {
             this.property.set(text);
