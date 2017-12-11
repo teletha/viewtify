@@ -257,8 +257,8 @@ public final class Viewtify {
      * @param list A {@link ObservableList} source to bind.
      * @return A binding builder.
      */
-    public static <E> CalculationList<E> calculate(ObservableList<E> list, Observable... dependencies) {
-        return calculate("root", list, dependencies);
+    public static <E> CalculationList<E> calculate(ObservableList<E> list) {
+        return calculate("root", list);
     }
 
     /**
@@ -267,8 +267,8 @@ public final class Viewtify {
      * @param list A {@link ObservableList} source to bind.
      * @return A binding builder.
      */
-    public static <E> CalculationList<E> calculate(String name, ObservableList<E> list, Observable... dependencies) {
-        return list instanceof CalculationList ? (CalculationList) list : new CalculationList(name, list, dependencies);
+    public static <E> CalculationList<E> calculate(String name, ObservableList<E> list) {
+        return list instanceof CalculationList ? (CalculationList) list : new CalculationList(name, list);
     }
 
     /**

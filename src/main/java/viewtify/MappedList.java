@@ -54,7 +54,6 @@ class MappedList<Out, In> extends AbstractList<Out> implements ObservableList<Ou
         source.addListener((InvalidationListener) o -> {
             if (invalidationListeners != null) {
                 invalidationListeners.forEach(listener -> {
-                    System.out.println("Mapped" + source + " is invalid now");
                     listener.invalidated(this);
                 });
             }

@@ -16,11 +16,13 @@ import javafx.collections.ObservableList;
 
 import org.junit.Test;
 
+import antibug.powerassert.PowerAssertOff;
 import kiss.Variable;
 
 /**
  * @version 2017/12/05 23:45:03
  */
+@PowerAssertOff
 public class CalculationListTest {
 
     @Test
@@ -603,9 +605,9 @@ public class CalculationListTest {
         assert result.isValid() == true;
 
         // add
+        System.out.println("\r\nadd");
         Value<String> v4 = Value.of("four");
         source.add(v4);
-        System.out.println("add");
         assert result.isValid() == false;
         assert result.getValue().size() == 3;
         assert result.getValue().get(0).equals("one");
@@ -614,8 +616,8 @@ public class CalculationListTest {
         assert result.isValid() == true;
 
         // remove
+        System.out.println("\r\nremove");
         source.remove(0);
-        System.out.println("remove");
         assert result.isValid() == false;
         assert result.getValue().size() == 2;
         assert result.getValue().get(0).equals("two");
@@ -623,9 +625,9 @@ public class CalculationListTest {
         assert result.isValid() == true;
 
         // change on item
+        System.out.println("\r\nchange");
         v2.property.set("ng");
         v3.property.set("ok");
-        System.out.println("change");
         assert result.isValid() == false;
         assert result.getValue().size() == 2;
         assert result.getValue().get(0).equals("ok");
