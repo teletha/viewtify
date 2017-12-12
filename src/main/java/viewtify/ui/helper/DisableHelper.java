@@ -43,4 +43,11 @@ public interface DisableHelper<Self extends DisableHelper> {
         }
         return (Self) this;
     }
+
+    /**
+     * Validation helper.
+     */
+    default Self enableWhen(ObservableValue<? extends Boolean> condition) {
+        return disableWhen(Viewtify.calculate(condition, v -> !v));
+    }
 }

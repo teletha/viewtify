@@ -23,6 +23,7 @@ import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
 import viewtify.View;
+import viewtify.Viewtify;
 
 /**
  * @version 2017/11/15 9:54:15
@@ -51,7 +52,7 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
      * @return
      */
     public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> provideVariable(Class<Type> type, WiseFunction<Type, Variable<ColumnValue>> provider) {
-        return provideProperty(type, row -> new SimpleObjectProperty(provider.apply(row).get()));
+        return provideProperty(type, row -> Viewtify.calculate(provider.apply(row)));
     }
 
     /**

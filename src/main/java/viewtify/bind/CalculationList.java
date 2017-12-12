@@ -89,10 +89,24 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> {
         }));
     }
 
+    /**
+     * Create boolean {@link Calculation} whether this list has the specified value or not.
+     * 
+     * @param value
+     * @return
+     */
+    public Calculation<Boolean> is(E value) {
+        return new Calculation<Boolean>(() -> getValue().contains(value), null, this);
+    }
+
+    /**
+     * Create boolean {@link Calculation} whether this list never have the specified value or not.
+     * 
+     * @param value
+     * @return
+     */
     public Calculation<Boolean> isNot(E value) {
-        return new Calculation<Boolean>(() -> {
-            return !getValue().contains(value);
-        }, null, this);
+        return new Calculation<Boolean>(() -> !getValue().contains(value), null, this);
     }
 
     /**
