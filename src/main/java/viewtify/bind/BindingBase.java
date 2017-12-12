@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify;
+package viewtify.bind;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -21,8 +21,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
+import viewtify.Viewtify;
+
 /**
- * @version 2017/12/10 15:38:58
+ * Thread-aware {@link Binding} base.
+ * 
+ * @version 2017/12/12 15:23:30
  */
 public abstract class BindingBase<E> implements Binding<E> {
 
