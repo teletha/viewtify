@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify;
+package viewtify.bind;
 
 import java.util.Map;
 
@@ -23,6 +23,7 @@ import org.junit.Test;
 
 import kiss.I;
 import kiss.Variable;
+import viewtify.Viewtify;
 import viewtify.bind.Calculation;
 
 /**

@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify;
+package viewtify.bind;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import antibug.powerassert.PowerAssertOff;
 import kiss.Variable;
+import viewtify.Viewtify;
 import viewtify.bind.Calculation;
 import viewtify.bind.CalculationList;
 
