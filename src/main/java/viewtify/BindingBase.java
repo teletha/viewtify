@@ -18,6 +18,7 @@ import javafx.beans.Observable;
 import javafx.beans.binding.Binding;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 /**
@@ -26,10 +27,13 @@ import javafx.collections.ObservableList;
 public abstract class BindingBase<E> implements Binding<E> {
 
     /** The listener holder. */
+    private List<InvalidationListener> invalidationListeners;
+
+    /** The listener holder. */
     private List<ChangeListener<? super E>> changeListeners;
 
     /** The listener holder. */
-    private List<InvalidationListener> invalidationListeners;
+    private List<ListChangeListener<? super E>> listChangeListeners;
 
     /** The listener holder. */
     private List<Observable> dependencies;
@@ -101,6 +105,42 @@ public abstract class BindingBase<E> implements Binding<E> {
         }
     }
 
+    /**
+     * Manage {@link ListChangeListener}.
+     * 
+     * @param listener
+     */
+    public synchronized void addListener(ListChangeListener<? super E> listener) {
+        if (listener != null) {
+            if (listChangeListeners == null) {
+                listChangeListeners = new CopyOnWriteArrayList();
+            }
+            listChangeListeners.add(listener);
+        }
+    }
+
+    /**
+     * Manage {@link ListChangeListener}.
+     * 
+     * @param listener
+     */
+    public synchronized void removeListener(ListChangeListener<? super E> listener) {
+        if (listener != null) {
+            if (listChangeListeners != null) {
+                listChangeListeners.remove(listener);
+
+                if (listChangeListeners.isEmpty()) {
+                    listChangeListeners = null;
+                }
+            }
+        }
+    }
+
+    /**
+     * Manage dependency {@link Observable}.
+     * 
+     * @param dependency
+     */
     protected final synchronized void bind(Observable dependency) {
         if (dependency != null) {
             if (dependencies == null) {
@@ -112,6 +152,11 @@ public abstract class BindingBase<E> implements Binding<E> {
         }
     }
 
+    /**
+     * Manage dependency {@link Observable}.
+     * 
+     * @param dependency
+     */
     protected final synchronized void unbind(Observable dependency) {
         if (dependency != null && dependencies != null) {
             dependencies.remove(dependency);
