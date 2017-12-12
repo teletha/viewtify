@@ -112,8 +112,8 @@ public class CalculationListTest {
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
         CalculationList<String> result = Viewtify.calculate(FXCollections.observableArrayList(v1, v2, v3))
-                .checkObservable(o -> o.property)
-                .checkObservable(o -> o.variable)
+                .observe(o -> o.property)
+                .observe(o -> o.variable)
                 .map(Value<String>::text);
 
         assert result.isValid() == false;
@@ -137,7 +137,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void checkObservable() throws Exception {
+    public void observeObservable() throws Exception {
         Value<String> v1 = Value.of("one");
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
@@ -156,7 +156,7 @@ public class CalculationListTest {
         assert wrapped.isValid() == true;
 
         // observe property changing
-        wrapped.checkObservable(v -> v.property);
+        wrapped.observe(v -> v.property);
 
         // change on property, invalidate
         v1.property.set("will invalidate");
@@ -166,7 +166,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void checkVariable() throws Exception {
+    public void observeVariable() throws Exception {
         Value<String> v1 = Value.of("one");
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
@@ -185,7 +185,7 @@ public class CalculationListTest {
         assert wrapped.isValid() == true;
 
         // observe variable changing
-        wrapped.checkObservable(v -> v.variable);
+        wrapped.observe(v -> v.variable);
 
         // change on variable, invalidate
         v1.variable.set("will invalidate");
@@ -514,124 +514,6 @@ public class CalculationListTest {
         source.set(0, "NG");
         assert result.isValid() == false;
         assert result.getValue() == false;
-        assert result.isValid() == true;
-    }
-
-    @Test
-    public void skip() throws Exception {
-        ObservableList<String> source = FXCollections.observableArrayList("one", "two", "three");
-        CalculationList<String> result = Viewtify.calculate(source).skip(v -> v.contains("w"));
-        assert result.isValid() == false;
-        assert result.getValue().size() == 2;
-        assert result.getValue().get(0).equals("one");
-        assert result.getValue().get(1).equals("three");
-        assert result.isValid() == true;
-
-        // add
-        source.add("four");
-        assert result.isValid() == false;
-        assert result.getValue().size() == 3;
-        assert result.getValue().get(0).equals("one");
-        assert result.getValue().get(1).equals("three");
-        assert result.getValue().get(2).equals("four");
-        assert result.isValid() == true;
-
-        // remove
-        source.remove(0);
-        assert result.isValid() == false;
-        assert result.getValue().size() == 2;
-        assert result.getValue().get(0).equals("three");
-        assert result.getValue().get(1).equals("four");
-        assert result.isValid() == true;
-
-        // replace
-        source.set(0, "ok");
-        source.set(1, "wow");
-        assert result.isValid() == false;
-        assert result.getValue().size() == 2;
-        assert result.getValue().get(0).equals("ok");
-        assert result.getValue().get(1).equals("four");
-        assert result.isValid() == true;
-    }
-
-    @Test
-    public void take() throws Exception {
-        ObservableList<String> source = FXCollections.observableArrayList("one", "two", "three");
-        CalculationList<String> result = Viewtify.calculate(source).take(v -> v.contains("o"));
-        assert result.isValid() == false;
-        assert result.getValue().size() == 2;
-        assert result.getValue().get(0).equals("one");
-        assert result.getValue().get(1).equals("two");
-        assert result.isValid() == true;
-
-        // add
-        source.add("four");
-        assert result.isValid() == false;
-        assert result.getValue().size() == 3;
-        assert result.getValue().get(0).equals("one");
-        assert result.getValue().get(1).equals("two");
-        assert result.getValue().get(2).equals("four");
-        assert result.isValid() == true;
-
-        // remove
-        source.remove(0);
-        assert result.isValid() == false;
-        assert result.getValue().size() == 2;
-        assert result.getValue().get(0).equals("two");
-        assert result.getValue().get(1).equals("four");
-        assert result.isValid() == true;
-
-        // replace
-        source.set(1, "ok");
-        source.set(2, "ng");
-        assert result.isValid() == false;
-        assert result.getValue().size() == 2;
-        assert result.getValue().get(0).equals("two");
-        assert result.getValue().get(1).equals("ok");
-        assert result.isValid() == true;
-    }
-
-    @Test
-    public void takeWithPropertyCheck() throws Exception {
-        Value<String> v1 = Value.of("one");
-        Value<String> v2 = Value.of("two");
-        Value<String> v3 = Value.of("three");
-        ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
-        CalculationList<String> result = Viewtify.calculate(source).flatObservable(v -> v.property).take(v -> v.contains("o"));
-        assert result.isValid() == false;
-        assert result.getValue().size() == 2;
-        assert result.getValue().get(0).equals("one");
-        assert result.getValue().get(1).equals("two");
-        assert result.isValid() == true;
-
-        // add
-        System.out.println("\r\nadd");
-        Value<String> v4 = Value.of("four");
-        source.add(v4);
-        assert result.isValid() == false;
-        assert result.getValue().size() == 3;
-        assert result.getValue().get(0).equals("one");
-        assert result.getValue().get(1).equals("two");
-        assert result.getValue().get(2).equals("four");
-        assert result.isValid() == true;
-
-        // remove
-        System.out.println("\r\nremove");
-        source.remove(0);
-        assert result.isValid() == false;
-        assert result.getValue().size() == 2;
-        assert result.getValue().get(0).equals("two");
-        assert result.getValue().get(1).equals("four");
-        assert result.isValid() == true;
-
-        // change on item
-        System.out.println("\r\nchange");
-        v2.property.set("ng");
-        v3.property.set("ok");
-        assert result.isValid() == false;
-        assert result.getValue().size() == 2;
-        assert result.getValue().get(0).equals("ok");
-        assert result.getValue().get(1).equals("four");
         assert result.isValid() == true;
     }
 
