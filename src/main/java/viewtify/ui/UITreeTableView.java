@@ -59,12 +59,20 @@ public class UITreeTableView<T> extends UIControl<UITreeTableView, TreeTableView
      * Specifies the selection mode to use in this selection model. The selection mode specifies how
      * many items in the underlying data model can be selected at any one time.
      * <p>
-     * By default, the selection mode is <code>SelectionMode.SINGLE</code>.
      */
-    public UITreeTableView<T> selectionMode(SelectionMode mode) {
-        if (mode != null) {
-            ui.getSelectionModel().setSelectionMode(mode);
-        }
+    public UITreeTableView<T> selectMultiple() {
+        ui.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies the selection mode to use in this selection model. The selection mode specifies how
+     * many items in the underlying data model can be selected at any one time.
+     * <p>
+     */
+    public UITreeTableView<T> selectSingle() {
+        ui.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         return this;
     }
 
