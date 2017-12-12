@@ -54,7 +54,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> {
      */
     @Override
     protected ObservableList<E> computeValue() {
-        System.out.println(source);
+        if (debug) System.out.println(source);
         return source;
     }
 
@@ -123,7 +123,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> {
                 observableSelectors = new CopyOnWriteArrayList<>();
                 source.addListener(this::observeItem);
             }
-    
+
             if (!observableSelectors.contains(selector)) {
                 observableSelectors.add(selector);
                 source.forEach(e -> {
@@ -145,7 +145,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> {
                 if (change.wasRemoved()) {
                     change.getRemoved().forEach(e -> observableSelectors.forEach(s -> unbind(s.apply(e))));
                 }
-    
+
                 if (change.wasAdded()) {
                     change.getAddedSubList().forEach(e -> observableSelectors.forEach(s -> bind(s.apply(e))));
                 }

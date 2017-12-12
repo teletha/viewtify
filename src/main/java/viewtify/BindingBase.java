@@ -26,6 +26,9 @@ import javafx.collections.ObservableList;
  */
 public abstract class BindingBase<E> implements Binding<E> {
 
+    /** The debuggable mode. */
+    protected static final boolean debug = false;
+
     /** The listener holder. */
     private List<InvalidationListener> invalidationListeners;
 
@@ -213,7 +216,7 @@ public abstract class BindingBase<E> implements Binding<E> {
             if (validity.compareAndSet(true, false)) {
                 reference = null;
 
-                System.out.println(this + " is invalid now");
+                if (debug) System.out.println(this + " is invalid now");
 
                 if (invalidationListeners != null) {
                     for (InvalidationListener listener : invalidationListeners) {
