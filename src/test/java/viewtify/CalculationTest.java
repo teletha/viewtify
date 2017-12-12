@@ -23,6 +23,7 @@ import org.junit.Test;
 
 import kiss.I;
 import kiss.Variable;
+import viewtify.bind.Calculation;
 
 /**
  * @version 2017/12/06 23:28:16

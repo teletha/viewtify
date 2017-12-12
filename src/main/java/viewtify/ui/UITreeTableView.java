@@ -18,9 +18,9 @@ import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.text.Text;
 
-import viewtify.CalculationList;
 import viewtify.View;
 import viewtify.Viewtify;
+import viewtify.bind.CalculationList;
 
 /**
  * @version 2017/11/15 9:54:15

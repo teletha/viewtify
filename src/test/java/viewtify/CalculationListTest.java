@@ -18,6 +18,8 @@ import org.junit.Test;
 
 import antibug.powerassert.PowerAssertOff;
 import kiss.Variable;
+import viewtify.bind.Calculation;
+import viewtify.bind.CalculationList;
 
 /**
  * @version 2017/12/05 23:45:03

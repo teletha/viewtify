@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify;
+package viewtify.bind;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,7 @@ import javafx.beans.value.ObservableValue;
 
 import kiss.I;
 import kiss.Variable;
+import viewtify.Viewtify;
 
 /**
  * @version 2017/12/06 23:28:47
@@ -39,7 +40,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param calculation
      * @param dependencies
      */
-    protected Calculation(Supplier calculation, Calculation outer, Observable... dependencies) {
+    public Calculation(Supplier calculation, Calculation outer, Observable... dependencies) {
         this.calculation = calculation;
 
         List<Observable> list = new ArrayList();

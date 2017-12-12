@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify;
+package viewtify.bind;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import javafx.collections.ObservableList;
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseBiFunction;
-import viewtify.bind.BindingBase;
+import viewtify.Viewtify;
 
 /**
  * @version 2017/12/12 15:08:43
@@ -49,7 +49,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> {
      * @param name
      * @param source
      */
-    CalculationList(String name, ObservableList<E> source) {
+    public CalculationList(String name, ObservableList<E> source) {
         this.name = name;
         this.source = source;
 

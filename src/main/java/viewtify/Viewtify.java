@@ -43,6 +43,8 @@ import kiss.WiseBiFunction;
 import kiss.WiseFunction;
 import kiss.WiseSupplier;
 import kiss.WiseTriFunction;
+import viewtify.bind.Calculation;
+import viewtify.bind.CalculationList;
 import viewtify.ui.UI;
 
 /**
