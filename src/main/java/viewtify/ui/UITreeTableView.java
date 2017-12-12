@@ -60,7 +60,7 @@ public class UITreeTableView<T> extends UIControl<UITreeTableView, TreeTableView
      * many items in the underlying data model can be selected at any one time.
      * <p>
      */
-    public UITreeTableView<T> selectMultiple() {
+    public UITreeTableView<T> selectMultipleRows() {
         ui.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         return this;
     }
@@ -71,7 +71,7 @@ public class UITreeTableView<T> extends UIControl<UITreeTableView, TreeTableView
      * many items in the underlying data model can be selected at any one time.
      * <p>
      */
-    public UITreeTableView<T> selectSingle() {
+    public UITreeTableView<T> selectSingleRow() {
         ui.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         return this;
     }
