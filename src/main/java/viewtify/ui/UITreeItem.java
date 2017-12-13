@@ -63,7 +63,7 @@ public class UITreeItem<T> {
      * @param value A child item value.
      * @return A created item.
      */
-    public <R extends T> UITreeItem<R> createItem(R value) {
+    public <R> UITreeItem<R> createItem(R value) {
         UITreeItem child = new UITreeItem(table, value);
         ui.getChildren().add(child.ui);
 
