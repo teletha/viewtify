@@ -27,7 +27,7 @@ import kiss.model.Model;
 import viewtify.ui.UITreeTableColumn;
 
 /**
- * @version 2017/11/30 12:43:32
+ * @version 2017/12/15 10:16:14
  */
 public abstract class View implements Extensible {
 
@@ -39,6 +39,9 @@ public abstract class View implements Extensible {
 
     /** The parent view. */
     private View parent;
+
+    /** The flag whether this view is sub or not. */
+    private String prefix;
 
     /**
      * Use class name as view name.
@@ -74,11 +77,23 @@ public abstract class View implements Extensible {
                         if (view == null) {
                             view = I.make((Class<View>) type);
                             view.parent = this;
+
+                            // check sub view
+                            if (type.getEnclosingClass() == getClass()) {
+                                view.prefix = field.getName();
+                            }
                         }
                         field.set(this, view);
                     } else {
-                        String id = "#" + field.getName();
+                        // detect widget id
+                        String id = field.getName();
 
+                        if (prefix != null) {
+                            id = prefix + capitalize(id);
+                        }
+                        id = "#" + id;
+
+                        // find by id
                         Object node = root().lookup(id);
 
                         if (node == null) {
@@ -112,6 +127,16 @@ public abstract class View implements Extensible {
         } catch (Exception e) {
             throw I.quiet(e);
         }
+    }
+
+    /**
+     * Capitalize helper.
+     * 
+     * @param value
+     * @return
+     */
+    private String capitalize(String value) {
+        return Character.toUpperCase(value.charAt(0)) + value.substring(1);
     }
 
     /**
