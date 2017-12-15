@@ -9,6 +9,7 @@
  */
 package viewtify.ui;
 
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.scene.control.CheckBox;
 
 import viewtify.View;
@@ -16,7 +17,7 @@ import viewtify.View;
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UICheckBox<T> extends UI<UICheckBox, CheckBox> {
+public class UICheckBox extends UI<UICheckBox, CheckBox> {
 
     /**
      * Enchanced view.
@@ -38,4 +39,21 @@ public class UICheckBox<T> extends UI<UICheckBox, CheckBox> {
         return this;
     }
 
+    /**
+     * Return true when this checkbox is selected.
+     * 
+     * @return
+     */
+    public ObservableBooleanValue isSelected() {
+        return ui.selectedProperty();
+    }
+
+    /**
+     * Return true when this checkbox is NOT selected.
+     * 
+     * @return
+     */
+    public ObservableBooleanValue isNotSelected() {
+        return ui.selectedProperty().not();
+    }
 }
