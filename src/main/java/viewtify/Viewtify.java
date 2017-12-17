@@ -56,10 +56,12 @@ public final class Viewtify {
     private static final boolean inTest;
 
     static {
+        // Error Handling
         Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
             e.printStackTrace();
         });
 
+        // For Test
         inTest = I.signal(new Error().getStackTrace())
                 .take(e -> e.getClassName().startsWith("org.junit."))
                 .take(1)

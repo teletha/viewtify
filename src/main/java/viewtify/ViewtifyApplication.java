@@ -50,6 +50,7 @@ public final class ViewtifyApplication extends Application {
         I.make(WindowLocator.class).restore().locate("MainWindow", stage);
 
         Scene scene = new Scene(Viewtify.root().root());
+        scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
