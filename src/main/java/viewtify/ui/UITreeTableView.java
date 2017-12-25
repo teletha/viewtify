@@ -28,7 +28,7 @@ import viewtify.bind.CalculationList;
 public class UITreeTableView<T> extends UIControl<UITreeTableView, TreeTableView<T>> {
 
     /** The root item. */
-    private final UITreeItem root;
+    public final UITreeItem root;
 
     /**
      * Enchanced view.
@@ -83,16 +83,6 @@ public class UITreeTableView<T> extends UIControl<UITreeTableView, TreeTableView
         ui.setRowFactory(table -> renderer.apply(this));
 
         return this;
-    }
-
-    /**
-     * Add item to root child.
-     * 
-     * @param item
-     * @return
-     */
-    public <R> UITreeItem<R> createItem(R item) {
-        return root.createItem(item);
     }
 
     /**
