@@ -19,7 +19,7 @@ import viewtify.View;
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UIText extends UI<UIText, TextField> {
+public class UIText extends UserInterface<UIText, TextField> {
 
     /**
      * Enchanced view.

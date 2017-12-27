@@ -27,7 +27,7 @@ import viewtify.View;
 /**
  * @version 2017/11/18 1:30:40
  */
-public class UISpinner<T> extends UI<UISpinner<T>, Spinner<T>> {
+public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>> {
 
     /**
      * Enchanced view.

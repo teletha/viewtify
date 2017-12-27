@@ -19,7 +19,14 @@ import viewtify.Viewtify;
 /**
  * @version 2017/12/02 18:19:15
  */
-public interface StyleHelper<Self extends StyleHelper, S extends Styleable> extends UserInterface<S> {
+public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
+
+    /**
+     * Return the associated user interface.
+     * 
+     * @return
+     */
+    S ui();
 
     /**
      * Apply single state class by the specified enum.

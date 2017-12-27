@@ -20,7 +20,7 @@ import viewtify.View;
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UIListView<T> extends UI<UIListView, ListView<T>> {
+public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
 
     /**
      * Enchanced view.

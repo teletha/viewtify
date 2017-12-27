@@ -26,7 +26,7 @@ import viewtify.View;
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UIComboBox<T> extends UI<UIComboBox, ComboBox<T>> {
+public class UIComboBox<T> extends UserInterface<UIComboBox, ComboBox<T>> {
 
     /**
      * Enchanced view.

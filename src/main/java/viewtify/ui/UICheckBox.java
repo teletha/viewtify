@@ -17,7 +17,7 @@ import viewtify.View;
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UICheckBox extends UI<UICheckBox, CheckBox> {
+public class UICheckBox extends UserInterface<UICheckBox, CheckBox> {
 
     /**
      * Enchanced view.

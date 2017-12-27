@@ -21,7 +21,7 @@ import viewtify.View;
 /**
  * @version 2017/11/29 10:12:34
  */
-public class UITabPane<T> extends UI<UITabPane, TabPane> {
+public class UITabPane<T> extends UserInterface<UITabPane, TabPane> {
 
     /**
      * Enchanced view.

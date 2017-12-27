@@ -13,7 +13,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -65,7 +64,7 @@ public abstract class View implements Extensible {
         try {
             // Inject various types
             for (Field field : getClass().getDeclaredFields()) {
-                if (field.isAnnotationPresent(FXML.class)) {
+                if (field.isAnnotationPresent(UI.class)) {
                     field.setAccessible(true);
 
                     Class<?> type = field.getType();

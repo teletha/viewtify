@@ -45,7 +45,7 @@ import kiss.WiseSupplier;
 import kiss.WiseTriFunction;
 import viewtify.bind.Calculation;
 import viewtify.bind.CalculationList;
-import viewtify.ui.UI;
+import viewtify.ui.UserInterface;
 
 /**
  * @version 2017/12/01 18:25:44
@@ -482,7 +482,7 @@ public final class Viewtify {
         });
     }
 
-    public static UI wrap(Control ui, View view) {
-        return new UI(ui, view);
+    public static UserInterface wrap(Control ui, View view) {
+        return new UserInterface(ui, view);
     }
 }

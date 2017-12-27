@@ -19,7 +19,7 @@ import viewtify.View;
 /**
  * @version 2017/12/05 16:14:25
  */
-public class UIControl<Self extends UIControl, W extends Control> extends UI<Self, W> {
+public class UIControl<Self extends UIControl, W extends Control> extends UserInterface<Self, W> {
 
     private UIContextMenu context;
 

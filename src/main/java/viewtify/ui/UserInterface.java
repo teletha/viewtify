@@ -44,7 +44,7 @@ import viewtify.ui.helper.StyleHelper;
 /**
  * @version 2017/11/15 10:31:50
  */
-public class UI<Self extends UI, W extends Node> implements StyleHelper<Self, W>, DisableHelper<Self> {
+public class UserInterface<Self extends UserInterface, W extends Node> implements StyleHelper<Self, W>, DisableHelper<Self> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
@@ -64,7 +64,7 @@ public class UI<Self extends UI, W extends Node> implements StyleHelper<Self, W>
     /**
      * @param ui
      */
-    public UI(W ui, View view) {
+    public UserInterface(W ui, View view) {
         this.ui = ui;
         this.view = view;
     }
@@ -90,8 +90,8 @@ public class UI<Self extends UI, W extends Node> implements StyleHelper<Self, W>
      * 
      * @return
      */
-    public UI parent() {
-        return new UI(ui.getParent(), view);
+    public UserInterface parent() {
+        return new UserInterface(ui.getParent(), view);
     }
 
     /**
