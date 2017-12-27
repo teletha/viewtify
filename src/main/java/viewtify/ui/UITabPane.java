@@ -10,7 +10,7 @@
 package viewtify.ui;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -19,9 +19,9 @@ import kiss.I;
 import viewtify.View;
 
 /**
- * @version 2017/11/29 10:12:34
+ * @version 2017/12/27 16:00:44
  */
-public class UITabPane<T> extends UserInterface<UITabPane, TabPane> {
+public class UITabPane extends UserInterface<UITabPane, TabPane> {
 
     /**
      * Enchanced view.
@@ -51,7 +51,7 @@ public class UITabPane<T> extends UserInterface<UITabPane, TabPane> {
      * @return
      */
     public <V extends View> UITabPane load(String label, Class<V> loadingViewType) {
-        return load(label, () -> I.make(loadingViewType));
+        return load(label, tab -> I.make(loadingViewType));
     }
 
     /**
@@ -61,24 +61,13 @@ public class UITabPane<T> extends UserInterface<UITabPane, TabPane> {
      * @param loadingViewType A view type to load.
      * @return
      */
-    public <V extends View> UITabPane load(String label, V view) {
-        return load(label, () -> view);
-    }
-
-    /**
-     * Load tab with the specified view.
-     * 
-     * @param label A tab label.
-     * @param loadingViewType A view type to load.
-     * @return
-     */
-    public <V extends View> UITabPane load(String label, Supplier<V> view) {
+    public <V extends View> UITabPane load(String label, Function<UITab, V> view) {
         Tab tab = new Tab(label);
         AtomicBoolean loaded = new AtomicBoolean();
 
         tab.selectedProperty().addListener(change -> {
             if (loaded.getAndSet(true) == false) {
-                tab.setContent(view.get().root());
+                tab.setContent(view.apply(new UITab(tab)).root());
             }
         });
 
