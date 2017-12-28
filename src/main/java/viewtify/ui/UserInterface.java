@@ -28,6 +28,9 @@ import javafx.scene.control.MenuItem;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
+import org.objenesis.instantiator.ObjectInstantiator;
 
 import kiss.I;
 import kiss.Manageable;
