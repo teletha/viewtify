@@ -9,6 +9,7 @@
  */
 package viewtify;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -17,6 +18,9 @@ import javafx.scene.input.ScrollEvent;
  * @version 2017/11/15 10:44:45
  */
 public class User {
+
+    /** User Action */
+    public static EventType<ActionEvent> Action = ActionEvent.ACTION;
 
     /** User Action */
     public static EventType<ScrollEvent> Scroll = ScrollEvent.SCROLL;

@@ -90,6 +90,13 @@ public class UIComboBox<T> extends UserInterface<UIComboBox, ComboBox<T>> {
     }
 
     /**
+     * Get current index.
+     */
+    public int index() {
+        return ui.getSelectionModel().getSelectedIndex();
+    }
+
+    /**
      * Get current value.
      * 
      * @return

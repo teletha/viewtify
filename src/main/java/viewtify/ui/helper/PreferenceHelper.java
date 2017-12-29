@@ -28,10 +28,10 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
     }
 
     default Self model(Supplier<V> getter, Consumer<V> setter) {
+        preference().setValue(getter.get());
         preference().addListener((source, oldValue, newValue) -> {
             setter.accept(newValue);
         });
-        preference().setValue(getter.get());
 
         return (Self) this;
     }
