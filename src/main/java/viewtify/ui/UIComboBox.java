@@ -15,6 +15,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
@@ -22,11 +23,12 @@ import javafx.scene.control.ListCell;
 import kiss.I;
 import kiss.Signal;
 import viewtify.View;
+import viewtify.ui.helper.PreferenceHelper;
 
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UIComboBox<T> extends UserInterface<UIComboBox, ComboBox<T>> {
+public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> implements PreferenceHelper<UIComboBox<T>, T> {
 
     /**
      * Enchanced view.
@@ -35,6 +37,14 @@ public class UIComboBox<T> extends UserInterface<UIComboBox, ComboBox<T>> {
      */
     private UIComboBox(ComboBox<T> ui, View view) {
         super(ui, view);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Property<T> preference() {
+        return ui.valueProperty();
     }
 
     /**
