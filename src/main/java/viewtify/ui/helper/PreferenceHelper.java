@@ -9,9 +9,6 @@
  */
 package viewtify.ui.helper;
 
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
 import javafx.beans.property.Property;
 
 import kiss.Variable;
@@ -23,16 +20,30 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
 
     Property<V> preference();
 
-    default Self model(Variable<V> property) {
-        return model(property::get, property::set);
+    /**
+     * This preference synchronizes with the specified value.
+     */
+    default Self model(Property<V> value) {
+        if (value != null) {
+            Property<V> pref = preference();
+            pref.unbind();
+            pref.setValue(value.getValue());
+            pref.bind(value);
+        }
+        return (Self) this;
     }
 
-    default Self model(Supplier<V> getter, Consumer<V> setter) {
-        preference().setValue(getter.get());
-        preference().addListener((source, oldValue, newValue) -> {
-            setter.accept(newValue);
-        });
-
+    /**
+     * This preference synchronizes with the specified value.
+     */
+    default Self model(Variable<V> value) {
+        if (value != null) {
+            Property<V> pref = preference();
+            pref.setValue(value.get());
+            preference().addListener((source, oldValue, newValue) -> {
+                value.set(newValue);
+            });
+        }
         return (Self) this;
     }
 }
