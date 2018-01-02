@@ -11,15 +11,21 @@ package viewtify;
 
 import static java.util.concurrent.TimeUnit.*;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Spinner;
 import javafx.stage.Stage;
 
 import org.controlsfx.tools.ValueExtractor;
 
+import filer.Filer;
 import kiss.Decoder;
 import kiss.Encoder;
 import kiss.I;
@@ -39,6 +45,9 @@ public final class ViewtifyApplication extends Application {
         ValueExtractor.addObservableValueExtractor(c -> c instanceof Spinner, c -> ((Spinner) c).valueProperty());
     }
 
+    /** The style sheet manager. */
+    private final StyleSheetObserver styles = new StyleSheetObserver();
+
     /**
      * Initialize {@link Viewtify} application.
      */
@@ -53,6 +62,10 @@ public final class ViewtifyApplication extends Application {
         scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
+
+        // observe stylesheets
+        styles.observe(scene.getStylesheets());
+        styles.observe(scene.getRoot().getStylesheets());
     }
 
     /**
@@ -61,6 +74,49 @@ public final class ViewtifyApplication extends Application {
     @Override
     public void stop() throws Exception {
         Viewtify.deactivate();
+    }
+
+    /**
+     * @version 2018/01/02 19:04:37
+     */
+    private static class StyleSheetObserver {
+
+        /**
+         * Observe stylesheet.
+         * 
+         * @param stylesheets
+         */
+        private void observe(ObservableList<String> stylesheets) {
+            for (String stylesheet : stylesheets) {
+                if (stylesheet.startsWith("file:/")) {
+                    Path path = Paths.get(stylesheet.substring(6));
+
+                    if (Files.exists(path)) {
+                        Filer.observe(path).debounce(1, SECONDS).to(e -> {
+                            AtomicInteger index = new AtomicInteger();
+
+                            // remove
+                            Viewtify.inUI(() -> {
+                                index.set(stylesheets.indexOf(stylesheet));
+
+                                if (index.get() != -1) {
+                                    stylesheets.remove(index.get());
+                                }
+                            });
+
+                            // reload
+                            Viewtify.inUI(() -> {
+                                if (index.get() == -1) {
+                                    stylesheets.add(stylesheet);
+                                } else {
+                                    stylesheets.add(index.get(), stylesheet);
+                                }
+                            });
+                        });
+                    }
+                }
+            }
+        }
     }
 
     /**
