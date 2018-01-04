@@ -29,9 +29,24 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     S ui();
 
     /**
+     * Apply class name;
+     * 
+     * @param className
+     */
+    default Self style(String className) {
+        Viewtify.inUI(() -> {
+            ObservableList<String> classes = ui().getStyleClass();
+
+            if (!classes.contains(className)) {
+                classes.add(className);
+            }
+        });
+        return (Self) this;
+    }
+
+    /**
      * Apply single state class by the specified enum.
      * 
-     * @param node
      * @param state
      */
     default <E extends Enum<E>> Self style(E state) {

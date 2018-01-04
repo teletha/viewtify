@@ -33,6 +33,7 @@ import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Control;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import filer.Filer;
 import kiss.Disposable;
@@ -103,6 +104,9 @@ public final class Viewtify {
     /** The singleton FX stage. */
     static Stage stage;
 
+    /** The application initializer, plz call me on {@link Application#start(Stage)}. */
+    static Consumer<Stage> initializer;
+
     /**
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      */
@@ -111,9 +115,16 @@ public final class Viewtify {
     }
 
     /**
+     * Activate the specified {@link Viewtify} application with {@link StageStyle#DECORATED}.
+     */
+    public static final void activate(Class<? extends View> application, ActivationPolicy policy) {
+        activate(application, policy, null);
+    }
+
+    /**
      * Activate the specified {@link Viewtify} application.
      */
-    public static final synchronized void activate(Class<? extends View> application, ActivationPolicy policy) {
+    public static final synchronized void activate(Class<? extends View> application, ActivationPolicy policy, StageStyle style) {
         if (rootViewClass != null) {
             return; // ignore duplicated call
         }
@@ -178,6 +189,12 @@ public final class Viewtify {
 
         // load extensions in application package
         I.load(application, false);
+
+        // build application initializer
+        initializer = s -> {
+            stage = s;
+            stage.initStyle(style != null ? style : StageStyle.DECORATED);
+        };
 
         // launch JavaFX UI
         Application.launch(ViewtifyApplication.class);

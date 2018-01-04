@@ -53,7 +53,7 @@ public final class ViewtifyApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        Viewtify.stage = stage;
+        Viewtify.initializer.accept(stage);
 
         // trace window size and position
         I.make(WindowLocator.class).restore().locate("MainWindow", stage);
