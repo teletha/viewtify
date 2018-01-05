@@ -95,6 +95,19 @@ public class UserInterface<Self extends UserInterface, W extends Node> implement
     }
 
     /**
+     * Specifies whether this {@code Node} and any subnodes should be rendered as part of the scene
+     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it
+     * is off the screen or obscured by another Node. Invisible nodes never receive mouse events or
+     * keyboard focus and never maintain keyboard focus when they become invisible.
+     *
+     * @defaultValue true
+     */
+    public Self visible(boolean visible) {
+        ui.setVisible(visible);
+        return (Self) this;
+    }
+
+    /**
      * Helper to listen user action event.
      * 
      * @param actionType
