@@ -18,6 +18,9 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import javafx.beans.Observable;
+import javafx.beans.binding.DoubleExpression;
+import javafx.beans.binding.IntegerExpression;
+import javafx.beans.binding.LongExpression;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ObservableValue;
 
@@ -124,6 +127,30 @@ public class Calculation<T> extends ObjectBinding<T> {
                 }
             }
         };
+    }
+
+    /**
+     * Returns a new ObservableValue that, when this ObservableValue holds value {@code x}, holds
+     * the value held by {@code f(x)}, and is empty when this ObservableValue is empty.
+     */
+    public Calculation<Integer> flatInteger(Function<? super T, IntegerExpression> mapper) {
+        return flatObservable(mapper::apply).as(Integer.class);
+    }
+
+    /**
+     * Returns a new ObservableValue that, when this ObservableValue holds value {@code x}, holds
+     * the value held by {@code f(x)}, and is empty when this ObservableValue is empty.
+     */
+    public Calculation<Long> flatLong(Function<? super T, LongExpression> mapper) {
+        return flatObservable(mapper::apply).as(Long.class);
+    }
+
+    /**
+     * Returns a new ObservableValue that, when this ObservableValue holds value {@code x}, holds
+     * the value held by {@code f(x)}, and is empty when this ObservableValue is empty.
+     */
+    public Calculation<Double> flatDouble(Function<? super T, DoubleExpression> mapper) {
+        return flatObservable(mapper::apply).as(Double.class);
     }
 
     /**

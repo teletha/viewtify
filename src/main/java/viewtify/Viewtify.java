@@ -26,12 +26,17 @@ import java.util.function.Supplier;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.Observable;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Control;
+import javafx.scene.layout.Region;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -501,5 +506,43 @@ public final class Viewtify {
 
     public static UserInterface wrap(Control ui, View view) {
         return new UserInterface(ui, view);
+    }
+
+    /**
+     * Clip the specified node by its parent node.
+     * 
+     * @param node A target node to clip.
+     */
+    public static final void clip(Node node) {
+        if (node != null) {
+            clip(node, node.parentProperty());
+        }
+    }
+
+    /**
+     * Clip the specified node by the specified clipper.
+     * 
+     * @param node A target node to clip.
+     * @param clipper A clip area.
+     */
+    public static final void clip(Node node, Parent clipper) {
+        if (node != null && clipper != null) {
+            clip(node, new SimpleObjectProperty(clipper));
+        }
+    }
+
+    /**
+     * Clip the specified node by the specified clipper.
+     * 
+     * @param node A target node to clip.
+     * @param clipper A clip area.
+     */
+    public static final void clip(Node node, ObservableValue<? extends Parent> clipper) {
+        if (node != null && clipper != null) {
+            Calculation<Double> width = calculate(clipper).as(Region.class).flatDouble(Region::widthProperty);
+            Calculation<Double> height = calculate(clipper).as(Region.class).flatDouble(Region::heightProperty);
+
+            node.clipProperty().bind(calculate(width, height, () -> new Rectangle(width.get(), height.get())));
+        }
     }
 }
