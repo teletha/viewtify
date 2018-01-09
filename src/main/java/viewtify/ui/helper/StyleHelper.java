@@ -12,6 +12,7 @@ package viewtify.ui.helper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
+import javafx.scene.Node;
 
 import kiss.Variable;
 import viewtify.Viewtify;
@@ -45,11 +46,31 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     }
 
     /**
+     * Apply class name;
+     * 
+     * @param className
+     */
+    default <E extends Enum<E>> Self style(E... states) {
+        Viewtify.inUI(() -> {
+            ObservableList<String> classes = ui().getStyleClass();
+
+            for (E state : states) {
+                String name = state.name();
+
+                if (!classes.contains(name)) {
+                    classes.add(name);
+                }
+            }
+        });
+        return (Self) this;
+    }
+
+    /**
      * Apply single state class by the specified enum.
      * 
      * @param state
      */
-    default <E extends Enum<E>> Self style(E state) {
+    default <E extends Enum<E>> Self styleOnly(E state) {
         if (state != null) {
             Viewtify.inUI(() -> {
                 ObservableList<String> classes = ui().getStyleClass();
@@ -76,8 +97,8 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
      * @param node
      * @param state
      */
-    default <E extends Enum<E>> Self style(Variable<E> state) {
-        return style(Viewtify.calculate(state));
+    default <E extends Enum<E>> Self styleOnly(Variable<E> state) {
+        return styleOnly(Viewtify.calculate(state));
     }
 
     /**
@@ -86,8 +107,8 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
      * @param node
      * @param state
      */
-    default <E extends Enum<E>> Self style(ObservableValue<E> state) {
-        state.addListener(o -> style(state.getValue()));
+    default <E extends Enum<E>> Self styleOnly(ObservableValue<E> state) {
+        state.addListener(o -> styleOnly(state.getValue()));
         return (Self) this;
     }
 
@@ -107,5 +128,24 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
             });
         }
         return (Self) this;
+    }
+
+    /**
+     * Create temporary {@link StyleHelper}.
+     * 
+     * @param node
+     * @return
+     */
+    static StyleHelper of(Node node) {
+        return new StyleHelper() {
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public Styleable ui() {
+                return node;
+            }
+        };
     }
 }
