@@ -144,11 +144,11 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> imp
      * @return
      */
     public UIComboBox<T> text(Function<T, String> factory) {
-        Cell cell = new Cell(factory);
-
-        ui.setCellFactory(e -> cell);
-        ui.setButtonCell(cell);
-
+        if (factory != null) {
+            // IMPORTANT : Don't share cell factory instance.
+            ui.setCellFactory(e -> new Cell(factory));
+            ui.setButtonCell(new Cell(factory));
+        }
         return this;
     }
 
@@ -157,10 +157,11 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> imp
      */
     private class Cell extends ListCell<T> {
 
+        /** The text factory. */
         private final Function<T, String> factory;
 
         /**
-         * @param factory
+         * @param factory A text factory.
          */
         private Cell(Function<T, String> factory) {
             this.factory = factory;
@@ -173,7 +174,9 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> imp
         protected void updateItem(T item, boolean empty) {
             super.updateItem(item, empty);
 
-            if (item != null && !empty) {
+            if (item == null || empty) {
+                setText(null);
+            } else {
                 setText(factory.apply(item));
             }
         }
