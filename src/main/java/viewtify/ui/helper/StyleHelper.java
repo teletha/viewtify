@@ -12,7 +12,6 @@ package viewtify.ui.helper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
-import javafx.scene.Node;
 
 import kiss.Variable;
 import viewtify.Viewtify;
@@ -133,10 +132,10 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     /**
      * Create temporary {@link StyleHelper}.
      * 
-     * @param node
+     * @param styleable
      * @return
      */
-    static StyleHelper of(Node node) {
+    static StyleHelper of(Styleable styleable) {
         return new StyleHelper() {
 
             /**
@@ -144,7 +143,7 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
              */
             @Override
             public Styleable ui() {
-                return node;
+                return styleable;
             }
         };
     }
