@@ -15,6 +15,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -136,6 +137,15 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>> {
     public UISpinner<T> value(T value) {
         ui.getValueFactory().setValue(value);
         return this;
+    }
+
+    /**
+     * Get current value as property.
+     * 
+     * @return
+     */
+    public ReadOnlyObjectProperty<T> property() {
+        return ui.valueProperty();
     }
 
     /**
