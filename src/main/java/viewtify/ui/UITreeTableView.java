@@ -28,7 +28,7 @@ import viewtify.bind.CalculationList;
 public class UITreeTableView<T> extends UIControl<UITreeTableView, TreeTableView<T>> {
 
     /** The root item. */
-    public final UITreeItem root;
+    public final UITreeItem<T> root;
 
     /**
      * Enchanced view.

@@ -26,7 +26,7 @@ import viewtify.View;
 import viewtify.Viewtify;
 
 /**
- * @version 2017/11/15 9:54:15
+ * @version 2018/01/16 13:49:29
  */
 public class UITreeTableColumn<RowValue, ColumnValue> {
 
@@ -51,8 +51,8 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
      * @param provider
      * @return
      */
-    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> provideVariable(Class<Type> type, WiseFunction<Type, Variable<ColumnValue>> provider) {
-        return provideProperty(type, row -> Viewtify.calculate(provider.apply(row)));
+    public <P extends Function<RowValue, ObservableValue<ColumnValue>>> UITreeTableColumn<RowValue, ColumnValue> model(Class<P> provider) {
+        return modelByProperty(I.make(provider));
     }
 
     /**
@@ -61,8 +61,8 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
      * @param provider
      * @return
      */
-    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> provideValue(Class<Type> type, WiseFunction<Type, ColumnValue> provider) {
-        return provideProperty(type, row -> new SimpleObjectProperty(provider.apply(row)));
+    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> model(Class<Type> type, WiseFunction<Type, ColumnValue> provider) {
+        return modelByProperty(type, row -> new SimpleObjectProperty(provider.apply(row)));
     }
 
     /**
@@ -71,9 +71,30 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
      * @param provider
      * @return
      */
-    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> provideProperty(Class<Type> type, Function<Type, ObservableValue<ColumnValue>> provider) {
+    public UITreeTableColumn<RowValue, ColumnValue> model(WiseFunction<RowValue, ColumnValue> provider) {
+        return modelByProperty(row -> new SimpleObjectProperty(provider.apply(row)));
+    }
+
+    /**
+     * Add value provider.
+     * 
+     * @param provider
+     * @return
+     */
+    public UITreeTableColumn<RowValue, ColumnValue> modelByProperty(Function<RowValue, ObservableValue<ColumnValue>> provider) {
+        ui.setCellValueFactory(data -> provider.apply(data.getValue().getValue()));
+        return this;
+    }
+
+    /**
+     * Add value provider.
+     * 
+     * @param provider
+     * @return
+     */
+    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> modelByProperty(Class<Type> type, Function<Type, ObservableValue<ColumnValue>> provider) {
         if (mappingProvider == null) {
-            provide(mappingProvider = new TypeMappingProvider());
+            modelByProperty(mappingProvider = new TypeMappingProvider());
         }
         mappingProvider.mapper.put(type, provider);
 
@@ -86,8 +107,8 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
      * @param provider
      * @return
      */
-    public <P extends Function<RowValue, ObservableValue<ColumnValue>>> UITreeTableColumn<RowValue, ColumnValue> provide(Class<P> provider) {
-        return provide(I.make(provider));
+    public UITreeTableColumn<RowValue, ColumnValue> modelByVar(WiseFunction<RowValue, Variable<ColumnValue>> provider) {
+        return modelByProperty(row -> Viewtify.calculate(provider.apply(row)));
     }
 
     /**
@@ -96,9 +117,8 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
      * @param provider
      * @return
      */
-    public UITreeTableColumn<RowValue, ColumnValue> provide(Function<RowValue, ObservableValue<ColumnValue>> provider) {
-        ui.setCellValueFactory(data -> provider.apply(data.getValue().getValue()));
-        return this;
+    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> modelByVar(Class<Type> type, WiseFunction<Type, Variable<ColumnValue>> provider) {
+        return modelByProperty(type, row -> Viewtify.calculate(provider.apply(row)));
     }
 
     /**

@@ -9,12 +9,15 @@
  */
 package viewtify.ui;
 
+import java.util.List;
 import java.util.function.Function;
 
 import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView;
 
+import kiss.I;
 import kiss.Signal;
 import viewtify.Viewtify;
 
@@ -58,6 +61,15 @@ public class UITreeItem<T> {
     }
 
     /**
+     * Get the list of child values.
+     * 
+     * @return
+     */
+    public List<T> values() {
+        return I.signal(ui.getChildren()).map(TreeItem<T>::getValue).toList();
+    }
+
+    /**
      * Create a child item at last with value.
      * 
      * @param value A child item value.
@@ -68,6 +80,23 @@ public class UITreeItem<T> {
         ui.getChildren().add(child.ui);
 
         return child;
+    }
+
+    /**
+     * Create a child item at last with value if the specified value is not associated.
+     * 
+     * @param value A child item value.
+     * @return A created item.
+     */
+    public <R> UITreeItem<R> createItemIfAbsent(R value) {
+        ObservableList<TreeItem<T>> children = ui.getChildren();
+
+        for (TreeItem<T> child : children) {
+            if (child.getValue() == value) {
+                return new UITreeItem(table, child);
+            }
+        }
+        return createItem(value);
     }
 
     /**
