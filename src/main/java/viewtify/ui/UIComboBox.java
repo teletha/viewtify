@@ -10,7 +10,6 @@
 package viewtify.ui;
 
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -123,17 +122,6 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> imp
      */
     public UIComboBox<T> value(T value) {
         ui.setValue(value);
-        return this;
-    }
-
-    /**
-     * Observe the value modification.
-     * 
-     * @param listener
-     * @return
-     */
-    public UIComboBox<T> observe(Consumer<T> listener) {
-        ui.valueProperty().addListener((p, o, n) -> listener.accept(n));
         return this;
     }
 

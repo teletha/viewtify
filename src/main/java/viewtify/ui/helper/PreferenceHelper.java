@@ -9,6 +9,8 @@
  */
 package viewtify.ui.helper;
 
+import java.util.function.Consumer;
+
 import javafx.beans.property.Property;
 
 import kiss.Variable;
@@ -44,6 +46,17 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
                 value.set(newValue);
             });
         }
+        return (Self) this;
+    }
+
+    /**
+     * Observe the value modification.
+     * 
+     * @param listener
+     * @return
+     */
+    default Self observe(Consumer<V> listener) {
+        preference().addListener((p, o, n) -> listener.accept(n));
         return (Self) this;
     }
 }
