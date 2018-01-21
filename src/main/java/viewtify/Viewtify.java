@@ -244,6 +244,17 @@ public final class Viewtify {
     }
 
     /**
+     * Force to blink the current application.
+     */
+    public static final void blink() {
+        inUI(() -> {
+            if (stage != null) {
+                stage.toFront();
+            }
+        });
+    }
+
+    /**
      * Retrieve the root view.
      * 
      * @return
