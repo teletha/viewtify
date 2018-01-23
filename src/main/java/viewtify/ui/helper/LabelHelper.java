@@ -7,18 +7,16 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.ui;
+package viewtify.ui.helper;
 
 import java.util.Objects;
 
 import javafx.scene.control.Labeled;
 
-import viewtify.ui.helper.StyleHelper;
-
 /**
- * @version 2017/11/15 9:54:15
+ * @version 2018/01/23 14:00:24
  */
-public interface UILabeled<Self extends UILabeled, W extends Labeled> extends StyleHelper<Self, W> {
+public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extends StyleHelper<Self, W> {
 
     /**
      * Get text.

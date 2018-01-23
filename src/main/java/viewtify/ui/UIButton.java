@@ -12,11 +12,12 @@ package viewtify.ui;
 import javafx.scene.control.Button;
 
 import viewtify.View;
+import viewtify.ui.helper.LabelHelper;
 
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UIButton extends UserInterface<UIButton, Button> implements UILabeled<UIButton, Button> {
+public class UIButton extends UserInterface<UIButton, Button> implements LabelHelper<UIButton, Button> {
 
     /**
      * Enchanced view.

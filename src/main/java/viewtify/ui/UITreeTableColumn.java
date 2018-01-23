@@ -24,6 +24,7 @@ import kiss.Variable;
 import kiss.WiseFunction;
 import viewtify.View;
 import viewtify.Viewtify;
+import viewtify.ui.helper.LabelHelper;
 
 /**
  * @version 2018/01/16 13:49:29
@@ -162,7 +163,7 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
     /**
      * @version 2017/12/02 18:11:59
      */
-    public class UITreeTableCell implements UILabeled<UITreeTableCell, TreeTableCell<RowValue, ColumnValue>> {
+    public class UITreeTableCell implements LabelHelper<UITreeTableCell, TreeTableCell<RowValue, ColumnValue>> {
 
         /** The user renderer. */
         private final BiConsumer<UITreeTableCell, ColumnValue> renderer;
