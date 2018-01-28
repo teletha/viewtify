@@ -10,25 +10,23 @@
 package viewtify.ui;
 
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.util.StringConverter;
 
-import kiss.I;
-import kiss.Signal;
 import viewtify.View;
+import viewtify.ui.helper.PreferenceHelper;
+import viewtify.ui.helper.ValueSelectHelper;
 
 /**
  * @version 2017/11/18 1:30:40
  */
-public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>> {
+public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
+        implements PreferenceHelper<UISpinner<T>, T>, ValueSelectHelper<UISpinner<T>, T> {
 
     /**
      * Enchanced view.
@@ -48,126 +46,19 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>> {
     }
 
     /**
-     * Set values.
-     * 
-     * @param values
-     * @return
+     * {@inheritDoc}
      */
-    public <E extends Enum> UISpinner<T> values(Class<E> enums) {
-        return values((T[]) enums.getEnumConstants());
+    @Override
+    public Property<T> model() {
+        return ui.getValueFactory().valueProperty();
     }
 
     /**
-     * Set values.
-     * 
-     * @param values
-     * @return
+     * {@inheritDoc}
      */
-    public UISpinner<T> values(T... values) {
-        return values(I.signal(values));
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
-    public UISpinner<T> values(Iterable<T> values) {
-        return values(I.signal(values));
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
-    public UISpinner<T> values(Signal<T> values) {
-        return values(values.toList());
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
-    public UISpinner<T> values(Stream<T> values) {
-        return values(values.collect(Collectors.toList()));
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
+    @Override
     public UISpinner<T> values(List<T> values) {
         ui.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory(FXCollections.observableArrayList(values)));
-        return this;
-    }
-
-    /**
-     * Set initial value.
-     * 
-     * @param initialValue
-     * @return
-     */
-    public UISpinner<T> initial(T initialValue) {
-        restore(ui.getValueFactory().valueProperty(), initialValue);
-        return this;
-    }
-
-    /**
-     * Get current value.
-     * 
-     * @return
-     */
-    public T value() {
-        return ui.getValue();
-    }
-
-    /**
-     * Set current value.
-     * 
-     * @param value
-     * @return
-     */
-    public UISpinner<T> value(T value) {
-        ui.getValueFactory().setValue(value);
-        return this;
-    }
-
-    /**
-     * Get current value as property.
-     * 
-     * @return
-     */
-    public ReadOnlyObjectProperty<T> property() {
-        return ui.valueProperty();
-    }
-
-    /**
-     * Observe the value modification.
-     * 
-     * @param listener
-     * @return
-     */
-    public UISpinner<T> observe(Consumer<T> listener) {
-        ui.getValueFactory().valueProperty().addListener((p, o, n) -> listener.accept(n));
-        return this;
-    }
-
-    /**
-     * Observe the value modification.
-     * 
-     * @param listener
-     * @return
-     */
-    public UISpinner<T> observeNow(Consumer<T> listener) {
-        observe(listener);
-        listener.accept(ui.getValue());
         return this;
     }
 

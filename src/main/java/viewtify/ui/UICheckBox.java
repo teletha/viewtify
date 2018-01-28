@@ -17,7 +17,7 @@ import viewtify.View;
 import viewtify.ui.helper.PreferenceHelper;
 
 /**
- * @version 2017/11/15 9:54:15
+ * @version 2018/01/28 18:09:48
  */
 public class UICheckBox extends UserInterface<UICheckBox, CheckBox> implements PreferenceHelper<UICheckBox, Boolean> {
 
@@ -31,21 +31,10 @@ public class UICheckBox extends UserInterface<UICheckBox, CheckBox> implements P
     }
 
     /**
-     * Set initial value.
-     * 
-     * @param initialValue
-     * @return
-     */
-    public UICheckBox initial(boolean initialValue) {
-        restore(ui.selectedProperty(), initialValue);
-        return this;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
-    public Property<Boolean> preference() {
+    public Property<Boolean> model() {
         return ui.selectedProperty();
     }
 

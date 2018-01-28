@@ -11,23 +11,21 @@ package viewtify.ui;
 
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 
-import kiss.I;
-import kiss.Signal;
 import viewtify.View;
 import viewtify.ui.helper.PreferenceHelper;
+import viewtify.ui.helper.ValueSelectHelper;
 
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> implements PreferenceHelper<UIComboBox<T>, T> {
+public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
+        implements PreferenceHelper<UIComboBox<T>, T>, ValueSelectHelper<UIComboBox<T>, T> {
 
     /**
      * Enchanced view.
@@ -42,59 +40,16 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> imp
      * {@inheritDoc}
      */
     @Override
-    public Property<T> preference() {
+    public Property<T> model() {
         return ui.valueProperty();
     }
 
     /**
-     * Set values.
-     * 
-     * @param values
-     * @return
+     * {@inheritDoc}
      */
-    public UIComboBox<T> values(T... values) {
-        return values(I.signal(values));
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
-    public UIComboBox<T> values(Signal<T> values) {
-        return values(values.toList());
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
-    public UIComboBox<T> values(Stream<T> values) {
-        return values(values.collect(Collectors.toList()));
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
+    @Override
     public UIComboBox<T> values(List<T> values) {
         ui.setItems(FXCollections.observableList(values));
-        return this;
-    }
-
-    /**
-     * Set initial value.
-     * 
-     * @param initialValue
-     * @return
-     */
-    public UIComboBox<T> initial(T initialValue) {
-        restore(ui.valueProperty(), initialValue);
         return this;
     }
 
@@ -103,26 +58,6 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> imp
      */
     public int index() {
         return ui.getSelectionModel().getSelectedIndex();
-    }
-
-    /**
-     * Get current value.
-     * 
-     * @return
-     */
-    public T value() {
-        return ui.getValue();
-    }
-
-    /**
-     * Set current value.
-     * 
-     * @param value
-     * @return
-     */
-    public UIComboBox<T> value(T value) {
-        ui.setValue(value);
-        return this;
     }
 
     /**

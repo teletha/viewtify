@@ -11,6 +11,7 @@ package viewtify.ui;
 
 import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -20,6 +21,8 @@ import javafx.scene.control.ListView;
 
 import viewtify.View;
 import viewtify.Viewtify;
+import viewtify.bind.Calculation;
+import viewtify.ui.helper.PreferenceHelper;
 
 /**
  * @version 2018/01/12 21:34:22
@@ -27,7 +30,9 @@ import viewtify.Viewtify;
 public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
 
     /** The original list. */
-    private final ObservableList<T> values;
+    private ObservableList<T> values;
+
+    private Calculation<Predicate<T>> filter;
 
     /**
      * Enchanced view.
@@ -41,8 +46,13 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
     }
 
     public UIListView<T> values(ObservableList<T> values) {
-        ui.setItems(values);
+        this.values = values;
+        bind();
         return this;
+    }
+
+    private void bind() {
+        ui.itemsProperty().bind(Viewtify.calculate(filter).map(f -> f == null ? values : new FilteredList<T>(values, f)));
     }
 
     public UIListView<T> cell(ListCell<T> cell) {
@@ -144,8 +154,20 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * @return
      */
     public <V> UIListView<T> filter(ObservableValue<V> value, BiPredicate<T, V> filter) {
-        ui.itemsProperty().bind(Viewtify.calculate(value, () -> new FilteredList<>(values, e -> filter.test(e, value.getValue()))));
+        this.filter = Viewtify.calculate(value, () -> t -> filter.test(t, value.getValue()));
+        bind();
 
         return this;
+    }
+
+    /**
+     * Filter items by the specified condition.
+     * 
+     * @param value An additional infomation.
+     * @param filter A conditional filer.
+     * @return
+     */
+    public <V> UIListView<T> filter(PreferenceHelper<?, V> value, BiPredicate<T, V> filter) {
+        return filter(value.model(), filter);
     }
 }
