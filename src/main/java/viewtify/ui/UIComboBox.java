@@ -18,14 +18,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 
 import viewtify.View;
-import viewtify.ui.helper.PreferenceHelper;
-import viewtify.ui.helper.ValueSelectHelper;
+import viewtify.ui.helper.SelectableValueHelper;
 
 /**
  * @version 2017/11/15 9:54:15
  */
-public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
-        implements PreferenceHelper<UIComboBox<T>, T>, ValueSelectHelper<UIComboBox<T>, T> {
+public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> implements SelectableValueHelper<UIComboBox<T>, T> {
 
     /**
      * Enchanced view.
