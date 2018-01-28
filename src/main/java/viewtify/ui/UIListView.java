@@ -65,9 +65,32 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
         return this;
     }
 
+    /**
+     * Scroll helper.
+     * 
+     * @return
+     */
     public UIListView<T> scrollTo(int index) {
         ui.scrollTo(index);
         return this;
+    }
+
+    /**
+     * Scroll helper.
+     * 
+     * @return
+     */
+    public UIListView<T> scrollToBottom() {
+        return scrollTo(ui.getItems().size() - 1);
+    }
+
+    /**
+     * Scroll helper.
+     * 
+     * @return
+     */
+    public UIListView<T> scrollToTop() {
+        return scrollTo(0);
     }
 
     /**
