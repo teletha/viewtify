@@ -243,7 +243,11 @@ public class UserInterface<Self extends UserInterface, W extends Node> implement
             String stored = preference.get(id);
 
             if (stored != null) {
-                value = (T) I.transform(stored, value.getClass());
+                try {
+                    value = (T) I.transform(stored, value.getClass());
+                } catch (Throwable e) {
+                    // ignore
+                }
             }
         }
         writer.accept(value);
