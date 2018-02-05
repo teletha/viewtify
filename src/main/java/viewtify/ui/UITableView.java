@@ -28,7 +28,7 @@ import viewtify.bind.CalculationList;
 public class UITableView<T> extends UIControl<UITableView, TableView<T>> {
 
     /** The root item. */
-    public final ObservableList<T> root;
+    public final ObservableList<T> values;
 
     /**
      * Enchanced view.
@@ -38,7 +38,7 @@ public class UITableView<T> extends UIControl<UITableView, TableView<T>> {
     private UITableView(TableView<T> ui, View view) {
         super(ui, view);
 
-        root = ui.getItems();
+        values = ui.getItems();
     }
 
     public UITableView<T> placeholder(String text) {

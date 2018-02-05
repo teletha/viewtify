@@ -295,17 +295,7 @@ public final class Viewtify {
      * @return A binding builder.
      */
     public static <E> CalculationList<E> calculate(ObservableList<E> list) {
-        return calculate("root", list);
-    }
-
-    /**
-     * Binding utility for {@link CalculationList}.
-     * 
-     * @param list A {@link ObservableList} source to bind.
-     * @return A binding builder.
-     */
-    public static <E> CalculationList<E> calculate(String name, ObservableList<E> list) {
-        return list instanceof CalculationList ? (CalculationList) list : new CalculationList(name, list);
+        return list instanceof CalculationList ? (CalculationList) list : new CalculationList(list);
     }
 
     /**
@@ -403,8 +393,26 @@ public final class Viewtify {
      * @param o1 A {@link Observable} target.
      * @return A lazy evaluated calculation.
      */
+    public static final <A> Calculation<A> calculate(A o1) {
+        if (o1 instanceof ObservableValue) {
+            return calculate((ObservableValue) o1);
+        } else {
+            return new Calculation(() -> o1, null);
+        }
+    }
+
+    /**
+     * Create {@link Calculation}.
+     * 
+     * @param o1 A {@link Observable} target.
+     * @return A lazy evaluated calculation.
+     */
     public static final <A> Calculation<A> calculate(ObservableValue<A> o1) {
-        return calculate(o1, () -> o1.getValue());
+        if (o1 instanceof Calculation) {
+            return (Calculation<A>) o1;
+        } else {
+            return calculate(o1, () -> o1.getValue());
+        }
     }
 
     /**

@@ -24,7 +24,6 @@ import org.junit.Test;
 import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
-import viewtify.bind.Calculation;
 
 /**
  * @version 2017/12/06 23:28:16
@@ -87,6 +86,37 @@ public class CalculationTest {
     @Test(expected = NullPointerException.class)
     public void asNull() throws Exception {
         Viewtify.calculate(Variable.of(10)).as(null);
+    }
+
+    @Test
+    public void concat() throws Exception {
+        Calculation<String> concat = Viewtify.calculate("Test").concat("OK");
+        assert concat.isValid() == false;
+        assert concat.get().equals("TestOK");
+        assert concat.isValid() == true;
+
+        StringProperty property1 = new SimpleStringProperty("OK");
+        concat = Viewtify.calculate("Test").concat(property1);
+        assert concat.isValid() == false;
+        assert concat.get().equals("TestOK");
+        assert concat.isValid() == true;
+
+        property1.set("NG");
+        assert concat.isValid() == false;
+        assert concat.get().equals("TestNG");
+        assert concat.isValid() == true;
+
+        StringProperty property2 = new SimpleStringProperty("!");
+        concat = Viewtify.calculate("Test").concat(property1, property2);
+        assert concat.isValid() == false;
+        assert concat.get().equals("TestNG!");
+        assert concat.isValid() == true;
+
+        property1.set("OK");
+        property2.set("!!");
+        assert concat.isValid() == false;
+        assert concat.get().equals("TestOK!!");
+        assert concat.isValid() == true;
     }
 
     @Test

@@ -34,9 +34,6 @@ import viewtify.Viewtify;
  */
 public class CalculationList<E> extends BindingBase<ObservableList<E>> {
 
-    /** The name for debug. */
-    private final String name;
-
     /** The source list. */
     private final ObservableList<E> source;
 
@@ -46,11 +43,9 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> {
     /**
      * Create {@link CalculationList} with identical name.
      * 
-     * @param name
      * @param source
      */
-    public CalculationList(String name, ObservableList<E> source) {
-        this.name = name;
+    public CalculationList(ObservableList<E> source) {
         this.source = source;
 
         bind(source);
@@ -73,7 +68,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> {
      */
     public <R> CalculationList<R> flatObservable(Function<E, ObservableValue<R>> mapper) {
         observe(mapper);
-        return Viewtify.calculate("flatObservable", new MappedList<>(this, e -> mapper.apply(e).getValue()));
+        return Viewtify.calculate(new MappedList<>(this, e -> mapper.apply(e).getValue()));
     }
 
     /**
@@ -84,7 +79,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> {
      */
     public <R> CalculationList<R> flatVariable(Function<E, Variable<R>> mapper) {
         observe(mapper);
-        return Viewtify.calculate("flatVariable", new MappedList<>(this, e -> {
+        return Viewtify.calculate(new MappedList<>(this, e -> {
             return mapper.apply(e).get();
         }));
     }
@@ -129,7 +124,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> {
      * @return
      */
     public <R> CalculationList<R> map(Function<E, R> mapper) {
-        return Viewtify.calculate("map", new MappedList<>(this, mapper));
+        return Viewtify.calculate(new MappedList<>(this, mapper));
     }
 
     /**
@@ -186,14 +181,6 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> {
         return new Calculation<R>(() -> {
             return I.signal(getValue()).scan(init, accumulator).to().v;
         }, null, this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "CalcList[" + name + "]";
     }
 
     /**

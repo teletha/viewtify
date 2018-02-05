@@ -93,9 +93,21 @@
   Table
 ===========================================================================*/
 .table-column {
-  -fx-alignment: CENTER;
+  	-fx-alignment: CENTER;
 }
 
-.tree-table-row-cell{
-    -fx-indent: 0;
+.tree-table-row-cell {
+		-fx-indent: 0;
+}
+
+.table-view .table-cell {
+		-fx-table-cell-border-color: derive(-fx-color,5%);
+}
+
+.table-view .table-cell:filled {
+		-fx-table-cell-border-color: derive(-fx-color,20%);
+}
+
+.table-row-cell{
+    -fx-table-cell-border-color:transparent;
 }

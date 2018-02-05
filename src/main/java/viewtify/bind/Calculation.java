@@ -92,6 +92,33 @@ public class Calculation<T> extends ObjectBinding<T> {
     }
 
     /**
+     * Creates a new {@link Calculation} that holds a concatenated of the value held by this
+     * {@link Calculation}, and is empty when this {@link Calculation} is empty.
+     * 
+     * @param mapper function to map the value held by this ObservableValue.
+     */
+    public Calculation<String> concat(Object value) {
+        Calculation calculation = Viewtify.calculate(value).or("");
+
+        return new Calculation<String>(() -> Objects.toString(get()) + Objects.toString(calculation.getValue()), this, calculation);
+    }
+
+    /**
+     * Creates a new {@link Calculation} that holds a concatenated of the value held by this
+     * {@link Calculation}, and is empty when this {@link Calculation} is empty.
+     * 
+     * @param mapper function to map the value held by this ObservableValue.
+     */
+    public Calculation<String> concat(Object... values) {
+        Calculation base = this;
+
+        for (Object value : values) {
+            base = base.concat(value);
+        }
+        return base;
+    }
+
+    /**
      * Returns a new ObservableValue that, when this ObservableValue holds value {@code x}, holds
      * the value held by {@code f(x)}, and is empty when this ObservableValue is empty.
      */
@@ -343,5 +370,12 @@ public class Calculation<T> extends ObjectBinding<T> {
 
             return predicate.test(value) ? value : null;
         }, this);
+    }
+
+    /**
+     * Creates a new {@link Calculation} that holds the trimed {@link String} value.
+     */
+    public Calculation<String> trim() {
+        return map(v -> Objects.toString(v).trim());
     }
 }
