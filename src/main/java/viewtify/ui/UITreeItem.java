@@ -9,7 +9,6 @@
  */
 package viewtify.ui;
 
-import java.util.List;
 import java.util.function.Function;
 
 import javafx.collections.ListChangeListener.Change;
@@ -17,9 +16,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView;
 
-import kiss.I;
 import kiss.Signal;
 import viewtify.Viewtify;
+import viewtify.bind.CalculationList;
 
 /**
  * @version 2017/12/04 14:50:11
@@ -65,8 +64,8 @@ public class UITreeItem<T> {
      * 
      * @return
      */
-    public List<T> values() {
-        return I.signal(ui.getChildren()).map(TreeItem<T>::getValue).toList();
+    public CalculationList<T> values() {
+        return Viewtify.calculate(ui.getChildren()).map(i -> i.getValue());
     }
 
     /**

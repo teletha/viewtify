@@ -23,6 +23,7 @@ import javafx.scene.control.TreeTableColumn;
 import kiss.Extensible;
 import kiss.I;
 import kiss.model.Model;
+import viewtify.ui.UITableColumn;
 import viewtify.ui.UITreeTableColumn;
 
 /**
@@ -101,10 +102,11 @@ public abstract class View implements Extensible {
                             throw new Error(name() + ": Node [" + id + "] is not found.");
                         }
 
-                        if (type == TableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
+                        if (type == TableColumn.class || type == UITableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
                             // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
                             // so we must unwrap to javafx.scene.control.TreeTableColumn
                             node = ((com.sun.javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
+                            System.out.println(node + "  " + type);
                         }
 
                         if (type.getName().startsWith("viewtify.ui.")) {
@@ -112,7 +114,12 @@ public abstract class View implements Extensible {
                             Constructor constructor = Model.collectConstructors(type)[0];
                             constructor.setAccessible(true);
 
-                            field.set(this, constructor.newInstance(node, this));
+                            try {
+                                field.set(this, constructor.newInstance(node, this));
+                            } catch (Throwable e) {
+                                System.out.println(node + " EROROROROR " + this);
+                                throw I.quiet(e);
+                            }
                         } else {
                             // javafx ui
                             field.set(this, node);
