@@ -29,10 +29,8 @@ import viewtify.ui.helper.LabelHelper;
 /**
  * @version 2018/01/16 13:49:29
  */
-public class UITreeTableColumn<RowValue, ColumnValue> {
-
-    /** The actual widget. */
-    private final TreeTableColumn<RowValue, ColumnValue> ui;
+public class UITreeTableColumn<RowValue, ColumnValue>
+        extends UITableColumnBase<TreeTableColumn<RowValue, ColumnValue>, UITreeTableColumn, RowValue, ColumnValue> {
 
     /** The value provider utility. */
     private TypeMappingProvider mappingProvider;
@@ -43,7 +41,7 @@ public class UITreeTableColumn<RowValue, ColumnValue> {
      * @param ui
      */
     private UITreeTableColumn(TreeTableColumn<RowValue, ColumnValue> ui, View view) {
-        this.ui = ui;
+        super(ui);
     }
 
     /**

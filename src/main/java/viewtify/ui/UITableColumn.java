@@ -29,10 +29,8 @@ import viewtify.ui.helper.LabelHelper;
 /**
  * @version 2018/01/16 13:49:29
  */
-public class UITableColumn<RowValue, ColumnValue> {
-
-    /** The actual widget. */
-    private final TableColumn<RowValue, ColumnValue> ui;
+public class UITableColumn<RowValue, ColumnValue>
+        extends UITableColumnBase<TableColumn<RowValue, ColumnValue>, UITableColumn, RowValue, ColumnValue> {
 
     /** The value provider utility. */
     private TypeMappingProvider mappingProvider;
@@ -43,7 +41,7 @@ public class UITableColumn<RowValue, ColumnValue> {
      * @param ui
      */
     private UITableColumn(TableColumn<RowValue, ColumnValue> ui, View view) {
-        this.ui = ui;
+        super(ui);
     }
 
     /**
