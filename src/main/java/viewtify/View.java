@@ -106,7 +106,6 @@ public abstract class View implements Extensible {
                             // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
                             // so we must unwrap to javafx.scene.control.TreeTableColumn
                             node = ((com.sun.javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
-                            System.out.println(node + "  " + type);
                         }
 
                         if (type.getName().startsWith("viewtify.ui.")) {
@@ -114,12 +113,7 @@ public abstract class View implements Extensible {
                             Constructor constructor = Model.collectConstructors(type)[0];
                             constructor.setAccessible(true);
 
-                            try {
-                                field.set(this, constructor.newInstance(node, this));
-                            } catch (Throwable e) {
-                                System.out.println(node + " EROROROROR " + this);
-                                throw I.quiet(e);
-                            }
+                            field.set(this, constructor.newInstance(node, this));
                         } else {
                             // javafx ui
                             field.set(this, node);
@@ -130,7 +124,9 @@ public abstract class View implements Extensible {
                 }
             }
             initialize();
-        } catch (Exception e) {
+        } catch (
+
+        Exception e) {
             throw I.quiet(e);
         }
     }
