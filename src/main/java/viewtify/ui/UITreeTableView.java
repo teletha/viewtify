@@ -11,20 +11,20 @@ package viewtify.ui;
 
 import java.util.function.Function;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.scene.Node;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
-import javafx.scene.text.Text;
 
 import viewtify.View;
 import viewtify.Viewtify;
 
 /**
- * @version 2017/11/15 9:54:15
+ * @version 2018/02/07 16:46:46
  */
-public class UITreeTableView<T> extends AbstractTableView<UITreeTableView, TreeTableView<T>, T> {
+public class UITreeTableView<T> extends AbstractTableView<UITreeTableView<T>, TreeTableView<T>, T> {
 
     /** The root item. */
     public final UITreeItem<T> root;
@@ -44,35 +44,20 @@ public class UITreeTableView<T> extends AbstractTableView<UITreeTableView, TreeT
         root = new UITreeItem(ui, item);
     }
 
-    public UITreeTableView<T> placeholder(String text) {
-        return placeholder(new Text(text));
-    }
-
-    public UITreeTableView<T> placeholder(Node node) {
-        ui.setPlaceholder(node);
-        return this;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ObjectProperty<Node> placeholder() {
+        return ui.placeholderProperty();
     }
 
     /**
-     * <p>
-     * Specifies the selection mode to use in this selection model. The selection mode specifies how
-     * many items in the underlying data model can be selected at any one time.
-     * <p>
+     * {@inheritDoc}
      */
-    public UITreeTableView<T> selectMultipleRows() {
-        ui.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        return this;
-    }
-
-    /**
-     * <p>
-     * Specifies the selection mode to use in this selection model. The selection mode specifies how
-     * many items in the underlying data model can be selected at any one time.
-     * <p>
-     */
-    public UITreeTableView<T> selectSingleRow() {
-        ui.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        return this;
+    @Override
+    protected TableSelectionModel selectionModel() {
+        return ui.getSelectionModel();
     }
 
     /**

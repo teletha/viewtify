@@ -11,20 +11,20 @@ package viewtify.ui;
 
 import java.util.function.Function;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableRow;
+import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TableView;
-import javafx.scene.text.Text;
 
 import viewtify.View;
 import viewtify.Viewtify;
 
 /**
- * @version 2017/11/15 9:54:15
+ * @version 2018/02/07 16:46:51
  */
-public class UITableView<T> extends AbstractTableView<UITableView, TableView<T>, T> {
+public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<T>, T> {
 
     /** The root item. */
     public final ObservableList<T> values;
@@ -40,35 +40,20 @@ public class UITableView<T> extends AbstractTableView<UITableView, TableView<T>,
         values = ui.getItems();
     }
 
-    public UITableView<T> placeholder(String text) {
-        return placeholder(new Text(text));
-    }
-
-    public UITableView<T> placeholder(Node node) {
-        ui.setPlaceholder(node);
-        return this;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ObjectProperty<Node> placeholder() {
+        return ui.placeholderProperty();
     }
 
     /**
-     * <p>
-     * Specifies the selection mode to use in this selection model. The selection mode specifies how
-     * many items in the underlying data model can be selected at any one time.
-     * <p>
+     * {@inheritDoc}
      */
-    public UITableView<T> selectMultipleRows() {
-        ui.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        return this;
-    }
-
-    /**
-     * <p>
-     * Specifies the selection mode to use in this selection model. The selection mode specifies how
-     * many items in the underlying data model can be selected at any one time.
-     * <p>
-     */
-    public UITableView<T> selectSingleRow() {
-        ui.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        return this;
+    @Override
+    protected TableSelectionModel selectionModel() {
+        return ui.getSelectionModel();
     }
 
     /**
