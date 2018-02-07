@@ -13,6 +13,7 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
@@ -30,9 +31,9 @@ import kiss.WiseBiFunction;
 import viewtify.Viewtify;
 
 /**
- * @version 2017/12/12 15:08:43
+ * @version 2018/02/07 16:21:38
  */
-public class CalculationList<E> extends BindingBase<ObservableList<E>> {
+public class CalculationList<E> extends BindingBase<ObservableList<E>> implements Iterable<E> {
 
     /** The source list. */
     private final ObservableList<E> source;
@@ -58,6 +59,14 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> {
     protected ObservableList<E> computeValue() {
         if (debug) System.out.println(source);
         return source;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Iterator<E> iterator() {
+        return getValue().iterator();
     }
 
     /**
