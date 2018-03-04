@@ -13,6 +13,8 @@ import java.util.Objects;
 
 import javafx.scene.control.Tab;
 
+import kiss.Signal;
+import viewtify.Viewtify;
 import viewtify.ui.helper.StyleHelper;
 
 /**
@@ -23,11 +25,19 @@ public class UITab implements StyleHelper<UITab, Tab> {
     /** The actual ui. */
     public final Tab ui;
 
+    /** The event signal. */
+    public final Signal<UITab> closing;
+
+    /** The event signal. */
+    public final Signal<UITab> closed;
+
     /**
      * @param tab
      */
     public UITab(Tab tab) {
         this.ui = tab;
+        this.closing = Viewtify.signal(ui.onCloseRequestProperty(), this);
+        this.closed = Viewtify.signal(ui.onClosedProperty(), this);
     }
 
     /**

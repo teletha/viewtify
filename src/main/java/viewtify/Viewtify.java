@@ -26,12 +26,15 @@ import java.util.function.Supplier;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.Observable;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Control;
@@ -520,6 +523,21 @@ public final class Viewtify {
                     value.removeListener(listener);
                 }
             });
+        });
+    }
+
+    /**
+     * Build event signal.
+     * 
+     * @param eventHandlerProperty
+     * @param eventValue
+     * @return
+     */
+    public static <T> Signal<T> signal(ObjectProperty<EventHandler<Event>> eventHandlerProperty, T eventValue) {
+        return new Signal<>((observer, disposer) -> {
+            EventHandler<Event> handler = e -> observer.accept(eventValue);
+            eventHandlerProperty.set(handler);
+            return disposer.add(() -> eventHandlerProperty.set(null));
         });
     }
 

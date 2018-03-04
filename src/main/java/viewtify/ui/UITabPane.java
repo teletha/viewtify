@@ -10,18 +10,25 @@
 package viewtify.ui;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 
 import kiss.I;
+import kiss.Signal;
+import kiss.Variable;
+import toybox.SingleSelectionList;
 import viewtify.View;
 
 /**
  * @version 2017/12/27 16:00:44
  */
 public class UITabPane extends UserInterface<UITabPane, TabPane> {
+
+    private SingleSelectionList model;
 
     /**
      * Enchanced view.
@@ -30,6 +37,18 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
      */
     private UITabPane(TabPane ui, View view) {
         super(ui, view);
+    }
+
+    public <T> UITabPane model(SingleSelectionList<T> model, BiFunction<UITab, T, View> view) {
+        if (model != null) {
+            this.model = model;
+
+            for (T item : model.getItems()) {
+                load(item.toString(), tab -> view.apply(tab, item));
+                last().v.closed.to(() -> model.getItems().remove(item));
+            }
+        }
+        return this;
     }
 
     /**
@@ -72,6 +91,46 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
         });
 
         ui.getTabs().add(tab);
+        return this;
+    }
+
+    /**
+     * Retrieve all tabs.
+     * 
+     * @return
+     */
+    public Signal<UITab> tabs() {
+        return I.signal(ui.getTabs()).map(tab -> new UITab(tab));
+    }
+
+    /**
+     * Retrieve the first tab.
+     * 
+     * @return
+     */
+    public Variable<UITab> first() {
+        return tabs().first().to();
+    }
+
+    /**
+     * Retrieve the first tab.
+     * 
+     * @return
+     */
+    public Variable<UITab> last() {
+        return tabs().last().to();
+    }
+
+    /**
+     * The closing policy for the tabs.
+     * 
+     * @param policy The closing policy for the tabs.
+     * @return Chainable API.
+     */
+    public UITabPane policy(TabClosingPolicy policy) {
+        if (policy != null) {
+            ui.tabClosingPolicyProperty().set(policy);
+        }
         return this;
     }
 }

@@ -9,6 +9,9 @@
  */
 package toybox;
 
+import javafx.scene.control.TabPane.TabClosingPolicy;
+
+import kiss.I;
 import viewtify.ActivationPolicy;
 import viewtify.UI;
 import viewtify.View;
@@ -22,16 +25,14 @@ public class Toybox2 extends View {
 
     private @UI UITabPane main;
 
+    private final Consoles consoles = I.make(Consoles.class);
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void initialize() {
-        main.keybind("ctrl+t", () -> main.load("test", ConsoleView.class));
-    }
-
-    private void createConsole() {
-        main.
+        main.model(consoles, ConsoleView::new).policy(TabClosingPolicy.ALL_TABS).keybind("ctrl+t", consoles::createConsole);
     }
 
     /**

@@ -9,25 +9,22 @@
  */
 package toybox;
 
-import viewtify.View;
-import viewtify.ui.UITab;
+import java.nio.file.Path;
+
+import bee.util.Paths;
 
 /**
- * @version 2018/03/04 16:40:00
+ * @version 2018/03/04 20:36:40
  */
-public class ConsoleView extends View {
+public class Console {
+
+    /** The context directory. */
+    public Path directory;
 
     /**
-     * @param tab
-     * @param console
+     * @return
      */
-    public ConsoleView(UITab tab, Console console) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void initialize() {
+    public String name() {
+        return Paths.getName(directory);
     }
 }
