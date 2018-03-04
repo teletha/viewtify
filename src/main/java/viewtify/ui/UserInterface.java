@@ -25,6 +25,9 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -83,6 +86,19 @@ public class UserInterface<Self extends UserInterface, W extends Node> implement
     @Override
     public Property<Boolean> disable() {
         return ui.disableProperty();
+    }
+
+    /**
+     * Register keyborad shortcut.
+     * 
+     * @param key
+     * @param action
+     * @return
+     */
+    public Self keybind(String key, Runnable action) {
+        KeyCombination stroke = KeyCodeCombination.keyCombination(key);
+        when(KeyEvent.KEY_PRESSED).take(stroke::match).to(action::run);
+        return (Self) this;
     }
 
     /**
