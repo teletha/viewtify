@@ -16,7 +16,7 @@ import filer.Filer;
 /**
  * @version 2018/03/04 19:33:38
  */
-public class Consoles extends SingleSelectionList<Console> {
+public class Consoles extends SelectableModel<Console> {
 
     public void createConsole() {
         Path directory = getSelectedIndex() == -1 ? Filer.locate("").toAbsolutePath() : getSelectedItem().directory;
@@ -24,7 +24,7 @@ public class Consoles extends SingleSelectionList<Console> {
         Console console = new Console();
         console.directory = directory;
 
-        getItems().add(console);
-        System.out.println(getItems());
+        items.add(console);
+        System.out.println(this);
     }
 }

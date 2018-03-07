@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
@@ -20,15 +21,16 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
-import toybox.SingleSelectionList;
+import toybox.SelectableModel;
 import viewtify.View;
+import viewtify.Viewtify;
 
 /**
  * @version 2017/12/27 16:00:44
  */
 public class UITabPane extends UserInterface<UITabPane, TabPane> {
 
-    private SingleSelectionList model;
+    private SelectableModel model;
 
     /**
      * Enchanced view.
@@ -39,16 +41,24 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
         super(ui, view);
     }
 
-    public <T> UITabPane model(SingleSelectionList<T> model, BiFunction<UITab, T, View> view) {
+    public <T> UITabPane model(SelectableModel<T> model, BiFunction<UITab, T, View> view) {
         if (model != null) {
             this.model = model;
+            System.out.println(model.getSelectedIndex());
+            ui.getSelectionModel().select(model.getSelectedIndex());
 
-            for (T item : model.getItems()) {
+            Viewtify.calculate(ui.selectionModelProperty())
+                    .flatObservable(SingleSelectionModel<Tab>::selectedIndexProperty)
+                    .as(Integer.class)
+                    .to(model::select);
+
+            for (T item : model.items) {
                 load(item.toString(), tab -> view.apply(tab, item));
-                last().v.closed.to(() -> model.getItems().remove(item));
+                last().v.closed.to(() -> model.items.remove(item));
             }
         }
         return this;
+
     }
 
     /**

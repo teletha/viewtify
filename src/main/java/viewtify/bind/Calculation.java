@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -22,9 +23,11 @@ import javafx.beans.binding.DoubleExpression;
 import javafx.beans.binding.IntegerExpression;
 import javafx.beans.binding.LongExpression;
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import kiss.I;
+import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 
@@ -377,5 +380,26 @@ public class Calculation<T> extends ObjectBinding<T> {
      */
     public Calculation<String> trim() {
         return map(v -> Objects.toString(v).trim());
+    }
+
+    /**
+     * Convert to {@link Signal}.
+     * 
+     * @return
+     */
+    public Signal<T> observe() {
+        return new Signal<>((observer, disposer) -> {
+            ChangeListener<T> listener = (s, o, n) -> observer.accept(n);
+
+            addListener(listener);
+            return disposer.add(() -> removeListener(listener));
+        });
+    }
+
+    /**
+     * @param value
+     */
+    public void to(Consumer<T> value) {
+        addListener((s, o, n) -> value.accept(n));
     }
 }
