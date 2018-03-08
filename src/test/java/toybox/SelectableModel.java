@@ -49,13 +49,13 @@ public abstract class SelectableModel<T> extends SingleSelectionModel<T> impleme
     }).share();
 
     /** The event signal. */
-    public final Signal<T> added = changes.take(Change::wasAdded).flatIterable(Change::getAddedSubList);
+    public transient final Signal<T> added = changes.take(Change::wasAdded).flatIterable(Change::getAddedSubList);
 
     /** The event signal. */
-    public final Signal<T> removed = changes.take(Change::wasRemoved).flatIterable(Change::getRemoved);
+    public transient final Signal<T> removed = changes.take(Change::wasRemoved).flatIterable(Change::getRemoved);
 
     /** The event signal. */
-    public final Signal<T> selected = Viewtify.signal(selectedItemProperty());
+    public transient final Signal<T> selected = Viewtify.signal(selectedItemProperty());
 
     /**
      * With initial values.
@@ -78,7 +78,7 @@ public abstract class SelectableModel<T> extends SingleSelectionModel<T> impleme
      * 
      * @return The selectIndex property.
      */
-    int getA() {
+    int getWave() {
         return getSelectedIndex();
     }
 
@@ -87,7 +87,7 @@ public abstract class SelectableModel<T> extends SingleSelectionModel<T> impleme
      * 
      * @param index The selectIndex value to set.
      */
-    void setA(int index) {
+    void setWave(int index) {
         select(index);
     }
 
@@ -96,7 +96,11 @@ public abstract class SelectableModel<T> extends SingleSelectionModel<T> impleme
      */
     @Override
     protected T getModelItem(int index) {
-        return items.get(index);
+        try {
+            return items.get(index);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**

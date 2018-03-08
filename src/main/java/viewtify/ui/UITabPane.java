@@ -44,7 +44,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
     public <T> UITabPane model(SelectableModel<T> model, BiFunction<UITab, T, View> view) {
         if (model != null) {
             this.model = model;
-            System.out.println(model.getSelectedIndex());
+            System.out.println(model.getSelectedIndex() + "  " + model.items);
             ui.getSelectionModel().select(model.getSelectedIndex());
 
             Viewtify.calculate(ui.selectionModelProperty())
@@ -53,6 +53,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
                     .to(model::select);
 
             for (T item : model.items) {
+                System.out.println(item);
                 load(item.toString(), tab -> view.apply(tab, item));
                 last().v.closed.to(() -> model.items.remove(item));
             }
