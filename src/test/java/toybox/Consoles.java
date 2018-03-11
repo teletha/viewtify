@@ -16,15 +16,15 @@ import filer.Filer;
 /**
  * @version 2018/03/04 19:33:38
  */
-public class Consoles extends SelectableModel<Console> {
+public class Consoles extends Selectable<Consoles, Console> {
 
     public void createConsole() {
-        Path directory = getSelectedIndex() == -1 ? Filer.locate("").toAbsolutePath() : getSelectedItem().directory;
+        Path directory = selectionIndex.v == -1 ? Filer.locate("").toAbsolutePath() : getSelection().directory;
 
         Console console = new Console();
         console.directory = directory;
 
-        items.add(console);
+        add(console);
         System.out.println(this);
     }
 }

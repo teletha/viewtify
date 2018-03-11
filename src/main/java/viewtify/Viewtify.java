@@ -311,7 +311,7 @@ public final class Viewtify {
         return new Calculation<E>(variable::get, null) {
 
             /** The binding disposer. */
-            private final Disposable disposer = variable.observe().to(v -> invalidate());
+            private final Disposable disposer = variable.observeNow().to(v -> invalidate());
 
             /**
              * {@inheritDoc}
