@@ -1,0 +1,159 @@
+/*
+ * Copyright (C) 2018 Nameless Production Committee
+ *
+ * Licensed under the MIT License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *          http://opensource.org/licenses/mit-license.php
+ */
+package viewtify.model;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import kiss.Signal;
+import viewtify.Switch;
+
+/**
+ * @version 2018/03/12 21:12:24
+ */
+public abstract class Sequential<T> implements Iterable<T> {
+
+    /** The internal list. */
+    private List<T> items = new CopyOnWriteArrayList();
+
+    /** The event signal. */
+    private final Switch<T> adds = new Switch();
+
+    /** The event signal. */
+    public transient final Signal<T> add = adds.expose;
+
+    /** The event signal. */
+    private final Switch<T> removes = new Switch();
+
+    /** The event signal. */
+    public transient final Signal<T> remove = removes.expose;
+
+    /**
+     * Get the items property of this {@link Sequential}.
+     * 
+     * @return The items property.
+     */
+    List<T> getItems() {
+        return items;
+    }
+
+    /**
+     * Set the items property of this {@link Sequential}.
+     * 
+     * @param items The items value to set.
+     */
+    void setItems(List<T> items) {
+        this.items = items;
+    }
+
+    /**
+     * {@link List#size()}
+     */
+    public final int size() {
+        return items.size();
+    }
+
+    /**
+     * {@link List#isEmpty()}
+     */
+    public final boolean isEmpty() {
+        return items.isEmpty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Iterator<T> iterator() {
+        return items.iterator();
+    }
+
+    /**
+     * {@link List#add(Object)}
+     */
+    public final boolean add(T e) {
+        items.add(e);
+        adds.emit(e);
+        return true;
+    }
+
+    /**
+     * {@link List#remove(Object)}
+     */
+    public final boolean remove(T o) {
+        int index = items.indexOf(o);
+        if (index == -1) {
+            return true;
+        }
+        removes.emit(o);
+        items.remove(index);
+        return true;
+    }
+
+    /**
+     * {@link List#clear()}
+     */
+    public final void clear() {
+        for (T item : items) {
+            removes.emit(item);
+        }
+        items.clear();
+    }
+
+    /**
+     * {@link List#get(int)}
+     */
+    public final T get(int index) {
+        return items.get(index);
+    }
+
+    /**
+     * {@link List#set(int, Object)}
+     */
+    public final T set(int index, T element) {
+        T previous = items.get(index);
+        removes.emit(previous);
+        items.set(index, element);
+        adds.emit(element);
+        return previous;
+    }
+
+    /**
+     * {@link List#add(int, Object)}
+     */
+    public final void add(int index, T element) {
+        items.add(index, element);
+        adds.emit(element);
+    }
+
+    /**
+     * {@link List#remove(int)}
+     */
+    public final T remove(int index) {
+        T item = items.get(index);
+        removes.emit(item);
+        return items.remove(index);
+    }
+
+    /**
+     * {@link List#indexOf(Object)}
+     */
+    public final int indexOf(Object o) {
+        return items.indexOf(o);
+    }
+
+    /**
+     * {@link List#lastIndexOf(Object)}
+     */
+    public final int lastIndexOf(Object o) {
+        return items.lastIndexOf(o);
+    }
+}

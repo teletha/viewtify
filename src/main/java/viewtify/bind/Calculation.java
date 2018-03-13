@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -394,12 +393,5 @@ public class Calculation<T> extends ObjectBinding<T> {
             addListener(listener);
             return disposer.add(() -> removeListener(listener));
         });
-    }
-
-    /**
-     * @param value
-     */
-    public void to(Consumer<T> value) {
-        addListener((s, o, n) -> value.accept(n));
     }
 }

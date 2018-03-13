@@ -387,7 +387,7 @@ public final class Viewtify {
      * @return A lazy evaluated calculation.
      */
     public static final <E> Calculation<E> calculate(Observable o1, Observable o2, Observable o3, Observable o4, WiseSupplier<E> calculation) {
-        return new Calculation<E>(calculation::get, null, o1, o2, o3, o4);
+        return new Calculation<E>(calculation, null, o1, o2, o3, o4);
     }
 
     /**

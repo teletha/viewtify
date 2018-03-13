@@ -10,16 +10,24 @@
 package toybox;
 
 import java.nio.file.Path;
+import java.util.concurrent.TimeUnit;
 
 import filer.Filer;
+import kiss.Storable;
+import viewtify.model.Selectable;
 
 /**
  * @version 2018/03/04 19:33:38
  */
-public class Consoles extends Selectable<Consoles, Console> {
+public class Consoles extends Selectable<Console> implements Storable<Consoles> {
+
+    public Consoles() {
+        restore();
+        selectionIndex.observe().as(Object.class).merge(add, remove).debounce(1000, TimeUnit.MILLISECONDS).to(this::store);
+    }
 
     public void createConsole() {
-        Path directory = selectionIndex.v == -1 ? Filer.locate("").toAbsolutePath() : getSelection().directory;
+        Path directory = hasSelection() ? Filer.locate("").toAbsolutePath() : selection().directory;
 
         Console console = new Console();
         console.directory = directory;

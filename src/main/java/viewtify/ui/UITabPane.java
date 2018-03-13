@@ -13,22 +13,26 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 
+import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
-import toybox.Selectable;
 import viewtify.View;
 import viewtify.Viewtify;
+import viewtify.model.Selectable;
 
 /**
  * @version 2017/12/27 16:00:44
  */
 public class UITabPane extends UserInterface<UITabPane, TabPane> {
+
+    /** The model disposer. */
+    private Disposable disposable = Disposable.empty();
 
     /**
      * Enchanced view.
@@ -39,8 +43,11 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
         super(ui, view);
     }
 
-    public <S extends Selectable<S, T>, T> UITabPane model(S model, BiFunction<UITab, T, View> view) {
+    public <T> UITabPane model(Selectable<T> model, BiFunction<UITab, T, View> view) {
         if (model != null) {
+            disposable.dispose();
+            disposable = Disposable.empty();
+
             model.add.startWith(model).to(v -> {
                 load(v.toString(), tab -> view.apply(tab, v));
                 last().v.closed.to(() -> model.remove(v));
@@ -48,11 +55,12 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
             model.remove.to(v -> {
             });
 
-            model.selectionIndex.observeNow().to(ui.getSelectionModel()::select);
-            Viewtify.calculate(ui.selectionModelProperty())
-                    .flatObservable(SingleSelectionModel<Tab>::selectedIndexProperty)
+            disposable.add(model.selectionIndex.observeNow().to(ui.getSelectionModel()::select));
+            disposable.add(Viewtify.calculate(ui.getSelectionModel())
+                    .flatObservable(SelectionModel::selectedIndexProperty)
                     .as(Integer.class)
-                    .to(model::select);
+                    .observe()
+                    .to(model::select));
         }
         return this;
     }
