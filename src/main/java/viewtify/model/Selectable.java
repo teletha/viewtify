@@ -11,27 +11,28 @@ package viewtify.model;
 
 import kiss.Signal;
 import kiss.Variable;
-import viewtify.Switch;
 
 /**
  * @version 2018/03/13 11:19:15
  */
 public abstract class Selectable<T> extends Sequential<T> {
 
-    /** The event signal. */
-    private final Switch<T> selects = new Switch();
-
-    /** The event signal. */
-    public transient final Signal<T> select = selects.expose;
-
-    /** The event signal. */
-    private final Switch<T> deselects = new Switch();
-
-    /** The event signal. */
-    public transient final Signal<T> deselect = deselects.expose;
+    // /** The event signal. */
+    // private final Switch<T> selects = new Switch();
+    //
+    // /** The event signal. */
+    // public transient final Signal<T> select = selects.expose;
+    //
+    // /** The event signal. */
+    // private final Switch<T> deselects = new Switch();
+    //
+    // /** The event signal. */
+    // public transient final Signal<T> deselect = deselects.expose;
 
     /** The selected item index. */
     public final Variable<Integer> selectionIndex = Variable.of(-1);
+
+    public final Signal<T> selection = selectionIndex.observeNow().map(this::get);
 
     /**
      * Current select item.
@@ -58,6 +59,15 @@ public abstract class Selectable<T> extends Sequential<T> {
      */
     public final boolean hasSelection() {
         return 0 <= selectionIndex.v;
+    }
+
+    /**
+     * Current selection state.
+     * 
+     * @return
+     */
+    public final boolean hasNoSelection() {
+        return selectionIndex.v < 0;
     }
 
     /**

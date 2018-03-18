@@ -27,7 +27,7 @@ public class Consoles extends Selectable<Console> implements Storable<Consoles> 
     }
 
     public void createConsole() {
-        Path directory = hasSelection() ? Filer.locate("").toAbsolutePath() : selection().directory;
+        Path directory = hasSelection() ? selection().directory : Filer.locate("").toAbsolutePath();
 
         Console console = new Console();
         console.directory = directory;
