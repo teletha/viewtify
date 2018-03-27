@@ -11,6 +11,8 @@ package viewtify;
 
 import static java.util.concurrent.TimeUnit.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,6 +23,7 @@ import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Spinner;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import org.controlsfx.tools.ValueExtractor;
@@ -60,6 +63,7 @@ public final class ViewtifyApplication extends Application {
 
         Scene scene = new Scene(Viewtify.root().root());
         scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
+        configIcon(stage);
         stage.setScene(scene);
         stage.show();
 
@@ -74,6 +78,27 @@ public final class ViewtifyApplication extends Application {
     @Override
     public void stop() throws Exception {
         Viewtify.deactivate();
+    }
+
+    /**
+     * Search user specified icon and configure it.
+     * 
+     * @param stage
+     */
+    private void configIcon(Stage stage) {
+        try {
+            InputStream input;
+            Path icon = Paths.get("icon.png").toAbsolutePath();
+
+            if (Files.exists(icon)) {
+                input = Files.newInputStream(icon);
+            } else {
+                input = ClassLoader.getSystemResourceAsStream("icon.png");
+            }
+            stage.getIcons().add(new Image(input));
+        } catch (IOException e) {
+            // ignore
+        }
     }
 
     /**

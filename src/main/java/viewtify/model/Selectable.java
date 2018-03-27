@@ -32,7 +32,7 @@ public abstract class Selectable<T> extends Sequential<T> {
     /** The selected item index. */
     public final Variable<Integer> selectionIndex = Variable.of(-1);
 
-    public final Signal<T> selection = selectionIndex.observeNow().map(this::get);
+    public final Signal<T> selection = selectionIndex.observeNow().map(this::get).recover(null);
 
     /**
      * Current select item.
