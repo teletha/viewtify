@@ -105,7 +105,7 @@ public abstract class View implements Extensible {
                         if (type == TableColumn.class || type == UITableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
                             // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
                             // so we must unwrap to javafx.scene.control.TreeTableColumn
-                            node = ((com.sun.javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
+                            node = ((javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
                         }
 
                         if (type.getName().startsWith("viewtify.ui.")) {
