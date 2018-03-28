@@ -19,8 +19,6 @@ import org.junit.Test;
 import antibug.powerassert.PowerAssertOff;
 import kiss.Variable;
 import viewtify.Viewtify;
-import viewtify.bind.Calculation;
-import viewtify.bind.CalculationList;
 
 /**
  * @version 2017/12/05 23:45:03
@@ -116,7 +114,7 @@ public class CalculationListTest {
         Value<String> v3 = Value.of("three");
         CalculationList<String> result = Viewtify.calculate(FXCollections.observableArrayList(v1, v2, v3))
                 .observe(o -> o.property)
-                .observe(o -> o.variable)
+                .observeVariable(o -> o.variable)
                 .map(Value<String>::text);
 
         assert result.isValid() == false;
@@ -188,7 +186,7 @@ public class CalculationListTest {
         assert wrapped.isValid() == true;
 
         // observe variable changing
-        wrapped.observe(v -> v.variable);
+        wrapped.observeVariable(v -> v.variable);
 
         // change on variable, invalidate
         v1.variable.set("will invalidate");

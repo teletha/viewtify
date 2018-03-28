@@ -87,7 +87,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
      * @return
      */
     public <R> CalculationList<R> flatVariable(Function<E, Variable<R>> mapper) {
-        observe(mapper);
+        observeVariable(mapper);
         return Viewtify.calculate(new MappedList<>(this, e -> {
             return mapper.apply(e).get();
         }));
@@ -155,6 +155,19 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
                     bind(selector.apply(e));
                 });
             }
+        }
+        return this;
+    }
+
+    /**
+     * Register {@link Observable} property selector.
+     * 
+     * @param selector
+     * @return
+     */
+    public final synchronized CalculationList<E> observeVariable(Function<E, ? extends Variable> selector) {
+        if (selector != null) {
+            observe(v -> Viewtify.calculate(selector.apply(v)));
         }
         return this;
     }
