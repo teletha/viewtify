@@ -11,7 +11,6 @@ package viewtify;
 
 import static java.util.concurrent.TimeUnit.*;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -96,7 +95,7 @@ public final class ViewtifyApplication extends Application {
                 input = ClassLoader.getSystemResourceAsStream("icon.png");
             }
             stage.getIcons().add(new Image(input));
-        } catch (IOException e) {
+        } catch (Throwable e) {
             // ignore
         }
     }
