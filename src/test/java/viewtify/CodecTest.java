@@ -9,17 +9,17 @@
  */
 package viewtify;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import viewtify.ViewtifyApplication.Location;
 
 /**
- * @version 2017/11/25 12:05:43
+ * @version 2018/04/02 16:43:26
  */
-public class CodecTest {
+class CodecTest {
 
     @Test
-    public void bounds() throws Exception {
+    void bounds() {
         Location codec = new Location();
 
         Location locator = new Location();

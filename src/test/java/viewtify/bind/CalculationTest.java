@@ -19,19 +19,20 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
+import antibug.Code;
 import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
 
 /**
- * @version 2017/12/06 23:28:16
+ * @version 2018/04/02 16:36:28
  */
-public class CalculationTest {
+class CalculationTest {
 
     @Test
-    public void calculationFromObservableValue() throws Exception {
+    void calculationFromObservableValue() {
         ObjectProperty<Integer> property = new SimpleObjectProperty(10);
 
         Calculation<Integer> calculation = Viewtify.calculate(property);
@@ -51,7 +52,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void calculationFromVariable() throws Exception {
+    void calculationFromVariable() {
         Variable<Integer> variable = Variable.of(10);
 
         Calculation<Integer> calculation = Viewtify.calculate(variable);
@@ -71,7 +72,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void as() throws Exception {
+    void as() {
         Integer value = Integer.valueOf(10);
         Property<Object> object = new SimpleObjectProperty(10);
         Calculation<Object> calculation = Viewtify.calculate(object);
@@ -83,13 +84,13 @@ public class CalculationTest {
         assert calculation.as(Map.class).get() == null;
     }
 
-    @Test(expected = NullPointerException.class)
-    public void asNull() throws Exception {
-        Viewtify.calculate(Variable.of(10)).as(null);
+    @Test
+    void asNull() {
+        assert Code.catcheNPE(() -> Viewtify.calculate(Variable.of(10)).as(null));
     }
 
     @Test
-    public void concat() throws Exception {
+    void concat() {
         Calculation<String> concat = Viewtify.calculate("Test").concat("OK");
         assert concat.isValid() == false;
         assert concat.get().equals("TestOK");
@@ -120,7 +121,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void is() throws Exception {
+    void is() {
         Variable<Integer> variable = Variable.of(10);
 
         Calculation<Boolean> calculation = Viewtify.calculate(variable).is(10, 20);
@@ -139,7 +140,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void isSet() throws Exception {
+    void isSet() {
         Variable<Integer> variable = Variable.of(10);
 
         Calculation<Boolean> calculation = Viewtify.calculate(variable).is(I.set(10, 20));
@@ -158,7 +159,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void isObservable() throws Exception {
+    void isObservable() {
         IntegerProperty source = new SimpleIntegerProperty(10);
         IntegerProperty tester1 = new SimpleIntegerProperty(10);
         IntegerProperty tester2 = new SimpleIntegerProperty(20);
@@ -186,7 +187,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void isVariable() throws Exception {
+    void isVariable() {
         Variable<Integer> source = Variable.of(10);
         Variable<Integer> tester1 = Variable.of(10);
         Variable<Integer> tester2 = Variable.of(20);
@@ -214,7 +215,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void isNot() throws Exception {
+    void isNot() {
         Variable<Integer> variable = Variable.of(10);
 
         Calculation<Boolean> calculation = Viewtify.calculate(variable).isNot(10, 20);
@@ -233,7 +234,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void isNotSet() throws Exception {
+    void isNotSet() {
         Variable<Integer> variable = Variable.of(10);
 
         Calculation<Boolean> calculation = Viewtify.calculate(variable).isNot(I.set(10, 20));
@@ -252,7 +253,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void isNotObservable() throws Exception {
+    void isNotObservable() {
         IntegerProperty source = new SimpleIntegerProperty(10);
         IntegerProperty tester1 = new SimpleIntegerProperty(10);
         IntegerProperty tester2 = new SimpleIntegerProperty(20);
@@ -280,7 +281,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void isNotVariable() throws Exception {
+    void isNotVariable() {
         Variable<Integer> source = Variable.of(10);
         Variable<Integer> tester1 = Variable.of(10);
         Variable<Integer> tester2 = Variable.of(20);
@@ -308,7 +309,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void isAbsent() throws Exception {
+    void isAbsent() {
         Variable<Integer> variable = Variable.of(10);
 
         Calculation<Boolean> calculation = Viewtify.calculate(variable).isAbsent();
@@ -322,7 +323,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void isPresent() throws Exception {
+    void isPresent() {
         Variable<Integer> variable = Variable.of(10);
 
         Calculation<Boolean> calculation = Viewtify.calculate(variable).isPresent();
@@ -336,7 +337,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void or() throws Exception {
+    void or() {
         StringProperty p = new SimpleStringProperty("TEST");
         Calculation<String> calc = Viewtify.calculate(p).or("OTHER");
         assert calc.get().equals("TEST");
@@ -346,7 +347,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void orObservable() throws Exception {
+    void orObservable() {
         StringProperty p1 = new SimpleStringProperty("TEST");
         StringProperty p2 = new SimpleStringProperty("OTHER");
 
@@ -364,7 +365,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void orVariable() throws Exception {
+    void orVariable() {
         Variable<String> p1 = Variable.of("TEST");
         Variable<String> p2 = Variable.of("OTHER");
 
@@ -382,7 +383,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void skip() throws Exception {
+    void skip() {
         StringProperty p = new SimpleStringProperty("TEST");
         Calculation<String> calculation = Viewtify.calculate(p).skip(v -> v.contains("S"));
         assert calculation.get() == null;
@@ -395,7 +396,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void take() throws Exception {
+    void take() {
         StringProperty p = new SimpleStringProperty("TEST");
         Calculation<String> calculation = Viewtify.calculate(p).take(v -> v.contains("S"));
         assert calculation.get().equals("TEST");
@@ -408,7 +409,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void map() throws Exception {
+    void map() {
         StringProperty p = new SimpleStringProperty("TEST");
         Calculation<String> calc = Viewtify.calculate(p).map(String::toLowerCase);
         assert calc.get().equals("test");
@@ -421,7 +422,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void flatObservable() throws Exception {
+    void flatObservable() {
         Nest nest = new Nest("TEST");
         ObjectProperty<Nest> p = new SimpleObjectProperty(nest);
         Calculation<String> calc = Viewtify.calculate(p).flatObservable(v -> v.property);
@@ -445,7 +446,7 @@ public class CalculationTest {
     }
 
     @Test
-    public void flatVariable() throws Exception {
+    void flatVariable() {
         Nest nest = new Nest("TEST");
         ObjectProperty<Nest> p = new SimpleObjectProperty(nest);
         Calculation<String> calc = Viewtify.calculate(p).flatVariable(v -> v.variable);

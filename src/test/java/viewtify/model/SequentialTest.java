@@ -11,19 +11,18 @@ package viewtify.model;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import kiss.I;
 import kiss.Ⅱ;
-import viewtify.model.Sequential;
 
 /**
- * @version 2018/03/13 9:10:12
+ * @version 2018/04/02 16:43:00
  */
-public class SequentialTest {
+class SequentialTest {
 
     @Test
-    public void add() {
+    void add() {
         Model list = new Model();
         List<Ⅱ<String, Integer>> result = list.add.map(v -> I.pair(v, list.indexOf(v))).toList();
 
@@ -33,7 +32,7 @@ public class SequentialTest {
     }
 
     @Test
-    public void addIndex() {
+    void addIndex() {
         Model list = new Model();
         List<Ⅱ<String, Integer>> result = list.add.map(v -> I.pair(v, list.indexOf(v))).toList();
 
@@ -45,7 +44,7 @@ public class SequentialTest {
     }
 
     @Test
-    public void set() {
+    void set() {
         Model list = new Model();
         list.add(0, "X");
 
@@ -63,7 +62,7 @@ public class SequentialTest {
     }
 
     @Test
-    public void remove() {
+    void remove() {
         Model list = new Model();
         list.add("X");
         list.add("Y");
@@ -76,7 +75,7 @@ public class SequentialTest {
     }
 
     @Test
-    public void removeIndex() {
+    void removeIndex() {
         Model list = new Model();
         list.add("X");
         list.add("Y");
@@ -89,7 +88,7 @@ public class SequentialTest {
     }
 
     @Test
-    public void clear() {
+    void clear() {
         Model list = new Model();
         list.add("X");
         list.add("Y");
@@ -103,7 +102,7 @@ public class SequentialTest {
     }
 
     /**
-     * @version 2018/03/13 9:11:03
+     * @version 2018/04/02 16:43:15
      */
     private static class Model extends Sequential<String> {
     }

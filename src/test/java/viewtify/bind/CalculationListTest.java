@@ -14,20 +14,20 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import antibug.powerassert.PowerAssertOff;
 import kiss.Variable;
 import viewtify.Viewtify;
 
 /**
- * @version 2017/12/05 23:45:03
+ * @version 2018/04/02 16:36:32
  */
 @PowerAssertOff
-public class CalculationListTest {
+class CalculationListTest {
 
     @Test
-    public void calculateList() throws Exception {
+    void calculateList() {
         ObservableList<String> source = FXCollections.observableArrayList("one", "two", "three");
         CalculationList<String> result = Viewtify.calculate(source);
         assert result.isValid() == false;
@@ -67,7 +67,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void map() throws Exception {
+    void map() {
         ObservableList<String> source = FXCollections.observableArrayList("one", "two", "three");
         CalculationList<String> result = Viewtify.calculate(source).map(String::toUpperCase);
         assert result.isValid() == false;
@@ -108,7 +108,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void mapWithMultiCheck() {
+    void mapWithMultiCheck() {
         Value<String> v1 = Value.of("one");
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
@@ -138,7 +138,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void observeObservable() throws Exception {
+    void observeObservable() {
         Value<String> v1 = Value.of("one");
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
@@ -167,7 +167,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void observeVariable() throws Exception {
+    void observeVariable() {
         Value<String> v1 = Value.of("one");
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
@@ -196,7 +196,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void flatObservable() throws Exception {
+    void flatObservable() {
         Value<String> v1 = Value.of("one");
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
@@ -261,7 +261,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void flatObservableAndMap() throws Exception {
+    void flatObservableAndMap() {
         Value<String> v1 = Value.of("one");
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
@@ -315,7 +315,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void flatObservableAndReduce() throws Exception {
+    void flatObservableAndReduce() {
         Value<Integer> v1 = Value.of(1);
         Value<Integer> v2 = Value.of(2);
         Value<Integer> v3 = Value.of(3);
@@ -347,7 +347,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void flatVariable() throws Exception {
+    void flatVariable() {
         Value<String> v1 = Value.of("one");
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
@@ -412,7 +412,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void flatVariableAndMap() throws Exception {
+    void flatVariableAndMap() {
         Value<String> v1 = Value.of("one");
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
@@ -465,7 +465,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void flatVariableAndReduce() throws Exception {
+    void flatVariableAndReduce() {
         Value<Integer> v1 = Value.of(1);
         Value<Integer> v2 = Value.of(2);
         Value<Integer> v3 = Value.of(3);
@@ -504,7 +504,7 @@ public class CalculationListTest {
     }
 
     @Test
-    public void isNot() throws Exception {
+    void isNot() {
         ObservableList<String> source = FXCollections.observableArrayList("value1", "value2", "value3");
         Calculation<Boolean> result = Viewtify.calculate(source).isNot("NG");
         assert result.isValid() == false;
@@ -519,7 +519,7 @@ public class CalculationListTest {
     }
 
     /**
-     * @version 2017/12/06 1:26:43
+     * @version 2018/04/02 16:42:46
      */
     private static class Value<T> {
 
