@@ -10,11 +10,11 @@
 package viewtify;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.channels.FileChannel;
+import java.nio.channels.AsynchronousFileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.WatchEvent;
 import java.nio.file.attribute.FileTime;
 import java.util.concurrent.ExecutorService;
@@ -154,9 +154,10 @@ public final class Viewtify {
                 if (Files.notExists(root)) {
                     Files.createDirectory(root);
                 }
+                Path file = root.resolve("lock");
 
                 // try to retrieve lock to validate
-                FileChannel channel = new RandomAccessFile(root.resolve("lock").toFile(), "rw").getChannel();
+                AsynchronousFileChannel channel = AsynchronousFileChannel.open(file, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
                 FileLock lock = channel.tryLock();
 
                 if (lock == null) {
