@@ -16,14 +16,12 @@ import javafx.collections.ObservableList;
 
 import org.junit.jupiter.api.Test;
 
-import antibug.powerassert.PowerAssertOff;
 import kiss.Variable;
 import viewtify.Viewtify;
 
 /**
- * @version 2018/04/02 16:36:32
+ * @version 2018/04/05 23:44:13
  */
-@PowerAssertOff
 class CalculationListTest {
 
     @Test
@@ -447,6 +445,7 @@ class CalculationListTest {
 
         // change on source item
         v2.variable.set("variable");
+        assert result.isValid() == false;
         assert result.getValue().size() == 4;
         assert result.getValue().get(0).equals("CHANGE");
         assert result.getValue().get(1).equals("VARIABLE");
