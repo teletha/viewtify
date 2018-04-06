@@ -329,6 +329,30 @@ public final class Viewtify {
     /**
      * Create {@link Calculation} from {@link Variable}.
      * 
+     * @param variable A {@link Variable}.
+     * @return A new created {@link Calculation}.
+     */
+    public static <E> Calculation<E> calculate2(Variable<E> variable) {
+        return new Calculation<E>(variable::get, null) {
+
+            /** The binding disposer. */
+            private final Disposable disposer = variable.observeNow().to(this::invalidate);
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void dispose() {
+                super.dispose();
+
+                disposer.dispose();
+            }
+        };
+    }
+
+    /**
+     * Create {@link Calculation} from {@link Variable}.
+     * 
      * @param variables A list of {@link Variable}.
      * @return A new created {@link Calculation} list.
      */

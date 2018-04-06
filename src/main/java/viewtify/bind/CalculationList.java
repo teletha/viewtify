@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 
@@ -25,6 +27,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 
+import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseBiFunction;
@@ -40,6 +43,9 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
 
     /** The selector list. */
     private List<Function<E, ? extends Observable>> observableSelectors;
+
+    /** The associated disposers. */
+    private Map<E, Disposable> disposers;
 
     /**
      * Create {@link CalculationList} with identical name.
@@ -88,9 +94,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
      */
     public <R> CalculationList<R> flatVariable(Function<E, Variable<R>> mapper) {
         observeVariable(mapper);
-        return Viewtify.calculate(new MappedList<>(this, e -> {
-            return mapper.apply(e).get();
-        }));
+        return Viewtify.calculate(new MappedList<>(this, e -> mapper.apply(e).get()));
     }
 
     /**
@@ -167,7 +171,24 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
      */
     public final synchronized CalculationList<E> observeVariable(Function<E, ? extends Variable> selector) {
         if (selector != null) {
-            observe(v -> Viewtify.calculate(selector.apply(v)));
+            if (disposers == null) {
+                disposers = new ConcurrentHashMap();
+            }
+
+            source.forEach(v -> {
+                disposers.put(v, selector.apply(v).observe().to(this::invalidate));
+            });
+            source.addListener((ListChangeListener<E>) change -> {
+                while (change.next()) {
+                    if (change.wasRemoved()) {
+                        change.getRemoved().forEach(e -> disposers.remove(e).dispose());
+                    }
+
+                    if (change.wasAdded()) {
+                        change.getAddedSubList().forEach(e -> disposers.put(e, selector.apply(e).observe().to(this::invalidate)));
+                    }
+                }
+            });
         }
         return this;
     }

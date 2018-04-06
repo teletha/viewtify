@@ -20,7 +20,7 @@ import kiss.Variable;
 import viewtify.Viewtify;
 
 /**
- * @version 2018/04/05 23:44:13
+ * @version 2018/04/06 16:49:47
  */
 class CalculationListTest {
 
@@ -238,14 +238,34 @@ class CalculationListTest {
         assert result.getValue().get(3).equals("four");
         assert result.isValid() == true;
 
+        // change on source item
+        v2.property.set("change again");
+        assert result.isValid() == false;
+        assert result.getValue().size() == 4;
+        assert result.getValue().get(0).equals("change");
+        assert result.getValue().get(1).equals("change again");
+        assert result.getValue().get(2).equals("three");
+        assert result.getValue().get(3).equals("four");
+        assert result.isValid() == true;
+
         // change on added source item
         v4.property.set("change on item");
         assert result.isValid() == false;
         assert result.getValue().size() == 4;
         assert result.getValue().get(0).equals("change");
-        assert result.getValue().get(1).equals("change on item");
+        assert result.getValue().get(1).equals("change again");
         assert result.getValue().get(2).equals("three");
         assert result.getValue().get(3).equals("change on item");
+        assert result.isValid() == true;
+
+        // change on added source item again
+        v4.property.set("change again");
+        assert result.isValid() == false;
+        assert result.getValue().size() == 4;
+        assert result.getValue().get(0).equals("change");
+        assert result.getValue().get(1).equals("change again");
+        assert result.getValue().get(2).equals("three");
+        assert result.getValue().get(3).equals("change again");
         assert result.isValid() == true;
 
         // dispose
@@ -389,14 +409,34 @@ class CalculationListTest {
         assert result.getValue().get(3).equals("four");
         assert result.isValid() == true;
 
+        // change on source item again
+        v2.variable.set("change again");
+        assert result.isValid() == false;
+        assert result.getValue().size() == 4;
+        assert result.getValue().get(0).equals("change");
+        assert result.getValue().get(1).equals("change again");
+        assert result.getValue().get(2).equals("three");
+        assert result.getValue().get(3).equals("four");
+        assert result.isValid() == true;
+
         // change on added source item
         v4.variable.set("change on item");
         assert result.isValid() == false;
         assert result.getValue().size() == 4;
         assert result.getValue().get(0).equals("change");
-        assert result.getValue().get(1).equals("change on item");
+        assert result.getValue().get(1).equals("change again");
         assert result.getValue().get(2).equals("three");
         assert result.getValue().get(3).equals("change on item");
+        assert result.isValid() == true;
+
+        // change on added source item again
+        v4.variable.set("change again");
+        assert result.isValid() == false;
+        assert result.getValue().size() == 4;
+        assert result.getValue().get(0).equals("change");
+        assert result.getValue().get(1).equals("change again");
+        assert result.getValue().get(2).equals("three");
+        assert result.getValue().get(3).equals("change again");
         assert result.isValid() == true;
 
         // dispose

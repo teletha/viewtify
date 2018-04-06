@@ -21,8 +21,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
-import viewtify.Viewtify;
-
 /**
  * Thread-aware {@link Binding} base.
  * 
@@ -216,19 +214,17 @@ public abstract class BindingBase<E> implements Binding<E> {
      */
     @Override
     public void invalidate() {
-        Viewtify.inUI(() -> {
-            if (validity.compareAndSet(true, false)) {
-                reference = null;
+        if (validity.compareAndSet(true, false)) {
+            reference = null;
 
-                if (debug) System.out.println(this + " is invalid now");
+            if (debug) System.out.println(this + " is invalid now");
 
-                if (invalidationListeners != null) {
-                    for (InvalidationListener listener : invalidationListeners) {
-                        listener.invalidated(this);
-                    }
+            if (invalidationListeners != null) {
+                for (InvalidationListener listener : invalidationListeners) {
+                    listener.invalidated(this);
                 }
             }
-        });
+        }
     }
 
     /**
