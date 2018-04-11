@@ -181,7 +181,19 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
             source.addListener((ListChangeListener<E>) change -> {
                 while (change.next()) {
                     if (change.wasRemoved()) {
-                        change.getRemoved().forEach(e -> disposers.remove(e).dispose());
+                        change.getRemoved().forEach(e -> {
+                            if (disposers == null) {
+                                System.out.println(disposers + " is null");
+                                return;
+                            }
+                            Disposable removed = disposers.remove(e);
+
+                            if (removed == null) {
+                                System.out.println(removed);
+                            } else {
+                                removed.dispose();
+                            }
+                        });
                     }
 
                     if (change.wasAdded()) {
