@@ -25,6 +25,7 @@ import java.util.function.Supplier;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -304,26 +305,12 @@ public final class Viewtify {
 
     /**
      * Create {@link Calculation} from {@link Variable}.
-     * 
+     *
      * @param variable A {@link Variable}.
      * @return A new created {@link Calculation}.
      */
     public static <E> Calculation<E> calculate(Variable<E> variable) {
-        return new Calculation<E>(variable::get, null) {
-
-            /** The binding disposer. */
-            private final Disposable disposer = variable.observeNow().to(v -> invalidate());
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void dispose() {
-                super.dispose();
-
-                disposer.dispose();
-            }
-        };
+        return calculate(variable, new InvalidationListener[0]);
     }
 
     /**
@@ -332,11 +319,16 @@ public final class Viewtify {
      * @param variable A {@link Variable}.
      * @return A new created {@link Calculation}.
      */
-    public static <E> Calculation<E> calculate2(Variable<E> variable) {
+    public static <E> Calculation<E> calculate(Variable<E> variable, InvalidationListener... listeners) {
         return new Calculation<E>(variable::get, null) {
 
             /** The binding disposer. */
-            private final Disposable disposer = variable.observeNow().to(this::invalidate);
+            private final Disposable disposer = variable.observeNow().to(v -> {
+                invalidate();
+                for (InvalidationListener listener : listeners) {
+                    listener.invalidated(this);
+                }
+            });
 
             /**
              * {@inheritDoc}
@@ -352,7 +344,7 @@ public final class Viewtify {
 
     /**
      * Create {@link Calculation} from {@link Variable}.
-     * 
+     *
      * @param variables A list of {@link Variable}.
      * @return A new created {@link Calculation} list.
      */

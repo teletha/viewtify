@@ -15,8 +15,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 
@@ -29,6 +27,7 @@ import javafx.collections.ObservableList;
 
 import kiss.Disposable;
 import kiss.I;
+import kiss.Table;
 import kiss.Variable;
 import kiss.WiseBiFunction;
 import viewtify.Viewtify;
@@ -45,7 +44,9 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
     private List<Function<E, ? extends Observable>> observableSelectors;
 
     /** The associated disposers. */
-    private Map<E, Disposable> disposers;
+    private Table<E, Disposable> disposers;
+
+    private List<Function<E, Variable>> variableSelectors;
 
     /**
      * Create {@link CalculationList} with identical name.
@@ -150,7 +151,20 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
         if (selector != null) {
             if (observableSelectors == null) {
                 observableSelectors = new CopyOnWriteArrayList<>();
-                source.addListener(this::observeItem);
+                source.addListener((ListChangeListener<E>) change -> {
+                    while (change.next()) {
+                        if (observableSelectors != null) {
+                            if (change.wasRemoved()) {
+                                change.getRemoved().forEach(e -> observableSelectors.forEach(s -> unbind(s.apply(e))));
+                            }
+
+                            if (change.wasAdded()) {
+                                change.getAddedSubList().forEach(e -> observableSelectors.forEach(s -> bind(s.apply(e))));
+                            }
+                        }
+                        invalidate();
+                    }
+                });
             }
 
             if (!observableSelectors.contains(selector)) {
@@ -170,59 +184,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
      * @return
      */
     public final synchronized CalculationList<E> observeVariable(Function<E, ? extends Variable> selector) {
-        if (selector != null) {
-            if (disposers == null) {
-                disposers = new ConcurrentHashMap();
-            }
-
-            source.forEach(v -> {
-                disposers.put(v, selector.apply(v).observe().to(this::invalidate));
-            });
-            source.addListener((ListChangeListener<E>) change -> {
-                while (change.next()) {
-                    if (change.wasRemoved()) {
-                        change.getRemoved().forEach(e -> {
-                            if (disposers == null) {
-                                System.out.println(disposers + " is null");
-                                return;
-                            }
-                            Disposable removed = disposers.remove(e);
-
-                            if (removed == null) {
-                                System.out.println(removed);
-                            } else {
-                                removed.dispose();
-                            }
-                        });
-                    }
-
-                    if (change.wasAdded()) {
-                        change.getAddedSubList().forEach(e -> disposers.put(e, selector.apply(e).observe().to(this::invalidate)));
-                    }
-                }
-            });
-        }
-        return this;
-    }
-
-    /**
-     * Observe list item modification.
-     * 
-     * @param change
-     */
-    private void observeItem(ListChangeListener.Change<? extends E> change) {
-        while (change.next()) {
-            if (observableSelectors != null) {
-                if (change.wasRemoved()) {
-                    change.getRemoved().forEach(e -> observableSelectors.forEach(s -> unbind(s.apply(e))));
-                }
-
-                if (change.wasAdded()) {
-                    change.getAddedSubList().forEach(e -> observableSelectors.forEach(s -> bind(s.apply(e))));
-                }
-            }
-            invalidate();
-        }
+        return observe(e -> Viewtify.calculate(selector.apply(e), s -> invalidate()));
     }
 
     /**

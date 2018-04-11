@@ -20,7 +20,7 @@ import kiss.Variable;
 import viewtify.Viewtify;
 
 /**
- * @version 2018/04/06 16:49:47
+ * @version 2018/04/11 23:41:49
  */
 class CalculationListTest {
 
@@ -190,6 +190,39 @@ class CalculationListTest {
         v1.variable.set("will invalidate");
         assert wrapped.isValid() == false;
         assert wrapped.getValue().get(0).variable.get().equals("will invalidate");
+        assert wrapped.isValid() == true;
+    }
+
+    @Test
+    void observeVariables() {
+        Value<String> value = Value.of("one");
+        ObservableList<Value<String>> source = FXCollections.observableArrayList(value);
+
+        // normal validation
+        CalculationList<String> wrapped = Viewtify.calculate(source)
+                .observeVariable(v -> v.variable)
+                .observeVariable(v -> v.variableOther)
+                .map(v -> v.variable.v + " is " + v.variableOther.v);
+        assert wrapped.isValid() == false;
+        assert wrapped.getValue().size() == 1;
+        assert wrapped.isValid() == true;
+
+        // change on other
+        value.variableOther.set("changed");
+        assert wrapped.isValid() == false;
+        assert wrapped.getValue().get(0).equals("one is changed");
+        assert wrapped.isValid() == true;
+
+        // change on variable
+        value.variable.set("item");
+        assert wrapped.isValid() == false;
+        assert wrapped.getValue().get(0).equals("item is changed");
+        assert wrapped.isValid() == true;
+
+        // remove item
+        source.remove(value);
+        assert wrapped.isValid() == false;
+        assert wrapped.getValue().size() == 0;
         assert wrapped.isValid() == true;
     }
 
@@ -563,6 +596,8 @@ class CalculationListTest {
     private static class Value<T> {
 
         public final Variable<T> variable = Variable.empty();
+
+        public final Variable<T> variableOther = Variable.empty();
 
         public final ObjectProperty<T> property = new SimpleObjectProperty();
 
