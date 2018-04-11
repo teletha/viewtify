@@ -25,9 +25,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 
-import kiss.Disposable;
 import kiss.I;
-import kiss.Table;
 import kiss.Variable;
 import kiss.WiseBiFunction;
 import viewtify.Viewtify;
@@ -42,11 +40,6 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
 
     /** The selector list. */
     private List<Function<E, ? extends Observable>> observableSelectors;
-
-    /** The associated disposers. */
-    private Table<E, Disposable> disposers;
-
-    private List<Function<E, Variable>> variableSelectors;
 
     /**
      * Create {@link CalculationList} with identical name.
