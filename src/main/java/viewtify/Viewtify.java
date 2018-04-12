@@ -17,6 +17,10 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.WatchEvent;
 import java.nio.file.attribute.FileTime;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -33,6 +37,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ModifiableObservableListBase;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -272,34 +277,12 @@ public final class Viewtify {
     }
 
     /**
-     * Observe list change evnet.
-     * 
-     * @param list
-     * @return
-     */
-    public static <E> Signal<Change<? extends E>> signal(ObservableList<E> list) {
-        return new Signal<>((observer, disposer) -> {
-            ListChangeListener<E> listener = change -> {
-                while (change.next()) {
-                    observer.accept(change);
-                }
-            };
-
-            list.addListener(listener);
-
-            return disposer.add(() -> {
-                list.removeListener(listener);
-            });
-        });
-    }
-
-    /**
      * Binding utility for {@link CalculationList}.
      * 
      * @param list A {@link ObservableList} source to bind.
      * @return A binding builder.
      */
-    public static <E> CalculationList<E> calculate(ObservableList<E> list) {
+    public final static <E> CalculationList<E> calculate(ObservableList<E> list) {
         return list instanceof CalculationList ? (CalculationList) list : new CalculationList(list);
     }
 
@@ -309,7 +292,7 @@ public final class Viewtify {
      * @param variable A {@link Variable}.
      * @return A new created {@link Calculation}.
      */
-    public static <E> Calculation<E> calculate(Variable<E> variable) {
+    public final static <E> Calculation<E> calculate(Variable<E> variable) {
         return calculate(variable, new InvalidationListener[0]);
     }
 
@@ -319,7 +302,7 @@ public final class Viewtify {
      * @param variable A {@link Variable}.
      * @return A new created {@link Calculation}.
      */
-    public static <E> Calculation<E> calculate(Variable<E> variable, InvalidationListener... listeners) {
+    public final static <E> Calculation<E> calculate(Variable<E> variable, InvalidationListener... listeners) {
         return new Calculation<E>(variable::get, null) {
 
             /** The binding disposer. */
@@ -348,7 +331,7 @@ public final class Viewtify {
      * @param variables A list of {@link Variable}.
      * @return A new created {@link Calculation} list.
      */
-    public static <E> Calculation<E>[] calculate(Variable<E>... variables) {
+    public final static <E> Calculation<E>[] calculate(Variable<E>... variables) {
         Calculation<E>[] calculations = new Calculation[variables.length];
 
         for (int i = 0; i < calculations.length; i++) {
@@ -476,7 +459,7 @@ public final class Viewtify {
      * 
      * @param process
      */
-    public static void inWorker(Runnable process) {
+    public final static void inWorker(Runnable process) {
         pool.submit(process);
     }
 
@@ -485,7 +468,7 @@ public final class Viewtify {
      * 
      * @param process
      */
-    public static void inWorker(Supplier<Disposable> process) {
+    public final static void inWorker(Supplier<Disposable> process) {
         pool.submit(() -> {
             Terminator.add(process.get());
         });
@@ -496,7 +479,7 @@ public final class Viewtify {
      * 
      * @param process
      */
-    public static void inUI(Runnable process) {
+    public final static void inUI(Runnable process) {
         if (Platform.isFxApplicationThread() || inTest) {
             process.run();
         } else {
@@ -509,7 +492,7 @@ public final class Viewtify {
      * 
      * @param process
      */
-    public static void inUI(Supplier<Disposable> process) {
+    public final static void inUI(Supplier<Disposable> process) {
         if (Platform.isFxApplicationThread()) {
             Terminator.add(process.get());
         } else {
@@ -517,6 +500,28 @@ public final class Viewtify {
                 Terminator.add(process.get());
             });
         }
+    }
+
+    /**
+     * Observe list change evnet.
+     * 
+     * @param list
+     * @return
+     */
+    public static <E> Signal<Change<? extends E>> signal(ObservableList<E> list) {
+        return new Signal<>((observer, disposer) -> {
+            ListChangeListener<E> listener = change -> {
+                while (change.next()) {
+                    observer.accept(change);
+                }
+            };
+
+            list.addListener(listener);
+
+            return disposer.add(() -> {
+                list.removeListener(listener);
+            });
+        });
     }
 
     /**
@@ -597,6 +602,90 @@ public final class Viewtify {
             Calculation<Double> height = calculate(clipper).as(Region.class).flatDouble(Region::heightProperty);
 
             node.clipProperty().bind(calculate(width, height, () -> new Rectangle(width.get(), height.get())));
+        }
+    }
+
+    public static final <E> ObservableList<E> observe(List<E> list) {
+        return new ObservableWrapList<E>(list);
+    }
+
+    /**
+     * @version 2018/04/12 12:59:14
+     */
+    private static class ObservableWrapList<E> extends ModifiableObservableListBase<E> implements ObservableList<E> {
+
+        /** The delegation. */
+        private final List<E> list;
+
+        /**
+         * @param list
+         */
+        private ObservableWrapList(List<E> list) {
+            this.list = Objects.requireNonNull(list);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int size() {
+            return list.size();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public E get(int index) {
+            return list.get(index);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void doAdd(int index, E element) {
+            list.add(index, element);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected E doSet(int index, E element) {
+            return list.set(index, element);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected E doRemove(int index) {
+            return list.remove(index);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Iterator<E> iterator() {
+            return list.iterator();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public ListIterator<E> listIterator() {
+            return list.listIterator();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public ListIterator<E> listIterator(int index) {
+            return list.listIterator(index);
         }
     }
 }

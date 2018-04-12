@@ -24,12 +24,12 @@ import kiss.model.Model;
 import kiss.model.Property;
 
 /**
- * @version 2017/12/28 14:23:00
+ * @version 2018/04/12 13:14:54
  */
 @Manageable(lifestyle = Singleton.class)
 public abstract class Preference<Self extends Preference> implements Storable<Self> {
 
-    private final List<Observer<? super Boolean>> observers = new ArrayList();
+    private final List<Observer<Boolean>> observers = new ArrayList();
 
     /**
      * 

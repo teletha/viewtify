@@ -9,6 +9,7 @@
  */
 package viewtify.ui;
 
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 
 import javafx.beans.property.ObjectProperty;
@@ -22,11 +23,11 @@ import viewtify.View;
 import viewtify.Viewtify;
 
 /**
- * @version 2018/02/07 16:46:51
+ * @version 2018/04/12 13:16:59
  */
 public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<T>, T> {
 
-    /** The root item. */
+    /** The items (concurrent safe, snapshot iteration). */
     public final ObservableList<T> values;
 
     /**
@@ -37,7 +38,8 @@ public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<
     private UITableView(TableView<T> ui, View view) {
         super(ui, view, Viewtify.calculate(ui.getSelectionModel().getSelectedItems()));
 
-        values = ui.getItems();
+        values = Viewtify.observe(new CopyOnWriteArrayList<>(ui.getItems()));
+        ui.setItems(values);
     }
 
     /**
