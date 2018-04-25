@@ -399,6 +399,8 @@ public final class Viewtify {
     public static final <A> Calculation<A> calculate(A o1) {
         if (o1 instanceof ObservableValue) {
             return calculate((ObservableValue) o1);
+        } else if (o1 instanceof Variable) {
+            return calculate(calculate((Variable) o1));
         } else {
             return new Calculation(() -> o1, null);
         }
@@ -605,8 +607,24 @@ public final class Viewtify {
         }
     }
 
+    /**
+     * Build {@link ObservableList}.
+     * 
+     * @param list
+     * @return
+     */
     public static final <E> ObservableList<E> observe(List<E> list) {
         return new ObservableWrapList<E>(list);
+    }
+
+    /**
+     * Build {@link ObservableList}.
+     * 
+     * @param list
+     * @return
+     */
+    public static final <E> ObservableList<E> observe(List<E> list, Signal<E> add, Signal<E> remove) {
+        return new ObservableWrapList(list, add, remove);
     }
 
     /**
@@ -621,7 +639,38 @@ public final class Viewtify {
          * @param list
          */
         private ObservableWrapList(List<E> list) {
+            this(list, null, null);
+        }
+
+        /**
+         * @param list
+         * @param addLast
+         * @param removeFirst
+         */
+        private ObservableWrapList(List<E> list, Signal<E> addLast, Signal<E> removeFirst) {
             this.list = Objects.requireNonNull(list);
+
+            if (addLast != null) {
+                addLast.to(v -> {
+                    beginChange();
+                    try {
+                        int size = list.size();
+                        nextAdd(size - 1, size);
+                    } finally {
+                        endChange();
+                    }
+                });
+            }
+            if (removeFirst != null) {
+                removeFirst.to(v -> {
+                    beginChange();
+                    try {
+                        nextRemove(0, v);
+                    } finally {
+                        endChange();
+                    }
+                });
+            }
         }
 
         /**
