@@ -44,6 +44,7 @@ import kiss.Storable;
 public final class ViewtifyApplication extends Application {
 
     static {
+        Thread.setDefaultUncaughtExceptionHandler((thread, e) -> e.printStackTrace());
         ValueExtractor.addObservableValueExtractor(c -> c instanceof Spinner, c -> ((Spinner) c).valueProperty());
     }
 

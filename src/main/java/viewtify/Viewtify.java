@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
+import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -502,6 +503,102 @@ public final class Viewtify {
                 Terminator.add(process.get());
             });
         }
+    }
+
+    /**
+     * Create {@link ObservableValue} which notify value change event in UI thread.
+     * 
+     * @param value
+     * @return
+     */
+    public final static <E> ObservableValue<E> inUI(ObservableValue<E> value) {
+        Objects.requireNonNull(value);
+
+        return new ObservableValue<E>() {
+
+            /** The wrapper manager. */
+            private WeakHashMap wrappers;
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public synchronized void addListener(InvalidationListener listener) {
+                // propagate change event on UI thread
+                InvalidationListener wrapper = o -> {
+                    inUI(() -> listener.invalidated(o));
+                };
+                value.addListener(wrapper);
+
+                // manage the wrapped listener
+                if (wrappers == null) {
+                    wrappers = new WeakHashMap();
+                }
+                wrappers.put(listener, wrapper);
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public synchronized void removeListener(InvalidationListener listener) {
+                if (wrappers != null) {
+                    InvalidationListener wrapper = (InvalidationListener) wrappers.remove(listener);
+
+                    if (wrapper != null) {
+                        value.removeListener(wrapper);
+
+                        if (wrappers.isEmpty()) {
+                            wrappers = null;
+                        }
+                    }
+                }
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public synchronized void addListener(ChangeListener<? super E> listener) {
+                // propagate change event on UI thread
+                ChangeListener<? super E> wrapper = (s, o, n) -> {
+                    inUI(() -> listener.changed(s, o, n));
+                };
+                value.addListener(wrapper);
+
+                // manage the wrapped listener
+                if (wrappers == null) {
+                    wrappers = new WeakHashMap();
+                }
+                wrappers.put(listener, wrapper);
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public synchronized void removeListener(ChangeListener<? super E> listener) {
+                if (wrappers != null) {
+                    ChangeListener<? super E> wrapper = (ChangeListener<? super E>) wrappers.remove(listener);
+
+                    if (wrapper != null) {
+                        value.removeListener(wrapper);
+
+                        if (wrappers.isEmpty()) {
+                            wrappers = null;
+                        }
+                    }
+                }
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public E getValue() {
+                return value.getValue();
+            }
+        };
     }
 
     /**

@@ -12,6 +12,8 @@ package viewtify.ui;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableColumnBase;
 
+import viewtify.Viewtify;
+
 /**
  * @version 2018/02/05 20:43:01
  */
@@ -34,7 +36,7 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
      * @return
      */
     public Self header(ObservableValue calculation) {
-        ui.textProperty().bind(calculation);
+        ui.textProperty().bind(Viewtify.inUI(calculation));
         return (Self) this;
     }
 
