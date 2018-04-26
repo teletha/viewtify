@@ -27,7 +27,7 @@ import kiss.Variable;
 import viewtify.Viewtify;
 
 /**
- * @version 2018/04/02 16:36:28
+ * @version 2018/04/26 9:04:34
  */
 class CalculationTest {
 
@@ -117,6 +117,17 @@ class CalculationTest {
         property2.set("!!");
         assert concat.isValid() == false;
         assert concat.get().equals("TestOK!!");
+        assert concat.isValid() == true;
+
+        Variable<String> variable = Variable.of("OK");
+        concat = Viewtify.calculate("Test").concat(variable);
+        assert concat.isValid() == false;
+        assert concat.get().equals("TestOK");
+        assert concat.isValid() == true;
+
+        variable.set("NG");
+        assert concat.isValid() == false;
+        assert concat.get().equals("TestNG");
         assert concat.isValid() == true;
     }
 
