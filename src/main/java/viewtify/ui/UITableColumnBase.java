@@ -9,7 +9,7 @@
  */
 package viewtify.ui;
 
-import javafx.beans.value.ObservableValue;
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.TableColumnBase;
 
 import viewtify.Viewtify;
@@ -32,22 +32,11 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
     /**
      * Set column header text.
      * 
-     * @param value
+     * @param texts
      * @return
      */
-    public Self header(ObservableValue calculation) {
-        ui.textProperty().bind(Viewtify.inUI(calculation));
-        return (Self) this;
-    }
-
-    /**
-     * Set column header text.
-     * 
-     * @param value
-     * @return
-     */
-    public Self header(Object value) {
-        ui.setText(String.valueOf(value));
+    public Self header(Object... texts) {
+        ui.textProperty().bind(Viewtify.inUI(Bindings.concat(Viewtify.observe(texts))));
         return (Self) this;
     }
 }
