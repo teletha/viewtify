@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -517,7 +517,7 @@ public final class Viewtify {
         return new ObservableValue<E>() {
 
             /** The wrapper manager. */
-            private ConcurrentHashMap wrappers;
+            private WeakHashMap wrappers;
 
             /**
              * {@inheritDoc}
@@ -532,7 +532,7 @@ public final class Viewtify {
 
                 // manage the wrapped listener
                 if (wrappers == null) {
-                    wrappers = new ConcurrentHashMap();
+                    wrappers = new WeakHashMap();
                 }
                 wrappers.put(listener, wrapper);
             }
@@ -568,7 +568,7 @@ public final class Viewtify {
 
                 // manage the wrapped listener
                 if (wrappers == null) {
-                    wrappers = new ConcurrentHashMap();
+                    wrappers = new WeakHashMap();
                 }
                 wrappers.put(listener, wrapper);
             }
