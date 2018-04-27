@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import kiss.Signal;
-import viewtify.Switch;
+import kiss.Signaler;
 
 /**
- * @version 2018/03/12 21:12:24
+ * @version 2018/04/28 8:37:47
  */
 public abstract class Sequential<T> implements Iterable<T> {
 
@@ -25,16 +25,16 @@ public abstract class Sequential<T> implements Iterable<T> {
     private List<T> items = new CopyOnWriteArrayList();
 
     /** The event signal. */
-    private final Switch<T> adds = new Switch();
+    private final Signaler<T> adds = new Signaler();
 
     /** The event signal. */
-    public transient final Signal<T> add = adds.expose;
+    public transient final Signal<T> add = new Signal<>(adds);
 
     /** The event signal. */
-    private final Switch<T> removes = new Switch();
+    private final Signaler<T> removes = new Signaler();
 
     /** The event signal. */
-    public transient final Signal<T> remove = removes.expose;
+    public transient final Signal<T> remove = new Signal(removes);
 
     /**
      * Get the items property of this {@link Sequential}.
@@ -81,7 +81,7 @@ public abstract class Sequential<T> implements Iterable<T> {
      */
     public final boolean add(T e) {
         items.add(e);
-        adds.emit(e);
+        adds.accept(e);
         return true;
     }
 
@@ -93,7 +93,7 @@ public abstract class Sequential<T> implements Iterable<T> {
         if (index == -1) {
             return true;
         }
-        removes.emit(o);
+        removes.accept(o);
         items.remove(index);
         return true;
     }
@@ -103,7 +103,7 @@ public abstract class Sequential<T> implements Iterable<T> {
      */
     public final void clear() {
         for (T item : items) {
-            removes.emit(item);
+            removes.accept(item);
         }
         items.clear();
     }
@@ -120,9 +120,9 @@ public abstract class Sequential<T> implements Iterable<T> {
      */
     public final T set(int index, T element) {
         T previous = items.get(index);
-        removes.emit(previous);
+        removes.accept(previous);
         items.set(index, element);
-        adds.emit(element);
+        adds.accept(element);
         return previous;
     }
 
@@ -131,7 +131,7 @@ public abstract class Sequential<T> implements Iterable<T> {
      */
     public final void add(int index, T element) {
         items.add(index, element);
-        adds.emit(element);
+        adds.accept(element);
     }
 
     /**
@@ -139,7 +139,7 @@ public abstract class Sequential<T> implements Iterable<T> {
      */
     public final T remove(int index) {
         T item = items.get(index);
-        removes.emit(item);
+        removes.accept(item);
         return items.remove(index);
     }
 
