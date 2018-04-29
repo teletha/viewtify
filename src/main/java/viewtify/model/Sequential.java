@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import kiss.Signal;
-import kiss.Signaler;
+import kiss.Signaling;
 
 /**
  * @version 2018/04/28 8:37:47
@@ -25,16 +25,16 @@ public abstract class Sequential<T> implements Iterable<T> {
     private List<T> items = new CopyOnWriteArrayList();
 
     /** The event signal. */
-    private final Signaler<T> adds = new Signaler();
+    private final Signaling<T> adds = new Signaling();
 
     /** The event signal. */
-    public transient final Signal<T> add = new Signal<>(adds);
+    public transient final Signal<T> add = adds.expose;
 
     /** The event signal. */
-    private final Signaler<T> removes = new Signaler();
+    private final Signaling<T> removes = new Signaling();
 
     /** The event signal. */
-    public transient final Signal<T> remove = new Signal(removes);
+    public transient final Signal<T> remove = removes.expose;
 
     /**
      * Get the items property of this {@link Sequential}.
