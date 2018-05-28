@@ -189,7 +189,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
      */
     public <R> Calculation<R> reduce(R init, WiseBiFunction<R, E, R> accumulator) {
         return new Calculation<R>(() -> {
-            return I.signal(getValue()).scan(init, accumulator).to().v;
+            return I.signal(getValue()).scanWith(init, accumulator).to().v;
         }, null, this);
     }
 
