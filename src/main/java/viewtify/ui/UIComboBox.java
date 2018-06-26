@@ -17,11 +17,12 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 
+import viewtify.User;
 import viewtify.View;
 import viewtify.ui.helper.SelectableValueHelper;
 
 /**
- * @version 2017/11/15 9:54:15
+ * @version 2018/06/26 19:55:03
  */
 public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> implements SelectableValueHelper<UIComboBox<T>, T> {
 
@@ -32,6 +33,15 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> imp
      */
     private UIComboBox(ComboBox<T> ui, View view) {
         super(ui, view);
+
+        // FUNCTIONALITY : wheel scroll will change selection.
+        when(User.Scroll, e -> {
+            if (e.getDeltaY() < 0) {
+                ui.getSelectionModel().selectNext();
+            } else {
+                ui.getSelectionModel().selectPrevious();
+            }
+        });
     }
 
     /**
