@@ -137,7 +137,7 @@ public abstract class View implements Extensible {
                         } else {
                             Parent parent = ((Node) node).getParent();
 
-                            if (parent instanceof Pane) {
+                            if (node instanceof Pane) {
                                 ObservableList<Node> children = ((Pane) parent).getChildren();
                                 children.set(children.indexOf(node), value);
                             }

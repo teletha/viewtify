@@ -219,9 +219,9 @@ public final class Viewtify {
 
     /**
      * <p>
-     * Implements the same behaviour as the "touch" utility on Unix. It creates a new file with size
-     * 0 or, if the file exists already, it is opened and closed without modifying it, but updating
-     * the file date and time.
+     * Implements the same behaviour as the "touch" utility on Unix. It creates a new file with size 0
+     * or, if the file exists already, it is opened and closed without modifying it, but updating the
+     * file date and time.
      * </p>
      * 
      * @param path
@@ -871,6 +871,20 @@ public final class Viewtify {
         @Override
         public E getValue() {
             return var.get();
+        }
+    }
+
+    /**
+     * @param node
+     */
+    public static void expand(Node node) {
+        if (node instanceof Region) {
+            Region region = (Region) node;
+
+            Viewtify.signal(region.parentProperty()).startWith(region.getParent()).as(Region.class).to(parent -> {
+                region.prefWidthProperty().bind(parent.widthProperty());
+                region.prefHeightProperty().bind(parent.heightProperty());
+            });
         }
     }
 }
