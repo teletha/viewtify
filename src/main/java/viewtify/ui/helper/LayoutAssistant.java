@@ -13,8 +13,10 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.scene.Parent;
 
+import kiss.Signal;
+
 /**
- * @version 2018/01/15 12:17:48
+ * @version 2018/06/26 12:42:21
  */
 public final class LayoutAssistant implements InvalidationListener {
 
@@ -80,11 +82,24 @@ public final class LayoutAssistant implements InvalidationListener {
      * Register relayout action.
      * 
      * @param observables
-     * @return
+     * @return Chainable API.
      */
     public LayoutAssistant layoutBy(Observable... observables) {
         for (Observable observable : observables) {
             observable.addListener(this);
+        }
+        return this;
+    }
+
+    /**
+     * Register relayout action.
+     * 
+     * @param signals
+     * @return Chainable API.
+     */
+    public LayoutAssistant layoutBy(Signal... signals) {
+        for (Signal signal : signals) {
+            signal.to(this::requestLayout);
         }
         return this;
     }

@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.layout.Pane;
 
 import kiss.Extensible;
 import kiss.I;
@@ -27,7 +28,7 @@ import viewtify.ui.UITableColumn;
 import viewtify.ui.UITreeTableColumn;
 
 /**
- * @version 2017/12/15 10:16:14
+ * @version 2018/06/26 2:27:21
  */
 public abstract class View implements Extensible {
 
@@ -84,6 +85,16 @@ public abstract class View implements Extensible {
                             }
                         }
                         field.set(this, view);
+
+                        // if view has been associated with xml and current view has Pane node which id equals to field
+                        // name, we should connect them.
+                        if (view.root != null) {
+                            Object node = root().lookup("#" + field.getName());
+                            if (node instanceof Pane) {
+                                ((Pane) node).getChildren().add(view.root());
+                            }
+                        }
+
                     } else {
                         // detect widget id
                         String id = field.getName();

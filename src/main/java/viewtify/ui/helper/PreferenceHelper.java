@@ -15,11 +15,13 @@ import java.util.function.Consumer;
 import javafx.beans.property.Property;
 
 import kiss.I;
+import kiss.Signal;
 import kiss.Variable;
+import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 
 /**
- * @version 2018/01/28 18:09:59
+ * @version 2018/06/26 15:06:36
  */
 public interface PreferenceHelper<Self extends PreferenceHelper, V> {
 
@@ -100,12 +102,30 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
     /**
      * Observe the value modification.
      * 
+     * @return A {@link Signal} that notify the change of this value.
+     */
+    default Signal<V> observe() {
+        return Viewtify.signal(model()).skipNull();
+    }
+
+    /**
+     * Observe the value modification.
+     * 
      * @param listener
      * @return
      */
     default Self observe(Consumer<V> listener) {
         model().addListener((p, o, n) -> listener.accept(n));
         return (Self) this;
+    }
+
+    /**
+     * Observe the value modification.
+     * 
+     * @return A {@link Signal} that notify the change of this value.
+     */
+    default Signal<V> observeNow() {
+        return observe().startWith(value()).skipNull();
     }
 
     /**
