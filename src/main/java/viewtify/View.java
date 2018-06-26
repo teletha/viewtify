@@ -13,6 +13,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -94,7 +95,6 @@ public abstract class View implements Extensible {
                                 ((Pane) node).getChildren().add(view.root());
                             }
                         }
-
                     } else {
                         // detect widget id
                         String id = field.getName();
@@ -113,23 +113,34 @@ public abstract class View implements Extensible {
                             throw new Error(name() + ": Node [" + id + "] is not found.");
                         }
 
-                        if (type == TableColumn.class || type == UITableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
-                            // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
-                            // so we must unwrap to javafx.scene.control.TreeTableColumn
-                            node = ((javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
-                        }
+                        Node value = (Node) field.get(this);
 
-                        if (type.getName().startsWith("viewtify.ui.")) {
-                            // viewtify ui widget
-                            Constructor constructor = Model.collectConstructors(type)[0];
-                            constructor.setAccessible(true);
+                        if (value == null) {
+                            if (type == TableColumn.class || type == UITableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
+                                // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
+                                // so we must unwrap to javafx.scene.control.TreeTableColumn
+                                node = ((javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
+                            }
 
-                            field.set(this, constructor.newInstance(node, this));
+                            if (type.getName().startsWith("viewtify.ui.")) {
+                                // viewtify ui widget
+                                Constructor constructor = Model.collectConstructors(type)[0];
+                                constructor.setAccessible(true);
+
+                                field.set(this, constructor.newInstance(node, this));
+                            } else {
+                                // javafx ui
+                                field.set(this, node);
+
+                                enhanceNode(node);
+                            }
                         } else {
-                            // javafx ui
-                            field.set(this, node);
+                            Parent parent = ((Node) node).getParent();
 
-                            enhanceNode(node);
+                            if (parent instanceof Pane) {
+                                ObservableList<Node> children = ((Pane) parent).getChildren();
+                                children.set(children.indexOf(node), value);
+                            }
                         }
                     }
                 }
