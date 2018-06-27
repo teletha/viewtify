@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import kiss.Extensible;
@@ -87,13 +88,11 @@ public abstract class View implements Extensible {
                         }
                         field.set(this, view);
 
-                        // if view has been associated with xml and current view has Pane node which id equals to field
+                        // if view has been associated with xml and current view has Pane node which
+                        // id equals to field
                         // name, we should connect them.
                         if (view.root != null) {
-                            Object node = root().lookup("#" + field.getName());
-                            if (node instanceof Pane) {
-                                ((Pane) node).getChildren().add(view.root());
-                            }
+                            replace(root().lookup("#" + field.getName()), view.root);
                         }
                     } else {
                         // detect widget id
@@ -135,12 +134,7 @@ public abstract class View implements Extensible {
                                 enhanceNode(node);
                             }
                         } else {
-                            Parent parent = ((Node) node).getParent();
-
-                            if (node instanceof Pane) {
-                                ObservableList<Node> children = ((Pane) parent).getChildren();
-                                children.set(children.indexOf(node), value);
-                            }
+                            replace((Node) node, value);
                         }
                     }
                 }
@@ -150,6 +144,39 @@ public abstract class View implements Extensible {
 
         Exception e) {
             throw I.quiet(e);
+        }
+    }
+
+    /**
+     * Replace the target node with replacer.
+     * 
+     * @param replaced
+     * @param replacer
+     */
+    private void replace(Node replaced, Node replacer) {
+        if (replaced == null) {
+            return;
+        }
+
+        Parent parent = replaced.getParent();
+
+        if (parent instanceof BorderPane) {
+            BorderPane border = (BorderPane) parent;
+            if (border.getCenter() == replaced) {
+                border.setCenter(replacer);
+            } else if (border.getTop() == replaced) {
+                border.setTop(replacer);
+            } else if (border.getBottom() == replaced) {
+                border.setBottom(replacer);
+            } else if (border.getRight() == replaced) {
+                border.setRight(replacer);
+            } else if (border.getLeft() == replaced) {
+                border.setLeft(replacer);
+            }
+        } else if (parent instanceof Pane) {
+            Pane pane = (Pane) parent;
+            ObservableList<Node> children = pane.getChildren();
+            children.set(children.indexOf(replaced), replacer);
         }
     }
 

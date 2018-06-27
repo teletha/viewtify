@@ -873,18 +873,4 @@ public final class Viewtify {
             return var.get();
         }
     }
-
-    /**
-     * @param node
-     */
-    public static void expand(Node node) {
-        if (node instanceof Region) {
-            Region region = (Region) node;
-
-            Viewtify.signal(region.parentProperty()).startWith(region.getParent()).as(Region.class).to(parent -> {
-                region.prefWidthProperty().bind(parent.widthProperty());
-                region.prefHeightProperty().bind(parent.heightProperty());
-            });
-        }
-    }
 }
