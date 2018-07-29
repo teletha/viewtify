@@ -35,13 +35,7 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> imp
         super(ui, view);
 
         // FUNCTIONALITY : wheel scroll will change selection.
-        when(User.Scroll, e -> {
-            if (e.getDeltaY() < 0) {
-                ui.getSelectionModel().selectNext();
-            } else {
-                ui.getSelectionModel().selectPrevious();
-            }
-        });
+        when(User.Scroll, Action.traverse(ui.getSelectionModel()));
     }
 
     /**

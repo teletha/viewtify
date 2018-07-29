@@ -22,6 +22,7 @@ import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
+import viewtify.User;
 import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.model.Selectable;
@@ -41,6 +42,9 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
      */
     private UITabPane(TabPane ui, View view) {
         super(ui, view);
+
+        // FUNCTIONALITY : wheel scroll will change selection.
+        when(User.Scroll).take(Action.inside(ui.lookup(".tab-header-background"))).to(Action.traverse(ui.getSelectionModel()));
     }
 
     public <T> UITabPane model(Selectable<T> model, BiFunction<UITab, T, View> view) {
