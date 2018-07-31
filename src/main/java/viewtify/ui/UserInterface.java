@@ -18,9 +18,6 @@ import java.util.function.Predicate;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyProperty;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
@@ -34,20 +31,19 @@ import org.controlsfx.validation.Validator;
 
 import kiss.I;
 import kiss.Manageable;
-import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
-import kiss.WiseBiConsumer;
-import kiss.WiseTriConsumer;
 import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.ui.helper.DisableHelper;
+import viewtify.ui.helper.EventHelper;
 import viewtify.ui.helper.StyleHelper;
 
 /**
- * @version 2017/11/15 10:31:50
+ * @version 2018/07/31 16:01:23
  */
-public class UserInterface<Self extends UserInterface, W extends Node> implements StyleHelper<Self, W>, DisableHelper<Self> {
+public class UserInterface<Self extends UserInterface, W extends Node>
+        implements EventHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
@@ -112,8 +108,8 @@ public class UserInterface<Self extends UserInterface, W extends Node> implement
 
     /**
      * Specifies whether this {@code Node} and any subnodes should be rendered as part of the scene
-     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it is
-     * off the screen or obscured by another Node. Invisible nodes never receive mouse events or
+     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it
+     * is off the screen or obscured by another Node. Invisible nodes never receive mouse events or
      * keyboard focus and never maintain keyboard focus when they become invisible.
      *
      * @defaultValue true
@@ -121,81 +117,6 @@ public class UserInterface<Self extends UserInterface, W extends Node> implement
     public Self visible(boolean visible) {
         ui.setVisible(visible);
         return (Self) this;
-    }
-
-    /**
-     * Helper to listen user action event.
-     * 
-     * @param actionType
-     * @param listener
-     * @return
-     */
-    public <E extends Event> Signal<E> when(EventType<E> actionType) {
-        return new Signal<E>((observer, disposer) -> {
-            EventHandler<E> listener = observer::accept;
-
-            ui.addEventHandler(actionType, listener);
-
-            return disposer.add(() -> {
-                ui.removeEventHandler(actionType, listener);
-            });
-        });
-    }
-
-    /**
-     * Helper to listen user action event.
-     * 
-     * @param actionType
-     * @param listener
-     * @return
-     */
-    public <T extends Event> Self when(EventType<T> actionType, Runnable listener) {
-        return when(actionType, e -> listener.run());
-    }
-
-    /**
-     * Helper to listen user action event.
-     * 
-     * @param actionType
-     * @param listener
-     * @return
-     */
-    public <T extends Event> Self when(EventType<T> actionType, Consumer<T> listener) {
-        ui.addEventHandler(actionType, listener::accept);
-        return (Self) this;
-    }
-
-    /**
-     * Helper to listen user action event.
-     * 
-     * @param actionType
-     * @param listener
-     * @return
-     */
-    public <T extends Event, A> Self when(EventType<T> actionType, Consumer<A> listener, A context) {
-        return when(actionType, e -> listener.accept(context));
-    }
-
-    /**
-     * Helper to listen user action event.
-     * 
-     * @param actionType
-     * @param listener
-     * @return
-     */
-    public <T extends Event> Self when(EventType<T> actionType, WiseBiConsumer<T, Self> listener) {
-        return when(actionType, e -> listener.accept(e, (Self) this));
-    }
-
-    /**
-     * Helper to listen user action event.
-     * 
-     * @param actionType
-     * @param listener
-     * @return
-     */
-    public <T extends Event, Context> Self when(EventType<T> actionType, Context context, WiseTriConsumer<T, Self, Context> listener) {
-        return when(actionType, e -> listener.accept(e, (Self) this, context));
     }
 
     /**

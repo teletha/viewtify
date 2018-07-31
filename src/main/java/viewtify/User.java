@@ -36,4 +36,7 @@ public class User {
 
     /** User Action */
     public static EventType<MouseEvent> ClickSafely = new EventType<MouseEvent>(MouseEvent.ANY, "MOUSE_CLICKED_SAFELY");
+
+    /** User Action */
+    public static EventType<MouseEvent> Drag = MouseEvent.MOUSE_DRAGGED;
 }

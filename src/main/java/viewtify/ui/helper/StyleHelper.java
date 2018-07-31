@@ -9,13 +9,9 @@
  */
 package viewtify.ui.helper;
 
-import java.util.Optional;
-
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.css.CssMetaData;
 import javafx.css.Styleable;
-import javafx.scene.layout.Region;
 
 import kiss.Variable;
 import viewtify.Viewtify;
