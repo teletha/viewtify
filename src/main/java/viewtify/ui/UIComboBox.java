@@ -17,9 +17,9 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 
-import viewtify.User;
 import viewtify.View;
 import viewtify.ui.helper.SelectableValueHelper;
+import viewtify.ui.helper.User;
 
 /**
  * @version 2018/06/26 19:55:03

@@ -22,10 +22,10 @@ import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
-import viewtify.User;
 import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.model.Selectable;
+import viewtify.ui.helper.User;
 
 /**
  * @version 2017/12/27 16:00:44

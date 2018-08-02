@@ -14,9 +14,9 @@ import java.time.LocalDate;
 import javafx.beans.property.Property;
 import javafx.scene.control.DatePicker;
 
-import viewtify.User;
 import viewtify.View;
 import viewtify.ui.helper.PreferenceHelper;
+import viewtify.ui.helper.User;
 
 /**
  * @version 2018/06/25 18:47:45

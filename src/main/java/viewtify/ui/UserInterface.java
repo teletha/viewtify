@@ -24,7 +24,6 @@ import javafx.scene.control.Control;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -38,6 +37,7 @@ import viewtify.Viewtify;
 import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.EventHelper;
 import viewtify.ui.helper.StyleHelper;
+import viewtify.ui.helper.User;
 
 /**
  * @version 2018/07/31 16:01:23
@@ -93,7 +93,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      */
     public Self keybind(String key, Runnable action) {
         KeyCombination stroke = KeyCodeCombination.keyCombination(key);
-        when(KeyEvent.KEY_PRESSED).take(stroke::match).to(action::run);
+        when(User.KeyPress).take(stroke::match).to(action::run);
         return (Self) this;
     }
 
@@ -108,8 +108,8 @@ public class UserInterface<Self extends UserInterface, W extends Node>
 
     /**
      * Specifies whether this {@code Node} and any subnodes should be rendered as part of the scene
-     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it
-     * is off the screen or obscured by another Node. Invisible nodes never receive mouse events or
+     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it is
+     * off the screen or obscured by another Node. Invisible nodes never receive mouse events or
      * keyboard focus and never maintain keyboard focus when they become invisible.
      *
      * @defaultValue true
