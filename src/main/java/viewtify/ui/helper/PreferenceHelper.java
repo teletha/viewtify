@@ -10,18 +10,19 @@
 package viewtify.ui.helper;
 
 import java.lang.reflect.Method;
-import java.util.function.Consumer;
 
 import javafx.beans.property.Property;
 
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
+import kiss.WiseBiConsumer;
+import kiss.WiseConsumer;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 
 /**
- * @version 2018/06/26 15:06:36
+ * @version 2018/08/03 7:56:44
  */
 public interface PreferenceHelper<Self extends PreferenceHelper, V> {
 
@@ -114,8 +115,19 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
      * @param listener
      * @return
      */
-    default Self observe(Consumer<V> listener) {
+    default Self observe(WiseConsumer<V> listener) {
         model().addListener((p, o, n) -> listener.accept(n));
+        return (Self) this;
+    }
+
+    /**
+     * Observe the value modification.
+     * 
+     * @param listener
+     * @return
+     */
+    default Self observe(WiseBiConsumer<V, V> listener) {
+        model().addListener((p, o, n) -> listener.accept(o, n));
         return (Self) this;
     }
 
@@ -134,9 +146,21 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
      * @param listener
      * @return
      */
-    default Self observeNow(Consumer<V> listener) {
+    default Self observeNow(WiseConsumer<V> listener) {
         observe(listener);
         listener.accept(model().getValue());
+        return (Self) this;
+    }
+
+    /**
+     * Observe the value modification.
+     * 
+     * @param listener
+     * @return
+     */
+    default Self observeNow(WiseBiConsumer<V, V> listener) {
+        observe(listener);
+        listener.accept(null, model().getValue());
         return (Self) this;
     }
 }
