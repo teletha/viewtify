@@ -10,6 +10,7 @@
 package viewtify.ui.helper;
 
 import java.lang.reflect.Method;
+import java.util.function.Predicate;
 
 import javafx.beans.property.Property;
 
@@ -18,6 +19,7 @@ import kiss.Signal;
 import kiss.Variable;
 import kiss.WiseBiConsumer;
 import kiss.WiseConsumer;
+import kiss.WiseFunction;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 
@@ -50,6 +52,19 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
      */
     default Self value(V value) {
         model().setValue(value);
+        return (Self) this;
+    }
+
+    /**
+     * Set the current value.
+     * 
+     * @param value
+     * @return
+     */
+    default Self value(WiseFunction<V, V> setter) {
+        if (setter != null) {
+            model().setValue(setter.apply(value()));
+        }
         return (Self) this;
     }
 
@@ -161,6 +176,13 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
     default Self observeNow(WiseBiConsumer<V, V> listener) {
         observe(listener);
         listener.accept(null, model().getValue());
+        return (Self) this;
+    }
+
+    default Self restrict(Predicate<V> condition) {
+        if (condition != null && this instanceof UserInterface) {
+            ((UserInterface) this).require(ui -> condition.test(value()));
+        }
         return (Self) this;
     }
 }
