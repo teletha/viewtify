@@ -20,10 +20,12 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
+import kiss.I;
 import kiss.Signal;
+import viewtify.Key;
 
 /**
- * @version 2018/08/02 3:14:11
+ * @version 2018/08/02 10:24:27
  */
 public final class User<E extends Event> {
 
@@ -31,36 +33,33 @@ public final class User<E extends Event> {
     public static final User<ActionEvent> Action = new User(ActionEvent.ACTION);
 
     /** User Action */
-    public static final User<KeyEvent> KeyPress = new User(KeyEvent.KEY_PRESSED);
-
-    /** User Action */
-    public static final User<GestureEvent> Gesture = GestureBy(MouseButton.SECONDARY);
+    public static final User<GestureEvent> Gesture = GestureBy(MouseButton.NONE);
 
     /**
-     * Helper method to create {@link User} action for mouse gesture.
+     * Helper method to create {@link User} action for gesture.
      * 
-     * @param button A target button.
-     * @return
+     * @param button A target mouse button.
+     * @return A user action.
      */
     public static final User<GestureEvent> GestureBy(MouseButton button) {
-        return new User<>(MouseEvent.MOUSE_DRAGGED, (signal, helper) -> signal.take(is(button))
-                .takeUntil(helper.when(User.MouseRelease).take(is(button)))
+        return new User<>(MouseEvent.MOUSE_DRAGGED, (signal, helper) -> signal.take(valid(button))
+                .takeUntil(helper.when(User.MouseRelease).take(valid(button)))
                 .scan(GestureEvent::new, GestureEvent::update)
                 .repeat());
     }
 
     /** User Action */
-    public static final User<GestureEvent> GestureFinish = GestureFinishBy(MouseButton.SECONDARY);
+    public static final User<GestureEvent> GestureFinish = GestureFinishBy(MouseButton.NONE);
 
     /**
-     * Helper method to create {@link User} action for mouse gesture.
+     * Helper method to create {@link User} action for gesture.
      * 
-     * @param button A target button.
-     * @return
+     * @param button A target mouse button.
+     * @return A user action.
      */
     public static final User<GestureEvent> GestureFinishBy(MouseButton button) {
-        return new User<>(MouseEvent.MOUSE_DRAGGED, (signal, helper) -> signal.take(is(button))
-                .takeUntil(helper.when(User.MouseRelease).take(is(button)))
+        return new User<>(MouseEvent.MOUSE_DRAGGED, (signal, helper) -> signal.take(valid(button))
+                .takeUntil(helper.when(User.MouseRelease).take(valid(button)))
                 .scan(GestureEvent::new, GestureEvent::update)
                 .last()
                 .repeat());
@@ -72,9 +71,38 @@ public final class User<E extends Event> {
      * @param button A target button to detect.
      * @return
      */
-    private static Predicate<MouseEvent> is(MouseButton button) {
-        return e -> e.getButton() == button;
+    private static Predicate<MouseEvent> valid(MouseButton button) {
+        return button == null || button == MouseButton.NONE ? I.accept() : e -> e.getButton() == button;
     }
+
+    /**
+     * Helper method to create {@link User} action for key input.
+     * 
+     * @param button A target mouse button.
+     * @return A user action.
+     */
+    public static final User<KeyEvent> input(Key key) {
+        return new User<>(KeyEvent.KEY_RELEASED, (signal, helper) -> signal.take(valid(key)));
+    }
+
+    /**
+     * Helper method to detect {@link Key}.
+     * 
+     * @param button A target key to detect.
+     * @return
+     */
+    private static Predicate<KeyEvent> valid(Key key) {
+        return key == null ? I.accept() : e -> e.getCode().getCode() == key.code;
+    }
+
+    /** User Action */
+    public static final User<KeyEvent> KeyPress = new User(KeyEvent.KEY_PRESSED);
+
+    /** User Action */
+    public static final User<KeyEvent> KeyRelease = new User(KeyEvent.KEY_RELEASED);
+
+    /** User Action */
+    public static final User<KeyEvent> KeyType = new User(KeyEvent.KEY_TYPED);
 
     /** User Action */
     public static final User<MouseEvent> MouseClick = new User(MouseEvent.MOUSE_CLICKED);
@@ -100,6 +128,7 @@ public final class User<E extends Event> {
     /** The actual event type. */
     final EventType type;
 
+    /** The action post processor. */
     final BiFunction<Signal<?>, UserActionHelper, Signal<E>> hook;
 
     /**
@@ -127,7 +156,7 @@ public final class User<E extends Event> {
      * @version 2018/08/01 17:02:20
      */
     @SuppressWarnings("serial")
-    public static class GestureEvent extends Event {
+    public static final class GestureEvent extends Event {
 
         /** The minimal movement where the gesture is recognized. */
         private static final double tolerance = 15;
