@@ -35,7 +35,7 @@ import kiss.Storable;
 import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.ui.helper.DisableHelper;
-import viewtify.ui.helper.EventHelper;
+import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
 
@@ -43,7 +43,7 @@ import viewtify.ui.helper.User;
  * @version 2018/07/31 16:01:23
  */
 public class UserInterface<Self extends UserInterface, W extends Node>
-        implements EventHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self> {
+        implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();

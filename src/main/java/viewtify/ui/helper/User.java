@@ -25,7 +25,7 @@ import kiss.Signal;
 /**
  * @version 2018/08/02 3:14:11
  */
-public class User<E extends Event> {
+public final class User<E extends Event> {
 
     /** User Action */
     public static final User<ActionEvent> Action = new User(ActionEvent.ACTION);
@@ -34,19 +34,7 @@ public class User<E extends Event> {
     public static final User<KeyEvent> KeyPress = new User(KeyEvent.KEY_PRESSED);
 
     /** User Action */
-    public static final User<ScrollEvent> Scroll = new User(ScrollEvent.SCROLL);
-
-    /** User Action */
-    public static final User<ScrollEvent> ScrollStart = new User(ScrollEvent.SCROLL_STARTED);
-
-    /** User Action */
-    public static final User<ScrollEvent> ScrollFinish = new User(ScrollEvent.SCROLL_FINISHED);
-
-    /** User Action */
-    public static final User<MouseEvent> MouseClick = new User(MouseEvent.MOUSE_CLICKED);
-
-    /** User Action */
-    public static final User<MouseGestureEvent> MouseGesture = MouseGestureFor(MouseButton.SECONDARY);
+    public static final User<GestureEvent> Gesture = GestureBy(MouseButton.SECONDARY);
 
     /**
      * Helper method to create {@link User} action for mouse gesture.
@@ -54,15 +42,15 @@ public class User<E extends Event> {
      * @param button A target button.
      * @return
      */
-    public static final User<MouseGestureEvent> MouseGestureFor(MouseButton button) {
+    public static final User<GestureEvent> GestureBy(MouseButton button) {
         return new User<>(MouseEvent.MOUSE_DRAGGED, (signal, helper) -> signal.take(is(button))
                 .takeUntil(helper.when(User.MouseRelease).take(is(button)))
-                .scan(MouseGestureEvent::new, MouseGestureEvent::update)
+                .scan(GestureEvent::new, GestureEvent::update)
                 .repeat());
     }
 
     /** User Action */
-    public static final User<MouseGestureEvent> MouseGestureFinish = MouseGestureFinishFor(MouseButton.SECONDARY);
+    public static final User<GestureEvent> GestureFinish = GestureFinishBy(MouseButton.SECONDARY);
 
     /**
      * Helper method to create {@link User} action for mouse gesture.
@@ -70,10 +58,10 @@ public class User<E extends Event> {
      * @param button A target button.
      * @return
      */
-    public static final User<MouseGestureEvent> MouseGestureFinishFor(MouseButton button) {
+    public static final User<GestureEvent> GestureFinishBy(MouseButton button) {
         return new User<>(MouseEvent.MOUSE_DRAGGED, (signal, helper) -> signal.take(is(button))
                 .takeUntil(helper.when(User.MouseRelease).take(is(button)))
-                .scan(MouseGestureEvent::new, MouseGestureEvent::update)
+                .scan(GestureEvent::new, GestureEvent::update)
                 .last()
                 .repeat());
     }
@@ -89,6 +77,9 @@ public class User<E extends Event> {
     }
 
     /** User Action */
+    public static final User<MouseEvent> MouseClick = new User(MouseEvent.MOUSE_CLICKED);
+
+    /** User Action */
     public static final User<MouseEvent> MouseMove = new User(MouseEvent.MOUSE_MOVED);
 
     /** User Action */
@@ -97,10 +88,19 @@ public class User<E extends Event> {
     /** User Action */
     public static final User<MouseEvent> MouseRelease = new User(MouseEvent.MOUSE_RELEASED);
 
+    /** User Action */
+    public static final User<ScrollEvent> Scroll = new User(ScrollEvent.SCROLL);
+
+    /** User Action */
+    public static final User<ScrollEvent> ScrollStart = new User(ScrollEvent.SCROLL_STARTED);
+
+    /** User Action */
+    public static final User<ScrollEvent> ScrollFinish = new User(ScrollEvent.SCROLL_FINISHED);
+
     /** The actual event type. */
     final EventType type;
 
-    final BiFunction<Signal<?>, EventHelper, Signal<E>> hook;
+    final BiFunction<Signal<?>, UserActionHelper, Signal<E>> hook;
 
     /**
      * Hide constructor.
@@ -116,7 +116,7 @@ public class User<E extends Event> {
      * 
      * @param type
      */
-    private <T extends Event> User(EventType<T> type, BiFunction<Signal<T>, EventHelper<?>, Signal<E>> hook) {
+    private <T extends Event> User(EventType<T> type, BiFunction<Signal<T>, UserActionHelper<?>, Signal<E>> hook) {
         this.type = type;
         this.hook = (BiFunction) hook;
     }
@@ -127,7 +127,7 @@ public class User<E extends Event> {
      * @version 2018/08/01 17:02:20
      */
     @SuppressWarnings("serial")
-    public static class MouseGestureEvent extends Event {
+    public static class GestureEvent extends Event {
 
         /** The minimal movement where the gesture is recognized. */
         private static final double tolerance = 15;
@@ -153,7 +153,7 @@ public class User<E extends Event> {
         /**
          * @param start
          */
-        private MouseGestureEvent(MouseEvent start) {
+        private GestureEvent(MouseEvent start) {
             super(start.getSource(), start.getTarget(), start.getEventType());
             this.init = this.prev = this.now = start;
 
@@ -167,7 +167,7 @@ public class User<E extends Event> {
          * @param event
          * @return
          */
-        private MouseGestureEvent update(MouseEvent event) {
+        private GestureEvent update(MouseEvent event) {
             this.prev = this.now;
             this.now = event;
 

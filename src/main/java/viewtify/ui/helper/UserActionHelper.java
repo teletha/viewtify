@@ -22,7 +22,7 @@ import kiss.WiseTriConsumer;
 /**
  * @version 2018/08/01 21:17:18
  */
-public interface EventHelper<Self extends EventHelper> {
+public interface UserActionHelper<Self extends UserActionHelper> {
 
     Node ui();
 
