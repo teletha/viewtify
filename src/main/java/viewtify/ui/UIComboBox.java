@@ -12,19 +12,22 @@ package viewtify.ui;
 import java.util.List;
 import java.util.function.Function;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 
 import viewtify.View;
+import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.SelectableValueHelper;
 import viewtify.ui.helper.User;
 
 /**
- * @version 2018/06/26 19:55:03
+ * @version 2018/08/03 19:20:46
  */
-public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> implements SelectableValueHelper<UIComboBox<T>, T> {
+public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
+        implements SelectableValueHelper<UIComboBox<T>, T>, EditableHelper<UIComboBox> {
 
     /**
      * Enchanced view.
@@ -36,6 +39,14 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>> imp
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll, Action.traverse(ui.getSelectionModel()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BooleanProperty editable() {
+        return ui.editableProperty();
     }
 
     /**

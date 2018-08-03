@@ -10,6 +10,7 @@
 package viewtify.ui.helper;
 
 import java.lang.reflect.Method;
+import java.util.function.Function;
 
 import javafx.beans.property.Property;
 
@@ -175,6 +176,19 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
     default Self observeNow(WiseBiConsumer<V, V> listener) {
         observe(listener);
         listener.accept(null, model().getValue());
+        return (Self) this;
+    }
+
+    default Self restrict(Function<V, V> condition) {
+        if (condition != null) {
+            observeNow().to(v -> {
+                V result = condition.apply(v);
+
+                if (result != v) {
+                    value(result);
+                }
+            });
+        }
         return (Self) this;
     }
 }

@@ -11,17 +11,20 @@ package viewtify.ui;
 
 import java.time.LocalDate;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.scene.control.DatePicker;
 
 import viewtify.View;
+import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.PreferenceHelper;
 import viewtify.ui.helper.User;
 
 /**
- * @version 2018/06/25 18:47:45
+ * @version 2018/08/03 19:21:26
  */
-public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker> implements PreferenceHelper<UIDatePicker, LocalDate> {
+public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
+        implements PreferenceHelper<UIDatePicker, LocalDate>, EditableHelper<UIDatePicker> {
 
     /**
      * Enchanced view.
@@ -39,6 +42,14 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker> implem
                 value(value().minusDays(1));
             }
         });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BooleanProperty editable() {
+        return ui.editableProperty();
     }
 
     /**
