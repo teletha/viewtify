@@ -10,7 +10,8 @@
 package viewtify.ui.helper;
 
 import java.lang.reflect.Method;
-import java.util.function.Function;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 import javafx.beans.property.Property;
 
@@ -179,16 +180,15 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
         return (Self) this;
     }
 
-    default Self restrict(Function<V, V> condition) {
-        if (condition != null) {
-            observeNow().to(v -> {
-                V result = condition.apply(v);
+    default Self restrict(Predicate<V> condition) {
+        Objects.requireNonNull(condition);
 
-                if (result != v) {
-                    value(result);
+        return observeNow((prev, now) -> {
+            if (prev != null) {
+                if (condition.test(now) == false) {
+                    value(prev);
                 }
-            });
-        }
-        return (Self) this;
+            }
+        });
     }
 }
