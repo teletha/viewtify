@@ -219,9 +219,9 @@ public final class Viewtify {
 
     /**
      * <p>
-     * Implements the same behaviour as the "touch" utility on Unix. It creates a new file with size 0
-     * or, if the file exists already, it is opened and closed without modifying it, but updating the
-     * file date and time.
+     * Implements the same behaviour as the "touch" utility on Unix. It creates a new file with size
+     * 0 or, if the file exists already, it is opened and closed without modifying it, but updating
+     * the file date and time.
      * </p>
      * 
      * @param path

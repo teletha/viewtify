@@ -11,6 +11,9 @@ package viewtify.ui;
 
 import static java.util.concurrent.TimeUnit.*;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -18,15 +21,27 @@ import java.util.function.Predicate;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyProperty;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.util.Duration;
 
+import org.controlsfx.control.decoration.Decoration;
+import org.controlsfx.control.decoration.GraphicDecoration;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationMessage;
+import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.ValidationSupport;
-import org.controlsfx.validation.Validator;
+import org.controlsfx.validation.decoration.AbstractValidationDecoration;
+import org.controlsfx.validation.decoration.GraphicValidationDecoration;
 
 import kiss.I;
 import kiss.Manageable;
@@ -35,15 +50,19 @@ import kiss.Storable;
 import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.ui.helper.DisableHelper;
-import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
+import viewtify.ui.helper.UserActionHelper;
 
 /**
  * @version 2018/07/31 16:01:23
  */
 public class UserInterface<Self extends UserInterface, W extends Node>
         implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self> {
+
+    static {
+        I.load(Message.class, false);
+    }
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
@@ -108,8 +127,8 @@ public class UserInterface<Self extends UserInterface, W extends Node>
 
     /**
      * Specifies whether this {@code Node} and any subnodes should be rendered as part of the scene
-     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it is
-     * off the screen or obscured by another Node. Invisible nodes never receive mouse events or
+     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it
+     * is off the screen or obscured by another Node. Invisible nodes never receive mouse events or
      * keyboard focus and never maintain keyboard focus when they become invisible.
      *
      * @defaultValue true
@@ -120,32 +139,36 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     }
 
     /**
-     * Validation helper.
+     * Set the validator for this {@link UserInterface}.
      * 
-     * @param condition
-     * @return
+     * @param validator A validator.
+     * @return Chainable API.
      */
-    public Self require(Predicate<Self> condition) {
+    public final Self require(Predicate<Self> validator) {
         if (ui instanceof Control) {
-            if (validations == null) {
-                validations = new ValidationSupport();
-            }
-
-            validations.registerValidator((Control) ui, false, Validator.createPredicateValidator(v -> {
-                return condition.test((Self) this);
-            }, ""));
+            validationSupport().registerValidator((Control) ui, false, new Validator(validator, this));
         }
         return (Self) this;
     }
 
     /**
-     * Validation helper.
+     * Return the validation result of this {@link UserInterface}.
      */
-    public ReadOnlyBooleanProperty isInvalid() {
+    public final ReadOnlyBooleanProperty isInvalid() {
+        return validationSupport().invalidProperty();
+    }
+
+    /**
+     * Retrieve the singleton {@link ValidationSupport} for this {@link UserInterface}.
+     * 
+     * @return
+     */
+    private synchronized ValidationSupport validationSupport() {
         if (validations == null) {
             validations = new ValidationSupport();
+            validations.setValidationDecorator(new ValidationDecoration());
         }
-        return validations.invalidProperty();
+        return validations;
     }
 
     /**
@@ -223,5 +246,119 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     @SuppressWarnings("serial")
     @Manageable(lifestyle = Singleton.class)
     private static class Preference extends TreeMap<String, String> implements Storable<Preference> {
+    }
+
+    /**
+     * @version 2018/08/03 15:16:51
+     */
+    private static class Validator<T> implements org.controlsfx.validation.Validator<T> {
+
+        /** The actual validator. */
+        private final Consumer<T> validator;
+
+        /**
+         * Hide constructor.
+         */
+        private Validator(Predicate<T> validator) {
+            this(v -> {
+                if (validator.test(v) == false) {
+                    throw new AssertionError();
+                }
+            });
+        }
+
+        /**
+         * Hide constructor.
+         */
+        private Validator(Predicate<T> validator, T value) {
+            this(v -> {
+                if (validator.test(value) == false) {
+                    throw new AssertionError();
+                }
+            });
+        }
+
+        /**
+         * Hide constructor.
+         */
+        private Validator(Consumer<T> validator) {
+            this.validator = Objects.requireNonNull(validator);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public ValidationResult apply(Control ui, T value) {
+            try {
+                validator.accept(value);
+                return null;
+            } catch (Throwable e) {
+                String message = e.getLocalizedMessage();
+
+                if (message == null || message.isEmpty()) {
+                    message = I.i18n(Message.class).invalidValue();
+                }
+                return ValidationResult.fromError(ui, message);
+            }
+        }
+    }
+
+    /**
+     * @version 2018/08/03 16:45:41
+     */
+    private static class ValidationDecoration extends AbstractValidationDecoration {
+        private static final Image ERROR_IMAGE = new Image(GraphicValidationDecoration.class
+                .getResource("/impl/org/controlsfx/control/validation/decoration-error.png") //$NON-NLS-1$
+                .toExternalForm());
+
+        private static final Image WARNING_IMAGE = new Image(GraphicValidationDecoration.class
+                .getResource("/impl/org/controlsfx/control/validation/decoration-warning.png") //$NON-NLS-1$
+                .toExternalForm());
+
+        private static final Image REQUIRED_IMAGE = new Image(GraphicValidationDecoration.class
+                .getResource("/impl/org/controlsfx/control/validation/required-indicator.png") //$NON-NLS-1$
+                .toExternalForm());
+
+        private static final String SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"; //$NON-NLS-1$
+
+        private static final String POPUP_SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 5);"; //$NON-NLS-1$
+
+        private static final String TOOLTIP_COMMON_EFFECTS = "-fx-font-weight: bold; -fx-padding: 5; -fx-border-width:1;"; //$NON-NLS-1$
+
+        private static final String ERROR_TOOLTIP_EFFECT = POPUP_SHADOW_EFFECT + TOOLTIP_COMMON_EFFECTS + "-fx-background-color: FBEFEF; -fx-text-fill: cc0033; -fx-border-color:cc0033;"; //$NON-NLS-1$
+
+        private static final String WARNING_TOOLTIP_EFFECT = POPUP_SHADOW_EFFECT + TOOLTIP_COMMON_EFFECTS + "-fx-background-color: FFFFCC; -fx-text-fill: CC9900; -fx-border-color: CC9900;"; //$NON-NLS-1$
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected Collection<Decoration> createValidationDecorations(ValidationMessage message) {
+            Node image = new ImageView(Severity.ERROR == message.getSeverity() ? ERROR_IMAGE : WARNING_IMAGE);
+            image.setStyle(SHADOW_EFFECT);
+
+            Tooltip tooltip = new Tooltip(message.getText());
+            tooltip.setAutoFix(true);
+            tooltip.setShowDelay(Duration.ZERO);
+            tooltip.setShowDuration(Duration.INDEFINITE);
+            tooltip.setStyle(Severity.ERROR == message.getSeverity() ? ERROR_TOOLTIP_EFFECT : WARNING_TOOLTIP_EFFECT);
+
+            Label label = new Label();
+            label.setGraphic(image);
+            label.setTooltip(tooltip);
+            label.setAlignment(Pos.CENTER);
+
+            return List.of(new GraphicDecoration(label, Pos.CENTER_LEFT));
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected Collection<Decoration> createRequiredDecorations(Control target) {
+            return List.of(new GraphicDecoration(new ImageView(REQUIRED_IMAGE), Pos.TOP_LEFT, REQUIRED_IMAGE.getWidth() / 2, REQUIRED_IMAGE
+                    .getHeight() / 2));
+        }
     }
 }
