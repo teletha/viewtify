@@ -9,29 +9,28 @@
  */
 package viewtify.ui.helper;
 
-import java.util.function.Consumer;
-
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 
+import kiss.I;
 import kiss.Signal;
 import kiss.WiseBiConsumer;
-import kiss.WiseTriConsumer;
+import kiss.WiseConsumer;
+import kiss.WiseRunnable;
 
 /**
- * @version 2018/08/01 21:17:18
+ * @version 2018/08/04 1:10:45
  */
 public interface UserActionHelper<Self extends UserActionHelper> {
 
     Node ui();
 
     /**
-     * Helper to listen user action event.
+     * Listen the specified user action.
      * 
-     * @param actionType
-     * @param listener
-     * @return
+     * @param actionType A user action to detect.
+     * @return An event {@link Signal}.
      */
     default <E extends Event> Signal<E> when(User<E> actionType) {
         return actionType.hook.apply(new Signal<E>((observer, disposer) -> {
@@ -46,58 +45,164 @@ public interface UserActionHelper<Self extends UserActionHelper> {
     }
 
     /**
-     * Helper to listen user action event.
+     * Listen all specified user actions.
      * 
-     * @param actionType
-     * @param listener
-     * @return
+     * @param actionTypes A list of user actions to detect.
+     * @return An event {@link Signal}.
      */
-    default <T extends Event> Self when(User<T> actionType, Runnable listener) {
-        return when(actionType, e -> listener.run());
+    default <E extends Event> Signal<E> when(User<E>... actionTypes) {
+        return when(I.signal(actionTypes));
     }
 
     /**
-     * Helper to listen user action event.
+     * Listen all specified user actions.
      * 
-     * @param actionType
-     * @param listener
-     * @return
+     * @param actionTypes A list of user actions to detect.
+     * @return An event {@link Signal}.
      */
-    default <T extends Event> Self when(User<T> actionType, Consumer<T> listener) {
-        when(actionType).to(listener::accept);
+    private <E extends Event> Signal<E> when(Signal<User<E>> actionTypes) {
+        return actionTypes.skipNull().flatMap(this::when);
+    }
+
+    /**
+     * Listen the specified user action.
+     * 
+     * @param actionType A user action to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
+     */
+    default <E extends Event> Self when(User<E> actionType, WiseRunnable listener) {
+        return when(I.signal(actionType), listener);
+    }
+
+    /**
+     * Listen all specified user actions.
+     * 
+     * @param actionType1 A user action to detect.
+     * @param actionType2 A user action to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
+     */
+    default <E extends Event> Self when(User<E> actionType1, User<E> actionType2, WiseRunnable listener) {
+        return when(I.signal(actionType1, actionType2), listener);
+    }
+
+    /**
+     * Listen all specified user actions.
+     * 
+     * @param actionType1 A user action to detect.
+     * @param actionType2 A user action to detect.
+     * @param actionType3 A user action to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
+     */
+    default <E extends Event> Self when(User<E> actionType1, User<E> actionType2, User<E> actionType3, WiseRunnable listener) {
+        return when(I.signal(actionType1, actionType2, actionType3), listener);
+    }
+
+    /**
+     * Listen all specified user actions.
+     * 
+     * @param actionTypes A list of user actions to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
+     */
+    private <E extends Event> Self when(Signal<User<E>> actionTypes, WiseRunnable listener) {
+        return when(actionTypes, listener.asConsumer());
+    }
+
+    /**
+     * Listen the specified user action.
+     * 
+     * @param actionType A user action to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
+     */
+    default <E extends Event> Self when(User<E> actionType, WiseConsumer<E> listener) {
+        return when(I.signal(actionType), listener);
+    }
+
+    /**
+     * Listen all specified user actions.
+     * 
+     * @param actionType1 A user action to detect.
+     * @param actionType2 A user action to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
+     */
+    default <E extends Event> Self when(User<E> actionType1, User<E> actionType2, WiseConsumer<E> listener) {
+        return when(I.signal(actionType1, actionType2), listener);
+    }
+
+    /**
+     * Listen all specified user actions.
+     * 
+     * @param actionType1 A user action to detect.
+     * @param actionType2 A user action to detect.
+     * @param actionType3 A user action to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
+     */
+    default <E extends Event> Self when(User<E> actionType1, User<E> actionType2, User<E> actionType3, WiseConsumer<E> listener) {
+        return when(I.signal(actionType1, actionType2, actionType3), listener);
+    }
+
+    /**
+     * Listen all specified user actions.
+     * 
+     * @param actionTypes A list of user actions to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
+     */
+    private <E extends Event> Self when(Signal<User<E>> actionTypes, WiseConsumer<E> listener) {
+        when(actionTypes).to(listener);
         return (Self) this;
     }
 
     /**
-     * Helper to listen user action event.
+     * Listen the specified user action.
      * 
-     * @param actionType
-     * @param listener
-     * @return
+     * @param actionType A user action to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
      */
-    default <T extends Event, A> Self when(User<T> actionType, Consumer<A> listener, A context) {
-        return when(actionType, e -> listener.accept(context));
+    default <E extends Event> Self when(User<E> actionType, WiseBiConsumer<E, Self> listener) {
+        return when(I.signal(actionType), listener);
     }
 
     /**
-     * Helper to listen user action event.
+     * Listen all specified user actions.
      * 
-     * @param actionType
-     * @param listener
-     * @return
+     * @param actionType1 A user action to detect.
+     * @param actionType2 A user action to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
      */
-    default <T extends Event> Self when(User<T> actionType, WiseBiConsumer<T, Self> listener) {
-        return when(actionType, e -> listener.accept(e, (Self) this));
+    default <E extends Event> Self when(User<E> actionType1, User<E> actionType2, WiseBiConsumer<E, Self> listener) {
+        return when(I.signal(actionType1, actionType2), listener);
     }
 
     /**
-     * Helper to listen user action event.
+     * Listen all specified user actions.
      * 
-     * @param actionType
-     * @param listener
-     * @return
+     * @param actionType1 A user action to detect.
+     * @param actionType2 A user action to detect.
+     * @param actionType3 A user action to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
      */
-    default <T extends Event, Context> Self when(User<T> actionType, Context context, WiseTriConsumer<T, Self, Context> listener) {
-        return when(actionType, e -> listener.accept(e, (Self) this, context));
+    default <E extends Event> Self when(User<E> actionType1, User<E> actionType2, User<E> actionType3, WiseBiConsumer<E, Self> listener) {
+        return when(I.signal(actionType1, actionType2, actionType3), listener);
+    }
+
+    /**
+     * Listen all specified user actions.
+     * 
+     * @param actionTypes A list of user actions to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
+     */
+    private <E extends Event> Self when(Signal<User<E>> actionTypes, WiseBiConsumer<E, Self> listener) {
+        return when(actionTypes, e -> listener.accept(e, (Self) this));
     }
 }

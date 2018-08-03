@@ -127,8 +127,8 @@ public class UserInterface<Self extends UserInterface, W extends Node>
 
     /**
      * Specifies whether this {@code Node} and any subnodes should be rendered as part of the scene
-     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it
-     * is off the screen or obscured by another Node. Invisible nodes never receive mouse events or
+     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it is
+     * off the screen or obscured by another Node. Invisible nodes never receive mouse events or
      * keyboard focus and never maintain keyboard focus when they become invisible.
      *
      * @defaultValue true
@@ -145,8 +145,10 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @return Chainable API.
      */
     public final Self require(Predicate<Self> validator) {
-        if (ui instanceof Control) {
-            validationSupport().registerValidator((Control) ui, false, new Validator(validator, this));
+        if (validator != null) {
+            require(self -> {
+                assert validator.test(self);
+            });
         }
         return (Self) this;
     }
@@ -159,7 +161,9 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      */
     public final Self require(Consumer<Self> validator) {
         if (ui instanceof Control) {
-            validationSupport().registerValidator((Control) ui, false, new Validator(validator, this));
+            ValidationSupport validation = validationSupport();
+            validation.registerValidator((Control) ui, false, new Validator(validator, this));
+            validation.initInitialDecoration();
         }
         return (Self) this;
     }
@@ -268,35 +272,6 @@ public class UserInterface<Self extends UserInterface, W extends Node>
 
         /** The actual validator. */
         private final Consumer<T> validator;
-
-        /**
-         * Hide constructor.
-         */
-        private Validator(Predicate<T> validator) {
-            this(v -> {
-                if (validator.test(v) == false) {
-                    throw new AssertionError();
-                }
-            });
-        }
-
-        /**
-         * Hide constructor.
-         */
-        private Validator(Predicate<T> validator, T value) {
-            this(v -> {
-                if (validator.test(value) == false) {
-                    throw new AssertionError();
-                }
-            });
-        }
-
-        /**
-         * Hide constructor.
-         */
-        private Validator(Consumer<T> validator) {
-            this.validator = validator;
-        }
 
         /**
          * Hide constructor.

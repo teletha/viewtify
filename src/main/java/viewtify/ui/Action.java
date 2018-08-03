@@ -9,13 +9,14 @@
  */
 package viewtify.ui;
 
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import javafx.scene.Node;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.input.GestureEvent;
 import javafx.scene.input.ScrollEvent;
+
+import kiss.WiseConsumer;
 
 /**
  * @version 2018/07/29 17:05:42
@@ -38,7 +39,7 @@ public class Action {
      * @param model A target {@link SelectionModel}.
      * @return New action.
      */
-    public static final Consumer<ScrollEvent> traverse(SelectionModel model) {
+    public static final WiseConsumer<ScrollEvent> traverse(SelectionModel model) {
         return e -> {
             if (e.getDeltaY() < 0) {
                 model.selectNext();

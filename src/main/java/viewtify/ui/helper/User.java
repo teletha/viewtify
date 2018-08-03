@@ -108,6 +108,15 @@ public final class User<E extends Event> {
     public static final User<MouseEvent> MouseClick = new User(MouseEvent.MOUSE_CLICKED);
 
     /** User Action */
+    public static final User<MouseEvent> MouseDrag = new User(MouseEvent.MOUSE_DRAGGED);
+
+    /** User Action */
+    public static final User<MouseEvent> MouseEnter = new User(MouseEvent.MOUSE_ENTERED);
+
+    /** User Action */
+    public static final User<MouseEvent> MouseExit = new User(MouseEvent.MOUSE_EXITED);
+
+    /** User Action */
     public static final User<MouseEvent> MouseMove = new User(MouseEvent.MOUSE_MOVED);
 
     /** User Action */
