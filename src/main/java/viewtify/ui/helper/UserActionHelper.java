@@ -24,6 +24,11 @@ import kiss.WiseRunnable;
  */
 public interface UserActionHelper<Self extends UserActionHelper> {
 
+    /**
+     * Return the target {@link Node} to listen to user actions.
+     * 
+     * @return A target {@link Node}.
+     */
     Node ui();
 
     /**
@@ -33,7 +38,7 @@ public interface UserActionHelper<Self extends UserActionHelper> {
      * @return An event {@link Signal}.
      */
     default <E extends Event> Signal<E> when(User<E> actionType) {
-        return actionType.hook.apply(new Signal<E>((observer, disposer) -> {
+        return actionType.hook.apply(this, new Signal<E>((observer, disposer) -> {
             EventHandler<E> listener = observer::accept;
 
             ui().addEventHandler(actionType.type, listener);
@@ -41,7 +46,7 @@ public interface UserActionHelper<Self extends UserActionHelper> {
             return disposer.add(() -> {
                 ui().removeEventHandler(actionType.type, listener);
             });
-        }), this);
+        }));
     }
 
     /**

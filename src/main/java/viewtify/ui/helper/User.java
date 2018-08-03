@@ -42,7 +42,7 @@ public final class User<E extends Event> {
      * @return A user action.
      */
     public static final User<GestureEvent> GestureBy(MouseButton button) {
-        return new User<>(MouseEvent.MOUSE_DRAGGED, (signal, helper) -> signal.take(valid(button))
+        return new User<>(MouseEvent.MOUSE_DRAGGED, (helper, signal) -> signal.take(valid(button))
                 .takeUntil(helper.when(User.MouseRelease).take(valid(button)))
                 .scan(GestureEvent::new, GestureEvent::update)
                 .repeat());
@@ -58,7 +58,7 @@ public final class User<E extends Event> {
      * @return A user action.
      */
     public static final User<GestureEvent> GestureFinishBy(MouseButton button) {
-        return new User<>(MouseEvent.MOUSE_DRAGGED, (signal, helper) -> signal.take(valid(button))
+        return new User<>(MouseEvent.MOUSE_DRAGGED, (helper, signal) -> signal.take(valid(button))
                 .takeUntil(helper.when(User.MouseRelease).take(valid(button)))
                 .scan(GestureEvent::new, GestureEvent::update)
                 .last()
@@ -82,7 +82,7 @@ public final class User<E extends Event> {
      * @return A user action.
      */
     public static final User<KeyEvent> input(Key key) {
-        return new User<>(KeyEvent.KEY_RELEASED, (signal, helper) -> signal.take(valid(key)));
+        return new User<>(KeyEvent.KEY_RELEASED, (helper, signal) -> signal.take(valid(key)));
     }
 
     /**
@@ -138,7 +138,7 @@ public final class User<E extends Event> {
     final EventType type;
 
     /** The action post processor. */
-    final BiFunction<Signal<?>, UserActionHelper, Signal<E>> hook;
+    final BiFunction<UserActionHelper, Signal<?>, Signal<E>> hook;
 
     /**
      * Hide constructor.
@@ -146,7 +146,7 @@ public final class User<E extends Event> {
      * @param type
      */
     private User(EventType<E> type) {
-        this(type, (s, h) -> s);
+        this(type, (h, s) -> s);
     }
 
     /**
@@ -154,7 +154,7 @@ public final class User<E extends Event> {
      * 
      * @param type
      */
-    private <T extends Event> User(EventType<T> type, BiFunction<Signal<T>, UserActionHelper<?>, Signal<E>> hook) {
+    private <T extends Event> User(EventType<T> type, BiFunction<UserActionHelper<?>, Signal<T>, Signal<E>> hook) {
         this.type = type;
         this.hook = (BiFunction) hook;
     }
