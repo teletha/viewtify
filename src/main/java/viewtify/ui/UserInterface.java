@@ -13,7 +13,6 @@ import static java.util.concurrent.TimeUnit.*;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -62,6 +61,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
 
     static {
         I.load(Message.class, false);
+        ClassLoader.getSystemClassLoader().setDefaultAssertionStatus(true);
     }
 
     /** User configuration for UI. */
@@ -145,6 +145,19 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @return Chainable API.
      */
     public final Self require(Predicate<Self> validator) {
+        if (ui instanceof Control) {
+            validationSupport().registerValidator((Control) ui, false, new Validator(validator, this));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Set the validator for this {@link UserInterface}.
+     * 
+     * @param validator A validator.
+     * @return Chainable API.
+     */
+    public final Self require(Consumer<Self> validator) {
         if (ui instanceof Control) {
             validationSupport().registerValidator((Control) ui, false, new Validator(validator, this));
         }
@@ -282,7 +295,14 @@ public class UserInterface<Self extends UserInterface, W extends Node>
          * Hide constructor.
          */
         private Validator(Consumer<T> validator) {
-            this.validator = Objects.requireNonNull(validator);
+            this.validator = validator;
+        }
+
+        /**
+         * Hide constructor.
+         */
+        private Validator(Consumer<T> validator, T value) {
+            this.validator = v -> validator.accept(value);
         }
 
         /**
@@ -297,7 +317,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
                 String message = e.getLocalizedMessage();
 
                 if (message == null || message.isEmpty()) {
-                    message = I.i18n(Message.class).invalidValue();
+                    message = I.i18n(Message::invalidValue);
                 }
                 return ValidationResult.fromError(ui, message);
             }
