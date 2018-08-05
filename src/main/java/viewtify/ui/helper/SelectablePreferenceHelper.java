@@ -19,7 +19,7 @@ import kiss.Signal;
 /**
  * @version 2018/01/28 18:31:40
  */
-public interface SelectableValueHelper<Self extends SelectableValueHelper<Self, V>, V> extends PreferenceHelper<Self, V> {
+public interface SelectablePreferenceHelper<Self extends SelectablePreferenceHelper<Self, V>, V> extends PreferenceHelper<Self, V> {
 
     /**
      * Set values.

@@ -10,8 +10,9 @@
 package viewtify.ui.helper;
 
 import java.lang.reflect.Method;
-import java.util.Objects;
-import java.util.function.Predicate;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
 
@@ -25,9 +26,9 @@ import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 
 /**
- * @version 2018/08/03 16:36:25
+ * @version 2018/08/05 12:22:03
  */
-public interface PreferenceHelper<Self extends PreferenceHelper, V> {
+public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supplier<V>, Consumer<V> {
 
     /**
      * The preference.
@@ -35,6 +36,22 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
      * @return
      */
     Property<V> model();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default V get() {
+        return value();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default void accept(V value) {
+        value(value);
+    }
 
     /**
      * The preference value.
@@ -180,15 +197,8 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> {
         return (Self) this;
     }
 
-    default Self restrict(Predicate<V> condition) {
-        Objects.requireNonNull(condition);
+    default <P> Self restrictS(Function<Signal<V>, Signal<Boolean>> condition) {
 
-        return observeNow((prev, now) -> {
-            if (prev != null) {
-                if (condition.test(now) == false) {
-                    value(prev);
-                }
-            }
-        });
+        return (Self) this;
     }
 }

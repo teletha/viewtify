@@ -19,12 +19,12 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.util.StringConverter;
 
 import viewtify.View;
-import viewtify.ui.helper.SelectableValueHelper;
+import viewtify.ui.helper.SelectablePreferenceHelper;
 
 /**
  * @version 2017/11/18 1:30:40
  */
-public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>> implements SelectableValueHelper<UISpinner<T>, T> {
+public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>> implements SelectablePreferenceHelper<UISpinner<T>, T> {
 
     /**
      * Enchanced view.

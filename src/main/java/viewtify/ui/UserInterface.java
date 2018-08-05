@@ -46,6 +46,8 @@ import kiss.I;
 import kiss.Manageable;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.WiseConsumer;
+import kiss.WiseRunnable;
 import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.ui.helper.DisableHelper;
@@ -159,7 +161,17 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @param validator A validator.
      * @return Chainable API.
      */
-    public final Self require(Consumer<Self> validator) {
+    public final Self require(WiseRunnable validator) {
+        return require(validator.asConsumer());
+    }
+
+    /**
+     * Set the validator for this {@link UserInterface}.
+     * 
+     * @param validator A validator.
+     * @return Chainable API.
+     */
+    public final Self require(WiseConsumer<Self> validator) {
         if (ui instanceof Control) {
             ValidationSupport validation = validationSupport();
             validation.registerValidator((Control) ui, false, new Validator(validator, this));
