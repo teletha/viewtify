@@ -9,19 +9,18 @@
  */
 package viewtify.ui;
 
-import java.util.Objects;
-
+import javafx.beans.property.Property;
 import javafx.scene.control.TextField;
 
-import kiss.I;
 import kiss.Signal;
 import viewtify.View;
 import viewtify.Viewtify;
+import viewtify.ui.helper.PreferenceHelper;
 
 /**
- * @version 2017/11/15 9:54:15
+ * @version 2018/08/06 19:41:38
  */
-public class UIText extends UserInterface<UIText, TextField> {
+public class UIText extends UserInterface<UIText, TextField> implements PreferenceHelper<UIText, String> {
 
     /**
      * Enchanced view.
@@ -33,47 +32,11 @@ public class UIText extends UserInterface<UIText, TextField> {
     }
 
     /**
-     * Get text.
-     * 
-     * @param text
+     * {@inheritDoc}
      */
-    public String text() {
-        return ui.getText();
-    }
-
-    /**
-     * Set text.
-     * 
-     * @param text
-     */
-    public UIText text(Object text) {
-        ui.setText(Objects.toString(text));
-        return this;
-    }
-
-    /**
-     * Set initial value.
-     * 
-     * @param initialValue
-     * @return
-     */
-    public UIText initial(String initialValue) {
-        restore(ui.textProperty(), initialValue);
-        return this;
-    }
-
-    /**
-     * Get text as the specified type.
-     * 
-     * @return
-     */
-    public <T> T valueOr(T defaultValue) {
-        try {
-            return I.transform(text(), (Class<T>) defaultValue.getClass());
-        } catch (Throwable e) {
-            return defaultValue;
-
-        }
+    @Override
+    public Property<String> model() {
+        return ui.textProperty();
     }
 
     /**

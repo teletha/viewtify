@@ -39,7 +39,7 @@ public class Validation {
     public final BooleanBinding valid = invalid.not();
 
     /** The validation message. */
-    public Variable<String> message = Variable.empty();
+    public final Variable<String> message = Variable.empty();
 
     /** The list of validators. */
     private final Set<Runnable> validators = new HashSet();
