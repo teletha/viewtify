@@ -162,8 +162,9 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @param timing
      * @return
      */
-    public final Self validateWhen(Signal<?> timing) {
-        validation().when(timing);
+    public final Self validateWhen(Signal<?>... timings) {
+        I.signal(timings).skipNull().to(validation()::when);
+
         return (Self) this;
     }
 
