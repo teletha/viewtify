@@ -23,15 +23,15 @@ public interface EditableHelper<Self extends EditableHelper> {
      * 
      * @return
      */
-    BooleanProperty editable();
+    BooleanProperty edit();
 
     /**
      * Change this {@link UserInterface}'s editable state.
      * 
      * @return Chainable API.
      */
-    default Self editable(boolean editable) {
-        editable().setValue(editable);
+    default Self editable() {
+        edit().setValue(true);
         return (Self) this;
     }
 
@@ -41,7 +41,7 @@ public interface EditableHelper<Self extends EditableHelper> {
      * @return Chainable API.
      */
     default Self uneditable() {
-        editable().setValue(false);
+        edit().setValue(false);
         return (Self) this;
     }
 }

@@ -25,7 +25,7 @@ import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 
 /**
- * @version 2018/08/06 19:43:43
+ * @version 2018/08/06 22:13:08
  */
 public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supplier<V>, Consumer<V> {
 
@@ -55,20 +55,31 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supp
     /**
      * Get the preference value.
      * 
-     * @return
+     * @return A preference value.
      */
     default V value() {
         return model().getValue();
     }
 
     /**
+     * Get the preference value as the specified type.
+     * 
+     * @param type A value type to transform.
+     * @return A transformed value.
+     */
+    default <T> T valueAs(Class<T> type) {
+        return I.transform(value(), type);
+    }
+
+    /**
      * Get the preference value or default value.
      * 
-     * @return
+     * @param defaultValue A default value.
+     * @return A preference value.
      */
     default <T> T valueOr(T defaultValue) {
         try {
-            return I.transform(value(), (Class<T>) defaultValue.getClass());
+            return valueAs((Class<T>) defaultValue.getClass());
         } catch (Throwable e) {
             return defaultValue;
         }

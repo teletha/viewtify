@@ -45,7 +45,7 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
      * {@inheritDoc}
      */
     @Override
-    public BooleanProperty editable() {
+    public BooleanProperty edit() {
         return ui.editableProperty();
     }
 

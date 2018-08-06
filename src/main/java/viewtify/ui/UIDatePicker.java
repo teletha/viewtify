@@ -53,7 +53,7 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
      * {@inheritDoc}
      */
     @Override
-    public BooleanProperty editable() {
+    public BooleanProperty edit() {
         return ui.editableProperty();
     }
 
