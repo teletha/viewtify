@@ -18,7 +18,9 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 
+import kiss.Signal;
 import viewtify.View;
+import viewtify.Viewtify;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.SelectablePreferenceHelper;
 import viewtify.ui.helper.User;
@@ -89,6 +91,14 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Signal<?> validateWhen() {
+        return Viewtify.signal(model());
+    }
+
+    /**
      * @version 2017/11/18 21:42:55
      */
     private class Cell extends ListCell<T> {
@@ -117,5 +127,4 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
             }
         }
     }
-
 }

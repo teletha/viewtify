@@ -20,7 +20,9 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.scene.control.DatePicker;
 
+import kiss.Signal;
 import viewtify.View;
+import viewtify.Viewtify;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.PreferenceHelper;
 import viewtify.ui.helper.User;
@@ -65,6 +67,14 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
         return ui.valueProperty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Signal<?> validateWhen() {
+        return Viewtify.signal(model());
+    }
+
     public final ZonedDateTime zoned() {
         return value().atStartOfDay(ZoneId.of("UTC"));
     }
@@ -102,6 +112,16 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
      */
     public final boolean isAfter(ChronoZonedDateTime date) {
         return isAfter(date.toLocalDate());
+    }
+
+    /**
+     * Compare this {@link LocalDate} with the specified date.
+     * 
+     * @param date A date to compare.
+     * @return A result.
+     */
+    public final boolean isAfter(Supplier<LocalDate> date) {
+        return isAfter(date.get());
     }
 
     /**

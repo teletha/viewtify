@@ -11,14 +11,12 @@ package viewtify.ui;
 
 import static java.util.concurrent.TimeUnit.*;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.Property;
-import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -34,22 +32,20 @@ import javafx.scene.input.KeyCombination;
 import javafx.util.Duration;
 
 import org.controlsfx.control.decoration.Decoration;
+import org.controlsfx.control.decoration.Decorator;
 import org.controlsfx.control.decoration.GraphicDecoration;
-import org.controlsfx.validation.Severity;
-import org.controlsfx.validation.ValidationMessage;
-import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.ValidationSupport;
-import org.controlsfx.validation.decoration.AbstractValidationDecoration;
 import org.controlsfx.validation.decoration.GraphicValidationDecoration;
 
 import kiss.I;
 import kiss.Manageable;
+import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
-import kiss.WiseConsumer;
 import kiss.WiseRunnable;
 import viewtify.View;
 import viewtify.Viewtify;
+import viewtify.model.Validation;
 import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
@@ -61,11 +57,6 @@ import viewtify.ui.helper.UserActionHelper;
 public class UserInterface<Self extends UserInterface, W extends Node>
         implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self> {
 
-    static {
-        I.load(Message.class, false);
-        ClassLoader.getSystemClassLoader().setDefaultAssertionStatus(true);
-    }
-
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
 
@@ -75,8 +66,8 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     /** The associated view. */
     private final View view;
 
-    /** The validatiors. */
-    private ValidationSupport validations;
+    /** The validation system. */
+    private Validation validation;
 
     /** Do restore oonly once. */
     private boolean restored = false;
@@ -146,13 +137,10 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @param validator A validator.
      * @return Chainable API.
      */
-    public final Self require(Predicate<Self> validator) {
-        if (validator != null) {
-            require(self -> {
-                assert validator.test(self);
-            });
-        }
-        return (Self) this;
+    public final Self validate(Predicate<Self> validator) {
+        return validate(() -> {
+            assert validator.test((Self) this);
+        });
     }
 
     /**
@@ -161,30 +149,44 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @param validator A validator.
      * @return Chainable API.
      */
-    public final Self require(WiseRunnable validator) {
-        return require(validator.asConsumer());
+    public final Self validate(WiseRunnable validator) {
+        validation().require(validator);
+
+        return (Self) this;
     }
 
     /**
-     * Set the validator for this {@link UserInterface}.
+     * Register the validation timing.
      * 
-     * @param validator A validator.
-     * @return Chainable API.
+     * @param timing
+     * @return
      */
-    public final Self require(WiseConsumer<Self> validator) {
-        if (ui instanceof Control) {
-            ValidationSupport validation = validationSupport();
-            validation.registerValidator((Control) ui, false, new Validator(validator, this));
-            validation.initInitialDecoration();
-        }
+    public final Self validateWhen(Signal<?> timing) {
+        validation().when(timing);
         return (Self) this;
+    }
+
+    /**
+     * Built-in validation timing for this {@link UserInterface}.
+     * 
+     * @return
+     */
+    protected Signal<?> validateWhen() {
+        return null; // default value
     }
 
     /**
      * Return the validation result of this {@link UserInterface}.
      */
-    public final ReadOnlyBooleanProperty isInvalid() {
-        return validationSupport().invalidProperty();
+    public final BooleanBinding isValid() {
+        return validation().valid;
+    }
+
+    /**
+     * Return the validation result of this {@link UserInterface}.
+     */
+    public final BooleanBinding isInvalid() {
+        return validation().invalid;
     }
 
     /**
@@ -192,12 +194,19 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * 
      * @return
      */
-    private synchronized ValidationSupport validationSupport() {
-        if (validations == null) {
-            validations = new ValidationSupport();
-            validations.setValidationDecorator(new ValidationDecoration());
+    private synchronized Validation validation() {
+        if (validation == null) {
+            validation = new Validation();
+            validation.when(validateWhen());
+            validation.message.observe().on(Viewtify.UIThread).to(message -> {
+                if (message == null) {
+                    Decorator.removeAllDecorations(ui);
+                } else {
+                    Decorator.addDecoration(ui, ValidationDecoration.createValidationDecoration(message, true));
+                }
+            });
         }
-        return validations;
+        return validation;
     }
 
     /**
@@ -278,43 +287,9 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     }
 
     /**
-     * @version 2018/08/03 15:16:51
-     */
-    private static class Validator<T> implements org.controlsfx.validation.Validator<T> {
-
-        /** The actual validator. */
-        private final Consumer<T> validator;
-
-        /**
-         * Hide constructor.
-         */
-        private Validator(Consumer<T> validator, T value) {
-            this.validator = v -> validator.accept(value);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public ValidationResult apply(Control ui, T value) {
-            try {
-                validator.accept(value);
-                return null;
-            } catch (Throwable e) {
-                String message = e.getLocalizedMessage();
-
-                if (message == null || message.isEmpty()) {
-                    message = I.i18n(Message::invalidValue);
-                }
-                return ValidationResult.fromError(ui, message);
-            }
-        }
-    }
-
-    /**
      * @version 2018/08/03 16:45:41
      */
-    private static class ValidationDecoration extends AbstractValidationDecoration {
+    private static class ValidationDecoration {
         private static final Image ERROR_IMAGE = new Image(GraphicValidationDecoration.class
                 .getResource("/impl/org/controlsfx/control/validation/decoration-error.png") //$NON-NLS-1$
                 .toExternalForm());
@@ -337,35 +312,27 @@ public class UserInterface<Self extends UserInterface, W extends Node>
 
         private static final String WARNING_TOOLTIP_EFFECT = POPUP_SHADOW_EFFECT + TOOLTIP_COMMON_EFFECTS + "-fx-background-color: FFFFCC; -fx-text-fill: CC9900; -fx-border-color: CC9900;"; //$NON-NLS-1$
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected Collection<Decoration> createValidationDecorations(ValidationMessage message) {
-            Node image = new ImageView(Severity.ERROR == message.getSeverity() ? ERROR_IMAGE : WARNING_IMAGE);
+        private static Decoration createValidationDecoration(String message, boolean error) {
+            Node image = new ImageView(error ? ERROR_IMAGE : WARNING_IMAGE);
             image.setStyle(SHADOW_EFFECT);
 
-            Tooltip tooltip = new Tooltip(message.getText());
+            Tooltip tooltip = new Tooltip(message);
             tooltip.setAutoFix(true);
             tooltip.setShowDelay(Duration.ZERO);
             tooltip.setShowDuration(Duration.INDEFINITE);
-            tooltip.setStyle(Severity.ERROR == message.getSeverity() ? ERROR_TOOLTIP_EFFECT : WARNING_TOOLTIP_EFFECT);
+            tooltip.setStyle(error ? ERROR_TOOLTIP_EFFECT : WARNING_TOOLTIP_EFFECT);
 
             Label label = new Label();
             label.setGraphic(image);
             label.setTooltip(tooltip);
             label.setAlignment(Pos.CENTER);
 
-            return List.of(new GraphicDecoration(label, Pos.CENTER_LEFT));
+            return new GraphicDecoration(label, Pos.CENTER_LEFT);
         }
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected Collection<Decoration> createRequiredDecorations(Control target) {
-            return List.of(new GraphicDecoration(new ImageView(REQUIRED_IMAGE), Pos.TOP_LEFT, REQUIRED_IMAGE.getWidth() / 2, REQUIRED_IMAGE
-                    .getHeight() / 2));
+        private static Decoration createRequiredDecoration(Control target) {
+            return new GraphicDecoration(new ImageView(REQUIRED_IMAGE), Pos.TOP_LEFT, REQUIRED_IMAGE.getWidth() / 2, REQUIRED_IMAGE
+                    .getHeight() / 2);
         }
     }
 }

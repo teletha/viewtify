@@ -14,7 +14,9 @@ import java.util.Objects;
 import javafx.scene.control.TextField;
 
 import kiss.I;
+import kiss.Signal;
 import viewtify.View;
+import viewtify.Viewtify;
 
 /**
  * @version 2017/11/15 9:54:15
@@ -72,5 +74,13 @@ public class UIText extends UserInterface<UIText, TextField> {
             return defaultValue;
 
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Signal<?> validateWhen() {
+        return Viewtify.signal(ui.textProperty());
     }
 }
