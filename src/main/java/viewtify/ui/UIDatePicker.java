@@ -20,9 +20,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.scene.control.DatePicker;
 
-import kiss.Signal;
 import viewtify.View;
-import viewtify.Viewtify;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.PreferenceHelper;
 import viewtify.ui.helper.User;
@@ -65,14 +63,6 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
     @Override
     public Property<LocalDate> model() {
         return ui.valueProperty();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Signal<?> validateWhen() {
-        return Viewtify.signal(model());
     }
 
     public final ZonedDateTime zoned() {

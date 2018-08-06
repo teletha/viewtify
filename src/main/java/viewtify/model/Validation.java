@@ -53,6 +53,9 @@ public class Validation {
     public Validation require(WiseRunnable validator) {
         if (validator != null) {
             validators.add(validator);
+
+            // apply validation immediately
+            validate();
         }
         return this;
     }

@@ -47,6 +47,7 @@ import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.model.Validation;
 import viewtify.ui.helper.DisableHelper;
+import viewtify.ui.helper.PreferenceHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
@@ -167,15 +168,6 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     }
 
     /**
-     * Built-in validation timing for this {@link UserInterface}.
-     * 
-     * @return
-     */
-    protected Signal<?> validateWhen() {
-        return null; // default value
-    }
-
-    /**
      * Return the validation result of this {@link UserInterface}.
      */
     public final BooleanBinding isValid() {
@@ -198,15 +190,36 @@ public class UserInterface<Self extends UserInterface, W extends Node>
         if (validation == null) {
             validation = new Validation();
             validation.when(validateWhen());
-            validation.message.observe().on(Viewtify.UIThread).to(message -> {
+            validation.message.observe().to(message -> {
                 if (message == null) {
-                    Decorator.removeAllDecorations(ui);
+                    I.signal(Decorator.getDecorations(ui))
+                            .take(ValidationDecoration.class::isInstance)
+                            .take(1)
+                            .on(Viewtify.UIThread)
+                            .to(e -> Decorator.removeDecoration(ui, e));
                 } else {
-                    Decorator.addDecoration(ui, ValidationDecoration.createValidationDecoration(message, true));
+                    I.signal(Decorator.getDecorations(ui))
+                            .any(ValidationDecoration.class::isInstance)
+                            .take(false)
+                            .on(Viewtify.UIThread)
+                            .to(() -> Decorator.addDecoration(ui, ValidationDecoration.createValidationDecoration(message, true)));
                 }
             });
         }
         return validation;
+    }
+
+    /**
+     * Built-in validation timing for this {@link UserInterface}.
+     * 
+     * @return
+     */
+    private Signal<?> validateWhen() {
+        if (this instanceof PreferenceHelper) {
+            return Viewtify.signal(((PreferenceHelper) this).model());
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -289,7 +302,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     /**
      * @version 2018/08/03 16:45:41
      */
-    private static class ValidationDecoration {
+    private static class ValidationDecoration extends GraphicDecoration {
         private static final Image ERROR_IMAGE = new Image(GraphicValidationDecoration.class
                 .getResource("/impl/org/controlsfx/control/validation/decoration-error.png") //$NON-NLS-1$
                 .toExternalForm());
@@ -312,6 +325,14 @@ public class UserInterface<Self extends UserInterface, W extends Node>
 
         private static final String WARNING_TOOLTIP_EFFECT = POPUP_SHADOW_EFFECT + TOOLTIP_COMMON_EFFECTS + "-fx-background-color: FFFFCC; -fx-text-fill: CC9900; -fx-border-color: CC9900;"; //$NON-NLS-1$
 
+        /**
+         * @param decorationNode
+         * @param position
+         */
+        private ValidationDecoration(Node decorationNode, Pos position) {
+            super(decorationNode, position);
+        }
+
         private static Decoration createValidationDecoration(String message, boolean error) {
             Node image = new ImageView(error ? ERROR_IMAGE : WARNING_IMAGE);
             image.setStyle(SHADOW_EFFECT);
@@ -327,7 +348,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
             label.setTooltip(tooltip);
             label.setAlignment(Pos.CENTER);
 
-            return new GraphicDecoration(label, Pos.CENTER_LEFT);
+            return new ValidationDecoration(label, Pos.CENTER_LEFT);
         }
 
         private static Decoration createRequiredDecoration(Control target) {

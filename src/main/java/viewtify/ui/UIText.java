@@ -12,9 +12,7 @@ package viewtify.ui;
 import javafx.beans.property.Property;
 import javafx.scene.control.TextField;
 
-import kiss.Signal;
 import viewtify.View;
-import viewtify.Viewtify;
 import viewtify.ui.helper.PreferenceHelper;
 
 /**
@@ -37,13 +35,5 @@ public class UIText extends UserInterface<UIText, TextField> implements Preferen
     @Override
     public Property<String> model() {
         return ui.textProperty();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Signal<?> validateWhen() {
-        return Viewtify.signal(ui.textProperty());
     }
 }
