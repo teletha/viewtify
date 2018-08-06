@@ -168,6 +168,18 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     }
 
     /**
+     * Register the validation timing.
+     * 
+     * @param timing
+     * @return
+     */
+    public final Self validateWhen(UserInterface... timings) {
+        I.signal(timings).skipNull().map(UserInterface::validateWhen).to(validation()::when);
+
+        return (Self) this;
+    }
+
+    /**
      * Return the validation result of this {@link UserInterface}.
      */
     public final BooleanBinding isValid() {
