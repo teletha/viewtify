@@ -105,6 +105,25 @@ public final class User<E extends Event> {
     public static final User<KeyEvent> KeyType = new User(KeyEvent.KEY_TYPED);
 
     /** User Action */
+    public static final User<MouseEvent> LeftClick = click(MouseButton.PRIMARY);
+
+    /** User Action */
+    public static final User<MouseEvent> RightClick = click(MouseButton.SECONDARY);
+
+    /** User Action */
+    public static final User<MouseEvent> MiddleClick = click(MouseButton.MIDDLE);
+
+    /**
+     * Helper method to create {@link User} action for key input.
+     * 
+     * @param button A target mouse button.
+     * @return A user action.
+     */
+    public static final User<MouseEvent> click(MouseButton button) {
+        return new User<>(MouseEvent.MOUSE_CLICKED, (helper, signal) -> signal.take(e -> e.getButton() == MouseButton.MIDDLE));
+    }
+
+    /** User Action */
     public static final User<MouseEvent> MouseClick = new User(MouseEvent.MOUSE_CLICKED);
 
     /** User Action */
@@ -234,7 +253,8 @@ public final class User<E extends Event> {
         /**
          * Horizontal position of the event relative to the origin of the MouseEvent's source.
          *
-         * @return horizontal position of the event relative to the origin of the MouseEvent's source.
+         * @return horizontal position of the event relative to the origin of the MouseEvent's
+         *         source.
          */
         public final double getX() {
             return now.getX() - prev.getX();
@@ -252,7 +272,8 @@ public final class User<E extends Event> {
         /**
          * Horizontal position of the event relative to the origin of the MouseEvent's source.
          *
-         * @return horizontal position of the event relative to the origin of the MouseEvent's source.
+         * @return horizontal position of the event relative to the origin of the MouseEvent's
+         *         source.
          */
         public final double getFullX() {
             return now.getX() - init.getX();
