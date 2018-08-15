@@ -86,6 +86,16 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supp
     }
 
     /**
+     * Get the preference value or default value.
+     * 
+     * @param defaultValue A default value.
+     * @return A preference value.
+     */
+    default <T> T valueOr(Variable<T> defaultValue) {
+        return valueOr(defaultValue.v);
+    }
+
+    /**
      * Set the current value.
      * 
      * @param value
@@ -93,6 +103,17 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supp
      */
     default Self value(V value) {
         model().setValue(value);
+        return (Self) this;
+    }
+
+    /**
+     * Set the current value.
+     * 
+     * @param value
+     * @return
+     */
+    default Self value(Variable<V> value) {
+        model().setValue(value.v);
         return (Self) this;
     }
 
