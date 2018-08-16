@@ -151,6 +151,16 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supp
     }
 
     /**
+     * Set initial value.
+     * 
+     * @param initialValue
+     * @return
+     */
+    default Self initial(Variable<V> initialValue) {
+        return initial(initialValue.v);
+    }
+
+    /**
      * This preference synchronizes with the specified value.
      */
     default Self model(Property<V> value) {
