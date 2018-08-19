@@ -9,16 +9,20 @@
  */
 package viewtify.ui;
 
+import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
+import kiss.Disposable;
+import kiss.Signal;
 import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.bind.Calculation;
@@ -34,6 +38,9 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
 
     private Calculation<Predicate<T>> filter;
 
+    /** The list ui refresher. */
+    private Disposable refresher;
+
     /**
      * Enchanced view.
      * 
@@ -43,6 +50,14 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
         super(ui, view);
 
         this.values = ui.getItems();
+    }
+
+    public UIListView<T> values(List<T> values, Signal<?> refreshTiming) {
+        if (refresher != null) {
+            refresher.dispose();
+        }
+        refresher = refreshTiming.to(ui::refresh);
+        return values(FXCollections.observableList(values));
     }
 
     public UIListView<T> values(ObservableList<T> values) {
