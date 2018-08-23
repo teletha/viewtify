@@ -21,11 +21,12 @@ import kiss.Variable;
 import kiss.WiseBiConsumer;
 import kiss.WiseConsumer;
 import kiss.WiseFunction;
+import kiss.WiseRunnable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 
 /**
- * @version 2018/08/06 22:13:08
+ * @version 2018/08/23 22:19:19
  */
 public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supplier<V>, Consumer<V> {
 
@@ -202,6 +203,17 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supp
      * @param listener
      * @return
      */
+    default Self observe(WiseRunnable listener) {
+        model().addListener((p, o, n) -> listener.run());
+        return (Self) this;
+    }
+
+    /**
+     * Observe the value modification.
+     * 
+     * @param listener
+     * @return
+     */
     default Self observe(WiseConsumer<V> listener) {
         model().addListener((p, o, n) -> listener.accept(n));
         return (Self) this;
@@ -225,6 +237,18 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supp
      */
     default Signal<V> observeNow() {
         return observe().startWith(value()).skipNull();
+    }
+
+    /**
+     * Observe the value modification.
+     * 
+     * @param listener
+     * @return
+     */
+    default Self observeNow(WiseRunnable listener) {
+        observe(listener);
+        listener.run();
+        return (Self) this;
     }
 
     /**
