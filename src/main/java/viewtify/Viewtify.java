@@ -63,6 +63,7 @@ import kiss.WiseTriFunction;
 import viewtify.bind.Calculation;
 import viewtify.bind.CalculationList;
 import viewtify.ui.UserInterface;
+import viewtify.util.UIThreadSafeList;
 
 /**
  * @version 2017/12/01 18:25:44
@@ -221,9 +222,9 @@ public final class Viewtify {
 
     /**
      * <p>
-     * Implements the same behaviour as the "touch" utility on Unix. It creates a new file with size 0
-     * or, if the file exists already, it is opened and closed without modifying it, but updating the
-     * file date and time.
+     * Implements the same behaviour as the "touch" utility on Unix. It creates a new file with size
+     * 0 or, if the file exists already, it is opened and closed without modifying it, but updating
+     * the file date and time.
      * </p>
      * 
      * @param path
@@ -602,6 +603,16 @@ public final class Viewtify {
                 return value.getValue();
             }
         };
+    }
+
+    /**
+     * Create {@link ObservableList} which notify value change event in UI thread.
+     * 
+     * @param list A target {@link ObservableList}.
+     * @return A created ui thread-safe {@link ObservableList}.
+     */
+    public static final <E> ObservableList<E> inUI(ObservableList<E> list) {
+        return list instanceof UIThreadSafeList ? list : new UIThreadSafeList<>(list);
     }
 
     /**

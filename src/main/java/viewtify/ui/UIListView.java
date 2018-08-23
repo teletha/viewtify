@@ -191,7 +191,7 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * @param filter A conditional filer.
      * @return
      */
-    public <V> UIListView<T> filter(ObservableValue<V> value, BiPredicate<T, V> filter) {
+    public <V> UIListView<T> take(ObservableValue<V> value, BiPredicate<T, V> filter) {
         this.filter = Viewtify.calculate(value, () -> t -> filter.test(t, value.getValue()));
         bind();
 
@@ -205,7 +205,7 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * @param filter A conditional filer.
      * @return
      */
-    public <V> UIListView<T> filter(PreferenceHelper<?, V> value, BiPredicate<T, V> filter) {
-        return filter(value.model(), filter);
+    public <V> UIListView<T> take(PreferenceHelper<?, V> value, BiPredicate<T, V> filter) {
+        return take(value.model(), filter);
     }
 }
