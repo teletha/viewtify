@@ -9,17 +9,19 @@
  */
 package viewtify.ui;
 
+import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
 import kiss.Disposable;
+import kiss.Signal;
 import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.ui.helper.PreferenceHelper;
@@ -55,7 +57,20 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
     }
 
     private void bind() {
-        ui.itemsProperty().bind(Viewtify.calculate(filter).map(f -> f == null ? values : new FilteredList<T>(values, f)));
+        ui.setItems(values);
+        // ui.itemsProperty().bind(Viewtify.calculate(filter).map(f -> f == null ? values : new
+        // FilteredList<T>(values, f)));
+    }
+
+    public UIListView<T> values(List<T> values, Signal<?> updateTiming) {
+        ui.setItems(this.values = FXCollections.observableList(values));
+
+        if (refresher != null) {
+            refresher.dispose();
+        }
+        this.refresher = updateTiming.startWithNull().on(Viewtify.UIThread).to(ui::refresh);
+
+        return this;
     }
 
     public UIListView<T> cell(ListCell<T> cell) {
