@@ -9,32 +9,33 @@
  */
 package viewtify.ui;
 
-import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
 import kiss.Disposable;
-import kiss.Signal;
+import kiss.I;
+import kiss.Variable;
 import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.ui.helper.PreferenceHelper;
 
 /**
- * @version 2018/01/12 21:34:22
+ * @version 2018/08/26 16:03:05
  */
-public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
+public class UIListView<E> extends UserInterface<UIListView, ListView<E>> {
 
-    /** The original list. */
-    private ObservableList<T> values;
+    /** The item filter manager. */
+    private final Variable<Predicate<E>> filter;
 
-    private Predicate<T> filter;
+    /** The item list manager. */
+    private final Variable<ObservableList<E>> items;
 
     /** The list ui refresher. */
     private Disposable refresher;
@@ -44,41 +45,35 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * 
      * @param ui
      */
-    private UIListView(ListView<T> ui, View view) {
+    private UIListView(ListView<E> ui, View view) {
         super(ui, view);
 
-        this.values = ui.getItems();
+        this.filter = Variable.of(I.accept());
+        this.items = Variable.of(ui.getItems());
+
+        items.observeNow().combineLatest(filter.observeNow()).to(e -> {
+            ui.setItems(new FilteredList(e.ⅰ, e.ⅱ));
+        });
     }
 
-    public UIListView<T> values(ObservableList<T> values) {
-        this.values = values;
-        bind();
-        return this;
-    }
-
-    private void bind() {
-        ui.setItems(values);
-        // ui.itemsProperty().bind(Viewtify.calculate(filter).map(f -> f == null ? values : new
-        // FilteredList<T>(values, f)));
-    }
-
-    public UIListView<T> values(List<T> values, Signal<?> updateTiming) {
-        ui.setItems(this.values = FXCollections.observableList(values));
-
-        if (refresher != null) {
-            refresher.dispose();
-        }
-        this.refresher = updateTiming.startWithNull().on(Viewtify.UIThread).to(ui::refresh);
+    /**
+     * Set items to show.
+     * 
+     * @param values
+     * @return
+     */
+    public UIListView<E> values(ObservableList<E> values) {
+        this.items.set(values);
 
         return this;
     }
 
-    public UIListView<T> cell(ListCell<T> cell) {
+    public UIListView<E> cell(ListCell<E> cell) {
         ui.setCellFactory(e -> cell);
         return this;
     }
 
-    public UIListView<T> cell(Function<UIListView<T>, ListCell<T>> factory) {
+    public UIListView<E> cell(Function<UIListView<E>, ListCell<E>> factory) {
         ui.setCellFactory(e -> factory.apply(this));
         return this;
     }
@@ -88,7 +83,7 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * 
      * @return
      */
-    public UIListView<T> scrollTo(int index) {
+    public UIListView<E> scrollTo(int index) {
         ui.scrollTo(index);
         return this;
     }
@@ -98,7 +93,7 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * 
      * @return
      */
-    public UIListView<T> scrollToBottom() {
+    public UIListView<E> scrollToBottom() {
         return scrollTo(ui.getItems().size() - 1);
     }
 
@@ -107,7 +102,7 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * 
      * @return
      */
-    public UIListView<T> scrollToTop() {
+    public UIListView<E> scrollToTop() {
         return scrollTo(0);
     }
 
@@ -117,8 +112,8 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * @param value
      * @return
      */
-    public UIListView<T> add(int index, T value) {
-        values.add(index, value);
+    public UIListView<E> add(int index, E value) {
+        items.v.add(index, value);
 
         return this;
     }
@@ -129,7 +124,7 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * @param value
      * @return
      */
-    public UIListView<T> addFirst(T value) {
+    public UIListView<E> addFirst(E value) {
         return add(0, value);
     }
 
@@ -139,8 +134,8 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * @param value
      * @return
      */
-    public UIListView<T> addLast(T value) {
-        values.add(value);
+    public UIListView<E> addLast(E value) {
+        items.v.add(value);
 
         return this;
     }
@@ -151,8 +146,8 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * @param value
      * @return
      */
-    public UIListView<T> remove(int index) {
-        values.remove(index);
+    public UIListView<E> remove(int index) {
+        items.v.remove(index);
 
         return this;
     }
@@ -163,7 +158,7 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * @param value
      * @return
      */
-    public UIListView<T> removeFirst() {
+    public UIListView<E> removeFirst() {
         return remove(0);
     }
 
@@ -173,8 +168,8 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * @param value
      * @return
      */
-    public UIListView<T> removeLast() {
-        return remove(values.size() - 1);
+    public UIListView<E> removeLast() {
+        return remove(items.v.size() - 1);
     }
 
     /**
@@ -184,19 +179,31 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
      * @return
      */
     public int size() {
-        return values.size();
+        return items.v.size();
     }
 
     /**
      * Filter items by the specified condition.
      * 
-     * @param value An additional infomation.
+     * @param context An additional infomation.
      * @param filter A conditional filer.
      * @return
      */
-    public <V> UIListView<T> take(ObservableValue<V> value, BiPredicate<T, V> filter) {
-        this.filter = e -> filter.test(e, value.getValue());
-        bind();
+    public <C> UIListView<E> take(PreferenceHelper<?, C> context, BiPredicate<E, C> filter) {
+        return take(context.model(), filter);
+    }
+
+    /**
+     * Filter items by the specified condition.
+     * 
+     * @param context An additional infomation.
+     * @param filter A conditional filer.
+     * @return
+     */
+    public <C> UIListView<E> take(ObservableValue<C> context, BiPredicate<E, C> filter) {
+        Viewtify.signalNow(context).to(c -> {
+            this.filter.set((E e) -> filter.test(e, c));
+        });
 
         return this;
     }
@@ -204,11 +211,22 @@ public class UIListView<T> extends UserInterface<UIListView, ListView<T>> {
     /**
      * Filter items by the specified condition.
      * 
-     * @param value An additional infomation.
+     * @param context An additional infomation.
      * @param filter A conditional filer.
      * @return
      */
-    public <V> UIListView<T> take(PreferenceHelper<?, V> value, BiPredicate<T, V> filter) {
-        return take(value.model(), filter);
+    public <C> UIListView<E> skip(PreferenceHelper<?, C> context, BiPredicate<E, C> filter) {
+        return take(context, filter.negate());
+    }
+
+    /**
+     * Filter items by the specified condition.
+     * 
+     * @param context An additional infomation.
+     * @param filter A conditional filer.
+     * @return
+     */
+    public <C> UIListView<E> skip(ObservableValue<C> context, BiPredicate<E, C> filter) {
+        return take(context, filter.negate());
     }
 }

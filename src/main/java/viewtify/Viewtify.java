@@ -676,6 +676,16 @@ public final class Viewtify {
         });
     }
 
+    /**
+     * Signal value changing.
+     * 
+     * @param values
+     * @return
+     */
+    public static <T> Signal<T> signalNow(ObservableValue<T> value) {
+        return signal(value).startWith(value.getValue());
+    }
+
     public static UserInterface wrap(Control ui, View view) {
         return new UserInterface(ui, view);
     }
