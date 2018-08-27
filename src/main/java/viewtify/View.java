@@ -11,12 +11,14 @@ package viewtify;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableColumn;
@@ -30,7 +32,7 @@ import viewtify.ui.UITableColumn;
 import viewtify.ui.UITreeTableColumn;
 
 /**
- * @version 2018/06/26 2:27:21
+ * @version 2018/08/27 21:51:30
  */
 public abstract class View implements Extensible {
 
@@ -249,5 +251,33 @@ public abstract class View implements Extensible {
      */
     public final <N extends Parent> N root() {
         return root != null ? (N) root : parent != null ? parent.root() : (N) Viewtify.stage.getScene().getRoot();
+    }
+
+    /**
+     * Localized by the specified resource class.
+     * 
+     * @param resourceClass
+     */
+    protected final <R extends Extensible> R localizeBy(Class<R> resourceClass) {
+        R resource = I.i18n(resourceClass);
+
+        for (Node node : root.lookupAll(".label")) {
+            String id = node.getId();
+
+            if (id != null) {
+                try {
+                    Method method = resourceClass.getDeclaredMethod(id);
+                    method.setAccessible(true);
+                    Object message = method.invoke(resource);
+
+                    if (message != null) {
+                        ((Label) node).setText(String.valueOf(message));
+                    }
+                } catch (Exception e) {
+                    // ignore
+                }
+            }
+        }
+        return resource;
     }
 }

@@ -10,11 +10,12 @@
 package viewtify.ui.helper;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import javafx.scene.control.Labeled;
 
 /**
- * @version 2018/01/23 14:00:24
+ * @version 2018/08/27 21:27:30
  */
 public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extends StyleHelper<Self, W> {
 
@@ -30,10 +31,19 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
     /**
      * Set text.
      * 
-     * @param text
+     * @param text A text to set.
      */
     default Self text(Object text) {
         ui().setText(Objects.toString(text));
         return (Self) this;
+    }
+
+    /**
+     * Set text.
+     * 
+     * @param text A text {@link Supplier} to set.
+     */
+    default Self text(Supplier<?> text) {
+        return text(text.get());
     }
 }
