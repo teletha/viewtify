@@ -9,14 +9,12 @@
  */
 package viewtify;
 
+import static java.util.concurrent.TimeUnit.*;
+
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import kiss.Manageable;
-import kiss.Observer;
-import kiss.Signal;
+import kiss.Signaling;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
@@ -24,18 +22,19 @@ import kiss.model.Model;
 import kiss.model.Property;
 
 /**
- * @version 2018/04/12 13:14:54
+ * @version 2018/08/27 10:40:07
  */
 @Manageable(lifestyle = Singleton.class)
 public abstract class Preference<Self extends Preference> implements Storable<Self> {
 
-    private final List<Observer<Boolean>> observers = new ArrayList();
+    /** The save event manager. */
+    private final Signaling<Boolean> saver = new Signaling();
 
     /**
-     * 
+     * Hide constructor.
      */
     protected Preference() {
-        new Signal<>(observers).debounce(3, TimeUnit.SECONDS).to(Storable.super::store);
+        saver.expose.debounce(3, SECONDS).to(Storable.super::store);
     }
 
     /**
@@ -43,17 +42,24 @@ public abstract class Preference<Self extends Preference> implements Storable<Se
      */
     @Override
     public Self store() {
-        observers.forEach(o -> o.accept(true));
+        saver.accept(true);
         return (Self) this;
     }
 
     /**
-     * 
+     * Make this {@link Preference} auto-savable.
      */
     protected final void autoSave() {
         search(this, Model.of(this), this);
     }
 
+    /**
+     * Search autosavable {@link Variable} property.
+     * 
+     * @param root
+     * @param model
+     * @param object
+     */
     private void search(Preference root, Model<Object> model, Object object) {
         for (Property property : model.properties()) {
             if (property.isAttribute()) {
@@ -61,9 +67,7 @@ public abstract class Preference<Self extends Preference> implements Storable<Se
                     Field field = model.type.getDeclaredField(property.name);
                     if (field.getType() == Variable.class) {
                         Variable variable = (Variable) field.get(object);
-                        variable.observe().diff().to(() -> {
-                            root.store();
-                        });
+                        variable.observe().diff().to(root::store);
                     }
                 } catch (Exception e) {
                     // ignore

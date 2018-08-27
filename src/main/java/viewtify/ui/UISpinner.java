@@ -56,7 +56,7 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>> implem
      */
     @Override
     public UISpinner<T> values(List<T> values) {
-        ui.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory(FXCollections.observableArrayList(values)));
+        ui.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory(FXCollections.observableList(values)));
         return this;
     }
 
