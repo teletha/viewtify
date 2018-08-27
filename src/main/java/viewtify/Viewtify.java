@@ -48,8 +48,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.Control;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
 import filer.Filer;
 import kiss.Disposable;
@@ -613,6 +615,22 @@ public final class Viewtify {
      */
     public static final <E> ObservableList<E> inUI(ObservableList<E> list) {
         return list instanceof UIThreadSafeList ? list : new UIThreadSafeList<>(list);
+    }
+
+    /**
+     * Retrieve the {@link Screen} that {@link ViewtifyApplication} is displayed.
+     * 
+     * @return
+     */
+    public static Screen screen() {
+        Window window = root().root().getScene().getWindow();
+
+        for (Screen screen : Screen.getScreens()) {
+            if (screen.getBounds().contains(window.getX(), window.getY())) {
+                return screen;
+            }
+        }
+        return Screen.getPrimary();
     }
 
     /**

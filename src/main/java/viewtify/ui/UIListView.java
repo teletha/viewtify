@@ -15,7 +15,6 @@ import java.util.function.Predicate;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
@@ -52,7 +51,7 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>> {
         this.items = Variable.of(ui.getItems());
 
         items.observeNow().combineLatest(filter.observeNow()).to(e -> {
-            ui.setItems(new FilteredList(e.ⅰ, e.ⅱ));
+            ui.setItems(e.ⅰ.filtered(e.ⅱ));
         });
     }
 
