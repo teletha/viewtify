@@ -25,7 +25,7 @@ import kiss.Variable;
 import kiss.WiseRunnable;
 
 /**
- * @version 2018/08/06 14:33:52
+ * @version 2018/08/28 1:23:00
  */
 public class Validation {
 
@@ -87,7 +87,7 @@ public class Validation {
             String message = e.getLocalizedMessage();
 
             if (message == null || message.isEmpty()) {
-                message = I.i18n(Message::invalidValue);
+                message = I.i18n(Lang::invalidValue);
             }
             $valid.set(false);
             this.message.set(message);
@@ -99,7 +99,7 @@ public class Validation {
      */
     @SuppressWarnings("unused")
     @Manageable(lifestyle = Singleton.class)
-    private static class Message implements Extensible {
+    private static class Lang implements Extensible {
 
         /**
          * Error for Invalid value.
@@ -115,7 +115,7 @@ public class Validation {
          * 
          * @version 2018/08/03 16:16:05
          */
-        private static class Message_ja extends Message {
+        private static class Lang_ja extends Lang {
 
             /**
              * {@inheritDoc}

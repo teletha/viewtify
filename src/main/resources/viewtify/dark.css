@@ -116,3 +116,13 @@
 .table-row-cell{
     -fx-table-cell-border-color:transparent;
 }
+
+/* ==========================================================================
+  Validation Tooltip
+===========================================================================*/
+.ValidationTooltip {
+		-fx-font-size: 12px;
+		-fx-padding: 8px 12px;
+		-fx-text-fill: -fx-light-text-color;
+		-fx-background-color: rgba(60, 60, 60, 0.7);
+}

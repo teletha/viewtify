@@ -9,21 +9,21 @@
  */
 package viewtify.ui;
 
-import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 
 import viewtify.View;
 
 /**
- * @version 2018/08/28 12:52:59
+ * @version 2018/08/27 23:24:41
  */
-public class UIText extends AbstractTextField<UIText, TextField> {
+public class UIPassword extends AbstractTextField<UIPassword, PasswordField> {
 
     /**
      * Enchanced view.
      * 
      * @param ui
      */
-    private UIText(TextField ui, View view) {
+    private UIPassword(PasswordField ui, View view) {
         super(ui, view);
     }
 }

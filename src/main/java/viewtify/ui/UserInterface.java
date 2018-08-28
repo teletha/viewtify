@@ -21,11 +21,9 @@ import javafx.beans.property.ReadOnlyProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -35,7 +33,7 @@ import org.controlsfx.control.decoration.Decoration;
 import org.controlsfx.control.decoration.Decorator;
 import org.controlsfx.control.decoration.GraphicDecoration;
 import org.controlsfx.validation.ValidationSupport;
-import org.controlsfx.validation.decoration.GraphicValidationDecoration;
+import org.controlsfx.validation.decoration.ValidationDecoration;
 
 import kiss.I;
 import kiss.Manageable;
@@ -121,8 +119,8 @@ public class UserInterface<Self extends UserInterface, W extends Node>
 
     /**
      * Specifies whether this {@code Node} and any subnodes should be rendered as part of the scene
-     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it is
-     * off the screen or obscured by another Node. Invisible nodes never receive mouse events or
+     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it
+     * is off the screen or obscured by another Node. Invisible nodes never receive mouse events or
      * keyboard focus and never maintain keyboard focus when they become invisible.
      *
      * @defaultValue true
@@ -138,8 +136,8 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @param validator A validator.
      * @return Chainable API.
      */
-    public final Self validate(Predicate<Self> validator) {
-        return validate(() -> {
+    public final Self require(Predicate<Self> validator) {
+        return require(() -> {
             assert validator.test((Self) this);
         });
     }
@@ -150,7 +148,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @param validator A validator.
      * @return Chainable API.
      */
-    public final Self validate(WiseRunnable validator) {
+    public final Self require(WiseRunnable validator) {
         validation().require(validator);
 
         return (Self) this;
@@ -162,7 +160,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @param timing
      * @return
      */
-    public final Self validateWhen(Signal<?>... timings) {
+    public final Self requireWhen(Signal<?>... timings) {
         I.signal(timings).skipNull().to(validation()::when);
 
         return (Self) this;
@@ -174,9 +172,19 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @param timing
      * @return
      */
-    public final Self validateWhen(UserInterface... timings) {
+    public final Self requireWhen(UserInterface... timings) {
         I.signal(timings).skipNull().map(UserInterface::validateWhen).to(validation()::when);
 
+        return (Self) this;
+    }
+
+    /**
+     * Mark as invalid interface.
+     * 
+     * @return
+     */
+    public final Self invalid(String message) {
+        validation().message.set(message);
         return (Self) this;
     }
 
@@ -206,7 +214,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
             validation.message.observe().to(message -> {
                 if (message == null) {
                     I.signal(Decorator.getDecorations(ui))
-                            .take(ValidationDecoration.class::isInstance)
+                            .take(GraphicDecoration.class::isInstance)
                             .take(1)
                             .on(Viewtify.UIThread)
                             .to(e -> Decorator.removeDecoration(ui, e));
@@ -215,7 +223,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
                             .any(ValidationDecoration.class::isInstance)
                             .take(false)
                             .on(Viewtify.UIThread)
-                            .to(() -> Decorator.addDecoration(ui, ValidationDecoration.createValidationDecoration(message, true)));
+                            .to(() -> Decorator.addDecoration(ui, createValidatorDecoration(message, true)));
                 }
             });
         }
@@ -233,6 +241,30 @@ public class UserInterface<Self extends UserInterface, W extends Node>
         } else {
             return null;
         }
+    }
+
+    /**
+     * Create decoration node.
+     * 
+     * @param message
+     * @param error
+     * @return
+     */
+    private Decoration createValidatorDecoration(String message, boolean error) {
+        Node image = new ImageView("/impl/org/controlsfx/control/validation/decoration-" + (error ? "error" : "warning") + ".png");
+
+        Tooltip tooltip = new Tooltip(message);
+        tooltip.setAutoFix(true);
+        tooltip.setShowDelay(Duration.ZERO);
+        tooltip.setShowDuration(Duration.INDEFINITE);
+        StyleHelper.of(tooltip).style("ValidationTooltip").style(error ? "ValidationError" : "ValidationWarning");
+
+        Label label = new Label();
+        label.setGraphic(image);
+        label.setTooltip(tooltip);
+        label.setAlignment(Pos.CENTER);
+
+        return new GraphicDecoration(label, Pos.CENTER_LEFT);
     }
 
     /**
@@ -310,63 +342,5 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     @SuppressWarnings("serial")
     @Manageable(lifestyle = Singleton.class)
     private static class Preference extends TreeMap<String, String> implements Storable<Preference> {
-    }
-
-    /**
-     * @version 2018/08/03 16:45:41
-     */
-    private static class ValidationDecoration extends GraphicDecoration {
-        private static final Image ERROR_IMAGE = new Image(GraphicValidationDecoration.class
-                .getResource("/impl/org/controlsfx/control/validation/decoration-error.png") //$NON-NLS-1$
-                .toExternalForm());
-
-        private static final Image WARNING_IMAGE = new Image(GraphicValidationDecoration.class
-                .getResource("/impl/org/controlsfx/control/validation/decoration-warning.png") //$NON-NLS-1$
-                .toExternalForm());
-
-        private static final Image REQUIRED_IMAGE = new Image(GraphicValidationDecoration.class
-                .getResource("/impl/org/controlsfx/control/validation/required-indicator.png") //$NON-NLS-1$
-                .toExternalForm());
-
-        private static final String SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"; //$NON-NLS-1$
-
-        private static final String POPUP_SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 5);"; //$NON-NLS-1$
-
-        private static final String TOOLTIP_COMMON_EFFECTS = "-fx-font-weight: bold; -fx-padding: 5; -fx-border-width:1;"; //$NON-NLS-1$
-
-        private static final String ERROR_TOOLTIP_EFFECT = POPUP_SHADOW_EFFECT + TOOLTIP_COMMON_EFFECTS + "-fx-background-color: FBEFEF; -fx-text-fill: cc0033; -fx-border-color:cc0033;"; //$NON-NLS-1$
-
-        private static final String WARNING_TOOLTIP_EFFECT = POPUP_SHADOW_EFFECT + TOOLTIP_COMMON_EFFECTS + "-fx-background-color: FFFFCC; -fx-text-fill: CC9900; -fx-border-color: CC9900;"; //$NON-NLS-1$
-
-        /**
-         * @param decorationNode
-         * @param position
-         */
-        private ValidationDecoration(Node decorationNode, Pos position) {
-            super(decorationNode, position);
-        }
-
-        private static Decoration createValidationDecoration(String message, boolean error) {
-            Node image = new ImageView(error ? ERROR_IMAGE : WARNING_IMAGE);
-            image.setStyle(SHADOW_EFFECT);
-
-            Tooltip tooltip = new Tooltip(message);
-            tooltip.setAutoFix(true);
-            tooltip.setShowDelay(Duration.ZERO);
-            tooltip.setShowDuration(Duration.INDEFINITE);
-            tooltip.setStyle(error ? ERROR_TOOLTIP_EFFECT : WARNING_TOOLTIP_EFFECT);
-
-            Label label = new Label();
-            label.setGraphic(image);
-            label.setTooltip(tooltip);
-            label.setAlignment(Pos.CENTER);
-
-            return new ValidationDecoration(label, Pos.CENTER_LEFT);
-        }
-
-        private static Decoration createRequiredDecoration(Control target) {
-            return new GraphicDecoration(new ImageView(REQUIRED_IMAGE), Pos.TOP_LEFT, REQUIRED_IMAGE.getWidth() / 2, REQUIRED_IMAGE
-                    .getHeight() / 2);
-        }
     }
 }

@@ -12,12 +12,14 @@ package viewtify;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.function.BiConsumer;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
@@ -261,23 +263,40 @@ public abstract class View implements Extensible {
     protected final <R extends Extensible> R localizeBy(Class<R> resourceClass) {
         R resource = I.i18n(resourceClass);
 
-        for (Node node : root.lookupAll(".label")) {
+        localize(resource, Label.class, Label::setText);
+        localize(resource, Button.class, Button::setText);
+
+        return resource;
+    }
+
+    /**
+     * Localize the node text.
+     * 
+     * @param resource
+     * @param type
+     * @param localizer
+     */
+    private <R, T> void localize(R resource, Class<T> type, BiConsumer<T, String> localizer) {
+        for (Node node : root.lookupAll("." + type.getSimpleName().toLowerCase())) {
             String id = node.getId();
 
             if (id != null) {
                 try {
-                    Method method = resourceClass.getDeclaredMethod(id);
+                    Method method = resource.getClass().getDeclaredMethod(id);
                     method.setAccessible(true);
-                    Object message = method.invoke(resource);
+                    Object m = method.invoke(resource);
 
-                    if (message != null) {
-                        ((Label) node).setText(String.valueOf(message));
+                    if (m != null) {
+                        String message = String.valueOf(m);
+
+                        if (message != null) {
+                            localizer.accept((T) node, message);
+                        }
                     }
                 } catch (Exception e) {
                     // ignore
                 }
             }
         }
-        return resource;
     }
 }
