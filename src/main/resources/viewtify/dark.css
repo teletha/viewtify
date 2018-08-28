@@ -29,6 +29,7 @@
     /* A bright blue for highlighting/accenting objects.  For example: selected
      * text; selected items in menus, lists, trees, and tables; progress bars */
     -fx-accent: rgb(0, 60, 80);
+    -fx-link: rgb(72, 186, 234);
 
     /* color of non-focused yet selected elements */
     -fx-selection-bar-non-focused: rgb(50, 50, 50);
@@ -60,6 +61,16 @@
     -fx-background-color: -fx-mark-highlight-color, rgb(255, 255, 255);
 }
 
+.hyperlink {
+		-fx-text-fill: -fx-link;
+		-fx-underline: false;
+		-fx-border-width: 0;
+}
+
+.hyperlink:hover {
+		-fx-underline: true;
+}
+
 /* ==========================================================================
   Tab
 ===========================================================================*/
@@ -83,15 +94,14 @@
 
 .vertical *.tab-label {
     -fx-rotate: 90;
+    -fx-text-overrun: clip;
+    -fx-font-size: 14px;
 }
 
 .vertical {
-		-fx-tab-max-height: 120px;
 		-fx-tab-min-height: 120px;
-		-fx-tab-max-width: 70px;
-		-fx-tab-min-width: 70px;
-		-fx-padding: 0;
-}
+		-fx-tab-min-width: 0px;
+}		
 
 
 /* ==========================================================================
