@@ -24,16 +24,13 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.util.Duration;
 
-import org.controlsfx.control.decoration.Decoration;
 import org.controlsfx.control.decoration.Decorator;
 import org.controlsfx.control.decoration.GraphicDecoration;
 import org.controlsfx.validation.ValidationSupport;
-import org.controlsfx.validation.decoration.ValidationDecoration;
 
 import kiss.I;
 import kiss.Manageable;
@@ -49,9 +46,10 @@ import viewtify.ui.helper.PreferenceHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
+import viewtify.util.Icon;
 
 /**
- * @version 2018/07/31 16:01:23
+ * @version 2018/08/28 23:42:08
  */
 public class UserInterface<Self extends UserInterface, W extends Node>
         implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self> {
@@ -179,6 +177,59 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     }
 
     /**
+     * Mark as valid interface.
+     * 
+     * @return
+     */
+    public final Self decorateBy(Icon icon) {
+        decorateBy(icon, null);
+
+        return (Self) this;
+    }
+
+    /**
+     * Decorate this ui by the specified icon.
+     * 
+     * @param icon
+     * @param message
+     */
+    private void decorateBy(Icon icon, String message) {
+        I.signal(Decorator.getDecorations(ui))
+                .take(GraphicDecoration.class::isInstance)
+                .take(1)
+                .on(Viewtify.UIThread)
+                .to(deco -> Decorator.removeDecoration(ui, deco), e -> {
+    
+                }, () -> {
+                    Label label = new Label();
+                    label.setGraphic(icon.image());
+                    label.setAlignment(Pos.CENTER);
+    
+                    if (message != null && !message.isEmpty()) {
+                        Tooltip tooltip = new Tooltip(message);
+                        tooltip.setAutoFix(true);
+                        tooltip.setShowDelay(Duration.ZERO);
+                        tooltip.setShowDuration(Duration.INDEFINITE);
+                        StyleHelper.of(tooltip).style("ValidationTooltip");
+                        label.setTooltip(tooltip);
+                    }
+    
+                    Decorator.addDecoration(ui, new GraphicDecoration(label, Pos.CENTER_LEFT));
+                });
+    }
+
+    /**
+     * Undecorate all icons.
+     */
+    private void undecorate() {
+        I.signal(Decorator.getDecorations(ui))
+                .take(GraphicDecoration.class::isInstance)
+                .take(1)
+                .on(Viewtify.UIThread)
+                .to(deco -> Decorator.removeDecoration(ui, deco));
+    }
+
+    /**
      * Mark as invalid interface.
      * 
      * @return
@@ -213,17 +264,9 @@ public class UserInterface<Self extends UserInterface, W extends Node>
             validation.when(validateWhen());
             validation.message.observe().to(message -> {
                 if (message == null) {
-                    I.signal(Decorator.getDecorations(ui))
-                            .take(GraphicDecoration.class::isInstance)
-                            .take(1)
-                            .on(Viewtify.UIThread)
-                            .to(e -> Decorator.removeDecoration(ui, e));
+                    undecorate();
                 } else {
-                    I.signal(Decorator.getDecorations(ui))
-                            .any(ValidationDecoration.class::isInstance)
-                            .take(false)
-                            .on(Viewtify.UIThread)
-                            .to(() -> Decorator.addDecoration(ui, createValidatorDecoration(message, true)));
+                    decorateBy(Icon.Error, message);
                 }
             });
         }
@@ -241,30 +284,6 @@ public class UserInterface<Self extends UserInterface, W extends Node>
         } else {
             return null;
         }
-    }
-
-    /**
-     * Create decoration node.
-     * 
-     * @param message
-     * @param error
-     * @return
-     */
-    private Decoration createValidatorDecoration(String message, boolean error) {
-        Node image = new ImageView("/impl/org/controlsfx/control/validation/decoration-" + (error ? "error" : "warning") + ".png");
-
-        Tooltip tooltip = new Tooltip(message);
-        tooltip.setAutoFix(true);
-        tooltip.setShowDelay(Duration.ZERO);
-        tooltip.setShowDuration(Duration.INDEFINITE);
-        StyleHelper.of(tooltip).style("ValidationTooltip").style(error ? "ValidationError" : "ValidationWarning");
-
-        Label label = new Label();
-        label.setGraphic(image);
-        label.setTooltip(tooltip);
-        label.setAlignment(Pos.CENTER);
-
-        return new GraphicDecoration(label, Pos.CENTER_LEFT);
     }
 
     /**
