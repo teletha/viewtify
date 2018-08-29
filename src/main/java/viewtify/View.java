@@ -13,6 +13,7 @@ import java.awt.Desktop;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URL;
@@ -71,13 +72,17 @@ public abstract class View<B extends Extensible> implements Extensible {
             try {
                 buildUI();
 
-                this.root = declareUI().build();
-
                 // localize
                 Type[] types = Model.collectParameters(getClass(), View.class);
 
                 if (types != null && types.length != 0) {
-                    message = localizeBy((Class<B>) types[0]);
+                    message = I.i18n((Class<B>) types[0]);
+                }
+                this.root = declareUI().build();
+
+                if (types != null && types.length != 0) {
+                    localize(message, (Class<B>) types[0], Label.class, Label::setText);
+                    localize(message, (Class<B>) types[0], Button.class, Button::setText);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -136,7 +141,15 @@ public abstract class View<B extends Extensible> implements Extensible {
                         }
                     } else {
                         // find by id
-                        Object node = I.make((Class) Model.collectParameters(field.getType(), UserInterface.class)[1]);
+                        Type t = Model.collectParameters(field.getType(), UserInterface.class)[1];
+                        Class c;
+
+                        if (t instanceof ParameterizedType) {
+                            c = (Class) ((ParameterizedType) t).getRawType();
+                        } else {
+                            c = (Class) t;
+                        }
+                        Object node = I.make(c);
 
                         if (node instanceof Node) {
                             ((Node) node).setId(field.getName());
@@ -169,7 +182,8 @@ public abstract class View<B extends Extensible> implements Extensible {
                     }
                 }
             }
-            initialize();
+
+            Platform.runLater(this::initialize);
         } catch (Exception e) {
             throw I.quiet(e);
         }
