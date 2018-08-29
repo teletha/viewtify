@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox;
 import kiss.I;
 import kiss.Tree;
 import viewtify.ui.UserInterfaceProvider;
+import viewtify.util.TextNotation;
 
 /**
  * @version 2018/08/29 11:22:43
@@ -72,8 +73,21 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
         $(new PaneNode(HBox.class), child, children);
     }
 
+    protected final void hbox(Consumer<UINode> attribute, UserInterfaceProvider... children) {
+        $(new PaneNode(HBox.class), attribute, () -> {
+            for (UserInterfaceProvider child : children) {
+                $(child);
+            }
+        });
+
+    }
+
     protected final void label(String text, Consumer<UINode>... nodes) {
         $(new LabelNode(text), nodes);
+    }
+
+    protected final UserInterfaceProvider<Label> label(String text) {
+        return new LabelNode(text);
     }
 
     /**
@@ -152,9 +166,9 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
     /**
      * @version 2018/08/29 12:05:24
      */
-    private static final class LabelNode implements UserInterfaceProvider<Label> {
+    private static final class LabelNode implements UserInterfaceProvider {
 
-        private final String text;;
+        private final String text;
 
         /**
         * 
@@ -167,8 +181,8 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
          * {@inheritDoc}
          */
         @Override
-        public Label ui() {
-            return new Label(text);
+        public Node ui() {
+            return TextNotation.parse(text);
         }
     }
 }

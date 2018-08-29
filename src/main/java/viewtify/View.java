@@ -9,13 +9,11 @@
  */
 package viewtify;
 
-import java.awt.Desktop;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.net.URI;
 import java.net.URL;
 import java.util.function.BiConsumer;
 
@@ -25,22 +23,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.TextFlow;
 
 import kiss.Extensible;
 import kiss.I;
+import kiss.Manageable;
+import kiss.Singleton;
 import kiss.model.Model;
 import viewtify.dsl.UIDefinition;
 import viewtify.ui.UITableColumn;
 import viewtify.ui.UITreeTableColumn;
 import viewtify.ui.UserInterface;
+import viewtify.util.TextNotation;
 
 /**
  * @version 2018/08/29 10:16:30
@@ -60,30 +59,29 @@ public abstract class View<B extends Extensible> implements Extensible {
     private String prefix;
 
     /** The associated message resources. */
-    protected B message;
+    private final Class<B> messageClass;
+
+    /** The associated message resources. */
+    protected final B message;
 
     /**
      * Use class name as view name.
      */
     protected View() {
+        Type[] types = Model.collectParameters(getClass(), View.class);
+        this.messageClass = (Class<B>) (types == null || types.length == 0 ? Φ.class : types[0]);
+        this.message = I.i18n(messageClass);
+
         // initialize UI structure
         if (isUIDefiend()) {
             // initialize user system lazily
             try {
                 buildUI();
 
-                // localize
-                Type[] types = Model.collectParameters(getClass(), View.class);
-
-                if (types != null && types.length != 0) {
-                    message = I.i18n((Class<B>) types[0]);
-                }
                 this.root = declareUI().build();
 
-                if (types != null && types.length != 0) {
-                    localize(message, (Class<B>) types[0], Label.class, Label::setText);
-                    localize(message, (Class<B>) types[0], Button.class, Button::setText);
-                }
+                localize(message, messageClass, Label.class, Label::setText);
+                localize(message, messageClass, Button.class, Button::setText);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw I.quiet(e);
@@ -438,7 +436,7 @@ public abstract class View<B extends Extensible> implements Extensible {
                                 ObservableList<Node> children = parent.getChildren();
                                 int index = children.indexOf(node);
 
-                                TextFlow flow = composeTextFlow(message);
+                                Node flow = TextNotation.parse(message);
                                 flow.setId(node.getId());
                                 flow.getStyleClass().addAll(node.getStyleClass());
                                 children.set(index, flow);
@@ -454,69 +452,12 @@ public abstract class View<B extends Extensible> implements Extensible {
         }
     }
 
-    static TextFlow composeTextFlow(String message) {
-        TextFlow flow = new TextFlow();
-        ObservableList<Node> children = flow.getChildren();
-
-        boolean inLink = false;
-        boolean inURL = false;
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < message.length(); i++) {
-            char c = message.charAt(i);
-
-            switch (c) {
-            case '[':
-                inLink = true;
-                if (builder.length() != 0) {
-                    children.add(new Label(builder.toString()));
-                    builder = new StringBuilder();
-                }
-                break;
-
-            case ']':
-                if (inLink) {
-                    inLink = false;
-                    if (builder.length() != 0) {
-                        children.add(new Hyperlink(builder.toString()));
-                        builder = new StringBuilder();
-
-                        if (message.charAt(i + 1) == '(') {
-                            inURL = true;
-                            i++;
-                        }
-                    }
-                } else {
-                    builder.append(c);
-                }
-                break;
-
-            case ')':
-                if (inURL) {
-                    inURL = false;
-                    String uri = builder.toString();
-                    Hyperlink link = (Hyperlink) children.get(children.size() - 1);
-                    link.setOnAction(e -> {
-                        try {
-                            Desktop.getDesktop().browse(new URI(uri));
-                        } catch (Throwable error) {
-                            throw I.quiet(error);
-                        }
-                    });
-                    builder = new StringBuilder();
-                    break;
-                }
-
-            default:
-                builder.append(c);
-                break;
-            }
-        }
-
-        if (builder.length() != 0) {
-            children.add(new Label(builder.toString()));
-        }
-
-        return flow;
+    /**
+     * Empty resource.
+     * 
+     * @version 2018/08/30 1:55:51
+     */
+    @Manageable(lifestyle = Singleton.class)
+    private static class Φ implements Extensible {
     }
 }

@@ -7,30 +7,26 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify;
+package viewtify.util;
 
 import javafx.collections.ObservableList;
-import javafx.embed.swing.JFXPanel;
 import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.text.TextFlow;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-/**
- * @version 2018/08/29 1:07:32
- */
-class TextAnalyzerTest {
+import viewtify.JavaFXTester;
 
-    @BeforeAll
-    static void initialize() {
-        new JFXPanel();
-    }
+/**
+ * @version 2018/08/30 2:12:43
+ */
+class TextNotationTest extends JavaFXTester {
 
     @Test
     void linkOnly() {
-        ObservableList<Node> nodes = View.composeTextFlow("[link](http://test.com/)").getChildren();
+        ObservableList<Node> nodes = as(TextNotation.parse("[link](http://test.com/)"), TextFlow.class).getChildren();
 
         assert nodes.size() == 1;
 
@@ -40,7 +36,7 @@ class TextAnalyzerTest {
 
     @Test
     void linkAndText() {
-        ObservableList<Node> nodes = View.composeTextFlow("[link](http://test.com/) now!").getChildren();
+        ObservableList<Node> nodes = as(TextNotation.parse("[link](http://test.com/) now!"), TextFlow.class).getChildren();
 
         assert nodes.size() == 2;
 
