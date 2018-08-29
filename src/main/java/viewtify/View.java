@@ -88,7 +88,7 @@ public abstract class View<B extends Extensible> implements Extensible {
             }
         } else {
             try {
-                this.root = new FXMLLoader(findFXML()).load();
+                this.root = new FXMLLoader(load("fxml")).load();
             } catch (Exception e) {
                 // FXML for this view is not found, use parent view's root
             }
@@ -96,6 +96,23 @@ public abstract class View<B extends Extensible> implements Extensible {
             // initialize user system lazily
             Platform.runLater(this::init);
         }
+    }
+
+    /**
+     * Load the file by name.
+     * 
+     * @return
+     */
+    URL load(String extension) {
+        String name = getClass().getSimpleName() + "." + extension;
+
+        // find from view package
+        URL u = getClass().getResource(name);
+
+        if (u == null) {
+            u = ClassLoader.getSystemResource(name);
+        }
+        return u;
     }
 
     private boolean isUIDefiend() {
@@ -185,23 +202,6 @@ public abstract class View<B extends Extensible> implements Extensible {
         } catch (Exception e) {
             throw I.quiet(e);
         }
-    }
-
-    /**
-     * Search FXML file by name.
-     * 
-     * @return
-     */
-    private URL findFXML() {
-        String name = getClass().getSimpleName() + ".fxml";
-
-        // find from view package
-        URL u = getClass().getResource(name);
-
-        if (u == null) {
-            u = ClassLoader.getSystemResource(name);
-        }
-        return u;
     }
 
     /**

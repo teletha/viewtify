@@ -39,7 +39,7 @@ import kiss.Storable;
 /**
  * Singleton managed JavaFX application.
  * 
- * @version 2017/11/28 15:24:38
+ * @version 2018/08/30 3:04:34
  */
 public final class ViewtifyApplication extends Application {
 
@@ -61,8 +61,10 @@ public final class ViewtifyApplication extends Application {
         // trace window size and position
         I.make(WindowLocator.class).restore().locate("MainWindow", stage);
 
-        Scene scene = new Scene(Viewtify.root().root());
+        View view = Viewtify.root();
+        Scene scene = new Scene(view.root());
         scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
+        scene.getStylesheets().add(view.load("css").toExternalForm());
         configIcon(stage);
         stage.setScene(scene);
         stage.show();
