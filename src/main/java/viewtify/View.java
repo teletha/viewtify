@@ -86,7 +86,7 @@ public abstract class View implements Extensible {
 
     private boolean isUIDefiend() {
         try {
-            getClass().getDeclaredMethod("defineUI");
+            getClass().getDeclaredMethod("declareUI");
             return true;
         } catch (NoSuchMethodException | SecurityException e) {
             return false;
@@ -97,9 +97,10 @@ public abstract class View implements Extensible {
         try {
             // Inject various types
             for (Field field : getClass().getDeclaredFields()) {
-                if (field.isAnnotationPresent(UI.class)) {
+                Class<?> type = field.getType();
+
+                if (UserInterface.class.isAssignableFrom(type)) {
                     field.setAccessible(true);
-                    Class<?> type = field.getType();
 
                     if (View.class.isAssignableFrom(type)) {
                         // check from call stack
