@@ -52,7 +52,7 @@ import viewtify.util.Icon;
  * @version 2018/08/28 23:42:08
  */
 public class UserInterface<Self extends UserInterface, W extends Node>
-        implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self> {
+        implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, UserInterfaceProvider<W> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
@@ -199,12 +199,12 @@ public class UserInterface<Self extends UserInterface, W extends Node>
                 .take(1)
                 .on(Viewtify.UIThread)
                 .to(deco -> Decorator.removeDecoration(ui, deco), e -> {
-    
+
                 }, () -> {
                     Label label = new Label();
                     label.setGraphic(icon.image());
                     label.setAlignment(Pos.CENTER);
-    
+
                     if (message != null && !message.isEmpty()) {
                         Tooltip tooltip = new Tooltip(message);
                         tooltip.setAutoFix(true);
@@ -213,7 +213,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
                         StyleHelper.of(tooltip).style("ValidationTooltip");
                         label.setTooltip(tooltip);
                     }
-    
+
                     Decorator.addDecoration(ui, new GraphicDecoration(label, Pos.CENTER_LEFT));
                 });
     }
