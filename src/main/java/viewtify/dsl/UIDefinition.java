@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.fxml;
+package viewtify.dsl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +27,13 @@ import viewtify.ui.UserInterfaceProvider;
 /**
  * @version 2018/08/29 11:22:43
  */
-public class FXML extends Tree<UserInterfaceProvider, FXML.UINode> {
+public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINode> {
 
     /**
      * 
      */
-    public FXML() {
-        super(FXML.UINode::new, null);
+    public UIDefinition() {
+        super(UIDefinition.UINode::new, null);
     }
 
     public Node build() {

@@ -7,11 +7,11 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.fxml;
+package viewtify.dsl;
 
 import java.util.function.Consumer;
 
-import viewtify.fxml.FXML.UINode;
+import viewtify.dsl.UIDefinition.UINode;
 
 /**
  * @version 2018/08/29 14:55:22

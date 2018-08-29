@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.fxml;
+package viewtify.dsl;
 
 import java.lang.reflect.Field;
 import java.util.List;

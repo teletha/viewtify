@@ -7,13 +7,17 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.fxml;
+package viewtify.dsl;
 
 import kiss.Extensible;
+import kiss.Manageable;
+import kiss.Singleton;
+import viewtify.dsl.Style;
 
 /**
  * @version 2018/08/29 15:09:15
  */
+@Manageable(lifestyle = Singleton.class)
 public abstract class StyleDSL implements Extensible {
 
     /**

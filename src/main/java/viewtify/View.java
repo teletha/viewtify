@@ -35,7 +35,7 @@ import javafx.scene.text.TextFlow;
 import kiss.Extensible;
 import kiss.I;
 import kiss.model.Model;
-import viewtify.fxml.FXML;
+import viewtify.dsl.UIDefinition;
 import viewtify.ui.UITableColumn;
 import viewtify.ui.UITreeTableColumn;
 import viewtify.ui.UserInterface;
@@ -67,7 +67,7 @@ public abstract class View implements Extensible {
             try {
                 buildUI();
 
-                this.root = defineUI().build();
+                this.root = declareUI().build();
             } catch (Exception e) {
                 e.printStackTrace();
                 throw I.quiet(e);
@@ -341,7 +341,7 @@ public abstract class View implements Extensible {
      */
     protected abstract void initialize();
 
-    protected FXML defineUI() {
+    protected UIDefinition declareUI() {
         return null;
     }
 

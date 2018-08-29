@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.fxml;
+package viewtify.dsl;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -17,18 +17,19 @@ import org.junit.jupiter.api.Test;
 
 import viewtify.JavaFXTester;
 import viewtify.UI;
+import viewtify.dsl.UIDefinition;
 import viewtify.ui.UILabel;
 
 /**
  * @version 2018/08/29 11:25:48
  */
-class FXMLTest extends JavaFXTester {
+class UIDefinitionTest extends JavaFXTester {
 
     private @UI UILabel label = new UILabel(new Label(), null);
 
     @Test
     void label() {
-        FXML fxml = new FXML() {
+        UIDefinition fxml = new UIDefinition() {
             {
                 $(label);
             }
@@ -40,7 +41,7 @@ class FXMLTest extends JavaFXTester {
 
     @Test
     void vbox() {
-        FXML fxml = new FXML() {
+        UIDefinition fxml = new UIDefinition() {
             {
                 vbox(label);
             }
@@ -52,7 +53,7 @@ class FXMLTest extends JavaFXTester {
 
     @Test
     void vboxLambda() {
-        FXML fxml = new FXML() {
+        UIDefinition fxml = new UIDefinition() {
             {
                 vbox(() -> {
                     $(label);
@@ -66,7 +67,7 @@ class FXMLTest extends JavaFXTester {
 
     @Test
     void vboxNest() {
-        FXML fxml = new FXML() {
+        UIDefinition fxml = new UIDefinition() {
             {
                 vbox(() -> {
                     vbox(label);
@@ -81,7 +82,7 @@ class FXMLTest extends JavaFXTester {
 
     @Test
     void vboxNestLambda() {
-        FXML fxml = new FXML() {
+        UIDefinition fxml = new UIDefinition() {
             {
                 vbox(() -> {
                     vbox(() -> {
