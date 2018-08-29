@@ -14,6 +14,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URI;
+import java.net.URL;
 import java.util.function.BiConsumer;
 
 import javafx.application.Platform;
@@ -38,7 +39,7 @@ import viewtify.ui.UITableColumn;
 import viewtify.ui.UITreeTableColumn;
 
 /**
- * @version 2018/08/27 21:51:30
+ * @version 2018/08/29 10:16:30
  */
 public abstract class View implements Extensible {
 
@@ -60,13 +61,30 @@ public abstract class View implements Extensible {
     protected View() {
         // initialize UI structure
         try {
-            this.root = new FXMLLoader(ClassLoader.getSystemResource(getClass().getSimpleName() + ".fxml")).load();
+            this.root = new FXMLLoader(findFXML()).load();
         } catch (Exception e) {
             // FXML for this view is not found, use parent view's root
         }
 
         // initialize user system lazily
         Platform.runLater(this::init);
+    }
+
+    /**
+     * Search FXML file by name.
+     * 
+     * @return
+     */
+    private URL findFXML() {
+        String name = getClass().getSimpleName() + ".fxml";
+
+        // find from view package
+        URL u = getClass().getResource(name);
+
+        if (u == null) {
+            u = ClassLoader.getSystemResource(name);
+        }
+        return u;
     }
 
     /**
