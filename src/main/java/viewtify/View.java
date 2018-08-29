@@ -13,6 +13,7 @@ import java.awt.Desktop;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URL;
 import java.util.function.BiConsumer;
@@ -43,7 +44,7 @@ import viewtify.ui.UserInterface;
 /**
  * @version 2018/08/29 10:16:30
  */
-public abstract class View implements Extensible {
+public abstract class View<B extends Extensible> implements Extensible {
 
     /** The human-readable ID separator. */
     public static final String IDSeparator = " ➝ ";
@@ -52,10 +53,13 @@ public abstract class View implements Extensible {
     private Node root;
 
     /** The parent view. */
-    private View parent;
+    private View<?> parent;
 
     /** The flag whether this view is sub or not. */
     private String prefix;
+
+    /** The associated message resources. */
+    protected B message;
 
     /**
      * Use class name as view name.
@@ -68,6 +72,13 @@ public abstract class View implements Extensible {
                 buildUI();
 
                 this.root = declareUI().build();
+
+                // localize
+                Type[] types = Model.collectParameters(getClass(), View.class);
+
+                if (types != null && types.length != 0) {
+                    message = localizeBy((Class<B>) types[0]);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 throw I.quiet(e);
@@ -394,7 +405,7 @@ public abstract class View implements Extensible {
      * @param type
      * @param localizer
      */
-    private <R, T> void localize(R resource, Class<R> resourceClass, Class<T> type, BiConsumer<T, String> localizer) {
+    private <R extends Extensible, T> void localize(R resource, Class<R> resourceClass, Class<T> type, BiConsumer<T, String> localizer) {
         for (Node node : root.lookupAll("." + type.getSimpleName().toLowerCase())) {
             String id = node.getId();
 
