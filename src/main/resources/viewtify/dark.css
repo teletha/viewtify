@@ -45,6 +45,10 @@
     -fx-prompt-text-fill: transparent;
 }
 
+.text-field {
+  -fx-text-box-border: -fx-color;
+}
+
 /* Fix scroll bar buttons arrows colors */
 .scroll-bar > .increment-button > .increment-arrow,
 .scroll-bar > .decrement-button > .decrement-arrow {
@@ -70,6 +74,7 @@
 .hyperlink:hover {
 		-fx-underline: true;
 }
+
 
 /* ==========================================================================
   Tab
