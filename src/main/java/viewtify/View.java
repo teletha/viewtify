@@ -134,25 +134,31 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                 field.setAccessible(true);
 
                 if (View.class.isAssignableFrom(type)) {
-                    // check from call stack
-                    View view = findViewFromParent(type);
+                    Object assigned = field.get(this);
 
-                    if (view == null) {
-                        view = View.build((Class<View>) type);
-                        view.parent = this;
+                    if (assigned != null) {
+                        ((View) assigned).initializeLazy();
+                    } else {
+                        // check from call stack
+                        View view = findViewFromParent(type);
 
-                        // check sub view
-                        if (type.getEnclosingClass() == getClass()) {
-                            view.prefix = field.getName();
+                        if (view == null) {
+                            view = View.build((Class<View>) type);
+                            view.parent = this;
+
+                            // check sub view
+                            if (type.getEnclosingClass() == getClass()) {
+                                view.prefix = field.getName();
+                            }
                         }
-                    }
-                    field.set(this, view);
+                        field.set(this, view);
 
-                    // if view has been associated with xml and current view has Pane node which
-                    // id equals to field
-                    // name, we should connect them.
-                    if (view.root != null) {
-                        replace(root().lookup("#" + field.getName()), view.root);
+                        // if view has been associated with xml and current view has Pane node which
+                        // id equals to field
+                        // name, we should connect them.
+                        if (view.root != null) {
+                            replace(root().lookup("#" + field.getName()), view.root);
+                        }
                     }
                 } else if (UserInterface.class.isAssignableFrom(type)) {
                     // find by id

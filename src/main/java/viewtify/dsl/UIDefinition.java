@@ -91,7 +91,7 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
 
     }
 
-    protected final void label(String text, Consumer<UINode>... nodes) {
+    protected final void label(Object text, Consumer<UINode>... nodes) {
         $(new LabelNode(text), nodes);
     }
 
@@ -182,8 +182,8 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
         /**
         * 
         */
-        private LabelNode(String text) {
-            this.text = text;
+        private LabelNode(Object text) {
+            this.text = String.valueOf(text);
         }
 
         /**
