@@ -19,7 +19,7 @@ import viewtify.ui.helper.StyleHelper;
 /**
  * @version 2018/08/29 14:55:22
  */
-public interface Style extends Consumer<UINode> {
+public interface Style extends stylist.Style, Consumer<UINode> {
 
     /**
      * {@inheritDoc}
@@ -30,9 +30,4 @@ public interface Style extends Consumer<UINode> {
             StyleHelper.of((Styleable) parent.node).style(StyleManager.name(this));
         }
     }
-
-    /**
-     * Declare styles.
-     */
-    void declare();
 }

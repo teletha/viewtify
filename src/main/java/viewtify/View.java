@@ -35,6 +35,7 @@ import kiss.I;
 import kiss.Manageable;
 import kiss.Singleton;
 import kiss.model.Model;
+import stylist.StyleDSL;
 import viewtify.dsl.UIDefinition;
 import viewtify.ui.UITableColumn;
 import viewtify.ui.UITreeTableColumn;
@@ -374,6 +375,10 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
     protected abstract void initialize();
 
     protected UIDefinition declareUI() {
+        return null;
+    }
+
+    protected StyleDSL declareStyle() {
         return null;
     }
 
