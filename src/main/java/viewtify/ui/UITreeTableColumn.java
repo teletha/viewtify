@@ -40,7 +40,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * 
      * @param ui
      */
-    private UITreeTableColumn(TreeTableColumn<RowValue, ColumnValue> ui, View view) {
+    public UITreeTableColumn(TreeTableColumn<RowValue, ColumnValue> ui, View view) {
         super(ui);
     }
 

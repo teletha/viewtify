@@ -137,13 +137,13 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                     Object assigned = field.get(this);
 
                     if (assigned != null) {
-                        ((View) assigned).initializeLazy();
+                        ((View) assigned).initializeLazy(this);
                     } else {
                         // check from call stack
                         View view = findViewFromParent(type);
 
                         if (view == null) {
-                            view = View.build((Class<View>) type);
+                            view = View.build((Class<View>) type, this);
                             view.parent = this;
 
                             // check sub view
@@ -160,6 +160,8 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                             replace(root().lookup("#" + field.getName()), view.root);
                         }
                     }
+                } else if (UITreeTableColumn.class == type) {
+                    field.set(this, new UITreeTableColumn(new TreeTableColumn(), this));
                 } else if (UserInterface.class.isAssignableFrom(type)) {
                     // find by id
                     Type t = Model.collectParameters(field.getType(), UserInterface.class)[1];
@@ -182,6 +184,7 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                         if (type == TableColumn.class || type == UITableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
                             // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
                             // so we must unwrap to javafx.scene.control.TreeTableColumn
+                            System.out.println(type + "  " + field + "  " + node);
                             node = ((javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
                         }
 
@@ -226,7 +229,7 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                         View view = findViewFromParent(type);
 
                         if (view == null) {
-                            view = build((Class<View>) type);
+                            view = build((Class<View>) type, this);
                             view.parent = this;
 
                             // check sub view
@@ -472,8 +475,18 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
      * @return
      */
     public static <V extends View> V build(Class<V> viewType) {
+        return build(viewType, null);
+    }
+
+    /**
+     * Build {@link View} properly.
+     * 
+     * @param viewType
+     * @return
+     */
+    private static <V extends View> V build(Class<V> viewType, View parent) {
         V view = I.make(viewType);
-        view.initializeLazy();
+        view.initializeLazy(parent);
         return view;
     }
 
@@ -483,9 +496,10 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
     /**
      * Initialize myself.
      */
-    final synchronized void initializeLazy() {
+    final synchronized void initializeLazy(View parent) {
         if (initialized == false) {
             initialized = true;
+            this.parent = parent;
 
             // initialize user system lazily
             try {
@@ -500,6 +514,10 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                 throw I.quiet(e);
             }
         }
+    }
+
+    private void buildView() {
+
     }
 
     /**

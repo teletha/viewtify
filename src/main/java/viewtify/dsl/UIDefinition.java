@@ -9,13 +9,12 @@
  */
 package viewtify.dsl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 
+import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -37,8 +36,8 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
         super(UIDefinition.UINode::new, null);
     }
 
-    public Node build() {
-        return root.get(0).build();
+    public final Node build() {
+        return (Node) root.get(0).node;
     }
 
     /**
@@ -47,7 +46,7 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
      * @param node
      */
     protected final void $(Node node) {
-        $(new JavaFxNode(node));
+        $(() -> node);
     }
 
     protected final void vbox(UserInterfaceProvider... children) {
@@ -92,11 +91,11 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
     }
 
     protected final void label(Object text, Consumer<UINode>... nodes) {
-        $(new LabelNode(text), nodes);
+        $(() -> TextNotation.parse(String.valueOf(text)), nodes);
     }
 
-    protected final UserInterfaceProvider<Label> label(String text) {
-        return new LabelNode(text);
+    protected final UserInterfaceProvider<Node> label(String text) {
+        return () -> TextNotation.parse(text);
     }
 
     /**
@@ -104,17 +103,13 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
      */
     public static class UINode implements Consumer<UINode> {
 
-        protected UserInterfaceProvider ui;
-
-        private List<UINode> children = new ArrayList();
-
-        List<String> classes = new ArrayList();
+        protected Object node;
 
         /**
          * @param name
          */
         private UINode(UserInterfaceProvider ui, int id, Object context) {
-            this.ui = ui;
+            this.node = ui.ui();
         }
 
         /**
@@ -122,30 +117,15 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
          */
         @Override
         public void accept(UINode context) {
-            context.children.add(this);
-        }
-
-        /**
-         * Build {@link Node}.
-         * 
-         * @return
-         */
-        private Node build() {
-            Node node = ui.ui();
-            node.getStyleClass().addAll(classes);
-
-            if (node instanceof Pane) {
-                return build((Pane) node);
-            } else {
-                return node;
+            if (context.node instanceof TableView) {
+                ((TableView) context.node).getColumns().add(node);
+            } else if (context.node instanceof TreeTableView) {
+                ((TreeTableView) context.node).getColumns().add(node);
+            } else if (context.node instanceof Group) {
+                ((Group) context.node).getChildren().add((Node) node);
+            } else if (context.node instanceof Pane) {
+                ((Pane) context.node).getChildren().add((Node) node);
             }
-        }
-
-        private <P extends Pane> P build(P pane) {
-            for (UINode child : children) {
-                pane.getChildren().add(child.build());
-            }
-            return pane;
         }
     }
 
@@ -154,13 +134,13 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
      */
     private static final class PaneNode<P extends Pane> implements UserInterfaceProvider<P> {
 
-        private final Class<P> pane;
+        private final P pane;
 
         /**
         * 
         */
-        private PaneNode(Class<P> pane) {
-            this.pane = Objects.requireNonNull(pane);
+        private PaneNode(Class<P> type) {
+            this.pane = I.make(type);
         }
 
         /**
@@ -168,54 +148,7 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
          */
         @Override
         public P ui() {
-            return I.make(pane);
-        }
-    }
-
-    /**
-     * @version 2018/08/29 12:05:24
-     */
-    private static final class LabelNode implements UserInterfaceProvider {
-
-        private final String text;
-
-        /**
-        * 
-        */
-        private LabelNode(Object text) {
-            this.text = String.valueOf(text);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Node ui() {
-            return TextNotation.parse(text);
-        }
-    }
-
-    /**
-     * @version 2018/08/30 9:15:13
-     */
-    private static final class JavaFxNode implements UserInterfaceProvider {
-
-        /** The actual node. */
-        private final Node node;
-
-        /**
-         * @param node
-         */
-        private JavaFxNode(Node node) {
-            this.node = node;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Node ui() {
-            return node;
+            return pane;
         }
     }
 }

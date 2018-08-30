@@ -11,7 +11,10 @@ package viewtify.dsl;
 
 import java.util.function.Consumer;
 
+import javafx.css.Styleable;
+
 import viewtify.dsl.UIDefinition.UINode;
+import viewtify.ui.helper.StyleHelper;
 
 /**
  * @version 2018/08/29 14:55:22
@@ -23,7 +26,9 @@ public interface Style extends Consumer<UINode> {
      */
     @Override
     default void accept(UINode parent) {
-        parent.classes.add(StyleManager.name(this));
+        if (parent.node instanceof Styleable) {
+            StyleHelper.of((Styleable) parent.node).style(StyleManager.name(this));
+        }
     }
 
     /**

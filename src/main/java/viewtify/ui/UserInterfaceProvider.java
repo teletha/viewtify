@@ -9,12 +9,10 @@
  */
 package viewtify.ui;
 
-import javafx.scene.Node;
-
 /**
  * @version 2018/08/29 12:11:02
  */
-public interface UserInterfaceProvider<N extends Node> {
+public interface UserInterfaceProvider<N> {
 
     /**
      * Provide the actual javafx UI.

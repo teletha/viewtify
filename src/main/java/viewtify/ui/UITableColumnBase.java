@@ -17,10 +17,11 @@ import viewtify.Viewtify;
 /**
  * @version 2018/02/05 20:43:01
  */
-public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowValue, ColumnValue> {
+public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowValue, ColumnValue>
+        implements UserInterfaceProvider<Column> {
 
     /** The actual widget. */
-    protected final Column ui;
+    public final Column ui;
 
     /**
      * @param ui
@@ -38,5 +39,13 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
     public Self header(Object... texts) {
         ui.textProperty().bind(Viewtify.inUI(Bindings.concat(Viewtify.observe(texts))));
         return (Self) this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Column ui() {
+        return ui;
     }
 }
