@@ -278,7 +278,7 @@ public final class Viewtify {
      */
     public static final <V extends View> V root() {
         if (rootView == null) {
-            rootView = I.make(rootViewClass);
+            rootView = View.build(rootViewClass);
         }
         return (V) rootView;
     }

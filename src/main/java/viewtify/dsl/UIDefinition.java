@@ -41,6 +41,15 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
         return root.get(0).build();
     }
 
+    /**
+     * Declare the specified {@link Node}.
+     * 
+     * @param node
+     */
+    protected final void $(Node node) {
+        $(new JavaFxNode(node));
+    }
+
     protected final void vbox(UserInterfaceProvider... children) {
         vbox(() -> {
             for (UserInterfaceProvider child : children) {
@@ -183,6 +192,30 @@ public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINod
         @Override
         public Node ui() {
             return TextNotation.parse(text);
+        }
+    }
+
+    /**
+     * @version 2018/08/30 9:15:13
+     */
+    private static final class JavaFxNode implements UserInterfaceProvider {
+
+        /** The actual node. */
+        private final Node node;
+
+        /**
+         * @param node
+         */
+        private JavaFxNode(Node node) {
+            this.node = node;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Node ui() {
+            return node;
         }
     }
 }

@@ -88,7 +88,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
      * @return
      */
     public <V extends View> UITabPane load(String label, Class<V> loadingViewType) {
-        return load(label, tab -> I.make(loadingViewType));
+        return load(label, tab -> View.build(loadingViewType));
     }
 
     /**

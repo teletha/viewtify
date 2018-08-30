@@ -39,12 +39,13 @@ import viewtify.dsl.UIDefinition;
 import viewtify.ui.UITableColumn;
 import viewtify.ui.UITreeTableColumn;
 import viewtify.ui.UserInterface;
+import viewtify.ui.UserInterfaceProvider;
 import viewtify.util.TextNotation;
 
 /**
  * @version 2018/08/29 10:16:30
  */
-public abstract class View<B extends Extensible> implements Extensible {
+public abstract class View<B extends Extensible> implements Extensible, UserInterfaceProvider {
 
     /** The human-readable ID separator. */
     public static final String IDSeparator = " ➝ ";
@@ -74,19 +75,20 @@ public abstract class View<B extends Extensible> implements Extensible {
 
         // initialize UI structure
         if (isUIDefiend()) {
-            // initialize user system lazily
-            try {
-                buildUI();
-
-                this.root = declareUI().build();
-
-                localize(message, messageClass, Label.class, Label::setText);
-                localize(message, messageClass, Button.class, Button::setText);
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw I.quiet(e);
-            }
+            // initialized = true;
+            // try {
+            // buildUI();
+            //
+            // this.root = declareUI().build();
+            //
+            // localize(message, messageClass, Label.class, Label::setText);
+            // localize(message, messageClass, Button.class, Button::setText);
+            // } catch (Exception e) {
+            // e.printStackTrace();
+            // throw I.quiet(e);
+            // }
         } else {
+            initialized = true;
             try {
                 this.root = new FXMLLoader(load("fxml")).load();
             } catch (Exception e) {
@@ -129,71 +131,68 @@ public abstract class View<B extends Extensible> implements Extensible {
             // Inject various types
             for (Field field : getClass().getDeclaredFields()) {
                 Class<?> type = field.getType();
+                field.setAccessible(true);
 
-                if (UserInterface.class.isAssignableFrom(type)) {
-                    field.setAccessible(true);
+                if (View.class.isAssignableFrom(type)) {
+                    // check from call stack
+                    View view = findViewFromParent(type);
 
-                    if (View.class.isAssignableFrom(type)) {
-                        // check from call stack
-                        View view = findViewFromParent(type);
+                    if (view == null) {
+                        view = View.build((Class<View>) type);
+                        view.parent = this;
 
-                        if (view == null) {
-                            view = I.make((Class<View>) type);
-                            view.parent = this;
-
-                            // check sub view
-                            if (type.getEnclosingClass() == getClass()) {
-                                view.prefix = field.getName();
-                            }
+                        // check sub view
+                        if (type.getEnclosingClass() == getClass()) {
+                            view.prefix = field.getName();
                         }
-                        field.set(this, view);
+                    }
+                    field.set(this, view);
 
-                        // if view has been associated with xml and current view has Pane node which
-                        // id equals to field
-                        // name, we should connect them.
-                        if (view.root != null) {
-                            replace(root().lookup("#" + field.getName()), view.root);
+                    // if view has been associated with xml and current view has Pane node which
+                    // id equals to field
+                    // name, we should connect them.
+                    if (view.root != null) {
+                        replace(root().lookup("#" + field.getName()), view.root);
+                    }
+                } else if (UserInterface.class.isAssignableFrom(type)) {
+                    // find by id
+                    Type t = Model.collectParameters(field.getType(), UserInterface.class)[1];
+                    Class c;
+
+                    if (t instanceof ParameterizedType) {
+                        c = (Class) ((ParameterizedType) t).getRawType();
+                    } else {
+                        c = (Class) t;
+                    }
+                    Object node = I.make(c);
+
+                    if (node instanceof Node) {
+                        ((Node) node).setId(field.getName());
+                    }
+
+                    Node value = (Node) field.get(this);
+
+                    if (value == null) {
+                        if (type == TableColumn.class || type == UITableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
+                            // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
+                            // so we must unwrap to javafx.scene.control.TreeTableColumn
+                            node = ((javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
+                        }
+
+                        if (type.getName().startsWith("viewtify.ui.")) {
+                            // viewtify ui widget
+                            Constructor constructor = Model.collectConstructors(type)[0];
+                            constructor.setAccessible(true);
+
+                            field.set(this, constructor.newInstance(node, this));
+                        } else {
+                            // javafx ui
+                            field.set(this, node);
+
+                            enhanceNode(node);
                         }
                     } else {
-                        // find by id
-                        Type t = Model.collectParameters(field.getType(), UserInterface.class)[1];
-                        Class c;
-
-                        if (t instanceof ParameterizedType) {
-                            c = (Class) ((ParameterizedType) t).getRawType();
-                        } else {
-                            c = (Class) t;
-                        }
-                        Object node = I.make(c);
-
-                        if (node instanceof Node) {
-                            ((Node) node).setId(field.getName());
-                        }
-
-                        Node value = (Node) field.get(this);
-
-                        if (value == null) {
-                            if (type == TableColumn.class || type == UITableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
-                                // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
-                                // so we must unwrap to javafx.scene.control.TreeTableColumn
-                                node = ((javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
-                            }
-
-                            if (type.getName().startsWith("viewtify.ui.")) {
-                                // viewtify ui widget
-                                Constructor constructor = Model.collectConstructors(type)[0];
-                                constructor.setAccessible(true);
-
-                                field.set(this, constructor.newInstance(node, this));
-                            } else {
-                                // javafx ui
-                                field.set(this, node);
-
-                                enhanceNode(node);
-                            }
-                        } else {
-                            replace((Node) node, value);
-                        }
+                        replace((Node) node, value);
                     }
                 }
             }
@@ -221,7 +220,7 @@ public abstract class View<B extends Extensible> implements Extensible {
                         View view = findViewFromParent(type);
 
                         if (view == null) {
-                            view = I.make((Class<View>) type);
+                            view = build((Class<View>) type);
                             view.parent = this;
 
                             // check sub view
@@ -397,6 +396,14 @@ public abstract class View<B extends Extensible> implements Extensible {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Node ui() {
+        return root();
+    }
+
+    /**
      * Localized by the specified resource class.
      * 
      * @param resourceClass
@@ -448,6 +455,43 @@ public abstract class View<B extends Extensible> implements Extensible {
                 } catch (Exception e) {
                     // ignore
                 }
+            }
+        }
+    }
+
+    /**
+     * Build {@link View} properly.
+     * 
+     * @param viewType
+     * @return
+     */
+    public static <V extends View> V build(Class<V> viewType) {
+        V view = I.make(viewType);
+        view.initializeLazy();
+        return view;
+    }
+
+    /** The initialization state. */
+    private boolean initialized;
+
+    /**
+     * Initialize myself.
+     */
+    final synchronized void initializeLazy() {
+        if (initialized == false) {
+            initialized = true;
+
+            // initialize user system lazily
+            try {
+                buildUI();
+
+                this.root = declareUI().build();
+
+                localize(message, messageClass, Label.class, Label::setText);
+                localize(message, messageClass, Button.class, Button::setText);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw I.quiet(e);
             }
         }
     }

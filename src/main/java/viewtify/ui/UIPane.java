@@ -13,7 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
-import kiss.I;
 import viewtify.View;
 
 /**
@@ -36,7 +35,7 @@ public class UIPane extends UserInterface<UIPane, Pane> {
      * @return
      */
     public final <V extends View> UIPane set(Class<V> view) {
-        return set(I.make(view));
+        return set(View.build(view));
     }
 
     /**
