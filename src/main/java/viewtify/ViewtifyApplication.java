@@ -62,14 +62,12 @@ public final class ViewtifyApplication extends Application {
         // trace window size and position
         I.make(WindowLocator.class).restore().locate("MainWindow", stage);
         Path application = Stylist.writeTo(".preferences/application.css");
-        application = Paths.get("test.css");
 
         View view = Viewtify.root();
         Scene scene = new Scene(view.root());
-        scene.getStylesheets()
-                .addAll(getClass().getResource("dark.css").toExternalForm(), view.load("css")
-                        .toExternalForm(), application.toAbsolutePath().toUri().toURL().toExternalForm());
-        System.out.println(scene.getStylesheets());
+        scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
+        scene.getStylesheets().add(view.load("css").toExternalForm());
+        scene.getStylesheets().add(application.toUri().toURL().toExternalForm());
         configIcon(stage);
         stage.setScene(scene);
         stage.show();
@@ -124,38 +122,27 @@ public final class ViewtifyApplication extends Application {
                     Path path = Paths.get(stylesheet.substring(6));
 
                     if (Files.exists(path)) {
-                        System.out.println(path);
-                        try {
-                            Filer.observe(path).debounce(1, SECONDS).to(e -> {
-                                AtomicInteger index = new AtomicInteger();
-                                System.out.println(path);
+                        Filer.observe(path).debounce(1, SECONDS).to(e -> {
+                            AtomicInteger index = new AtomicInteger();
 
-                                // remove
-                                Viewtify.inUI(() -> {
-                                    index.set(stylesheets.indexOf(stylesheet));
+                            // remove
+                            Viewtify.inUI(() -> {
+                                index.set(stylesheets.indexOf(stylesheet));
 
-                                    if (index.get() != -1) {
-                                        stylesheets.remove(index.get());
-                                    }
-                                });
-
-                                // reload
-                                Viewtify.inUI(() -> {
-                                    if (index.get() == -1) {
-                                        stylesheets.add(stylesheet);
-                                    } else {
-                                        stylesheets.add(index.get(), stylesheet);
-                                    }
-                                });
-                            }, e -> {
-                                e.printStackTrace();
-                            }, () -> {
-                                System.out.println("COMPLETE");
+                                if (index.get() != -1) {
+                                    stylesheets.remove(index.get());
+                                }
                             });
-                        } catch (Throwable e) {
-                            e.printStackTrace();
-                            throw I.quiet(e);
-                        }
+
+                            // reload
+                            Viewtify.inUI(() -> {
+                                if (index.get() == -1) {
+                                    stylesheets.add(stylesheet);
+                                } else {
+                                    stylesheets.add(index.get(), stylesheet);
+                                }
+                            });
+                        });
                     }
                 }
             }

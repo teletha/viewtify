@@ -63,6 +63,7 @@ import kiss.WiseFunction;
 import kiss.WiseSupplier;
 import kiss.WiseTriFunction;
 import stylist.Stylist;
+import stylist.Vendor;
 import stylist.util.HierarchicalNaming;
 import viewtify.bind.Calculation;
 import viewtify.bind.CalculationList;
@@ -85,6 +86,7 @@ public final class Viewtify {
             e.printStackTrace();
         });
 
+        Stylist.setVendor(Vendor.JavaFX);
         Stylist.setNamingStrategy(new HierarchicalNaming("_"));
 
         // For Test
