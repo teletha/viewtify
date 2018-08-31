@@ -62,6 +62,8 @@ import kiss.WiseBiFunction;
 import kiss.WiseFunction;
 import kiss.WiseSupplier;
 import kiss.WiseTriFunction;
+import stylist.Stylist;
+import stylist.util.HierarchicalNaming;
 import viewtify.bind.Calculation;
 import viewtify.bind.CalculationList;
 import viewtify.ui.UserInterface;
@@ -82,6 +84,8 @@ public final class Viewtify {
         Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
             e.printStackTrace();
         });
+
+        Stylist.setNamingStrategy(new HierarchicalNaming("_"));
 
         // For Test
         inTest = I.signal(new Error().getStackTrace())

@@ -27,7 +27,7 @@ public interface Style extends stylist.Style, Consumer<UINode> {
     @Override
     default void accept(UINode parent) {
         if (parent.node instanceof Styleable) {
-            StyleHelper.of((Styleable) parent.node).style(StyleManager.name(this));
+            StyleHelper.of((Styleable) parent.node).style(name());
         }
     }
 }

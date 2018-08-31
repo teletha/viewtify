@@ -35,6 +35,7 @@ import kiss.Manageable;
 import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
+import stylist.Stylist;
 
 /**
  * Singleton managed JavaFX application.
@@ -60,11 +61,15 @@ public final class ViewtifyApplication extends Application {
 
         // trace window size and position
         I.make(WindowLocator.class).restore().locate("MainWindow", stage);
+        Path application = Stylist.writeTo(".preferences/application.css");
+        application = Paths.get("test.css");
 
         View view = Viewtify.root();
         Scene scene = new Scene(view.root());
-        scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
-        scene.getStylesheets().add(view.load("css").toExternalForm());
+        scene.getStylesheets()
+                .addAll(getClass().getResource("dark.css").toExternalForm(), view.load("css")
+                        .toExternalForm(), application.toAbsolutePath().toUri().toURL().toExternalForm());
+        System.out.println(scene.getStylesheets());
         configIcon(stage);
         stage.setScene(scene);
         stage.show();
@@ -119,27 +124,38 @@ public final class ViewtifyApplication extends Application {
                     Path path = Paths.get(stylesheet.substring(6));
 
                     if (Files.exists(path)) {
-                        Filer.observe(path).debounce(1, SECONDS).to(e -> {
-                            AtomicInteger index = new AtomicInteger();
+                        System.out.println(path);
+                        try {
+                            Filer.observe(path).debounce(1, SECONDS).to(e -> {
+                                AtomicInteger index = new AtomicInteger();
+                                System.out.println(path);
 
-                            // remove
-                            Viewtify.inUI(() -> {
-                                index.set(stylesheets.indexOf(stylesheet));
+                                // remove
+                                Viewtify.inUI(() -> {
+                                    index.set(stylesheets.indexOf(stylesheet));
 
-                                if (index.get() != -1) {
-                                    stylesheets.remove(index.get());
-                                }
+                                    if (index.get() != -1) {
+                                        stylesheets.remove(index.get());
+                                    }
+                                });
+
+                                // reload
+                                Viewtify.inUI(() -> {
+                                    if (index.get() == -1) {
+                                        stylesheets.add(stylesheet);
+                                    } else {
+                                        stylesheets.add(index.get(), stylesheet);
+                                    }
+                                });
+                            }, e -> {
+                                e.printStackTrace();
+                            }, () -> {
+                                System.out.println("COMPLETE");
                             });
-
-                            // reload
-                            Viewtify.inUI(() -> {
-                                if (index.get() == -1) {
-                                    stylesheets.add(stylesheet);
-                                } else {
-                                    stylesheets.add(index.get(), stylesheet);
-                                }
-                            });
-                        });
+                        } catch (Throwable e) {
+                            e.printStackTrace();
+                            throw I.quiet(e);
+                        }
                     }
                 }
             }
