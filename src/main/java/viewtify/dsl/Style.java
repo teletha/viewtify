@@ -12,7 +12,11 @@ package viewtify.dsl;
 import java.util.function.Consumer;
 
 import javafx.css.Styleable;
+import javafx.scene.paint.Color;
 
+import kiss.Variable;
+import stylist.CSSValue;
+import stylist.StyleRule;
 import viewtify.dsl.UIDefinition.UINode;
 import viewtify.ui.helper.StyleHelper;
 
@@ -28,6 +32,22 @@ public interface Style extends stylist.Style, Consumer<UINode> {
     default void accept(UINode parent) {
         if (parent.node instanceof Styleable) {
             StyleHelper.of((Styleable) parent.node).style(name());
+        }
+    }
+
+    /**
+     * Compute stroke color as JavaFX {@link Color}.
+     * 
+     * @return
+     */
+    default Color stroke() {
+        StyleRule rule = StyleRule.create(this);
+        Variable<CSSValue> color = rule.properties.get("stroke");
+
+        if (color.isPresent()) {
+            return Color.web(color.toString());
+        } else {
+            return Color.TRANSPARENT;
         }
     }
 }
