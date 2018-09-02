@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 
 import kiss.Variable;
+import stylist.Style;
 import viewtify.Viewtify;
 
 /**
@@ -39,6 +40,24 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
 
             if (!classes.contains(className)) {
                 classes.add(className);
+            }
+        });
+        return (Self) this;
+    }
+
+    /**
+     * Apply class name;
+     * 
+     * @param className
+     */
+    default Self style(Style... styles) {
+        Viewtify.inUI(() -> {
+            ObservableList<String> classes = ui().getStyleClass();
+
+            for (Style style : styles) {
+                if (!classes.contains(style.name())) {
+                    classes.add(style.name());
+                }
             }
         });
         return (Self) this;
