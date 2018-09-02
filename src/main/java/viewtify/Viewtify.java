@@ -81,12 +81,7 @@ public final class Viewtify {
     static {
         ClassLoader.getSystemClassLoader().setDefaultAssertionStatus(true);
 
-        // Error Handling
-        Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
-            e.printStackTrace();
-        });
-
-        Stylist.setVendor(Vendor.JavaFX);
+        Stylist.setCurrentVendor(Vendor.JavaFX);
         Stylist.setNamingStrategy(new HierarchicalNaming("_"));
 
         // For Test

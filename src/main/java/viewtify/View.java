@@ -63,7 +63,7 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
     private final Class<B> messageClass;
 
     /** The associated message resources. */
-    protected final B message;
+    protected final B $;
 
     /**
      * Use class name as view name.
@@ -71,7 +71,7 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
     protected View() {
         Type[] types = Model.collectParameters(getClass(), View.class);
         this.messageClass = (Class<B>) (types == null || types.length == 0 ? Φ.class : types[0]);
-        this.message = I.i18n(messageClass);
+        this.$ = I.i18n(messageClass);
 
         // initialize UI structure
         if (isUIDefiend()) {
@@ -507,8 +507,8 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
 
                 this.root = declareUI().build();
 
-                localize(message, messageClass, Label.class, Label::setText);
-                localize(message, messageClass, Button.class, Button::setText);
+                localize($, messageClass, Label.class, Label::setText);
+                localize($, messageClass, Button.class, Button::setText);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw I.quiet(e);

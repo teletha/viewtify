@@ -36,6 +36,7 @@ import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
 import stylist.Stylist;
+import stylist.util.JavaFXLizer;
 
 /**
  * Singleton managed JavaFX application.
@@ -61,7 +62,7 @@ public final class ViewtifyApplication extends Application {
 
         // trace window size and position
         I.make(WindowLocator.class).restore().locate("MainWindow", stage);
-        Path application = Stylist.writeTo(".preferences/application.css");
+        Path application = Stylist.writeTo(Paths.get(".preferences/application.css"), JavaFXLizer.pretty());
 
         View view = Viewtify.root();
         Scene scene = new Scene(view.root());
