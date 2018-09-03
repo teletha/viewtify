@@ -368,11 +368,11 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     /**
      * @version 2018/09/03 14:36:43
      */
-    private static class Styles extends StyleDSL {
+    private static class Styles implements StyleDSL {
 
         static Style ValidationToolTip = () -> {
             font.size(12, px).color("-fx-light-text-color");
-            background.color(rgba(60, 60, 60, 0.8));
+            background.color(StyleDSL.rgba(60, 60, 60, 0.8));
             padding.vertical(8, px).horizontal(12, px);
         };
     }
