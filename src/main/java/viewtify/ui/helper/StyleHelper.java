@@ -34,22 +34,6 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
      * 
      * @param className
      */
-    default Self style(String className) {
-        Viewtify.inUI(() -> {
-            ObservableList<String> classes = ui().getStyleClass();
-
-            if (!classes.contains(className)) {
-                classes.add(className);
-            }
-        });
-        return (Self) this;
-    }
-
-    /**
-     * Apply class name;
-     * 
-     * @param className
-     */
     default Self style(Style... styles) {
         Viewtify.inUI(() -> {
             ObservableList<String> classes = ui().getStyleClass();

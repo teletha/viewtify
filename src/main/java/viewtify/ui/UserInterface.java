@@ -38,6 +38,8 @@ import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.WiseRunnable;
+import stylist.Style;
+import stylist.StyleDSL;
 import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.model.Validation;
@@ -210,7 +212,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
                         tooltip.setAutoFix(true);
                         tooltip.setShowDelay(Duration.ZERO);
                         tooltip.setShowDuration(Duration.INDEFINITE);
-                        StyleHelper.of(tooltip).style("ValidationTooltip");
+                        StyleHelper.of(tooltip).style(Styles.ValidationToolTip);
                         label.setTooltip(tooltip);
                     }
 
@@ -361,5 +363,17 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     @SuppressWarnings("serial")
     @Manageable(lifestyle = Singleton.class)
     private static class Preference extends TreeMap<String, String> implements Storable<Preference> {
+    }
+
+    /**
+     * @version 2018/09/03 14:36:43
+     */
+    private static class Styles extends StyleDSL {
+
+        static Style ValidationToolTip = () -> {
+            font.size(12, px).color("-fx-light-text-color");
+            background.color(rgba(60, 60, 60, 0.8));
+            padding.vertical(8, px).horizontal(12, px);
+        };
     }
 }
