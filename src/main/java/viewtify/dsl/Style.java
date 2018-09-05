@@ -21,7 +21,7 @@ import viewtify.dsl.UIDefinition.UINode;
 import viewtify.ui.helper.StyleHelper;
 
 /**
- * @version 2018/08/29 14:55:22
+ * @version 2018/09/05 14:03:55
  */
 public interface Style extends stylist.Style, Consumer<UINode> {
 
@@ -45,7 +45,13 @@ public interface Style extends stylist.Style, Consumer<UINode> {
         Variable<CSSValue> color = rule.properties.get("stroke");
 
         if (color.isPresent()) {
-            return Color.web(color.toString());
+            CSSValue value = color.v;
+
+            if (value instanceof stylist.value.Color) {
+                return Color.web(((stylist.value.Color) value).toRGB());
+            } else {
+                return Color.web(color.toString());
+            }
         } else {
             return Color.TRANSPARENT;
         }

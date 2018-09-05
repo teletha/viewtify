@@ -372,7 +372,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
 
         static Style ValidationToolTip = () -> {
             font.size(12, px).color("-fx-light-text-color");
-            background.color(StyleDSL.rgba(60, 60, 60, 0.8));
+            background.color($.rgba(60, 60, 60, 0.8));
             padding.vertical(8, px).horizontal(12, px);
         };
     }
