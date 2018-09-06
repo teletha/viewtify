@@ -69,6 +69,7 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
      * Use class name as view name.
      */
     protected View() {
+        Model.of(View.class);
         Type[] types = Model.collectParameters(getClass(), View.class);
         this.messageClass = (Class<B>) (types == null || types.length == 0 ? Φ.class : types[0]);
         this.$ = I.i18n(messageClass);
@@ -154,8 +155,7 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                         field.set(this, view);
 
                         // if view has been associated with xml and current view has Pane node which
-                        // id equals to field
-                        // name, we should connect them.
+                        // id equals to field name, we should connect them.
                         if (view.root != null) {
                             replace(root().lookup("#" + field.getName()), view.root);
                         }
@@ -184,7 +184,6 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                         if (type == TableColumn.class || type == UITableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
                             // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
                             // so we must unwrap to javafx.scene.control.TreeTableColumn
-                            System.out.println(type + "  " + field + "  " + node);
                             node = ((javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
                         }
 
