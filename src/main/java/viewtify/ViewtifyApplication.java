@@ -36,7 +36,6 @@ import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
 import stylist.Stylist;
-import stylist.util.HierarchicalNaming;
 import stylist.util.JavaFXLizer;
 
 /**
@@ -64,7 +63,6 @@ public final class ViewtifyApplication extends Application {
         // trace window size and position
         I.make(WindowLocator.class).restore().locate("MainWindow", stage);
 
-        Stylist.setNamingStrategy(new HierarchicalNaming("_"));
         Path application = Stylist.writeTo(Paths.get(".preferences/application.css"), JavaFXLizer.pretty());
 
         View view = Viewtify.root();

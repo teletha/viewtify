@@ -9,12 +9,12 @@
  */
 package viewtify.dsl;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import javafx.css.Styleable;
 import javafx.scene.paint.Color;
 
-import kiss.Variable;
 import stylist.CSSValue;
 import stylist.StyleRule;
 import viewtify.dsl.UIDefinition.UINode;
@@ -42,10 +42,10 @@ public interface Style extends stylist.Style, Consumer<UINode> {
      */
     default Color stroke() {
         StyleRule rule = StyleRule.create(this);
-        Variable<CSSValue> color = rule.properties.get("stroke");
+        Optional<CSSValue> color = rule.properties.get("stroke");
 
         if (color.isPresent()) {
-            CSSValue value = color.v;
+            CSSValue value = color.get();
 
             if (value instanceof stylist.value.Color) {
                 return Color.web(((stylist.value.Color) value).toRGB());
