@@ -27,10 +27,10 @@ import viewtify.Viewtify;
 import viewtify.ui.helper.LabelHelper;
 
 /**
- * @version 2018/01/16 13:49:29
+ * @version 2018/09/07 10:35:24
  */
 public class UITableColumn<RowValue, ColumnValue>
-        extends UITableColumnBase<TableColumn<RowValue, ColumnValue>, UITableColumn, RowValue, ColumnValue> {
+        extends UITableColumnBase<TableColumn<RowValue, ColumnValue>, UITableColumn<RowValue, ColumnValue>, RowValue, ColumnValue> {
 
     /** The value provider utility. */
     private TypeMappingProvider mappingProvider;
