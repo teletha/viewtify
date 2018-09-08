@@ -68,7 +68,6 @@ public final class ViewtifyApplication extends Application {
         View view = Viewtify.root();
         Scene scene = new Scene(view.root());
         scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
-        scene.getStylesheets().add(view.load("css").toExternalForm());
         scene.getStylesheets().add(application.toUri().toURL().toExternalForm());
         configIcon(stage);
         stage.setScene(scene);

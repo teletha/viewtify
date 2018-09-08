@@ -18,7 +18,7 @@ import stylist.Style;
 import viewtify.Viewtify;
 
 /**
- * @version 2017/12/02 18:19:15
+ * @version 2018/09/08 19:41:41
  */
 public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
 
@@ -30,62 +30,23 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     S ui();
 
     /**
-     * Apply class name;
+     * Apply {@link Style} to user interface;
      * 
-     * @param className
+     * @param styles A list of {@link Style}s to apply.
+     * @return Chainable API.
      */
     default Self style(Style... styles) {
-        Viewtify.inUI(() -> {
-            ObservableList<String> classes = ui().getStyleClass();
-
-            for (Style style : styles) {
-                if (!classes.contains(style.name())) {
-                    classes.add(style.name());
-                }
-            }
-        });
-        return (Self) this;
-    }
-
-    /**
-     * Apply class name;
-     * 
-     * @param className
-     */
-    default <E extends Enum<E>> Self style(E... states) {
-        Viewtify.inUI(() -> {
-            ObservableList<String> classes = ui().getStyleClass();
-
-            for (E state : states) {
-                String name = state.name();
-
-                if (!classes.contains(name)) {
-                    classes.add(name);
-                }
-            }
-        });
-        return (Self) this;
-    }
-
-    /**
-     * Apply single state class by the specified enum.
-     * 
-     * @param state
-     */
-    default <E extends Enum<E>> Self styleOnly(E state) {
-        if (state != null) {
+        if (styles != null && styles.length != 0) {
             Viewtify.inUI(() -> {
                 ObservableList<String> classes = ui().getStyleClass();
 
-                for (Enum value : state.getClass().getEnumConstants()) {
-                    String name = value.name();
+                for (Style style : styles) {
+                    if (style != null) {
+                        String name = style.name();
 
-                    if (state == value) {
                         if (!classes.contains(name)) {
                             classes.add(name);
                         }
-                    } else {
-                        classes.remove(name);
                     }
                 }
             });
@@ -94,38 +55,73 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     }
 
     /**
-     * Apply single state class by the specified enum.
+     * Apply {@link Style} to user interface;
      * 
-     * @param node
-     * @param state
+     * @param styles A list of {@link Style}s to apply.
+     * @return Chainable API.
      */
-    default <E extends Enum<E>> Self styleOnly(Variable<E> state) {
-        return styleOnly(Viewtify.calculate(state));
-    }
-
-    /**
-     * Apply single state class by the specified enum.
-     * 
-     * @param node
-     * @param state
-     */
-    default <E extends Enum<E>> Self styleOnly(ObservableValue<E> state) {
-        state.addListener(o -> styleOnly(state.getValue()));
-        return (Self) this;
-    }
-
-    /**
-     * Clear all style for the specified enum type.
-     * 
-     * @param class1
-     */
-    default <E extends Enum<E>> Self unstyle(Class<E> style) {
+    default Self styleOnly(Style style) {
         if (style != null) {
             Viewtify.inUI(() -> {
                 ObservableList<String> classes = ui().getStyleClass();
 
-                for (Enum value : style.getEnumConstants()) {
-                    classes.remove(value.name());
+                for (Style member : style.group()) {
+                    String clazz = member.name();
+
+                    if (member == style) {
+                        if (!classes.contains(clazz)) {
+                            classes.add(clazz);
+                        }
+                    } else {
+                        classes.remove(clazz);
+                    }
+                }
+            });
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Apply {@link Style} to user interface;
+     * 
+     * @param styles A list of {@link Style}s to apply.
+     * @return Chainable API.
+     */
+    default Self styleOnly(ObservableValue<Style> style) {
+        style.addListener(o -> styleOnly(style.getValue()));
+        return (Self) this;
+    }
+
+    /**
+     * Apply {@link Style} to user interface;
+     * 
+     * @param styles A list of {@link Style}s to apply.
+     * @return Chainable API.
+     */
+    default Self styleOnly(Variable<Style> style) {
+        style.observeNow().to(this::styleOnly);
+        return (Self) this;
+    }
+
+    /**
+     * Unapply {@link Style} from user interface;
+     * 
+     * @param styles A list of {@link Style}s to unapply.
+     * @return Chainable API.
+     */
+    default Self unstyle(Style... styles) {
+        if (styles != null && styles.length != 0) {
+            Viewtify.inUI(() -> {
+                ObservableList<String> classes = ui().getStyleClass();
+
+                for (Style style : styles) {
+                    if (style != null) {
+                        String name = style.name();
+
+                        if (!classes.contains(name)) {
+                            classes.add(name);
+                        }
+                    }
                 }
             });
         }
