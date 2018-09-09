@@ -9,10 +9,13 @@
  */
 package viewtify.ui;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import javafx.css.CssMetaData;
+import javafx.css.Styleable;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -40,7 +43,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
      * @param view A {@link View} to which the widget belongs.
      */
     private UITabPane(View view) {
-        super(new TabPane(), view);
+        super(new Internal(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll).take(Action.inside(ui.lookup(".tab-header-background"))).to(Action.traverse(ui.getSelectionModel()));
@@ -152,5 +155,19 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
             ui.tabClosingPolicyProperty().set(policy);
         }
         return this;
+    }
+
+    /**
+     * @version 2018/09/09 23:26:36
+     */
+    private static class Internal extends TabPane {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
+            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+        }
     }
 }

@@ -9,12 +9,15 @@
  */
 package viewtify.ui;
 
+import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.css.CssMetaData;
+import javafx.css.Styleable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
@@ -44,7 +47,7 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>> {
      * @param view A {@link View} to which the widget belongs.
      */
     private UIListView(View view) {
-        super(new ListView(), view);
+        super(new Internal<E>(), view);
 
         this.filter = Variable.of(I.accept());
         this.items = Variable.of(ui.getItems());
@@ -226,5 +229,19 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>> {
      */
     public <C> UIListView<E> skip(ObservableValue<C> context, BiPredicate<E, C> filter) {
         return take(context, filter.negate());
+    }
+
+    /**
+     * @version 2018/09/09 23:26:36
+     */
+    private static class Internal<T> extends ListView<T> {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
+            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+        }
     }
 }

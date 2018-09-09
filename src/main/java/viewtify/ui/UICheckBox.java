@@ -9,8 +9,12 @@
  */
 package viewtify.ui;
 
+import java.util.List;
+
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableBooleanValue;
+import javafx.css.CssMetaData;
+import javafx.css.Styleable;
 import javafx.scene.control.CheckBox;
 
 import viewtify.ui.helper.PreferenceHelper;
@@ -26,7 +30,7 @@ public class UICheckBox extends UserInterface<UICheckBox, CheckBox> implements P
      * @param view A {@link View} to which the widget belongs.
      */
     private UICheckBox(View view) {
-        super(new CheckBox(), view);
+        super(new Internal(), view);
     }
 
     /**
@@ -53,5 +57,19 @@ public class UICheckBox extends UserInterface<UICheckBox, CheckBox> implements P
      */
     public ObservableBooleanValue isNotSelected() {
         return ui.selectedProperty().not();
+    }
+
+    /**
+     * @version 2018/09/09 23:26:36
+     */
+    private static class Internal extends CheckBox {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
+            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+        }
     }
 }

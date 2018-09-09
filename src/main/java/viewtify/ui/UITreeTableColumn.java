@@ -10,12 +10,15 @@
 package viewtify.ui;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.css.CssMetaData;
+import javafx.css.Styleable;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 
@@ -40,7 +43,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * @param view A {@link View} to which the widget belongs.
      */
     private UITreeTableColumn(View view) {
-        super(new TreeTableColumn());
+        super(new Internal());
     }
 
     /**
@@ -196,6 +199,20 @@ public class UITreeTableColumn<RowValue, ColumnValue>
         @Override
         public TreeTableCell ui() {
             return ui;
+        }
+    }
+
+    /**
+     * @version 2018/09/09 23:26:36
+     */
+    private static class Internal<S, T> extends TreeTableColumn<S, T> {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
+            return EnhancedCSSProperty.metadata(super.getCssMetaData());
         }
     }
 }

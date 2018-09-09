@@ -9,6 +9,10 @@
  */
 package viewtify.ui;
 
+import java.util.List;
+
+import javafx.css.CssMetaData;
+import javafx.css.Styleable;
 import javafx.scene.control.Label;
 
 import viewtify.ui.helper.LabelHelper;
@@ -24,6 +28,20 @@ public class UILabel extends UserInterface<UILabel, Label> implements LabelHelpe
      * @param view A {@link View} to which the widget belongs.
      */
     UILabel(View view) {
-        super(new Label(), view);
+        super(new Internal(), view);
+    }
+
+    /**
+     * @version 2018/09/09 23:26:36
+     */
+    private static class Internal extends Label {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
+            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+        }
     }
 }

@@ -15,9 +15,9 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
 
 /**
- * @version 2017/12/05 16:14:25
+ * @version 2018/09/10 8:45:01
  */
-public class UIControl<Self extends UIControl, W extends Control> extends UserInterface<Self, W> {
+public abstract class AbstractControl<Self extends AbstractControl, W extends Control> extends UserInterface<Self, W> {
 
     private UIContextMenu context;
 
@@ -25,7 +25,7 @@ public class UIControl<Self extends UIControl, W extends Control> extends UserIn
      * @param ui
      * @param view
      */
-    protected UIControl(W ui, View view) {
+    protected AbstractControl(W ui, View view) {
         super(ui, view);
     }
 

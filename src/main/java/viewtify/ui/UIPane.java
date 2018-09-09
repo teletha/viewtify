@@ -9,7 +9,11 @@
  */
 package viewtify.ui;
 
+import java.util.List;
+
 import javafx.collections.ObservableList;
+import javafx.css.CssMetaData;
+import javafx.css.Styleable;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
@@ -24,7 +28,7 @@ public class UIPane extends UserInterface<UIPane, Pane> {
      * @param view A {@link View} to which the widget belongs.
      */
     public UIPane(View view) {
-        super(new Pane(), view);
+        super(new Internal(), view);
     }
 
     /**
@@ -54,5 +58,19 @@ public class UIPane extends UserInterface<UIPane, Pane> {
             }
         }
         return this;
+    }
+
+    /**
+     * @version 2018/09/09 23:26:36
+     */
+    private static class Internal extends Pane {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
+            return EnhancedCSSProperty.metadata(super.getCssMetaData());
+        }
     }
 }

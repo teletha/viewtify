@@ -23,7 +23,7 @@ import viewtify.bind.CalculationList;
 /**
  * @version 2018/09/09 11:54:03
  */
-public abstract class AbstractTableView<Self extends AbstractTableView, W extends Control, T> extends UIControl<Self, W> {
+public abstract class AbstractTableView<Self extends AbstractTableView, W extends Control, T> extends AbstractControl<Self, W> {
 
     /** The selection model. */
     private final CalculationList<T> selection;
