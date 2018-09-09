@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.dsl;
+package viewtify;
 
 import java.util.function.Consumer;
 
@@ -25,15 +25,17 @@ import viewtify.ui.UserInterfaceProvider;
 import viewtify.util.TextNotation;
 
 /**
- * @version 2018/08/29 11:22:43
+ * Declared user interface.
+ * 
+ * @version 2018/09/09 23:05:01
  */
-public class UIDefinition extends Tree<UserInterfaceProvider, UIDefinition.UINode> {
+public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
 
     /**
      * 
      */
-    public UIDefinition() {
-        super(UIDefinition.UINode::new, null);
+    public UI() {
+        super(UI.UINode::new, null);
     }
 
     public final Node build() {

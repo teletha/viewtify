@@ -16,19 +16,19 @@ import javafx.scene.layout.VBox;
 import org.junit.jupiter.api.Test;
 
 import viewtify.JavaFXTester;
-import viewtify.dsl.UIDefinition;
+import viewtify.UI;
 import viewtify.ui.UILabel;
 
 /**
  * @version 2018/08/29 11:25:48
  */
-class UIDefinitionTest extends JavaFXTester {
+class UIDeclarationTest extends JavaFXTester {
 
     private UILabel label = new UILabel(null);
 
     @Test
     void label() {
-        UIDefinition fxml = new UIDefinition() {
+        UI fxml = new UI() {
             {
                 $(label);
             }
@@ -40,7 +40,7 @@ class UIDefinitionTest extends JavaFXTester {
 
     @Test
     void vbox() {
-        UIDefinition fxml = new UIDefinition() {
+        UI fxml = new UI() {
             {
                 vbox(label);
             }
@@ -52,7 +52,7 @@ class UIDefinitionTest extends JavaFXTester {
 
     @Test
     void vboxLambda() {
-        UIDefinition fxml = new UIDefinition() {
+        UI fxml = new UI() {
             {
                 vbox(() -> {
                     $(label);
@@ -66,7 +66,7 @@ class UIDefinitionTest extends JavaFXTester {
 
     @Test
     void vboxNest() {
-        UIDefinition fxml = new UIDefinition() {
+        UI fxml = new UI() {
             {
                 vbox(() -> {
                     vbox(label);
@@ -81,7 +81,7 @@ class UIDefinitionTest extends JavaFXTester {
 
     @Test
     void vboxNestLambda() {
-        UIDefinition fxml = new UIDefinition() {
+        UI fxml = new UI() {
             {
                 vbox(() -> {
                     vbox(() -> {

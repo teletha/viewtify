@@ -30,7 +30,7 @@ import kiss.I;
 import kiss.Manageable;
 import kiss.Singleton;
 import kiss.model.Model;
-import viewtify.dsl.UIDefinition;
+import viewtify.UI;
 import viewtify.util.TextNotation;
 
 /**
@@ -68,7 +68,7 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
      * 
      * @return
      */
-    protected abstract UIDefinition declareUI();
+    protected abstract UI declareUI();
 
     /**
      * Initialize {@link View}.

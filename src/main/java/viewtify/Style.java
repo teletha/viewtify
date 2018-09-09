@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.dsl;
+package viewtify;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -17,10 +17,12 @@ import javafx.scene.paint.Color;
 
 import stylist.CSSValue;
 import stylist.StyleRule;
-import viewtify.dsl.UIDefinition.UINode;
+import viewtify.UI.UINode;
 import viewtify.ui.helper.StyleHelper;
 
 /**
+ * Declared interface style.
+ * 
  * @version 2018/09/05 14:03:55
  */
 public interface Style extends stylist.Style, Consumer<UINode> {

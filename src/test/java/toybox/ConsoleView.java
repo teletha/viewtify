@@ -9,7 +9,7 @@
  */
 package toybox;
 
-import viewtify.dsl.UIDefinition;
+import viewtify.UI;
 import viewtify.ui.UITab;
 import viewtify.ui.View;
 
@@ -29,7 +29,7 @@ public class ConsoleView extends View {
      * {@inheritDoc}
      */
     @Override
-    protected UIDefinition declareUI() {
+    protected UI declareUI() {
         return null;
     }
 

@@ -13,8 +13,8 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 
 import kiss.I;
 import viewtify.ActivationPolicy;
+import viewtify.UI;
 import viewtify.Viewtify;
-import viewtify.dsl.UIDefinition;
 import viewtify.ui.UITabPane;
 import viewtify.ui.View;
 
@@ -31,7 +31,7 @@ public class Toybox2 extends View {
      * {@inheritDoc}
      */
     @Override
-    protected UIDefinition declareUI() {
+    protected UI declareUI() {
         return null;
     }
 
