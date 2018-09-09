@@ -22,12 +22,11 @@ import javafx.scene.control.TreeTableColumn;
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
-import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.ui.helper.LabelHelper;
 
 /**
- * @version 2018/09/07 10:35:29
+ * @version 2018/09/09 18:05:42
  */
 public class UITreeTableColumn<RowValue, ColumnValue>
         extends UITableColumnBase<TreeTableColumn<RowValue, ColumnValue>, UITreeTableColumn<RowValue, ColumnValue>, RowValue, ColumnValue> {
@@ -38,10 +37,10 @@ public class UITreeTableColumn<RowValue, ColumnValue>
     /**
      * Enchanced view.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    public UITreeTableColumn(TreeTableColumn<RowValue, ColumnValue> ui, View view) {
-        super(ui);
+    private UITreeTableColumn(View view) {
+        super(new TreeTableColumn());
     }
 
     /**

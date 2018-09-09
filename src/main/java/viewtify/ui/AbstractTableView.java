@@ -18,7 +18,6 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableSelectionModel;
 import javafx.scene.text.Text;
 
-import viewtify.View;
 import viewtify.bind.CalculationList;
 
 /**

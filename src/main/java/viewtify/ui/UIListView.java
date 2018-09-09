@@ -21,7 +21,6 @@ import javafx.scene.control.ListView;
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
-import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.ui.helper.PreferenceHelper;
 

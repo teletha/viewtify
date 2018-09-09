@@ -18,7 +18,6 @@ import kiss.Extensible;
 import kiss.I;
 import kiss.Manageable;
 import kiss.Singleton;
-import viewtify.View;
 import viewtify.ui.helper.PreferenceHelper;
 
 /**

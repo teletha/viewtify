@@ -12,8 +12,6 @@ package viewtify.ui;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 
-import viewtify.View;
-
 /**
  * @version 2018/01/05 2:31:23
  */

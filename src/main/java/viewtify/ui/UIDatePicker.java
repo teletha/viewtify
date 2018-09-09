@@ -21,7 +21,6 @@ import javafx.beans.property.Property;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 
-import viewtify.View;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.PreferenceHelper;
 import viewtify.ui.helper.User;

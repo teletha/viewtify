@@ -9,9 +9,9 @@
  */
 package toybox;
 
-import viewtify.View;
 import viewtify.dsl.UIDefinition;
 import viewtify.ui.UITab;
+import viewtify.ui.View;
 
 /**
  * @version 2018/03/04 16:40:00

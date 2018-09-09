@@ -13,8 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
-import viewtify.View;
-
 /**
  * @version 2018/09/09 12:03:12
  */

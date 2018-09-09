@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify;
+package viewtify.ui;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -17,11 +17,12 @@ import java.util.function.BiConsumer;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.css.Styleable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TableColumnBase;
 import javafx.scene.layout.Pane;
 
 import kiss.Extensible;
@@ -30,10 +31,6 @@ import kiss.Manageable;
 import kiss.Singleton;
 import kiss.model.Model;
 import viewtify.dsl.UIDefinition;
-import viewtify.ui.UITableColumn;
-import viewtify.ui.UITreeTableColumn;
-import viewtify.ui.UserInterface;
-import viewtify.ui.UserInterfaceProvider;
 import viewtify.util.TextNotation;
 
 /**
@@ -102,7 +99,14 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
      * @return
      */
     public final <N extends Parent> N root() {
-        return root != null ? (N) root : parent != null ? parent.root() : (N) Viewtify.stage.getScene().getRoot();
+        if (root != null) {
+            return (N) root;
+        }
+
+        if (parent != null) {
+            return parent.root();
+        }
+        throw new Error();
     }
 
     /**
@@ -224,44 +228,29 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                 Class<?> type = field.getType();
                 field.setAccessible(true);
 
-                if (View.class.isAssignableFrom(type)) {
-                    Object assigned = field.get(this);
+                Object assigned = field.get(this);
 
+                if (View.class.isAssignableFrom(type)) {
                     if (assigned != null) {
                         ((View) assigned).initializeLazy(this);
                     } else {
-                        // check from call stack
-                        View view = findViewFromParent(type);
+                        View view = findViewFromAncestor(type);
 
                         if (view == null) {
                             view = View.build((Class<View>) type, this);
-                            view.parent = this;
                         }
+
                         field.set(this, view);
-
-                        // if view has been associated with xml and current view has Pane node which
-                        // id equals to field name, we should connect them.
-                        // if (view.root != null) {
-                        // replace(root().lookup("#" + field.getName()), view.root);
-                        // }
                     }
-                } else if (UITableColumn.class == type) {
-                    field.set(this, new UITableColumn());
-                } else if (UITreeTableColumn.class == type) {
-                    field.set(this, new UITreeTableColumn(new TreeTableColumn(), this));
-                } else if (UserInterface.class.isAssignableFrom(type)) {
-                    Node value = (Node) field.get(this);
+                } else if (UserInterfaceProvider.class.isAssignableFrom(type)) {
+                    if (assigned == null) {
+                        Constructor constructor = Model.collectConstructors(type)[0];
+                        constructor.setAccessible(true);
 
-                    if (value == null) {
-                        if (type.getPackage() == UserInterface.class.getPackage()) {
-                            Constructor constructor = Model.collectConstructors(type)[0];
-                            constructor.setAccessible(true);
+                        UserInterfaceProvider provider = (UserInterfaceProvider) constructor.newInstance(this);
 
-                            UserInterface ui = (UserInterface) constructor.newInstance(this);
-                            ui.ui.setId(field.getName());
-
-                            field.set(this, ui);
-                        }
+                        assignId(provider.ui(), field.getName());
+                        field.set(this, provider);
                     }
                 }
             }
@@ -278,11 +267,25 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
      * @param type A target type.
      * @return
      */
-    private <V extends View> V findViewFromParent(Class type) {
+    private <V extends View> V findViewFromAncestor(Class type) {
         if (type.isInstance(this)) {
             return (V) this;
         }
-        return parent == null ? null : parent.findViewFromParent(type);
+        return parent == null ? null : parent.findViewFromAncestor(type);
+    }
+
+    /**
+     * Assign id to {@link Styleable}.
+     * 
+     * @param ui
+     * @param id
+     */
+    private void assignId(Object ui, String id) {
+        if (ui instanceof Node) {
+            ((Node) ui).setId(id);
+        } else if (ui instanceof TableColumnBase) {
+            ((TableColumnBase) ui).setId(id);
+        }
     }
 
     /**

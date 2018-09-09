@@ -14,8 +14,6 @@ import java.util.function.Consumer;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
 
-import viewtify.View;
-
 /**
  * @version 2017/12/05 16:14:25
  */

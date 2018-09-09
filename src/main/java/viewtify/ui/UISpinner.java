@@ -18,7 +18,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.util.StringConverter;
 
-import viewtify.View;
 import viewtify.ui.helper.SelectablePreferenceHelper;
 
 /**

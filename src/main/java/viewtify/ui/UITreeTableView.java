@@ -18,7 +18,6 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 
-import viewtify.View;
 import viewtify.Viewtify;
 
 /**

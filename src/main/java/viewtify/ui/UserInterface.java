@@ -40,7 +40,6 @@ import kiss.Storable;
 import kiss.WiseRunnable;
 import stylist.Style;
 import stylist.StyleDSL;
-import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.model.Validation;
 import viewtify.ui.helper.DisableHelper;

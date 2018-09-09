@@ -13,18 +13,17 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 
 import kiss.I;
 import viewtify.ActivationPolicy;
-import viewtify.UI;
-import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.dsl.UIDefinition;
 import viewtify.ui.UITabPane;
+import viewtify.ui.View;
 
 /**
  * @version 2018/03/04 16:04:31
  */
 public class Toybox2 extends View {
 
-    private @UI UITabPane main;
+    private UITabPane main;
 
     private final Consoles consoles = I.make(Consoles.class);
 

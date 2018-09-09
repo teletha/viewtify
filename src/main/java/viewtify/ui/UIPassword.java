@@ -11,8 +11,6 @@ package viewtify.ui;
 
 import javafx.scene.control.PasswordField;
 
-import viewtify.View;
-
 /**
  * @version 2018/09/09 12:04:03
  */

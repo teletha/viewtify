@@ -11,7 +11,6 @@ package viewtify.ui;
 
 import javafx.scene.control.Button;
 
-import viewtify.View;
 import viewtify.ui.helper.LabelHelper;
 
 /**

@@ -22,7 +22,6 @@ import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
-import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.model.Selectable;
 import viewtify.ui.helper.User;

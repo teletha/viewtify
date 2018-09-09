@@ -65,6 +65,7 @@ import kiss.WiseTriFunction;
 import viewtify.bind.Calculation;
 import viewtify.bind.CalculationList;
 import viewtify.ui.UserInterface;
+import viewtify.ui.View;
 import viewtify.util.UIThreadSafeList;
 
 /**

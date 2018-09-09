@@ -13,7 +13,6 @@ import javafx.beans.property.Property;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.scene.control.CheckBox;
 
-import viewtify.View;
 import viewtify.ui.helper.PreferenceHelper;
 
 /**

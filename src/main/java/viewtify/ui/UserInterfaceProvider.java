@@ -9,15 +9,17 @@
  */
 package viewtify.ui;
 
+import javafx.css.Styleable;
+
 /**
- * @version 2018/08/29 12:11:02
+ * @version 2018/09/09 18:10:32
  */
-public interface UserInterfaceProvider<N> {
+public interface UserInterfaceProvider<UI extends Styleable> {
 
     /**
-     * Provide the actual javafx UI.
+     * Provide the actual user interface.
      * 
-     * @return
+     * @return A user interface.
      */
-    N ui();
+    UI ui();
 }

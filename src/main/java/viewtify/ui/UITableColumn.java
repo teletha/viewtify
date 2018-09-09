@@ -26,7 +26,7 @@ import viewtify.Viewtify;
 import viewtify.ui.helper.LabelHelper;
 
 /**
- * @version 2018/09/07 10:35:24
+ * @version 2018/09/09 18:04:36
  */
 public class UITableColumn<RowValue, ColumnValue>
         extends UITableColumnBase<TableColumn<RowValue, ColumnValue>, UITableColumn<RowValue, ColumnValue>, RowValue, ColumnValue> {
@@ -37,9 +37,9 @@ public class UITableColumn<RowValue, ColumnValue>
     /**
      * Enchanced view.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    public UITableColumn() {
+    private UITableColumn(View view) {
         super(new TableColumn());
     }
 
