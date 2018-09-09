@@ -15,15 +15,16 @@ import viewtify.View;
 import viewtify.ui.helper.LabelHelper;
 
 /**
- * @version 2018/01/23 13:49:29
+ * @version 2018/09/09 11:47:48
  */
 public class UILabel extends UserInterface<UILabel, Label> implements LabelHelper<UILabel, Label> {
 
     /**
-     * @param ui
-     * @param view
+     * Build {@link Label}.
+     * 
+     * @param view A {@link View} to which the widget belongs.
      */
-    public UILabel(Label ui, View view) {
-        super(ui, view);
+    UILabel(View view) {
+        super(new Label(), view);
     }
 }

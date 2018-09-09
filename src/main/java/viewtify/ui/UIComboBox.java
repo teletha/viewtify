@@ -24,18 +24,18 @@ import viewtify.ui.helper.SelectablePreferenceHelper;
 import viewtify.ui.helper.User;
 
 /**
- * @version 2018/08/03 19:20:46
+ * @version 2018/09/09 11:49:25
  */
 public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
         implements SelectablePreferenceHelper<UIComboBox<T>, T>, EditableHelper<UIComboBox> {
 
     /**
-     * Enchanced view.
+     * Builde {@link ComboBox}.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    private UIComboBox(ComboBox<T> ui, View view) {
-        super(ui, view);
+    private UIComboBox(View view) {
+        super(new ComboBox(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll, Action.traverse(ui.getSelectionModel()));

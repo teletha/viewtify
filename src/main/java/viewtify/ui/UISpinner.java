@@ -22,17 +22,17 @@ import viewtify.View;
 import viewtify.ui.helper.SelectablePreferenceHelper;
 
 /**
- * @version 2017/11/18 1:30:40
+ * @version 2018/09/09 12:00:56
  */
 public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>> implements SelectablePreferenceHelper<UISpinner<T>, T> {
 
     /**
      * Enchanced view.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    private UISpinner(Spinner ui, View view) {
-        super(ui, view);
+    private UISpinner(View view) {
+        super(new Spinner(), view);
 
         ui.setOnScroll(e -> {
             if (e.getDeltaY() > 0) {

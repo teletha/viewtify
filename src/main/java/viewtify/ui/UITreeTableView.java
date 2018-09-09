@@ -22,7 +22,7 @@ import viewtify.View;
 import viewtify.Viewtify;
 
 /**
- * @version 2018/02/07 16:46:46
+ * @version 2018/09/09 11:56:31
  */
 public class UITreeTableView<T> extends AbstractTableView<UITreeTableView<T>, TreeTableView<T>, T> {
 
@@ -32,10 +32,10 @@ public class UITreeTableView<T> extends AbstractTableView<UITreeTableView<T>, Tr
     /**
      * Enchanced view.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    private UITreeTableView(TreeTableView<T> ui, View view) {
-        super(ui, view, Viewtify.calculate(ui.getSelectionModel().getSelectedItems()).map(TreeItem<T>::getValue));
+    private UITreeTableView(View view) {
+        super(new TreeTableView(), view, ui -> Viewtify.calculate(ui.getSelectionModel().getSelectedItems()).map(TreeItem<T>::getValue));
 
         TreeItem item = new TreeItem();
         ui.setRoot(item);

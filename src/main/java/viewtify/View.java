@@ -12,7 +12,6 @@ package viewtify;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.function.BiConsumer;
@@ -161,48 +160,22 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                         }
                     }
                 } else if (UITableColumn.class == type) {
-                    field.set(this, new UITableColumn(new TableColumn(), this));
+                    field.set(this, new UITableColumn());
                 } else if (UITreeTableColumn.class == type) {
                     field.set(this, new UITreeTableColumn(new TreeTableColumn(), this));
                 } else if (UserInterface.class.isAssignableFrom(type)) {
-                    // find by id
-                    Type t = Model.collectParameters(field.getType(), UserInterface.class)[1];
-                    Class c;
-
-                    if (t instanceof ParameterizedType) {
-                        c = (Class) ((ParameterizedType) t).getRawType();
-                    } else {
-                        c = (Class) t;
-                    }
-                    Object node = I.make(c);
-
-                    if (node instanceof Node) {
-                        ((Node) node).setId(field.getName());
-                    }
-
                     Node value = (Node) field.get(this);
 
                     if (value == null) {
-                        if (type == TableColumn.class || type == UITableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
-                            // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
-                            // so we must unwrap to javafx.scene.control.TreeTableColumn
-                            node = ((javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
-                        }
-
-                        if (type.getName().startsWith("viewtify.ui.")) {
-                            // viewtify ui widget
+                        if (type.getPackage() == UserInterface.class.getPackage()) {
                             Constructor constructor = Model.collectConstructors(type)[0];
                             constructor.setAccessible(true);
 
-                            field.set(this, constructor.newInstance(node, this));
-                        } else {
-                            // javafx ui
-                            field.set(this, node);
+                            UserInterface ui = (UserInterface) constructor.newInstance(this);
+                            ui.ui.setId(field.getName());
 
-                            enhanceNode(node);
+                            field.set(this, ui);
                         }
-                    } else {
-                        replace((Node) node, value);
                     }
                 }
             }

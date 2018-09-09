@@ -26,7 +26,7 @@ import viewtify.Viewtify;
 import viewtify.ui.helper.PreferenceHelper;
 
 /**
- * @version 2018/08/26 16:03:05
+ * @version 2018/09/09 12:01:42
  */
 public class UIListView<E> extends UserInterface<UIListView, ListView<E>> {
 
@@ -42,10 +42,10 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>> {
     /**
      * Enchanced view.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    private UIListView(ListView<E> ui, View view) {
-        super(ui, view);
+    private UIListView(View view) {
+        super(new ListView(), view);
 
         this.filter = Variable.of(I.accept());
         this.items = Variable.of(ui.getItems());

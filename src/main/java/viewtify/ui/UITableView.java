@@ -33,10 +33,10 @@ public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<
     /**
      * Enchanced view.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    private UITableView(TableView<T> ui, View view) {
-        super(ui, view, Viewtify.calculate(ui.getSelectionModel().getSelectedItems()));
+    private UITableView(View view) {
+        super(new TableView(), view, ui -> Viewtify.calculate(ui.getSelectionModel().getSelectedItems()));
 
         values = Viewtify.observe(new CopyOnWriteArrayList<>(ui.getItems()));
         ui.setItems(values);

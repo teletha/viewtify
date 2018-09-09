@@ -17,17 +17,17 @@ import viewtify.View;
 import viewtify.ui.helper.PreferenceHelper;
 
 /**
- * @version 2018/01/28 18:09:48
+ * @version 2018/09/09 12:02:22
  */
 public class UICheckBox extends UserInterface<UICheckBox, CheckBox> implements PreferenceHelper<UICheckBox, Boolean> {
 
     /**
      * Enchanced view.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    private UICheckBox(CheckBox ui, View view) {
-        super(ui, view);
+    private UICheckBox(View view) {
+        super(new CheckBox(), view);
     }
 
     /**

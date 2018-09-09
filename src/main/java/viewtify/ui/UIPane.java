@@ -16,16 +16,17 @@ import javafx.scene.layout.Pane;
 import viewtify.View;
 
 /**
- * @version 2018/08/29 16:30:02
+ * @version 2018/09/09 12:03:12
  */
 public class UIPane extends UserInterface<UIPane, Pane> {
 
     /**
-     * @param ui
-     * @param view
+     * Enchanced view.
+     * 
+     * @param view A {@link View} to which the widget belongs.
      */
-    public UIPane(Pane ui, View view) {
-        super(ui, view);
+    public UIPane(View view) {
+        super(new Pane(), view);
     }
 
     /**

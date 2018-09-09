@@ -22,7 +22,6 @@ import javafx.scene.control.TableColumn;
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
-import viewtify.View;
 import viewtify.Viewtify;
 import viewtify.ui.helper.LabelHelper;
 
@@ -40,8 +39,8 @@ public class UITableColumn<RowValue, ColumnValue>
      * 
      * @param ui
      */
-    public UITableColumn(TableColumn<RowValue, ColumnValue> ui, View view) {
-        super(ui);
+    public UITableColumn() {
+        super(new TableColumn());
     }
 
     /**

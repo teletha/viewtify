@@ -14,16 +14,16 @@ import javafx.scene.control.TextField;
 import viewtify.View;
 
 /**
- * @version 2018/08/28 12:52:59
+ * @version 2018/09/09 12:01:37
  */
 public class UIText extends AbstractTextField<UIText, TextField> {
 
     /**
      * Enchanced view.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    private UIText(TextField ui, View view) {
-        super(ui, view);
+    private UIText(View view) {
+        super(new TextField(), view);
     }
 }

@@ -15,16 +15,16 @@ import viewtify.View;
 import viewtify.ui.helper.LabelHelper;
 
 /**
- * @version 2017/11/15 9:54:15
+ * @version 2018/09/09 11:59:42
  */
 public class UIButton extends UserInterface<UIButton, Button> implements LabelHelper<UIButton, Button> {
 
     /**
      * Enchanced view.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    private UIButton(Button ui, View view) {
-        super(ui, view);
+    private UIButton(View view) {
+        super(new Button(), view);
     }
 }

@@ -28,7 +28,7 @@ import viewtify.model.Selectable;
 import viewtify.ui.helper.User;
 
 /**
- * @version 2017/12/27 16:00:44
+ * @version 2018/09/09 12:03:35
  */
 public class UITabPane extends UserInterface<UITabPane, TabPane> {
 
@@ -38,10 +38,10 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
     /**
      * Enchanced view.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    private UITabPane(TabPane ui, View view) {
-        super(ui, view);
+    private UITabPane(View view) {
+        super(new TabPane(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll).take(Action.inside(ui.lookup(".tab-header-background"))).to(Action.traverse(ui.getSelectionModel()));

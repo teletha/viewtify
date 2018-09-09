@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 
 import viewtify.View;
@@ -26,18 +27,18 @@ import viewtify.ui.helper.PreferenceHelper;
 import viewtify.ui.helper.User;
 
 /**
- * @version 2018/08/05 0:28:49
+ * @version 2018/09/09 12:23:10
  */
 public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
         implements PreferenceHelper<UIDatePicker, LocalDate>, EditableHelper<UIDatePicker>, Comparable<UIDatePicker> {
 
     /**
-     * Enchanced view.
+     * Builde {@link ComboBox}.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    protected UIDatePicker(DatePicker ui, View view) {
-        super(ui, view);
+    protected UIDatePicker(View view) {
+        super(new DatePicker(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll, e -> {

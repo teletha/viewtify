@@ -9,6 +9,8 @@
  */
 package viewtify.ui;
 
+import java.util.function.Function;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
@@ -20,7 +22,7 @@ import viewtify.View;
 import viewtify.bind.CalculationList;
 
 /**
- * @version 2018/02/07 16:38:22
+ * @version 2018/09/09 11:54:03
  */
 public abstract class AbstractTableView<Self extends AbstractTableView, W extends Control, T> extends UIControl<Self, W> {
 
@@ -31,10 +33,10 @@ public abstract class AbstractTableView<Self extends AbstractTableView, W extend
      * @param ui
      * @param view
      */
-    protected AbstractTableView(W ui, View view, CalculationList<T> selection) {
+    protected AbstractTableView(W ui, View view, Function<W, CalculationList<T>> selection) {
         super(ui, view);
 
-        this.selection = selection;
+        this.selection = selection.apply(ui);
     }
 
     /**

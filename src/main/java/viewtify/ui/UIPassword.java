@@ -14,16 +14,16 @@ import javafx.scene.control.PasswordField;
 import viewtify.View;
 
 /**
- * @version 2018/08/27 23:24:41
+ * @version 2018/09/09 12:04:03
  */
 public class UIPassword extends AbstractTextField<UIPassword, PasswordField> {
 
     /**
      * Enchanced view.
      * 
-     * @param ui
+     * @param view A {@link View} to which the widget belongs.
      */
-    private UIPassword(PasswordField ui, View view) {
-        super(ui, view);
+    private UIPassword(View view) {
+        super(new PasswordField(), view);
     }
 }
