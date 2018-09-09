@@ -9,6 +9,10 @@
  */
 package viewtify.ui;
 
+import java.util.List;
+
+import javafx.css.CssMetaData;
+import javafx.css.Styleable;
 import javafx.scene.control.PasswordField;
 
 /**
@@ -22,6 +26,20 @@ public class UIPassword extends AbstractTextField<UIPassword, PasswordField> {
      * @param view A {@link View} to which the widget belongs.
      */
     private UIPassword(View view) {
-        super(new PasswordField(), view);
+        super(new Internal(), view);
+    }
+
+    /**
+     * @version 2018/09/09 23:26:36
+     */
+    private static class Internal extends PasswordField {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
+            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+        }
     }
 }
