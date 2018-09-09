@@ -40,7 +40,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * 
      * @param ui
      */
-    private UITableColumn(TableColumn<RowValue, ColumnValue> ui, View view) {
+    public UITableColumn(TableColumn<RowValue, ColumnValue> ui, View view) {
         super(ui);
     }
 

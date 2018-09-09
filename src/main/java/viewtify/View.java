@@ -160,6 +160,8 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                             replace(root().lookup("#" + field.getName()), view.root);
                         }
                     }
+                } else if (UITableColumn.class == type) {
+                    field.set(this, new UITableColumn(new TableColumn(), this));
                 } else if (UITreeTableColumn.class == type) {
                     field.set(this, new UITreeTableColumn(new TreeTableColumn(), this));
                 } else if (UserInterface.class.isAssignableFrom(type)) {
