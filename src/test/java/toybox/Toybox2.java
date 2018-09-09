@@ -16,6 +16,7 @@ import viewtify.ActivationPolicy;
 import viewtify.UI;
 import viewtify.View;
 import viewtify.Viewtify;
+import viewtify.dsl.UIDefinition;
 import viewtify.ui.UITabPane;
 
 /**
@@ -26,6 +27,14 @@ public class Toybox2 extends View {
     private @UI UITabPane main;
 
     private final Consoles consoles = I.make(Consoles.class);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected UIDefinition declareUI() {
+        return null;
+    }
 
     /**
      * {@inheritDoc}

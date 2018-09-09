@@ -10,6 +10,7 @@
 package toybox;
 
 import viewtify.View;
+import viewtify.dsl.UIDefinition;
 import viewtify.ui.UITab;
 
 /**
@@ -22,6 +23,14 @@ public class ConsoleView extends View {
      * @param console
      */
     public ConsoleView(UITab tab, Console console) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected UIDefinition declareUI() {
+        return null;
     }
 
     /**

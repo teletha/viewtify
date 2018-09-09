@@ -13,7 +13,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.net.URL;
 import java.util.function.BiConsumer;
 
 import javafx.application.Platform;
@@ -38,7 +37,7 @@ import viewtify.ui.UserInterfaceProvider;
 import viewtify.util.TextNotation;
 
 /**
- * @version 2018/08/29 10:16:30
+ * @version 2018/09/09 16:24:47
  */
 public abstract class View<B extends Extensible> implements Extensible, UserInterfaceProvider {
 
@@ -68,98 +67,16 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
     }
 
     /**
-     * Load the file by name.
+     * Declare user interface.
      * 
      * @return
      */
-    URL load(String extension) {
-        String name = getClass().getSimpleName() + "." + extension;
-
-        // find from view package
-        URL u = getClass().getResource(name);
-
-        if (u == null) {
-            u = ClassLoader.getSystemResource(name);
-        }
-        return u;
-    }
-
-    private void buildUI() {
-        try {
-            // Inject various types
-            for (Field field : getClass().getDeclaredFields()) {
-                Class<?> type = field.getType();
-                field.setAccessible(true);
-
-                if (View.class.isAssignableFrom(type)) {
-                    Object assigned = field.get(this);
-
-                    if (assigned != null) {
-                        ((View) assigned).initializeLazy(this);
-                    } else {
-                        // check from call stack
-                        View view = findViewFromParent(type);
-
-                        if (view == null) {
-                            view = View.build((Class<View>) type, this);
-                            view.parent = this;
-                        }
-                        field.set(this, view);
-
-                        // if view has been associated with xml and current view has Pane node which
-                        // id equals to field name, we should connect them.
-                        // if (view.root != null) {
-                        // replace(root().lookup("#" + field.getName()), view.root);
-                        // }
-                    }
-                } else if (UITableColumn.class == type) {
-                    field.set(this, new UITableColumn());
-                } else if (UITreeTableColumn.class == type) {
-                    field.set(this, new UITreeTableColumn(new TreeTableColumn(), this));
-                } else if (UserInterface.class.isAssignableFrom(type)) {
-                    Node value = (Node) field.get(this);
-
-                    if (value == null) {
-                        if (type.getPackage() == UserInterface.class.getPackage()) {
-                            Constructor constructor = Model.collectConstructors(type)[0];
-                            constructor.setAccessible(true);
-
-                            UserInterface ui = (UserInterface) constructor.newInstance(this);
-                            ui.ui.setId(field.getName());
-
-                            field.set(this, ui);
-                        }
-                    }
-                }
-            }
-
-            Platform.runLater(this::initialize);
-        } catch (Exception e) {
-            throw I.quiet(e);
-        }
-    }
+    protected abstract UIDefinition declareUI();
 
     /**
-     * Find the specified typed view from parent view stack.
-     * 
-     * @param type A target type.
-     * @return
-     */
-    <V extends View> V findViewFromParent(Class type) {
-        if (type.isInstance(this)) {
-            return (V) this;
-        }
-        return parent == null ? null : parent.findViewFromParent(type);
-    }
-
-    /**
-     * Describe your initialization.
+     * Initialize {@link View}.
      */
     protected abstract void initialize();
-
-    protected UIDefinition declareUI() {
-        return null;
-    }
 
     /**
      * Compute human-readable name for this view. Default is simple class name.
@@ -298,6 +215,74 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                 throw I.quiet(e);
             }
         }
+    }
+
+    private void buildUI() {
+        try {
+            // Inject various types
+            for (Field field : getClass().getDeclaredFields()) {
+                Class<?> type = field.getType();
+                field.setAccessible(true);
+
+                if (View.class.isAssignableFrom(type)) {
+                    Object assigned = field.get(this);
+
+                    if (assigned != null) {
+                        ((View) assigned).initializeLazy(this);
+                    } else {
+                        // check from call stack
+                        View view = findViewFromParent(type);
+
+                        if (view == null) {
+                            view = View.build((Class<View>) type, this);
+                            view.parent = this;
+                        }
+                        field.set(this, view);
+
+                        // if view has been associated with xml and current view has Pane node which
+                        // id equals to field name, we should connect them.
+                        // if (view.root != null) {
+                        // replace(root().lookup("#" + field.getName()), view.root);
+                        // }
+                    }
+                } else if (UITableColumn.class == type) {
+                    field.set(this, new UITableColumn());
+                } else if (UITreeTableColumn.class == type) {
+                    field.set(this, new UITreeTableColumn(new TreeTableColumn(), this));
+                } else if (UserInterface.class.isAssignableFrom(type)) {
+                    Node value = (Node) field.get(this);
+
+                    if (value == null) {
+                        if (type.getPackage() == UserInterface.class.getPackage()) {
+                            Constructor constructor = Model.collectConstructors(type)[0];
+                            constructor.setAccessible(true);
+
+                            UserInterface ui = (UserInterface) constructor.newInstance(this);
+                            ui.ui.setId(field.getName());
+
+                            field.set(this, ui);
+                        }
+                    }
+                }
+            }
+
+            Platform.runLater(this::initialize);
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
+    }
+
+    /**
+     * Find the specified typed view from parent view stack.
+     * 
+     * @param type A target type.
+     * @return
+     */
+    private <V extends View> V findViewFromParent(Class type) {
+        if (type.isInstance(this)) {
+            return (V) this;
+        }
+        return parent == null ? null : parent.findViewFromParent(type);
     }
 
     /**
