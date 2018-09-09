@@ -18,15 +18,11 @@ import java.util.function.BiConsumer;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import kiss.Extensible;
@@ -55,9 +51,6 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
     /** The parent view. */
     private View<?> parent;
 
-    /** The flag whether this view is sub or not. */
-    private String prefix;
-
     /** The associated message resources. */
     private final Class<B> messageClass;
 
@@ -72,32 +65,6 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
         Type[] types = Model.collectParameters(getClass(), View.class);
         this.messageClass = (Class<B>) (types == null || types.length == 0 ? Φ.class : types[0]);
         this.$ = I.i18n(messageClass);
-
-        // initialize UI structure
-        if (isUIDefiend()) {
-            // initialized = true;
-            // try {
-            // buildUI();
-            //
-            // this.root = declareUI().build();
-            //
-            // localize(message, messageClass, Label.class, Label::setText);
-            // localize(message, messageClass, Button.class, Button::setText);
-            // } catch (Exception e) {
-            // e.printStackTrace();
-            // throw I.quiet(e);
-            // }
-        } else {
-            initialized = true;
-            try {
-                this.root = new FXMLLoader(load("fxml")).load();
-            } catch (Exception e) {
-                // FXML for this view is not found, use parent view's root
-            }
-
-            // initialize user system lazily
-            Platform.runLater(this::init);
-        }
     }
 
     /**
@@ -115,15 +82,6 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
             u = ClassLoader.getSystemResource(name);
         }
         return u;
-    }
-
-    private boolean isUIDefiend() {
-        try {
-            getClass().getDeclaredMethod("declareUI");
-            return true;
-        } catch (NoSuchMethodException | SecurityException e) {
-            return false;
-        }
     }
 
     private void buildUI() {
@@ -145,19 +103,14 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                         if (view == null) {
                             view = View.build((Class<View>) type, this);
                             view.parent = this;
-
-                            // check sub view
-                            if (type.getEnclosingClass() == getClass()) {
-                                view.prefix = field.getName();
-                            }
                         }
                         field.set(this, view);
 
                         // if view has been associated with xml and current view has Pane node which
                         // id equals to field name, we should connect them.
-                        if (view.root != null) {
-                            replace(root().lookup("#" + field.getName()), view.root);
-                        }
+                        // if (view.root != null) {
+                        // replace(root().lookup("#" + field.getName()), view.root);
+                        // }
                     }
                 } else if (UITableColumn.class == type) {
                     field.set(this, new UITableColumn());
@@ -187,133 +140,6 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
     }
 
     /**
-     * Initialization for system.
-     */
-    final synchronized void init() {
-        try {
-            // Inject various types
-            for (Field field : getClass().getDeclaredFields()) {
-                if (field.isAnnotationPresent(UI.class)) {
-                    field.setAccessible(true);
-
-                    Class<?> type = field.getType();
-
-                    if (View.class.isAssignableFrom(type)) {
-                        // check from call stack
-                        View view = findViewFromParent(type);
-
-                        if (view == null) {
-                            view = build((Class<View>) type, this);
-                            view.parent = this;
-
-                            // check sub view
-                            if (type.getEnclosingClass() == getClass()) {
-                                view.prefix = field.getName();
-                            }
-                        }
-                        field.set(this, view);
-
-                        // if view has been associated with xml and current view has Pane node which
-                        // id equals to field
-                        // name, we should connect them.
-                        if (view.root != null) {
-                            replace(root().lookup("#" + field.getName()), view.root);
-                        }
-                    } else {
-                        // detect widget id
-                        String id = field.getName();
-
-                        if (prefix != null) {
-                            id = prefix + capitalize(id);
-                        }
-                        id = "#" + id;
-
-                        // find by id
-                        Object node = root().lookup(id);
-
-                        if (node == null) {
-                            // If this exception will be thrown, it is bug of this program. So
-                            // we must rethrow the wrapped error in here.
-                            throw new Error(name() + ": Node [" + id + "] is not found.");
-                        }
-
-                        Node value = (Node) field.get(this);
-
-                        if (value == null) {
-                            if (type == TableColumn.class || type == UITableColumn.class || type == TreeTableColumn.class || type == UITreeTableColumn.class) {
-                                // TableColumn returns c.s.jfx.scene.control.skin.TableColumnHeader
-                                // so we must unwrap to javafx.scene.control.TreeTableColumn
-                                node = ((javafx.scene.control.skin.TableColumnHeader) node).getTableColumn();
-                            }
-
-                            if (type.getName().startsWith("viewtify.ui.")) {
-                                // viewtify ui widget
-                                Constructor constructor = Model.collectConstructors(type)[0];
-                                constructor.setAccessible(true);
-
-                                field.set(this, constructor.newInstance(node, this));
-                            } else {
-                                // javafx ui
-                                field.set(this, node);
-
-                                enhanceNode(node);
-                            }
-                        } else {
-                            replace((Node) node, value);
-                        }
-                    }
-                }
-            }
-            initialize();
-        } catch (Exception e) {
-            throw I.quiet(e);
-        }
-    }
-
-    /**
-     * Replace the target node with replacer.
-     * 
-     * @param replaced
-     * @param replacer
-     */
-    private void replace(Node replaced, Node replacer) {
-        if (replaced == null) {
-            return;
-        }
-
-        Parent parent = replaced.getParent();
-
-        if (parent instanceof BorderPane) {
-            BorderPane border = (BorderPane) parent;
-            if (border.getCenter() == replaced) {
-                border.setCenter(replacer);
-            } else if (border.getTop() == replaced) {
-                border.setTop(replacer);
-            } else if (border.getBottom() == replaced) {
-                border.setBottom(replacer);
-            } else if (border.getRight() == replaced) {
-                border.setRight(replacer);
-            } else if (border.getLeft() == replaced) {
-                border.setLeft(replacer);
-            }
-        } else if (parent instanceof Pane) {
-            Pane pane = (Pane) parent;
-            ObservableList<Node> children = pane.getChildren();
-            children.set(children.indexOf(replaced), replacer);
-        }
-    }
-
-    /**
-     * Capitalize helper.
-     * 
-     * @param value
-     * @return
-     */
-    private String capitalize(String value) {
-        return Character.toUpperCase(value.charAt(0)) + value.substring(1);
-    }
-
-    /**
      * Find the specified typed view from parent view stack.
      * 
      * @param type A target type.
@@ -324,22 +150,6 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
             return (V) this;
         }
         return parent == null ? null : parent.findViewFromParent(type);
-    }
-
-    /**
-     * Enhance Node.
-     */
-    private void enhanceNode(Object node) {
-        if (node instanceof Spinner) {
-            Spinner spinner = (Spinner) node;
-            spinner.setOnScroll(e -> {
-                if (e.getDeltaY() > 0) {
-                    spinner.increment();
-                } else if (e.getDeltaY() < 0) {
-                    spinner.decrement();
-                }
-            });
-        }
     }
 
     /**
@@ -470,7 +280,7 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
     /**
      * Initialize myself.
      */
-    final synchronized void initializeLazy(View parent) {
+    protected final synchronized void initializeLazy(View parent) {
         if (initialized == false) {
             initialized = true;
             this.parent = parent;
@@ -488,10 +298,6 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
                 throw I.quiet(e);
             }
         }
-    }
-
-    private void buildView() {
-
     }
 
     /**
