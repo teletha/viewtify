@@ -69,7 +69,7 @@ import viewtify.ui.View;
 import viewtify.util.UIThreadSafeList;
 
 /**
- * @version 2017/12/01 18:25:44
+ * @version 2018/09/09 22:42:40
  */
 public final class Viewtify {
 
@@ -268,11 +268,11 @@ public final class Viewtify {
     }
 
     /**
-     * Retrieve the root view.
+     * Returns the application {@link View}.
      * 
-     * @return
+     * @return The application view.
      */
-    public static final <V extends View> V root() {
+    public static final <V extends View> V view() {
         if (rootView == null) {
             rootView = View.build(rootViewClass);
         }
@@ -619,7 +619,7 @@ public final class Viewtify {
      * @return
      */
     public static Screen screen() {
-        Window window = root().root().getScene().getWindow();
+        Window window = view().root().getScene().getWindow();
 
         for (Screen screen : Screen.getScreens()) {
             if (screen.getBounds().contains(window.getX(), window.getY())) {

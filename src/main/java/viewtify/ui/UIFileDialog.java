@@ -52,7 +52,7 @@ public class UIFileDialog {
      */
     public Signal<Path> select() {
         return new Signal<Path>((observer, disposer) -> {
-            File selected = chooser.showOpenDialog(Viewtify.root().root().getScene().getWindow());
+            File selected = chooser.showOpenDialog(Viewtify.view().root().getScene().getWindow());
 
             if (selected != null) {
                 observer.accept(selected.toPath());

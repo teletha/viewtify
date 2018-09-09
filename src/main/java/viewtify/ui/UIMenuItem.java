@@ -21,7 +21,7 @@ import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.StyleHelper;
 
 /**
- * @version 2017/11/15 9:54:15
+ * @version 2018/09/09 22:41:56
  */
 public class UIMenuItem implements StyleHelper<UIMenuItem, MenuItem>, DisableHelper<UIMenuItem> {
 

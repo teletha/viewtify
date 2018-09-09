@@ -66,7 +66,7 @@ public final class ViewtifyApplication extends Application {
 
         Path application = Stylist.writeTo(Paths.get(".preferences/application.css"), JavaFXLizer.pretty());
 
-        View view = Viewtify.root();
+        View view = Viewtify.view();
         Scene scene = new Scene(view.root());
         scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
         scene.getStylesheets().add(application.toUri().toURL().toExternalForm());

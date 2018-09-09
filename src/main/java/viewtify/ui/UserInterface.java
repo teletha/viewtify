@@ -62,7 +62,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     public final W ui;
 
     /** The associated view. */
-    private final View view;
+    protected final View view;
 
     /** The validation system. */
     private Validation validation;

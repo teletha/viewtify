@@ -97,13 +97,16 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
      * @param loadingViewType A view type to load.
      * @return
      */
-    public <V extends View> UITabPane load(String label, Function<UITab, V> view) {
+    public <V extends View> UITabPane load(String label, Function<UITab, V> viewBuilder) {
         Tab tab = new Tab(label);
         AtomicBoolean loaded = new AtomicBoolean();
 
         tab.selectedProperty().addListener(change -> {
             if (loaded.getAndSet(true) == false) {
-                tab.setContent(view.apply(new UITab(tab)).root());
+                V view = viewBuilder.apply(new UITab(tab));
+                view.initializeLazy(this.view);
+
+                tab.setContent(view.root());
             }
         });
 

@@ -201,7 +201,7 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
     /**
      * Initialize myself.
      */
-    protected final synchronized void initializeLazy(View parent) {
+    final synchronized void initializeLazy(View parent) {
         if (initialized == false) {
             initialized = true;
             this.parent = parent;

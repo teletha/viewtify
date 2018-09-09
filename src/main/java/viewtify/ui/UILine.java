@@ -23,7 +23,7 @@ public class UILine extends UIShape<UILine, Line> {
      * 
      */
     public UILine() {
-        super(new Line(), Viewtify.root());
+        super(new Line(), Viewtify.view());
     }
 
     public UILine startX(double value) {

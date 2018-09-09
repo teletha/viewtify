@@ -18,7 +18,7 @@ import viewtify.Viewtify;
 import viewtify.ui.helper.StyleHelper;
 
 /**
- * @version 2017/12/27 15:55:39
+ * @version 2018/09/09 22:41:39
  */
 public class UITab implements StyleHelper<UITab, Tab> {
 
