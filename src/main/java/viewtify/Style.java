@@ -9,14 +9,8 @@
  */
 package viewtify;
 
-import java.util.Optional;
-import java.util.function.Consumer;
-
 import javafx.css.Styleable;
-import javafx.scene.paint.Color;
 
-import stylist.CSSValue;
-import stylist.StyleRule;
 import viewtify.UI.UINode;
 import viewtify.ui.helper.StyleHelper;
 
@@ -25,37 +19,19 @@ import viewtify.ui.helper.StyleHelper;
  * 
  * @version 2018/09/05 14:03:55
  */
-public interface Style extends stylist.Style, Consumer<UINode> {
+public interface Style extends stylist.Style {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    default void accept(UINode parent) {
-        if (parent.node instanceof Styleable) {
-            StyleHelper.of((Styleable) parent.node).style(this);
-        }
-    }
+    default void accept(Object parent) {
+        if (parent instanceof UINode) {
+            UINode p = (UINode) parent;
 
-    /**
-     * Compute stroke color as JavaFX {@link Color}.
-     * 
-     * @return
-     */
-    default Color stroke() {
-        StyleRule rule = StyleRule.create(this);
-        Optional<CSSValue> color = rule.properties.get("stroke");
-
-        if (color.isPresent()) {
-            CSSValue value = color.get();
-
-            if (value instanceof stylist.value.Color) {
-                return Color.web(((stylist.value.Color) value).toRGB());
-            } else {
-                return Color.web(color.toString());
+            if (p.node instanceof Styleable) {
+                StyleHelper.of((Styleable) p.node).style(this);
             }
-        } else {
-            return Color.TRANSPARENT;
         }
     }
 }
