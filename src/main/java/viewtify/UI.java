@@ -9,8 +9,10 @@
  */
 package viewtify;
 
+import java.awt.Label;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -45,6 +47,11 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
         super(UI.UINode::new, null);
     }
 
+    /**
+     * Build node tree.
+     * 
+     * @return
+     */
     public final Node build() {
         return (Node) root.get(0).node;
     }
@@ -52,18 +59,30 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
     /**
      * Declare the specified {@link Node}.
      * 
-     * @param node
+     * @param node A JavaFX {@link Node} to compose.
      */
     protected final void $(Node node) {
         $(() -> node);
     }
 
-    protected final void label(Object text, Consumer<UINode>... nodes) {
-        $(() -> TextNotation.parse(String.valueOf(text)), nodes);
+    /**
+     * Declare the {@link Label}.
+     * 
+     * @param text A label text.
+     * @param followers
+     */
+    protected final void label(Object text, Consumer<UINode>... followers) {
+        label(() -> String.valueOf(text), followers);
     }
 
-    protected final UserInterfaceProvider<Node> label(String text) {
-        return () -> TextNotation.parse(text);
+    /**
+     * Declare the {@link Label}.
+     * 
+     * @param text A label text.
+     * @param followers
+     */
+    protected final void label(Supplier<String> text, Consumer<UINode>... followers) {
+        $(() -> TextNotation.parse(String.valueOf(text.get())), followers);
     }
 
     /**
