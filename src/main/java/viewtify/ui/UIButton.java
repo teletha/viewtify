@@ -41,7 +41,7 @@ public class UIButton extends UserInterface<UIButton, Button> implements LabelHe
          */
         @Override
         public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+            return ExtraCSS.metadata(super.getControlCssMetaData());
         }
     }
 }

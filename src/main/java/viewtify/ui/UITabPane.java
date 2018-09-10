@@ -167,7 +167,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
          */
         @Override
         public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+            return ExtraCSS.metadata(super.getControlCssMetaData());
         }
     }
 }

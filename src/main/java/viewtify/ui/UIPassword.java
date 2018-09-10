@@ -39,7 +39,7 @@ public class UIPassword extends AbstractTextField<UIPassword, PasswordField> {
          */
         @Override
         public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+            return ExtraCSS.metadata(super.getControlCssMetaData());
         }
     }
 }

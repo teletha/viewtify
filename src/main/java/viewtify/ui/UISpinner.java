@@ -117,7 +117,7 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>> implem
          */
         @Override
         public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+            return ExtraCSS.metadata(super.getControlCssMetaData());
         }
     }
 }

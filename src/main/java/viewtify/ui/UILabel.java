@@ -41,7 +41,7 @@ public class UILabel extends UserInterface<UILabel, Label> implements LabelHelpe
          */
         @Override
         public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+            return ExtraCSS.metadata(super.getControlCssMetaData());
         }
     }
 }

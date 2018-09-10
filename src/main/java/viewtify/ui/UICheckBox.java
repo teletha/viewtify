@@ -69,7 +69,7 @@ public class UICheckBox extends UserInterface<UICheckBox, CheckBox> implements P
          */
         @Override
         public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+            return ExtraCSS.metadata(super.getControlCssMetaData());
         }
     }
 }

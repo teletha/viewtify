@@ -1,11 +1,11 @@
 /*
- * Copyright (C) 2018 Nameless Production Committee
+ * Copyright (C) 2018 viewtify Development Team
  *
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *          http://opensource.org/licenses/mit-license.php
+ *          https://opensource.org/licenses/MIT
  */
 package viewtify.ui;
 
@@ -70,7 +70,7 @@ public class UIPane extends UserInterface<UIPane, Pane> {
          */
         @Override
         public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
-            return EnhancedCSSProperty.metadata(super.getCssMetaData());
+            return ExtraCSS.metadata(super.getCssMetaData());
         }
     }
 }

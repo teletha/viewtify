@@ -212,7 +212,7 @@ public class UITableColumn<RowValue, ColumnValue>
          */
         @Override
         public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
-            return EnhancedCSSProperty.metadata(super.getCssMetaData());
+            return ExtraCSS.metadata(super.getCssMetaData());
         }
     }
 }

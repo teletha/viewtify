@@ -129,7 +129,7 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
          */
         @Override
         public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return EnhancedCSSProperty.metadata(super.getControlCssMetaData());
+            return ExtraCSS.metadata(super.getControlCssMetaData());
         }
     }
 }
