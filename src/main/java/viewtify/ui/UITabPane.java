@@ -109,7 +109,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
                 V view = viewBuilder.apply(new UITab(tab));
                 view.initializeLazy(this.view);
 
-                tab.setContent(view.root());
+                tab.setContent(view.ui());
             }
         });
 

@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Spinner;
 import javafx.scene.image.Image;
@@ -67,7 +68,7 @@ public final class ViewtifyApplication extends Application {
         Path application = Stylist.writeTo(Paths.get(".preferences/application.css"), JavaFXLizer.pretty());
 
         View view = Viewtify.view();
-        Scene scene = new Scene(view.root());
+        Scene scene = new Scene((Parent) view.ui());
         scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
         scene.getStylesheets().add(application.toUri().toURL().toExternalForm());
         configIcon(stage);

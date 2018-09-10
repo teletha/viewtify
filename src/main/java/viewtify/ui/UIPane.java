@@ -52,9 +52,9 @@ public class UIPane extends UserInterface<UIPane, Pane> {
             ObservableList<Node> children = ui.getChildren();
 
             if (children.isEmpty()) {
-                children.add(view.root());
+                children.add(view.ui());
             } else {
-                children.set(0, view.root());
+                children.set(0, view.ui());
             }
         }
         return this;

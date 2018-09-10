@@ -619,7 +619,7 @@ public final class Viewtify {
      * @return
      */
     public static Screen screen() {
-        Window window = view().root().getScene().getWindow();
+        Window window = view().ui().getScene().getWindow();
 
         for (Screen screen : Screen.getScreens()) {
             if (screen.getBounds().contains(window.getX(), window.getY())) {

@@ -19,7 +19,6 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumnBase;
@@ -94,27 +93,18 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
     }
 
     /**
-     * Retrieve the root node.
-     * 
-     * @return
-     */
-    public final <N extends Parent> N root() {
-        if (root != null) {
-            return (N) root;
-        }
-
-        if (parent != null) {
-            return parent.root();
-        }
-        throw new Error();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
-    public Node ui() {
-        return root();
+    public final Node ui() {
+        if (root != null) {
+            return root;
+        }
+
+        if (parent != null) {
+            return parent.ui();
+        }
+        throw new Error();
     }
 
     /**
