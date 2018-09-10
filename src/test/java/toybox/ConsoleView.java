@@ -9,7 +9,7 @@
  */
 package toybox;
 
-import viewtify.UI;
+import viewtify.ui.UI;
 import viewtify.ui.UITab;
 import viewtify.ui.View;
 

@@ -7,13 +7,14 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify;
+package viewtify.ui;
 
 import java.awt.Label;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import javafx.css.Styleable;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.TableView;
@@ -24,13 +25,14 @@ import javafx.scene.layout.VBox;
 
 import kiss.I;
 import kiss.Tree;
-import viewtify.ui.UserInterfaceProvider;
+import stylist.Style;
+import viewtify.ui.helper.StyleHelper;
 import viewtify.util.TextNotation;
 
 /**
  * Declared user interface.
  * 
- * @version 2018/09/09 23:05:01
+ * @version 2018/09/10 18:42:52
  */
 public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
 
@@ -43,8 +45,14 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
     /**
      * 
      */
-    public UI() {
-        super(UI.UINode::new, null);
+    protected UI() {
+        super(UI.UINode::new, null, (follower, current) -> {
+            if (follower instanceof Style && current.node instanceof Styleable) {
+                StyleHelper.of((Styleable) current.node).style((Style) follower);
+            } else {
+                follower.accept(current);
+            }
+        });
     }
 
     /**
@@ -52,7 +60,7 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      * 
      * @return
      */
-    public final Node build() {
+    final Node build() {
         return (Node) root.get(0).node;
     }
 

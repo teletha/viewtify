@@ -29,7 +29,6 @@ import kiss.I;
 import kiss.Manageable;
 import kiss.Singleton;
 import kiss.model.Model;
-import viewtify.UI;
 import viewtify.util.TextNotation;
 
 /**

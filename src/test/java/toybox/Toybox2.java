@@ -13,8 +13,8 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 
 import kiss.I;
 import viewtify.ActivationPolicy;
-import viewtify.UI;
 import viewtify.Viewtify;
+import viewtify.ui.UI;
 import viewtify.ui.UITabPane;
 import viewtify.ui.View;
 

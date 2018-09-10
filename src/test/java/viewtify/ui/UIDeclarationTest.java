@@ -16,7 +16,6 @@ import javafx.scene.layout.VBox;
 import org.junit.jupiter.api.Test;
 
 import viewtify.JavaFXTester;
-import viewtify.UI;
 
 /**
  * @version 2018/08/29 11:25:48
