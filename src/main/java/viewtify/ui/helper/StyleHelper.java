@@ -116,11 +116,7 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
 
                 for (Style style : styles) {
                     if (style != null) {
-                        String name = style.name();
-
-                        if (!classes.contains(name)) {
-                            classes.add(name);
-                        }
+                        classes.remove(style.name());
                     }
                 }
             });
