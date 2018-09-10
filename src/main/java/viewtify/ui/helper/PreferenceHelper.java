@@ -10,7 +10,6 @@
 package viewtify.ui.helper;
 
 import java.lang.reflect.Method;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
@@ -26,9 +25,9 @@ import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 
 /**
- * @version 2018/08/23 22:19:19
+ * @version 2018/09/10 20:25:21
  */
-public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supplier<V>, Consumer<V> {
+public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supplier<V> {
 
     /**
      * The preference.
@@ -43,14 +42,6 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supp
     @Override
     default V get() {
         return value();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    default void accept(V value) {
-        value(value);
     }
 
     /**
