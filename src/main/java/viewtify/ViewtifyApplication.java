@@ -37,8 +37,8 @@ import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
 import stylist.Stylist;
-import stylist.util.JavaFXLizer;
 import viewtify.ui.View;
+import viewtify.util.JavaFXLizer;
 
 /**
  * Singleton managed JavaFX application.
