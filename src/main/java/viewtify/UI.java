@@ -9,6 +9,7 @@
  */
 package viewtify;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import javafx.scene.Group;
@@ -31,6 +32,12 @@ import viewtify.util.TextNotation;
  */
 public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
 
+    /** The horizontal box. */
+    protected static final UserInterfaceProvider hbox = new Box(HBox.class);
+
+    /** The vertical box. */
+    protected static final UserInterfaceProvider vbox = new Box(VBox.class);
+
     /**
      * 
      */
@@ -49,47 +56,6 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      */
     protected final void $(Node node) {
         $(() -> node);
-    }
-
-    protected final void vbox(UserInterfaceProvider... children) {
-        vbox(() -> {
-            for (UserInterfaceProvider child : children) {
-                $(child);
-            }
-        });
-    }
-
-    protected final void vbox(Runnable children) {
-        $(new PaneNode(VBox.class), children);
-    }
-
-    protected final void vbox(Consumer<UINode> child, Runnable children) {
-        $(new PaneNode(VBox.class), child, children);
-    }
-
-    protected final void hbox(UserInterfaceProvider... children) {
-        hbox(() -> {
-            for (UserInterfaceProvider child : children) {
-                $(child);
-            }
-        });
-    }
-
-    protected final void hbox(Runnable children) {
-        $(new PaneNode(HBox.class), children);
-    }
-
-    protected final void hbox(Consumer<UINode> child, Runnable children) {
-        $(new PaneNode(HBox.class), child, children);
-    }
-
-    protected final void hbox(Consumer<UINode> attribute, UserInterfaceProvider... children) {
-        $(new PaneNode(HBox.class), attribute, () -> {
-            for (UserInterfaceProvider child : children) {
-                $(child);
-            }
-        });
-
     }
 
     protected final void label(Object text, Consumer<UINode>... nodes) {
@@ -132,17 +98,20 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
     }
 
     /**
-     * @version 2018/08/29 12:05:24
+     * @version 2018/09/10 15:28:21
      */
-    private static final class PaneNode<P extends Pane> implements UserInterfaceProvider<P> {
+    private static final class Box<P extends Pane> implements UserInterfaceProvider<P> {
 
-        private final P pane;
+        /** The box type. */
+        private final Class<P> type;
 
         /**
-        * 
-        */
-        private PaneNode(Class<P> type) {
-            this.pane = I.make(type);
+         * The typed box.
+         * 
+         * @param type A box type.
+         */
+        private Box(Class<P> type) {
+            this.type = Objects.requireNonNull(type);
         }
 
         /**
@@ -150,7 +119,7 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
          */
         @Override
         public P ui() {
-            return pane;
+            return I.make(type);
         }
     }
 }

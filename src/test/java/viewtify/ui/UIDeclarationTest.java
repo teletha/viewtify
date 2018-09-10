@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 
 import viewtify.JavaFXTester;
 import viewtify.UI;
-import viewtify.ui.UILabel;
 
 /**
  * @version 2018/08/29 11:25:48
@@ -42,7 +41,9 @@ class UIDeclarationTest extends JavaFXTester {
     void vbox() {
         UI fxml = new UI() {
             {
-                vbox(label);
+                $(vbox, () -> {
+                    $(label);
+                });
             }
         };
 
@@ -54,7 +55,7 @@ class UIDeclarationTest extends JavaFXTester {
     void vboxLambda() {
         UI fxml = new UI() {
             {
-                vbox(() -> {
+                $(vbox, () -> {
                     $(label);
                 });
             }
@@ -68,8 +69,10 @@ class UIDeclarationTest extends JavaFXTester {
     void vboxNest() {
         UI fxml = new UI() {
             {
-                vbox(() -> {
-                    vbox(label);
+                $(vbox, () -> {
+                    $(vbox, () -> {
+                        $(label);
+                    });
                 });
             }
         };
@@ -83,8 +86,8 @@ class UIDeclarationTest extends JavaFXTester {
     void vboxNestLambda() {
         UI fxml = new UI() {
             {
-                vbox(() -> {
-                    vbox(() -> {
+                $(vbox, () -> {
+                    $(vbox, () -> {
                         $(label);
                     });
                 });
