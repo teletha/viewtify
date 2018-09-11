@@ -64,7 +64,7 @@ public class FXUtils {
      */
     public static stylist.value.Color color(Color color) {
         return stylist.value.Color
-                .rgba((int) (color.getRed() * 255), (int) (color.getGreen() * 255), (int) (color.getBlue() * 255), color.getOpacity());
+                .rgb((int) (color.getRed() * 255), (int) (color.getGreen() * 255), (int) (color.getBlue() * 255), color.getOpacity());
     }
 
     /**
@@ -101,7 +101,7 @@ public class FXUtils {
          */
         @Override
         public stylist.value.Color decode(String value) {
-            return stylist.value.Color.rgb(value);
+            return stylist.value.Color.of(value);
         }
 
         /**
