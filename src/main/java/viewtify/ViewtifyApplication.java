@@ -22,11 +22,8 @@ import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Spinner;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-import org.controlsfx.tools.ValueExtractor;
 
 import filer.Filer;
 import kiss.Decoder;
@@ -46,11 +43,6 @@ import viewtify.util.JavaFXLizer;
  * @version 2018/08/30 3:04:34
  */
 public final class ViewtifyApplication extends Application {
-
-    static {
-        Thread.setDefaultUncaughtExceptionHandler((thread, e) -> e.printStackTrace());
-        ValueExtractor.addObservableValueExtractor(c -> c instanceof Spinner, c -> ((Spinner) c).valueProperty());
-    }
 
     /** The style sheet manager. */
     private final StyleSheetObserver styles = new StyleSheetObserver();
