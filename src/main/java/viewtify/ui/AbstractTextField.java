@@ -9,7 +9,7 @@
  */
 package viewtify.ui;
 
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -19,6 +19,7 @@ import kiss.I;
 import kiss.Manageable;
 import kiss.Singleton;
 import viewtify.ui.helper.PreferenceHelper;
+import viewtify.util.RegulatableProperty;
 
 /**
  * @version 2018/08/28 12:51:50
@@ -28,6 +29,9 @@ public abstract class AbstractTextField<Self extends AbstractTextField, F extend
 
     /** The message resource. */
     private static final Lang $ = I.i18n(Lang.class);
+
+    /** The model. */
+    private final RegulatableProperty<String> text = new RegulatableProperty<>(ui.textProperty());
 
     /**
      * Enchanced view.
@@ -42,8 +46,8 @@ public abstract class AbstractTextField<Self extends AbstractTextField, F extend
      * {@inheritDoc}
      */
     @Override
-    public final StringProperty model() {
-        return ui.textProperty();
+    public final Property<String> model() {
+        return text;
     }
 
     /**

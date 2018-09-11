@@ -12,11 +12,12 @@ package viewtify.ui.helper;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 
+import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 
 /**
- * @version 2017/12/04 9:11:19
+ * @version 2018/09/11 16:46:22
  */
 public interface DisableHelper<Self extends DisableHelper> {
 
@@ -26,6 +27,15 @@ public interface DisableHelper<Self extends DisableHelper> {
      * @return
      */
     Property<Boolean> disable();
+
+    /**
+     * Validation helper.
+     */
+    default Self disableWhen(Signal<Boolean> condition) {
+        condition.to(disable()::setValue);
+
+        return (Self) this;
+    }
 
     /**
      * Validation helper.
