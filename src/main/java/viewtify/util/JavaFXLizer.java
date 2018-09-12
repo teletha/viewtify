@@ -10,9 +10,9 @@
 package viewtify.util;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Consumer;
 
+import kiss.Variable;
 import stylist.CSSValue;
 import stylist.util.Formatter;
 import stylist.util.Properties;
@@ -73,13 +73,13 @@ public class JavaFXLizer implements Consumer<Properties> {
      * @param properties
      */
     private void alignment(Properties properties) {
-        Optional<CSSValue> horizontal = properties.remove("text-align");
-        Optional<CSSValue> vertical = properties.remove("vertical-align");
+        Variable<CSSValue> horizontal = properties.remove("text-align");
+        Variable<CSSValue> vertical = properties.remove("vertical-align");
 
         if (horizontal.isPresent() || vertical.isPresent()) {
             String value = "";
-            String h = horizontal.orElse(CSSValue.of("left")).toString();
-            String v = vertical.orElse(CSSValue.of("center")).toString();
+            String h = horizontal.or(CSSValue.of("left")).toString();
+            String v = vertical.or(CSSValue.of("center")).toString();
 
             if (v.equals("middle")) {
                 v = "center";
@@ -100,7 +100,7 @@ public class JavaFXLizer implements Consumer<Properties> {
      * @param properties
      */
     private void textIndent(Properties properties) {
-        Optional<CSSValue> indent = properties.remove("text-indent");
+        Variable<CSSValue> indent = properties.remove("text-indent");
 
         if (indent.isPresent()) {
             properties.set("label-padding", CSSValue.of("0 0 0").join(indent.get()));
@@ -113,7 +113,7 @@ public class JavaFXLizer implements Consumer<Properties> {
      * @param properties
      */
     private void userSelect(Properties properties) {
-        Optional<CSSValue> value = properties.remove("user-select");
+        Variable<CSSValue> value = properties.remove("user-select");
 
         if (value.isPresent()) {
             properties.set("focus-traversable", CSSValue.of(!value.get().match("none")));

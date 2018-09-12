@@ -9,12 +9,11 @@
  */
 package viewtify.util;
 
-import java.util.Optional;
-
 import javafx.scene.paint.Color;
 
 import kiss.Decoder;
 import kiss.Encoder;
+import kiss.Variable;
 import stylist.CSSValue;
 import stylist.Style;
 import stylist.StyleRule;
@@ -31,7 +30,7 @@ public class FXUtils {
      */
     public static Color color(Style style, String propertyName) {
         StyleRule rule = StyleRule.create(style);
-        Optional<CSSValue> color = rule.properties.get(propertyName);
+        Variable<CSSValue> color = rule.properties.get(propertyName);
 
         if (color.isPresent()) {
             CSSValue value = color.get();
