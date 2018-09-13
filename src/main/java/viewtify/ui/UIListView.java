@@ -9,6 +9,7 @@
  */
 package viewtify.ui;
 
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -53,7 +54,9 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>> {
         this.items = Variable.of(ui.getItems());
 
         items.observeNow().combineLatest(filter.observeNow()).to(e -> {
-            ui.setItems(e.ⅰ.filtered(e.ⅱ));
+            I.run(() -> {
+                ui.setItems(e.ⅰ.filtered(e.ⅱ));
+            }, error -> error.type(ConcurrentModificationException.class));
         });
     }
 
