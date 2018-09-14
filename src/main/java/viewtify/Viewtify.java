@@ -239,9 +239,9 @@ public final class Viewtify {
      * Deactivate the current application.
      */
     public static final void deactivate() {
-        Terminator.dispose();
-
         Platform.exit();
+        System.out.println("deactivate");
+        Terminator.dispose();
     }
 
     /**
