@@ -23,6 +23,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
+import javafx.stage.Window;
 
 import kiss.Extensible;
 import kiss.I;
@@ -104,6 +106,31 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
             return parent.ui();
         }
         throw new Error();
+    }
+
+    /**
+     * Returns the root {@link View}.
+     * 
+     * @return The root view.
+     */
+    public final View root() {
+        return parent == null ? this : parent.root();
+    }
+
+    /**
+     * Returns the {@link Screen} which this {@link View} is displayed.
+     * 
+     * @return The {@link Screen} which this {@link View} is displayed.
+     */
+    public final Screen screen() {
+        Window window = root().ui().getScene().getWindow();
+
+        for (Screen screen : Screen.getScreens()) {
+            if (screen.getBounds().contains(window.getX(), window.getY())) {
+                return screen;
+            }
+        }
+        return Screen.getPrimary();
     }
 
     /**

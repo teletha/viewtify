@@ -56,10 +56,8 @@ import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Window;
 
 import filer.Filer;
 import kiss.Decoder;
@@ -129,9 +127,6 @@ public final class Viewtify {
 
     /** The root view class. */
     private static Class<? extends View> rootViewClass;
-
-    /** The root view instance for cache. */
-    private static View rootView;
 
     private static Stage stage;
 
@@ -282,7 +277,7 @@ public final class Viewtify {
 
                 Path css = Stylist.writeTo(Paths.get(".preferences/application.css"), JavaFXLizer.pretty());
 
-                View view = Viewtify.view();
+                View view = View.build(rootViewClass);
                 Scene scene = new Scene((Parent) view.ui());
                 scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
                 scene.getStylesheets().add(css.toUri().toURL().toExternalForm());
@@ -382,18 +377,6 @@ public final class Viewtify {
                 stage.toFront();
             }
         });
-    }
-
-    /**
-     * Returns the application {@link View}.
-     * 
-     * @return The application view.
-     */
-    public static final <V extends View> V view() {
-        if (rootView == null) {
-            rootView = View.build(rootViewClass);
-        }
-        return (V) rootView;
     }
 
     /**
@@ -728,22 +711,6 @@ public final class Viewtify {
      */
     public static final <E> ObservableList<E> inUI(ObservableList<E> list) {
         return list instanceof UIThreadSafeList ? list : new UIThreadSafeList<>(list);
-    }
-
-    /**
-     * Retrieve the {@link Screen} that {@link ViewtifyApplication} is displayed.
-     * 
-     * @return
-     */
-    public static Screen screen() {
-        Window window = view().ui().getScene().getWindow();
-
-        for (Screen screen : Screen.getScreens()) {
-            if (screen.getBounds().contains(window.getX(), window.getY())) {
-                return screen;
-            }
-        }
-        return Screen.getPrimary();
     }
 
     /**
