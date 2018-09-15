@@ -12,7 +12,6 @@ package toybox;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 
 import kiss.I;
-import viewtify.ActivationPolicy;
 import viewtify.Viewtify;
 import viewtify.ui.UI;
 import viewtify.ui.UITabPane;
@@ -49,6 +48,6 @@ public class Toybox2 extends View {
      * @param args
      */
     public static void main(String[] args) {
-        Viewtify.activate(Toybox2.class, ActivationPolicy.Latest);
+        Viewtify.application().activate(Toybox2.class);
     }
 }

@@ -124,24 +124,61 @@ public final class Viewtify {
     /** The application initializer, plz call me on {@link Application#start(Stage)}. */
     static Consumer<Stage> initializer;
 
+    /** The configurable setting. */
+    ActivationPolicy policy = ActivationPolicy.Latest;
+
+    /** The configurable setting. */
+    StageStyle stageStyle = StageStyle.DECORATED;
+
+    /**
+     * Hide constructor.
+     */
+    private Viewtify() {
+    }
+
+    /**
+     * Configure {@link ActivationPolicy}.
+     * 
+     * @param policy
+     * @return
+     */
+    public Viewtify policy(ActivationPolicy policy) {
+        if (policy != null) {
+            this.policy = policy;
+        }
+        return this;
+    }
+
+    /**
+     * Configure {@link StageStyle}.
+     * 
+     * @param style
+     * @return
+     */
+    public Viewtify style(StageStyle style) {
+        if (style != null) {
+            this.stageStyle = style;
+        }
+        return this;
+    }
+
+    /**
+     * Add termination action.
+     * 
+     * @param termination
+     * @return
+     */
+    public Viewtify onTerminating(Runnable termination) {
+        if (termination != null) {
+            Terminator.add(termination::run);
+        }
+        return this;
+    }
+
     /**
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      */
-    public static final void activate(Class<? extends View> application) {
-        activate(application, null);
-    }
-
-    /**
-     * Activate the specified {@link Viewtify} application with {@link StageStyle#DECORATED}.
-     */
-    public static final void activate(Class<? extends View> application, ActivationPolicy policy) {
-        activate(application, policy, null);
-    }
-
-    /**
-     * Activate the specified {@link Viewtify} application.
-     */
-    public static final synchronized void activate(Class<? extends View> application, ActivationPolicy policy, StageStyle style) {
+    public void activate(Class<? extends View> application) {
         if (rootViewClass != null) {
             return; // ignore duplicated call
         }
@@ -211,7 +248,7 @@ public final class Viewtify {
         // build application initializer
         initializer = s -> {
             stage = s;
-            stage.initStyle(style != null ? style : StageStyle.DECORATED);
+            stage.initStyle(stageStyle);
         };
 
         // launch JavaFX UI
@@ -227,7 +264,7 @@ public final class Viewtify {
      * 
      * @param path
      */
-    private static void touch(Path path) throws IOException {
+    private void touch(Path path) throws IOException {
         if (Files.exists(path)) {
             Files.setLastModifiedTime(path, FileTime.fromMillis(System.currentTimeMillis()));
         } else {
@@ -236,11 +273,20 @@ public final class Viewtify {
     }
 
     /**
+     * Gain application builder.
+     * 
+     * @return
+     */
+    public static final Viewtify application() {
+        return new Viewtify();
+    }
+
+    /**
      * Deactivate the current application.
      */
     public static final void deactivate() {
         Platform.exit();
-        System.out.println("deactivate");
+
         Terminator.dispose();
     }
 
