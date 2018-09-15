@@ -11,7 +11,7 @@ package viewtify;
 
 import org.junit.jupiter.api.Test;
 
-import viewtify.ViewtifyApplication.Location;
+import viewtify.Viewtify.Location;
 
 /**
  * @version 2018/04/02 16:43:26

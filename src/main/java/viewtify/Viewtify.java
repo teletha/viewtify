@@ -9,14 +9,20 @@
  */
 package viewtify;
 
+import static java.util.concurrent.TimeUnit.*;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.nio.channels.AsynchronousFileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.WatchEvent;
 import java.nio.file.attribute.FileTime;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -25,10 +31,10 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -45,7 +51,9 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Control;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
@@ -54,18 +62,25 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 import filer.Filer;
+import kiss.Decoder;
 import kiss.Disposable;
+import kiss.Encoder;
 import kiss.I;
+import kiss.Manageable;
 import kiss.Signal;
+import kiss.Singleton;
+import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseBiFunction;
 import kiss.WiseFunction;
 import kiss.WiseSupplier;
 import kiss.WiseTriFunction;
+import stylist.Stylist;
 import viewtify.bind.Calculation;
 import viewtify.bind.CalculationList;
 import viewtify.ui.UserInterface;
 import viewtify.ui.View;
+import viewtify.util.JavaFXLizer;
 import viewtify.util.UIThreadSafeList;
 
 /**
@@ -118,17 +133,19 @@ public final class Viewtify {
     /** The root view instance for cache. */
     private static View rootView;
 
-    /** The singleton FX stage. */
-    static Stage stage;
-
-    /** The application initializer, plz call me on {@link Application#start(Stage)}. */
-    static Consumer<Stage> initializer;
+    private static Stage stage;
 
     /** The configurable setting. */
-    ActivationPolicy policy = ActivationPolicy.Latest;
+    private ActivationPolicy policy = ActivationPolicy.Latest;
 
     /** The configurable setting. */
-    StageStyle stageStyle = StageStyle.DECORATED;
+    private StageStyle stageStyle = StageStyle.DECORATED;
+
+    /** The configurable setting. */
+    private boolean useDarkTheme = false;
+
+    /** The style sheet manager. */
+    private final StyleSheetObserver styles = new StyleSheetObserver();
 
     /**
      * Hide constructor.
@@ -172,6 +189,16 @@ public final class Viewtify {
         if (termination != null) {
             Terminator.add(termination::run);
         }
+        return this;
+    }
+
+    /**
+     * Use the dark theme.
+     * 
+     * @return
+     */
+    public Viewtify useDarkTheme() {
+        useDarkTheme = true;
         return this;
     }
 
@@ -240,19 +267,42 @@ public final class Viewtify {
         }
 
         // load extensions in viewtify package
-        I.load(ViewtifyApplication.Location.class, false);
+        I.load(Location.class, false);
 
         // load extensions in application package
         I.load(application, false);
 
-        // build application initializer
-        initializer = s -> {
-            stage = s;
-            stage.initStyle(stageStyle);
-        };
-
         // launch JavaFX UI
-        Application.launch(ViewtifyApplication.class);
+        Platform.startup(() -> {
+            try {
+                stage = new Stage(stageStyle);
+
+                // trace window size and position
+                I.make(WindowLocator.class).restore().locate("MainWindow", stage);
+
+                Path css = Stylist.writeTo(Paths.get(".preferences/application.css"), JavaFXLizer.pretty());
+
+                View view = Viewtify.view();
+                Scene scene = new Scene((Parent) view.ui());
+                scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
+                scene.getStylesheets().add(css.toUri().toURL().toExternalForm());
+                configIcon(stage);
+                stage.setScene(scene);
+                stage.show();
+
+                // observe stylesheets
+                styles.observe(scene.getStylesheets());
+                styles.observe(scene.getRoot().getStylesheets());
+
+                stage.showingProperty().addListener((observable, oldValue, newValue) -> {
+                    if (oldValue == true && newValue == false) {
+                        deactivate();
+                    }
+                });
+            } catch (MalformedURLException e) {
+                throw I.quiet(e);
+            }
+        });
     }
 
     /**
@@ -269,6 +319,27 @@ public final class Viewtify {
             Files.setLastModifiedTime(path, FileTime.fromMillis(System.currentTimeMillis()));
         } else {
             Files.createFile(path);
+        }
+    }
+
+    /**
+     * Search user specified icon and configure it.
+     * 
+     * @param stage
+     */
+    private void configIcon(Stage stage) {
+        try {
+            InputStream input;
+            Path icon = Paths.get("icon.png").toAbsolutePath();
+
+            if (Files.exists(icon)) {
+                input = Files.newInputStream(icon);
+            } else {
+                input = ClassLoader.getSystemResourceAsStream("icon.png");
+            }
+            stage.getIcons().add(new Image(input));
+        } catch (Throwable e) {
+            // ignore
         }
     }
 
@@ -954,6 +1025,166 @@ public final class Viewtify {
         @Override
         public E getValue() {
             return var.get();
+        }
+    }
+
+    /**
+     * @version 2018/01/02 19:04:37
+     */
+    private static class StyleSheetObserver {
+
+        /**
+         * Observe stylesheet.
+         * 
+         * @param stylesheets
+         */
+        private void observe(ObservableList<String> stylesheets) {
+            for (String stylesheet : stylesheets) {
+                if (stylesheet.startsWith("file:/")) {
+                    Path path = Paths.get(stylesheet.substring(6));
+
+                    if (Files.exists(path)) {
+                        Filer.observe(path).debounce(1, SECONDS).to(e -> {
+                            AtomicInteger index = new AtomicInteger();
+
+                            // remove
+                            Viewtify.inUI(() -> {
+                                index.set(stylesheets.indexOf(stylesheet));
+
+                                if (index.get() != -1) {
+                                    stylesheets.remove(index.get());
+                                }
+                            });
+
+                            // reload
+                            Viewtify.inUI(() -> {
+                                if (index.get() == -1) {
+                                    stylesheets.add(stylesheet);
+                                } else {
+                                    stylesheets.add(index.get(), stylesheet);
+                                }
+                            });
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @version 2017/11/25 23:59:20
+     */
+    @SuppressWarnings("serial")
+    @Manageable(lifestyle = Singleton.class)
+    private static class WindowLocator extends HashMap<String, Location> implements Storable<WindowLocator> {
+
+        /** Magic Number for window state. */
+        private static final int Normal = 0;
+
+        /** Magic Number for window state. */
+        private static final int Max = 1;
+
+        /** Magic Number for window state. */
+        private static final int Min = 2;
+
+        /**
+         * <p>
+         * Apply window size and location setting.
+         * </p>
+         * 
+         * @param stage A target to apply.
+         */
+        void locate(String name, Stage stage) {
+            Location location = get(name);
+
+            if (location != null) {
+                // restore window location
+                if (location.w != 0) {
+                    stage.setX(location.x);
+                    stage.setY(location.y);
+                    stage.setWidth(location.w);
+                    stage.setHeight(location.h);
+                }
+
+                // restore window state
+                switch (location.state) {
+                case Max:
+                    stage.setMaximized(true);
+                    break;
+
+                case Min:
+                    stage.setIconified(true);
+                    break;
+                }
+            }
+
+            // observe window location and state
+            Signal<Boolean> windowState = Viewtify.signal(stage.maximizedProperty(), stage.iconifiedProperty());
+            Signal<Number> windowLocation = Viewtify
+                    .signal(stage.xProperty(), stage.yProperty(), stage.widthProperty(), stage.heightProperty());
+
+            windowState.merge(windowLocation.mapTo(true)).debounce(500, MILLISECONDS).to(() -> {
+                Location store = computeIfAbsent(name, key -> new Location());
+
+                if (stage.isMaximized()) {
+                    store.state = Max;
+                } else if (stage.isIconified()) {
+                    store.state = Min;
+                } else {
+                    store.state = Normal;
+                    store.x = stage.getX();
+                    store.y = stage.getY();
+                    store.w = stage.getWidth();
+                    store.h = stage.getHeight();
+                }
+                store();
+            });
+        }
+    }
+
+    /**
+     * @version 2017/11/25 23:31:06
+     */
+    static class Location implements Decoder<Location>, Encoder<Location> {
+
+        /** The window location. */
+        public double x;
+
+        /** The window location. */
+        public double y;
+
+        /** The window location. */
+        public double w;
+
+        /** The window location. */
+        public double h;
+
+        /** The window location. */
+        public int state;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String encode(Location value) {
+            return value.x + " " + value.y + " " + value.w + " " + value.h + " " + value.state;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Location decode(String value) {
+            String[] values = value.split(" ");
+
+            Location locator = new Location();
+            locator.x = Double.parseDouble(values[0]);
+            locator.y = Double.parseDouble(values[1]);
+            locator.w = Double.parseDouble(values[2]);
+            locator.h = Double.parseDouble(values[3]);
+            locator.state = Integer.parseInt(values[4]);
+
+            return locator;
         }
     }
 }
