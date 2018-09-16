@@ -83,7 +83,7 @@ import viewtify.util.JavaFXLizer;
 import viewtify.util.UIThreadSafeList;
 
 /**
- * @version 2018/09/09 22:42:40
+ * @version 2018/09/16 16:21:29
  */
 public final class Viewtify {
 
@@ -136,7 +136,10 @@ public final class Viewtify {
     private StageStyle stageStyle = StageStyle.DECORATED;
 
     /** The configurable setting. */
-    private boolean useDarkTheme = false;
+    private Theme theme = Theme.Light;
+
+    /** The configurable setting. */
+    private String icon = "";
 
     /** The application class. */
     private Class<? extends View> applicationClass;
@@ -148,32 +151,6 @@ public final class Viewtify {
      * Hide constructor.
      */
     private Viewtify() {
-    }
-
-    /**
-     * Configure {@link ActivationPolicy}.
-     * 
-     * @param policy
-     * @return
-     */
-    public Viewtify policy(ActivationPolicy policy) {
-        if (policy != null) {
-            this.policy = policy;
-        }
-        return this;
-    }
-
-    /**
-     * Configure {@link StageStyle}.
-     * 
-     * @param style
-     * @return
-     */
-    public Viewtify style(StageStyle style) {
-        if (style != null) {
-            this.stageStyle = style;
-        }
-        return this;
     }
 
     /**
@@ -190,12 +167,53 @@ public final class Viewtify {
     }
 
     /**
-     * Use the dark theme.
+     * Configure application {@link ActivationPolicy}.
      * 
+     * @param policy
      * @return
      */
-    public Viewtify useDarkTheme() {
-        useDarkTheme = true;
+    public Viewtify use(ActivationPolicy policy) {
+        if (policy != null) {
+            this.policy = policy;
+        }
+        return this;
+    }
+
+    /**
+     * Configure {@link StageStyle}.
+     * 
+     * @param style
+     * @return
+     */
+    public Viewtify use(StageStyle style) {
+        if (style != null) {
+            this.stageStyle = style;
+        }
+        return this;
+    }
+
+    /**
+     * Configure application {@link Theme}.
+     * 
+     * @param theme
+     * @return
+     */
+    public Viewtify use(Theme theme) {
+        if (theme != null) {
+            this.theme = theme;
+        }
+        return this;
+    }
+
+    /**
+     * Configure application icon.
+     * 
+     * @return A relative path to icon.
+     */
+    public Viewtify icon(String pathToIcon) {
+        if (pathToIcon != null) {
+            this.icon = pathToIcon;
+        }
         return this;
     }
 
@@ -227,9 +245,10 @@ public final class Viewtify {
                 views.add(view);
 
                 Scene scene = new Scene((Parent) view.ui());
-                if (useDarkTheme) scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
+                scene.getStylesheets().add(theme.url);
                 scene.getStylesheets().add(css.toUri().toURL().toExternalForm());
-                configIcon(stage);
+
+                stage.getIcons().add(loadImage(icon));
                 stage.setScene(scene);
                 stage.show();
 
@@ -246,6 +265,30 @@ public final class Viewtify {
                 throw I.quiet(e);
             }
         });
+    }
+
+    /**
+     * Load the image resource which is located by the path.
+     * 
+     * @param path
+     * @return
+     */
+    private Image loadImage(String path) {
+        return new Image(loadResource(path));
+    }
+
+    /**
+     * Load the resource which is located by the path.
+     * 
+     * @param path
+     * @return
+     */
+    private InputStream loadResource(String path) {
+        try {
+            return Files.newInputStream(Paths.get(path));
+        } catch (IOException e) {
+            return ClassLoader.getSystemResourceAsStream(path);
+        }
     }
 
     /**
@@ -316,27 +359,6 @@ public final class Viewtify {
             Files.setLastModifiedTime(path, FileTime.fromMillis(System.currentTimeMillis()));
         } else {
             Files.createFile(path);
-        }
-    }
-
-    /**
-     * Search user specified icon and configure it.
-     * 
-     * @param stage
-     */
-    private void configIcon(Stage stage) {
-        try {
-            InputStream input;
-            Path icon = Paths.get("icon.png").toAbsolutePath();
-
-            if (Files.exists(icon)) {
-                input = Files.newInputStream(icon);
-            } else {
-                input = ClassLoader.getSystemResourceAsStream("icon.png");
-            }
-            stage.getIcons().add(new Image(input));
-        } catch (Throwable e) {
-            // ignore
         }
     }
 
