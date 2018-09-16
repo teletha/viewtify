@@ -57,6 +57,7 @@ import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -74,7 +75,6 @@ import kiss.WiseBiFunction;
 import kiss.WiseFunction;
 import kiss.WiseSupplier;
 import kiss.WiseTriFunction;
-import stylist.Stylist;
 import viewtify.bind.Calculation;
 import viewtify.bind.CalculationList;
 import viewtify.ui.UserInterface;
@@ -141,11 +141,14 @@ public final class Viewtify {
     /** The configurable setting. */
     private String icon = "";
 
+    /** The configurable setting. */
+    private double width;
+
+    /** The configurable setting. */
+    private double height;
+
     /** The application class. */
     private Class<? extends View> applicationClass;
-
-    /** The style sheet manager. */
-    private final StyleSheetObserver styles = new StyleSheetObserver();
 
     /**
      * Hide constructor.
@@ -218,6 +221,24 @@ public final class Viewtify {
     }
 
     /**
+     * Configure application initial size
+     * 
+     * @param width
+     * @param height
+     * @return
+     */
+    public Viewtify size(double width, double height) {
+        if (0 < width) {
+            this.width = width;
+        }
+
+        if (0 < height) {
+            this.height = height;
+        }
+        return this;
+    }
+
+    /**
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      */
     public void activate(Class<? extends View> application) {
@@ -231,36 +252,39 @@ public final class Viewtify {
         // load extensions in application package
         I.load(application, false);
 
+        // build application stylesheet
+        Path applicationStyles = JavaFXLizer.pretty().format(".preferences/application.css");
+
         // launch JavaFX UI
         Platform.startup(() -> {
             try {
                 Stage stage = new Stage(stageStyle);
+                stage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
+                stage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
+                stage.getIcons().add(loadImage(icon));
 
                 // trace window size and position
-                I.make(WindowLocator.class).restore().locate("MainWindow", stage);
-
-                Path css = Stylist.writeTo(Paths.get(".preferences/application.css"), JavaFXLizer.pretty());
+                I.make(WindowLocator.class).restore().locate(application, stage);
 
                 View view = View.build(application);
                 views.add(view);
 
                 Scene scene = new Scene((Parent) view.ui());
                 scene.getStylesheets().add(theme.url);
-                scene.getStylesheets().add(css.toUri().toURL().toExternalForm());
-
-                stage.getIcons().add(loadImage(icon));
-                stage.setScene(scene);
-                stage.show();
+                scene.getStylesheets().add(applicationStyles.toUri().toURL().toExternalForm());
 
                 // observe stylesheets
-                styles.observe(scene.getStylesheets());
-                styles.observe(scene.getRoot().getStylesheets());
+                observe(scene.getStylesheets());
+                observe(scene.getRoot().getStylesheets());
 
                 stage.showingProperty().addListener((observable, oldValue, newValue) -> {
                     if (oldValue == true && newValue == false) {
                         deactivate();
                     }
                 });
+
+                stage.setScene(scene);
+                stage.show();
             } catch (MalformedURLException e) {
                 throw I.quiet(e);
             }
@@ -359,6 +383,43 @@ public final class Viewtify {
             Files.setLastModifiedTime(path, FileTime.fromMillis(System.currentTimeMillis()));
         } else {
             Files.createFile(path);
+        }
+    }
+
+    /**
+     * Observe stylesheet.
+     * 
+     * @param stylesheets
+     */
+    private void observe(ObservableList<String> stylesheets) {
+        for (String stylesheet : stylesheets) {
+            if (stylesheet.startsWith("file:/")) {
+                Path path = Paths.get(stylesheet.substring(6));
+
+                if (Files.exists(path)) {
+                    Filer.observe(path).debounce(1, SECONDS).to(e -> {
+                        AtomicInteger index = new AtomicInteger();
+
+                        // remove
+                        Viewtify.inUI(() -> {
+                            index.set(stylesheets.indexOf(stylesheet));
+
+                            if (index.get() != -1) {
+                                stylesheets.remove(index.get());
+                            }
+                        });
+
+                        // reload
+                        Viewtify.inUI(() -> {
+                            if (index.get() == -1) {
+                                stylesheets.add(stylesheet);
+                            } else {
+                                stylesheets.add(index.get(), stylesheet);
+                            }
+                        });
+                    });
+                }
+            }
         }
     }
 
@@ -997,54 +1058,11 @@ public final class Viewtify {
     }
 
     /**
-     * @version 2018/01/02 19:04:37
-     */
-    private static class StyleSheetObserver {
-
-        /**
-         * Observe stylesheet.
-         * 
-         * @param stylesheets
-         */
-        private void observe(ObservableList<String> stylesheets) {
-            for (String stylesheet : stylesheets) {
-                if (stylesheet.startsWith("file:/")) {
-                    Path path = Paths.get(stylesheet.substring(6));
-
-                    if (Files.exists(path)) {
-                        Filer.observe(path).debounce(1, SECONDS).to(e -> {
-                            AtomicInteger index = new AtomicInteger();
-
-                            // remove
-                            Viewtify.inUI(() -> {
-                                index.set(stylesheets.indexOf(stylesheet));
-
-                                if (index.get() != -1) {
-                                    stylesheets.remove(index.get());
-                                }
-                            });
-
-                            // reload
-                            Viewtify.inUI(() -> {
-                                if (index.get() == -1) {
-                                    stylesheets.add(stylesheet);
-                                } else {
-                                    stylesheets.add(index.get(), stylesheet);
-                                }
-                            });
-                        });
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * @version 2017/11/25 23:59:20
      */
     @SuppressWarnings("serial")
     @Manageable(lifestyle = Singleton.class)
-    private static class WindowLocator extends HashMap<String, Location> implements Storable<WindowLocator> {
+    private static class WindowLocator extends HashMap<Class, Location> implements Storable<WindowLocator> {
 
         /** Magic Number for window state. */
         private static final int Normal = 0;
@@ -1062,8 +1080,8 @@ public final class Viewtify {
          * 
          * @param stage A target to apply.
          */
-        void locate(String name, Stage stage) {
-            Location location = get(name);
+        void locate(Class view, Stage stage) {
+            Location location = get(view);
 
             if (location != null) {
                 // restore window location
@@ -1092,7 +1110,7 @@ public final class Viewtify {
                     .signal(stage.xProperty(), stage.yProperty(), stage.widthProperty(), stage.heightProperty());
 
             windowState.merge(windowLocation.mapTo(true)).debounce(500, MILLISECONDS).to(() -> {
-                Location store = computeIfAbsent(name, key -> new Location());
+                Location store = computeIfAbsent(view, key -> new Location());
 
                 if (stage.isMaximized()) {
                     store.state = Max;

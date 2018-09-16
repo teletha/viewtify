@@ -9,7 +9,10 @@
  */
 package viewtify.util;
 
+import static java.lang.Double.*;
+
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import kiss.Decoder;
 import kiss.Encoder;
@@ -109,6 +112,31 @@ public class FXUtils {
         @Override
         public String encode(stylist.value.Color value) {
             return value.toRGB();
+        }
+    }
+
+    /**
+     * @version 2018/09/16 17:32:34
+     */
+    @SuppressWarnings("unused")
+    private static class RectangleCodec implements Encoder<Rectangle>, Decoder<Rectangle> {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Rectangle decode(String value) {
+            String[] values = value.split(" ");
+
+            return new Rectangle(parseDouble(values[0]), parseDouble(values[1]), parseDouble(values[2]), parseDouble(values[3]));
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String encode(Rectangle value) {
+            return value.getX() + " " + value.getY() + " " + value.getWidth() + " " + value.getHeight();
         }
     }
 }
