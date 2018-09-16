@@ -22,6 +22,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.WatchEvent;
 import java.nio.file.attribute.FileTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -125,10 +126,8 @@ public final class Viewtify {
     /** Executor for Worker Thread. */
     public static final Consumer<Runnable> WorkerThread = pool::submit;
 
-    /** The root view class. */
-    private static Class<? extends View> rootViewClass;
-
-    private static Stage stage;
+    /** All managed views. */
+    private static List<View> views = new ArrayList();
 
     /** The configurable setting. */
     private ActivationPolicy policy = ActivationPolicy.Latest;
@@ -138,6 +137,9 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private boolean useDarkTheme = false;
+
+    /** The application class. */
+    private Class<? extends View> applicationClass;
 
     /** The style sheet manager. */
     private final StyleSheetObserver styles = new StyleSheetObserver();
@@ -201,23 +203,59 @@ public final class Viewtify {
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      */
     public void activate(Class<? extends View> application) {
-        if (rootViewClass != null) {
-            return; // ignore duplicated call
-        }
+        this.applicationClass = application;
 
-        rootViewClass = application;
+        checkPolicy();
 
-        if (policy == null) {
-            policy = ActivationPolicy.Latest;
-        }
+        // load extensions in viewtify package
+        I.load(Location.class, false);
 
-        // =====================================================================
-        // Validate ActivationPolicy
-        // =====================================================================
+        // load extensions in application package
+        I.load(application, false);
+
+        // launch JavaFX UI
+        Platform.startup(() -> {
+            try {
+                Stage stage = new Stage(stageStyle);
+
+                // trace window size and position
+                I.make(WindowLocator.class).restore().locate("MainWindow", stage);
+
+                Path css = Stylist.writeTo(Paths.get(".preferences/application.css"), JavaFXLizer.pretty());
+
+                View view = View.build(application);
+                views.add(view);
+
+                Scene scene = new Scene((Parent) view.ui());
+                if (useDarkTheme) scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
+                scene.getStylesheets().add(css.toUri().toURL().toExternalForm());
+                configIcon(stage);
+                stage.setScene(scene);
+                stage.show();
+
+                // observe stylesheets
+                styles.observe(scene.getStylesheets());
+                styles.observe(scene.getRoot().getStylesheets());
+
+                stage.showingProperty().addListener((observable, oldValue, newValue) -> {
+                    if (oldValue == true && newValue == false) {
+                        deactivate();
+                    }
+                });
+            } catch (MalformedURLException e) {
+                throw I.quiet(e);
+            }
+        });
+    }
+
+    /**
+     * Check {@link ActivationPolicy}.
+     */
+    private void checkPolicy() {
         if (policy != ActivationPolicy.Multiple) {
             try {
                 // create application specified directory for lock
-                Path root = Filer.locate(System.getProperty("java.io.tmpdir")).resolve(application.getName());
+                Path root = Filer.locate(System.getProperty("java.io.tmpdir")).resolve(applicationClass.getName());
 
                 if (Files.notExists(root)) {
                     Files.createDirectory(root);
@@ -248,7 +286,9 @@ public final class Viewtify {
                 Filer.observe(root).map(WatchEvent::context).to(path -> {
                     switch (path.getFileName().toString()) {
                     case "active":
-                        show();
+                        for (View view : views) {
+                            view.show();
+                        }
                         break;
 
                     case "close":
@@ -260,44 +300,6 @@ public final class Viewtify {
                 throw I.quiet(e);
             }
         }
-
-        // load extensions in viewtify package
-        I.load(Location.class, false);
-
-        // load extensions in application package
-        I.load(application, false);
-
-        // launch JavaFX UI
-        Platform.startup(() -> {
-            try {
-                stage = new Stage(stageStyle);
-
-                // trace window size and position
-                I.make(WindowLocator.class).restore().locate("MainWindow", stage);
-
-                Path css = Stylist.writeTo(Paths.get(".preferences/application.css"), JavaFXLizer.pretty());
-
-                View view = View.build(rootViewClass);
-                Scene scene = new Scene((Parent) view.ui());
-                scene.getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
-                scene.getStylesheets().add(css.toUri().toURL().toExternalForm());
-                configIcon(stage);
-                stage.setScene(scene);
-                stage.show();
-
-                // observe stylesheets
-                styles.observe(scene.getStylesheets());
-                styles.observe(scene.getRoot().getStylesheets());
-
-                stage.showingProperty().addListener((observable, oldValue, newValue) -> {
-                    if (oldValue == true && newValue == false) {
-                        deactivate();
-                    }
-                });
-            } catch (MalformedURLException e) {
-                throw I.quiet(e);
-            }
-        });
     }
 
     /**
@@ -354,29 +356,6 @@ public final class Viewtify {
         Platform.exit();
 
         Terminator.dispose();
-    }
-
-    /**
-     * Force to show the current application on top of display.
-     */
-    public static final void show() {
-        inUI(() -> {
-            if (stage != null && !stage.isAlwaysOnTop()) {
-                stage.setAlwaysOnTop(true);
-                stage.setAlwaysOnTop(false);
-            }
-        });
-    }
-
-    /**
-     * Force to blink the current application.
-     */
-    public static final void blink() {
-        inUI(() -> {
-            if (stage != null) {
-                stage.toFront();
-            }
-        });
     }
 
     /**

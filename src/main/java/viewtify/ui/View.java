@@ -24,13 +24,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import kiss.Extensible;
 import kiss.I;
 import kiss.Manageable;
 import kiss.Singleton;
+import kiss.Variable;
 import kiss.model.Model;
+import viewtify.Viewtify;
 import viewtify.util.TextNotation;
 
 /**
@@ -131,6 +134,38 @@ public abstract class View<B extends Extensible> implements Extensible, UserInte
             }
         }
         return Screen.getPrimary();
+    }
+
+    /**
+     * Force to show the current application window which this {@link View} is displayed.
+     */
+    public final void show() {
+        I.signal(stage()).skipNull().skip(Stage::isAlwaysOnTop).on(Viewtify.UIThread).to(e -> {
+            e.setAlwaysOnTop(true);
+            e.setAlwaysOnTop(false);
+        });
+    }
+
+    /**
+     * Force to blink the current application window which this {@link View} is displayed.
+     */
+    public final void blink() {
+        I.signal(stage()).skipNull().on(Viewtify.UIThread).to(Stage::toFront);
+    }
+
+    /**
+     * Find {@link Stage} of this {@link View}.
+     * 
+     * @return
+     */
+    private Variable<Stage> stage() {
+        Window window = ui().getScene().getWindow();
+
+        if (window instanceof Stage) {
+            return Variable.of((Stage) window);
+        } else {
+            return Variable.empty();
+        }
     }
 
     /**
