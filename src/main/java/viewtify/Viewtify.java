@@ -343,7 +343,7 @@ public final class Viewtify {
                         root.file("close").touch();
 
                         // wait for shutdown previous application
-                        channel.lock();
+                        channel.lock().get();
                     }
                 }
 
