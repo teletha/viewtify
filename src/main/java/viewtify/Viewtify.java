@@ -21,7 +21,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.WatchEvent;
-import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -61,7 +60,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import filer.Filer;
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -75,6 +73,9 @@ import kiss.WiseBiFunction;
 import kiss.WiseFunction;
 import kiss.WiseSupplier;
 import kiss.WiseTriFunction;
+import psychopath.Directory;
+import psychopath.File;
+import psychopath.Locator;
 import viewtify.bind.Calculation;
 import viewtify.bind.CalculationList;
 import viewtify.ui.UserInterface;
@@ -322,27 +323,24 @@ public final class Viewtify {
         if (policy != ActivationPolicy.Multiple) {
             try {
                 // create application specified directory for lock
-                Path root = Filer.locate(System.getProperty("java.io.tmpdir")).resolve(applicationClass.getName());
-
-                if (Files.notExists(root)) {
-                    Files.createDirectory(root);
-                }
-                Path file = root.resolve("lock");
+                Directory root = Locator.temporary().directory(applicationClass.getName()).touch();
+                File file = root.file("lock");
 
                 // try to retrieve lock to validate
-                AsynchronousFileChannel channel = AsynchronousFileChannel.open(file, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+                AsynchronousFileChannel channel = AsynchronousFileChannel
+                        .open(file.asPath(), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
                 FileLock lock = channel.tryLock();
 
                 if (lock == null) {
                     // another application is activated
                     if (policy == ActivationPolicy.Earliest) {
                         // make the window active
-                        touch(root.resolve("active"));
+                        root.file("active").touch();
 
                         throw new RuntimeException("Application is running already.");
                     } else {
                         // close the window
-                        touch(root.resolve("close"));
+                        root.file("close").touch();
 
                         // wait for shutdown previous application
                         channel.lock();
@@ -350,7 +348,7 @@ public final class Viewtify {
                 }
 
                 // observe lock directory for next application
-                Filer.observe(root).map(WatchEvent::context).to(path -> {
+                root.observe().map(WatchEvent::context).to(path -> {
                     switch (path.getFileName().toString()) {
                     case "active":
                         for (View view : views) {
@@ -370,23 +368,6 @@ public final class Viewtify {
     }
 
     /**
-     * <p>
-     * Implements the same behaviour as the "touch" utility on Unix. It creates a new file with size
-     * 0 or, if the file exists already, it is opened and closed without modifying it, but updating
-     * the file date and time.
-     * </p>
-     * 
-     * @param path
-     */
-    private void touch(Path path) throws IOException {
-        if (Files.exists(path)) {
-            Files.setLastModifiedTime(path, FileTime.fromMillis(System.currentTimeMillis()));
-        } else {
-            Files.createFile(path);
-        }
-    }
-
-    /**
      * Observe stylesheet.
      * 
      * @param stylesheets
@@ -394,10 +375,10 @@ public final class Viewtify {
     private void observe(ObservableList<String> stylesheets) {
         for (String stylesheet : stylesheets) {
             if (stylesheet.startsWith("file:/")) {
-                Path path = Paths.get(stylesheet.substring(6));
+                File file = Locator.file(stylesheet.substring(6));
 
-                if (Files.exists(path)) {
-                    Filer.observe(path).debounce(1, SECONDS).to(e -> {
+                if (file.isPresent()) {
+                    file.observe().debounce(1, SECONDS).to(e -> {
                         AtomicInteger index = new AtomicInteger();
 
                         // remove

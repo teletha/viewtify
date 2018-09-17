@@ -9,15 +9,15 @@
  */
 package toybox;
 
-import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-import filer.Filer;
 import kiss.Storable;
+import psychopath.Directory;
+import psychopath.Locator;
 import viewtify.model.Selectable;
 
 /**
- * @version 2018/03/04 19:33:38
+ * @version 2018/09/17 22:24:47
  */
 public class Consoles extends Selectable<Console> implements Storable<Consoles> {
 
@@ -27,7 +27,7 @@ public class Consoles extends Selectable<Console> implements Storable<Consoles> 
     }
 
     public void createConsole() {
-        Path directory = hasSelection() ? selection().directory : Filer.locate("").toAbsolutePath();
+        Directory directory = hasSelection() ? selection().directory : Locator.directory("").absolutize();
 
         Console console = new Console();
         console.directory = directory;

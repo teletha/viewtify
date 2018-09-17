@@ -9,22 +9,20 @@
  */
 package toybox;
 
-import java.nio.file.Path;
-
-import bee.util.Paths;
+import psychopath.Directory;
 
 /**
- * @version 2018/03/04 20:36:40
+ * @version 2018/09/17 22:23:43
  */
 public class Console {
 
     /** The context directory. */
-    public Path directory;
+    public Directory directory;
 
     /**
      * @return
      */
     public String name() {
-        return Paths.getName(directory);
+        return directory.name();
     }
 }
