@@ -11,15 +11,9 @@ package viewtify;
 
 import static java.util.concurrent.TimeUnit.*;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.nio.channels.AsynchronousFileChannel;
-import java.nio.channels.FileLock;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -310,8 +304,8 @@ public final class Viewtify {
      */
     private InputStream loadResource(String path) {
         try {
-            return Files.newInputStream(Paths.get(path));
-        } catch (IOException e) {
+            return Locator.file(path).newInputStream();
+        } catch (Exception e) {
             return ClassLoader.getSystemResourceAsStream(path);
         }
     }
@@ -321,49 +315,36 @@ public final class Viewtify {
      */
     private void checkPolicy() {
         if (policy != ActivationPolicy.Multiple) {
-            try {
-                // create application specified directory for lock
-                Directory root = Locator.temporary().directory(applicationClass.getName()).touch();
-                File file = root.file("lock");
+            // create application specified directory for lock
+            Directory root = Locator.temporary().directory(applicationClass.getName()).touch();
 
-                // try to retrieve lock to validate
-                AsynchronousFileChannel channel = AsynchronousFileChannel
-                        .open(file.asPath(), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
-                FileLock lock = channel.tryLock();
+            root.lock(() -> {
+                // another application is activated
+                if (policy == ActivationPolicy.Earliest) {
+                    // make the window active
+                    root.file("active").touch();
 
-                if (lock == null) {
-                    // another application is activated
-                    if (policy == ActivationPolicy.Earliest) {
-                        // make the window active
-                        root.file("active").touch();
-
-                        throw new RuntimeException("Application is running already.");
-                    } else {
-                        // close the window
-                        root.file("close").touch();
-
-                        // wait for shutdown previous application
-                        channel.lock().get();
-                    }
+                    throw new Error("Application is running already.");
+                } else {
+                    // close the window
+                    root.file("close").touch();
                 }
+            });
 
-                // observe lock directory for next application
-                root.observe().map(WatchEvent::context).to(path -> {
-                    switch (path.getFileName().toString()) {
-                    case "active":
-                        for (View view : views) {
-                            view.show();
-                        }
-                        break;
-
-                    case "close":
-                        deactivate();
-                        break;
+            // observe lock directory for next application
+            root.observe().map(WatchEvent::context).to(path -> {
+                switch (path.getFileName().toString()) {
+                case "active":
+                    for (View view : views) {
+                        view.show();
                     }
-                });
-            } catch (Exception e) {
-                throw I.quiet(e);
-            }
+                    break;
+
+                case "close":
+                    deactivate();
+                    break;
+                }
+            });
         }
     }
 
