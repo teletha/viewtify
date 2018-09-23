@@ -17,7 +17,7 @@ import stylist.StyleRule;
 import stylist.value.Color;
 
 /**
- * @version 2018/09/12 19:16:52
+ * @version 2018/09/24 7:46:41
  */
 class JavaFXLizerTest implements StyleDSL {
 
@@ -167,5 +167,13 @@ class JavaFXLizerTest implements StyleDSL {
             text.unselectable();
         });
         assert style.properties.is("-fx-focus-traversable", "false");
+    }
+
+    @Test
+    void visibility() {
+        StyleRule style = writeStyle(() -> {
+            visibility.hidden();
+        });
+        assert style.properties.is("visibility", "hidden");
     }
 }

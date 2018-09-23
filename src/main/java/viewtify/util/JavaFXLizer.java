@@ -19,7 +19,7 @@ import stylist.util.Properties;
 import stylist.value.Color;
 
 /**
- * @version 2018/09/10 11:24:54
+ * @version 2018/09/24 7:48:25
  */
 public class JavaFXLizer implements Consumer<Properties> {
 
@@ -64,7 +64,8 @@ public class JavaFXLizer implements Consumer<Properties> {
     private CSSValue rename(CSSValue propertyName) {
         String name = propertyName.toString();
         String renamed = propertyNames.getOrDefault(name, name);
-        return CSSValue.of("-fx-" + renamed);
+
+        return name.equals("visibility") ? propertyName : CSSValue.of("-fx-" + renamed);
     }
 
     /**
