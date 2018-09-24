@@ -22,6 +22,7 @@ import javafx.css.StyleOrigin;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.css.converter.InsetsConverter;
+import javafx.css.converter.SizeConverter;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -31,7 +32,7 @@ import javafx.scene.layout.VBox;
 import kiss.WiseBiConsumer;
 
 /**
- * @version 2018/09/10 9:20:35
+ * @version 2018/09/24 16:48:16
  */
 final class ExtraCSS {
 
@@ -46,8 +47,15 @@ final class ExtraCSS {
         }
     });
 
+    /** The extra property. */
+    private static final Meta<Node, Number> ZIndex = new Meta<>("-fx-z-index", SizeConverter.getInstance(), (node, size) -> {
+        System.out.println("ZINdex");
+        System.out.println(size + "  " + size.doubleValue() + "   " + (-size.doubleValue()));
+        node.setViewOrder(-size.doubleValue());
+    });
+
     /** The extra properties. */
-    private static final List<CssMetaData<? extends Styleable, ?>> extra = List.of(Margin);
+    private static final List<CssMetaData<? extends Styleable, ?>> extra = List.of(Margin, ZIndex);
 
     /** The cache of CSS metadata. */
     private static final Map<List<CssMetaData<? extends Styleable, ?>>, List<CssMetaData<? extends Styleable, ?>>> cache = new HashMap();
