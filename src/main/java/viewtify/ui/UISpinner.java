@@ -14,8 +14,6 @@ import java.util.function.Function;
 
 import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
-import javafx.css.CssMetaData;
-import javafx.css.Styleable;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.util.StringConverter;
@@ -33,7 +31,7 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>> implem
      * @param view A {@link View} to which the widget belongs.
      */
     private UISpinner(View view) {
-        super(new Internal(), view);
+        super(new Spinner(), view);
 
         ui.setOnScroll(e -> {
             if (e.getDeltaY() > 0) {
@@ -104,20 +102,6 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>> implem
             // If this exception will be thrown, it is bug of this program. So we must rethrow the
             // wrapped error in here.
             throw new Error("Don't call!");
-        }
-    }
-
-    /**
-     * @version 2018/09/09 23:26:36
-     */
-    private static class Internal extends Spinner {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return ExtraCSS.metadata(super.getControlCssMetaData());
         }
     }
 }

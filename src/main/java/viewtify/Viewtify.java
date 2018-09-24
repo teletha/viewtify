@@ -96,6 +96,8 @@ public final class Viewtify {
                 .startWith(false)
                 .to()
                 .get();
+
+        CSS.enhance();
     }
 
     /** The dispose on exit. */

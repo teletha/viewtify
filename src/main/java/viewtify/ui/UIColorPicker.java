@@ -9,12 +9,8 @@
  */
 package viewtify.ui;
 
-import java.util.List;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
-import javafx.css.CssMetaData;
-import javafx.css.Styleable;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 
@@ -39,7 +35,7 @@ public class UIColorPicker extends UserInterface<UIColorPicker, ColorPicker>
      * @param view A {@link View} to which the widget belongs.
      */
     protected UIColorPicker(View view) {
-        super(new Internal(), view);
+        super(new ColorPicker(), view);
     }
 
     /**
@@ -56,19 +52,5 @@ public class UIColorPicker extends UserInterface<UIColorPicker, ColorPicker>
     @Override
     public Property<Color> model() {
         return color;
-    }
-
-    /**
-     * @version 2018/09/09 23:26:36
-     */
-    private static class Internal extends ColorPicker {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return ExtraCSS.metadata(super.getControlCssMetaData());
-        }
     }
 }

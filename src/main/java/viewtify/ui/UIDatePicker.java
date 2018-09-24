@@ -14,13 +14,10 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoZonedDateTime;
-import java.util.List;
 import java.util.function.Supplier;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
-import javafx.css.CssMetaData;
-import javafx.css.Styleable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 
@@ -40,7 +37,7 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
      * @param view A {@link View} to which the widget belongs.
      */
     protected UIDatePicker(View view) {
-        super(new Internal(), view);
+        super(new DatePicker(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll, e -> {
@@ -205,19 +202,5 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
      */
     public final boolean isSame(ChronoZonedDateTime date) {
         return isSame(date.toLocalDate());
-    }
-
-    /**
-     * @version 2018/09/09 23:26:36
-     */
-    private static class Internal extends DatePicker {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return ExtraCSS.metadata(super.getControlCssMetaData());
-        }
     }
 }

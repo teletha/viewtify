@@ -7,13 +7,13 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify.ui;
+package viewtify;
 
+import java.lang.instrument.Instrumentation;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javafx.css.CssMetaData;
@@ -29,12 +29,21 @@ import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import filer.Filer;
+import kiss.I;
 import kiss.WiseBiConsumer;
+import net.bytebuddy.agent.ByteBuddyAgent;
+import net.bytebuddy.agent.builder.AgentBuilder;
+import net.bytebuddy.asm.ModifierAdjustment;
+import net.bytebuddy.description.modifier.FieldManifestation;
+import net.bytebuddy.description.modifier.Visibility;
+import net.bytebuddy.matcher.ElementMatchers;
 
 /**
- * @version 2018/09/24 16:48:16
+ * @version 2018/09/24 22:02:52
  */
-final class ExtraCSS {
+@SuppressWarnings("unused")
+final class CSS {
 
     /** The extra property. */
     private static final Meta<Node, Insets> Margin = new Meta<>("-fx-margin", InsetsConverter.getInstance(), (node, insets) -> {
@@ -49,31 +58,41 @@ final class ExtraCSS {
 
     /** The extra property. */
     private static final Meta<Node, Number> ZIndex = new Meta<>("-fx-z-index", SizeConverter.getInstance(), (node, size) -> {
-        System.out.println("ZINdex");
-        System.out.println(size + "  " + size.doubleValue() + "   " + (-size.doubleValue()));
         node.setViewOrder(-size.doubleValue());
     });
 
-    /** The extra properties. */
-    private static final List<CssMetaData<? extends Styleable, ?>> extra = List.of(Margin, ZIndex);
-
-    /** The cache of CSS metadata. */
-    private static final Map<List<CssMetaData<? extends Styleable, ?>>, List<CssMetaData<? extends Styleable, ?>>> cache = new HashMap();
-
     /**
-     * Append extra CSS properties to the specified metadata.
-     * 
-     * @param meta A parent metadata to be appended.
-     * @return A synthesized metadata which is cached properly.
+     * Enhance CSS implemetation.
      */
-    static List<CssMetaData<? extends Styleable, ?>> metadata(List<CssMetaData<? extends Styleable, ?>> meta) {
-        return cache.computeIfAbsent(meta, parent -> {
-            List<CssMetaData<? extends Styleable, ?>> synthesized = new ArrayList();
-            synthesized.addAll(parent);
-            synthesized.addAll(extra);
+    static void enhance() {
+        try {
+            Instrumentation instrument = ByteBuddyAgent.install();
 
-            return Collections.unmodifiableList(synthesized);
-        });
+            // expose javafx.scene.Node$StyleableProperties
+            ModifierAdjustment modifier = new ModifierAdjustment() //
+                    .withTypeModifiers(Visibility.PUBLIC)
+                    .withFieldModifiers(Visibility.PUBLIC, FieldManifestation.PLAIN);
+
+            // redefine
+            new AgentBuilder.Default() //
+                    .enableBootstrapInjection(instrument, Filer.locateTemporary().toFile())
+                    .type(ElementMatchers.named("javafx.scene.Node$StyleableProperties"))
+                    .transform((builder, desc, loader, module) -> builder.visit(modifier))
+                    .installOn(instrument);
+
+            // add extra properties
+            Class clazz = Class.forName("javafx.scene.Node$StyleableProperties");
+            Field field = clazz.getDeclaredField("STYLEABLES");
+            List list = (List) field.get(null);
+
+            List enhanced = new ArrayList();
+            enhanced.addAll(list);
+            enhanced.addAll(I.signal(CSS.class.getDeclaredFields()).take(f -> f.getType() == Meta.class).map(f -> f.get(null)).toList());
+
+            field.set(null, Collections.unmodifiableList(enhanced));
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
     }
 
     /**

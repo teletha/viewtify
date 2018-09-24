@@ -9,14 +9,11 @@
  */
 package viewtify.ui;
 
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
-import javafx.css.CssMetaData;
-import javafx.css.Styleable;
 import javafx.scene.Node;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableSelectionModel;
@@ -38,7 +35,7 @@ public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<
      * @param view A {@link View} to which the widget belongs.
      */
     private UITableView(View view) {
-        super(new Internal(), view, ui -> Viewtify.calculate(ui.getSelectionModel().getSelectedItems()));
+        super(new TableView(), view, ui -> Viewtify.calculate(ui.getSelectionModel().getSelectedItems()));
 
         values = Viewtify.observe(new CopyOnWriteArrayList<>(ui.getItems()));
         ui.setItems(values);
@@ -67,19 +64,5 @@ public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<
         ui.setRowFactory(table -> renderer.apply(this));
 
         return this;
-    }
-
-    /**
-     * @version 2018/09/09 23:26:36
-     */
-    private static class Internal<V> extends TableView<V> {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return ExtraCSS.metadata(super.getControlCssMetaData());
-        }
     }
 }

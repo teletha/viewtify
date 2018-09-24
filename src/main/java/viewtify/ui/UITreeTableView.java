@@ -9,12 +9,9 @@
  */
 package viewtify.ui;
 
-import java.util.List;
 import java.util.function.Function;
 
 import javafx.beans.property.ObjectProperty;
-import javafx.css.CssMetaData;
-import javafx.css.Styleable;
 import javafx.scene.Node;
 import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TreeItem;
@@ -37,7 +34,7 @@ public class UITreeTableView<T> extends AbstractTableView<UITreeTableView<T>, Tr
      * @param view A {@link View} to which the widget belongs.
      */
     private UITreeTableView(View view) {
-        super(new Internal(), view, ui -> Viewtify.calculate(ui.getSelectionModel().getSelectedItems()).map(TreeItem<T>::getValue));
+        super(new TreeTableView(), view, ui -> Viewtify.calculate(ui.getSelectionModel().getSelectedItems()).map(TreeItem<T>::getValue));
 
         TreeItem item = new TreeItem();
         ui.setRoot(item);
@@ -69,19 +66,5 @@ public class UITreeTableView<T> extends AbstractTableView<UITreeTableView<T>, Tr
         ui.setRowFactory(table -> renderer.apply(this));
 
         return this;
-    }
-
-    /**
-     * @version 2018/09/09 23:26:36
-     */
-    private static class Internal<V> extends TreeTableView<V> {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return ExtraCSS.metadata(super.getControlCssMetaData());
-        }
     }
 }

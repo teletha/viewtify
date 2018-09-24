@@ -10,15 +10,12 @@
 package viewtify.ui;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.css.CssMetaData;
-import javafx.css.Styleable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
@@ -43,7 +40,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param view A {@link View} to which the widget belongs.
      */
     private UITableColumn(View view) {
-        super(new Internal());
+        super(new TableColumn());
     }
 
     /**
@@ -199,20 +196,6 @@ public class UITableColumn<RowValue, ColumnValue>
         @Override
         public TableCell ui() {
             return ui;
-        }
-    }
-
-    /**
-     * @version 2018/09/09 23:26:36
-     */
-    private static class Internal<S, T> extends TableColumn<S, T> {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
-            return ExtraCSS.metadata(super.getCssMetaData());
         }
     }
 }

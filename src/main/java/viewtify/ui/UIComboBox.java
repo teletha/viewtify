@@ -15,8 +15,6 @@ import java.util.function.Function;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
-import javafx.css.CssMetaData;
-import javafx.css.Styleable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 
@@ -36,7 +34,7 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
      * @param view A {@link View} to which the widget belongs.
      */
     private UIComboBox(View view) {
-        super(new Internal(), view);
+        super(new ComboBox(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll, Action.traverse(ui.getSelectionModel()));
@@ -116,20 +114,6 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
             } else {
                 setText(factory.apply(item));
             }
-        }
-    }
-
-    /**
-     * @version 2018/09/09 23:26:36
-     */
-    private static class Internal extends ComboBox {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return ExtraCSS.metadata(super.getControlCssMetaData());
         }
     }
 }

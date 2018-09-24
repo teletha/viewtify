@@ -9,10 +9,6 @@
  */
 package viewtify.ui;
 
-import java.util.List;
-
-import javafx.css.CssMetaData;
-import javafx.css.Styleable;
 import javafx.scene.control.Button;
 
 import viewtify.ui.helper.LabelHelper;
@@ -28,20 +24,6 @@ public class UIButton extends UserInterface<UIButton, Button> implements LabelHe
      * @param view A {@link View} to which the widget belongs.
      */
     private UIButton(View view) {
-        super(new Internal(), view);
-    }
-
-    /**
-     * @version 2018/09/09 23:26:36
-     */
-    private static class Internal extends Button {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
-            return ExtraCSS.metadata(super.getControlCssMetaData());
-        }
+        super(new Button(), view);
     }
 }
