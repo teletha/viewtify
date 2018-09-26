@@ -16,6 +16,9 @@ public class Project extends bee.api.Project {
         require("com.github.teletha", "psychopath", "0.6");
         require("com.github.teletha", "stylist", "0.1");
         require("com.github.teletha", "antibug", "0.6").atTest();
+        require("org.openjfx", "javafx-controls", "11");
+        require("org.openjfx", "javafx-media", "11");
         require("org.controlsfx", "controlsfx", "9.0.0");
+
     }
 }

@@ -9,7 +9,7 @@
  */
 package viewtify;
 
-import javafx.embed.swing.JFXPanel;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
 
@@ -22,7 +22,8 @@ public abstract class JavaFXTester {
 
     @BeforeAll
     static void initialize() {
-        new JFXPanel();
+        Platform.startup(() -> {
+        });
     }
 
     /**
