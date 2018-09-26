@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.util;
+package viewtify;
 
 import java.util.Map;
 import java.util.function.Consumer;
@@ -19,13 +19,13 @@ import stylist.util.Properties;
 import stylist.value.Color;
 
 /**
- * @version 2018/09/24 7:48:25
+ * @version 2018/09/26 15:12:34
  */
-public class JavaFXLizer implements Consumer<Properties> {
+class CSSProcessor implements Consumer<Properties> {
 
     /** The special formatter for JavaFX. */
     public static final Formatter pretty() {
-        return Formatter.pretty().color(Color::toRGB).postProcessor(new JavaFXLizer());
+        return Formatter.pretty().color(Color::toRGB).postProcessor(new CSSProcessor());
     }
 
     /** The property name mapping. */

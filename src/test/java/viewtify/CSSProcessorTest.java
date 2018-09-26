@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.util;
+package viewtify;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,11 +15,12 @@ import stylist.Style;
 import stylist.StyleDSL;
 import stylist.StyleRule;
 import stylist.value.Color;
+import viewtify.CSSProcessor;
 
 /**
  * @version 2018/09/24 7:46:41
  */
-class JavaFXLizerTest implements StyleDSL {
+class CSSProcessorTest implements StyleDSL {
 
     /**
      * Write {@link Style}.
@@ -30,7 +31,7 @@ class JavaFXLizerTest implements StyleDSL {
     private StyleRule writeStyle(Style style) {
         StyleRule rule = StyleRule.create(style);
 
-        new JavaFXLizer().accept(rule.properties);
+        new CSSProcessor().accept(rule.properties);
 
         return rule;
     }

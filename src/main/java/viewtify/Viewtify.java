@@ -74,7 +74,6 @@ import viewtify.bind.Calculation;
 import viewtify.bind.CalculationList;
 import viewtify.ui.UserInterface;
 import viewtify.ui.View;
-import viewtify.util.JavaFXLizer;
 import viewtify.util.UIThreadSafeList;
 
 /**
@@ -250,7 +249,7 @@ public final class Viewtify {
         I.load(application, false);
 
         // build application stylesheet
-        Path applicationStyles = JavaFXLizer.pretty().format(".preferences/application.css");
+        Path applicationStyles = CSSProcessor.pretty().format(".preferences/application.css");
 
         // launch JavaFX UI
         Platform.startup(() -> {
