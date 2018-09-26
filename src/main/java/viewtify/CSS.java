@@ -58,7 +58,9 @@ final class CSS {
 
     /** The extra property. */
     private static final Meta<Node, Number> ZIndex = new Meta<>("-fx-z-index", SizeConverter.getInstance(), (node, size) -> {
-        node.setViewOrder(-size.doubleValue());
+        if (size != null) {
+            node.setViewOrder(-size.doubleValue());
+        }
     });
 
     /**
