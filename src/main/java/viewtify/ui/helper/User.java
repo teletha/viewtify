@@ -92,7 +92,7 @@ public final class User<E extends Event> {
      * @return
      */
     private static Predicate<KeyEvent> valid(Key key) {
-        return key == null ? I.accept() : e -> e.getCode().getCode() == key.code;
+        return key == null ? I.accept() : key::match;
     }
 
     /** User Action */

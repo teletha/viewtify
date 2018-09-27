@@ -9,7 +9,7 @@
  */
 package viewtify;
 
-import viewtify.ui.helper.User;
+import javafx.scene.input.KeyEvent;
 
 /**
  * @version 2018/08/02 11:31:46
@@ -521,41 +521,125 @@ public class Key {
     public static final Key Circumflex = new Key(160, "Circumflex");
 
     /**
-     * Constant for the Microsoft Windows "Windows" key. It is used for both the left and right version
-     * of the key.
+     * Constant for the Microsoft Windows "Windows" key. It is used for both the left and right
+     * version of the key.
      */
     public static final Key WINDOWS = new Key(91, "Windows");
+
+    /** The modifier. */
+    private static final int ALT = 1 << 0;
+
+    /** The modifier. */
+    private static final int CTRL = 1 << 1;
+
+    /** The modifier. */
+    private static final int META = 1 << 2;
+
+    /** The modifier. */
+    private static final int SHIFT = 1 << 3;
+
+    /** The modifier. */
+    private static final int SHORTCUT = 1 << 4;
 
     /** The native key code. */
     public final int code;
 
-    /** The event type. */
-    public final User event;
+    /** The key name. */
+    public final String name;
+
+    /** The modifier manager. */
+    private final int modifiers;
 
     /**
      * @param code A native key code.
      */
     private Key(int code, String name) {
-        this(code, name, null);
+        this(code, name, 0);
     }
 
     /**
      * @param code A native key code.
      */
-    private Key(int code, String name, User event) {
+    private Key(int code, String name, int modifier) {
         this.code = code;
-        this.event = event;
+        this.name = name;
+        this.modifiers = modifier;
     }
 
-    public Key ctrl() {
-        return null;
-    }
-
-    public Key shift() {
-        return null;
-    }
-
+    /**
+     * With modifier.
+     * 
+     * @return A modified key combination.
+     */
     public Key alt() {
-        return null;
+        return new Key(code, name, modifiers | ALT);
+    }
+
+    /**
+     * With modifier.
+     * 
+     * @return A modified key combination.
+     */
+    public Key ctrl() {
+        return new Key(code, name, modifiers | CTRL);
+    }
+
+    /**
+     * With modifier.
+     * 
+     * @return A modified key combination.
+     */
+    public Key meta() {
+        return new Key(code, name, modifiers | META);
+    }
+
+    /**
+     * With modifier.
+     * 
+     * @return A modified key combination.
+     */
+    public Key shift() {
+        return new Key(code, name, modifiers | SHIFT);
+    }
+
+    /**
+     * With modifier.
+     * 
+     * @return A modified key combination.
+     */
+    public Key shortcut() {
+        return new Key(code, name, modifiers | SHORTCUT);
+    }
+
+    /**
+     * Tests if this key matches the combination on the specified KeyEvent.
+     * 
+     * @param e
+     */
+    public boolean match(KeyEvent e) {
+        if (e.getCode().getCode() != code) {
+            return false;
+        }
+
+        if ((modifiers & ALT) != 0 && !e.isAltDown()) {
+            return false;
+        }
+
+        if ((modifiers & CTRL) != 0 && !e.isControlDown()) {
+            return false;
+        }
+
+        if ((modifiers & META) != 0 && !e.isMetaDown()) {
+            return false;
+        }
+
+        if ((modifiers & SHIFT) != 0 && !e.isShiftDown()) {
+            return false;
+        }
+
+        if ((modifiers & SHORTCUT) != 0 && !e.isShortcutDown()) {
+            return false;
+        }
+        return true;
     }
 }
