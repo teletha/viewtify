@@ -15,6 +15,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import kiss.Signal;
 import kiss.Signaling;
+import kiss.Storable;
 
 /**
  * @version 2018/04/28 8:37:47
@@ -35,6 +36,16 @@ public abstract class Sequential<T> implements Iterable<T> {
 
     /** The event signal. */
     public transient final Signal<T> remove = removes.expose;
+
+    /**
+     * 
+     * 
+     */
+    protected Sequential() {
+        if (this instanceof Storable) {
+            add.merge(remove).mapTo(this).as(Storable.class).to(Storable::store);
+        }
+    }
 
     /**
      * Get the items property of this {@link Sequential}.

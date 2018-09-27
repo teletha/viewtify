@@ -9,11 +9,11 @@
  */
 package viewtify.ui;
 
-import java.util.Objects;
-
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.Tab;
 
 import kiss.Signal;
+import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.helper.StyleHelper;
 
@@ -63,7 +63,11 @@ public class UITab implements StyleHelper<UITab, Tab> {
      * @param text
      */
     public UITab text(Object text) {
-        ui.setText(Objects.toString(text));
+        if (text instanceof Variable) {
+            ui.textProperty().bind(Viewtify.calculate((Variable) text));
+        } else {
+            ui.textProperty().bind(Bindings.concat(text));
+        }
         return this;
     }
 }

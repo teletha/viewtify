@@ -19,6 +19,5 @@ public class Project extends bee.api.Project {
         require("org.openjfx", "javafx-controls", "11");
         require("org.openjfx", "javafx-media", "11");
         require("org.controlsfx", "controlsfx", "9.0.0");
-
     }
 }

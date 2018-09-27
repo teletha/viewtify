@@ -27,7 +27,7 @@ import viewtify.model.Selectable;
 import viewtify.ui.helper.User;
 
 /**
- * @version 2018/09/09 12:03:35
+ * @version 2018/09/27 11:20:12
  */
 public class UITabPane extends UserInterface<UITabPane, TabPane> {
 
@@ -46,13 +46,33 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
         when(User.Scroll).take(Action.inside(ui.lookup(".tab-header-background"))).to(Action.traverse(ui.getSelectionModel()));
     }
 
-    public <T> UITabPane model(Selectable<T> model, BiFunction<UITab, T, View> view) {
+    /**
+     * Set initial selected index.
+     * 
+     * @param initialSelectedIndex
+     * @return
+     */
+    public UITabPane initial(int initialSelectedIndex) {
+        restore(ui.getSelectionModel().selectedIndexProperty(), v -> ui.getSelectionModel().select((int) v), initialSelectedIndex);
+        return this;
+    }
+
+    /**
+     * Load tab with the specified view.
+     * 
+     * @param model A binded model.
+     * @param label Specify the label of the tab. This is used as a temporary label until the
+     *            contents of the tab are read, as tab loading is delayed until needed actually.
+     * @param view
+     * @return
+     */
+    public <T> UITabPane model(Selectable<T> model, Function<T, String> label, BiFunction<UITab, T, View> view) {
         if (model != null) {
             disposable.dispose();
             disposable = Disposable.empty();
 
             model.add.startWith(model).to(v -> {
-                load(v.toString(), tab -> view.apply(tab, v));
+                load(label.apply(v), tab -> view.apply(tab, v));
                 last().v.closed.to(() -> model.remove(v));
             });
             model.remove.to(v -> {
@@ -69,20 +89,10 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
     }
 
     /**
-     * Set initial selected index.
-     * 
-     * @param initialSelectedIndex
-     * @return
-     */
-    public UITabPane initial(int initialSelectedIndex) {
-        restore(ui.getSelectionModel().selectedIndexProperty(), v -> ui.getSelectionModel().select((int) v), initialSelectedIndex);
-        return this;
-    }
-
-    /**
      * Load tab with the specified view.
      * 
-     * @param label A tab label.
+     * @param label Specify the label of the tab. This is used as a temporary label until the
+     *            contents of the tab are read, as tab loading is delayed until needed actually.
      * @param loadingViewType A view type to load.
      * @return
      */
@@ -93,7 +103,8 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
     /**
      * Load tab with the specified view.
      * 
-     * @param label A tab label.
+     * @param label Specify the label of the tab. This is used as a temporary label until the
+     *            contents of the tab are read, as tab loading is delayed until needed actually.
      * @param loadingViewType A view type to load.
      * @return
      */

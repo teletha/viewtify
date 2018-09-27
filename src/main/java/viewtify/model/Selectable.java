@@ -40,7 +40,11 @@ public abstract class Selectable<T> extends Sequential<T> {
      * @return
      */
     public final T selection() {
-        return get(selectionIndex.v);
+        if (selectionIndex.is(-1)) {
+            return null;
+        } else {
+            return get(selectionIndex.v);
+        }
     }
 
     /**
