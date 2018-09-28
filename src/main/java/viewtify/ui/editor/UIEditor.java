@@ -41,7 +41,6 @@ public class UIEditor extends UserInterface<UIEditor, WebView> {
 
     public String cusor() {
         JSObject executeScript = (JSObject) ui.getEngine().executeScript("editor.selection.getCursor()");
-        System.out.println(executeScript.);
 
         return "OKOKO";
     }
