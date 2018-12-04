@@ -13,6 +13,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 
+import kiss.Signal;
 import kiss.Variable;
 import stylist.Style;
 import viewtify.Viewtify;
@@ -99,7 +100,17 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
      * @return Chainable API.
      */
     default Self styleOnly(Variable<Style> style) {
-        style.observeNow().to(this::styleOnly);
+        return styleOnly(style.observeNow());
+    }
+
+    /**
+     * Apply {@link Style} to user interface;
+     * 
+     * @param styles A list of {@link Style}s to apply.
+     * @return Chainable API.
+     */
+    default Self styleOnly(Signal<Style> style) {
+        style.to(this::styleOnly);
         return (Self) this;
     }
 
