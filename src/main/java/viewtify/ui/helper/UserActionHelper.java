@@ -17,6 +17,7 @@ import kiss.I;
 import kiss.Signal;
 import kiss.WiseBiConsumer;
 import kiss.WiseConsumer;
+import kiss.WiseFunction;
 import kiss.WiseRunnable;
 
 /**
@@ -66,7 +67,7 @@ public interface UserActionHelper<Self extends UserActionHelper> {
      * @return An event {@link Signal}.
      */
     private <E extends Event> Signal<E> when(Signal<User<E>> actionTypes) {
-        return actionTypes.skipNull().flatMap(this::when);
+        return actionTypes.skipNull().flatMap((WiseFunction<User<E>, Signal<E>>) this::when);
     }
 
     /**
