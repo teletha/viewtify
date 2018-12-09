@@ -10,9 +10,12 @@
 package viewtify.ui.helper;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import javafx.scene.control.Labeled;
+import kiss.Variable;
+import viewtify.Viewtify;
 
 /**
  * @version 2018/08/27 21:27:30
@@ -45,5 +48,10 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      */
     default Self text(Supplier<?> text) {
         return text(text.get());
+    }
+
+    default Self text(Variable text) {
+        text.observeNow().on(Viewtify.UIThread).to((Consumer) this::text);
+        return (Self) this;
     }
 }
