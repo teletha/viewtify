@@ -317,7 +317,7 @@ public final class Viewtify {
     private void checkPolicy() {
         if (policy != ActivationPolicy.Multiple) {
             // create application specified directory for lock
-            Directory root = Locator.temporaryDirectory().directory(applicationClass.getName()).touch();
+            Directory root = Locator.directory(".lock").touch();
 
             root.lock(() -> {
                 // another application is activated
