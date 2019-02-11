@@ -87,7 +87,7 @@ public class Validation {
             String message = e.getLocalizedMessage();
 
             if (message == null || message.isEmpty()) {
-                message = I.i18n(Lang::invalidValue);
+                message = I.i18n(Lang.class).invalidValue();
             }
             $valid.set(false);
             this.message.set(message);
