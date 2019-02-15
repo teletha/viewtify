@@ -12,10 +12,10 @@ public class Project extends bee.api.Project {
     {
         product("com.github.teletha", "viewtify", "1.0");
 
-        require("com.github.teletha", "sinobu", "[1.2,)");
-        require("com.github.teletha", "psychopath", "0.9");
-        require("com.github.teletha", "stylist", "0.1");
-        require("com.github.teletha", "antibug", "0.6").atTest();
+        require("com.github.teletha", "sinobu", "LATEST");
+        require("com.github.teletha", "psychopath", "LATEST");
+        require("com.github.teletha", "stylist", "LATEST");
+        require("com.github.teletha", "antibug", "LATEST").atTest();
         require("org.openjfx", "javafx-controls", "11");
         require("org.openjfx", "javafx-media", "11");
         require("org.openjfx", "javafx-web", "11");

@@ -9,7 +9,11 @@
  */
 package viewtify.bind;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -18,10 +22,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
-import org.junit.jupiter.api.Test;
-
-import antibug.Code;
 import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
@@ -86,7 +86,7 @@ class CalculationTest {
 
     @Test
     void asNull() {
-        assert Code.catcheNPE(() -> Viewtify.calculate(Variable.of(10)).as(null));
+        assertThrows(NullPointerException.class, () -> Viewtify.calculate(Variable.of(10)).as(null));
     }
 
     @Test
