@@ -31,8 +31,8 @@ public interface DisableHelper<Self extends DisableHelper> {
     /**
      * Validation helper.
      */
-    default Self disableWhen(Signal<Boolean> condition) {
-        condition.to(disable()::setValue);
+    default Self disableWhen(Signal<Boolean> condition, Signal<Boolean>... conditions) {
+        condition.combineLatest(conditions, (one, other) -> one || other).to(disable()::setValue);
 
         return (Self) this;
     }

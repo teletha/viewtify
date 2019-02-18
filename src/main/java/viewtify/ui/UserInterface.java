@@ -15,7 +15,6 @@ import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.geometry.Pos;
@@ -243,14 +242,14 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     /**
      * Return the validation result of this {@link UserInterface}.
      */
-    public final BooleanBinding isValid() {
+    public final Signal<Boolean> isValid() {
         return validation().valid;
     }
 
     /**
      * Return the validation result of this {@link UserInterface}.
      */
-    public final BooleanBinding isInvalid() {
+    public final Signal<Boolean> isInvalid() {
         return validation().invalid;
     }
 
