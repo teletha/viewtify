@@ -18,9 +18,9 @@ public class Project extends bee.api.Project {
         require("com.github.teletha", "antibug", "LATEST").atTest();
         require("net.bytebuddy", "byte-buddy", "LATEST");
         require("net.bytebuddy", "byte-buddy-agent", "LATEST");
-        require("org.openjfx", "javafx-controls", "11");
-        require("org.openjfx", "javafx-media", "11");
-        require("org.openjfx", "javafx-web", "11");
+        require("org.openjfx", "javafx-controls", "LATEST");
+        require("org.openjfx", "javafx-media", "LATEST");
+        require("org.openjfx", "javafx-web", "LATEST");
         require("org.controlsfx", "controlsfx", "9.0.0");
 
         versionControlSystem("https://github.com/teletha/viewtify");
