@@ -16,24 +16,20 @@ import kiss.Extensible;
 import kiss.I;
 import kiss.Manageable;
 import kiss.Signal;
-import kiss.Signaling;
 import kiss.Singleton;
 import kiss.Variable;
 import kiss.WiseRunnable;
 
 public class Validation {
 
-    /** The internal validation result. */
-    private final Signaling<Boolean> $valid = new Signaling();
-
-    /** The exposed validation result. */
-    public final Signal<Boolean> valid = $valid.expose;
-
-    /** The exposed validation result. */
-    public final Signal<Boolean> invalid = $valid.expose.map(v -> !v);
-
     /** The validation message. */
     public final Variable<String> message = Variable.empty();
+
+    /** The exposed validation result. */
+    public final Signal<Boolean> valid = message.observeNow().map(m -> m == null || m.isEmpty());
+
+    /** The exposed validation result. */
+    public final Signal<Boolean> invalid = valid.map(v -> !v);
 
     /** The list of validators. */
     private final Set<Runnable> validators = new HashSet();
@@ -75,7 +71,6 @@ public class Validation {
             for (Runnable validator : validators) {
                 validator.run();
             }
-            $valid.accept(true);
             this.message.set((String) null);
         } catch (Throwable e) {
             String message = e.getLocalizedMessage();
@@ -83,7 +78,6 @@ public class Validation {
             if (message == null || message.isEmpty()) {
                 message = I.i18n(Lang.class).invalidValue();
             }
-            $valid.accept(false);
             this.message.set(message);
         }
     }

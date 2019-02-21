@@ -14,8 +14,8 @@ import java.util.function.Consumer;
 
 import kiss.Variable;
 import stylist.CSSValue;
+import stylist.Properties;
 import stylist.Stylist;
-import stylist.util.Properties;
 import stylist.value.Color;
 
 /**
