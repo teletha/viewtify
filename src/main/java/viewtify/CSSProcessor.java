@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 import kiss.Variable;
 import stylist.CSSValue;
-import stylist.util.Formatter;
+import stylist.Stylist;
 import stylist.util.Properties;
 import stylist.value.Color;
 
@@ -24,8 +24,8 @@ import stylist.value.Color;
 class CSSProcessor implements Consumer<Properties> {
 
     /** The special formatter for JavaFX. */
-    public static final Formatter pretty() {
-        return Formatter.pretty().color(Color::toRGB).postProcessor(new CSSProcessor());
+    public static final Stylist pretty() {
+        return Stylist.pretty().color(Color::toRGB).postProcessor(new CSSProcessor());
     }
 
     /** The property name mapping. */

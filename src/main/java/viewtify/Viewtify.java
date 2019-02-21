@@ -249,7 +249,7 @@ public final class Viewtify {
         I.load(application, false);
 
         // build application stylesheet
-        Path applicationStyles = CSSProcessor.pretty().format(".preferences/application.css");
+        Path applicationStyles = CSSProcessor.pretty().formatTo(".preferences/application.css");
 
         // launch JavaFX UI
         Platform.startup(() -> {
