@@ -80,7 +80,7 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      * @param followers
      */
     protected final void label(Object text, Consumer<UINode>... followers) {
-        label(() -> String.valueOf(text), followers);
+        $(() -> TextNotation.parse(String.valueOf(text)), followers);
     }
 
     /**
@@ -90,7 +90,7 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      * @param followers
      */
     protected final void label(Supplier<String> text, Consumer<UINode>... followers) {
-        $(() -> TextNotation.parse(String.valueOf(text.get())), followers);
+        $(() -> TextNotation.parse(text), followers);
     }
 
     /**

@@ -14,8 +14,10 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import javafx.scene.control.Labeled;
+
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.translator.Lang;
 
 /**
  * @version 2018/08/27 21:27:30
@@ -47,7 +49,10 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * @param text A text {@link Supplier} to set.
      */
     default Self text(Supplier<?> text) {
-        return text(text.get());
+        Lang.observe().to(lang -> {
+            text(text.get());
+        });
+        return (Self) this;
     }
 
     default Self text(Variable text) {
