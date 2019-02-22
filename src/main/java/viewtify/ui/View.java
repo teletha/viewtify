@@ -19,17 +19,13 @@ import javafx.scene.control.TableColumnBase;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import kiss.Extensible;
 import kiss.I;
-import kiss.Manageable;
-import kiss.Singleton;
 import kiss.Variable;
 import kiss.model.Model;
 import viewtify.Viewtify;
 
-/**
- * @version 2018/09/09 16:24:47
- */
 public abstract class View implements Extensible, UserInterfaceProvider {
 
     /** The human-readable ID separator. */
@@ -259,14 +255,5 @@ public abstract class View implements Extensible, UserInterfaceProvider {
         } else if (ui instanceof TableColumnBase) {
             ((TableColumnBase) ui).setId(id);
         }
-    }
-
-    /**
-     * Empty resource.
-     * 
-     * @version 2018/08/30 1:55:51
-     */
-    @Manageable(lifestyle = Singleton.class)
-    private static class Φ implements Extensible {
     }
 }
