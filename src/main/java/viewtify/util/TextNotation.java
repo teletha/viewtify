@@ -20,7 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.text.TextFlow;
 
 import kiss.I;
-import viewtify.translator.Lang;
+import viewtify.localize.Lang;
 
 /**
  * @version 2018/08/30 2:09:47

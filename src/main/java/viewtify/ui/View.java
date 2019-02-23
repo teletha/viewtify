@@ -25,12 +25,12 @@ import kiss.I;
 import kiss.Variable;
 import kiss.model.Model;
 import viewtify.Viewtify;
-import viewtify.translator.Lang;
+import viewtify.localize.Lang;
 
 public abstract class View implements Extensible, UserInterfaceProvider {
 
     protected static Lang lang() {
-        return Lang.now();
+        return Lang.current();
     }
 
     /** The human-readable ID separator. */

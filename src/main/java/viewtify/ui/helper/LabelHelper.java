@@ -17,7 +17,7 @@ import javafx.scene.control.Labeled;
 
 import kiss.Variable;
 import viewtify.Viewtify;
-import viewtify.translator.Lang;
+import viewtify.localize.Lang;
 
 /**
  * @version 2018/08/27 21:27:30
