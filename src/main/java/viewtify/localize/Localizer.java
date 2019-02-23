@@ -13,8 +13,10 @@ import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import kiss.I;
+import psychopath.File;
 import psychopath.Location;
 import psychopath.Locator;
 
@@ -69,13 +71,19 @@ public final class Localizer {
     }
 
     public void localize() {
-        I.signal(classes)
+        List<String> texts = I.signal(classes)
                 .flatArray(clazz -> clazz.getDeclaredFields())
                 .take(field -> Modifier.isStatic(field.getModifiers()) && field.getType() == Text.class)
                 .effect(field -> field.setAccessible(true))
                 .map(field -> (Text) field.get(null))
-                .to(text -> {
-                    System.out.println(text.get());
-                });
+                .map(Text::get)
+                .toList();
+
+        StringJoiner joiner = new StringJoiner("\r\n\r\n");
+        for (String text : texts) {
+            joiner.add(text);
+        }
+
+        File text = Locator.temporaryFile("message.txt");
     }
 }
