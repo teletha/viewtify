@@ -243,10 +243,10 @@ public final class Viewtify {
         checkPolicy();
 
         // load extensions in viewtify package
-        I.load(Location.class, false);
+        I.load(Location.class);
 
         // load extensions in application package
-        I.load(application, false);
+        I.load(application);
 
         // build application stylesheet
         Path applicationStyles = CSSProcessor.pretty().formatTo(".preferences/application.css");

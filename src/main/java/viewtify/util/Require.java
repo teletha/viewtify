@@ -23,7 +23,7 @@ import kiss.WiseRunnable;
 public class Require {
 
     static {
-        I.load(Lang.class, false);
+        I.load(Lang.class);
     }
 
     /** The message resource. */
