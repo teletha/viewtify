@@ -114,7 +114,7 @@ public interface UserActionHelper<Self extends UserActionHelper> {
      * @return Chainable API.
      */
     private <E extends Event> Self when(Signal<User<E>> actionTypes, WiseRunnable listener) {
-        return when(actionTypes, listener.asConsumer());
+        return when(actionTypes, listener.append());
     }
 
     /**
