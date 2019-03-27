@@ -50,10 +50,8 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>> {
         this.filter = Variable.of(I.accept());
         this.items = Variable.of(ui.getItems());
 
-        items.observeNow().combineLatest(filter.observeNow()).to(e -> {
-            I.run(() -> {
-                ui.setItems(e.ⅰ.filtered(e.ⅱ));
-            }, error -> error.type(ConcurrentModificationException.class));
+        items.observeNow().combineLatest(filter.observeNow()).retry(ConcurrentModificationException.class).to(e -> {
+            ui.setItems(e.ⅰ.filtered(e.ⅱ));
         });
     }
 
