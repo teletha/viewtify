@@ -20,10 +20,16 @@ import org.junit.jupiter.api.BeforeAll;
  */
 public abstract class JavaFXTester {
 
+    private static boolean started = false;
+
     @BeforeAll
-    static void initialize() {
-        Platform.startup(() -> {
-        });
+    static synchronized void initialize() {
+        if (started == false) {
+            started = true;
+
+            Platform.startup(() -> {
+            });
+        }
     }
 
     /**
