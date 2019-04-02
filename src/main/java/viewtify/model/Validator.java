@@ -28,6 +28,6 @@ public class Validator {
     }
 
     public Validator asserts(Signal<?> timing, WiseRunnable assertion) {
-        return asserts(timing, assertion.as());
+        return asserts(timing, assertion.widen());
     }
 }
