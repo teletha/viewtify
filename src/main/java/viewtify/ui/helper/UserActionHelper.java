@@ -12,7 +12,6 @@ package viewtify.ui.helper;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.WiseBiConsumer;
@@ -114,7 +113,7 @@ public interface UserActionHelper<Self extends UserActionHelper> {
      * @return Chainable API.
      */
     private <E extends Event> Self when(Signal<User<E>> actionTypes, WiseRunnable listener) {
-        return when(actionTypes, (WiseConsumer<E>) listener.widen());
+        return when(actionTypes, I.wiseC(listener));
     }
 
     /**
