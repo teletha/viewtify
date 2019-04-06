@@ -9,7 +9,6 @@
  */
 package viewtify.model;
 
-import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import kiss.WiseConsumer;
@@ -29,6 +28,6 @@ public class Validator {
     }
 
     public Validator asserts(Signal<?> timing, WiseRunnable assertion) {
-        return asserts(timing, I.wiseC(assertion));
+        return asserts(timing, assertion.postfix());
     }
 }
