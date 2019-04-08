@@ -22,10 +22,10 @@ import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
 import kiss.I;
 import kiss.Tree;
 import stylist.Style;
+import transcript.Transcript;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.util.TextNotation;
 
@@ -90,6 +90,16 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      * @param followers
      */
     protected final void label(Supplier<String> text, Consumer<UINode>... followers) {
+        $(() -> TextNotation.parse(text), followers);
+    }
+
+    /**
+     * Declare the {@link Label}.
+     * 
+     * @param text A label text.
+     * @param followers
+     */
+    protected final void label(Transcript text, Consumer<UINode>... followers) {
         $(() -> TextNotation.parse(text), followers);
     }
 

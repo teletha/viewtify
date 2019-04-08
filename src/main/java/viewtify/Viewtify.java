@@ -53,7 +53,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -84,21 +83,6 @@ public final class Viewtify {
     /** The runtime info. */
     private static final boolean inTest;
 
-    static {
-        ClassLoader.getSystemClassLoader().setDefaultAssertionStatus(true);
-
-        // For Test
-        inTest = I.signal(new Error().getStackTrace())
-                .take(e -> e.getClassName().startsWith("org.junit."))
-                .take(1)
-                .mapTo(true)
-                .startWith(false)
-                .to()
-                .get();
-
-        CSS.enhance();
-    }
-
     /** The dispose on exit. */
     public static final Disposable Terminator = Disposable.empty();
 
@@ -121,6 +105,21 @@ public final class Viewtify {
 
     /** Executor for Worker Thread. */
     public static final Consumer<Runnable> WorkerThread = pool::submit;
+
+    static {
+        ClassLoader.getSystemClassLoader().setDefaultAssertionStatus(true);
+
+        // For Test
+        inTest = I.signal(new Error().getStackTrace())
+                .take(e -> e.getClassName().startsWith("org.junit."))
+                .take(1)
+                .mapTo(true)
+                .startWith(false)
+                .to()
+                .get();
+
+        CSS.enhance();
+    }
 
     /** All managed views. */
     private static List<View> views = new ArrayList();

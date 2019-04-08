@@ -11,11 +11,15 @@ package viewtify.ui.helper;
 
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import javafx.scene.control.Labeled;
+import kiss.I;
+import kiss.Signal;
 import kiss.Variable;
 import transcript.Lang;
+import transcript.Transcript;
 import viewtify.Viewtify;
 
 /**
@@ -48,8 +52,26 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * @param text A text {@link Supplier} to set.
      */
     default Self text(Supplier<?> text) {
-        Lang.observe().to(lang -> {
-            text(text.get());
+        return text(lang -> I.signal(text).map(String::valueOf));
+    }
+
+    /**
+     * Set text.
+     * 
+     * @param text A text {@link Supplier} to set.
+     */
+    default Self text(Transcript text) {
+        return text(text::as);
+    }
+
+    /**
+     * Set text.
+     * 
+     * @param text A text {@link Supplier} to set.
+     */
+    private Self text(Function<Lang, Signal<String>> text) {
+        Lang.observe().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
+            text(translated);
         });
         return (Self) this;
     }

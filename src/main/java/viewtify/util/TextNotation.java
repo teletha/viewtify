@@ -11,6 +11,7 @@ package viewtify.util;
 
 import java.awt.Desktop;
 import java.net.URI;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import javafx.collections.ObservableList;
@@ -19,7 +20,10 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.text.TextFlow;
 import kiss.I;
+import kiss.Signal;
 import transcript.Lang;
+import transcript.Transcript;
+import viewtify.Viewtify;
 
 /**
  * @version 2018/08/30 2:09:47
@@ -109,12 +113,32 @@ public class TextNotation {
      * @return
      */
     public static Node parse(Supplier<String> message) {
+        return parse(lang -> I.signal(message));
+    }
+
+    /**
+     * Parse as {@link TextFlow}.
+     * 
+     * @param message A wiki-like notation text.
+     * @return
+     */
+    public static Node parse(Transcript message) {
+        return parse(message::as);
+    }
+
+    /**
+     * Parse as {@link TextFlow}.
+     * 
+     * @param message A wiki-like notation text.
+     * @return
+     */
+    private static Node parse(Function<Lang, Signal<String>> message) {
         TextFlow flow = new TextFlow();
         ObservableList<Node> children = flow.getChildren();
 
-        Lang.observe().to(() -> {
+        Lang.observe().switchMap(I.wiseF(message)).on(Viewtify.UIThread).to(text -> {
             children.clear();
-            parse(children, message.get());
+            parse(children, text);
         });
         return flow;
     }
