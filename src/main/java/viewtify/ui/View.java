@@ -19,13 +19,12 @@ import javafx.scene.control.TableColumnBase;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
 import kiss.Extensible;
 import kiss.I;
 import kiss.Variable;
 import kiss.model.Model;
+import transcript.Lang;
 import viewtify.Viewtify;
-import viewtify.localize.Lang;
 
 public abstract class View implements Extensible, UserInterfaceProvider {
 

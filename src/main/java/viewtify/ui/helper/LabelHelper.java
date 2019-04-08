@@ -14,10 +14,9 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import javafx.scene.control.Labeled;
-
 import kiss.Variable;
+import transcript.Lang;
 import viewtify.Viewtify;
-import viewtify.localize.Lang;
 
 /**
  * @version 2018/08/27 21:27:30

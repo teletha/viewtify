@@ -18,9 +18,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.text.TextFlow;
-
 import kiss.I;
-import viewtify.localize.Lang;
+import transcript.Lang;
 
 /**
  * @version 2018/08/30 2:09:47
