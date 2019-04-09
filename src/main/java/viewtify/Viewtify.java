@@ -53,6 +53,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -303,9 +304,11 @@ public final class Viewtify {
      * @return
      */
     private InputStream loadResource(String path) {
-        try {
-            return Locator.file(path).newInputStream();
-        } catch (Exception e) {
+        File file = Locator.file(path);
+
+        if (file.isPresent()) {
+            return file.newInputStream();
+        } else {
             return ClassLoader.getSystemResourceAsStream(path);
         }
     }
