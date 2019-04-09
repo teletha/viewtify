@@ -12,13 +12,10 @@ package viewtify.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import kiss.Extensible;
-import kiss.I;
-import kiss.Manageable;
 import kiss.Signal;
-import kiss.Singleton;
 import kiss.Variable;
 import kiss.WiseRunnable;
+import transcript.Transcript;
 
 public class Validation {
 
@@ -76,43 +73,9 @@ public class Validation {
             String message = e.getLocalizedMessage();
 
             if (message == null || message.isEmpty()) {
-                message = I.i18n(Lang.class).invalidValue();
+                message = Transcript.en("This is invalid value, please correct.").get();
             }
             this.message.set(message);
         }
     }
-
-    /**
-     * @version 2018/08/03 16:14:14
-     */
-    @SuppressWarnings("unused")
-    @Manageable(lifestyle = Singleton.class)
-    private static class Lang implements Extensible {
-
-        /**
-         * Error for Invalid value.
-         * 
-         * @return
-         */
-        String invalidValue() {
-            return "This is invalid value, please correct.";
-        }
-
-        /**
-         * Japanease bundle.
-         * 
-         * @version 2018/08/03 16:16:05
-         */
-        private static class Lang_ja extends Lang {
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            String invalidValue() {
-                return "不正な値です、修正して下さい。";
-            }
-        }
-    }
-
 }
