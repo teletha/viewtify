@@ -14,6 +14,7 @@ import static java.util.concurrent.TimeUnit.*;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
@@ -235,6 +236,15 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @return
      */
     public final Self invalid(String message) {
+        return invalid(() -> message);
+    }
+
+    /**
+     * Mark as invalid interface.
+     * 
+     * @return
+     */
+    public final Self invalid(Supplier<String> message) {
         validation().message.set(message);
         return (Self) this;
     }
