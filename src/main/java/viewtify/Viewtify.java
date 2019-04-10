@@ -144,9 +144,6 @@ public final class Viewtify {
     /** The configurable setting. */
     private double height;
 
-    /** The application class. */
-    private Class<? extends View> applicationClass;
-
     /**
      * Hide constructor.
      */
@@ -252,8 +249,6 @@ public final class Viewtify {
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      */
     public void activate(Class<? extends View> application) {
-        this.applicationClass = application;
-
         checkPolicy();
 
         // load extensions in viewtify package

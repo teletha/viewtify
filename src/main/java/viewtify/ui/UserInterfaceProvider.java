@@ -14,6 +14,7 @@ import javafx.css.Styleable;
 /**
  * @version 2018/09/09 18:10:32
  */
+@SuppressWarnings("hiding")
 public interface UserInterfaceProvider<UI extends Styleable> {
 
     /**

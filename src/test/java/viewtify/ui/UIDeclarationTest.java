@@ -47,7 +47,7 @@ class UIDeclarationTest extends JavaFXTester {
         };
 
         VBox root = as(fxml.build(), VBox.class);
-        Label label = as(root.getChildren().get(0), Label.class);
+        as(root.getChildren().get(0), Label.class);
     }
 
     @Test
@@ -61,7 +61,7 @@ class UIDeclarationTest extends JavaFXTester {
         };
 
         VBox root = as(fxml.build(), VBox.class);
-        Label label = as(root.getChildren().get(0), Label.class);
+        as(root.getChildren().get(0), Label.class);
     }
 
     @Test
@@ -78,7 +78,7 @@ class UIDeclarationTest extends JavaFXTester {
 
         VBox root = as(fxml.build(), VBox.class);
         VBox child = as(root.getChildren().get(0), VBox.class);
-        Label label = as(child.getChildren().get(0), Label.class);
+        as(child.getChildren().get(0), Label.class);
     }
 
     @Test
@@ -95,6 +95,6 @@ class UIDeclarationTest extends JavaFXTester {
 
         VBox root = as(fxml.build(), VBox.class);
         VBox child = as(root.getChildren().get(0), VBox.class);
-        Label label = as(child.getChildren().get(0), Label.class);
+        as(child.getChildren().get(0), Label.class);
     }
 }

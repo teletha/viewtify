@@ -19,7 +19,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
-import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
@@ -35,9 +34,6 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>> {
 
     /** The item list manager. */
     private final Variable<ObservableList<E>> items;
-
-    /** The list ui refresher. */
-    private Disposable refresher;
 
     /**
      * Enchanced view.
