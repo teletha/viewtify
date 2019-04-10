@@ -70,6 +70,7 @@ import kiss.WiseTriFunction;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
+import transcript.Lang;
 import viewtify.bind.Calculation;
 import viewtify.bind.CalculationList;
 import viewtify.ui.UserInterface;
@@ -212,6 +213,19 @@ public final class Viewtify {
     public Viewtify icon(String pathToIcon) {
         if (pathToIcon != null) {
             this.icon = pathToIcon;
+        }
+        return this;
+    }
+
+    /**
+     * Configure application default language.
+     * 
+     * @param language A default language you want.
+     * @return Chainable API.
+     */
+    public Viewtify language(Lang language) {
+        if (language != null) {
+            language.setDefault();
         }
         return this;
     }
