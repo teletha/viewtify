@@ -15,6 +15,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import javafx.scene.control.Labeled;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -22,9 +23,6 @@ import transcript.Lang;
 import transcript.Transcript;
 import viewtify.Viewtify;
 
-/**
- * @version 2018/08/27 21:27:30
- */
 public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extends StyleHelper<Self, W> {
 
     /**
@@ -51,7 +49,7 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * 
      * @param text A text {@link Supplier} to set.
      */
-    default Self text(Supplier<?> text) {
+    default Self text(Supplier text) {
         return text(lang -> I.signal(text).map(String::valueOf));
     }
 
@@ -76,6 +74,12 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
         return (Self) this;
     }
 
+    /**
+     * Set text.
+     * 
+     * @param text A text {@link Variable} to set.
+     * @return
+     */
     default Self text(Variable text) {
         text.observeNow().on(Viewtify.UIThread).to((Consumer) this::text);
         return (Self) this;

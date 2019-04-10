@@ -92,6 +92,7 @@ class CSSProcessor implements Consumer<Properties> {
                 value = v + "-" + h;
             }
             properties.set("alignment", CSSValue.of(value));
+            if (!value.contains("-")) properties.set("text-alignment", CSSValue.of(value));
         }
     }
 

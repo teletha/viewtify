@@ -37,7 +37,7 @@ public class TextNotation {
      * @param message A wiki-like notation text.
      * @return
      */
-    public static Node parse(String message) {
+    public static TextFlow parse(String message) {
         return parse(() -> message);
     }
 
@@ -47,7 +47,7 @@ public class TextNotation {
      * @param message A wiki-like notation text.
      * @return
      */
-    public static Node parse(Supplier<String> message) {
+    public static TextFlow parse(Supplier<String> message) {
         return parse(lang -> I.signal(message));
     }
 
@@ -57,7 +57,7 @@ public class TextNotation {
      * @param message A wiki-like notation text.
      * @return
      */
-    public static Node parse(Transcript message) {
+    public static TextFlow parse(Transcript message) {
         return parse(message::as);
     }
 
@@ -67,7 +67,7 @@ public class TextNotation {
      * @param message A wiki-like notation text.
      * @return
      */
-    private static Node parse(Function<Lang, Signal<String>> message) {
+    private static TextFlow parse(Function<Lang, Signal<String>> message) {
         TextFlow flow = new TextFlow();
         ObservableList<Node> children = flow.getChildren();
 
