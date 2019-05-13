@@ -10,6 +10,7 @@
 package viewtify.ui;
 
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import javafx.scene.Node;
 import javafx.scene.control.SelectionModel;
@@ -29,8 +30,8 @@ public class Action {
      * @param node A target node.
      * @return A filter.
      */
-    public static final Predicate<GestureEvent> inside(Node node) {
-        return e -> node.contains(e.getX(), e.getY());
+    public static final Predicate<GestureEvent> inside(Supplier<Node> node) {
+        return e -> node.get().contains(e.getX(), e.getY());
     }
 
     /**

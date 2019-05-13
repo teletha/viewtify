@@ -43,7 +43,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> {
         super(new TabPane(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.
-        when(User.Scroll).take(Action.inside(ui.lookup(".tab-header-background"))).to(Action.traverse(ui.getSelectionModel()));
+        when(User.Scroll).take(Action.inside(() -> ui.lookup(".tab-header-background"))).to(Action.traverse(ui.getSelectionModel()));
     }
 
     /**
