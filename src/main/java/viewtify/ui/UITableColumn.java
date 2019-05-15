@@ -18,6 +18,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
@@ -138,7 +139,11 @@ public class UITableColumn<RowValue, ColumnValue>
                 map = mapper.get(type);
             }
 
-            return map.apply(value);
+            if (map == null) {
+                return new SimpleObjectProperty();
+            } else {
+                return map.apply(value);
+            }
         }
     }
 

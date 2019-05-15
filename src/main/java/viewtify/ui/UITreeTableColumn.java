@@ -18,6 +18,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
+
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
@@ -138,7 +139,11 @@ public class UITreeTableColumn<RowValue, ColumnValue>
                 map = mapper.get(type);
             }
 
-            return map.apply(value);
+            if (map == null) {
+                return new SimpleObjectProperty();
+            } else {
+                return map.apply(value);
+            }
         }
     }
 
