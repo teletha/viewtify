@@ -18,7 +18,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
-
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
@@ -131,7 +130,15 @@ public class UITreeTableColumn<RowValue, ColumnValue>
          */
         @Override
         public ObservableValue<ColumnValue> apply(T value) {
-            return mapper.get(value.getClass()).apply(value);
+            Class type = value.getClass();
+            Function<T, ObservableValue<ColumnValue>> map = mapper.get(type);
+
+            while (map == null && type != Object.class) {
+                type = type.getSuperclass();
+                map = mapper.get(type);
+            }
+
+            return map.apply(value);
         }
     }
 
