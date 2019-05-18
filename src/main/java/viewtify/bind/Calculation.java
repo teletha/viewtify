@@ -193,6 +193,16 @@ public class Calculation<T> extends ObjectBinding<T> {
     }
 
     /**
+     * Returns a new ObservableValue that holds a mapping of the value held by this ObservableValue,
+     * and is empty when this ObservableValue is empty.
+     * 
+     * @param mapper function to map the value held by this ObservableValue.
+     */
+    public <R> Calculation<R> flatMap(Function<? super T, Signal<R>> mapper) {
+        return flatVariable(v -> mapper.apply(v).to());
+    }
+
+    /**
      * Equality check.
      * 
      * @param active
