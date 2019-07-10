@@ -53,7 +53,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -249,13 +248,20 @@ public final class Viewtify {
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      */
     public void activate(Class<? extends View> application) {
+        activate(I.make(application));
+    }
+
+    /**
+     * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
+     */
+    public void activate(View application) {
         checkPolicy();
 
         // load extensions in viewtify package
         I.load(Location.class);
 
         // load extensions in application package
-        I.load(application);
+        I.load(application.getClass());
 
         // build application stylesheet
         Path applicationStyles = CSSProcessor.pretty().formatTo(".preferences/application.css");
@@ -266,10 +272,10 @@ public final class Viewtify {
                 Stage stage = new Stage(stageStyle);
                 stage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
                 stage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
-                stage.getIcons().add(loadImage(icon));
+                if (icon.length() != 0) stage.getIcons().add(loadImage(icon));
 
                 // trace window size and position
-                I.make(WindowLocator.class).restore().locate(application, stage);
+                I.make(WindowLocator.class).restore().locate(application.getClass(), stage);
 
                 View view = View.build(application);
                 views.add(view);

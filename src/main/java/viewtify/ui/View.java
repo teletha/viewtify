@@ -162,11 +162,30 @@ public abstract class View implements Extensible, UserInterfaceProvider {
     /**
      * Build {@link View} properly.
      * 
+     * @param view
+     * @return
+     */
+    public static <V extends View> V build(V view) {
+        return build(view, null);
+    }
+
+    /**
+     * Build {@link View} properly.
+     * 
      * @param viewType
      * @return
      */
     private static <V extends View> V build(Class<V> viewType, View parent) {
-        V view = I.make(viewType);
+        return build(I.make(viewType), parent);
+    }
+
+    /**
+     * Build {@link View} properly.
+     * 
+     * @param view
+     * @return
+     */
+    private static <V extends View> V build(V view, View parent) {
         view.initializeLazy(parent);
         return view;
     }
