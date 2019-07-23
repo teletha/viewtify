@@ -22,6 +22,7 @@ import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
 import kiss.Tree;
 import stylist.Style;
@@ -41,6 +42,9 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
 
     /** The vertical box. */
     protected static final UserInterfaceProvider vbox = new Box(VBox.class);
+
+    /** The vertical box. */
+    protected static final UserInterfaceProvider xbox = new XBox();
 
     /**
      * 
@@ -157,6 +161,30 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
         @Override
         public P ui() {
             return I.make(type);
+        }
+    }
+
+    /**
+     * @version 2018/09/10 15:28:21
+     */
+    private static final class XBox implements UserInterfaceProvider<VBox> {
+
+        /**
+         * The typed box.
+         * 
+         * @param type A box type.
+         */
+        private XBox() {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public VBox ui() {
+            VBox b = new VBox();
+            b.setFillWidth(true);
+            return b;
         }
     }
 }
