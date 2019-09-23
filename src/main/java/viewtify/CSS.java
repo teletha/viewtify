@@ -28,7 +28,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import kiss.I;
 import kiss.WiseBiConsumer;
 import net.bytebuddy.agent.ByteBuddyAgent;
@@ -37,7 +36,6 @@ import net.bytebuddy.asm.ModifierAdjustment;
 import net.bytebuddy.description.modifier.FieldManifestation;
 import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.matcher.ElementMatchers;
-import psychopath.Locator;
 
 /**
  * @version 2018/09/24 22:02:52
@@ -77,7 +75,6 @@ final class CSS {
 
             // redefine
             new AgentBuilder.Default() //
-                    .enableBootstrapInjection(instrument, Locator.temporaryFile().asJavaFile())
                     .type(ElementMatchers.named("javafx.scene.Node$StyleableProperties"))
                     .transform((builder, desc, loader, module) -> builder.visit(modifier))
                     .installOn(instrument);
