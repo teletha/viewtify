@@ -24,9 +24,12 @@ import javafx.css.StyleableProperty;
 import javafx.css.converter.InsetsConverter;
 import javafx.css.converter.SizeConverter;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import kiss.I;
 import kiss.WiseBiConsumer;
@@ -38,7 +41,7 @@ import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.matcher.ElementMatchers;
 
 /**
- * @version 2018/09/24 22:02:52
+ * Declare viewtify's enhanced css properties.
  */
 @SuppressWarnings("unused")
 final class CSS {
@@ -53,6 +56,53 @@ final class CSS {
             VBox.setMargin(node, insets);
         }
     });
+
+    /** The extra property. */
+    private static final Meta<Node, Number> PositionTop = new Meta<>("-fx-top", SizeConverter.getInstance(), (node, size) -> {
+        Parent parent = node.getParent();
+
+        if (parent instanceof StackPane) {
+            layoutStackPaneConstraints(node, Side.TOP, size);
+        }
+    });
+
+    /**
+     * Apply position and margin for {@link StackPane}.
+     * 
+     * @param node A target child node of {@link StackPane}.
+     * @param marginSide A margin side.
+     * @param marginSize A margin size.
+     */
+    private static final void layoutStackPaneConstraints(Node node, Side marginSide, Number marginSize) {
+        Insets m = StackPane.getMargin(node);
+        Pos p = null;
+
+        if (m == null) {
+            m = new Insets(0);
+        }
+
+        switch (marginSide) {
+        case TOP:
+            m = new Insets(marginSize.doubleValue(), m.getRight(), m.getBottom(), m.getLeft());
+            p = Pos.TOP_LEFT;
+            break;
+        case RIGHT:
+            m = new Insets(m.getTop(), marginSize.doubleValue(), m.getBottom(), m.getLeft());
+            p = Pos.CENTER_RIGHT;
+            break;
+        case BOTTOM:
+            m = new Insets(m.getTop(), m.getRight(), marginSize.doubleValue(), m.getLeft());
+            p = Pos.BOTTOM_LEFT;
+            break;
+        case LEFT:
+            m = new Insets(m.getTop(), m.getRight(), m.getBottom(), marginSize.doubleValue());
+            p = Pos.CENTER_LEFT;
+            break;
+        }
+
+        StackPane.setAlignment(node, p);
+        StackPane.setMargin(node, m);
+    }
 
     /** The extra property. */
     private static final Meta<Node, Number> ZIndex = new Meta<>("-fx-z-index", SizeConverter.getInstance(), (node, size) -> {

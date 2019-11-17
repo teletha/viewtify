@@ -21,8 +21,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import kiss.I;
 import kiss.Tree;
 import stylist.Style;
@@ -32,8 +32,6 @@ import viewtify.util.TextNotation;
 
 /**
  * Declared user interface.
- * 
- * @version 2018/09/10 18:42:52
  */
 public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
 
@@ -42,6 +40,9 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
 
     /** The vertical box. */
     protected static final UserInterfaceProvider vbox = new Box(VBox.class);
+
+    /** The stack box. */
+    protected static final UserInterfaceProvider sbox = new Box(StackPane.class);
 
     /**
      * 
@@ -136,7 +137,7 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
     }
 
     /**
-     * @version 2018/09/10 15:28:21
+     * General box container.
      */
     private static final class Box<P extends Pane> implements UserInterfaceProvider<P> {
 
