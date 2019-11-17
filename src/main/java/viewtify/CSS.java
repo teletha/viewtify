@@ -25,12 +25,12 @@ import javafx.css.converter.InsetsConverter;
 import javafx.css.converter.SizeConverter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
 import kiss.WiseBiConsumer;
 import net.bytebuddy.agent.ByteBuddyAgent;
@@ -62,7 +62,34 @@ final class CSS {
         Parent parent = node.getParent();
 
         if (parent instanceof StackPane) {
-            layoutStackPaneConstraints(node, Side.TOP, size);
+            layoutStackPaneConstraints(node, Pos.TOP_CENTER, size);
+        }
+    });
+
+    /** The extra property. */
+    private static final Meta<Node, Number> PositionRight = new Meta<>("-fx-right", SizeConverter.getInstance(), (node, size) -> {
+        Parent parent = node.getParent();
+
+        if (parent instanceof StackPane) {
+            layoutStackPaneConstraints(node, Pos.CENTER_RIGHT, size);
+        }
+    });
+
+    /** The extra property. */
+    private static final Meta<Node, Number> PositionBottom = new Meta<>("-fx-bottom", SizeConverter.getInstance(), (node, size) -> {
+        Parent parent = node.getParent();
+
+        if (parent instanceof StackPane) {
+            layoutStackPaneConstraints(node, Pos.BOTTOM_CENTER, size);
+        }
+    });
+
+    /** The extra property. */
+    private static final Meta<Node, Number> PositionLeft = new Meta<>("-fx-left", SizeConverter.getInstance(), (node, size) -> {
+        Parent parent = node.getParent();
+
+        if (parent instanceof StackPane) {
+            layoutStackPaneConstraints(node, Pos.CENTER_LEFT, size);
         }
     });
 
@@ -73,35 +100,81 @@ final class CSS {
      * @param marginSide A margin side.
      * @param marginSize A margin size.
      */
-    private static final void layoutStackPaneConstraints(Node node, Side marginSide, Number marginSize) {
+    private static final void layoutStackPaneConstraints(Node node, Pos marginSide, Number marginSize) {
         Insets m = StackPane.getMargin(node);
-        Pos p = null;
-
         if (m == null) {
             m = new Insets(0);
         }
-
-        switch (marginSide) {
-        case TOP:
-            m = new Insets(marginSize.doubleValue(), m.getRight(), m.getBottom(), m.getLeft());
-            p = Pos.TOP_LEFT;
-            break;
-        case RIGHT:
-            m = new Insets(m.getTop(), marginSize.doubleValue(), m.getBottom(), m.getLeft());
-            p = Pos.CENTER_RIGHT;
-            break;
-        case BOTTOM:
-            m = new Insets(m.getTop(), m.getRight(), marginSize.doubleValue(), m.getLeft());
-            p = Pos.BOTTOM_LEFT;
-            break;
-        case LEFT:
-            m = new Insets(m.getTop(), m.getRight(), m.getBottom(), marginSize.doubleValue());
-            p = Pos.CENTER_LEFT;
-            break;
+        if (marginSize == null) {
+            marginSize = 0;
         }
 
-        StackPane.setAlignment(node, p);
+        switch (marginSide) {
+        case TOP_CENTER:
+            m = new Insets(marginSize.doubleValue(), m.getRight(), m.getBottom(), m.getLeft());
+            break;
+        case CENTER_RIGHT:
+            m = new Insets(m.getTop(), marginSize.doubleValue(), m.getBottom(), m.getLeft());
+            break;
+        case BOTTOM_CENTER:
+            m = new Insets(m.getTop(), m.getRight(), marginSize.doubleValue(), m.getLeft());
+            break;
+        case CENTER_LEFT:
+            m = new Insets(m.getTop(), m.getRight(), m.getBottom(), marginSize.doubleValue());
+            break;
+        }
         StackPane.setMargin(node, m);
+
+        Pos p = StackPane.getAlignment(node);
+        if (p == null) {
+            p = Pos.TOP_LEFT;
+        }
+
+        if (has("TOP", p)) {
+            if (has("RIGHT", marginSide)) {
+                p = Pos.TOP_RIGHT;
+            } else if (has("LEFT", marginSide)) {
+                p = Pos.TOP_LEFT;
+            } else {
+                p = Pos.TOP_CENTER;
+            }
+        } else if (has("RIGHT", p)) {
+            if (has("TOP", marginSide)) {
+                p = Pos.TOP_RIGHT;
+            } else if (has("BOTTOM", marginSide)) {
+                p = Pos.BOTTOM_RIGHT;
+            } else {
+                p = Pos.CENTER_RIGHT;
+            }
+        } else if (has("BOTTOM", p)) {
+            if (has("RIGHT", marginSide)) {
+                p = Pos.BOTTOM_RIGHT;
+            } else if (has("LEFT", marginSide)) {
+                p = Pos.BOTTOM_LEFT;
+            } else {
+                p = Pos.BOTTOM_CENTER;
+            }
+        } else {
+            if (has("TOP", marginSide)) {
+                p = Pos.TOP_LEFT;
+            } else if (has("BOTTOM", marginSide)) {
+                p = Pos.BOTTOM_LEFT;
+            } else {
+                p = Pos.CENTER_LEFT;
+            }
+        }
+        StackPane.setAlignment(node, p);
+    }
+
+    /**
+     * Helper.
+     * 
+     * @param side
+     * @param pos
+     * @return
+     */
+    private static final boolean has(String side, Pos pos) {
+        return pos.name().contains(side);
     }
 
     /** The extra property. */
