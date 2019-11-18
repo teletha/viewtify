@@ -9,7 +9,7 @@
  */
 package viewtify.util;
 
-import static java.lang.Double.*;
+import static java.lang.Double.parseDouble;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -21,13 +21,48 @@ import stylist.CSSValue;
 import stylist.Style;
 import stylist.StyleRule;
 
-/**
- * @version 2018/09/10 10:57:23
- */
 public class FXUtils {
 
     /**
-     * Compute color as JavaFX {@link Color}.
+     * Compute length property.
+     * 
+     * @return
+     */
+    public static double length(Style style, String propertyName) {
+        StyleRule rule = StyleRule.create(style);
+        Variable<CSSValue> value = rule.properties.get(propertyName);
+
+        if (value.isPresent()) {
+            return Double.parseDouble(value.v.toString().replaceAll("[a-z]", ""));
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Compute length array property.
+     * 
+     * @return
+     */
+    public static double[] lengths(Style style, String propertyName) {
+        StyleRule rule = StyleRule.create(style);
+        Variable<CSSValue> value = rule.properties.get(propertyName);
+
+        if (value.isPresent()) {
+            String[] values = value.get().toString().split(" ");
+            double[] convert = new double[values.length];
+
+            for (int i = 0; i < convert.length; i++) {
+                convert[i] = Double.parseDouble(values[i]);
+            }
+            return convert;
+        } else {
+            return new double[0];
+        }
+    }
+
+    /**
+     * Compute color property
      * 
      * @return
      */
