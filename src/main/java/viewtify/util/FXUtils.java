@@ -9,11 +9,10 @@
  */
 package viewtify.util;
 
-import static java.lang.Double.parseDouble;
+import static java.lang.Double.*;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
 import kiss.Decoder;
 import kiss.Encoder;
 import kiss.Variable;
@@ -26,25 +25,53 @@ public class FXUtils {
     /**
      * Compute length property.
      * 
-     * @return
+     * @param style A target style.
+     * @param propertyName A target property name.
+     * @return A computed JavaFX value.
      */
     public static double length(Style style, String propertyName) {
+        return length(style, propertyName, 0);
+    }
+
+    /**
+     * Compute length property.
+     * 
+     * @param style A target style.
+     * @param propertyName A target property name.
+     * @param defaultValue A default value when the propoerty is not defined.
+     * @return A computed JavaFX value.
+     */
+    public static double length(Style style, String propertyName, double defaultValue) {
         StyleRule rule = StyleRule.create(style);
         Variable<CSSValue> value = rule.properties.get(propertyName);
 
         if (value.isPresent()) {
             return Double.parseDouble(value.v.toString().replaceAll("[a-z]", ""));
         } else {
-            return 0;
+            return defaultValue;
         }
     }
 
     /**
      * Compute length array property.
      * 
-     * @return
+     * @param style A target style.
+     * @param propertyName A target property name.
+     * @return A computed JavaFX value.
      */
     public static double[] lengths(Style style, String propertyName) {
+        return lengths(style, propertyName, new double[0]);
+    }
+
+    /**
+     * Compute length array property.
+     * 
+     * @param style A target style.
+     * @param propertyName A target property name.
+     * @param defaultValue A default value when the propoerty is not defined.
+     * @return A computed JavaFX value.
+     */
+    public static double[] lengths(Style style, String propertyName, double[] defaultValue) {
         StyleRule rule = StyleRule.create(style);
         Variable<CSSValue> value = rule.properties.get(propertyName);
 
@@ -57,16 +84,30 @@ public class FXUtils {
             }
             return convert;
         } else {
-            return new double[0];
+            return defaultValue;
         }
     }
 
     /**
-     * Compute color property
+     * Compute color property.
      * 
-     * @return
+     * @param style A target style.
+     * @param propertyName A target property name.
+     * @return A computed JavaFX value.
      */
     public static Color color(Style style, String propertyName) {
+        return color(style, propertyName, Color.TRANSPARENT);
+    }
+
+    /**
+     * Compute color property.
+     * 
+     * @param style A target style.
+     * @param propertyName A target property name.
+     * @param defaultValue A default value when the propoerty is not defined.
+     * @return A computed JavaFX value.
+     */
+    public static Color color(Style style, String propertyName, Color defaultValue) {
         StyleRule rule = StyleRule.create(style);
         Variable<CSSValue> color = rule.properties.get(propertyName);
 
@@ -79,7 +120,7 @@ public class FXUtils {
                 return Color.web(color.toString());
             }
         } else {
-            return Color.TRANSPARENT;
+            return defaultValue;
         }
     }
 
