@@ -105,6 +105,19 @@ public final class LayoutAssistant implements InvalidationListener {
     }
 
     /**
+     * Register relayout condition.
+     * 
+     * @param timing A condition signal.
+     * @return Chainable API.
+     */
+    public LayoutAssistant layoutWhile(Signal<Boolean> timing) {
+        timing.to(v -> {
+            shouldLayout = v;
+        });
+        return this;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
