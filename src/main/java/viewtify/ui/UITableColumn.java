@@ -32,9 +32,6 @@ public class UITableColumn<RowValue, ColumnValue>
     /** The value provider utility. */
     private TypeMappingProvider mappingProvider;
 
-    /** The associated view. */
-    private final View view;
-
     /**
      * Enchanced view.
      * 
@@ -42,7 +39,6 @@ public class UITableColumn<RowValue, ColumnValue>
      */
     private UITableColumn(View view) {
         super(new TableColumn());
-        this.view = view;
     }
 
     /**
