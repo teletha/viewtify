@@ -9,7 +9,7 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.util.TreeMap;
 import java.util.function.Consumer;
@@ -45,6 +45,7 @@ import viewtify.model.Validation;
 import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.PreferenceHelper;
 import viewtify.ui.helper.StyleHelper;
+import viewtify.ui.helper.TooltipHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.util.Icon;
@@ -53,7 +54,7 @@ import viewtify.util.Icon;
  * @version 2018/08/28 23:42:08
  */
 public class UserInterface<Self extends UserInterface, W extends Node>
-        implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, UserInterfaceProvider<W> {
+        implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, TooltipHelper<Self, W>, UserInterfaceProvider<W> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();

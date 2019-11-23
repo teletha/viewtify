@@ -14,7 +14,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Labeled;
+import javafx.scene.layout.HBox;
 
 import kiss.I;
 import kiss.Signal;
@@ -22,6 +24,7 @@ import kiss.Variable;
 import transcript.Lang;
 import transcript.Transcript;
 import viewtify.Viewtify;
+import viewtify.ui.UILabel;
 
 public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extends StyleHelper<Self, W> {
 
@@ -82,6 +85,23 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      */
     default Self text(Variable text) {
         text.observeNow().on(Viewtify.UIThread).to((Consumer) this::text);
+        return (Self) this;
+    }
+
+    /**
+     * Set text flow and style.
+     * 
+     * @param texts The text list.
+     * @param styles The style list.
+     */
+    default Self text(UILabel... texts) {
+        HBox box = new HBox();
+        box.setAlignment(Pos.CENTER);
+
+        for (int i = 0; i < texts.length; i++) {
+            box.getChildren().add(texts[i].ui);
+        }
+        ui().setGraphic(box);
         return (Self) this;
     }
 }

@@ -16,6 +16,7 @@ import java.util.function.Function;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
@@ -25,14 +26,14 @@ import kiss.WiseFunction;
 import viewtify.Viewtify;
 import viewtify.ui.helper.LabelHelper;
 
-/**
- * @version 2018/09/09 18:04:36
- */
 public class UITableColumn<RowValue, ColumnValue>
         extends UITableColumnBase<TableColumn<RowValue, ColumnValue>, UITableColumn<RowValue, ColumnValue>, RowValue, ColumnValue> {
 
     /** The value provider utility. */
     private TypeMappingProvider mappingProvider;
+
+    /** The associated view. */
+    private final View view;
 
     /**
      * Enchanced view.
@@ -41,6 +42,7 @@ public class UITableColumn<RowValue, ColumnValue>
      */
     private UITableColumn(View view) {
         super(new TableColumn());
+        this.view = view;
     }
 
     /**
@@ -170,7 +172,7 @@ public class UITableColumn<RowValue, ColumnValue>
     }
 
     /**
-     * @version 2017/12/02 18:11:59
+     * 
      */
     public class UITableCell implements LabelHelper<UITableCell, TableCell<RowValue, ColumnValue>> {
 
@@ -208,6 +210,15 @@ public class UITableColumn<RowValue, ColumnValue>
         @Override
         public TableCell ui() {
             return ui;
+        }
+
+        /**
+         * Set your {@link Node} to this {@link TableCell}.
+         * 
+         * @param node
+         */
+        public final void set(Node node) {
+            ui.setGraphic(node);
         }
     }
 }

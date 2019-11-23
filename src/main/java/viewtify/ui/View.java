@@ -280,6 +280,24 @@ public abstract class View implements Extensible, UserInterfaceProvider {
     }
 
     /**
+     * Create {@link UserInterface}.
+     * 
+     * @param <T>
+     * @param type
+     * @return
+     */
+    protected <T extends UserInterface> T make(Class<T> type) {
+        try {
+            Constructor constructor = Model.collectConstructors(type)[0];
+            constructor.setAccessible(true);
+
+            return (T) constructor.newInstance(this);
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
+    }
+
+    /**
      * Find the specified typed view from parent view stack.
      * 
      * @param type A target type.
