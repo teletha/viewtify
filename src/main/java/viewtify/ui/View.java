@@ -11,6 +11,7 @@ package viewtify.ui;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import javafx.application.Platform;
 import javafx.css.Styleable;
@@ -19,6 +20,7 @@ import javafx.scene.control.TableColumnBase;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import kiss.Extensible;
 import kiss.I;
 import kiss.Variable;
@@ -52,7 +54,31 @@ public abstract class View implements Extensible, UserInterfaceProvider {
      * 
      * @return
      */
-    protected abstract UI declareUI();
+    protected UI declareUI() {
+        // auto detect UI definition
+        for (Class<?> member : getClass().getDeclaredClasses()) {
+            if (UI.class.isAssignableFrom(member)) {
+                if (Modifier.isStatic(member.getModifiers())) {
+                    return I.make((Class<UI>) member);
+                } else {
+                    for (Constructor constructor : member.getDeclaredConstructors()) {
+                        Class[] paramTypes = constructor.getParameterTypes();
+
+                        if (paramTypes.length == 1 && paramTypes[0] == getClass()) {
+                            try {
+                                constructor.setAccessible(true);
+                                return (UI) constructor.newInstance(this);
+                            } catch (Exception e) {
+                                throw I.quiet(e);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        throw I.quiet(new ClassNotFoundException(getClass() + " don't have UI definition. Define member class which is subclassed by " + UI.class
+                .getName() + "."));
+    }
 
     /**
      * Initialize {@link View}.
@@ -196,7 +222,7 @@ public abstract class View implements Extensible, UserInterfaceProvider {
     /**
      * Initialize myself.
      */
-    final synchronized void initializeLazy(View parent) {
+    synchronized void initializeLazy(View parent) {
         if (initialized == false) {
             initialized = true;
             this.parent = parent;
