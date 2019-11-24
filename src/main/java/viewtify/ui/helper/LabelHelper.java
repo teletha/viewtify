@@ -15,9 +15,10 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Labeled;
 import javafx.scene.layout.HBox;
-
+import javafx.scene.layout.VBox;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -25,6 +26,7 @@ import transcript.Lang;
 import transcript.Transcript;
 import viewtify.Viewtify;
 import viewtify.ui.UILabel;
+import viewtify.ui.UserInterfaceProvider;
 
 public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extends StyleHelper<Self, W> {
 
@@ -32,6 +34,7 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * Get text.
      * 
      * @param text
+     * @return A current text.
      */
     default String text() {
         return ui().getText();
@@ -41,6 +44,7 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * Set text.
      * 
      * @param text A text to set.
+     * @return Chainable API.
      */
     default Self text(Object text) {
         ui().setText(Objects.toString(text));
@@ -51,6 +55,7 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * Set text.
      * 
      * @param text A text {@link Supplier} to set.
+     * @return Chainable API.
      */
     default Self text(Supplier text) {
         return text(lang -> I.signal(text).map(String::valueOf));
@@ -60,6 +65,7 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * Set text.
      * 
      * @param text A text {@link Supplier} to set.
+     * @return Chainable API.
      */
     default Self text(Transcript text) {
         return text(text::as);
@@ -69,6 +75,7 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * Set text.
      * 
      * @param text A text {@link Supplier} to set.
+     * @return Chainable API.
      */
     private Self text(Function<Lang, Signal<String>> text) {
         Lang.observe().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
@@ -81,7 +88,7 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * Set text.
      * 
      * @param text A text {@link Variable} to set.
-     * @return
+     * @return Chainable API.
      */
     default Self text(Variable text) {
         text.observeNow().on(Viewtify.UIThread).to((Consumer) this::text);
@@ -89,10 +96,10 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
     }
 
     /**
-     * Set text flow and style.
+     * Set honrizontal styled text.
      * 
      * @param texts The text list.
-     * @param styles The style list.
+     * @return Chainable API.
      */
     default Self text(UILabel... texts) {
         HBox box = new HBox();
@@ -101,7 +108,43 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
         for (int i = 0; i < texts.length; i++) {
             box.getChildren().add(texts[i].ui);
         }
-        ui().setGraphic(box);
+        return text(box);
+    }
+
+    /**
+     * Set vertical styled text.
+     * 
+     * @param texts The text list.
+     * @return Chainable API.
+     */
+    default Self textV(UILabel... texts) {
+        VBox box = new VBox();
+        box.setAlignment(Pos.CENTER);
+
+        for (int i = 0; i < texts.length; i++) {
+            box.getChildren().add(texts[i].ui);
+        }
+        return text(box);
+    }
+
+    /**
+     * Set the specifie {@link Node} as literal component.
+     * 
+     * @param text A literal component to set.
+     * @return Chainable API.
+     */
+    default Self text(UserInterfaceProvider text) {
+        return text(text.ui().getStyleableNode());
+    }
+
+    /**
+     * Set the specifie {@link Node} as literal component.
+     * 
+     * @param text A literal component to set.
+     * @return Chainable API.
+     */
+    default Self text(Node text) {
+        ui().setGraphic(text);
         return (Self) this;
     }
 }

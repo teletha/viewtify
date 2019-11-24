@@ -18,7 +18,6 @@ import javafx.scene.Node;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TableView;
-
 import viewtify.Viewtify;
 
 /**
