@@ -19,7 +19,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
@@ -187,6 +186,7 @@ public class UITableColumn<RowValue, ColumnValue>
 
                 if (empty || item == null) {
                     setText(null);
+                    setGraphic(null);
                 } else {
                     renderer.accept(UITableCell.this, item);
                 }
