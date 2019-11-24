@@ -16,7 +16,6 @@ import java.util.function.Function;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import kiss.I;
@@ -206,15 +205,6 @@ public class UITableColumn<RowValue, ColumnValue>
         @Override
         public TableCell ui() {
             return ui;
-        }
-
-        /**
-         * Set your {@link Node} to this {@link TableCell}.
-         * 
-         * @param node
-         */
-        public final void set(Node node) {
-            ui.setGraphic(node);
         }
     }
 }
