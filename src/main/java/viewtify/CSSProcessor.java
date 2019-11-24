@@ -11,6 +11,7 @@ package viewtify;
 
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
 
 import kiss.Variable;
 import stylist.CSSValue;
@@ -18,10 +19,10 @@ import stylist.Properties;
 import stylist.Stylist;
 import stylist.value.Color;
 
-/**
- * @version 2018/09/26 15:12:34
- */
 class CSSProcessor implements Consumer<Properties> {
+
+    /** The digit pattern. */
+    private static final Pattern HasDigit = Pattern.compile("[-\\.]?\\d+.+");
 
     /** The special formatter for JavaFX. */
     public static final Stylist pretty() {
@@ -29,8 +30,7 @@ class CSSProcessor implements Consumer<Properties> {
     }
 
     /** The property name mapping. */
-    private static final Map<String, String> propertyNames = Map
-            .of("width", "pref-width", "height", "pref-height", "color", "text-fill", "stroke-dasharray", "stroke-dash-array");
+    private static final Map<String, String> propertyNames = Map.of("color", "text-fill", "stroke-dasharray", "stroke-dash-array");
 
     /** The property value mapping. */
     private static final Map<String, String> cursorProperties = Map.of("pointer", "hand");
@@ -48,8 +48,10 @@ class CSSProcessor implements Consumer<Properties> {
         properties.revalue("cursor", cursorProperties);
 
         alignment(properties);
+        height(properties);
         textIndent(properties);
         userSelect(properties);
+        width(properties);
 
         // assign prefix and map special name
         properties.rename(this::rename);
@@ -97,6 +99,23 @@ class CSSProcessor implements Consumer<Properties> {
     }
 
     /**
+     * Configure key-word height property.
+     * 
+     * @param properties
+     */
+    private void height(Properties properties) {
+        Variable<CSSValue> height = properties.remove("height");
+
+        if (height.isPresent()) {
+            if (HasDigit.matcher(height.v.toString()).matches()) {
+                properties.set("pref-height", height.v);
+            } else {
+                properties.set("height", height.v);
+            }
+        }
+    }
+
+    /**
      * Configure text-indent.
      * 
      * @param properties
@@ -119,6 +138,23 @@ class CSSProcessor implements Consumer<Properties> {
 
         if (value.isPresent()) {
             properties.set("focus-traversable", CSSValue.of(!value.get().match("none")));
+        }
+    }
+
+    /**
+     * Configure key-word width property.
+     * 
+     * @param properties
+     */
+    private void width(Properties properties) {
+        Variable<CSSValue> width = properties.remove("width");
+
+        if (width.isPresent()) {
+            if (HasDigit.matcher(width.v.toString()).matches()) {
+                properties.set("pref-width", width.v);
+            } else {
+                properties.set("width", width.v);
+            }
         }
     }
 

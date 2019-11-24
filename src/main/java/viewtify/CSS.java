@@ -23,11 +23,13 @@ import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.css.converter.InsetsConverter;
 import javafx.css.converter.SizeConverter;
+import javafx.css.converter.StringConverter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -45,6 +47,20 @@ import net.bytebuddy.matcher.ElementMatchers;
  */
 @SuppressWarnings("unused")
 final class CSS {
+
+    /** The extra property. */
+    private static final Meta<Node, String> HeightKeyword = new Meta<>("-fx-height", StringConverter.getInstance(), (node, value) -> {
+        if (value.equals("fill")) {
+            VBox.setVgrow(node, Priority.ALWAYS);
+        }
+    });
+
+    /** The extra property. */
+    private static final Meta<Node, String> WidthKeyword = new Meta<>("-fx-width", StringConverter.getInstance(), (node, value) -> {
+        if (value.equals("fill")) {
+            HBox.setHgrow(node, Priority.ALWAYS);
+        }
+    });
 
     /** The extra property. */
     private static final Meta<Node, Insets> Margin = new Meta<>("-fx-margin", InsetsConverter.getInstance(), (node, insets) -> {
