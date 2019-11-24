@@ -50,14 +50,14 @@ final class CSS {
 
     /** The extra property. */
     private static final Meta<Node, String> HeightKeyword = new Meta<>("-fx-height", StringConverter.getInstance(), (node, value) -> {
-        if (value.equals("fill")) {
+        if ("fill".equals(value)) {
             VBox.setVgrow(node, Priority.ALWAYS);
         }
     });
 
     /** The extra property. */
     private static final Meta<Node, String> WidthKeyword = new Meta<>("-fx-width", StringConverter.getInstance(), (node, value) -> {
-        if (value.equals("fill")) {
+        if ("fill".equals(value)) {
             HBox.setHgrow(node, Priority.ALWAYS);
         }
     });
