@@ -53,6 +53,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -255,7 +256,7 @@ public final class Viewtify {
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      */
     public void activate(View application) {
-        checkPolicy();
+        checkPolicy(application.getClass().getSimpleName());
 
         // load extensions in viewtify package
         I.load(Location.class);
@@ -330,11 +331,13 @@ public final class Viewtify {
 
     /**
      * Check {@link ActivationPolicy}.
+     * 
+     * @param name A simple name of application.
      */
-    private void checkPolicy() {
+    private void checkPolicy(String applicationName) {
         if (policy != ActivationPolicy.Multiple) {
             // create application specified directory for lock
-            Directory root = Locator.directory(".lock").touch();
+            Directory root = Locator.directory(".lock-" + applicationName.toLowerCase()).touch();
 
             root.lock(() -> {
                 // another application is activated
