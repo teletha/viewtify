@@ -23,8 +23,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
 import kiss.Tree;
+import kiss.WiseRunnable;
 import stylist.Style;
 import transcript.Transcript;
 import viewtify.ui.helper.StyleHelper;
@@ -73,6 +75,24 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      */
     protected final void $(Node node) {
         $(() -> node);
+    }
+
+    /**
+     * Declare the specified {@link Node}.
+     * 
+     * @param node A JavaFX {@link Node} to compose.
+     */
+    protected final void $(Node node, WiseRunnable writer) {
+        $(() -> node, writer);
+    }
+
+    /**
+     * Declare the specified {@link Node}.
+     * 
+     * @param node A JavaFX {@link Node} to compose.
+     */
+    protected final void $(Node node, Style style, WiseRunnable writer) {
+        $(() -> node, style, writer);
     }
 
     /**
