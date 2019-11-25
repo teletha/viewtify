@@ -25,6 +25,7 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -53,7 +54,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -339,18 +339,20 @@ public final class Viewtify {
             // create application specified directory for lock
             Directory root = Locator.directory(".lock-" + applicationName.toLowerCase()).touch();
 
-            root.lock(() -> {
-                // another application is activated
-                if (policy == ActivationPolicy.Earliest) {
-                    // make the window active
-                    root.file("active").touch();
+            root.lock()
+                    .retryWhen(NullPointerException.class, e -> e.effect(() -> {
+                        // another application is activated
+                        if (policy == ActivationPolicy.Earliest) {
+                            // make the window active
+                            root.file("active").touch();
 
-                    throw new Error("Application is running already.");
-                } else {
-                    // close the window
-                    root.file("close").touch();
-                }
-            });
+                            throw new Error("Application is running already.");
+                        } else {
+                            // close the window
+                            root.file("close").touch();
+                        }
+                    }).wait(500, TimeUnit.MILLISECONDS).take(10))
+                    .to();
 
             // observe lock directory for next application
             root.observe().map(WatchEvent::context).to(path -> {
