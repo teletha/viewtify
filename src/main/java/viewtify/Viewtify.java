@@ -35,7 +35,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.beans.value.ObservableValueBase;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
@@ -868,44 +867,6 @@ public final class Viewtify {
             Calculation<Double> height = calculate(clipper).as(Region.class).flatDouble(Region::heightProperty);
 
             node.clipProperty().bind(calculate(width, height, () -> new Rectangle(width.get(), height.get())));
-        }
-    }
-
-    public static final <E> ObservableValue<E> observe(Variable<E> value) {
-        return new ObservableVariable(value);
-    }
-
-    public static final Object[] observe(Object... values) {
-        for (int i = 0; i < values.length; i++) {
-            if (values[i] instanceof Variable) {
-                values[i] = observe((Variable) values[i]);
-            }
-        }
-        return values;
-    }
-
-    /**
-     * @version 2018/04/27 12:51:37
-     */
-    private static class ObservableVariable<E> extends ObservableValueBase<E> {
-
-        /** The actual value holder. */
-        private final Variable<E> var;
-
-        /**
-         * @param var
-         */
-        private ObservableVariable(Variable<E> var) {
-            this.var = Objects.requireNonNull(var);
-            this.var.observe().to(this::fireValueChangedEvent);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public E getValue() {
-            return var.get();
         }
     }
 
