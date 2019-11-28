@@ -185,7 +185,7 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supp
      * @return A {@link Signal} that notify the change of this value.
      */
     default Signal<V> observe() {
-        return Viewtify.signal(model()).skipNull();
+        return Viewtify.observe(model()).skipNull();
     }
 
     /**

@@ -36,8 +36,8 @@ public class UITab implements StyleHelper<UITab, Tab> {
      */
     public UITab(Tab tab) {
         this.ui = tab;
-        this.closing = Viewtify.signal(ui.onCloseRequestProperty(), this);
-        this.closed = Viewtify.signal(ui.onClosedProperty(), this);
+        this.closing = Viewtify.observe(ui.onCloseRequestProperty(), this);
+        this.closed = Viewtify.observe(ui.onClosedProperty(), this);
     }
 
     /**

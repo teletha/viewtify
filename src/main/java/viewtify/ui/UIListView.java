@@ -196,7 +196,7 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>> {
      * @return
      */
     public <C> UIListView<E> take(ObservableValue<C> context, BiPredicate<E, C> filter) {
-        Viewtify.signalNow(context).to(c -> {
+        Viewtify.observeNow(context).to(c -> {
             this.filter.set((E e) -> filter.test(e, c));
         });
 

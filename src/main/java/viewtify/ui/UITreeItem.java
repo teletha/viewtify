@@ -153,6 +153,6 @@ public class UITreeItem<T> {
      * @return
      */
     public UITreeItem<T> removeWhenEmpty() {
-        return removeWhen(Viewtify.signal(ui.getChildren()).take(Change::wasRemoved).take(c -> ui.getChildren().isEmpty()));
+        return removeWhen(Viewtify.observe(ui.getChildren()).take(Change::wasRemoved).take(c -> ui.getChildren().isEmpty()));
     }
 }

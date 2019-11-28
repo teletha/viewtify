@@ -283,8 +283,8 @@ public final class Viewtify {
                 scene.getStylesheets().add(applicationStyles.toUri().toURL().toExternalForm());
 
                 // observe stylesheets
-                observe(scene.getStylesheets());
-                observe(scene.getRoot().getStylesheets());
+                observeStylesheet(scene.getStylesheets());
+                observeStylesheet(scene.getRoot().getStylesheets());
 
                 stage.showingProperty().addListener((observable, oldValue, newValue) -> {
                     if (oldValue == true && newValue == false) {
@@ -373,7 +373,7 @@ public final class Viewtify {
      * 
      * @param stylesheets
      */
-    private void observe(ObservableList<String> stylesheets) {
+    private void observeStylesheet(ObservableList<String> stylesheets) {
         for (String stylesheet : stylesheets) {
             if (stylesheet.startsWith("file:/")) {
                 File file = Locator.file(stylesheet.substring(6));
@@ -763,7 +763,7 @@ public final class Viewtify {
      * @param list
      * @return
      */
-    public static <E> Signal<Change<? extends E>> signal(ObservableList<E> list) {
+    public static <E> Signal<Change<? extends E>> observe(ObservableList<E> list) {
         return new Signal<>((observer, disposer) -> {
             ListChangeListener<E> listener = change -> {
                 while (change.next()) {
@@ -785,7 +785,7 @@ public final class Viewtify {
      * @param values
      * @return
      */
-    public static <T> Signal<T> signal(ObservableValue<T>... values) {
+    public static <T> Signal<T> observe(ObservableValue<T>... values) {
         return new Signal<>((observer, disposer) -> {
             ChangeListener<T> listener = (s, o, n) -> {
                 observer.accept(n);
@@ -810,7 +810,7 @@ public final class Viewtify {
      * @param eventValue
      * @return
      */
-    public static <T> Signal<T> signal(ObjectProperty<EventHandler<Event>> eventHandlerProperty, T eventValue) {
+    public static <T> Signal<T> observe(ObjectProperty<EventHandler<Event>> eventHandlerProperty, T eventValue) {
         return new Signal<>((observer, disposer) -> {
             EventHandler<Event> handler = e -> observer.accept(eventValue);
             eventHandlerProperty.set(handler);
@@ -824,8 +824,8 @@ public final class Viewtify {
      * @param values
      * @return
      */
-    public static <T> Signal<T> signalNow(ObservableValue<T> value) {
-        return signal(value).startWith(value.getValue());
+    public static <T> Signal<T> observeNow(ObservableValue<T> value) {
+        return observe(value).startWith(value.getValue());
     }
 
     public static UserInterface wrap(Control ui, View view) {
@@ -918,9 +918,9 @@ public final class Viewtify {
             }
 
             // observe window location and state
-            Signal<Boolean> windowState = Viewtify.signal(stage.maximizedProperty(), stage.iconifiedProperty());
+            Signal<Boolean> windowState = Viewtify.observe(stage.maximizedProperty(), stage.iconifiedProperty());
             Signal<Number> windowLocation = Viewtify
-                    .signal(stage.xProperty(), stage.yProperty(), stage.widthProperty(), stage.heightProperty());
+                    .observe(stage.xProperty(), stage.yProperty(), stage.widthProperty(), stage.heightProperty());
 
             windowState.merge(windowLocation.mapTo(true)).debounce(500, MILLISECONDS).to(() -> {
                 Location store = computeIfAbsent(view, key -> new Location());

@@ -293,7 +293,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      */
     private Signal<?> validateWhen() {
         if (this instanceof PreferenceHelper) {
-            return Viewtify.signal(((PreferenceHelper) this).model());
+            return Viewtify.observe(((PreferenceHelper) this).model());
         } else {
             return null;
         }
@@ -341,7 +341,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
         writer.accept(value);
 
         // prepare for store
-        Viewtify.signal(property).debounce(1000, MILLISECONDS).to(change -> {
+        Viewtify.observe(property).debounce(1000, MILLISECONDS).to(change -> {
             preference.put(id, I.transform(change, String.class));
             preference.store();
         });
