@@ -29,13 +29,13 @@ import viewtify.Viewtify;
 /**
  * @version 2018/04/26 9:04:34
  */
-class CalculationTest {
+class CalculatedTest {
 
     @Test
     void calculationFromObservableValue() {
         ObjectProperty<Integer> property = new SimpleObjectProperty(10);
 
-        Calculation<Integer> calculation = Viewtify.calculate(property);
+        Calculated<Integer> calculation = Viewtify.calculate(property);
         assert calculation.isValid() == false;
         assert calculation.get() == 10;
         assert calculation.isValid() == true;
@@ -55,7 +55,7 @@ class CalculationTest {
     void calculationFromVariable() {
         Variable<Integer> variable = Variable.of(10);
 
-        Calculation<Integer> calculation = Viewtify.calculate(variable);
+        Calculated<Integer> calculation = Viewtify.calculate(variable);
         assert calculation.isValid() == false;
         assert calculation.get() == 10;
         assert calculation.isValid() == true;
@@ -75,7 +75,7 @@ class CalculationTest {
     void as() {
         Integer value = Integer.valueOf(10);
         Property<Object> object = new SimpleObjectProperty(10);
-        Calculation<Object> calculation = Viewtify.calculate(object);
+        Calculated<Object> calculation = Viewtify.calculate(object);
         assert calculation.as(Integer.class).get() == 10;
         assert calculation.as(Number.class).get().equals(value);
         assert calculation.as(Object.class).get().equals(value);
@@ -91,7 +91,7 @@ class CalculationTest {
 
     @Test
     void concat() {
-        Calculation<String> concat = Viewtify.calculate("Test").concat("OK");
+        Calculated<String> concat = Viewtify.calculate("Test").concat("OK");
         assert concat.isValid() == false;
         assert concat.get().equals("TestOK");
         assert concat.isValid() == true;
@@ -135,7 +135,7 @@ class CalculationTest {
     void is() {
         Variable<Integer> variable = Variable.of(10);
 
-        Calculation<Boolean> calculation = Viewtify.calculate(variable).is(10, 20);
+        Calculated<Boolean> calculation = Viewtify.calculate(variable).is(10, 20);
         assert calculation.get() == true;
         assert calculation.isValid() == true;
 
@@ -154,7 +154,7 @@ class CalculationTest {
     void isSet() {
         Variable<Integer> variable = Variable.of(10);
 
-        Calculation<Boolean> calculation = Viewtify.calculate(variable).is(I.set(10, 20));
+        Calculated<Boolean> calculation = Viewtify.calculate(variable).is(I.set(10, 20));
         assert calculation.get() == true;
         assert calculation.isValid() == true;
 
@@ -175,7 +175,7 @@ class CalculationTest {
         IntegerProperty tester1 = new SimpleIntegerProperty(10);
         IntegerProperty tester2 = new SimpleIntegerProperty(20);
 
-        Calculation<Boolean> calculation = Viewtify.calculate(source).is(tester1, tester2);
+        Calculated<Boolean> calculation = Viewtify.calculate(source).is(tester1, tester2);
         assert calculation.get() == true;
         assert calculation.isValid() == true;
 
@@ -203,7 +203,7 @@ class CalculationTest {
         Variable<Integer> tester1 = Variable.of(10);
         Variable<Integer> tester2 = Variable.of(20);
 
-        Calculation<Boolean> calculation = Viewtify.calculate(source).is(tester1, tester2);
+        Calculated<Boolean> calculation = Viewtify.calculate(source).is(tester1, tester2);
         assert calculation.get() == true;
         assert calculation.isValid() == true;
 
@@ -229,7 +229,7 @@ class CalculationTest {
     void isNot() {
         Variable<Integer> variable = Variable.of(10);
 
-        Calculation<Boolean> calculation = Viewtify.calculate(variable).isNot(10, 20);
+        Calculated<Boolean> calculation = Viewtify.calculate(variable).isNot(10, 20);
         assert calculation.get() == false;
         assert calculation.isValid() == true;
 
@@ -248,7 +248,7 @@ class CalculationTest {
     void isNotSet() {
         Variable<Integer> variable = Variable.of(10);
 
-        Calculation<Boolean> calculation = Viewtify.calculate(variable).isNot(I.set(10, 20));
+        Calculated<Boolean> calculation = Viewtify.calculate(variable).isNot(I.set(10, 20));
         assert calculation.get() == false;
         assert calculation.isValid() == true;
 
@@ -269,7 +269,7 @@ class CalculationTest {
         IntegerProperty tester1 = new SimpleIntegerProperty(10);
         IntegerProperty tester2 = new SimpleIntegerProperty(20);
 
-        Calculation<Boolean> calculation = Viewtify.calculate(source).isNot(tester1, tester2);
+        Calculated<Boolean> calculation = Viewtify.calculate(source).isNot(tester1, tester2);
         assert calculation.get() == false;
         assert calculation.isValid() == true;
 
@@ -297,7 +297,7 @@ class CalculationTest {
         Variable<Integer> tester1 = Variable.of(10);
         Variable<Integer> tester2 = Variable.of(20);
 
-        Calculation<Boolean> calculation = Viewtify.calculate(source).isNot(tester1, tester2);
+        Calculated<Boolean> calculation = Viewtify.calculate(source).isNot(tester1, tester2);
         assert calculation.get() == false;
         assert calculation.isValid() == true;
 
@@ -323,7 +323,7 @@ class CalculationTest {
     void isAbsent() {
         Variable<Integer> variable = Variable.of(10);
 
-        Calculation<Boolean> calculation = Viewtify.calculate(variable).isAbsent();
+        Calculated<Boolean> calculation = Viewtify.calculate(variable).isAbsent();
         assert calculation.get() == false;
         assert calculation.isValid() == true;
 
@@ -337,7 +337,7 @@ class CalculationTest {
     void isPresent() {
         Variable<Integer> variable = Variable.of(10);
 
-        Calculation<Boolean> calculation = Viewtify.calculate(variable).isPresent();
+        Calculated<Boolean> calculation = Viewtify.calculate(variable).isPresent();
         assert calculation.get() == true;
         assert calculation.isValid() == true;
 
@@ -350,7 +350,7 @@ class CalculationTest {
     @Test
     void or() {
         StringProperty p = new SimpleStringProperty("TEST");
-        Calculation<String> calc = Viewtify.calculate(p).or("OTHER");
+        Calculated<String> calc = Viewtify.calculate(p).or("OTHER");
         assert calc.get().equals("TEST");
 
         p.set(null);
@@ -362,7 +362,7 @@ class CalculationTest {
         StringProperty p1 = new SimpleStringProperty("TEST");
         StringProperty p2 = new SimpleStringProperty("OTHER");
 
-        Calculation<String> calc = Viewtify.calculate(p1).or(p2);
+        Calculated<String> calc = Viewtify.calculate(p1).or(p2);
         assert calc.get().equals("TEST");
 
         p1.set(null);
@@ -380,7 +380,7 @@ class CalculationTest {
         Variable<String> p1 = Variable.of("TEST");
         Variable<String> p2 = Variable.of("OTHER");
 
-        Calculation<String> calc = Viewtify.calculate(p1).or(p2);
+        Calculated<String> calc = Viewtify.calculate(p1).or(p2);
         assert calc.get().equals("TEST");
 
         p1.set((String) null);
@@ -396,7 +396,7 @@ class CalculationTest {
     @Test
     void skip() {
         StringProperty p = new SimpleStringProperty("TEST");
-        Calculation<String> calculation = Viewtify.calculate(p).skip(v -> v.contains("S"));
+        Calculated<String> calculation = Viewtify.calculate(p).skip(v -> v.contains("S"));
         assert calculation.get() == null;
         assert calculation.isValid() == true;
 
@@ -409,7 +409,7 @@ class CalculationTest {
     @Test
     void take() {
         StringProperty p = new SimpleStringProperty("TEST");
-        Calculation<String> calculation = Viewtify.calculate(p).take(v -> v.contains("S"));
+        Calculated<String> calculation = Viewtify.calculate(p).take(v -> v.contains("S"));
         assert calculation.get().equals("TEST");
         assert calculation.isValid() == true;
 
@@ -422,7 +422,7 @@ class CalculationTest {
     @Test
     void map() {
         StringProperty p = new SimpleStringProperty("TEST");
-        Calculation<String> calc = Viewtify.calculate(p).map(String::toLowerCase);
+        Calculated<String> calc = Viewtify.calculate(p).map(String::toLowerCase);
         assert calc.get().equals("test");
 
         p.set("CHANGE");
@@ -436,7 +436,7 @@ class CalculationTest {
     void flatObservable() {
         Nest nest = new Nest("TEST");
         ObjectProperty<Nest> p = new SimpleObjectProperty(nest);
-        Calculation<String> calc = Viewtify.calculate(p).flatObservable(v -> v.property);
+        Calculated<String> calc = Viewtify.calculate(p).flatObservable(v -> v.property);
         assert calc.get().equals("TEST");
 
         // change inner value
@@ -460,7 +460,7 @@ class CalculationTest {
     void flatVariable() {
         Nest nest = new Nest("TEST");
         ObjectProperty<Nest> p = new SimpleObjectProperty(nest);
-        Calculation<String> calc = Viewtify.calculate(p).flatVariable(v -> v.variable);
+        Calculated<String> calc = Viewtify.calculate(p).flatVariable(v -> v.variable);
         assert calc.isValid() == false;
         assert calc.get().equals("TEST");
         assert calc.isValid() == true;

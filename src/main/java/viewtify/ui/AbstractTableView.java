@@ -18,7 +18,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableSelectionModel;
 import javafx.scene.text.Text;
 
-import viewtify.bind.CalculationList;
+import viewtify.bind.CalculatedList;
 
 /**
  * @version 2018/09/09 11:54:03
@@ -26,13 +26,13 @@ import viewtify.bind.CalculationList;
 public abstract class AbstractTableView<Self extends AbstractTableView, W extends Control, T> extends AbstractControl<Self, W> {
 
     /** The selection model. */
-    private final CalculationList<T> selection;
+    private final CalculatedList<T> selection;
 
     /**
      * @param ui
      * @param view
      */
-    protected AbstractTableView(W ui, View view, Function<W, CalculationList<T>> selection) {
+    protected AbstractTableView(W ui, View view, Function<W, CalculatedList<T>> selection) {
         super(ui, view);
 
         this.selection = selection.apply(ui);
@@ -43,7 +43,7 @@ public abstract class AbstractTableView<Self extends AbstractTableView, W extend
      * 
      * @return
      */
-    public final CalculationList<T> selection() {
+    public final CalculatedList<T> selection() {
         return selection;
     }
 

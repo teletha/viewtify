@@ -33,7 +33,7 @@ import viewtify.Viewtify;
 /**
  * @version 2018/02/07 16:21:38
  */
-public class CalculationList<E> extends BindingBase<ObservableList<E>> implements Iterable<E> {
+public class CalculatedList<E> extends BindingBase<ObservableList<E>> implements Iterable<E> {
 
     /** The source list. */
     private final ObservableList<E> source;
@@ -42,11 +42,11 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
     private List<Function<E, ? extends Observable>> observableSelectors;
 
     /**
-     * Create {@link CalculationList} with identical name.
+     * Create {@link CalculatedList} with identical name.
      * 
      * @param source
      */
-    public CalculationList(ObservableList<E> source) {
+    public CalculatedList(ObservableList<E> source) {
         this.source = source;
 
         bind(source);
@@ -70,45 +70,45 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
     }
 
     /**
-     * Create mapped {@link CalculationList} for {@link ObservableValue}.
+     * Create mapped {@link CalculatedList} for {@link ObservableValue}.
      * 
      * @param mapper
      * @return
      */
-    public <R> CalculationList<R> flatObservable(Function<E, ObservableValue<R>> mapper) {
+    public <R> CalculatedList<R> flatObservable(Function<E, ObservableValue<R>> mapper) {
         observe(mapper);
         return Viewtify.calculate(new MappedList<>(this, e -> mapper.apply(e).getValue()));
     }
 
     /**
-     * Create mapped {@link CalculationList} for {@link Variable}.
+     * Create mapped {@link CalculatedList} for {@link Variable}.
      * 
      * @param mapper
      * @return
      */
-    public <R> CalculationList<R> flatVariable(Function<E, Variable<R>> mapper) {
+    public <R> CalculatedList<R> flatVariable(Function<E, Variable<R>> mapper) {
         observeVariable(mapper);
         return Viewtify.calculate(new MappedList<>(this, e -> mapper.apply(e).get()));
     }
 
     /**
-     * Create boolean {@link Calculation} whether this list has the specified value or not.
+     * Create boolean {@link Calculated} whether this list has the specified value or not.
      * 
      * @param value
      * @return
      */
-    public Calculation<Boolean> is(E value) {
-        return new Calculation<Boolean>(() -> getValue().contains(value), null, this);
+    public Calculated<Boolean> is(E value) {
+        return new Calculated<Boolean>(() -> getValue().contains(value), null, this);
     }
 
     /**
-     * Create boolean {@link Calculation} whether this list never have the specified value or not.
+     * Create boolean {@link Calculated} whether this list never have the specified value or not.
      * 
      * @param value
      * @return
      */
-    public Calculation<Boolean> isNot(E value) {
-        return new Calculation<Boolean>(() -> !getValue().contains(value), null, this);
+    public Calculated<Boolean> isNot(E value) {
+        return new Calculated<Boolean>(() -> !getValue().contains(value), null, this);
     }
 
     /**
@@ -117,7 +117,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
      * @param index
      * @return
      */
-    public Calculation<E> item(int index) {
+    public Calculated<E> item(int index) {
         return Viewtify.calculate(this, () -> {
             List<E> value = getValue();
             return index < value.size() ? value.get(index) : null;
@@ -125,12 +125,12 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
     }
 
     /**
-     * Create mapped {@link CalculationList}.
+     * Create mapped {@link CalculatedList}.
      * 
      * @param mapper
      * @return
      */
-    public <R> CalculationList<R> map(Function<E, R> mapper) {
+    public <R> CalculatedList<R> map(Function<E, R> mapper) {
         return Viewtify.calculate(new MappedList<>(this, mapper));
     }
 
@@ -140,7 +140,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
      * @param selector
      * @return
      */
-    public final synchronized CalculationList<E> observe(Function<E, ? extends Observable> selector) {
+    public final synchronized CalculatedList<E> observe(Function<E, ? extends Observable> selector) {
         if (selector != null) {
             if (observableSelectors == null) {
                 observableSelectors = new CopyOnWriteArrayList<>();
@@ -176,7 +176,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
      * @param selector
      * @return
      */
-    public final synchronized CalculationList<E> observeVariable(Function<E, ? extends Variable> selector) {
+    public final synchronized CalculatedList<E> observeVariable(Function<E, ? extends Variable> selector) {
         return observe(e -> Viewtify.calculate(selector.apply(e), s -> invalidate()));
     }
 
@@ -187,8 +187,8 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
      * @param accumulator
      * @return
      */
-    public <R> Calculation<R> reduce(R init, WiseBiFunction<R, E, R> accumulator) {
-        return new Calculation<R>(() -> {
+    public <R> Calculated<R> reduce(R init, WiseBiFunction<R, E, R> accumulator) {
+        return new Calculated<R>(() -> {
             return I.signal(getValue()).scanWith(init, accumulator).to().v;
         }, null, this);
     }
@@ -199,8 +199,8 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
      * @param list A list to add.
      * @return A concated list.
      */
-    public CalculationList<E> concat(ObservableList<E> list) {
-        return new CalculationList(new ConcatList(source, list));
+    public CalculatedList<E> concat(ObservableList<E> list) {
+        return new CalculatedList(new ConcatList(source, list));
     }
 
     /**
@@ -209,8 +209,8 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
      * @param list A list to add.
      * @return A concated list.
      */
-    public CalculationList<E> concat(CalculationList<E> list) {
-        return new CalculationList(new ConcatList(source, list.source));
+    public CalculatedList<E> concat(CalculatedList<E> list) {
+        return new CalculatedList(new ConcatList(source, list.source));
     }
 
     /**
@@ -219,7 +219,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
     private static class MappedList<Out, In> extends AbstractList<Out> implements ObservableList<Out> {
 
         /** The source list reference. */
-        private final CalculationList<In> source;
+        private final CalculatedList<In> source;
 
         /** The value mapper. */
         private final Function<? super In, ? extends Out> mapper;
@@ -238,7 +238,7 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
          * @param source
          * @param mapper
          */
-        MappedList(CalculationList<In> source, Function<? super In, ? extends Out> mapper) {
+        MappedList(CalculatedList<In> source, Function<? super In, ? extends Out> mapper) {
             this.source = source;
             this.mapper = mapper;
 

@@ -18,7 +18,7 @@ import javafx.scene.control.TreeTableView;
 
 import kiss.Signal;
 import viewtify.Viewtify;
-import viewtify.bind.CalculationList;
+import viewtify.bind.CalculatedList;
 
 /**
  * @version 2017/12/04 14:50:11
@@ -64,7 +64,7 @@ public class UITreeItem<T> {
      * 
      * @return
      */
-    public CalculationList<T> values() {
+    public CalculatedList<T> values() {
         return Viewtify.calculate(ui.getChildren()).map(i -> i.getValue());
     }
 

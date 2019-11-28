@@ -26,12 +26,12 @@ import viewtify.Viewtify;
 /**
  * @version 2018/04/11 23:41:49
  */
-class CalculationListTest {
+class CalculatedListTest {
 
     @Test
     void calculateList() {
         ObservableList<String> source = FXCollections.observableArrayList("one", "two", "three");
-        CalculationList<String> result = Viewtify.calculate(source);
+        CalculatedList<String> result = Viewtify.calculate(source);
         assert result.isValid() == false;
         assert result.getValue().size() == 3;
         assert result.getValue().get(0).equals("one");
@@ -71,7 +71,7 @@ class CalculationListTest {
     @Test
     void map() {
         ObservableList<String> source = FXCollections.observableArrayList("one", "two", "three");
-        CalculationList<String> result = Viewtify.calculate(source).map(String::toUpperCase);
+        CalculatedList<String> result = Viewtify.calculate(source).map(String::toUpperCase);
         assert result.isValid() == false;
         assert result.getValue().size() == 3;
         assert result.getValue().get(0).equals("ONE");
@@ -114,7 +114,7 @@ class CalculationListTest {
         Value<String> v1 = Value.of("one");
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
-        CalculationList<String> result = Viewtify.calculate(FXCollections.observableArrayList(v1, v2, v3))
+        CalculatedList<String> result = Viewtify.calculate(FXCollections.observableArrayList(v1, v2, v3))
                 .observe(o -> o.property)
                 .observeVariable(o -> o.variable)
                 .map(Value<String>::text);
@@ -147,7 +147,7 @@ class CalculationListTest {
         ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
 
         // normal validation
-        CalculationList<Value<String>> wrapped = Viewtify.calculate(source);
+        CalculatedList<Value<String>> wrapped = Viewtify.calculate(source);
         assert wrapped.isValid() == false;
         assert wrapped.getValue().size() == 3;
         assert wrapped.isValid() == true;
@@ -176,7 +176,7 @@ class CalculationListTest {
         ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
 
         // normal validation
-        CalculationList<Value<String>> wrapped = Viewtify.calculate(source);
+        CalculatedList<Value<String>> wrapped = Viewtify.calculate(source);
         assert wrapped.isValid() == false;
         assert wrapped.getValue().size() == 3;
         assert wrapped.isValid() == true;
@@ -203,7 +203,7 @@ class CalculationListTest {
         ObservableList<Value<String>> source = FXCollections.observableArrayList(value);
 
         // normal validation
-        CalculationList<String> wrapped = Viewtify.calculate(source)
+        CalculatedList<String> wrapped = Viewtify.calculate(source)
                 .observeVariable(v -> v.variable)
                 .observeVariable(v -> v.variableOther)
                 .map(v -> v.variable.v + " is " + v.variableOther.v);
@@ -236,7 +236,7 @@ class CalculationListTest {
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
         ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
-        CalculationList<String> result = Viewtify.calculate(source).flatObservable(v -> v.property);
+        CalculatedList<String> result = Viewtify.calculate(source).flatObservable(v -> v.property);
         assert result.isValid() == false;
         assert result.getValue().size() == 3;
         assert result.getValue().get(0).equals("one");
@@ -321,7 +321,7 @@ class CalculationListTest {
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
         ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
-        CalculationList<String> result = Viewtify.calculate(source).flatObservable(v -> v.property).map(String::toUpperCase);
+        CalculatedList<String> result = Viewtify.calculate(source).flatObservable(v -> v.property).map(String::toUpperCase);
         assert result.getValue().size() == 3;
         assert result.getValue().get(0).equals("ONE");
         assert result.getValue().get(1).equals("TWO");
@@ -375,7 +375,7 @@ class CalculationListTest {
         Value<Integer> v2 = Value.of(2);
         Value<Integer> v3 = Value.of(3);
         ObservableList<Value<Integer>> source = FXCollections.observableArrayList(v1, v2, v3);
-        Calculation<Integer> result = Viewtify.calculate(source).flatObservable(v -> v.property).reduce(0, (p, q) -> p + q);
+        Calculated<Integer> result = Viewtify.calculate(source).flatObservable(v -> v.property).reduce(0, (p, q) -> p + q);
         assert result.getValue() == 6;
 
         // add to source list
@@ -407,7 +407,7 @@ class CalculationListTest {
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
         ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
-        CalculationList<String> result = Viewtify.calculate(source).flatVariable(v -> v.variable);
+        CalculatedList<String> result = Viewtify.calculate(source).flatVariable(v -> v.variable);
         assert result.isValid() == false;
         assert result.getValue().size() == 3;
         assert result.getValue().get(0).equals("one");
@@ -492,7 +492,7 @@ class CalculationListTest {
         Value<String> v2 = Value.of("two");
         Value<String> v3 = Value.of("three");
         ObservableList<Value<String>> source = FXCollections.observableArrayList(v1, v2, v3);
-        CalculationList<String> result = Viewtify.calculate(source).flatVariable(v -> v.variable).map(String::toUpperCase);
+        CalculatedList<String> result = Viewtify.calculate(source).flatVariable(v -> v.variable).map(String::toUpperCase);
         assert result.getValue().size() == 3;
         assert result.getValue().get(0).equals("ONE");
         assert result.getValue().get(1).equals("TWO");
@@ -546,7 +546,7 @@ class CalculationListTest {
         Value<Integer> v2 = Value.of(2);
         Value<Integer> v3 = Value.of(3);
         ObservableList<Value<Integer>> source = FXCollections.observableArrayList(v1, v2, v3);
-        Calculation<Integer> result = Viewtify.calculate(source).flatVariable(v -> v.variable).reduce(0, (p, q) -> p + q);
+        Calculated<Integer> result = Viewtify.calculate(source).flatVariable(v -> v.variable).reduce(0, (p, q) -> p + q);
         assert result.getValue() == 6;
         assert result.isValid() == true;
 
@@ -582,7 +582,7 @@ class CalculationListTest {
     @Test
     void isNot() {
         ObservableList<String> source = FXCollections.observableArrayList("value1", "value2", "value3");
-        Calculation<Boolean> result = Viewtify.calculate(source).isNot("NG");
+        Calculated<Boolean> result = Viewtify.calculate(source).isNot("NG");
         assert result.isValid() == false;
         assert result.getValue() == true;
         assert result.isValid() == true;
@@ -598,7 +598,7 @@ class CalculationListTest {
     void concat() {
         ObservableList<String> source1 = FXCollections.observableArrayList("a", "b", "c");
         ObservableList<String> source2 = FXCollections.observableArrayList("A", "B", "C");
-        CalculationList<String> result = Viewtify.calculate(source1).concat(source2);
+        CalculatedList<String> result = Viewtify.calculate(source1).concat(source2);
 
         assert result.item(0).get().equals("a");
         assert result.item(1).get().equals("b");
@@ -621,7 +621,7 @@ class CalculationListTest {
     void concatIterator() {
         ObservableList<String> source1 = FXCollections.observableArrayList("a", "b", "c");
         ObservableList<String> source2 = FXCollections.observableArrayList("A", "B", "C");
-        CalculationList<String> result = Viewtify.calculate(source1).concat(source2);
+        CalculatedList<String> result = Viewtify.calculate(source1).concat(source2);
 
         List<String> list = StreamSupport.stream(result.spliterator(), false).collect(Collectors.toList());
         assert list.size() == 6;

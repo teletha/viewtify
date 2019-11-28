@@ -33,7 +33,7 @@ import viewtify.Viewtify;
 /**
  * @version 2017/12/06 23:28:47
  */
-public class Calculation<T> extends ObjectBinding<T> {
+public class Calculated<T> extends ObjectBinding<T> {
 
     /** The actual calculation. */
     private final Supplier<T> calculation;
@@ -45,7 +45,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param calculation
      * @param dependencies
      */
-    public Calculation(Supplier calculation, Calculation outer, Observable... dependencies) {
+    public Calculated(Supplier calculation, Calculated outer, Observable... dependencies) {
         this.calculation = calculation;
 
         List<Observable> list = new ArrayList();
@@ -87,32 +87,32 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param type
      * @return
      */
-    public <R> Calculation<R> as(Class<R> type) {
+    public <R> Calculated<R> as(Class<R> type) {
         Objects.requireNonNull(type);
 
-        return (Calculation<R>) take(v -> type.isInstance(v));
+        return (Calculated<R>) take(v -> type.isInstance(v));
     }
 
     /**
-     * Creates a new {@link Calculation} that holds a concatenated of the value held by this
-     * {@link Calculation}, and is empty when this {@link Calculation} is empty.
+     * Creates a new {@link Calculated} that holds a concatenated of the value held by this
+     * {@link Calculated}, and is empty when this {@link Calculated} is empty.
      * 
      * @param mapper function to map the value held by this ObservableValue.
      */
-    public Calculation<String> concat(Object value) {
-        Calculation calculation = Viewtify.calculate(value).or("");
+    public Calculated<String> concat(Object value) {
+        Calculated calculation = Viewtify.calculate(value).or("");
 
-        return new Calculation<String>(() -> Objects.toString(get()) + Objects.toString(calculation.getValue()), this, calculation);
+        return new Calculated<String>(() -> Objects.toString(get()) + Objects.toString(calculation.getValue()), this, calculation);
     }
 
     /**
-     * Creates a new {@link Calculation} that holds a concatenated of the value held by this
-     * {@link Calculation}, and is empty when this {@link Calculation} is empty.
+     * Creates a new {@link Calculated} that holds a concatenated of the value held by this
+     * {@link Calculated}, and is empty when this {@link Calculated} is empty.
      * 
      * @param mapper function to map the value held by this ObservableValue.
      */
-    public Calculation<String> concat(Object... values) {
-        Calculation base = this;
+    public Calculated<String> concat(Object... values) {
+        Calculated base = this;
 
         for (Object value : values) {
             base = base.concat(value);
@@ -124,8 +124,8 @@ public class Calculation<T> extends ObjectBinding<T> {
      * Returns a new ObservableValue that, when this ObservableValue holds value {@code x}, holds
      * the value held by {@code f(x)}, and is empty when this ObservableValue is empty.
      */
-    public <R> Calculation<R> flatObservable(Function<? super T, ObservableValue<R>> mapper) {
-        return new Calculation<R>(null, this) {
+    public <R> Calculated<R> flatObservable(Function<? super T, ObservableValue<R>> mapper) {
+        return new Calculated<R>(null, this) {
 
             /** The latest mapper value. */
             private ObservableValue<R> latest;
@@ -139,14 +139,14 @@ public class Calculation<T> extends ObjectBinding<T> {
                     unbind(latest);
                 }
 
-                T value = Calculation.this.get();
+                T value = Calculated.this.get();
 
                 if (value == null) {
                     latest = null;
                     return null;
                 }
 
-                latest = mapper.apply(Calculation.this.get());
+                latest = mapper.apply(Calculated.this.get());
 
                 if (latest == null) {
                     return null;
@@ -162,7 +162,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * Returns a new ObservableValue that, when this ObservableValue holds value {@code x}, holds
      * the value held by {@code f(x)}, and is empty when this ObservableValue is empty.
      */
-    public Calculation<Integer> flatInteger(Function<? super T, IntegerExpression> mapper) {
+    public Calculated<Integer> flatInteger(Function<? super T, IntegerExpression> mapper) {
         return flatObservable(mapper::apply).as(Integer.class);
     }
 
@@ -170,7 +170,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * Returns a new ObservableValue that, when this ObservableValue holds value {@code x}, holds
      * the value held by {@code f(x)}, and is empty when this ObservableValue is empty.
      */
-    public Calculation<Long> flatLong(Function<? super T, LongExpression> mapper) {
+    public Calculated<Long> flatLong(Function<? super T, LongExpression> mapper) {
         return flatObservable(mapper::apply).as(Long.class);
     }
 
@@ -178,7 +178,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * Returns a new ObservableValue that, when this ObservableValue holds value {@code x}, holds
      * the value held by {@code f(x)}, and is empty when this ObservableValue is empty.
      */
-    public Calculation<Double> flatDouble(Function<? super T, DoubleExpression> mapper) {
+    public Calculated<Double> flatDouble(Function<? super T, DoubleExpression> mapper) {
         return flatObservable(mapper::apply).as(Double.class);
     }
 
@@ -188,7 +188,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * 
      * @param mapper function to map the value held by this ObservableValue.
      */
-    public <R> Calculation<R> flatVariable(Function<? super T, Variable<R>> mapper) {
+    public <R> Calculated<R> flatVariable(Function<? super T, Variable<R>> mapper) {
         return flatObservable(v -> Viewtify.calculate(mapper.apply(v)));
     }
 
@@ -198,7 +198,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * 
      * @param mapper function to map the value held by this ObservableValue.
      */
-    public <R> Calculation<R> flatMap(Function<? super T, Signal<R>> mapper) {
+    public <R> Calculated<R> flatMap(Function<? super T, Signal<R>> mapper) {
         return flatVariable(v -> mapper.apply(v).to());
     }
 
@@ -208,7 +208,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param active
      * @return
      */
-    public Calculation<Boolean> is(T... values) {
+    public Calculated<Boolean> is(T... values) {
         return is(I.set(values));
     }
 
@@ -218,7 +218,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param active
      * @return
      */
-    public Calculation<Boolean> is(Set<T> values) {
+    public Calculated<Boolean> is(Set<T> values) {
         return map(v -> values.contains(v));
     }
 
@@ -228,8 +228,8 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param active
      * @return
      */
-    public Calculation<Boolean> is(ObservableValue<T>... values) {
-        return new Calculation<>(() -> {
+    public Calculated<Boolean> is(ObservableValue<T>... values) {
+        return new Calculated<>(() -> {
             T now = get();
 
             for (ObservableValue<T> value : values) {
@@ -247,7 +247,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param active
      * @return
      */
-    public Calculation<Boolean> is(Variable<T>... values) {
+    public Calculated<Boolean> is(Variable<T>... values) {
         return is(Viewtify.calculate(values));
     }
 
@@ -257,7 +257,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param active
      * @return
      */
-    public Calculation<Boolean> isNot(T... values) {
+    public Calculated<Boolean> isNot(T... values) {
         return isNot(I.set(values));
     }
 
@@ -267,7 +267,7 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param active
      * @return
      */
-    public Calculation<Boolean> isNot(Set<T> values) {
+    public Calculated<Boolean> isNot(Set<T> values) {
         return map(v -> !values.contains(v));
     }
 
@@ -277,8 +277,8 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param active
      * @return
      */
-    public Calculation<Boolean> isNot(ObservableValue<T>... values) {
-        return new Calculation<>(() -> {
+    public Calculated<Boolean> isNot(ObservableValue<T>... values) {
+        return new Calculated<>(() -> {
             T now = get();
 
             for (ObservableValue<T> value : values) {
@@ -296,46 +296,46 @@ public class Calculation<T> extends ObjectBinding<T> {
      * @param active
      * @return
      */
-    public Calculation<Boolean> isNot(Variable<T>... values) {
+    public Calculated<Boolean> isNot(Variable<T>... values) {
         return isNot(Viewtify.calculate(values));
     }
 
     /**
-     * Creates a new {@link Calculation} that holds {@code true} if this {@code ObjectExpression} is
+     * Creates a new {@link Calculated} that holds {@code true} if this {@code ObjectExpression} is
      * {@code null}.
      *
      * @return A new {@code Calculation}.
      */
-    public Calculation<Boolean> isAbsent() {
+    public Calculated<Boolean> isAbsent() {
         return map(v -> v == null);
     }
 
     /**
-     * Creates a new {@link Calculation} that holds {@code true} if this {@code ObjectExpression} is
+     * Creates a new {@link Calculated} that holds {@code true} if this {@code ObjectExpression} is
      * not {@code null}.
      *
      * @return A new {@code Calculation}.
      */
-    public Calculation<Boolean> isPresent() {
+    public Calculated<Boolean> isPresent() {
         return map(v -> v != null);
     }
 
     /**
-     * Creates a new {@link Calculation} that holds a mapping of the value held by this
-     * {@link Calculation}, and is empty when this {@link Calculation} is empty.
+     * Creates a new {@link Calculated} that holds a mapping of the value held by this
+     * {@link Calculated}, and is empty when this {@link Calculated} is empty.
      * 
      * @param mapper function to map the value held by this ObservableValue.
      */
-    public <R> Calculation<R> map(Function<? super T, ? extends R> mapper) {
-        return new Calculation(() -> mapper.apply(get()), this);
+    public <R> Calculated<R> map(Function<? super T, ? extends R> mapper) {
+        return new Calculated(() -> mapper.apply(get()), this);
     }
 
     /**
-     * Creates a new {@link Calculation} that holds the value held by this {@link Calculation}, or
-     * {@code other} when this {@link Calculation} is empty.
+     * Creates a new {@link Calculated} that holds the value held by this {@link Calculated}, or
+     * {@code other} when this {@link Calculated} is empty.
      */
-    public Calculation<T> or(T other) {
-        return new Calculation(() -> {
+    public Calculated<T> or(T other) {
+        return new Calculated(() -> {
             T value = get();
 
             return value == null ? other : value;
@@ -343,11 +343,11 @@ public class Calculation<T> extends ObjectBinding<T> {
     }
 
     /**
-     * Creates a new {@link Calculation} that holds the value held by this {@link Calculation}, or
-     * the value held by {@code other} when this {@link Calculation} is empty.
+     * Creates a new {@link Calculated} that holds the value held by this {@link Calculated}, or
+     * the value held by {@code other} when this {@link Calculated} is empty.
      */
-    public Calculation<T> or(ObservableValue<T> other) {
-        return new Calculation(() -> {
+    public Calculated<T> or(ObservableValue<T> other) {
+        return new Calculated(() -> {
             T value = get();
 
             return value == null ? other.getValue() : value;
@@ -355,29 +355,29 @@ public class Calculation<T> extends ObjectBinding<T> {
     }
 
     /**
-     * Creates a new {@link Calculation} that holds the value held by this {@link Calculation}, or
-     * the value held by {@code other} when this {@link Calculation} is empty.
+     * Creates a new {@link Calculated} that holds the value held by this {@link Calculated}, or
+     * the value held by {@code other} when this {@link Calculated} is empty.
      */
-    public Calculation<T> or(Variable<T> other) {
+    public Calculated<T> or(Variable<T> other) {
         return or(Viewtify.calculate(other));
     }
 
     /**
-     * Creates a new {@link Calculation} that holds the same value as this {@link Calculation} when
-     * the value does not satisfy the predicate and is empty when this {@link Calculation} is empty
+     * Creates a new {@link Calculated} that holds the same value as this {@link Calculated} when
+     * the value does not satisfy the predicate and is empty when this {@link Calculated} is empty
      * or its value satisfies the given predicate.
      */
-    public Calculation<T> skip(Predicate<T> predicate) {
+    public Calculated<T> skip(Predicate<T> predicate) {
         return take(predicate.negate());
     }
 
     /**
-     * Creates a new {@link Calculation} that holds the same value as this {@link Calculation} when
-     * the value satisfies the predicate and is empty when this {@link Calculation} is empty or its
+     * Creates a new {@link Calculated} that holds the same value as this {@link Calculated} when
+     * the value satisfies the predicate and is empty when this {@link Calculated} is empty or its
      * value does not satisfy the given predicate.
      */
-    public Calculation<T> take(Predicate<T> predicate) {
-        return new Calculation(() -> {
+    public Calculated<T> take(Predicate<T> predicate) {
+        return new Calculated(() -> {
             T value = get();
 
             return predicate.test(value) ? value : null;
@@ -385,9 +385,9 @@ public class Calculation<T> extends ObjectBinding<T> {
     }
 
     /**
-     * Creates a new {@link Calculation} that holds the trimed {@link String} value.
+     * Creates a new {@link Calculated} that holds the trimed {@link String} value.
      */
-    public Calculation<String> trim() {
+    public Calculated<String> trim() {
         return map(v -> Objects.toString(v).trim());
     }
 
