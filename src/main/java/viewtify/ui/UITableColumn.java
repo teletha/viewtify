@@ -18,11 +18,13 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
 import viewtify.Viewtify;
 import viewtify.ui.helper.LabelHelper;
+import viewtify.ui.helper.StyleHelper;
 
 public class UITableColumn<RowValue, ColumnValue>
         extends UITableColumnBase<TableColumn<RowValue, ColumnValue>, UITableColumn<RowValue, ColumnValue>, RowValue, ColumnValue> {
@@ -55,7 +57,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public <Type extends RowValue> UITableColumn<RowValue, ColumnValue> model(Class<Type> type, WiseFunction<Type, ColumnValue> provider) {
+    public <T extends RowValue> UITableColumn<RowValue, ColumnValue> model(Class<T> type, WiseFunction<T, ColumnValue> provider) {
         return modelByProperty(type, row -> new SimpleObjectProperty(provider.apply(row)));
     }
 
@@ -86,7 +88,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public <Type extends RowValue> UITableColumn<RowValue, ColumnValue> modelByProperty(Class<Type> type, Function<Type, ObservableValue<ColumnValue>> provider) {
+    public <T extends RowValue> UITableColumn<RowValue, ColumnValue> modelByProperty(Class<T> type, Function<T, ObservableValue<ColumnValue>> provider) {
         if (mappingProvider == null) {
             modelByProperty(mappingProvider = new TypeMappingProvider());
         }
@@ -111,7 +113,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public <Type extends RowValue> UITableColumn<RowValue, ColumnValue> modelByVar(Class<Type> type, WiseFunction<Type, Variable<ColumnValue>> provider) {
+    public <T extends RowValue> UITableColumn<RowValue, ColumnValue> modelByVar(Class<T> type, WiseFunction<T, Variable<ColumnValue>> provider) {
         return modelByProperty(type, row -> Viewtify.calculate(provider.apply(row)));
     }
 
@@ -168,7 +170,9 @@ public class UITableColumn<RowValue, ColumnValue>
     /**
      * 
      */
-    public class UITableCell implements LabelHelper<UITableCell, TableCell<RowValue, ColumnValue>> {
+    public class UITableCell
+            implements LabelHelper<UITableCell, TableCell<RowValue, ColumnValue>>,
+            StyleHelper<UITableCell, TableCell<RowValue, ColumnValue>> {
 
         /** The user renderer. */
         private final BiConsumer<UITableCell, ColumnValue> renderer;

@@ -14,11 +14,12 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import javafx.css.Styleable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Labeled;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -28,7 +29,7 @@ import viewtify.Viewtify;
 import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
 
-public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extends StyleHelper<Self, W> {
+public interface LabelHelper<Self extends LabelHelper, S extends Styleable> extends PropertyHelper {
 
     /**
      * Get text.
@@ -37,7 +38,7 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * @return A current text.
      */
     default String text() {
-        return ui().getText();
+        return property(Type.Text).getValue();
     }
 
     /**
@@ -47,7 +48,7 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * @return Chainable API.
      */
     default Self text(Object text) {
-        ui().setText(Objects.toString(text));
+        property(Type.Text).setValue(Objects.toString(text));
         return (Self) this;
     }
 
@@ -144,7 +145,7 @@ public interface LabelHelper<Self extends LabelHelper, W extends Labeled> extend
      * @return Chainable API.
      */
     default Self text(Node text) {
-        ui().setGraphic(text);
+        property(Type.Graphic).setValue(text);
         return (Self) this;
     }
 }

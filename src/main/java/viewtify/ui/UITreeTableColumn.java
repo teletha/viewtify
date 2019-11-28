@@ -24,6 +24,7 @@ import kiss.Variable;
 import kiss.WiseFunction;
 import viewtify.Viewtify;
 import viewtify.ui.helper.LabelHelper;
+import viewtify.ui.helper.StyleHelper;
 
 /**
  * @version 2018/09/09 18:05:42
@@ -59,7 +60,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> model(Class<Type> type, WiseFunction<Type, ColumnValue> provider) {
+    public <T extends RowValue> UITreeTableColumn<RowValue, ColumnValue> model(Class<T> type, WiseFunction<T, ColumnValue> provider) {
         return modelByProperty(type, row -> new SimpleObjectProperty(provider.apply(row)));
     }
 
@@ -90,7 +91,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> modelByProperty(Class<Type> type, Function<Type, ObservableValue<ColumnValue>> provider) {
+    public <T extends RowValue> UITreeTableColumn<RowValue, ColumnValue> modelByProperty(Class<T> type, Function<T, ObservableValue<ColumnValue>> provider) {
         if (mappingProvider == null) {
             modelByProperty(mappingProvider = new TypeMappingProvider());
         }
@@ -115,7 +116,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public <Type extends RowValue> UITreeTableColumn<RowValue, ColumnValue> modelByVar(Class<Type> type, WiseFunction<Type, Variable<ColumnValue>> provider) {
+    public <T extends RowValue> UITreeTableColumn<RowValue, ColumnValue> modelByVar(Class<T> type, WiseFunction<T, Variable<ColumnValue>> provider) {
         return modelByProperty(type, row -> Viewtify.calculate(provider.apply(row)));
     }
 
@@ -170,9 +171,11 @@ public class UITreeTableColumn<RowValue, ColumnValue>
     }
 
     /**
-     * @version 2017/12/02 18:11:59
+     * 
      */
-    public class UITreeTableCell implements LabelHelper<UITreeTableCell, TreeTableCell<RowValue, ColumnValue>> {
+    public class UITreeTableCell
+            implements LabelHelper<UITreeTableCell, TreeTableCell<RowValue, ColumnValue>>,
+            StyleHelper<UITreeTableCell, TreeTableCell<RowValue, ColumnValue>> {
 
         /** The user renderer. */
         private final BiConsumer<UITreeTableCell, ColumnValue> renderer;

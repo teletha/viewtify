@@ -44,6 +44,7 @@ import viewtify.Viewtify;
 import viewtify.model.Validation;
 import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.PreferenceHelper;
+import viewtify.ui.helper.PropertyHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
 import viewtify.ui.helper.User;
@@ -54,7 +55,8 @@ import viewtify.util.Icon;
  * @version 2018/08/28 23:42:08
  */
 public class UserInterface<Self extends UserInterface, W extends Node>
-        implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, TooltipHelper<Self, W>, UserInterfaceProvider<W> {
+        implements UserActionHelper<Self>, PropertyHelper, StyleHelper<Self, W>, DisableHelper<Self>, TooltipHelper<Self, W>,
+        UserInterfaceProvider<W> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();

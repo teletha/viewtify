@@ -9,16 +9,13 @@
  */
 package viewtify.ui;
 
-import javafx.beans.binding.Bindings;
 import javafx.scene.control.TableColumnBase;
 
-import viewtify.Viewtify;
+import viewtify.ui.helper.LabelHelper;
+import viewtify.ui.helper.StyleHelper;
 
-/**
- * @version 2018/02/05 20:43:01
- */
 public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowValue, ColumnValue>
-        implements UserInterfaceProvider<Column> {
+        implements UserInterfaceProvider<Column>, LabelHelper<Self, Column>, StyleHelper<Self, Column> {
 
     /** The actual widget. */
     public final Column ui;
@@ -28,17 +25,6 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
      */
     protected UITableColumnBase(Column ui) {
         this.ui = ui;
-    }
-
-    /**
-     * Set column header text.
-     * 
-     * @param texts
-     * @return
-     */
-    public Self header(Object... texts) {
-        ui.textProperty().bind(Viewtify.inUI(Bindings.concat(Viewtify.observe(texts))));
-        return (Self) this;
     }
 
     /**
