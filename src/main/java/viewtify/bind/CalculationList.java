@@ -194,6 +194,26 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
     }
 
     /**
+     * Concat this list and the given list.
+     * 
+     * @param list A list to add.
+     * @return A concated list.
+     */
+    public CalculationList<E> concat(ObservableList<E> list) {
+        return new CalculationList(new ConcatList(source, list));
+    }
+
+    /**
+     * Concat this list and the given list.
+     * 
+     * @param list A list to add.
+     * @return A concated list.
+     */
+    public CalculationList<E> concat(CalculationList<E> list) {
+        return new CalculationList(new ConcatList(source, list.source));
+    }
+
+    /**
      * @version 2017/12/12 15:25:23
      */
     private static class MappedList<Out, In> extends AbstractList<Out> implements ObservableList<Out> {
@@ -485,6 +505,223 @@ public class CalculationList<E> extends BindingBase<ObservableList<E>> implement
             @Override
             public void reset() {
                 change.reset();
+            }
+        }
+    }
+
+    private static class ConcatList<X> extends AbstractList<X> implements ObservableList<X> {
+
+        /** The target list. */
+        private final ObservableList<X> first;
+
+        /** The target list. */
+        private final ObservableList<X> second;
+
+        /**
+         * @param first
+         * @param second
+         */
+        private ConcatList(ObservableList<X> first, ObservableList<X> second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void addListener(InvalidationListener listener) {
+            first.addListener(listener);
+            second.addListener(listener);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            first.removeListener(listener);
+            second.removeListener(listener);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void addListener(ListChangeListener<? super X> listener) {
+            first.addListener(listener);
+            second.addListener(listener);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void removeListener(ListChangeListener<? super X> listener) {
+            first.removeListener(listener);
+            second.removeListener(listener);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean addAll(X... elements) {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean setAll(X... elements) {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean setAll(Collection<? extends X> col) {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean removeAll(X... elements) {
+            boolean result1 = first.removeAll(elements);
+            boolean result2 = second.removeAll(elements);
+            return result1 || result2;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean retainAll(X... elements) {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void remove(int from, int to) {
+            int firstSize = first.size();
+
+            if (from < firstSize) {
+                if (to < firstSize) {
+                    first.remove(from, to);
+                } else {
+                    first.remove(from, firstSize);
+                    second.remove(0, to - firstSize);
+                }
+            } else {
+                second.remove(from - firstSize, to - firstSize);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public X get(int index) {
+            int firstSize = first.size();
+
+            if (index < firstSize) {
+                return first.get(index);
+            } else {
+                return second.get(index - firstSize);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int size() {
+            return first.size() + second.size();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean contains(Object o) {
+            return first.contains(o) || second.contains(o);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Iterator<X> iterator() {
+            return new ConcatIterator(first.iterator(), second.iterator());
+        }
+    }
+
+    /**
+     * 
+     */
+    private static class ConcatIterator<T> implements Iterator<T> {
+
+        /** The target iterator. */
+        private final Iterator<T> first;
+
+        /** The target iterator. */
+        private final Iterator<T> second;
+
+        /** The cache. */
+        private boolean firstHasNext = true;
+
+        /**
+         * @param first
+         * @param second
+         */
+        private ConcatIterator(Iterator<T> first, Iterator<T> second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean hasNext() {
+            return (firstHasNext && (firstHasNext = first.hasNext())) || second.hasNext();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public T next() {
+            if (firstHasNext) {
+                return first.next();
+            } else {
+                return second.next();
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void remove() {
+            if (firstHasNext) {
+                first.remove();
+            } else {
+                second.remove();
             }
         }
     }

@@ -9,6 +9,10 @@
  */
 package viewtify.bind;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -588,6 +592,40 @@ class CalculationListTest {
         assert result.isValid() == false;
         assert result.getValue() == false;
         assert result.isValid() == true;
+    }
+
+    @Test
+    void concat() {
+        ObservableList<String> source1 = FXCollections.observableArrayList("a", "b", "c");
+        ObservableList<String> source2 = FXCollections.observableArrayList("A", "B", "C");
+        CalculationList<String> result = Viewtify.calculate(source1).concat(source2);
+
+        assert result.item(0).get().equals("a");
+        assert result.item(1).get().equals("b");
+        assert result.item(2).get().equals("c");
+        assert result.item(3).get().equals("A");
+        assert result.item(4).get().equals("B");
+        assert result.item(5).get().equals("C");
+
+        source1.add("d");
+        assert result.item(0).get().equals("a");
+        assert result.item(1).get().equals("b");
+        assert result.item(2).get().equals("c");
+        assert result.item(3).get().equals("d");
+        assert result.item(4).get().equals("A");
+        assert result.item(5).get().equals("B");
+        assert result.item(6).get().equals("C");
+    }
+
+    @Test
+    void concatIterator() {
+        ObservableList<String> source1 = FXCollections.observableArrayList("a", "b", "c");
+        ObservableList<String> source2 = FXCollections.observableArrayList("A", "B", "C");
+        CalculationList<String> result = Viewtify.calculate(source1).concat(source2);
+
+        List<String> list = StreamSupport.stream(result.spliterator(), false).collect(Collectors.toList());
+        assert list.size() == 6;
+        assert list.get(5).equals("C");
     }
 
     /**
