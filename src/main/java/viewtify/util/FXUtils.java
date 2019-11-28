@@ -9,10 +9,11 @@
  */
 package viewtify.util;
 
-import static java.lang.Double.*;
+import static java.lang.Double.parseDouble;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
 import kiss.Decoder;
 import kiss.Encoder;
 import kiss.Variable;

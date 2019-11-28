@@ -17,9 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Objects;
 import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
@@ -40,7 +38,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ObservableValueBase;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
-import javafx.collections.ModifiableObservableListBase;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -54,6 +51,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -870,137 +868,6 @@ public final class Viewtify {
             Calculation<Double> height = calculate(clipper).as(Region.class).flatDouble(Region::heightProperty);
 
             node.clipProperty().bind(calculate(width, height, () -> new Rectangle(width.get(), height.get())));
-        }
-    }
-
-    /**
-     * Build {@link ObservableList}.
-     * 
-     * @param list
-     * @return
-     */
-    public static final <E> ObservableList<E> observe(List<E> list) {
-        return new ObservableWrapList<E>(list);
-    }
-
-    /**
-     * Build {@link ObservableList}.
-     * 
-     * @param list
-     * @return
-     */
-    public static final <E> ObservableList<E> observe(List<E> list, Signal<E> add, Signal<E> remove) {
-        return new ObservableWrapList(list, add, remove);
-    }
-
-    /**
-     * @version 2018/04/12 12:59:14
-     */
-    private static class ObservableWrapList<E> extends ModifiableObservableListBase<E> implements ObservableList<E> {
-
-        /** The delegation. */
-        private final List<E> list;
-
-        /**
-         * @param list
-         */
-        private ObservableWrapList(List<E> list) {
-            this(list, null, null);
-        }
-
-        /**
-         * @param list
-         * @param addLast
-         * @param removeFirst
-         */
-        private ObservableWrapList(List<E> list, Signal<E> addLast, Signal<E> removeFirst) {
-            this.list = Objects.requireNonNull(list);
-
-            if (addLast != null) {
-                addLast.to(v -> {
-                    beginChange();
-                    try {
-                        int size = list.size();
-                        nextAdd(size - 1, size);
-                    } finally {
-                        endChange();
-                    }
-                });
-            }
-            if (removeFirst != null) {
-                removeFirst.to(v -> {
-                    beginChange();
-                    try {
-                        nextRemove(0, v);
-                    } finally {
-                        endChange();
-                    }
-                });
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public int size() {
-            return list.size();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public E get(int index) {
-            return list.get(index);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected void doAdd(int index, E element) {
-            list.add(index, element);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected E doSet(int index, E element) {
-            return list.set(index, element);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected E doRemove(int index) {
-            return list.remove(index);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Iterator<E> iterator() {
-            return list.iterator();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public ListIterator<E> listIterator() {
-            return list.listIterator();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public ListIterator<E> listIterator(int index) {
-            return list.listIterator(index);
         }
     }
 

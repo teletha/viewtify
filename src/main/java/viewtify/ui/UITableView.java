@@ -9,7 +9,6 @@
  */
 package viewtify.ui;
 
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 
 import javafx.beans.property.ObjectProperty;
@@ -18,15 +17,11 @@ import javafx.scene.Node;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TableView;
+
 import viewtify.Viewtify;
+import viewtify.ui.helper.CollectableHelper;
 
-/**
- * @version 2018/09/10 8:39:01
- */
-public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<T>, T> {
-
-    /** The items (concurrent safe, snapshot iteration). */
-    public final ObservableList<T> values;
+public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<T>, T> implements CollectableHelper<UITableView<T>, T> {
 
     /**
      * Enchanced view.
@@ -35,9 +30,14 @@ public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<
      */
     private UITableView(View view) {
         super(new TableView(), view, ui -> Viewtify.calculate(ui.getSelectionModel().getSelectedItems()));
+    }
 
-        values = Viewtify.observe(new CopyOnWriteArrayList<>(ui.getItems()));
-        ui.setItems(values);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ObservableList<T> items() {
+        return ui.getItems();
     }
 
     /**
