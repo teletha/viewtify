@@ -36,8 +36,11 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import javafx.collections.ObservableSet;
+import javafx.collections.SetChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -760,10 +763,28 @@ public final class Viewtify {
     /**
      * Observe list change evnet.
      * 
+     * @param set
+     * @return
+     */
+    public static <E> Signal<SetChangeListener.Change<? extends E>> observe(ObservableSet<E> set) {
+        return new Signal<>((observer, disposer) -> {
+            SetChangeListener<E> listener = change -> observer.accept(change);
+
+            set.addListener(listener);
+
+            return disposer.add(() -> {
+                set.removeListener(listener);
+            });
+        });
+    }
+
+    /**
+     * Observe list change evnet.
+     * 
      * @param list
      * @return
      */
-    public static <E> Signal<Change<? extends E>> observe(ObservableList<E> list) {
+    public static <E> Signal<ListChangeListener.Change<? extends E>> observe(ObservableList<E> list) {
         return new Signal<>((observer, disposer) -> {
             ListChangeListener<E> listener = change -> {
                 while (change.next()) {
@@ -775,6 +796,24 @@ public final class Viewtify {
 
             return disposer.add(() -> {
                 list.removeListener(listener);
+            });
+        });
+    }
+
+    /**
+     * Observe list change evnet.
+     * 
+     * @param set
+     * @return
+     */
+    public static <K, V> Signal<MapChangeListener.Change<? extends K, ? extends V>> observe(ObservableMap<K, V> map) {
+        return new Signal<>((observer, disposer) -> {
+            MapChangeListener<K, V> listener = change -> observer.accept(change);
+
+            map.addListener(listener);
+
+            return disposer.add(() -> {
+                map.removeListener(listener);
             });
         });
     }
