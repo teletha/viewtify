@@ -761,7 +761,7 @@ public final class Viewtify {
     }
 
     /**
-     * Observe list change evnet.
+     * Observe set change evnet.
      * 
      * @param set
      * @return
@@ -801,7 +801,7 @@ public final class Viewtify {
     }
 
     /**
-     * Observe list change evnet.
+     * Observe map change evnet.
      * 
      * @param set
      * @return
@@ -855,6 +855,36 @@ public final class Viewtify {
             eventHandlerProperty.set(handler);
             return disposer.add(() -> eventHandlerProperty.set(null));
         });
+    }
+
+    /**
+     * Observe set change evnet.
+     * 
+     * @param set A set to observe its modification.
+     * @return A modification stream.
+     */
+    public static <E> Signal<ObservableSet<E>> observeNow(ObservableSet<E> set) {
+        return observe(set).mapTo(set).startWith(set);
+    }
+
+    /**
+     * Observe list change evnet.
+     * 
+     * @param list A list to observe its modification.
+     * @return A modification stream.
+     */
+    public static <E> Signal<ObservableList<E>> observeNow(ObservableList<E> list) {
+        return observe(list).mapTo(list).startWith(list);
+    }
+
+    /**
+     * Observe map change evnet.
+     * 
+     * @param map A map to observe its modification.
+     * @return A modification stream.
+     */
+    public static <K, V> Signal<ObservableMap<K, V>> observeNow(ObservableMap<K, V> map) {
+        return observe(map).mapTo(map).startWith(map);
     }
 
     /**
