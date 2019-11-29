@@ -761,64 +761,6 @@ public final class Viewtify {
     }
 
     /**
-     * Observe set change evnet.
-     * 
-     * @param set
-     * @return
-     */
-    public static <E> Signal<SetChangeListener.Change<? extends E>> observe(ObservableSet<E> set) {
-        return new Signal<>((observer, disposer) -> {
-            SetChangeListener<E> listener = change -> observer.accept(change);
-
-            set.addListener(listener);
-
-            return disposer.add(() -> {
-                set.removeListener(listener);
-            });
-        });
-    }
-
-    /**
-     * Observe list change evnet.
-     * 
-     * @param list
-     * @return
-     */
-    public static <E> Signal<ListChangeListener.Change<? extends E>> observe(ObservableList<E> list) {
-        return new Signal<>((observer, disposer) -> {
-            ListChangeListener<E> listener = change -> {
-                while (change.next()) {
-                    observer.accept(change);
-                }
-            };
-
-            list.addListener(listener);
-
-            return disposer.add(() -> {
-                list.removeListener(listener);
-            });
-        });
-    }
-
-    /**
-     * Observe map change evnet.
-     * 
-     * @param set
-     * @return
-     */
-    public static <K, V> Signal<MapChangeListener.Change<? extends K, ? extends V>> observe(ObservableMap<K, V> map) {
-        return new Signal<>((observer, disposer) -> {
-            MapChangeListener<K, V> listener = change -> observer.accept(change);
-
-            map.addListener(listener);
-
-            return disposer.add(() -> {
-                map.removeListener(listener);
-            });
-        });
-    }
-
-    /**
      * Signal value changing.
      * 
      * @param values
@@ -863,8 +805,38 @@ public final class Viewtify {
      * @param set A set to observe its modification.
      * @return A modification stream.
      */
+    public static <E> Signal<ObservableSet<E>> observe(ObservableSet<E> set) {
+        return observeChange(set).mapTo(set);
+    }
+
+    /**
+     * Observe list change evnet.
+     * 
+     * @param list A list to observe its modification.
+     * @return A modification stream.
+     */
+    public static <E> Signal<ObservableList<E>> observe(ObservableList<E> list) {
+        return observeChange(list).mapTo(list);
+    }
+
+    /**
+     * Observe map change evnet.
+     * 
+     * @param map A map to observe its modification.
+     * @return A modification stream.
+     */
+    public static <K, V> Signal<ObservableMap<K, V>> observe(ObservableMap<K, V> map) {
+        return observeChange(map).mapTo(map);
+    }
+
+    /**
+     * Observe set change evnet.
+     * 
+     * @param set A set to observe its modification.
+     * @return A modification stream.
+     */
     public static <E> Signal<ObservableSet<E>> observeNow(ObservableSet<E> set) {
-        return observe(set).mapTo(set).startWith(set);
+        return observe(set).startWith(set);
     }
 
     /**
@@ -874,7 +846,7 @@ public final class Viewtify {
      * @return A modification stream.
      */
     public static <E> Signal<ObservableList<E>> observeNow(ObservableList<E> list) {
-        return observe(list).mapTo(list).startWith(list);
+        return observe(list).startWith(list);
     }
 
     /**
@@ -884,7 +856,7 @@ public final class Viewtify {
      * @return A modification stream.
      */
     public static <K, V> Signal<ObservableMap<K, V>> observeNow(ObservableMap<K, V> map) {
-        return observe(map).mapTo(map).startWith(map);
+        return observe(map).startWith(map);
     }
 
     /**
@@ -895,6 +867,64 @@ public final class Viewtify {
      */
     public static <T> Signal<T> observeNow(ObservableValue<T> value) {
         return observe(value).startWith(value.getValue());
+    }
+
+    /**
+     * Observe set change evnet.
+     * 
+     * @param set
+     * @return
+     */
+    public static <E> Signal<SetChangeListener.Change<? extends E>> observeChange(ObservableSet<E> set) {
+        return new Signal<>((observer, disposer) -> {
+            SetChangeListener<E> listener = change -> observer.accept(change);
+
+            set.addListener(listener);
+
+            return disposer.add(() -> {
+                set.removeListener(listener);
+            });
+        });
+    }
+
+    /**
+     * Observe list change evnet.
+     * 
+     * @param list
+     * @return
+     */
+    public static <E> Signal<ListChangeListener.Change<? extends E>> observeChange(ObservableList<E> list) {
+        return new Signal<>((observer, disposer) -> {
+            ListChangeListener<E> listener = change -> {
+                while (change.next()) {
+                    observer.accept(change);
+                }
+            };
+
+            list.addListener(listener);
+
+            return disposer.add(() -> {
+                list.removeListener(listener);
+            });
+        });
+    }
+
+    /**
+     * Observe map change evnet.
+     * 
+     * @param set
+     * @return
+     */
+    public static <K, V> Signal<MapChangeListener.Change<? extends K, ? extends V>> observeChange(ObservableMap<K, V> map) {
+        return new Signal<>((observer, disposer) -> {
+            MapChangeListener<K, V> listener = change -> observer.accept(change);
+
+            map.addListener(listener);
+
+            return disposer.add(() -> {
+                map.removeListener(listener);
+            });
+        });
     }
 
     public static UserInterface wrap(Control ui, View view) {
