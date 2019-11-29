@@ -872,8 +872,8 @@ public final class Viewtify {
     /**
      * Observe set change evnet.
      * 
-     * @param set
-     * @return
+     * @param map A set to observe its modification.
+     * @return A modification event stream.
      */
     public static <E> Signal<SetChangeListener.Change<? extends E>> observeChange(ObservableSet<E> set) {
         return new Signal<>((observer, disposer) -> {
@@ -890,8 +890,8 @@ public final class Viewtify {
     /**
      * Observe list change evnet.
      * 
-     * @param list
-     * @return
+     * @param list A set to observe its modification.
+     * @return A modification event stream.
      */
     public static <E> Signal<ListChangeListener.Change<? extends E>> observeChange(ObservableList<E> list) {
         return new Signal<>((observer, disposer) -> {
@@ -912,8 +912,8 @@ public final class Viewtify {
     /**
      * Observe map change evnet.
      * 
-     * @param set
-     * @return
+     * @param map A map to observe its modification.
+     * @return A modification event stream.
      */
     public static <K, V> Signal<MapChangeListener.Change<? extends K, ? extends V>> observeChange(ObservableMap<K, V> map) {
         return new Signal<>((observer, disposer) -> {
