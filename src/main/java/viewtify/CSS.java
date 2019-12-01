@@ -9,10 +9,7 @@
  */
 package viewtify;
 
-import java.lang.instrument.Instrumentation;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,12 +32,6 @@ import javafx.scene.layout.VBox;
 
 import kiss.I;
 import kiss.WiseBiConsumer;
-import net.bytebuddy.agent.ByteBuddyAgent;
-import net.bytebuddy.agent.builder.AgentBuilder;
-import net.bytebuddy.asm.ModifierAdjustment;
-import net.bytebuddy.description.modifier.FieldManifestation;
-import net.bytebuddy.description.modifier.Visibility;
-import net.bytebuddy.matcher.ElementMatchers;
 
 /**
  * Declare viewtify's enhanced css properties.
@@ -204,33 +195,11 @@ final class CSS {
      * Enhance CSS implemetation.
      */
     static void enhance() {
-        try {
-            Instrumentation instrument = ByteBuddyAgent.install();
+        List enhanced = new ArrayList();
+        enhanced.addAll(Node.StyleableProperties.STYLEABLES);
+        enhanced.addAll(I.signal(CSS.class.getDeclaredFields()).take(f -> f.getType() == Meta.class).map(f -> f.get(null)).toList());
 
-            // expose javafx.scene.Node$StyleableProperties
-            ModifierAdjustment modifier = new ModifierAdjustment() //
-                    .withTypeModifiers(Visibility.PUBLIC)
-                    .withFieldModifiers(Visibility.PUBLIC, FieldManifestation.PLAIN);
-
-            // redefine
-            new AgentBuilder.Default() //
-                    .type(ElementMatchers.named("javafx.scene.Node$StyleableProperties"))
-                    .transform((builder, desc, loader, module) -> builder.visit(modifier))
-                    .installOn(instrument);
-
-            // add extra properties
-            Class clazz = Class.forName("javafx.scene.Node$StyleableProperties");
-            Field field = clazz.getDeclaredField("STYLEABLES");
-            List list = (List) field.get(null);
-
-            List enhanced = new ArrayList();
-            enhanced.addAll(list);
-            enhanced.addAll(I.signal(CSS.class.getDeclaredFields()).take(f -> f.getType() == Meta.class).map(f -> f.get(null)).toList());
-
-            field.set(null, Collections.unmodifiableList(enhanced));
-        } catch (Exception e) {
-            throw I.quiet(e);
-        }
+        Node.StyleableProperties.STYLEABLES = enhanced;
     }
 
     /**
