@@ -563,15 +563,15 @@ public final class Viewtify {
     private static boolean restartWithExewrap() {
         String directory = System.getProperty("java.application.path");
         String name = System.getProperty("java.application.name");
-
         if (directory == null || name == null) {
             return false;
         }
 
         try {
-            new ProcessBuilder(directory + "\\" + name).start();
+            new ProcessBuilder().directory(new java.io.File(directory)).inheritIO().command(directory + "\\" + name).start();
             return true;
-        } catch (IOException e) {
+        } catch (Throwable e) {
+            e.printStackTrace();
             return false;
         }
     }
