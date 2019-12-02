@@ -12,12 +12,14 @@ package viewtify.ui.helper;
 import java.util.Objects;
 import java.util.function.Function;
 
-import javafx.beans.value.ObservableValue;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 
-import kiss.I;
-import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.ui.UserInterfaceProvider;
 
 public interface CollectableItemRenderingHelper<Self extends CollectableItemRenderingHelper, E> {
 
@@ -27,9 +29,9 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    default Self render(Function<E, String> renderer) {
+    default Self render(Function<E, Object> renderer) {
         Objects.requireNonNull(renderer);
-        return renderSignal(value -> I.signal(renderer.apply(value)));
+        return renderProperty(e -> new SimpleObjectProperty(renderer.apply(e)));
     }
 
     /**
@@ -38,9 +40,9 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    default Self renderValue(Function<E, ObservableValue<String>> renderer) {
+    default Self renderVariable(Function<E, Variable> renderer) {
         Objects.requireNonNull(renderer);
-        return renderSignal(value -> Viewtify.observeNow(renderer.apply(value)));
+        return renderProperty(e -> Viewtify.property(renderer.apply(e)));
     }
 
     /**
@@ -49,9 +51,12 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    default Self renderVariable(Function<E, Variable<String>> renderer) {
-        Objects.requireNonNull(renderer);
-        return renderSignal(value -> renderer.apply(value).observeNow());
+    default Self renderProperty(Function<E, Property> renderer) {
+        return renderNode(e -> {
+            Label label = new Label();
+            label.textProperty().bind(renderer.apply(e));
+            return label;
+        });
     }
 
     /**
@@ -60,18 +65,8 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    Self renderSignal(Function<E, Signal<String>> renderer);
-
-    /**
-     * Render the human-readable item expression.
-     * 
-     * @param renderer A renderer.
-     * @return
-     */
-    default Self renderCheckbox(Function<E, String> renderer, Function<E, Variable<Boolean>> checked) {
-        Objects.requireNonNull(renderer);
-        Objects.requireNonNull(checked);
-        return renderCheckboxSignal(value -> I.signal(renderer.apply(value)), checked);
+    default Self renderUI(Function<E, UserInterfaceProvider<? extends Node>> renderer) {
+        return renderNode(e -> renderer.apply(e).ui());
     }
 
     /**
@@ -80,29 +75,5 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    default Self renderCheckboxValue(Function<E, ObservableValue<String>> renderer, Function<E, Variable<Boolean>> checked) {
-        Objects.requireNonNull(renderer);
-        Objects.requireNonNull(checked);
-        return renderCheckboxSignal(value -> Viewtify.observeNow(renderer.apply(value)), checked);
-    }
-
-    /**
-     * Render the human-readable item expression.
-     * 
-     * @param renderer A renderer.
-     * @return
-     */
-    default Self renderCheckboxVariable(Function<E, Variable<String>> renderer, Function<E, Variable<Boolean>> checked) {
-        Objects.requireNonNull(renderer);
-        Objects.requireNonNull(checked);
-        return renderCheckboxSignal(value -> renderer.apply(value).observeNow(), checked);
-    }
-
-    /**
-     * Render the human-readable item expression.
-     * 
-     * @param renderer A renderer.
-     * @return
-     */
-    Self renderCheckboxSignal(Function<E, Signal<String>> renderer, Function<E, Variable<Boolean>> checked);
+    Self renderNode(Function<E, Node> renderer);
 }

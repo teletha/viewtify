@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import javafx.beans.property.Property;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
@@ -92,6 +93,17 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyHelper {
      */
     default Self text(Variable text) {
         text.observeNow().on(Viewtify.UIThread).to((Consumer) this::text);
+        return (Self) this;
+    }
+
+    /**
+     * Set text.
+     * 
+     * @param text A text {@link Variable} to set.
+     * @return Chainable API.
+     */
+    default Self text(Property text) {
+        property(Type.Text).bindBidirectional(text);
         return (Self) this;
     }
 

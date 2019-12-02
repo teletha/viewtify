@@ -20,12 +20,10 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
 import kiss.I;
-import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.helper.CollectableHelper;
@@ -70,28 +68,8 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>>
      * {@inheritDoc}
      */
     @Override
-    public UIListView<E> renderSignal(Function<E, Signal<String>> renderer) {
-        ui.setCellFactory(listView -> {
-            ListCell<E> cell = new ListCell();
-            Viewtify.observeNow(cell.itemProperty()).skipNull().flatMap(renderer::apply).to(cell::setText);
-            return cell;
-        });
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UIListView<E> renderCheckboxSignal(Function<E, Signal<String>> renderer, Function<E, Variable<Boolean>> checked) {
-        ui.setCellFactory(view -> {
-            return new GenericCell<E>(e -> {
-                CheckBox box = new CheckBox();
-                I.signal(e).skipNull().flatMap(renderer::apply).to(box::setText);
-                box.selectedProperty().bindBidirectional(Viewtify.property(checked.apply(e)));
-                return box;
-            });
-        });
+    public UIListView<E> renderNode(Function<E, Node> renderer) {
+        ui.setCellFactory(view -> new GenericCell<E>(renderer::apply));
         return this;
     }
 
@@ -123,7 +101,6 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>>
                 setGraphic(renderer.apply(item));
             }
         }
-
     }
 
     /**
