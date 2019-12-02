@@ -289,7 +289,7 @@ public abstract class View implements Extensible, UserInterfaceProvider {
      * @param type
      * @return
      */
-    protected <T extends UserInterface> T make(Class<T> type) {
+    protected final <T extends UserInterface> T make(Class<T> type) {
         try {
             Constructor constructor = Model.collectConstructors(type)[0];
             constructor.setAccessible(true);

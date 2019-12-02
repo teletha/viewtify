@@ -14,9 +14,6 @@ import javafx.scene.control.Label;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 
-/**
- * @version 2018/09/09 11:47:48
- */
 public class UILabel extends UserInterface<UILabel, Label> implements LabelHelper<UILabel>, ContextMenuHelper<UILabel> {
 
     /**

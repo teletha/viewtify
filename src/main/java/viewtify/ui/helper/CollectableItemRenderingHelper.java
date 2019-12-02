@@ -10,6 +10,7 @@
 package viewtify.ui.helper;
 
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import javafx.beans.property.Property;
@@ -19,6 +20,8 @@ import javafx.scene.control.Label;
 
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.ui.UIBuilder;
+import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
 
 public interface CollectableItemRenderingHelper<Self extends CollectableItemRenderingHelper, E> {
@@ -40,6 +43,21 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
+    default Self render(BiConsumer<UILabel, E> renderer) {
+        Objects.requireNonNull(renderer);
+        return renderByUI(e -> {
+            UILabel label = UIBuilder.createUILabel();
+            renderer.accept(label, e);
+            return label;
+        });
+    }
+
+    /**
+     * Render the human-readable item expression.
+     * 
+     * @param renderer A renderer.
+     * @return
+     */
     default Self renderByVariable(Function<E, Variable<String>> renderer) {
         Objects.requireNonNull(renderer);
         return renderByProperty(e -> Viewtify.property(renderer.apply(e)));
@@ -52,6 +70,7 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @return
      */
     default Self renderByProperty(Function<E, Property<String>> renderer) {
+        Objects.requireNonNull(renderer);
         return renderByNode(e -> {
             Label label = new Label();
             label.textProperty().bind(renderer.apply(e));
@@ -66,6 +85,7 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @return
      */
     default Self renderByUI(Function<E, ? extends UserInterfaceProvider<? extends Node>> renderer) {
+        Objects.requireNonNull(renderer);
         return renderByNode(e -> renderer.apply(e).ui());
     }
 

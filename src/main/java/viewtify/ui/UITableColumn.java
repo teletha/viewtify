@@ -11,7 +11,6 @@ package viewtify.ui;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import javafx.beans.property.SimpleObjectProperty;
@@ -25,8 +24,6 @@ import kiss.Variable;
 import kiss.WiseFunction;
 import viewtify.Viewtify;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
-import viewtify.ui.helper.LabelHelper;
-import viewtify.ui.helper.StyleHelper;
 
 public class UITableColumn<RowValue, ColumnValue>
         extends UITableColumnBase<TableColumn<RowValue, ColumnValue>, UITableColumn<RowValue, ColumnValue>, RowValue, ColumnValue>

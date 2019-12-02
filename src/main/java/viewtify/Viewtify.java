@@ -42,7 +42,6 @@ import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ObjectPropertyBase;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -58,7 +57,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
@@ -85,7 +83,6 @@ import psychopath.Locator;
 import transcript.Lang;
 import viewtify.bind.Calculated;
 import viewtify.bind.CalculatedList;
-import viewtify.ui.UserInterface;
 import viewtify.ui.View;
 import viewtify.util.UIThreadSafeList;
 
@@ -1235,35 +1232,6 @@ public final class Viewtify {
             // wrapped error in here.
             throw new Error();
         }
-    }
-
-    public static UserInterface wrap(Control ui, View view) {
-        return new UserInterface(ui, view);
-    }
-
-    public static <T> Property<T> wrap(Variable<T> variable) {
-        return new ObjectPropertyBase<>() {
-
-            {
-                variable.observe().to(this::fireValueChangedEvent);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public Object getBean() {
-                return null;
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public String getName() {
-                return null;
-            }
-        };
     }
 
     /**
