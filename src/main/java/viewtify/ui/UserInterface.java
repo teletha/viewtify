@@ -20,9 +20,7 @@ import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -348,28 +346,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     }
 
     /**
-     * Create new menu item.
      * 
-     * @return
-     */
-    public static final UIMenuItem menuItem() {
-        return new UIMenuItem(new MenuItem());
-    }
-
-    /**
-     * Create new menu item.
-     * 
-     * @return
-     */
-    public static final UIContextMenu contextMenu(Consumer<UIContextMenu> builder) {
-        UIContextMenu menu = new UIContextMenu(new ContextMenu());
-        builder.accept(menu);
-
-        return menu;
-    }
-
-    /**
-     * @version 2017/11/30 14:03:31
      */
     @SuppressWarnings("serial")
     @Manageable(lifestyle = Singleton.class)
@@ -377,7 +354,7 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     }
 
     /**
-     * @version 2018/09/03 14:36:43
+     * 
      */
     private static class Styles implements StyleDSL {
 

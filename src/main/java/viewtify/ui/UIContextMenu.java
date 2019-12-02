@@ -27,20 +27,7 @@ public class UIContextMenu {
     }
 
     /**
-     * Add menu items.
-     * 
-     * @param item
-     * @return
-     */
-    public UIContextMenu item(UIMenuItem... items) {
-        for (UIMenuItem item : items) {
-            ui.getItems().add(item.ui);
-        }
-        return this;
-    }
-
-    /**
-     * Add menu item.
+     * Add text menu.
      * 
      * @return
      */
