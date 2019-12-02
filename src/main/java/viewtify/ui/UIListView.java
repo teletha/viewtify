@@ -14,6 +14,9 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
@@ -22,16 +25,18 @@ import javafx.scene.control.ListView;
 import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PreferenceHelper;
 
-public class UIListView<E> extends UserInterface<UIListView, ListView<E>> implements ContextMenuHelper<UIListView> {
+public class UIListView<E> extends UserInterface<UIListView, ListView<E>>
+        implements CollectableHelper<UIListView<E>, E>, ContextMenuHelper<UIListView> {
 
     /** The item filter manager. */
     private final Variable<Predicate<E>> filter;
 
     /** The item list manager. */
-    private final Variable<ObservableList<E>> items;
+    private final ObjectProperty<ObservableList<E>> items;
 
     /**
      * Enchanced view.
@@ -42,23 +47,19 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>> implem
         super(new ListView<E>(), view);
 
         this.filter = Variable.of(I.accept());
-        this.items = Variable.of(ui.getItems());
+        this.items = new SimpleObjectProperty(ui.getItems());
 
-        items.observeNow().combineLatest(filter.observeNow()).retry(ConcurrentModificationException.class).to(e -> {
+        Viewtify.observe(items).combineLatest(filter.observeNow()).retry(ConcurrentModificationException.class).to(e -> {
             ui.setItems(e.ⅰ.filtered(e.ⅱ));
         });
     }
 
     /**
-     * Set items to show.
-     * 
-     * @param values
-     * @return
+     * {@inheritDoc}
      */
-    public UIListView<E> values(ObservableList<E> values) {
-        this.items.set(values);
-
-        return this;
+    @Override
+    public Property<ObservableList<E>> items() {
+        return items;
     }
 
     public UIListView<E> cell(ListCell<E> cell) {
@@ -97,82 +98,6 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>> implem
      */
     public UIListView<E> scrollToTop() {
         return scrollTo(0);
-    }
-
-    /**
-     * Add new item at the specifind index.
-     * 
-     * @param value
-     * @return
-     */
-    public UIListView<E> add(int index, E value) {
-        items.v.add(index, value);
-
-        return this;
-    }
-
-    /**
-     * Add new item at first.
-     * 
-     * @param value
-     * @return
-     */
-    public UIListView<E> addFirst(E value) {
-        return add(0, value);
-    }
-
-    /**
-     * Add new item at last.
-     * 
-     * @param value
-     * @return
-     */
-    public UIListView<E> addLast(E value) {
-        items.v.add(value);
-
-        return this;
-    }
-
-    /**
-     * Remove an item at the specifind index.
-     * 
-     * @param value
-     * @return
-     */
-    public UIListView<E> remove(int index) {
-        items.v.remove(index);
-
-        return this;
-    }
-
-    /**
-     * Remove an item at first.
-     * 
-     * @param value
-     * @return
-     */
-    public UIListView<E> removeFirst() {
-        return remove(0);
-    }
-
-    /**
-     * Remove an item at last.
-     * 
-     * @param value
-     * @return
-     */
-    public UIListView<E> removeLast() {
-        return remove(items.v.size() - 1);
-    }
-
-    /**
-     * Add new item.
-     * 
-     * @param value
-     * @return
-     */
-    public int size() {
-        return items.v.size();
     }
 
     /**

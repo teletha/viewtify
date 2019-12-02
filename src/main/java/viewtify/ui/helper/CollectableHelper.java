@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.function.Consumer;
 
+import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 
 import viewtify.Viewtify;
@@ -25,7 +26,29 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * 
      * @return
      */
-    ObservableList<E> items();
+    Property<ObservableList<E>> items();
+
+    /**
+     * Return the number of items.
+     * 
+     * @return
+     */
+    default int size() {
+        return items().getValue().size();
+    }
+
+    /**
+     * Set the specified items.
+     * 
+     * @param items
+     * @return
+     */
+    default Self items(ObservableList<E> items) {
+        if (items != null) {
+            items().setValue(items);
+        }
+        return (Self) this;
+    }
 
     /**
      * Add the specified item.
@@ -96,6 +119,16 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
     }
 
     /**
+     * Remove all items.
+     * 
+     * @return
+     */
+    default Self removeItemAll() {
+        modifyItemUISafely(List<E>::clear);
+        return (Self) this;
+    }
+
+    /**
      * Remove the first item.
      * 
      * @return Chainable API.
@@ -104,6 +137,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
         modifyItemUISafely(list -> {
             Iterator<E> iterator = list.iterator();
             if (iterator.hasNext()) {
+                iterator.next();
                 iterator.remove();
             }
         });
@@ -119,6 +153,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
         modifyItemUISafely(list -> {
             ListIterator<E> iterator = list.listIterator(list.size());
             if (iterator.hasPrevious()) {
+                iterator.previous();
                 iterator.remove();
             }
         });
@@ -131,6 +166,6 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * @param action
      */
     private void modifyItemUISafely(Consumer<List<E>> action) {
-        Viewtify.inUI(() -> action.accept(items()));
+        Viewtify.inUI(() -> action.accept(items().getValue()));
     }
 }

@@ -12,6 +12,7 @@ package viewtify.ui;
 import java.util.function.Function;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.TableRow;
@@ -36,8 +37,8 @@ public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<
      * {@inheritDoc}
      */
     @Override
-    public ObservableList<T> items() {
-        return ui.getItems();
+    public Property<ObservableList<T>> items() {
+        return ui.itemsProperty();
     }
 
     /**
