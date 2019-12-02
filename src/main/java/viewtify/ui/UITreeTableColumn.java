@@ -11,11 +11,11 @@ package viewtify.ui;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 
@@ -23,14 +23,14 @@ import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
 import viewtify.Viewtify;
-import viewtify.ui.helper.LabelHelper;
-import viewtify.ui.helper.StyleHelper;
+import viewtify.ui.helper.CollectableItemRenderingHelper;
 
 /**
  * @version 2018/09/09 18:05:42
  */
 public class UITreeTableColumn<RowValue, ColumnValue>
-        extends UITableColumnBase<TreeTableColumn<RowValue, ColumnValue>, UITreeTableColumn<RowValue, ColumnValue>, RowValue, ColumnValue> {
+        extends UITableColumnBase<TreeTableColumn<RowValue, ColumnValue>, UITreeTableColumn<RowValue, ColumnValue>, RowValue, ColumnValue>
+        implements CollectableItemRenderingHelper<UITreeTableColumn<RowValue, ColumnValue>, ColumnValue> {
 
     /** The value provider utility. */
     private TypeMappingProvider mappingProvider;
@@ -149,58 +149,26 @@ public class UITreeTableColumn<RowValue, ColumnValue>
     }
 
     /**
-     * Set cell renderer.
-     * 
-     * @param renderer
-     * @return
+     * {@inheritDoc}
      */
-    public UITreeTableColumn<RowValue, ColumnValue> render(Function<TreeTableColumn<RowValue, ColumnValue>, TreeTableCell<RowValue, ColumnValue>> renderer) {
-        ui.setCellFactory(table -> renderer.apply(table));
-        return this;
-    }
-
-    /**
-     * Set cell renderer.
-     * 
-     * @param renderer
-     * @return
-     */
-    public UITreeTableColumn<RowValue, ColumnValue> render(BiConsumer<UITreeTableCell, ColumnValue> renderer) {
-        ui.setCellFactory(table -> new UITreeTableCell(renderer).ui);
+    @Override
+    public UITreeTableColumn<RowValue, ColumnValue> renderByNode(Function<ColumnValue, ? extends Node> renderer) {
+        ui.setCellFactory(table -> new GenericCell(renderer));
         return this;
     }
 
     /**
      * 
      */
-    public class UITreeTableCell
-            implements LabelHelper<UITreeTableCell>, StyleHelper<UITreeTableCell, TreeTableCell<RowValue, ColumnValue>> {
+    private static class GenericCell<RowValue, ColumnValue> extends TreeTableCell<RowValue, ColumnValue> {
 
-        /** The user renderer. */
-        private final BiConsumer<UITreeTableCell, ColumnValue> renderer;
-
-        /** The actual widget. */
-        private final TreeTableCell<RowValue, ColumnValue> ui = new TreeTableCell<RowValue, ColumnValue>() {
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected void updateItem(ColumnValue item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    renderer.accept(UITreeTableCell.this, item);
-                }
-            }
-        };
+        /** The user defined cell renderer. */
+        private final Function<ColumnValue, Node> renderer;
 
         /**
          * @param renderer
          */
-        private UITreeTableCell(BiConsumer<UITreeTableCell, ColumnValue> renderer) {
+        private GenericCell(Function<ColumnValue, Node> renderer) {
             this.renderer = renderer;
         }
 
@@ -208,8 +176,14 @@ public class UITreeTableColumn<RowValue, ColumnValue>
          * {@inheritDoc}
          */
         @Override
-        public TreeTableCell ui() {
-            return ui;
+        protected void updateItem(ColumnValue item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (item == null || empty) {
+                setGraphic(null);
+            } else {
+                setGraphic(renderer.apply(item));
+            }
         }
     }
 }
