@@ -9,15 +9,13 @@
  */
 package viewtify.ui;
 
-import java.util.function.Supplier;
-
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
 public class UIContextMenu {
 
     /** The actual ui. */
-    public final ContextMenu ui;
+    private final ContextMenu ui;
 
     /**
      * Enchanced view.
@@ -42,19 +40,12 @@ public class UIContextMenu {
     }
 
     /**
-     * @param string
+     * Add menu item.
+     * 
      * @return
      */
-    public UIMenuItem menu(String label) {
-        return menu(() -> label);
-    }
-
-    /**
-     * @param string
-     * @return
-     */
-    public UIMenuItem menu(Supplier<String> label) {
-        MenuItem menu = new MenuItem(label.get());
+    public UIMenuItem menu() {
+        MenuItem menu = new MenuItem();
         ui.getItems().add(menu);
 
         return new UIMenuItem(menu);

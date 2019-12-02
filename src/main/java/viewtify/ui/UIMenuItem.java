@@ -18,15 +18,13 @@ import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 
 import viewtify.ui.helper.DisableHelper;
+import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 
-/**
- * @version 2018/09/09 22:41:56
- */
-public class UIMenuItem implements StyleHelper<UIMenuItem, MenuItem>, DisableHelper<UIMenuItem> {
+public class UIMenuItem implements StyleHelper<UIMenuItem, MenuItem>, DisableHelper<UIMenuItem>, LabelHelper<UIMenuItem, MenuItem> {
 
     /** The actual ui. */
-    public final MenuItem ui;
+    final MenuItem ui;
 
     /**
      * Enchanced view.
@@ -51,17 +49,6 @@ public class UIMenuItem implements StyleHelper<UIMenuItem, MenuItem>, DisableHel
     @Override
     public Property<Boolean> disable() {
         return ui.disableProperty();
-    }
-
-    /**
-     * Set label text.
-     * 
-     * @param label
-     * @return
-     */
-    public UIMenuItem label(String label) {
-        ui.setText(label);
-        return this;
     }
 
     /**
