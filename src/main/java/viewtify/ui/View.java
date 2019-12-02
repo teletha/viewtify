@@ -148,6 +148,9 @@ public abstract class View implements Extensible, UserInterfaceProvider {
      */
     public final void show() {
         I.signal(stage()).skipNull().skip(Stage::isAlwaysOnTop).on(Viewtify.UIThread).to(e -> {
+            if (e.isIconified()) {
+                e.setIconified(false);
+            }
             e.setAlwaysOnTop(true);
             e.setAlwaysOnTop(false);
         });

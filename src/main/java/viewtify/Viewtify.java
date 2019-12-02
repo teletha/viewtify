@@ -11,6 +11,12 @@ package viewtify;
 
 import static java.util.concurrent.TimeUnit.*;
 
+import java.awt.AWTException;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
@@ -27,6 +33,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import javax.imageio.ImageIO;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -139,6 +147,12 @@ public final class Viewtify {
     private String icon = "";
 
     /** The configurable setting. */
+    private boolean tray = false;
+
+    /** The configurable setting. */
+    private Class<? extends View> trayView;
+
+    /** The configurable setting. */
     private double width;
 
     /** The configurable setting. */
@@ -199,6 +213,27 @@ public final class Viewtify {
         if (theme != null) {
             this.theme = theme;
         }
+        return this;
+    }
+
+    /**
+     * Configure the functionality of system tray.
+     * 
+     * @return
+     */
+    public Viewtify useSystemTray() {
+        return useSystemTray(null);
+    }
+
+    /**
+     * Configure the functionality of system tray.
+     * 
+     * @param trayView
+     * @return
+     */
+    public Viewtify useSystemTray(Class<? extends View> trayView) {
+        this.tray = true;
+        this.trayView = trayView;
         return this;
     }
 
@@ -273,13 +308,17 @@ public final class Viewtify {
                 Stage stage = new Stage(stageStyle);
                 stage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
                 stage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
-                if (icon.length() != 0) stage.getIcons().add(loadImage(icon));
 
                 // trace window size and position
                 I.make(WindowLocator.class).restore().locate(application.getClass(), stage);
 
                 View view = View.build(application);
                 views.add(view);
+
+                if (icon.length() != 0) {
+                    stage.getIcons().add(loadImage(icon));
+                    if (tray) buildSystemTray(view);
+                }
 
                 Scene scene = new Scene((Parent) view.ui());
                 scene.getStylesheets().add(theme.url);
@@ -311,6 +350,20 @@ public final class Viewtify {
      */
     private Image loadImage(String path) {
         return new Image(loadResource(path));
+    }
+
+    /**
+     * Load the image resource which is located by the path.
+     * 
+     * @param path
+     * @return
+     */
+    private java.awt.Image loadAWTImage(String path) {
+        try {
+            return ImageIO.read(loadResource(path));
+        } catch (IOException e) {
+            throw I.quiet(e);
+        }
     }
 
     /**
@@ -405,6 +458,40 @@ public final class Viewtify {
                     });
                 }
             }
+        }
+    }
+
+    /**
+     * Create system tray.
+     */
+    private void buildSystemTray(View root) {
+        TrayIcon tray = new TrayIcon(loadAWTImage(icon));
+        tray.setImageAutoSize(true);
+        tray.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                switch (e.getButton()) {
+                case MouseEvent.BUTTON1: // left
+                    // if the user double-clicks on the tray icon, show the main app stage.
+                    inUI(root::show);
+                    break;
+
+                case MouseEvent.BUTTON2: // middle
+                    break;
+
+                case MouseEvent.BUTTON3: // right
+                    break;
+                }
+            }
+        });
+
+        try {
+            SystemTray system = SystemTray.getSystemTray();
+            system.add(tray);
+            onTerminating(() -> system.remove(tray));
+        } catch (AWTException e) {
+            throw I.quiet(e);
         }
     }
 
