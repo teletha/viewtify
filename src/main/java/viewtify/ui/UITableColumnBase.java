@@ -15,7 +15,7 @@ import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 
 public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowValue, ColumnValue>
-        implements UserInterfaceProvider<Column>, LabelHelper<Self, Column>, StyleHelper<Self, Column> {
+        implements UserInterfaceProvider<Column>, LabelHelper<Self>, StyleHelper<Self, Column> {
 
     /** The actual widget. */
     public final Column ui;

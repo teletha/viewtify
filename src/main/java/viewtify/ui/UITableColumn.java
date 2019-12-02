@@ -170,9 +170,7 @@ public class UITableColumn<RowValue, ColumnValue>
     /**
      * 
      */
-    public class UITableCell
-            implements LabelHelper<UITableCell, TableCell<RowValue, ColumnValue>>,
-            StyleHelper<UITableCell, TableCell<RowValue, ColumnValue>> {
+    public class UITableCell implements LabelHelper<UITableCell>, StyleHelper<UITableCell, TableCell<RowValue, ColumnValue>> {
 
         /** The user renderer. */
         private final BiConsumer<UITableCell, ColumnValue> renderer;

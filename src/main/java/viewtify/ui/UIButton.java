@@ -16,7 +16,7 @@ import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 
 public class UIButton extends UserInterface<UIButton, Button>
-        implements StyleHelper<UIButton, Button>, LabelHelper<UIButton, Button>, ContextMenuHelper<UIButton> {
+        implements StyleHelper<UIButton, Button>, LabelHelper<UIButton>, ContextMenuHelper<UIButton> {
 
     /**
      * Enchanced view.

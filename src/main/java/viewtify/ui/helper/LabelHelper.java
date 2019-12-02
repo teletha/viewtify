@@ -14,7 +14,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import javafx.css.Styleable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
@@ -29,7 +28,7 @@ import viewtify.Viewtify;
 import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
 
-public interface LabelHelper<Self extends LabelHelper, S extends Styleable> extends PropertyHelper {
+public interface LabelHelper<Self extends LabelHelper> extends PropertyHelper {
 
     /**
      * Get text.

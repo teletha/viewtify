@@ -174,8 +174,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * 
      */
     public class UITreeTableCell
-            implements LabelHelper<UITreeTableCell, TreeTableCell<RowValue, ColumnValue>>,
-            StyleHelper<UITreeTableCell, TreeTableCell<RowValue, ColumnValue>> {
+            implements LabelHelper<UITreeTableCell>, StyleHelper<UITreeTableCell, TreeTableCell<RowValue, ColumnValue>> {
 
         /** The user renderer. */
         private final BiConsumer<UITreeTableCell, ColumnValue> renderer;
