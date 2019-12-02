@@ -20,7 +20,6 @@ import javafx.scene.control.Label;
 
 import kiss.Variable;
 import viewtify.Viewtify;
-import viewtify.ui.UIBuilder;
 import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
 
