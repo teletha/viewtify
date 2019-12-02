@@ -16,6 +16,7 @@ import java.util.function.Function;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
@@ -23,11 +24,13 @@ import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
 import viewtify.Viewtify;
+import viewtify.ui.helper.CollectableItemRenderingHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 
 public class UITableColumn<RowValue, ColumnValue>
-        extends UITableColumnBase<TableColumn<RowValue, ColumnValue>, UITableColumn<RowValue, ColumnValue>, RowValue, ColumnValue> {
+        extends UITableColumnBase<TableColumn<RowValue, ColumnValue>, UITableColumn<RowValue, ColumnValue>, RowValue, ColumnValue>
+        implements CollectableItemRenderingHelper<UITableColumn<RowValue, ColumnValue>, ColumnValue> {
 
     /** The value provider utility. */
     private TypeMappingProvider mappingProvider;
@@ -146,14 +149,42 @@ public class UITableColumn<RowValue, ColumnValue>
     }
 
     /**
-     * Set cell renderer.
-     * 
-     * @param renderer
-     * @return
+     * {@inheritDoc}
      */
-    public UITableColumn<RowValue, ColumnValue> render(Function<TableColumn<RowValue, ColumnValue>, TableCell<RowValue, ColumnValue>> renderer) {
-        ui.setCellFactory(table -> renderer.apply(table));
+    @Override
+    public UITableColumn<RowValue, ColumnValue> renderNode(Function<ColumnValue, ? extends Node> renderer) {
+        ui.setCellFactory(table -> new GenericCell(renderer));
         return this;
+    }
+
+    /**
+     * 
+     */
+    private static class GenericCell<RowValue, ColumnValue> extends TableCell<RowValue, ColumnValue> {
+
+        /** The user defined cell renderer. */
+        private final Function<ColumnValue, Node> renderer;
+
+        /**
+         * @param renderer
+         */
+        private GenericCell(Function<ColumnValue, Node> renderer) {
+            this.renderer = renderer;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void updateItem(ColumnValue item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (item == null || empty) {
+                setGraphic(null);
+            } else {
+                setGraphic(renderer.apply(item));
+            }
+        }
     }
 
     /**
