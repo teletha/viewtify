@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.management.ManagementFactory;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.WatchEvent;
@@ -130,6 +131,9 @@ public final class Viewtify {
 
         CSS.enhance();
     }
+
+    /** The estimated application class. */
+    private static Class applicatonEntryClass;
 
     /** All managed views. */
     private static List<View> views = new ArrayList();
@@ -501,6 +505,7 @@ public final class Viewtify {
      * @return
      */
     public static final Viewtify application() {
+        applicatonEntryClass = StackWalker.getInstance().getCallerClass();
         return new Viewtify();
     }
 
@@ -511,6 +516,63 @@ public final class Viewtify {
         Platform.exit();
 
         Terminator.dispose();
+    }
+
+    /**
+     * Reactivate the current application.
+     */
+    public static final void reactivate() {
+        if (restartWithExewrap() || restartWithJava()) {
+            deactivate();
+        }
+    }
+
+    /**
+     * Try to restart application in normal java environment.
+     * 
+     * @return
+     */
+    private static boolean restartWithJava() {
+        ArrayList<String> commands = new ArrayList();
+
+        // Java
+        commands.add(System.getProperty("java.home") + java.io.File.separator + "bin" + java.io.File.separator + "java");
+        commands.addAll(ManagementFactory.getRuntimeMXBean().getInputArguments());
+
+        // classpath
+        commands.add("-cp");
+        commands.add(ManagementFactory.getRuntimeMXBean().getClassPath());
+
+        // Class to be executed
+        commands.add(applicatonEntryClass.getName());
+
+        try {
+            new ProcessBuilder(commands).start();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Try to restart application in exewrap environment.
+     * 
+     * @return
+     */
+    private static boolean restartWithExewrap() {
+        String directory = System.getProperty("java.application.path");
+        String name = System.getProperty("java.application.name");
+
+        if (directory == null || name == null) {
+            return false;
+        }
+
+        try {
+            new ProcessBuilder(directory + "\\" + name).start();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     /**
