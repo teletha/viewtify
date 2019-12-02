@@ -51,7 +51,7 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>>
         this.filter = Variable.of(I.accept());
         this.items = new SimpleObjectProperty(ui.getItems());
 
-        Viewtify.observe(items).combineLatest(filter.observeNow()).retry(ConcurrentModificationException.class).to(e -> {
+        Viewtify.observeNow(items).combineLatest(filter.observeNow()).retry(ConcurrentModificationException.class).to(e -> {
             ui.setItems(e.ⅰ.filtered(e.ⅱ));
         });
     }
