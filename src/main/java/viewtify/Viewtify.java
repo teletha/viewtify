@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.StackWalker.Option;
 import java.lang.management.ManagementFactory;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
@@ -505,7 +506,7 @@ public final class Viewtify {
      * @return
      */
     public static final Viewtify application() {
-        applicatonEntryClass = StackWalker.getInstance().getCallerClass();
+        applicatonEntryClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).getCallerClass();
         return new Viewtify();
     }
 

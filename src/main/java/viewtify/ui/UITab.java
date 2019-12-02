@@ -15,12 +15,10 @@ import javafx.scene.control.Tab;
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.StyleHelper;
 
-/**
- * @version 2018/09/09 22:41:39
- */
-public class UITab implements StyleHelper<UITab, Tab> {
+public class UITab implements StyleHelper<UITab, Tab>, ContextMenuHelper<UITab> {
 
     /** The actual ui. */
     public final Tab ui;

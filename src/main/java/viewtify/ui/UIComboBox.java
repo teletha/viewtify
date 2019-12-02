@@ -18,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 
+import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.SelectablePreferenceHelper;
 import viewtify.ui.helper.User;
@@ -26,7 +27,7 @@ import viewtify.ui.helper.User;
  * @version 2018/09/09 11:49:25
  */
 public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
-        implements SelectablePreferenceHelper<UIComboBox<T>, T>, EditableHelper<UIComboBox> {
+        implements SelectablePreferenceHelper<UIComboBox<T>, T>, EditableHelper<UIComboBox>, ContextMenuHelper<UIComboBox<T>> {
 
     /**
      * Builde {@link ComboBox}.

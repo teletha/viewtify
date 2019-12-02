@@ -11,13 +11,12 @@ package viewtify.ui;
 
 import javafx.scene.control.Button;
 
+import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 
-/**
- * @version 2018/09/09 11:59:42
- */
-public class UIButton extends UserInterface<UIButton, Button> implements StyleHelper<UIButton, Button>, LabelHelper<UIButton, Button> {
+public class UIButton extends UserInterface<UIButton, Button>
+        implements StyleHelper<UIButton, Button>, LabelHelper<UIButton, Button>, ContextMenuHelper<UIButton> {
 
     /**
      * Enchanced view.

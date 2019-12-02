@@ -12,11 +12,12 @@ package viewtify.ui;
 import javafx.beans.property.Property;
 import javafx.scene.control.TextField;
 
+import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PreferenceHelper;
 import viewtify.util.RegulatableProperty;
 
 public abstract class AbstractTextField<Self extends AbstractTextField, F extends TextField> extends UserInterface<Self, F>
-        implements PreferenceHelper<Self, String> {
+        implements PreferenceHelper<Self, String>, ContextMenuHelper<Self> {
 
     /** The model. */
     private final RegulatableProperty<String> text = new RegulatableProperty<>(ui.textProperty());

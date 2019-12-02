@@ -22,12 +22,10 @@ import javafx.scene.control.ListView;
 import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PreferenceHelper;
 
-/**
- * @version 2018/09/09 12:01:42
- */
-public class UIListView<E> extends UserInterface<UIListView, ListView<E>> {
+public class UIListView<E> extends UserInterface<UIListView, ListView<E>> implements ContextMenuHelper<UIListView> {
 
     /** The item filter manager. */
     private final Variable<Predicate<E>> filter;

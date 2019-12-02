@@ -19,11 +19,13 @@ import javafx.scene.control.TableSelectionModel;
 import javafx.scene.text.Text;
 
 import viewtify.bind.CalculatedList;
+import viewtify.ui.helper.ContextMenuHelper;
 
 /**
  * @version 2018/09/09 11:54:03
  */
-public abstract class AbstractTableView<Self extends AbstractTableView, W extends Control, T> extends AbstractControl<Self, W> {
+public abstract class AbstractTableView<Self extends AbstractTableView, W extends Control, T> extends UserInterface<Self, W>
+        implements ContextMenuHelper<Self> {
 
     /** The selection model. */
     private final CalculatedList<T> selection;

@@ -15,16 +15,14 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 
 import stylist.value.Color;
+import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.PreferenceHelper;
 import viewtify.util.DelegationProperty;
 import viewtify.util.FXUtils;
 
-/**
- * @version 2018/09/11 1:03:38
- */
 public class UIColorPicker extends UserInterface<UIColorPicker, ColorPicker>
-        implements PreferenceHelper<UIColorPicker, Color>, EditableHelper<UIColorPicker> {
+        implements PreferenceHelper<UIColorPicker, Color>, EditableHelper<UIColorPicker>, ContextMenuHelper<UIColorPicker> {
 
     private final DelegationProperty<javafx.scene.paint.Color, Color> color = new DelegationProperty<>(ui
             .valueProperty(), FXUtils::color, FXUtils::color);

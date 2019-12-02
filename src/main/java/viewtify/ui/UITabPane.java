@@ -24,12 +24,13 @@ import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.model.Selectable;
+import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.User;
 
 /**
  * @version 2018/09/27 11:20:12
  */
-public class UITabPane extends UserInterface<UITabPane, TabPane> {
+public class UITabPane extends UserInterface<UITabPane, TabPane> implements ContextMenuHelper<UITabPane> {
 
     /** The model disposer. */
     private Disposable disposable = Disposable.empty();

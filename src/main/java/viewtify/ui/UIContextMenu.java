@@ -24,7 +24,7 @@ public class UIContextMenu {
      * 
      * @param ui
      */
-    UIContextMenu(ContextMenu ui) {
+    public UIContextMenu(ContextMenu ui) {
         this.ui = ui;
     }
 
