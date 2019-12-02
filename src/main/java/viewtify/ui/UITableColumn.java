@@ -152,7 +152,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * {@inheritDoc}
      */
     @Override
-    public UITableColumn<RowValue, ColumnValue> renderNode(Function<ColumnValue, ? extends Node> renderer) {
+    public UITableColumn<RowValue, ColumnValue> renderByNode(Function<ColumnValue, ? extends Node> renderer) {
         ui.setCellFactory(table -> new GenericCell(renderer));
         return this;
     }

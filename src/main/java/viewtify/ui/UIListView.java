@@ -68,7 +68,7 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>>
      * {@inheritDoc}
      */
     @Override
-    public UIListView<E> renderNode(Function<E, ? extends Node> renderer) {
+    public UIListView<E> renderByNode(Function<E, ? extends Node> renderer) {
         ui.setCellFactory(view -> new GenericCell<E>(renderer::apply));
         return this;
     }

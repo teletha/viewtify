@@ -31,7 +31,7 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      */
     default Self render(Function<E, String> renderer) {
         Objects.requireNonNull(renderer);
-        return renderProperty(e -> new SimpleObjectProperty(renderer.apply(e)));
+        return renderByProperty(e -> new SimpleObjectProperty(renderer.apply(e)));
     }
 
     /**
@@ -40,9 +40,9 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    default Self renderVariable(Function<E, Variable<String>> renderer) {
+    default Self renderByVariable(Function<E, Variable<String>> renderer) {
         Objects.requireNonNull(renderer);
-        return renderProperty(e -> Viewtify.property(renderer.apply(e)));
+        return renderByProperty(e -> Viewtify.property(renderer.apply(e)));
     }
 
     /**
@@ -51,8 +51,8 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    default Self renderProperty(Function<E, Property<String>> renderer) {
-        return renderNode(e -> {
+    default Self renderByProperty(Function<E, Property<String>> renderer) {
+        return renderByNode(e -> {
             Label label = new Label();
             label.textProperty().bind(renderer.apply(e));
             return label;
@@ -65,8 +65,8 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    default Self renderUI(Function<E, ? extends UserInterfaceProvider<? extends Node>> renderer) {
-        return renderNode(e -> renderer.apply(e).ui());
+    default Self renderByUI(Function<E, ? extends UserInterfaceProvider<? extends Node>> renderer) {
+        return renderByNode(e -> renderer.apply(e).ui());
     }
 
     /**
@@ -75,5 +75,5 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    Self renderNode(Function<E, ? extends Node> renderer);
+    Self renderByNode(Function<E, ? extends Node> renderer);
 }
