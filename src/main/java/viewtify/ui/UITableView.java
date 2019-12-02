@@ -58,11 +58,10 @@ public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<
     }
 
     /**
-     * Specifies ROW renderer.
+     * Configure item renderer.
      */
     public UITableView<T> render(Function<UITableView<T>, TableRow<T>> renderer) {
         ui.setRowFactory(table -> renderer.apply(this));
-
         return this;
     }
 }

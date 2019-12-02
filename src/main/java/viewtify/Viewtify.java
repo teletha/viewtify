@@ -42,6 +42,8 @@ import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ObjectPropertyBase;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -1077,8 +1079,191 @@ public final class Viewtify {
         });
     }
 
+    /**
+     * Create the wrapped property of the specified {@link Variable}.
+     * 
+     * @param variable
+     * @return
+     */
+    public static <T> Property<T> property(Variable<T> variable) {
+        return new PropertyVariable(variable);
+    }
+
+    /**
+     * Thin {@link Property} wrapper for {@link Variable}.
+     */
+    private static class PropertyVariable<V> implements Property<V> {
+
+        /** The target. */
+        private final Variable<V> variable;
+
+        /** The listener cache. */
+        private WeakHashMap<ChangeListener, Disposable> listeners;
+
+        /**
+         * @param variable
+         */
+        private PropertyVariable(Variable<V> variable) {
+            this.variable = variable;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Object getBean() {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getName() {
+            return "";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public synchronized void addListener(ChangeListener<? super V> listener) {
+            Disposable disposer = variable.observe().to(v -> listener.changed(this, null, v));
+
+            if (listeners == null) {
+                listeners = new WeakHashMap();
+            }
+            listeners.put(listener, disposer);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public synchronized void removeListener(ChangeListener<? super V> listener) {
+            if (listeners != null) {
+                listeners.remove(listener);
+
+                if (listeners.isEmpty()) {
+                    listeners = null;
+                }
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public V getValue() {
+            return variable.v;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void addListener(InvalidationListener listener) {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setValue(V value) {
+            variable.set(value);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void bind(ObservableValue<? extends V> observable) {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void unbind() {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean isBound() {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void bindBidirectional(Property<V> other) {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void unbindBidirectional(Property<V> other) {
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
+        }
+    }
+
     public static UserInterface wrap(Control ui, View view) {
         return new UserInterface(ui, view);
+    }
+
+    public static <T> Property<T> wrap(Variable<T> variable) {
+        return new ObjectPropertyBase<>() {
+
+            {
+                variable.observe().to(this::fireValueChangedEvent);
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public Object getBean() {
+                return null;
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public String getName() {
+                return null;
+            }
+        };
     }
 
     /**

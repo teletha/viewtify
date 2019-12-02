@@ -19,18 +19,22 @@ import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
 import kiss.I;
+import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.helper.CollectableHelper;
+import viewtify.ui.helper.CollectableItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PreferenceHelper;
 
 public class UIListView<E> extends UserInterface<UIListView, ListView<E>>
-        implements CollectableHelper<UIListView<E>, E>, ContextMenuHelper<UIListView> {
+        implements CollectableHelper<UIListView<E>, E>, CollectableItemRenderingHelper<UIListView<E>, E>, ContextMenuHelper<UIListView<E>> {
 
     /** The item filter manager. */
     private final Variable<Predicate<E>> filter;
@@ -62,14 +66,64 @@ public class UIListView<E> extends UserInterface<UIListView, ListView<E>>
         return items;
     }
 
-    public UIListView<E> cell(ListCell<E> cell) {
-        ui.setCellFactory(e -> cell);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UIListView<E> renderSignal(Function<E, Signal<String>> renderer) {
+        ui.setCellFactory(listView -> {
+            ListCell<E> cell = new ListCell();
+            Viewtify.observeNow(cell.itemProperty()).skipNull().flatMap(renderer::apply).to(cell::setText);
+            return cell;
+        });
         return this;
     }
 
-    public UIListView<E> cell(Function<UIListView<E>, ListCell<E>> factory) {
-        ui.setCellFactory(e -> factory.apply(this));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UIListView<E> renderCheckboxSignal(Function<E, Signal<String>> renderer, Function<E, Variable<Boolean>> checked) {
+        ui.setCellFactory(view -> {
+            return new GenericCell<E>(e -> {
+                CheckBox box = new CheckBox();
+                I.signal(e).skipNull().flatMap(renderer::apply).to(box::setText);
+                box.selectedProperty().bindBidirectional(Viewtify.property(checked.apply(e)));
+                return box;
+            });
+        });
         return this;
+    }
+
+    /**
+     * 
+     */
+    private static class GenericCell<E> extends ListCell<E> {
+
+        /** The user defined cell renderer. */
+        private final Function<E, Node> renderer;
+
+        /**
+         * @param renderer
+         */
+        private GenericCell(Function<E, Node> renderer) {
+            this.renderer = renderer;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void updateItem(E item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (item == null || empty) {
+                setGraphic(null);
+            } else {
+                setGraphic(renderer.apply(item));
+            }
+        }
+
     }
 
     /**
