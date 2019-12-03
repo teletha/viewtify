@@ -110,9 +110,20 @@ public class FXUtils {
      */
     public static Color color(Style style, String propertyName, Color defaultValue) {
         StyleRule rule = StyleRule.create(style);
-        Variable<CSSValue> color = rule.properties.get(propertyName);
+        String[] names;
 
-        if (color.isPresent()) {
+        if (propertyName.equals("color") || propertyName.equals("fill") || propertyName.equals("stroke")) {
+            names = new String[] {"stroke", "fill", "color"};
+        } else {
+            names = new String[] {propertyName};
+        }
+
+        for (String name : names) {
+            Variable<CSSValue> color = rule.properties.get(name);
+
+            if (color.isAbsent()) {
+                continue;
+            }
             CSSValue value = color.get();
 
             if (value instanceof stylist.value.Color) {
@@ -120,9 +131,8 @@ public class FXUtils {
             } else {
                 return Color.web(color.toString());
             }
-        } else {
-            return defaultValue;
         }
+        return defaultValue;
     }
 
     /**
