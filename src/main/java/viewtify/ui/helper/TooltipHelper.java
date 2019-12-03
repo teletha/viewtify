@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import kiss.I;
@@ -34,6 +35,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
         Tooltip tooltip = new Tooltip(Objects.toString(text));
         tooltip.setShowDelay(Duration.millis(100));
         tooltip.setShowDuration(Duration.INDEFINITE);
+        tooltip.setFont(Font.font(12));
 
         Tooltip.install(ui(), tooltip);
         return (Self) this;
