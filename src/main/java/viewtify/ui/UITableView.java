@@ -17,11 +17,11 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
 import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.MultiSelectableHelper;
 import viewtify.ui.helper.PlaceholderHelper;
-import viewtify.ui.helper.SelectableHelper;
 
 public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
-        implements SelectableHelper<UITableView<T>, T>, PlaceholderHelper<UITableView<T>>, ContextMenuHelper<UITableView<T>> {
+        implements MultiSelectableHelper<UITableView<T>, T>, PlaceholderHelper<UITableView<T>>, ContextMenuHelper<UITableView<T>> {
 
     /**
      * Enchanced view.

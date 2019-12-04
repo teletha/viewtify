@@ -28,11 +28,12 @@ import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.MultiSelectableHelper;
 import viewtify.ui.helper.PreferenceHelper;
-import viewtify.ui.helper.SelectableHelper;
 
 public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
-        implements SelectableHelper<UIListView<E>, E>, CollectableItemRenderingHelper<UIListView<E>, E>, ContextMenuHelper<UIListView<E>> {
+        implements MultiSelectableHelper<UIListView<E>, E>, CollectableItemRenderingHelper<UIListView<E>, E>,
+        ContextMenuHelper<UIListView<E>> {
 
     /** The item filter manager. */
     private final Variable<Predicate<E>> filter;

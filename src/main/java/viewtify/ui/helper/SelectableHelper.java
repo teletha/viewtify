@@ -9,9 +9,6 @@
  */
 package viewtify.ui.helper;
 
-import javafx.collections.ObservableList;
-import javafx.scene.control.MultipleSelectionModel;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SelectionModel;
 
 import kiss.Variable;
@@ -23,7 +20,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * 
      * @return
      */
-    private MultipleSelectionModel<E> model() {
+    private SelectionModel<E> model() {
         return property(Type.SelectionModel).getValue();
     }
 
@@ -34,27 +31,5 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      */
     default Variable<E> selectedItem() {
         return Variable.of(model().getSelectedItem());
-    }
-
-    /**
-     * Get live-state list of the selected items.
-     * 
-     * @return
-     */
-    default ObservableList<E> selectedItems() {
-        return model().getSelectedItems();
-    }
-
-    /**
-     * Config {@link SelectionMode}.
-     * 
-     * @param mode
-     * @return Chainable API.
-     */
-    default Self mode(SelectionMode mode) {
-        if (mode != null) {
-            model().setSelectionMode(mode);
-        }
-        return (Self) this;
     }
 }

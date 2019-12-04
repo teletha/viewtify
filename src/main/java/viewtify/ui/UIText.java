@@ -11,9 +11,6 @@ package viewtify.ui;
 
 import javafx.scene.control.TextField;
 
-/**
- * @version 2018/09/09 12:01:37
- */
 public class UIText extends AbstractTextField<UIText, TextField> {
 
     /**

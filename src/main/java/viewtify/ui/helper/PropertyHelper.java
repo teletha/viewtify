@@ -15,8 +15,8 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -95,7 +95,7 @@ public interface PropertyHelper {
         public static final Type<Node> Placeholder = new Type("placeholder");
 
         /** The defined property type. */
-        public static final Type<MultipleSelectionModel> SelectionModel = new Type("selectionModel");
+        public static final Type<SelectionModel> SelectionModel = new Type("selectionModel");
 
         /** The defined property type. */
         public static final Type<String> Text = new Type("text");

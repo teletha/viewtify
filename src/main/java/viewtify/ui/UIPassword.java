@@ -11,9 +11,6 @@ package viewtify.ui;
 
 import javafx.scene.control.PasswordField;
 
-/**
- * @version 2018/09/09 12:04:03
- */
 public class UIPassword extends AbstractTextField<UIPassword, PasswordField> {
 
     /**

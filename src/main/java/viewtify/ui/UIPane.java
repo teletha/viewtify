@@ -13,9 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
-/**
- * @version 2018/09/09 12:03:12
- */
 public class UIPane extends UserInterface<UIPane, Pane> {
 
     /**
