@@ -12,6 +12,7 @@ package viewtify.ui;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.function.Predicate;
 
 import javafx.application.Platform;
 import javafx.css.Styleable;
@@ -123,8 +124,35 @@ public abstract class View implements Extensible, UserInterfaceProvider {
      * 
      * @return The root view.
      */
-    public final View root() {
-        return parent == null ? this : parent.root();
+    public final View findRootView() {
+        return findAncestorView(view -> view.parent == null).v;
+    }
+
+    /**
+     * Returns the nearest ancestor typed {@link View}.
+     * 
+     * @return The typed {@link View}.
+     */
+    public final <V extends View> Variable<V> findAncestorView(Class<V> viewType) {
+        return (Variable<V>) findAncestorView(view -> viewType.isInstance(view));
+    }
+
+    /**
+     * Finds the nearest ancestor view that meets the specified criteria.
+     * 
+     * @param condition A condition to match.
+     * @return A found {@link View}.
+     */
+    public final Variable<View> findAncestorView(Predicate<View> condition) {
+        View view = this;
+
+        while (view != null) {
+            if (condition.test(view)) {
+                return Variable.of(view);
+            }
+            view = view.parent;
+        }
+        return Variable.empty();
     }
 
     /**
@@ -133,7 +161,7 @@ public abstract class View implements Extensible, UserInterfaceProvider {
      * @return The {@link Screen} which this {@link View} is displayed.
      */
     public final Screen screen() {
-        Window window = root().ui().getScene().getWindow();
+        Window window = findRootView().ui().getScene().getWindow();
 
         for (Screen screen : Screen.getScreens()) {
             if (screen.getBounds().contains(window.getX(), window.getY())) {
@@ -255,13 +283,8 @@ public abstract class View implements Extensible, UserInterfaceProvider {
                     if (assigned != null) {
                         ((View) assigned).initializeLazy(this);
                     } else {
-                        View view = findViewFromAncestor(type);
-
-                        if (view == null) {
-                            view = View.build((Class<View>) type, this);
-                        }
-
-                        field.set(this, view);
+                        Class<View> viewType = (Class<View>) type;
+                        field.set(this, findAncestorView(viewType).or(() -> View.build(viewType, this)));
                     }
                 } else if (UserInterfaceProvider.class.isAssignableFrom(type)) {
                     if (assigned == null) {
@@ -298,19 +321,6 @@ public abstract class View implements Extensible, UserInterfaceProvider {
         } catch (Exception e) {
             throw I.quiet(e);
         }
-    }
-
-    /**
-     * Find the specified typed view from parent view stack.
-     * 
-     * @param type A target type.
-     * @return
-     */
-    private <V extends View> V findViewFromAncestor(Class type) {
-        if (type.isInstance(this)) {
-            return (V) this;
-        }
-        return parent == null ? null : parent.findViewFromAncestor(type);
     }
 
     /**

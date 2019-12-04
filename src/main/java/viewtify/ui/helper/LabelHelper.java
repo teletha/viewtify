@@ -156,6 +156,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyHelper {
      * @return Chainable API.
      */
     default Self text(Node text) {
+        property(Type.Text).setValue(null);
         property(Type.Graphic).setValue(text);
         return (Self) this;
     }
