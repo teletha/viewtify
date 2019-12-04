@@ -120,7 +120,7 @@ public final class User<E extends Event> {
      * @return A user action.
      */
     public static final User<MouseEvent> click(MouseButton button) {
-        return new User<>(MouseEvent.MOUSE_CLICKED, (helper, signal) -> signal.take(e -> e.getButton() == MouseButton.MIDDLE));
+        return new User<>(MouseEvent.MOUSE_CLICKED, (helper, signal) -> signal.take(e -> e.getButton() == button));
     }
 
     /** User Action */

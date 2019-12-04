@@ -19,7 +19,7 @@ import javafx.collections.ObservableList;
 
 import viewtify.Viewtify;
 
-public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
+public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> extends PropertyHelper {
 
     /**
      * Returns the managed item list.
@@ -167,5 +167,10 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      */
     private void modifyItemUISafely(Consumer<List<E>> action) {
         Viewtify.inUI(() -> action.accept(items().getValue()));
+    }
+
+    default Self whenSelected(Consumer<E> selected) {
+        Viewtify.observe(property(Type.SelectionModel).getValue().selectedItemProperty()).to(selected);
+        return (Self) this;
     }
 }

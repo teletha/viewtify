@@ -31,7 +31,7 @@ import viewtify.ui.helper.CollectableItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PreferenceHelper;
 
-public class UIListView<E> extends UserInterface<UIListView, ListView<E>>
+public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
         implements CollectableHelper<UIListView<E>, E>, CollectableItemRenderingHelper<UIListView<E>, E>, ContextMenuHelper<UIListView<E>> {
 
     /** The item filter manager. */

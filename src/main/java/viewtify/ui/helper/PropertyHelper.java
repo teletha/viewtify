@@ -15,6 +15,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Paint;
@@ -89,6 +90,9 @@ public interface PropertyHelper {
 
         /** The defined property type. */
         public static final Type<Double> Opacity = new Type("opacity");
+
+        /** The defined property type. */
+        public static final Type<MultipleSelectionModel> SelectionModel = new Type("selectionModel");
 
         /** The defined property type. */
         public static final Type<String> Text = new Type("text");
