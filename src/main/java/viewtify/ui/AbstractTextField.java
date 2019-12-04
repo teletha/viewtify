@@ -14,10 +14,11 @@ import javafx.scene.control.TextField;
 
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PreferenceHelper;
+import viewtify.ui.helper.RestorableHelper;
 import viewtify.util.RegulatableProperty;
 
 public abstract class AbstractTextField<Self extends AbstractTextField, F extends TextField> extends UserInterface<Self, F>
-        implements PreferenceHelper<Self, String>, ContextMenuHelper<Self> {
+        implements PreferenceHelper<Self, String>, ContextMenuHelper<Self>, RestorableHelper<Self, String> {
 
     /** The model. */
     private final RegulatableProperty<String> text = new RegulatableProperty<>(ui.textProperty());

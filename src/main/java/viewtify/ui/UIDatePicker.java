@@ -24,11 +24,12 @@ import javafx.scene.control.DatePicker;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.PreferenceHelper;
+import viewtify.ui.helper.RestorableHelper;
 import viewtify.ui.helper.User;
 
 public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
         implements PreferenceHelper<UIDatePicker, LocalDate>, EditableHelper<UIDatePicker>, Comparable<UIDatePicker>,
-        ContextMenuHelper<UIDatePicker> {
+        ContextMenuHelper<UIDatePicker>, RestorableHelper<UIDatePicker, LocalDate> {
 
     /**
      * Builde {@link ComboBox}.

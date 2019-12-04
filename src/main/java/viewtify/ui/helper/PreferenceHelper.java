@@ -9,7 +9,6 @@
  */
 package viewtify.ui.helper;
 
-import java.lang.reflect.Method;
 import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
@@ -22,7 +21,6 @@ import kiss.WiseConsumer;
 import kiss.WiseFunction;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
-import viewtify.ui.UserInterface;
 
 /**
  * @version 2018/09/10 20:25:21
@@ -120,36 +118,6 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supp
             model().setValue(setter.apply(value()));
         }
         return (Self) this;
-    }
-
-    /**
-     * Set initial value.
-     * 
-     * @param initialValue
-     * @return
-     */
-    default Self initial(V initialValue) {
-        if (this instanceof UserInterface) {
-            try {
-                UserInterface ui = (UserInterface) this;
-                Method method = UserInterface.class.getDeclaredMethod("restore", Property.class, Object.class);
-                method.setAccessible(true);
-                method.invoke(ui, model(), initialValue);
-            } catch (Exception e) {
-                throw I.quiet(e);
-            }
-        }
-        return (Self) this;
-    }
-
-    /**
-     * Set initial value.
-     * 
-     * @param initialValue
-     * @return
-     */
-    default Self initial(Variable<V> initialValue) {
-        return initial(initialValue.v);
     }
 
     /**

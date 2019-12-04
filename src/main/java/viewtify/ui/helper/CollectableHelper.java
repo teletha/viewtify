@@ -268,8 +268,8 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
     }
 
     default Self initial(int index) {
-        if (this instanceof PreferenceHelper) {
-            ((PreferenceHelper) this).initial(items().getValue().get(index));
+        if (this instanceof RestorableHelper) {
+            ((RestorableHelper) this).initial(items().getValue().get(index));
         }
         return (Self) this;
     }
