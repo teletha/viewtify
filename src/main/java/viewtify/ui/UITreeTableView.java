@@ -13,7 +13,6 @@ import java.util.function.Function;
 
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
@@ -51,14 +50,6 @@ public class UITreeTableView<T> extends UserInterface<UITreeTableView<T>, TreeTa
         // If this exception will be thrown, it is bug of this program. So we must rethrow the
         // wrapped error in here.
         throw new Error();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TableSelectionModel selectionModel() {
-        return ui.getSelectionModel();
     }
 
     /**

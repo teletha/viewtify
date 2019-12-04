@@ -22,7 +22,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MultipleSelectionModel;
 
 import kiss.I;
 import kiss.Variable;
@@ -63,14 +62,6 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
     @Override
     public Property<ObservableList<E>> items() {
         return items;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public MultipleSelectionModel<E> selectionModel() {
-        return ui.getSelectionModel();
     }
 
     /**

@@ -14,7 +14,6 @@ import java.util.function.Function;
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableRow;
-import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TableView;
 
 import viewtify.ui.helper.ContextMenuHelper;
@@ -39,14 +38,6 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
     @Override
     public Property<ObservableList<T>> items() {
         return ui.itemsProperty();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TableSelectionModel selectionModel() {
-        return ui.getSelectionModel();
     }
 
     /**

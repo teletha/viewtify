@@ -121,14 +121,21 @@ public interface PropertyHelper {
         /** The defined property type. */
         public static final Type<Boolean> WrapText = new Type("wrapText");
 
+        /** The property id counter. */
+        private static int counter;
+
         /** The property name. */
         private final String name;
+
+        /** The property id. */
+        public final int id;
 
         /**
          * 
          */
         private Type(String name) {
             this.name = name + "Property";
+            this.id = counter++;
         }
     }
 }

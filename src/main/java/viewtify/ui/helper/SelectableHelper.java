@@ -16,14 +16,16 @@ import javafx.scene.control.SelectionModel;
 
 import kiss.Variable;
 
-public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> extends CollectableHelper<Self, E> {
+public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> extends CollectableHelper<Self, E>, PropertyHelper {
 
     /**
-     * Get the {@link SelectionModel}.
+     * Retrieve the {@link SelectionModel}.
      * 
      * @return
      */
-    MultipleSelectionModel<E> selectionModel();
+    private MultipleSelectionModel<E> model() {
+        return property(Type.SelectionModel).getValue();
+    }
 
     /**
      * Get the latest selected item.
@@ -31,7 +33,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return
      */
     default Variable<E> selectedItem() {
-        return Variable.of(selectionModel().getSelectedItem());
+        return Variable.of(model().getSelectedItem());
     }
 
     /**
@@ -40,7 +42,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return
      */
     default ObservableList<E> selectedItems() {
-        return selectionModel().getSelectedItems();
+        return model().getSelectedItems();
     }
 
     /**
@@ -51,7 +53,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      */
     default Self mode(SelectionMode mode) {
         if (mode != null) {
-            selectionModel().setSelectionMode(mode);
+            model().setSelectionMode(mode);
         }
         return (Self) this;
     }
