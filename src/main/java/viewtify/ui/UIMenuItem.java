@@ -9,7 +9,6 @@
  */
 package viewtify.ui;
 
-import javafx.beans.property.Property;
 import javafx.scene.control.MenuItem;
 
 import viewtify.ui.helper.DisableHelper;
@@ -38,13 +37,5 @@ public class UIMenuItem
     @Override
     public MenuItem ui() {
         return ui;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Property<Boolean> disable() {
-        return ui.disableProperty();
     }
 }

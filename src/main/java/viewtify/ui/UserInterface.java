@@ -88,14 +88,6 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Property<Boolean> disable() {
-        return ui.disableProperty();
-    }
-
-    /**
      * Register keyborad shortcut.
      * 
      * @param key
