@@ -13,10 +13,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 
+import kiss.I;
+import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 
@@ -49,7 +53,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      */
     default Variable<E> first() {
         ObservableList<E> items = items().getValue();
-    
+
         if (items.isEmpty()) {
             return Variable.empty();
         } else {
@@ -64,7 +68,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      */
     default Variable<E> last() {
         ObservableList<E> items = items().getValue();
-    
+
         if (items.isEmpty()) {
             return Variable.empty();
         } else {
@@ -198,5 +202,75 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      */
     private void modifyItemUISafely(Consumer<List<E>> action) {
         Viewtify.inUI(() -> action.accept(items().getValue()));
+    }
+
+    /**
+     * Set values.
+     * 
+     * @param values
+     * @return
+     */
+    default <T extends Enum> Self values(Class<T> enums) {
+        return values((E[]) enums.getEnumConstants());
+    }
+
+    /**
+     * Set values.
+     * 
+     * @param values
+     * @return
+     */
+    default Self values(E... values) {
+        return values(I.signal(values));
+    }
+
+    /**
+     * Set values.
+     * 
+     * @param values
+     * @return
+     */
+    default Self values(Iterable<E> values) {
+        return values(I.signal(values));
+    }
+
+    /**
+     * Set values.
+     * 
+     * @param values
+     * @return
+     */
+    default Self values(Signal<E> values) {
+        return values(values.toList());
+    }
+
+    /**
+     * Set values.
+     * 
+     * @param values
+     * @return
+     */
+    default Self values(Stream<E> values) {
+        return values(values.collect(Collectors.toList()));
+    }
+
+    /**
+     * Set values.
+     * 
+     * @param values
+     * @return
+     */
+    default Self values(List<E> values) {
+        ObservableList<E> list = items().getValue();
+        list.clear();
+        list.addAll(values);
+        return (Self) this;
+    }
+
+    default Self initial(int index) {
+        if (this instanceof PreferenceHelper) {
+            ((PreferenceHelper) this).initial(items().getValue().get(index));
+        }
+        return (Self) this;
     }
 }

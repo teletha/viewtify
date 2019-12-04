@@ -9,25 +9,26 @@
  */
 package viewtify.ui;
 
-import java.util.List;
 import java.util.function.Function;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
-import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 
+import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
-import viewtify.ui.helper.SelectablePreferenceHelper;
+import viewtify.ui.helper.PreferenceHelper;
 import viewtify.ui.helper.User;
 
 /**
  * @version 2018/09/09 11:49:25
  */
 public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
-        implements SelectablePreferenceHelper<UIComboBox<T>, T>, EditableHelper<UIComboBox>, ContextMenuHelper<UIComboBox<T>> {
+        implements CollectableHelper<UIComboBox<T>, T>, PreferenceHelper<UIComboBox<T>, T>, EditableHelper<UIComboBox>,
+        ContextMenuHelper<UIComboBox<T>> {
 
     /**
      * Builde {@link ComboBox}.
@@ -45,6 +46,14 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
      * {@inheritDoc}
      */
     @Override
+    public Property<ObservableList<T>> items() {
+        return ui.itemsProperty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public BooleanProperty edit() {
         return ui.editableProperty();
     }
@@ -55,15 +64,6 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
     @Override
     public Property<T> model() {
         return ui.valueProperty();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UIComboBox<T> values(List<T> values) {
-        ui.setItems(FXCollections.observableList(values));
-        return this;
     }
 
     /**

@@ -9,20 +9,22 @@
  */
 package viewtify.ui;
 
-import java.util.List;
 import java.util.function.Function;
 
 import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.SpinnerValueFactory.ListSpinnerValueFactory;
 import javafx.util.StringConverter;
 
+import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.SelectablePreferenceHelper;
+import viewtify.ui.helper.PreferenceHelper;
 
 public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
-        implements SelectablePreferenceHelper<UISpinner<T>, T>, ContextMenuHelper<UISpinner<T>> {
+        implements CollectableHelper<UISpinner<T>, T>, PreferenceHelper<UISpinner<T>, T>, ContextMenuHelper<UISpinner<T>> {
 
     /**
      * Enchanced view.
@@ -30,7 +32,7 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
      * @param view A {@link View} to which the widget belongs.
      */
     private UISpinner(View view) {
-        super(new Spinner(), view);
+        super(new Spinner(new SpinnerValueFactory.ListSpinnerValueFactory(FXCollections.observableArrayList())), view);
 
         ui.setOnScroll(e -> {
             if (e.getDeltaY() > 0) {
@@ -45,17 +47,16 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
      * {@inheritDoc}
      */
     @Override
-    public Property<T> model() {
-        return ui.getValueFactory().valueProperty();
+    public Property<ObservableList<T>> items() {
+        return ((ListSpinnerValueFactory<T>) ui.getValueFactory()).itemsProperty();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public UISpinner<T> values(List<T> values) {
-        ui.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory(FXCollections.observableList(values)));
-        return this;
+    public Property<T> model() {
+        return ui.getValueFactory().valueProperty();
     }
 
     /**
