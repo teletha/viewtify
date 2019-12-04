@@ -14,7 +14,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoZonedDateTime;
-import java.util.function.Supplier;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
@@ -23,12 +22,12 @@ import javafx.scene.control.DatePicker;
 
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
-import viewtify.ui.helper.PreferenceHelper;
+import viewtify.ui.helper.ModelHelper;
 import viewtify.ui.helper.RestorableHelper;
 import viewtify.ui.helper.User;
 
 public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
-        implements PreferenceHelper<UIDatePicker, LocalDate>, EditableHelper<UIDatePicker>, Comparable<UIDatePicker>,
+        implements ModelHelper<UIDatePicker, LocalDate>, EditableHelper<UIDatePicker>, Comparable<UIDatePicker>,
         ContextMenuHelper<UIDatePicker>, RestorableHelper<UIDatePicker, LocalDate> {
 
     /**
@@ -42,9 +41,9 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll, e -> {
             if (e.getDeltaY() < 0) {
-                value(value().minusDays(1));
+                model(value().minusDays(1));
             } else {
-                value(value().plusDays(1));
+                model(value().plusDays(1));
             }
         });
     }
@@ -110,16 +109,6 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
      * @param date A date to compare.
      * @return A result.
      */
-    public final boolean isAfter(Supplier<LocalDate> date) {
-        return isAfter(date.get());
-    }
-
-    /**
-     * Compare this {@link LocalDate} with the specified date.
-     * 
-     * @param date A date to compare.
-     * @return A result.
-     */
     public final boolean isAfterOrSame(ChronoLocalDate date) {
         return 0 <= value().compareTo(date);
     }
@@ -172,16 +161,6 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
      */
     public final boolean isBeforeOrSame(ChronoZonedDateTime date) {
         return isBeforeOrSame(date.toLocalDate());
-    }
-
-    /**
-     * Compare this {@link LocalDate} with the specified date.
-     * 
-     * @param date A date to compare.
-     * @return A result.
-     */
-    public final boolean isBeforeOrSame(Supplier<LocalDate> date) {
-        return isBeforeOrSame(date.get());
     }
 
     /**

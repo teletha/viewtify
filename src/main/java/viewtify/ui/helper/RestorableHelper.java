@@ -14,7 +14,6 @@ import java.lang.reflect.Method;
 import javafx.beans.property.Property;
 
 import kiss.I;
-import kiss.Variable;
 import viewtify.ui.UserInterface;
 
 public interface RestorableHelper<Self extends RestorableHelper, V> {
@@ -44,15 +43,5 @@ public interface RestorableHelper<Self extends RestorableHelper, V> {
             }
         }
         return (Self) this;
-    }
-
-    /**
-     * Set initial value.
-     * 
-     * @param initialValue
-     * @return
-     */
-    default Self initial(Variable<V> initialValue) {
-        return initial(initialValue.v);
     }
 }

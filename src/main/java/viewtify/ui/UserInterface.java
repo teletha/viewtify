@@ -42,7 +42,7 @@ import stylist.StyleDSL;
 import viewtify.Viewtify;
 import viewtify.model.Validation;
 import viewtify.ui.helper.DisableHelper;
-import viewtify.ui.helper.PreferenceHelper;
+import viewtify.ui.helper.ModelHelper;
 import viewtify.ui.helper.PropertyHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
@@ -277,8 +277,8 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @return
      */
     private Signal<?> validateWhen() {
-        if (this instanceof PreferenceHelper) {
-            return Viewtify.observe(((PreferenceHelper) this).model());
+        if (this instanceof ModelHelper) {
+            return Viewtify.observe(((ModelHelper) this).model());
         } else {
             return null;
         }

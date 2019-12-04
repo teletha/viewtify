@@ -21,11 +21,11 @@ import javafx.util.StringConverter;
 
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.PreferenceHelper;
+import viewtify.ui.helper.ModelHelper;
 import viewtify.ui.helper.RestorableHelper;
 
 public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
-        implements CollectableHelper<UISpinner<T>, T>, PreferenceHelper<UISpinner<T>, T>, ContextMenuHelper<UISpinner<T>>,
+        implements CollectableHelper<UISpinner<T>, T>, ModelHelper<UISpinner<T>, T>, ContextMenuHelper<UISpinner<T>>,
         RestorableHelper<UISpinner<T>, T> {
 
     /**

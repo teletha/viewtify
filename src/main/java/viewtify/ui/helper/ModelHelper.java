@@ -9,8 +9,6 @@
  */
 package viewtify.ui.helper;
 
-import java.util.function.Supplier;
-
 import javafx.beans.property.Property;
 
 import kiss.I;
@@ -22,25 +20,7 @@ import kiss.WiseFunction;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
 
-/**
- * @version 2018/09/10 20:25:21
- */
-public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supplier<V> {
-
-    /**
-     * The preference.
-     * 
-     * @return
-     */
-    Property<V> model();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    default V get() {
-        return value();
-    }
+public interface ModelHelper<Self extends ModelHelper, V> {
 
     /**
      * Get the preference value.
@@ -86,12 +66,19 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supp
     }
 
     /**
+     * Return the current model.
+     * 
+     * @return
+     */
+    Property<V> model();
+
+    /**
      * Set the current value.
      * 
      * @param value
      * @return
      */
-    default Self value(V value) {
+    default Self model(V value) {
         model().setValue(value);
         return (Self) this;
     }
@@ -102,18 +89,7 @@ public interface PreferenceHelper<Self extends PreferenceHelper, V> extends Supp
      * @param value
      * @return
      */
-    default Self value(Variable<V> value) {
-        model().setValue(value.v);
-        return (Self) this;
-    }
-
-    /**
-     * Set the current value.
-     * 
-     * @param value
-     * @return
-     */
-    default Self value(WiseFunction<V, V> setter) {
+    default Self model(WiseFunction<V, V> setter) {
         if (setter != null) {
             model().setValue(setter.apply(value()));
         }
