@@ -23,22 +23,11 @@ import kiss.WiseRunnable;
 public interface UserActionHelper<Self extends UserActionHelper> {
 
     /**
-     * Add event handler.
+     * Return the JavaFX's UI component.
      * 
-     * @param <E>
-     * @param eventType
-     * @param eventHandler
+     * @return A UI component
      */
-    <T extends Event> void addEventHandler(EventType<T> eventType, final EventHandler<? super T> eventHandler);
-
-    /**
-     * Add event handler.
-     * 
-     * @param <T>
-     * @param eventType
-     * @param eventHandler
-     */
-    <T extends Event> void removeEventHandler(EventType<T> eventType, EventHandler<? super T> eventHandler);
+    Object ui();
 
     /**
      * Listen the specified user action.
@@ -50,12 +39,28 @@ public interface UserActionHelper<Self extends UserActionHelper> {
         return actionType.hook.apply(this, new Signal<E>((observer, disposer) -> {
             EventHandler<E> listener = observer::accept;
 
-            addEventHandler(actionType.type, listener);
+            invoke("addEventHandler", ui(), actionType.type, listener);
 
             return disposer.add(() -> {
-                removeEventHandler(actionType.type, listener);
+                invoke("removeEventHandler", ui(), actionType.type, listener);
             });
         }));
+    }
+
+    /**
+     * Invoke the event handler regstration methods.
+     * 
+     * @param name A method name.
+     * @param o A target object.
+     * @param type An event type.
+     * @param handler An event handler.
+     */
+    private void invoke(String name, Object o, EventType type, EventHandler handler) {
+        try {
+            o.getClass().getMethod(name, EventType.class, EventHandler.class).invoke(o, type, handler);
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
     }
 
     /**

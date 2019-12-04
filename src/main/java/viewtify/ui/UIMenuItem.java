@@ -10,9 +10,6 @@
 package viewtify.ui;
 
 import javafx.beans.property.Property;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.control.MenuItem;
 
 import viewtify.ui.helper.DisableHelper;
@@ -49,21 +46,5 @@ public class UIMenuItem
     @Override
     public Property<Boolean> disable() {
         return ui.disableProperty();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <T extends Event> void addEventHandler(EventType<T> eventType, EventHandler<? super T> eventHandler) {
-        ui.addEventHandler(eventType, (EventHandler) eventHandler);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <T extends Event> void removeEventHandler(EventType<T> eventType, EventHandler<? super T> eventHandler) {
-        ui.addEventHandler(eventType, (EventHandler) eventHandler);
     }
 }

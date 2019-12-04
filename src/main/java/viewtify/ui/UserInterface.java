@@ -18,9 +18,6 @@ import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -88,22 +85,6 @@ public class UserInterface<Self extends UserInterface, W extends Node>
     @Override
     public W ui() {
         return ui;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <E extends Event> void addEventHandler(EventType<E> eventType, EventHandler<? super E> eventHandler) {
-        ui.addEventHandler(eventType, eventHandler);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <E extends Event> void removeEventHandler(EventType<E> eventType, EventHandler<? super E> eventHandler) {
-        ui.removeEventHandler(eventType, eventHandler);
     }
 
     /**
