@@ -34,10 +34,73 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
     Property<ObservableList<E>> items();
 
     /**
-     * Set the specified items.
+     * Sets all values of the specified type enum as items.
      * 
-     * @param items
-     * @return
+     * @param items Sets all values of the specified type enum as items.
+     * @return Chainable API.
+     */
+    default <T extends Enum> Self items(Class<T> items) {
+        return items((E[]) items.getEnumConstants());
+    }
+
+    /**
+     * Sets all values as items.
+     * 
+     * @param items All items to set.
+     * @return Chainable API.
+     */
+    default Self items(E... items) {
+        return items(List.of(items));
+    }
+
+    /**
+     * Sets all values as items.
+     * 
+     * @param items All items to set.
+     * @return Chainable API.
+     */
+    default Self items(Iterable<E> items) {
+        return items(I.signal(items));
+    }
+
+    /**
+     * Sets all values as items.
+     * 
+     * @param items All items to set.
+     * @return Chainable API.
+     */
+    default Self items(Signal<E> items) {
+        return items(items.toList());
+    }
+
+    /**
+     * Sets all values as items.
+     * 
+     * @param items All items to set.
+     * @return Chainable API.
+     */
+    default Self items(Stream<E> items) {
+        return items(items.collect(Collectors.toList()));
+    }
+
+    /**
+     * Sets all values as items.
+     * 
+     * @param items All items to set.
+     * @return Chainable API.
+     */
+    default Self items(List<E> items) {
+        ObservableList<E> list = items().getValue();
+        list.clear();
+        list.setAll(items);
+        return (Self) this;
+    }
+
+    /**
+     * Sets all values as items.
+     * 
+     * @param items All items to set.
+     * @return Chainable API.
      */
     default Self items(ObservableList<E> items) {
         if (items != null) {
@@ -202,69 +265,6 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      */
     private void modifyItemUISafely(Consumer<List<E>> action) {
         Viewtify.inUI(() -> action.accept(items().getValue()));
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
-    default <T extends Enum> Self values(Class<T> enums) {
-        return values((E[]) enums.getEnumConstants());
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
-    default Self values(E... values) {
-        return values(I.signal(values));
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
-    default Self values(Iterable<E> values) {
-        return values(I.signal(values));
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
-    default Self values(Signal<E> values) {
-        return values(values.toList());
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
-    default Self values(Stream<E> values) {
-        return values(values.collect(Collectors.toList()));
-    }
-
-    /**
-     * Set values.
-     * 
-     * @param values
-     * @return
-     */
-    default Self values(List<E> values) {
-        ObservableList<E> list = items().getValue();
-        list.clear();
-        list.addAll(values);
-        return (Self) this;
     }
 
     default Self initial(int index) {
