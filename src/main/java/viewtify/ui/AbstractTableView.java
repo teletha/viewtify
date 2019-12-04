@@ -14,8 +14,6 @@ import java.util.function.Function;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableSelectionModel;
 import javafx.scene.text.Text;
 
 import viewtify.bind.CalculatedList;
@@ -38,15 +36,6 @@ public abstract class AbstractTableView<Self extends AbstractTableView, W extend
         super(ui, view);
 
         this.selection = selection.apply(ui);
-    }
-
-    /**
-     * Get all selected values.
-     * 
-     * @return
-     */
-    public final CalculatedList<T> selection() {
-        return selection;
     }
 
     /**
@@ -74,35 +63,6 @@ public abstract class AbstractTableView<Self extends AbstractTableView, W extend
      */
     public final Self placeholder(Node explaination) {
         placeholder().set(explaination);
-        return (Self) this;
-    }
-
-    /**
-     * Specify placeholder property.
-     * 
-     * @return
-     */
-    protected abstract TableSelectionModel selectionModel();
-
-    /**
-     * <p>
-     * Specifies the selection mode to use in this selection model. The selection mode specifies how
-     * many items in the underlying data model can be selected at any one time.
-     * <p>
-     */
-    public final Self selectMultipleRows() {
-        selectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        return (Self) this;
-    }
-
-    /**
-     * <p>
-     * Specifies the selection mode to use in this selection model. The selection mode specifies how
-     * many items in the underlying data model can be selected at any one time.
-     * <p>
-     */
-    public final Self selectSingleRow() {
-        selectionModel().setSelectionMode(SelectionMode.SINGLE);
         return (Self) this;
     }
 }

@@ -17,9 +17,10 @@ import java.util.function.Consumer;
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 
+import kiss.Variable;
 import viewtify.Viewtify;
 
-public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> extends PropertyHelper {
+public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
 
     /**
      * Returns the managed item list.
@@ -167,10 +168,5 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> e
      */
     private void modifyItemUISafely(Consumer<List<E>> action) {
         Viewtify.inUI(() -> action.accept(items().getValue()));
-    }
-
-    default Self whenSelected(Consumer<E> selected) {
-        Viewtify.observe(property(Type.SelectionModel).getValue().selectedItemProperty()).to(selected);
-        return (Self) this;
     }
 }

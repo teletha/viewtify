@@ -20,9 +20,9 @@ import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TableView;
 
 import viewtify.Viewtify;
-import viewtify.ui.helper.CollectableHelper;
+import viewtify.ui.helper.SelectableHelper;
 
-public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<T>, T> implements CollectableHelper<UITableView<T>, T> {
+public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<T>, T> implements SelectableHelper<UITableView<T>, T> {
 
     /**
      * Enchanced view.
@@ -45,16 +45,16 @@ public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<
      * {@inheritDoc}
      */
     @Override
-    protected ObjectProperty<Node> placeholder() {
-        return ui.placeholderProperty();
+    public TableSelectionModel selectionModel() {
+        return ui.getSelectionModel();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected TableSelectionModel selectionModel() {
-        return ui.getSelectionModel();
+    protected ObjectProperty<Node> placeholder() {
+        return ui.placeholderProperty();
     }
 
     /**

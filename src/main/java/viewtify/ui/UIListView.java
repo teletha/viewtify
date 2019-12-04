@@ -22,17 +22,18 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
 
 import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
-import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PreferenceHelper;
+import viewtify.ui.helper.SelectableHelper;
 
 public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
-        implements CollectableHelper<UIListView<E>, E>, CollectableItemRenderingHelper<UIListView<E>, E>, ContextMenuHelper<UIListView<E>> {
+        implements SelectableHelper<UIListView<E>, E>, CollectableItemRenderingHelper<UIListView<E>, E>, ContextMenuHelper<UIListView<E>> {
 
     /** The item filter manager. */
     private final Variable<Predicate<E>> filter;
@@ -62,6 +63,14 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
     @Override
     public Property<ObservableList<E>> items() {
         return items;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public MultipleSelectionModel<E> selectionModel() {
+        return ui.getSelectionModel();
     }
 
     /**

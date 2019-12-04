@@ -11,7 +11,7 @@ package viewtify.ui.helper;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
+import javafx.event.EventType;
 
 import kiss.I;
 import kiss.Signal;
@@ -20,17 +20,25 @@ import kiss.WiseConsumer;
 import kiss.WiseFunction;
 import kiss.WiseRunnable;
 
-/**
- * @version 2018/08/04 1:10:45
- */
 public interface UserActionHelper<Self extends UserActionHelper> {
 
     /**
-     * Return the target {@link Node} to listen to user actions.
+     * Add event handler.
      * 
-     * @return A target {@link Node}.
+     * @param <E>
+     * @param eventType
+     * @param eventHandler
      */
-    Node ui();
+    <T extends Event> void addEventHandler(EventType<T> eventType, final EventHandler<? super T> eventHandler);
+
+    /**
+     * Add event handler.
+     * 
+     * @param <T>
+     * @param eventType
+     * @param eventHandler
+     */
+    <T extends Event> void removeEventHandler(EventType<T> eventType, EventHandler<? super T> eventHandler);
 
     /**
      * Listen the specified user action.
@@ -42,10 +50,10 @@ public interface UserActionHelper<Self extends UserActionHelper> {
         return actionType.hook.apply(this, new Signal<E>((observer, disposer) -> {
             EventHandler<E> listener = observer::accept;
 
-            ui().addEventHandler(actionType.type, listener);
+            addEventHandler(actionType.type, listener);
 
             return disposer.add(() -> {
-                ui().removeEventHandler(actionType.type, listener);
+                removeEventHandler(actionType.type, listener);
             });
         }));
     }
