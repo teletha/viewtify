@@ -30,6 +30,36 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
     Property<ObservableList<E>> items();
 
     /**
+     * Returns the first item.
+     * 
+     * @return
+     */
+    default Variable<E> first() {
+        ObservableList<E> items = items().getValue();
+
+        if (items.isEmpty()) {
+            return Variable.empty();
+        } else {
+            return Variable.of(items.get(0));
+        }
+    }
+
+    /**
+     * Returns the last item.
+     * 
+     * @return
+     */
+    default Variable<E> last() {
+        ObservableList<E> items = items().getValue();
+
+        if (items.isEmpty()) {
+            return Variable.empty();
+        } else {
+            return Variable.of(items.get(items.size() - 1));
+        }
+    }
+
+    /**
      * Return the number of items.
      * 
      * @return

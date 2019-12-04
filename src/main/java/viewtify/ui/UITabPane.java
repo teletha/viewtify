@@ -13,21 +13,23 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 
 import kiss.Disposable;
-import kiss.I;
-import kiss.Signal;
-import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.model.Selectable;
 import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.SelectableHelper;
 import viewtify.ui.helper.User;
 
-public class UITabPane extends UserInterface<UITabPane, TabPane> implements ContextMenuHelper<UITabPane> {
+public class UITabPane extends UserInterface<UITabPane, TabPane>
+        implements ContextMenuHelper<UITabPane>, SelectableHelper<UITabPane, UITab> {
 
     /** The model disposer. */
     private Disposable disposable = Disposable.empty();
@@ -42,6 +44,14 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> implements Cont
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll).take(Action.inside(() -> ui.lookup(".tab-header-background"))).to(Action.traverse(ui.getSelectionModel()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Property<ObservableList<UITab>> items() {
+        return new SimpleObjectProperty(ui.getTabs());
     }
 
     /**
@@ -121,33 +131,6 @@ public class UITabPane extends UserInterface<UITabPane, TabPane> implements Cont
 
         ui.getTabs().add(tab);
         return this;
-    }
-
-    /**
-     * Retrieve all tabs.
-     * 
-     * @return
-     */
-    public Signal<UITab> tabs() {
-        return I.signal(ui.getTabs()).map(tab -> new UITab(tab));
-    }
-
-    /**
-     * Retrieve the first tab.
-     * 
-     * @return
-     */
-    public Variable<UITab> first() {
-        return tabs().first().to();
-    }
-
-    /**
-     * Retrieve the first tab.
-     * 
-     * @return
-     */
-    public Variable<UITab> last() {
-        return tabs().last().to();
     }
 
     /**
