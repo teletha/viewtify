@@ -24,12 +24,13 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 import kiss.Disposable;
 import viewtify.Viewtify;
 import viewtify.model.Selectable;
+import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.SelectableHelper;
 import viewtify.ui.helper.User;
 
 public class UITabPane extends UserInterface<UITabPane, TabPane>
-        implements ContextMenuHelper<UITabPane>, SelectableHelper<UITabPane, UITab> {
+        implements ContextMenuHelper<UITabPane>, SelectableHelper<UITabPane, UITab>, CollectableHelper<UITabPane, UITab> {
 
     /** The model disposer. */
     private Disposable disposable = Disposable.empty();

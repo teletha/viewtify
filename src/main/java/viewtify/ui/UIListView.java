@@ -26,14 +26,15 @@ import javafx.scene.control.ListView;
 import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.MultiSelectableHelper;
 import viewtify.ui.helper.PreferenceHelper;
 
 public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
-        implements MultiSelectableHelper<UIListView<E>, E>, CollectableItemRenderingHelper<UIListView<E>, E>,
-        ContextMenuHelper<UIListView<E>> {
+        implements MultiSelectableHelper<UIListView<E>, E>, CollectableHelper<UIListView<E>, E>,
+        CollectableItemRenderingHelper<UIListView<E>, E>, ContextMenuHelper<UIListView<E>> {
 
     /** The item filter manager. */
     private final Variable<Predicate<E>> filter;

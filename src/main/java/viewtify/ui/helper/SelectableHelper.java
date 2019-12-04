@@ -13,7 +13,7 @@ import javafx.scene.control.SelectionModel;
 
 import kiss.Variable;
 
-public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> extends CollectableHelper<Self, E>, PropertyHelper {
+public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> extends PropertyHelper {
 
     /**
      * Retrieve the {@link SelectionModel}.

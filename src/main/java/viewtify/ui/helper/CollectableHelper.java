@@ -100,19 +100,6 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
     }
 
     /**
-     * Add the specified item at the last.
-     * 
-     * @param item An item to add.
-     * @return Chainable API.
-     */
-    default Self addItemAtLast(E item) {
-        if (item != null) {
-            modifyItemUISafely(list -> list.add(item));
-        }
-        return (Self) this;
-    }
-
-    /**
      * Add the specified item at the first.
      * 
      * @param item An item to add.
@@ -121,6 +108,19 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
     default Self addItemAtFirst(E item) {
         if (item != null) {
             modifyItemUISafely(list -> list.add(0, item));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Add the specified item at the last.
+     * 
+     * @param item An item to add.
+     * @return Chainable API.
+     */
+    default Self addItemAtLast(E item) {
+        if (item != null) {
+            modifyItemUISafely(list -> list.add(item));
         }
         return (Self) this;
     }
