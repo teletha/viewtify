@@ -42,8 +42,8 @@ import stylist.StyleDSL;
 import viewtify.Viewtify;
 import viewtify.model.Validation;
 import viewtify.ui.helper.DisableHelper;
-import viewtify.ui.helper.ModelHelper;
-import viewtify.ui.helper.PropertyHelper;
+import viewtify.ui.helper.ValueHelper;
+import viewtify.ui.helper.PropertyAccessHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
 import viewtify.ui.helper.User;
@@ -52,7 +52,7 @@ import viewtify.util.Icon;
 
 public class UserInterface<Self extends UserInterface, W extends Node>
         implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, TooltipHelper<Self, W>, UserInterfaceProvider<W>,
-        PropertyHelper {
+        PropertyAccessHelper {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
@@ -277,8 +277,8 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * @return
      */
     private Signal<?> validateWhen() {
-        if (this instanceof ModelHelper) {
-            return Viewtify.observe(((ModelHelper) this).model());
+        if (this instanceof ValueHelper) {
+            return Viewtify.observe(((ValueHelper) this).valueProperty());
         } else {
             return null;
         }

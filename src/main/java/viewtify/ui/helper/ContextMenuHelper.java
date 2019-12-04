@@ -16,7 +16,7 @@ import javafx.scene.control.ContextMenu;
 
 import viewtify.ui.UIContextMenu;
 
-public interface ContextMenuHelper<Self extends ContextMenuHelper> extends PropertyHelper {
+public interface ContextMenuHelper<Self extends ContextMenuHelper> extends PropertyAccessHelper {
 
     /**
      * Create context menu.

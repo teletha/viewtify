@@ -22,12 +22,12 @@ import javafx.scene.control.DatePicker;
 
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
-import viewtify.ui.helper.ModelHelper;
+import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.RestorableHelper;
 import viewtify.ui.helper.User;
 
 public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
-        implements ModelHelper<UIDatePicker, LocalDate>, EditableHelper<UIDatePicker>, Comparable<UIDatePicker>,
+        implements ValueHelper<UIDatePicker, LocalDate>, EditableHelper<UIDatePicker>, Comparable<UIDatePicker>,
         ContextMenuHelper<UIDatePicker>, RestorableHelper<UIDatePicker, LocalDate> {
 
     /**
@@ -41,9 +41,9 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll, e -> {
             if (e.getDeltaY() < 0) {
-                model(value().minusDays(1));
+                value(value().minusDays(1));
             } else {
-                model(value().plusDays(1));
+                value(value().plusDays(1));
             }
         });
     }
@@ -60,7 +60,7 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
      * {@inheritDoc}
      */
     @Override
-    public Property<LocalDate> model() {
+    public Property<LocalDate> valueProperty() {
         return ui.valueProperty();
     }
 

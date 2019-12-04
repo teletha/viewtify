@@ -29,7 +29,7 @@ import viewtify.Viewtify;
 import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
 
-public interface LabelHelper<Self extends LabelHelper> extends PropertyHelper {
+public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHelper {
 
     /**
      * Get text.

@@ -23,7 +23,7 @@ public interface RestorableHelper<Self extends RestorableHelper, V> {
      * 
      * @return
      */
-    Property<V> model();
+    Property<V> valueProperty();
 
     /**
      * Set initial value.
@@ -37,7 +37,7 @@ public interface RestorableHelper<Self extends RestorableHelper, V> {
                 UserInterface ui = (UserInterface) this;
                 Method method = UserInterface.class.getDeclaredMethod("restore", Property.class, Object.class);
                 method.setAccessible(true);
-                method.invoke(ui, model(), initialValue);
+                method.invoke(ui, valueProperty(), initialValue);
             } catch (Exception e) {
                 throw I.quiet(e);
             }

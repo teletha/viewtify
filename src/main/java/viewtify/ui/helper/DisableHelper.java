@@ -18,7 +18,7 @@ import viewtify.Viewtify;
 /**
  * @version 2018/09/11 16:46:22
  */
-public interface DisableHelper<Self extends DisableHelper> extends PropertyHelper {
+public interface DisableHelper<Self extends DisableHelper> extends PropertyAccessHelper {
 
     /**
      * Validation helper.

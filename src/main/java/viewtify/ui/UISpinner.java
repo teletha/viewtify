@@ -21,11 +21,11 @@ import javafx.util.StringConverter;
 
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.ModelHelper;
+import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.RestorableHelper;
 
 public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
-        implements CollectableHelper<UISpinner<T>, T>, ModelHelper<UISpinner<T>, T>, ContextMenuHelper<UISpinner<T>>,
+        implements CollectableHelper<UISpinner<T>, T>, ValueHelper<UISpinner<T>, T>, ContextMenuHelper<UISpinner<T>>,
         RestorableHelper<UISpinner<T>, T> {
 
     /**
@@ -57,7 +57,7 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
      * {@inheritDoc}
      */
     @Override
-    public Property<T> model() {
+    public Property<T> valueProperty() {
         return ui.getValueFactory().valueProperty();
     }
 

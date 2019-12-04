@@ -24,7 +24,7 @@ import javafx.scene.text.TextAlignment;
 
 import kiss.I;
 
-public interface PropertyHelper {
+public interface PropertyAccessHelper {
 
     /**
      * Return the JavaFX's UI component.

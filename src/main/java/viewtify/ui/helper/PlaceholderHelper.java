@@ -25,7 +25,7 @@ import transcript.Transcript;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 
-public interface PlaceholderHelper<Self extends PlaceholderHelper> extends PropertyHelper {
+public interface PlaceholderHelper<Self extends PlaceholderHelper> extends PropertyAccessHelper {
 
     /**
      * Set placeholder text..

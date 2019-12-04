@@ -13,12 +13,12 @@ import javafx.beans.property.Property;
 import javafx.scene.control.TextField;
 
 import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.ModelHelper;
+import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.RestorableHelper;
 import viewtify.util.RegulatableProperty;
 
 public abstract class AbstractTextField<Self extends AbstractTextField, F extends TextField> extends UserInterface<Self, F>
-        implements ModelHelper<Self, String>, ContextMenuHelper<Self>, RestorableHelper<Self, String> {
+        implements ValueHelper<Self, String>, ContextMenuHelper<Self>, RestorableHelper<Self, String> {
 
     /** The model. */
     private final RegulatableProperty<String> text = new RegulatableProperty<>(ui.textProperty());
@@ -36,7 +36,7 @@ public abstract class AbstractTextField<Self extends AbstractTextField, F extend
      * {@inheritDoc}
      */
     @Override
-    public final Property<String> model() {
+    public final Property<String> valueProperty() {
         return text;
     }
 

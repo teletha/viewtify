@@ -20,19 +20,26 @@ import kiss.WiseFunction;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
 
-public interface ModelHelper<Self extends ModelHelper, V> {
+public interface ValueHelper<Self extends ValueHelper, V> {
 
     /**
-     * Get the preference value.
+     * Return the current model.
      * 
-     * @return A preference value.
+     * @return
+     */
+    Property<V> valueProperty();
+
+    /**
+     * Get the current value.
+     * 
+     * @return The current value.
      */
     default V value() {
-        return model().getValue();
+        return valueProperty().getValue();
     }
 
     /**
-     * Get the preference value as the specified type.
+     * Get the current value as the specified type.
      * 
      * @param type A value type to transform.
      * @return A transformed value.
@@ -42,7 +49,7 @@ public interface ModelHelper<Self extends ModelHelper, V> {
     }
 
     /**
-     * Get the preference value or default value.
+     * Get the current value or default value.
      * 
      * @param defaultValue A default value.
      * @return A preference value.
@@ -56,7 +63,7 @@ public interface ModelHelper<Self extends ModelHelper, V> {
     }
 
     /**
-     * Get the preference value or default value.
+     * Get the current value or default value.
      * 
      * @param defaultValue A default value.
      * @return A preference value.
@@ -66,42 +73,38 @@ public interface ModelHelper<Self extends ModelHelper, V> {
     }
 
     /**
-     * Return the current model.
+     * Updates to the specified value.
      * 
-     * @return
+     * @param value A new value to set.
+     * @return Chainable API.
      */
-    Property<V> model();
-
-    /**
-     * Set the current value.
-     * 
-     * @param value
-     * @return
-     */
-    default Self model(V value) {
-        model().setValue(value);
+    default Self value(V value) {
+        valueProperty().setValue(value);
         return (Self) this;
     }
 
     /**
-     * Set the current value.
+     * Updates to the specified value.
      * 
-     * @param value
-     * @return
+     * @param setter Calculates a new value based on the current value.
+     * @return Chainable API.
      */
-    default Self model(WiseFunction<V, V> setter) {
+    default Self value(WiseFunction<V, V> setter) {
         if (setter != null) {
-            model().setValue(setter.apply(value()));
+            value(setter.apply(value()));
         }
         return (Self) this;
     }
 
     /**
-     * This preference synchronizes with the specified value.
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @return Chainable API.
      */
-    default Self model(Property<V> value) {
+    default Self value(Property<V> value) {
         if (value != null) {
-            Property<V> pref = model();
+            Property<V> pref = valueProperty();
             pref.unbind();
             pref.setValue(value.getValue());
             pref.bind(value);
@@ -110,13 +113,16 @@ public interface ModelHelper<Self extends ModelHelper, V> {
     }
 
     /**
-     * This preference synchronizes with the specified value.
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @return Chainable API.
      */
-    default Self model(Variable<V> value) {
+    default Self value(Variable<V> value) {
         if (value != null) {
-            Property<V> pref = model();
+            Property<V> pref = valueProperty();
             pref.setValue(value.get());
-            model().addListener((source, oldValue, newValue) -> {
+            valueProperty().addListener((source, oldValue, newValue) -> {
                 value.set(newValue);
             });
         }
@@ -129,7 +135,7 @@ public interface ModelHelper<Self extends ModelHelper, V> {
      * @return A {@link Signal} that notify the change of this value.
      */
     default Signal<V> observe() {
-        return Viewtify.observe(model()).skipNull();
+        return Viewtify.observe(valueProperty()).skipNull();
     }
 
     /**
@@ -139,7 +145,7 @@ public interface ModelHelper<Self extends ModelHelper, V> {
      * @return
      */
     default Self observe(WiseRunnable listener) {
-        model().addListener((p, o, n) -> listener.run());
+        valueProperty().addListener((p, o, n) -> listener.run());
         return (Self) this;
     }
 
@@ -150,7 +156,7 @@ public interface ModelHelper<Self extends ModelHelper, V> {
      * @return
      */
     default Self observe(WiseConsumer<V> listener) {
-        model().addListener((p, o, n) -> listener.accept(n));
+        valueProperty().addListener((p, o, n) -> listener.accept(n));
         return (Self) this;
     }
 
@@ -161,7 +167,7 @@ public interface ModelHelper<Self extends ModelHelper, V> {
      * @return
      */
     default Self observe(WiseBiConsumer<V, V> listener) {
-        model().addListener((p, o, n) -> listener.accept(o, n));
+        valueProperty().addListener((p, o, n) -> listener.accept(o, n));
         return (Self) this;
     }
 
@@ -194,7 +200,7 @@ public interface ModelHelper<Self extends ModelHelper, V> {
      */
     default Self observeNow(WiseConsumer<V> listener) {
         observe(listener);
-        listener.accept(model().getValue());
+        listener.accept(valueProperty().getValue());
         return (Self) this;
     }
 
@@ -206,7 +212,7 @@ public interface ModelHelper<Self extends ModelHelper, V> {
      */
     default Self observeNow(WiseBiConsumer<V, V> listener) {
         observe(listener);
-        listener.accept(null, model().getValue());
+        listener.accept(null, valueProperty().getValue());
         return (Self) this;
     }
 }

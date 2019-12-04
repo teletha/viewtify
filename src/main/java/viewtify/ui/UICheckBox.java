@@ -15,11 +15,11 @@ import javafx.scene.control.CheckBox;
 
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
-import viewtify.ui.helper.ModelHelper;
+import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.RestorableHelper;
 
 public class UICheckBox extends UserInterface<UICheckBox, CheckBox>
-        implements ModelHelper<UICheckBox, Boolean>, ContextMenuHelper<UICheckBox>, LabelHelper<UICheckBox>,
+        implements ValueHelper<UICheckBox, Boolean>, ContextMenuHelper<UICheckBox>, LabelHelper<UICheckBox>,
         RestorableHelper<UICheckBox, Boolean> {
 
     /**
@@ -35,7 +35,7 @@ public class UICheckBox extends UserInterface<UICheckBox, CheckBox>
      * {@inheritDoc}
      */
     @Override
-    public Property<Boolean> model() {
+    public Property<Boolean> valueProperty() {
         return ui.selectedProperty();
     }
 

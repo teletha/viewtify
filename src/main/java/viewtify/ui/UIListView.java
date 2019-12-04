@@ -30,7 +30,7 @@ import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.MultiSelectableHelper;
-import viewtify.ui.helper.ModelHelper;
+import viewtify.ui.helper.ValueHelper;
 
 public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
         implements MultiSelectableHelper<UIListView<E>, E>, CollectableHelper<UIListView<E>, E>,
@@ -140,8 +140,8 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
      * @param filter A conditional filer.
      * @return
      */
-    public <C> UIListView<E> take(ModelHelper<?, C> context, BiPredicate<E, C> filter) {
-        return take(context.model(), filter);
+    public <C> UIListView<E> take(ValueHelper<?, C> context, BiPredicate<E, C> filter) {
+        return take(context.valueProperty(), filter);
     }
 
     /**
@@ -166,7 +166,7 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
      * @param filter A conditional filer.
      * @return
      */
-    public <C> UIListView<E> skip(ModelHelper<?, C> context, BiPredicate<E, C> filter) {
+    public <C> UIListView<E> skip(ValueHelper<?, C> context, BiPredicate<E, C> filter) {
         return take(context, filter.negate());
     }
 
