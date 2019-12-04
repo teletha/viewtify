@@ -30,13 +30,26 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
     Property<ObservableList<E>> items();
 
     /**
+     * Set the specified items.
+     * 
+     * @param items
+     * @return
+     */
+    default Self items(ObservableList<E> items) {
+        if (items != null) {
+            items().setValue(items);
+        }
+        return (Self) this;
+    }
+
+    /**
      * Returns the first item.
      * 
      * @return
      */
     default Variable<E> first() {
         ObservableList<E> items = items().getValue();
-
+    
         if (items.isEmpty()) {
             return Variable.empty();
         } else {
@@ -51,7 +64,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      */
     default Variable<E> last() {
         ObservableList<E> items = items().getValue();
-
+    
         if (items.isEmpty()) {
             return Variable.empty();
         } else {
@@ -66,19 +79,6 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      */
     default int size() {
         return items().getValue().size();
-    }
-
-    /**
-     * Set the specified items.
-     * 
-     * @param items
-     * @return
-     */
-    default Self items(ObservableList<E> items) {
-        if (items != null) {
-            items().setValue(items);
-        }
-        return (Self) this;
     }
 
     /**

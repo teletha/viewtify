@@ -11,6 +11,7 @@ package viewtify.ui;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -64,9 +65,6 @@ public class UserInterface<Self extends UserInterface, W extends Node>
 
     /** The validation system. */
     private Validation validation;
-
-    /** Do restore oonly once. */
-    private boolean restored = false;
 
     /**
      * @param ui
@@ -290,28 +288,22 @@ public class UserInterface<Self extends UserInterface, W extends Node>
      * Restore UI related settings.
      * 
      * @param property
-     * @param value
+     * @param defaultValue The default property value.
      */
-    protected final <T> void restore(Property<T> property, T value) {
-        restore(property, property::setValue, value);
+    protected final <T> T restore(Property<T> property, T defaultValue) {
+        return restore(property, property::setValue, defaultValue);
     }
 
     /**
      * Restore UI related settings.
      * 
-     * @param property
-     * @param writer
-     * @param value
+     * @param getterAndObserver A property value getter and observer.
+     * @param setter A property value setter.
+     * @param defaultValue The default property value.
      */
-    protected final <T> void restore(ReadOnlyProperty<T> property, Consumer<T> writer, T value) {
-        if (value == null || restored) {
-            // If this exception will be thrown, it is bug of this program. So we must rethrow the
-            // wrapped error in here.
-            throw new Error();
-        }
-        restored = true;
-
-        String id = view.id() + " 🔄 " + ui.getId();
+    protected final <T> T restore(ReadOnlyProperty<T> getterAndObserver, Consumer<T> setter, T defaultValue) {
+        T value = Objects.requireNonNull(defaultValue);
+        String id = view.id() + " 🔄 " + ui.getId() + " 🔄 " + getterAndObserver.getName();
 
         // restore
         if (ui.getId() != null) {
@@ -319,19 +311,20 @@ public class UserInterface<Self extends UserInterface, W extends Node>
 
             if (stored != null) {
                 try {
-                    value = (T) I.transform(stored, value.getClass());
+                    value = (T) I.transform(stored, defaultValue.getClass());
                 } catch (Throwable e) {
                     // ignore
                 }
             }
         }
-        writer.accept(value);
+        setter.accept(value);
 
-        // prepare for store
-        Viewtify.observe(property).debounce(1000, MILLISECONDS).to(change -> {
+        // prepare for storing
+        Viewtify.observe(getterAndObserver).debounce(1000, MILLISECONDS).to(change -> {
             preference.put(id, I.transform(change, String.class));
             preference.store();
         });
+        return value;
     }
 
     /**

@@ -10,20 +10,16 @@
 package viewtify.ui;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
-import javafx.scene.control.SelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 
 import kiss.Disposable;
-import viewtify.Viewtify;
-import viewtify.model.Selectable;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.SelectableHelper;
@@ -62,38 +58,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
      * @return
      */
     public UITabPane initial(int initialSelectedIndex) {
-        restore(ui.getSelectionModel().selectedIndexProperty(), v -> ui.getSelectionModel().select((int) v), initialSelectedIndex);
-        return this;
-    }
-
-    /**
-     * Load tab with the specified view.
-     * 
-     * @param model A binded model.
-     * @param label Specify the label of the tab. This is used as a temporary label until the
-     *            contents of the tab are read, as tab loading is delayed until needed actually.
-     * @param view
-     * @return
-     */
-    public <T> UITabPane model(Selectable<T> model, Function<T, String> label, BiFunction<UITab, T, View> view) {
-        if (model != null) {
-            disposable.dispose();
-            disposable = Disposable.empty();
-
-            model.add.startWith(model).to(v -> {
-                load(label.apply(v), tab -> view.apply(tab, v));
-                last().v.closed.to(() -> model.remove(v));
-            });
-            model.remove.to(v -> {
-            });
-
-            disposable.add(model.selectionIndex.observeNow().to(ui.getSelectionModel()::select));
-            disposable.add(Viewtify.calculate(ui.getSelectionModel())
-                    .flatObservable(SelectionModel::selectedIndexProperty)
-                    .as(Integer.class)
-                    .observe()
-                    .to(model::select));
-        }
+        restore(ui.getSelectionModel().selectedIndexProperty(), v -> ui.getSelectionModel().select(v.intValue()), initialSelectedIndex);
         return this;
     }
 
