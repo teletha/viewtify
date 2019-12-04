@@ -11,18 +11,18 @@ package viewtify.ui;
 
 import java.util.function.Function;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TableView;
 
-import viewtify.Viewtify;
+import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.PlaceholderHelper;
 import viewtify.ui.helper.SelectableHelper;
 
-public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<T>, T> implements SelectableHelper<UITableView<T>, T> {
+public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
+        implements SelectableHelper<UITableView<T>, T>, PlaceholderHelper<UITableView<T>>, ContextMenuHelper<UITableView<T>> {
 
     /**
      * Enchanced view.
@@ -30,7 +30,7 @@ public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<
      * @param view A {@link View} to which the widget belongs.
      */
     private UITableView(View view) {
-        super(new TableView(), view, ui -> Viewtify.calculate(ui.getSelectionModel().getSelectedItems()));
+        super(new TableView(), view);
     }
 
     /**
@@ -47,14 +47,6 @@ public class UITableView<T> extends AbstractTableView<UITableView<T>, TableView<
     @Override
     public TableSelectionModel selectionModel() {
         return ui.getSelectionModel();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ObjectProperty<Node> placeholder() {
-        return ui.placeholderProperty();
     }
 
     /**

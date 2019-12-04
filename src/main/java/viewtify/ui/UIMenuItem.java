@@ -40,7 +40,7 @@ public class UIMenuItem
      */
     @Override
     public MenuItem ui() {
-        return null;
+        return ui;
     }
 
     /**

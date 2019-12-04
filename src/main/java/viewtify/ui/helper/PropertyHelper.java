@@ -92,6 +92,9 @@ public interface PropertyHelper {
         public static final Type<Double> Opacity = new Type("opacity");
 
         /** The defined property type. */
+        public static final Type<Node> Placeholder = new Type("placeholder");
+
+        /** The defined property type. */
         public static final Type<MultipleSelectionModel> SelectionModel = new Type("selectionModel");
 
         /** The defined property type. */
