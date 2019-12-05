@@ -469,38 +469,83 @@ public interface ValueHelper<Self extends ValueHelper, V> {
     /**
      * Observe the value modification.
      * 
-     * @param listener
-     * @return
+     * @param listener A modification listener.
+     * @return Chainable API.
      */
     default Self observe(WiseRunnable listener) {
-        valueProperty().addListener((p, o, n) -> listener.run());
+        return observe(listener, null);
+    }
+
+    /**
+     * Observe the value modification.
+     * 
+     * @param listener A modification listener.
+     * @param disposer The modification listening is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self observe(WiseRunnable listener, Disposable disposer) {
+        if (listener != null) {
+            Disposable stop = observe().to(listener);
+            if (disposer != null) disposer.add(stop);
+        }
         return (Self) this;
     }
 
     /**
      * Observe the value modification.
      * 
-     * @param listener
-     * @return
+     * @param listener A modification listener.
+     * @return Chainable API.
      */
     default Self observe(WiseConsumer<V> listener) {
-        valueProperty().addListener((p, o, n) -> listener.accept(n));
+        return observe(listener, null);
+    }
+
+    /**
+     * Observe the value modification.
+     * 
+     * @param listener A modification listener.
+     * @param disposer The modification listening is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self observe(WiseConsumer<V> listener, Disposable disposer) {
+        if (listener != null) {
+            Disposable stop = observe().to(listener);
+            if (disposer != null) disposer.add(stop);
+        }
         return (Self) this;
     }
 
     /**
      * Observe the value modification.
      * 
-     * @param listener
-     * @return
+     * @param listener A modification listener.
+     * @return Chainable API.
      */
     default Self observe(WiseBiConsumer<V, V> listener) {
-        valueProperty().addListener((p, o, n) -> listener.accept(o, n));
-        return (Self) this;
+        return observe(listener, null);
     }
 
     /**
      * Observe the value modification.
+     * 
+     * @param listener A modification listener.
+     * @param disposer The modification listening is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self observe(WiseBiConsumer<V, V> listener, Disposable disposer) {
+        if (listener != null) {
+            Disposable stop = observe().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
+            if (disposer != null) disposer.add(stop);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Observe the value modification starting with the current value.
      * 
      * @return A {@link Signal} that notify the change of this value.
      */
@@ -509,38 +554,80 @@ public interface ValueHelper<Self extends ValueHelper, V> {
     }
 
     /**
-     * Observe the value modification.
+     * Observe the value modification starting with the current value.
      * 
-     * @param listener
-     * @return
+     * @param listener A modification listener.
+     * @return Chainable API.
      */
     default Self observeNow(WiseRunnable listener) {
-        observe(listener);
-        listener.run();
+        return observeNow(listener, null);
+    }
+
+    /**
+     * Observe the value modification starting with the current value.
+     * 
+     * @param listener A modification listener.
+     * @param disposer The modification listening is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self observeNow(WiseRunnable listener, Disposable disposer) {
+        if (listener != null) {
+            Disposable stop = observeNow().to(listener);
+            if (disposer != null) disposer.add(stop);
+        }
         return (Self) this;
     }
 
     /**
-     * Observe the value modification.
+     * Observe the value modification starting with the current value.
      * 
-     * @param listener
-     * @return
+     * @param listener A modification listener.
+     * @return Chainable API.
      */
     default Self observeNow(WiseConsumer<V> listener) {
-        observe(listener);
-        listener.accept(valueProperty().getValue());
+        return observeNow(listener, null);
+    }
+
+    /**
+     * Observe the value modification starting with the current value.
+     * 
+     * @param listener A modification listener.
+     * @param disposer The modification listening is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self observeNow(WiseConsumer<V> listener, Disposable disposer) {
+        if (listener != null) {
+            Disposable stop = observeNow().to(listener);
+            if (disposer != null) disposer.add(stop);
+        }
         return (Self) this;
     }
 
     /**
-     * Observe the value modification.
+     * Observe the value modification starting with the current value.
      * 
-     * @param listener
-     * @return
+     * @param listener A modification listener.
+     * @return Chainable API.
      */
     default Self observeNow(WiseBiConsumer<V, V> listener) {
-        observe(listener);
-        listener.accept(null, valueProperty().getValue());
+        return observeNow(listener, null);
+    }
+
+    /**
+     * Observe the value modification starting with the current value.
+     * 
+     * @param listener A modification listener.
+     * @param disposer The modification listening is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self observeNow(WiseBiConsumer<V, V> listener, Disposable disposer) {
+        if (listener != null) {
+            Disposable stop = observe().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
+            if (disposer != null) disposer.add(stop);
+        }
         return (Self) this;
     }
 }
