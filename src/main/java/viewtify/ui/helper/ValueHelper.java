@@ -118,7 +118,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param value The value that is synchronized with each other.
      * @return Chainable API.
      */
-    default <P extends ObservableValue<V> & WritableValue<V>> Self sync(P value) {
+    default <P extends WritableValue<V> & ObservableValue<V>> Self sync(P value) {
         return sync(value, null, null);
     }
 
@@ -130,7 +130,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default <P extends ObservableValue<V> & WritableValue<V>> Self sync(P value, Disposable unsynchronizer) {
+    default <P extends WritableValue<V> & ObservableValue<V>> Self sync(P value, Disposable unsynchronizer) {
         return sync(value, null, unsynchronizer);
     }
 
@@ -141,7 +141,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param synchronizer Synchronize at the specified timing.
      * @return Chainable API.
      */
-    default <P extends ObservableValue<V> & WritableValue<V>> Self sync(P value, Function<Signal<V>, Signal<V>> synchronizer) {
+    default <P extends WritableValue<V> & ObservableValue<V>> Self sync(P value, Function<Signal<V>, Signal<V>> synchronizer) {
         return sync(value, synchronizer, null);
     }
 
@@ -154,7 +154,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default <P extends ObservableValue<V> & WritableValue<V>> Self sync(P value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
+    default <P extends WritableValue<V> & ObservableValue<V>> Self sync(P value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
             sync(Viewtify.observeNow(value), value::setValue, synchronizer, unsynchronizer);
         }
