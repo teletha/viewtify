@@ -13,6 +13,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import javafx.beans.property.Property;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.WritableValue;
 
 import kiss.Disposable;
 import kiss.I;
@@ -72,6 +74,16 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param defaultValue A default value.
      * @return A preference value.
      */
+    default <T> T valueOr(ObservableValue<T> defaultValue) {
+        return valueOr(defaultValue.getValue());
+    }
+
+    /**
+     * Get the current value or default value.
+     * 
+     * @param defaultValue A default value.
+     * @return A preference value.
+     */
     default <T> T valueOr(Variable<T> defaultValue) {
         return valueOr(defaultValue.v);
     }
@@ -106,7 +118,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param value The value that is synchronized with each other.
      * @return Chainable API.
      */
-    default Self sync(Property<V> value) {
+    default <P extends ObservableValue<V> & WritableValue<V>> Self sync(P value) {
         return sync(value, null, null);
     }
 
@@ -118,7 +130,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self sync(Property<V> value, Disposable unsynchronizer) {
+    default <P extends ObservableValue<V> & WritableValue<V>> Self sync(P value, Disposable unsynchronizer) {
         return sync(value, null, unsynchronizer);
     }
 
@@ -129,7 +141,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param synchronizer Synchronize at the specified timing.
      * @return Chainable API.
      */
-    default Self sync(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
+    default <P extends ObservableValue<V> & WritableValue<V>> Self sync(P value, Function<Signal<V>, Signal<V>> synchronizer) {
         return sync(value, synchronizer, null);
     }
 
@@ -142,7 +154,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self sync(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
+    default <P extends ObservableValue<V> & WritableValue<V>> Self sync(P value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
             sync(Viewtify.observeNow(value), value::setValue, synchronizer, unsynchronizer);
         }
@@ -155,7 +167,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param value The synchronized source.
      * @return Chainable API.
      */
-    default Self syncFrom(Property<V> value) {
+    default Self syncFrom(ObservableValue<V> value) {
         return syncFrom(value, null, null);
     }
 
@@ -167,7 +179,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self syncFrom(Property<V> value, Disposable unsynchronizer) {
+    default Self syncFrom(ObservableValue<V> value, Disposable unsynchronizer) {
         return syncFrom(value, null, unsynchronizer);
     }
 
@@ -178,7 +190,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param synchronizer Synchronize at the specified timing.
      * @return Chainable API.
      */
-    default Self syncFrom(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
+    default Self syncFrom(ObservableValue<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
         return syncFrom(value, synchronizer, null);
     }
 
@@ -191,7 +203,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self syncFrom(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
+    default Self syncFrom(ObservableValue<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
             sync(Viewtify.observeNow(value), null, synchronizer, unsynchronizer);
         }
@@ -204,7 +216,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param value The synchronized target.
      * @return Chainable API.
      */
-    default Self syncTo(Property<V> value) {
+    default Self syncTo(WritableValue<V> value) {
         return syncTo(value, null, null);
     }
 
@@ -216,7 +228,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self syncTo(Property<V> value, Disposable unsynchronizer) {
+    default Self syncTo(WritableValue<V> value, Disposable unsynchronizer) {
         return syncTo(value, null, unsynchronizer);
     }
 
@@ -227,7 +239,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param synchronizer Synchronize at the specified timing.
      * @return Chainable API.
      */
-    default Self syncTo(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
+    default Self syncTo(WritableValue<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
         return syncTo(value, synchronizer, null);
     }
 
@@ -240,7 +252,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self syncTo(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
+    default Self syncTo(WritableValue<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
             sync(null, value::setValue, synchronizer, unsynchronizer);
         }
