@@ -107,7 +107,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return Chainable API.
      */
     default Self sync(Property<V> value) {
-        return async(value, null, null);
+        return sync(value, null, null);
     }
 
     /**
@@ -119,7 +119,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return Chainable API.
      */
     default Self sync(Property<V> value, Disposable unsynchronizer) {
-        return async(value, null, unsynchronizer);
+        return sync(value, null, unsynchronizer);
     }
 
     /**
@@ -129,8 +129,8 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param synchronizer Synchronize at the specified timing.
      * @return Chainable API.
      */
-    default Self async(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
-        return async(value, synchronizer, null);
+    default Self sync(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
+        return sync(value, synchronizer, null);
     }
 
     /**
@@ -142,7 +142,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self async(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
+    default Self sync(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
             if (synchronizer == null) {
                 synchronizer = Function.identity();
@@ -153,6 +153,120 @@ public interface ValueHelper<Self extends ValueHelper, V> {
 
             if (unsynchronizer != null) {
                 unsynchronizer.add(from).add(to);
+            }
+        }
+        return (Self) this;
+    }
+
+    /**
+     * This value will be synchronized from the specified value.
+     * 
+     * @param value The synchronized source.
+     * @return Chainable API.
+     */
+    default Self syncFrom(Property<V> value) {
+        return syncFrom(value, null, null);
+    }
+
+    /**
+     * This value will be synchronized from the specified value.
+     * 
+     * @param value The synchronized source.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self syncFrom(Property<V> value, Disposable unsynchronizer) {
+        return syncFrom(value, null, unsynchronizer);
+    }
+
+    /**
+     * This value will be synchronized from the specified value.
+     * 
+     * @param value The synchronized source.
+     * @param synchronizer Synchronize at the specified timing.
+     * @return Chainable API.
+     */
+    default Self syncFrom(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
+        return syncFrom(value, synchronizer, null);
+    }
+
+    /**
+     * This value will be synchronized from the specified value.
+     * 
+     * @param value The synchronized source.
+     * @param synchronizer Synchronize at the specified timing.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self syncFrom(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
+        if (value != null) {
+            if (synchronizer == null) {
+                synchronizer = Function.identity();
+            }
+
+            Disposable from = Viewtify.observeNow(value).plug(synchronizer).to((Consumer<V>) this::value);
+
+            if (unsynchronizer != null) {
+                unsynchronizer.add(from);
+            }
+        }
+        return (Self) this;
+    }
+
+    /**
+     * This value will be synchronized from the specified value.
+     * 
+     * @param value The synchronized source.
+     * @return Chainable API.
+     */
+    default Self syncTo(Property<V> value) {
+        return syncTo(value, null, null);
+    }
+
+    /**
+     * This value will be synchronized from the specified value.
+     * 
+     * @param value The synchronized source.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self syncTo(Property<V> value, Disposable unsynchronizer) {
+        return syncTo(value, null, unsynchronizer);
+    }
+
+    /**
+     * This value will be synchronized from the specified value.
+     * 
+     * @param value The synchronized source.
+     * @param synchronizer Synchronize at the specified timing.
+     * @return Chainable API.
+     */
+    default Self syncTo(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
+        return syncTo(value, synchronizer, null);
+    }
+
+    /**
+     * This value will be synchronized from the specified value.
+     * 
+     * @param value The synchronized source.
+     * @param synchronizer Synchronize at the specified timing.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self syncTo(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
+        if (value != null) {
+            if (synchronizer == null) {
+                synchronizer = Function.identity();
+            }
+
+            Disposable to = observeNow().plug(synchronizer).to(value::setValue);
+
+            if (unsynchronizer != null) {
+                unsynchronizer.add(to);
             }
         }
         return (Self) this;

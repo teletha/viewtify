@@ -203,6 +203,170 @@ class ValueHelperTest {
         assert p2.getValue().equals("affect only property2");
     }
 
+    @Test
+    void syncFromProperty() {
+        StringValue v = new StringValue("123");
+        StringProperty p = new SimpleStringProperty("property");
+        Disposable unsync = Disposable.empty();
+
+        v.syncFrom(p, unsync);
+        assert v.value().equals("property");
+        assert p.getValue().equals("property");
+
+        // from value
+        v.value("change value only");
+        assert v.value().equals("change value only");
+        assert p.getValue().equals("property");
+
+        // from property
+        p.setValue("change on property");
+        assert v.value().equals("change on property");
+        assert p.getValue().equals("change on property");
+
+        // unsynchronize
+        unsync.dispose();
+
+        // from property
+        p.setValue("not sync");
+        assert v.value().equals("change on property");
+        assert p.getValue().equals("not sync");
+    }
+
+    @Test
+    void syncFromProperties() {
+        StringValue v = new StringValue("123");
+        StringProperty p1 = new SimpleStringProperty("property1");
+        StringProperty p2 = new SimpleStringProperty("property2");
+        Disposable unsync1 = Disposable.empty();
+        Disposable unsync2 = Disposable.empty();
+
+        v.syncFrom(p1, unsync1).syncFrom(p2, unsync2);
+        assert v.value().equals("property2");
+        assert p1.getValue().equals("property1");
+        assert p2.getValue().equals("property2");
+
+        // from value
+        v.value("not sync");
+        assert v.value().equals("not sync");
+        assert p1.getValue().equals("property1");
+        assert p2.getValue().equals("property2");
+
+        // from property1
+        p1.setValue("change on property1");
+        assert v.value().equals("change on property1");
+        assert p1.getValue().equals("change on property1");
+        assert p2.getValue().equals("property2");
+
+        // from property2
+        p2.setValue("change on property2");
+        assert v.value().equals("change on property2");
+        assert p1.getValue().equals("change on property1");
+        assert p2.getValue().equals("change on property2");
+
+        // unsynchronize1
+        unsync1.dispose();
+
+        // from property1
+        p1.setValue("not sync");
+        assert v.value().equals("change on property2");
+        assert p1.getValue().equals("not sync");
+        assert p2.getValue().equals("change on property2");
+
+        // from property2
+        p2.setValue("update value and property2");
+        assert v.value().equals("update value and property2");
+        assert p1.getValue().equals("not sync");
+        assert p2.getValue().equals("update value and property2");
+
+        // unsynchronize2
+        unsync2.dispose();
+
+        // from property2
+        p2.setValue("not affect");
+        assert v.value().equals("update value and property2");
+        assert p1.getValue().equals("not sync");
+        assert p2.getValue().equals("not affect");
+    }
+
+    @Test
+    void syncToProperty() {
+        StringValue v = new StringValue("123");
+        StringProperty p = new SimpleStringProperty("property");
+        Disposable unsync = Disposable.empty();
+
+        v.syncTo(p, unsync);
+        assert v.value().equals("123");
+        assert p.getValue().equals("123");
+
+        // from value
+        v.value("change value");
+        assert v.value().equals("change value");
+        assert p.getValue().equals("change value");
+
+        // from property
+        p.setValue("not sync");
+        assert v.value().equals("change value");
+        assert p.getValue().equals("not sync");
+
+        // unsynchronize
+        unsync.dispose();
+
+        // from value
+        v.value("not affect");
+        assert v.value().equals("not affect");
+        assert p.getValue().equals("not sync");
+    }
+
+    @Test
+    void syncToProperties() {
+        StringValue v = new StringValue("123");
+        StringProperty p1 = new SimpleStringProperty("property1");
+        StringProperty p2 = new SimpleStringProperty("property2");
+        Disposable unsync1 = Disposable.empty();
+        Disposable unsync2 = Disposable.empty();
+
+        v.syncTo(p1, unsync1).syncTo(p2, unsync2);
+        assert v.value().equals("123");
+        assert p1.getValue().equals("123");
+        assert p2.getValue().equals("123");
+
+        // from value
+        v.value("456");
+        assert v.value().equals("456");
+        assert p1.getValue().equals("456");
+        assert p2.getValue().equals("456");
+
+        // from property1
+        p1.setValue("not sync");
+        assert v.value().equals("456");
+        assert p1.getValue().equals("not sync");
+        assert p2.getValue().equals("456");
+
+        // from property2
+        p2.setValue("not affect");
+        assert v.value().equals("456");
+        assert p1.getValue().equals("not sync");
+        assert p2.getValue().equals("not affect");
+
+        // unsynchronize1
+        unsync1.dispose();
+
+        // from value
+        v.value("change value");
+        assert v.value().equals("change value");
+        assert p1.getValue().equals("not sync");
+        assert p2.getValue().equals("change value");
+
+        // unsynchronize2
+        unsync2.dispose();
+
+        // from value
+        v.value("change value only");
+        assert v.value().equals("change value only");
+        assert p1.getValue().equals("not sync");
+        assert p2.getValue().equals("change value");
+    }
+
     /**
      * Simple Implementation.
      */
