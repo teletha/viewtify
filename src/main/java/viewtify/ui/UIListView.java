@@ -62,7 +62,7 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<E>> items() {
+    public Property<ObservableList<E>> itemProperty() {
         return items;
     }
 

@@ -31,16 +31,64 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * 
      * @return
      */
-    Property<ObservableList<E>> items();
+    Property<ObservableList<E>> itemProperty();
 
     /**
-     * Sets all values of the specified type enum as items.
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
      * 
-     * @param items Sets all values of the specified type enum as items.
+     * @param initialValue The initial value is mandatory, null values are not accepted.
      * @return Chainable API.
      */
-    default <T extends Enum> Self items(Class<T> items) {
-        return items((E[]) items.getEnumConstants());
+    default Self initialize(E... initialItems) {
+        return initialize(List.of(initialItems));
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(Signal<E> initialItems) {
+        return initialize(initialItems.toList());
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(Stream<E> initialItems) {
+        return initialize(initialItems.collect(Collectors.toList()));
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(List<E> initialItems) {
+        items(initialItems);
+
+        if (this instanceof ValueHelper && initialItems != null && !initialItems.isEmpty()) {
+            ((ValueHelper) this).initialize(initialItems.get(0));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Get the all items.
+     * 
+     * @return A live item list.
+     */
+    default ObservableList<E> items() {
+        return itemProperty().getValue();
     }
 
     /**
@@ -90,9 +138,10 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * @return Chainable API.
      */
     default Self items(List<E> items) {
-        ObservableList<E> list = items().getValue();
-        list.clear();
-        list.setAll(items);
+        modifyItemUISafely(list -> {
+            list.clear();
+            list.setAll(items);
+        });
         return (Self) this;
     }
 
@@ -104,7 +153,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      */
     default Self items(ObservableList<E> items) {
         if (items != null) {
-            items().setValue(items);
+            modifyItemUISafely(list -> itemProperty().setValue(items));
         }
         return (Self) this;
     }
@@ -115,7 +164,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * @return
      */
     default Variable<E> first() {
-        ObservableList<E> items = items().getValue();
+        ObservableList<E> items = itemProperty().getValue();
 
         if (items.isEmpty()) {
             return Variable.empty();
@@ -130,7 +179,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * @return
      */
     default Variable<E> last() {
-        ObservableList<E> items = items().getValue();
+        ObservableList<E> items = itemProperty().getValue();
 
         if (items.isEmpty()) {
             return Variable.empty();
@@ -145,7 +194,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * @return
      */
     default int size() {
-        return items().getValue().size();
+        return itemProperty().getValue().size();
     }
 
     /**
@@ -157,11 +206,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      */
     default Self addItemAt(int index, E item) {
         if (item != null && 0 <= index) {
-            modifyItemUISafely(list -> {
-                if (index < list.size()) {
-                    list.add(index, item);
-                }
-            });
+            modifyItemUISafely(list -> list.add(Math.min(index, list.size()), item));
         }
         return (Self) this;
     }
@@ -263,14 +308,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * 
      * @param action
      */
-    private void modifyItemUISafely(Consumer<List<E>> action) {
-        Viewtify.inUI(() -> action.accept(items().getValue()));
-    }
-
-    default Self initial(int index) {
-        if (this instanceof RestorableHelper) {
-            ((RestorableHelper) this).initial(items().getValue().get(index));
-        }
-        return (Self) this;
+    private void modifyItemUISafely(Consumer<ObservableList<E>> action) {
+        Viewtify.inUI(() -> action.accept(itemProperty().getValue()));
     }
 }

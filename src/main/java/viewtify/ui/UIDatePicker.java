@@ -22,13 +22,12 @@ import javafx.scene.control.DatePicker;
 
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
-import viewtify.ui.helper.ValueHelper;
-import viewtify.ui.helper.RestorableHelper;
 import viewtify.ui.helper.User;
+import viewtify.ui.helper.ValueHelper;
 
 public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
         implements ValueHelper<UIDatePicker, LocalDate>, EditableHelper<UIDatePicker>, Comparable<UIDatePicker>,
-        ContextMenuHelper<UIDatePicker>, RestorableHelper<UIDatePicker, LocalDate> {
+        ContextMenuHelper<UIDatePicker> {
 
     /**
      * Builde {@link ComboBox}.
@@ -80,7 +79,7 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
      * See {@link #initial(LocalDate)}.
      */
     public final UIDatePicker initial(ZonedDateTime initialValue) {
-        return initial(initialValue.toLocalDate());
+        return initialize(initialValue.toLocalDate());
     }
 
     /**

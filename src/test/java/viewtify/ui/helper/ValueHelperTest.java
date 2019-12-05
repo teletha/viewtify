@@ -398,4 +398,9 @@ class ValueHelperTest {
             return property;
         }
     }
+
+    @Test
+    void autoSave() {
+
+    }
 }

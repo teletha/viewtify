@@ -22,11 +22,9 @@ import javafx.util.StringConverter;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.ValueHelper;
-import viewtify.ui.helper.RestorableHelper;
 
 public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
-        implements CollectableHelper<UISpinner<T>, T>, ValueHelper<UISpinner<T>, T>, ContextMenuHelper<UISpinner<T>>,
-        RestorableHelper<UISpinner<T>, T> {
+        implements CollectableHelper<UISpinner<T>, T>, ValueHelper<UISpinner<T>, T>, ContextMenuHelper<UISpinner<T>> {
 
     /**
      * Enchanced view.
@@ -49,7 +47,7 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<T>> items() {
+    public Property<ObservableList<T>> itemProperty() {
         return ((ListSpinnerValueFactory<T>) ui.getValueFactory()).itemsProperty();
     }
 

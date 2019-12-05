@@ -9,6 +9,8 @@
  */
 package viewtify.ui.helper;
 
+import java.lang.reflect.Method;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -25,6 +27,7 @@ import kiss.WiseConsumer;
 import kiss.WiseFunction;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
+import viewtify.ui.UserInterface;
 
 public interface ValueHelper<Self extends ValueHelper, V> {
 
@@ -110,6 +113,52 @@ public interface ValueHelper<Self extends ValueHelper, V> {
             value(setter.apply(value()));
         }
         return (Self) this;
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(V initialValue) {
+        if (initialValue == null) {
+            initialValue = value();
+        }
+        Objects.requireNonNull(initialValue);
+
+        try {
+            UserInterface ui = (UserInterface) this;
+            Method method = UserInterface.class.getDeclaredMethod("restore", Property.class, Object.class);
+            method.setAccessible(true);
+            method.invoke(ui, valueProperty(), initialValue);
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(Variable<V> initialValue) {
+        return initialize(initialValue.v);
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(ObservableValue<V> initialValue) {
+        return initialize(initialValue.getValue());
     }
 
     /**

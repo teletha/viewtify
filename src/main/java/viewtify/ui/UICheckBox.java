@@ -16,11 +16,9 @@ import javafx.scene.control.CheckBox;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.ValueHelper;
-import viewtify.ui.helper.RestorableHelper;
 
 public class UICheckBox extends UserInterface<UICheckBox, CheckBox>
-        implements ValueHelper<UICheckBox, Boolean>, ContextMenuHelper<UICheckBox>, LabelHelper<UICheckBox>,
-        RestorableHelper<UICheckBox, Boolean> {
+        implements ValueHelper<UICheckBox, Boolean>, ContextMenuHelper<UICheckBox>, LabelHelper<UICheckBox> {
 
     /**
      * Enchanced view.

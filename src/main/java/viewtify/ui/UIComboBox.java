@@ -20,16 +20,15 @@ import javafx.scene.control.ListCell;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
-import viewtify.ui.helper.ValueHelper;
-import viewtify.ui.helper.RestorableHelper;
 import viewtify.ui.helper.User;
+import viewtify.ui.helper.ValueHelper;
 
 /**
  * @version 2018/09/09 11:49:25
  */
 public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
         implements CollectableHelper<UIComboBox<T>, T>, ValueHelper<UIComboBox<T>, T>, EditableHelper<UIComboBox>,
-        ContextMenuHelper<UIComboBox<T>>, RestorableHelper<UIComboBox<T>, T> {
+        ContextMenuHelper<UIComboBox<T>> {
 
     /**
      * Builde {@link ComboBox}.
@@ -47,7 +46,7 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<T>> items() {
+    public Property<ObservableList<T>> itemProperty() {
         return ui.itemsProperty();
     }
 
