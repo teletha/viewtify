@@ -363,7 +363,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param value The synchronized target.
      * @return Chainable API.
      */
-    default Self syncTo(Variable<V> value) {
+    default Self syncTo(Consumer<V> value) {
         return syncTo(value, null, null);
     }
 
@@ -375,7 +375,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self syncTo(Variable<V> value, Disposable unsynchronizer) {
+    default Self syncTo(Consumer<V> value, Disposable unsynchronizer) {
         return syncTo(value, null, unsynchronizer);
     }
 
@@ -386,7 +386,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param synchronizer Synchronize at the specified timing.
      * @return Chainable API.
      */
-    default Self syncTo(Variable<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
+    default Self syncTo(Consumer<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
         return syncTo(value, synchronizer, null);
     }
 
@@ -399,7 +399,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self syncTo(Variable<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
+    default Self syncTo(Consumer<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
             sync(null, value, synchronizer, unsynchronizer);
         }
