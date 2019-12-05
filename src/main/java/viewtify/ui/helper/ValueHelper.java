@@ -358,6 +358,31 @@ public interface ValueHelper<Self extends ValueHelper, V> {
     }
 
     /**
+     * This value will be synchronized from the specified value.
+     * 
+     * @param value The synchronized source.
+     * @return Chainable API.
+     */
+    default Self syncFrom(Signal<V> value) {
+        return syncFrom(value, null);
+    }
+
+    /**
+     * This value will be synchronized from the specified value.
+     * 
+     * @param value The synchronized source.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self syncFrom(Signal<V> value, Disposable unsynchronizer) {
+        if (value != null) {
+            sync(value, null, null, unsynchronizer);
+        }
+        return (Self) this;
+    }
+
+    /**
      * This value will synchronize to the specified value.
      * 
      * @param value The synchronized target.
