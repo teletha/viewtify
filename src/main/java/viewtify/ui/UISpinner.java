@@ -21,6 +21,7 @@ import javafx.util.StringConverter;
 
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.User;
 import viewtify.ui.helper.ValueHelper;
 
 public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
@@ -34,7 +35,7 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
     private UISpinner(View view) {
         super(new Spinner(new SpinnerValueFactory.ListSpinnerValueFactory(FXCollections.observableArrayList())), view);
 
-        ui.setOnScroll(e -> {
+        when(User.Scroll, e -> {
             if (e.getDeltaY() > 0) {
                 ui.increment();
             } else if (e.getDeltaY() < 0) {
@@ -47,42 +48,76 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<T>> itemProperty() {
-        return ((ListSpinnerValueFactory<T>) ui.getValueFactory()).itemsProperty();
+    public Property<T> valueProperty() {
+        return ui.getValueFactory().valueProperty();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Property<T> valueProperty() {
-        return ui.getValueFactory().valueProperty();
+    public Property<ObservableList<T>> itemProperty() {
+        return ((ListSpinnerValueFactory<T>) ui.getValueFactory()).itemsProperty();
     }
 
     /**
-     * Set value-display converter.
-     * 
-     * @param converter
-     * @return
+     * Attempts to imcrement the {@link #valueProperty() value} by the given number of steps.
+     *
+     * @param steps The number of increments that should be performed on the value.
+     * @return Chainable API.
      */
-    public UISpinner<T> text(Function<T, String> converter) {
-        ui.getValueFactory().setConverter(new Converter(converter));
-        ui.getEditor().setText(converter.apply(ui.getValue()));
+    public UISpinner<T> increment(int steps) {
+        ui.increment(steps);
+        return this;
+    }
+
+    /**
+     * Attempts to decrement the {@link #valueProperty() value} by the given number of steps.
+     *
+     * @param steps The number of decrements that should be performed on the value.
+     * @return Chainable API.
+     */
+    public UISpinner<T> decrement(int steps) {
+        ui.decrement(steps);
+        return this;
+    }
+
+    /**
+     * The wrapAround property is used to specify whether the value factory should be circular. For
+     * example, should an integer-based value model increment from the maximum value back to the
+     * minimum value (and vice versa).
+     * 
+     * @return Chainable API.
+     */
+    public UISpinner<T> around() {
+        ui.getValueFactory().setWrapAround(true);
+        return this;
+    }
+
+    /**
+     * Set value-display formatter.
+     * 
+     * @param formatter A value formatter.
+     * @return Chainable API.
+     */
+    public UISpinner<T> format(Function<T, String> formatter) {
+        ui.getValueFactory().setConverter(new GenericFormatter(formatter));
+        ui.getEditor().setText(formatter.apply(ui.getValue()));
 
         return this;
     }
 
     /**
-     * @version 2017/11/18 15:12:07
+     * 
      */
-    private class Converter extends StringConverter<T> {
+    private class GenericFormatter extends StringConverter<T> {
 
         private final Function<T, String> converter;
 
         /**
          * @param converter
          */
-        private Converter(Function<T, String> converter) {
+        private GenericFormatter(Function<T, String> converter) {
             this.converter = converter;
         }
 
