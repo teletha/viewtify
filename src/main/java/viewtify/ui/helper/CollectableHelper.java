@@ -34,55 +34,6 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
     Property<ObservableList<E>> itemProperty();
 
     /**
-     * Initialize with the specified value. This value is automatically saved whenever it is
-     * changed, and is restored the next time it is initialized.
-     * 
-     * @param initialValue The initial value is mandatory, null values are not accepted.
-     * @return Chainable API.
-     */
-    default Self initialize(E... initialItems) {
-        return initialize(List.of(initialItems));
-    }
-
-    /**
-     * Initialize with the specified value. This value is automatically saved whenever it is
-     * changed, and is restored the next time it is initialized.
-     * 
-     * @param initialValue The initial value is mandatory, null values are not accepted.
-     * @return Chainable API.
-     */
-    default Self initialize(Signal<E> initialItems) {
-        return initialize(initialItems.toList());
-    }
-
-    /**
-     * Initialize with the specified value. This value is automatically saved whenever it is
-     * changed, and is restored the next time it is initialized.
-     * 
-     * @param initialValue The initial value is mandatory, null values are not accepted.
-     * @return Chainable API.
-     */
-    default Self initialize(Stream<E> initialItems) {
-        return initialize(initialItems.collect(Collectors.toList()));
-    }
-
-    /**
-     * Initialize with the specified value. This value is automatically saved whenever it is
-     * changed, and is restored the next time it is initialized.
-     * 
-     * @param initialValue The initial value is mandatory, null values are not accepted.
-     * @return Chainable API.
-     */
-    default Self initialize(List<E> initialItems) {
-        items(initialItems);
-
-        if (this instanceof ValueHelper && initialItems != null && !initialItems.isEmpty()) {
-            ((ValueHelper) this).initialize(initialItems.get(0));
-        }
-        return (Self) this;
-    }
-
-    /**
      * Get the all items.
      * 
      * @return A live item list.
@@ -154,6 +105,55 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
     default Self items(ObservableList<E> items) {
         if (items != null) {
             modifyItemUISafely(list -> itemProperty().setValue(items));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(E... initialItems) {
+        return initialize(List.of(initialItems));
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(Signal<E> initialItems) {
+        return initialize(initialItems.toList());
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(Stream<E> initialItems) {
+        return initialize(initialItems.collect(Collectors.toList()));
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(List<E> initialItems) {
+        items(initialItems);
+    
+        if (this instanceof ValueHelper && initialItems != null && !initialItems.isEmpty()) {
+            ((ValueHelper) this).initialize(initialItems.get(0));
         }
         return (Self) this;
     }
