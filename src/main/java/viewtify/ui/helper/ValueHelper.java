@@ -9,8 +9,12 @@
  */
 package viewtify.ui.helper;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 import javafx.beans.property.Property;
 
+import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -102,12 +106,54 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param value The value that is synchronized with each other.
      * @return Chainable API.
      */
-    default Self value(Property<V> value) {
+    default Self sync(Property<V> value) {
+        return async(value, null, null);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self sync(Property<V> value, Disposable unsynchronizer) {
+        return async(value, null, unsynchronizer);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @param synchronizer Synchronize at the specified timing.
+     * @return Chainable API.
+     */
+    default Self async(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer) {
+        return async(value, synchronizer, null);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @param synchronizer Synchronize at the specified timing.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self async(Property<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
-            Property<V> pref = valueProperty();
-            pref.unbind();
-            pref.setValue(value.getValue());
-            pref.bind(value);
+            if (synchronizer == null) {
+                synchronizer = Function.identity();
+            }
+
+            Disposable from = Viewtify.observeNow(value).plug(synchronizer).to((Consumer<V>) this::value);
+            Disposable to = observe().plug(synchronizer).to(value::setValue);
+
+            if (unsynchronizer != null) {
+                unsynchronizer.add(from).add(to);
+            }
         }
         return (Self) this;
     }
@@ -118,7 +164,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param value The value that is synchronized with each other.
      * @return Chainable API.
      */
-    default Self value(Variable<V> value) {
+    default Self sync(Variable<V> value) {
         if (value != null) {
             Property<V> pref = valueProperty();
             pref.setValue(value.get());
