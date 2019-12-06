@@ -9,7 +9,7 @@
  */
 package viewtify.ui;
 
-import java.util.ConcurrentModificationException;
+import java.util.Comparator;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -39,6 +39,9 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
     /** The item filter manager. */
     private final Variable<Predicate<E>> filter;
 
+    /** The item sorter. */
+    private final Variable<Comparator> sorter = Variable.empty();
+
     /** The item list manager. */
     private final ObjectProperty<ObservableList<E>> items;
 
@@ -53,9 +56,17 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
         this.filter = Variable.of(I.accept());
         this.items = new SimpleObjectProperty(ui.getItems());
 
-        Viewtify.observeNow(items).combineLatest(filter.observeNow()).retry(ConcurrentModificationException.class).to(e -> {
-            ui.setItems(e.ⅰ.filtered(e.ⅱ));
-        });
+        Viewtify.observeNow(items).combineLatest(filter.observeNow(), sorter.observeNow()).to(e -> e.to((items, filter, sorter) -> {
+            if (filter != null) {
+                items = items.filtered(filter);
+            }
+
+            if (sorter != null) {
+                items = items.sorted(sorter);
+                System.out.println("sorter " + sorter);
+            }
+            ui.setItems(items);
+        }));
     }
 
     /**
@@ -72,6 +83,11 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
     @Override
     public UIListView<E> renderByNode(Function<E, ? extends Node> renderer) {
         ui.setCellFactory(view -> new GenericCell<E>(renderer::apply));
+        return this;
+    }
+
+    public UIListView<E> reverse() {
+        sorter.set(Comparator.naturalOrder());
         return this;
     }
 
