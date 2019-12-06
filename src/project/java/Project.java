@@ -18,7 +18,6 @@ public class Project extends bee.api.Project {
         require("com.github.teletha", "stylist");
         require("com.github.teletha", "transcript");
         require("com.github.teletha", "antibug").atTest();
-        require("org.eclipse.collections", "eclipse-collections");
         require("org.openjfx", "javafx-base");
         require("org.openjfx", "javafx-controls");
         require("org.openjfx", "javafx-graphics");
