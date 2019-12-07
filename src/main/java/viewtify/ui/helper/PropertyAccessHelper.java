@@ -10,6 +10,7 @@
 package viewtify.ui.helper;
 
 import javafx.beans.property.Property;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -21,7 +22,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-
 import kiss.I;
 
 public interface PropertyAccessHelper {
@@ -81,6 +81,9 @@ public interface PropertyAccessHelper {
 
         /** The defined property type. */
         public static final Type<String> Id = new Type("id");
+
+        /** The defined property type. */
+        public static final Type<ObservableList> Items = new Type("items");
 
         /** The defined property type. */
         public static final Type<Double> LineSpacing = new Type("lineSpacing");

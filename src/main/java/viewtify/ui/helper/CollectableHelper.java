@@ -18,7 +18,6 @@ import java.util.stream.Stream;
 
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -151,7 +150,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      */
     default Self initialize(List<E> initialItems) {
         items(initialItems);
-    
+
         if (this instanceof ValueHelper && initialItems != null && !initialItems.isEmpty()) {
             ((ValueHelper) this).initialize(initialItems.get(0));
         }
