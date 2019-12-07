@@ -56,7 +56,7 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<T>> itemProperty() {
+    public Property<ObservableList<T>> itemsProperty() {
         return ((ListSpinnerValueFactory<T>) ui.getValueFactory()).itemsProperty();
     }
 

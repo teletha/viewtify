@@ -38,7 +38,7 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<T>> itemProperty() {
+    public Property<ObservableList<T>> itemsProperty() {
         return ui.itemsProperty();
     }
 

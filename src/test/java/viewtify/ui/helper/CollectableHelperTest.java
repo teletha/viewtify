@@ -12,15 +12,14 @@ package viewtify.ui.helper;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import kiss.I;
 
 class CollectableHelperTest {
@@ -69,7 +68,7 @@ class CollectableHelperTest {
     /**
      * Simple Implementation.
      */
-    private static class SimpleList<T> implements CollectableHelper<SimpleList<T>, T> {
+    private static class SimpleList<T> extends ReferenceHolder implements CollectableHelper<SimpleList<T>, T> {
 
         /** The actual list. */
         private final ObjectProperty<ObservableList<T>> property = new SimpleObjectProperty(FXCollections.observableArrayList());
@@ -82,7 +81,7 @@ class CollectableHelperTest {
          * {@inheritDoc}
          */
         @Override
-        public Property<ObservableList<T>> itemProperty() {
+        public Property<ObservableList<T>> itemsProperty() {
             return property;
         }
     }

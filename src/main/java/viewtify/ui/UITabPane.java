@@ -47,7 +47,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<UITab>> itemProperty() {
+    public Property<ObservableList<UITab>> itemsProperty() {
         return new SimpleObjectProperty(ui.getTabs());
     }
 

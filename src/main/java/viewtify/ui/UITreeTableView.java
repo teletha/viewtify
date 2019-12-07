@@ -48,7 +48,7 @@ public class UITreeTableView<T> extends UserInterface<UITreeTableView<T>, TreeTa
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<T>> itemProperty() {
+    public Property<ObservableList<T>> itemsProperty() {
         // If this exception will be thrown, it is bug of this program. So we must rethrow the
         // wrapped error in here.
         throw new Error();

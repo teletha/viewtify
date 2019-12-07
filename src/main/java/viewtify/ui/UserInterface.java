@@ -9,13 +9,17 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.*;
 
 import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+
+import org.controlsfx.control.decoration.Decorator;
+import org.controlsfx.control.decoration.GraphicDecoration;
+import org.controlsfx.validation.ValidationSupport;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
@@ -26,11 +30,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.util.Duration;
-
-import org.controlsfx.control.decoration.Decorator;
-import org.controlsfx.control.decoration.GraphicDecoration;
-import org.controlsfx.validation.ValidationSupport;
-
 import kiss.I;
 import kiss.Manageable;
 import kiss.Signal;
@@ -42,15 +41,16 @@ import stylist.StyleDSL;
 import viewtify.Viewtify;
 import viewtify.model.Validation;
 import viewtify.ui.helper.DisableHelper;
-import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.PropertyAccessHelper;
+import viewtify.ui.helper.ReferenceHolder;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
+import viewtify.ui.helper.ValueHelper;
 import viewtify.util.Icon;
 
-public class UserInterface<Self extends UserInterface, W extends Node>
+public class UserInterface<Self extends UserInterface, W extends Node> extends ReferenceHolder
         implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, TooltipHelper<Self, W>, UserInterfaceProvider<W>,
         PropertyAccessHelper {
 

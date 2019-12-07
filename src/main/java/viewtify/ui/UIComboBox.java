@@ -16,7 +16,6 @@ import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
-
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
@@ -46,7 +45,7 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<T>> itemProperty() {
+    public Property<ObservableList<T>> itemsProperty() {
         return ui.itemsProperty();
     }
 

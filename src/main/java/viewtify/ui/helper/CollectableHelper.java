@@ -9,28 +9,33 @@
  */
 package viewtify.ui.helper;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 
-public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
+public interface CollectableHelper<Self extends ReferenceHolder & CollectableHelper<Self, E>, E> {
 
     /**
      * Returns the managed item list.
      * 
      * @return
      */
-    Property<ObservableList<E>> itemProperty();
+    Property<ObservableList<E>> itemsProperty();
 
     /**
      * Get the all items.
@@ -38,7 +43,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * @return A live item list.
      */
     default ObservableList<E> items() {
-        return itemProperty().getValue();
+        return refer().items.getValue();
     }
 
     /**
@@ -103,7 +108,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      */
     default Self items(ObservableList<E> items) {
         if (items != null) {
-            modifyItemUISafely(list -> itemProperty().setValue(items));
+            modifyItemUISafely(list -> refer().items.setValue(items));
         }
         return (Self) this;
     }
@@ -163,7 +168,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * @return
      */
     default Variable<E> first() {
-        ObservableList<E> items = itemProperty().getValue();
+        ObservableList<E> items = refer().items.getValue();
 
         if (items.isEmpty()) {
             return Variable.empty();
@@ -178,7 +183,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * @return
      */
     default Variable<E> last() {
-        ObservableList<E> items = itemProperty().getValue();
+        ObservableList<E> items = refer().items.getValue();
 
         if (items.isEmpty()) {
             return Variable.empty();
@@ -193,7 +198,7 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * @return
      */
     default int size() {
-        return itemProperty().getValue().size();
+        return refer().items.getValue().size();
     }
 
     /**
@@ -308,6 +313,127 @@ public interface CollectableHelper<Self extends CollectableHelper<Self, E>, E> {
      * @param action
      */
     private void modifyItemUISafely(Consumer<ObservableList<E>> action) {
-        Viewtify.inUI(() -> action.accept(itemProperty().getValue()));
+        Viewtify.inUI(() -> action.accept(refer().items.getValue()));
+    }
+
+    /**
+     * Filter items by the specified condition.
+     * 
+     * @param filter A conditional filter.
+     * @return Chainable API.
+     */
+    default Self take(Predicate<E> filter) {
+        refer().filter.set(filter);
+        return (Self) this;
+    }
+
+    /**
+     * Filter items by the specified condition.
+     * 
+     * @param context An additional infomation.
+     * @param filter A conditional filter.
+     * @return Chainable API.
+     */
+    default <C> Self take(ObservableValue<C> context, BiPredicate<E, C> filter) {
+        Viewtify.observeNow(context).to(c -> take(e -> filter.test(e, c)));
+        return (Self) this;
+    }
+
+    /**
+     * Filter items by the specified condition.
+     * 
+     * @param context An additional infomation.
+     * @param filter A conditional filter.
+     * @return Chainable API.
+     */
+    default <C> Self take(ValueHelper<?, C> context, BiPredicate<E, C> filter) {
+        return take(context.valueProperty(), filter);
+    }
+
+    /**
+     * Filter items by the specified condition.
+     * 
+     * @param filter A conditional filter.
+     * @return Chainable API.
+     */
+    default Self skip(Predicate<E> filter) {
+        return take(filter.negate());
+    }
+
+    /**
+     * Filter items by the specified condition.
+     * 
+     * @param context An additional infomation.
+     * @param filter A conditional filter.
+     * @return Chainable API.
+     */
+    default <C> Self skip(ObservableValue<C> context, BiPredicate<E, C> filter) {
+        return take(context, filter.negate());
+    }
+
+    /**
+     * Filter items by the specified condition.
+     * 
+     * @param context An additional infomation.
+     * @param filter A conditional filter.
+     * @return Chainable API.
+     */
+    default <C> Self skip(ValueHelper<?, C> context, BiPredicate<E, C> filter) {
+        return take(context.valueProperty(), filter.negate());
+    }
+
+    /**
+     * Retrieve the special reference holder.
+     * 
+     * @return
+     */
+    private Ð<E> refer() {
+        ReferenceHolder holder = (ReferenceHolder) this;
+
+        if (holder.collectables == null) {
+            synchronized (this) {
+                if (holder.collectables == null) {
+                    holder.collectables = new Ð(this);
+                }
+            }
+        }
+        return holder.collectables;
+    }
+
+    /**
+     * 
+     */
+    final class Ð<E> {
+
+        /** The item holder. */
+        private final Property<ObservableList<E>> items = new SimpleObjectProperty();
+
+        /** The item taking filter. */
+        private final Variable<Predicate<E>> filter = Variable.empty();
+
+        /** The item sorter. */
+        private final Variable<Comparator<E>> sorter = Variable.empty();
+
+        /**
+         * Initialize date reference.
+         * 
+         * @param helper
+         */
+        private Ð(CollectableHelper<?, E> helper) {
+            items.setValue(helper.itemsProperty().getValue());
+
+            Viewtify.observeNow(items).combineLatest(filter.observeNow(), sorter.observeNow()).to(v -> {
+                ObservableList items = v.ⅰ;
+
+                if (v.ⅱ != null) {
+                    items = items.filtered(v.ⅱ);
+                }
+
+                if (v.ⅲ != null) {
+                    items = items.sorted(v.ⅲ);
+                }
+                helper.itemsProperty().setValue(items);
+            });
+        }
     }
 }

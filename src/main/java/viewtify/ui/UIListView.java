@@ -11,6 +11,8 @@ package viewtify.ui;
 
 import java.util.function.Function;
 
+import javafx.beans.property.Property;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -19,7 +21,7 @@ import viewtify.ui.helper.CollectableItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.MultiSelectableHelper;
 
-public class UIListView<E> extends AbstractCollectableUI<UIListView<E>, ListView<E>, E>
+public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
         implements MultiSelectableHelper<UIListView<E>, E>, CollectableHelper<UIListView<E>, E>,
         CollectableItemRenderingHelper<UIListView<E>, E>, ContextMenuHelper<UIListView<E>> {
 
@@ -30,6 +32,14 @@ public class UIListView<E> extends AbstractCollectableUI<UIListView<E>, ListView
      */
     private UIListView(View view) {
         super(new ListView<E>(), view);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Property<ObservableList<E>> itemsProperty() {
+        return ui.itemsProperty();
     }
 
     /**
