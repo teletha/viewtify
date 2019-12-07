@@ -65,6 +65,46 @@ class CollectableHelperTest {
         Assertions.assertIterableEquals(List.of(1, 2, 3), list.items());
     }
 
+    @Test
+    void take() {
+        SimpleList<Integer> list = new SimpleList(1, 2, 3, 4, 5);
+        list.take(v -> v % 2 == 0);
+
+        Assertions.assertIterableEquals(List.of(2, 4), list.itemsProperty().getValue());
+    }
+
+    @Test
+    void takeWithObservableValue() {
+        Property<Integer> p = new SimpleObjectProperty(3);
+
+        SimpleList<Integer> list = new SimpleList(1, 2, 3, 4, 5);
+        list.take(p, (v, number) -> v < number);
+        Assertions.assertIterableEquals(List.of(1, 2), list.itemsProperty().getValue());
+
+        p.setValue(4);
+        Assertions.assertIterableEquals(List.of(1, 2, 3), list.itemsProperty().getValue());
+    }
+
+    @Test
+    void skip() {
+        SimpleList<Integer> list = new SimpleList(1, 2, 3, 4, 5);
+        list.skip(v -> v % 2 == 0);
+
+        Assertions.assertIterableEquals(List.of(1, 3, 5), list.itemsProperty().getValue());
+    }
+
+    @Test
+    void skipWithObservableValue() {
+        Property<Integer> p = new SimpleObjectProperty(3);
+
+        SimpleList<Integer> list = new SimpleList(1, 2, 3, 4, 5);
+        list.skip(p, (v, number) -> v < number);
+        Assertions.assertIterableEquals(List.of(3, 4, 5), list.itemsProperty().getValue());
+
+        p.setValue(4);
+        Assertions.assertIterableEquals(List.of(4, 5), list.itemsProperty().getValue());
+    }
+
     /**
      * Simple Implementation.
      */

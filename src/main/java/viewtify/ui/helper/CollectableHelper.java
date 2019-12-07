@@ -390,14 +390,14 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     private Ð<E> refer() {
         ReferenceHolder holder = (ReferenceHolder) this;
 
-        if (holder.collectables == null) {
+        if (holder.collectable == null) {
             synchronized (this) {
-                if (holder.collectables == null) {
-                    holder.collectables = new Ð(this);
+                if (holder.collectable == null) {
+                    holder.collectable = new Ð(this);
                 }
             }
         }
-        return holder.collectables;
+        return holder.collectable;
     }
 
     /**

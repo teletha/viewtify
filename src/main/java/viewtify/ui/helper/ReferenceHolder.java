@@ -12,5 +12,5 @@ package viewtify.ui.helper;
 public abstract class ReferenceHolder {
 
     /** The reference holder. */
-    volatile CollectableHelper.Ð collectables;
+    volatile CollectableHelper.Ð collectable;
 }
