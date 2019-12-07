@@ -317,6 +317,17 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     }
 
     /**
+     * Sort items by the specified {@link Comparator}.
+     * 
+     * @param sorter A item comparator.
+     * @return Chainable API.
+     */
+    default Self sort(Comparator<E> sorter) {
+        refer().sorter.set(sorter);
+        return (Self) this;
+    }
+
+    /**
      * Filter items by the specified condition.
      * 
      * @param filter A conditional filter.
