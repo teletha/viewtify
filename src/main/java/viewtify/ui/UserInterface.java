@@ -31,7 +31,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.util.Duration;
 import kiss.I;
-import kiss.Manageable;
+import kiss.Managed;
 import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
@@ -331,7 +331,7 @@ public class UserInterface<Self extends UserInterface, W extends Node> extends R
      * 
      */
     @SuppressWarnings("serial")
-    @Manageable(lifestyle = Singleton.class)
+    @Managed(value = Singleton.class)
     private static class Preference extends TreeMap<String, String> implements Storable<Preference> {
     }
 

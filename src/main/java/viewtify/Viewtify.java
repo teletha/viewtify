@@ -68,7 +68,7 @@ import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
 import kiss.I;
-import kiss.Manageable;
+import kiss.Managed;
 import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
@@ -1276,7 +1276,7 @@ public final class Viewtify {
      * @version 2017/11/25 23:59:20
      */
     @SuppressWarnings("serial")
-    @Manageable(lifestyle = Singleton.class)
+    @Managed(value = Singleton.class)
     private static class WindowLocator extends HashMap<Class, Location> implements Storable<WindowLocator> {
 
         /** Magic Number for window state. */
