@@ -69,6 +69,15 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
     }
 
     /**
+     * Declare the specified {@link View}.
+     * 
+     * @param node A {@link View} to compose.
+     */
+    protected final void $(View view) {
+        $(() -> View.build(view).ui());
+    }
+
+    /**
      * Declare the specified {@link Node}.
      * 
      * @param node A JavaFX {@link Node} to compose.
