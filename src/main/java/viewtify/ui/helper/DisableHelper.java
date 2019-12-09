@@ -127,4 +127,13 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
         }
         return (Self) this;
     }
+
+    /**
+     * Disable itself for a bit.
+     * 
+     * @return Chainable API.
+     */
+    default Self disableBriefly() {
+        return disableDuring(400, TimeUnit.MILLISECONDS);
+    }
 }

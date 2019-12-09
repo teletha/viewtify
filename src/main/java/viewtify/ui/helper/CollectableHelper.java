@@ -16,13 +16,13 @@ import java.util.ListIterator;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.BaseStream;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -62,16 +62,6 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @param items All items to set.
      * @return Chainable API.
      */
-    default Self items(Iterable<E> items) {
-        return items(I.signal(items));
-    }
-
-    /**
-     * Sets all values as items.
-     * 
-     * @param items All items to set.
-     * @return Chainable API.
-     */
     default Self items(Signal<E> items) {
         return items(items.toList());
     }
@@ -82,8 +72,18 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @param items All items to set.
      * @return Chainable API.
      */
-    default Self items(Stream<E> items) {
-        return items(items.collect(Collectors.toList()));
+    default Self items(BaseStream<E, ?> items) {
+        return items(items::iterator);
+    }
+
+    /**
+     * Sets all values as items.
+     * 
+     * @param items All items to set.
+     * @return Chainable API.
+     */
+    default Self items(Iterable<E> items) {
+        return items(I.signal(items));
     }
 
     /**
@@ -142,8 +142,19 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @param initialValue The initial value is mandatory, null values are not accepted.
      * @return Chainable API.
      */
-    default Self initialize(Stream<E> initialItems) {
-        return initialize(initialItems.collect(Collectors.toList()));
+    default Self initialize(BaseStream<E, ?> initialItems) {
+        return initialize(initialItems::iterator);
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(Iterable<E> initialItems) {
+        return initialize(I.signal(initialItems));
     }
 
     /**
