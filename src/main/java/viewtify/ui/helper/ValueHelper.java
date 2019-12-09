@@ -13,10 +13,12 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -677,5 +679,25 @@ public interface ValueHelper<Self extends ValueHelper, V> {
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
+    }
+
+    /**
+     * Checks if this value is the same as the specified value.
+     * 
+     * @param value A value to test.
+     * @return A result.
+     */
+    default boolean is(V value) {
+        return value() == value;
+    }
+
+    /**
+     * Continue to monitor whether this value meets the specified condition.
+     * 
+     * @param condition A value condition.
+     * @return A result stream.
+     */
+    default Signal<Boolean> is(Predicate<V> condition) {
+        return observeNow().map(condition::test);
     }
 }

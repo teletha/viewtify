@@ -11,6 +11,7 @@ package viewtify.ui.helper;
 
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 import javafx.beans.value.ObservableValue;
 
@@ -57,6 +58,20 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      */
     default boolean isDisable() {
         return property(Type.Disable).getValue() == true;
+    }
+
+    /**
+     * Disables itself when the specified condition is True, and enables it when False.
+     * 
+     * @param condition A timing condition.
+     * @param conditions Additional timing conditions.
+     * @return Chainable API.
+     */
+    default <V> Self disableWhen(ValueHelper<?, V> context, Predicate<V> condition) {
+        if (context != null && condition != null) {
+            disableWhen(context.observeNow().map(condition::test));
+        }
+        return (Self) this;
     }
 
     /**
