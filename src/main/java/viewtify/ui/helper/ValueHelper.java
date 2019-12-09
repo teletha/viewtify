@@ -708,7 +708,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return A result stream.
      */
     default Signal<Boolean> isToBe(V value) {
-        return isToBe(v -> Objects.equals(v, value));
+        return observeNow().is(value);
     }
 
     /**
@@ -718,6 +718,46 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return A result stream.
      */
     default Signal<Boolean> isToBe(Predicate<V> condition) {
-        return observeNow().map(condition::test);
+        return observeNow().is(condition);
+    }
+
+    /**
+     * Checks if this value is NOT the same as the specified value.
+     * 
+     * @param value A value to test.
+     * @return A result.
+     */
+    default boolean isNot(V value) {
+        return value() != value;
+    }
+
+    /**
+     * Checks if this value is NOT the same as the specified value.
+     * 
+     * @param condition A condition.
+     * @return A result.
+     */
+    default boolean isNot(Predicate<V> condition) {
+        return !condition.test(value());
+    }
+
+    /**
+     * Continue to monitor whether this value DOESN'T meets the specified condition.
+     * 
+     * @param value A value condition.
+     * @return A result stream.
+     */
+    default Signal<Boolean> isNotToBe(V value) {
+        return observeNow().isNot(value);
+    }
+
+    /**
+     * Continue to monitor whether this value DOESN'T meets the specified condition.
+     * 
+     * @param condition A value condition.
+     * @return A result stream.
+     */
+    default Signal<Boolean> isNotToBe(Predicate<V> condition) {
+        return observeNow().isNot(condition);
     }
 }
