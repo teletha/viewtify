@@ -692,12 +692,32 @@ public interface ValueHelper<Self extends ValueHelper, V> {
     }
 
     /**
+     * Checks if this value is the same as the specified value.
+     * 
+     * @param condition A condition.
+     * @return A result.
+     */
+    default boolean is(Predicate<V> condition) {
+        return condition.test(value());
+    }
+
+    /**
+     * Continue to monitor whether this value meets the specified condition.
+     * 
+     * @param value A value condition.
+     * @return A result stream.
+     */
+    default Signal<Boolean> isToBe(V value) {
+        return isToBe(v -> Objects.equals(v, value));
+    }
+
+    /**
      * Continue to monitor whether this value meets the specified condition.
      * 
      * @param condition A value condition.
      * @return A result stream.
      */
-    default Signal<Boolean> is(Predicate<V> condition) {
+    default Signal<Boolean> isToBe(Predicate<V> condition) {
         return observeNow().map(condition::test);
     }
 }
