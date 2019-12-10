@@ -42,6 +42,8 @@ public class UIPane extends UserInterface<UIPane, Pane> {
      */
     public final UIPane set(View view) {
         if (view != null) {
+            View.build(view, this.view);
+
             ObservableList<Node> children = ui.getChildren();
 
             if (children.isEmpty()) {
