@@ -11,23 +11,23 @@ package viewtify.ui;
 
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.ValueHelper;
 
-public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
-        implements CollectableHelper<UIComboBox<T>, T>, ValueHelper<UIComboBox<T>, T>, ContextMenuHelper<UIComboBox<T>> {
+public class UIChoiceBox<T> extends UserInterface<UIChoiceBox<T>, ChoiceBox<T>>
+        implements CollectableHelper<UIChoiceBox<T>, T>, ValueHelper<UIChoiceBox<T>, T>, ContextMenuHelper<UIChoiceBox<T>> {
 
     /**
-     * Builde {@link ComboBox}.
+     * Builde {@link ChoiceBox}.
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UIComboBox(View view) {
-        super(new ComboBox(), view);
+    private UIChoiceBox(View view) {
+        super(new ChoiceBox(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll, Action.traverse(ui.getSelectionModel()));

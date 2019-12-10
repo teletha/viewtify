@@ -127,6 +127,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
         if (initialValue == null) {
             initialValue = value();
         }
+
         Objects.requireNonNull(initialValue);
 
         try {
@@ -134,7 +135,8 @@ public interface ValueHelper<Self extends ValueHelper, V> {
             Method method = UserInterface.class.getDeclaredMethod("restore", Property.class, Object.class);
             method.setAccessible(true);
             method.invoke(ui, valueProperty(), initialValue);
-        } catch (Exception e) {
+        } catch (Throwable e) {
+            e.printStackTrace();
             throw I.quiet(e);
         }
         return (Self) this;
