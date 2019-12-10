@@ -23,16 +23,6 @@ import viewtify.Viewtify;
 public interface DisableHelper<Self extends DisableHelper> extends PropertyAccessHelper {
 
     /**
-     * Enables itself.
-     * 
-     * @return Chainable API.
-     */
-    default Self enable() {
-        property(Type.Disable).setValue(false);
-        return (Self) this;
-    }
-
-    /**
      * Gets whether it is enable.
      * 
      * @return A result.
@@ -42,22 +32,23 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Disables itself.
-     * 
-     * @return Chainable API.
-     */
-    default Self disable() {
-        property(Type.Disable).setValue(true);
-        return (Self) this;
-    }
-
-    /**
      * Gets whether it is disable.
      * 
      * @return A result.
      */
     default boolean isDisable() {
         return property(Type.Disable).getValue() == true;
+    }
+
+    /**
+     * Disables itself.
+     * 
+     * @param state A disable state.
+     * @return Chainable API.
+     */
+    default Self disable(boolean state) {
+        property(Type.Disable).setValue(state);
+        return (Self) this;
     }
 
     /**
@@ -123,8 +114,8 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      */
     default Self disableDuring(long time, TimeUnit unit) {
         if (0 < time && unit != null) {
-            disable();
-            I.schedule(time, unit, this::enable);
+            disable(true);
+            I.schedule(time, unit, () -> disable(false));
         }
         return (Self) this;
     }
