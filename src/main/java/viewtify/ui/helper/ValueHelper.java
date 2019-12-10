@@ -163,6 +163,46 @@ public interface ValueHelper<Self extends ValueHelper, V> {
     }
 
     /**
+     * Checks if this value is the same as the specified value.
+     * 
+     * @param value A value to test.
+     * @return A result.
+     */
+    default boolean is(V value) {
+        return value() == value;
+    }
+
+    /**
+     * Checks if this value is the same as the specified value.
+     * 
+     * @param condition A condition.
+     * @return A result.
+     */
+    default boolean is(Predicate<V> condition) {
+        return condition.test(value());
+    }
+
+    /**
+     * Checks if this value is NOT the same as the specified value.
+     * 
+     * @param value A value to test.
+     * @return A result.
+     */
+    default boolean isNot(V value) {
+        return value() != value;
+    }
+
+    /**
+     * Checks if this value is NOT the same as the specified value.
+     * 
+     * @param condition A condition.
+     * @return A result.
+     */
+    default boolean isNot(Predicate<V> condition) {
+        return !condition.test(value());
+    }
+
+    /**
      * Synchronizes with the specified value.
      * 
      * @param value The value that is synchronized with each other.
@@ -502,7 +542,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
         }
 
         if (receiver != null) {
-            Disposable to = (publisher == null ? observeNow() : observe()).plug(synchronizer).to(receiver);
+            Disposable to = (publisher == null ? observing() : signal()).plug(synchronizer).to(receiver);
             if (unsynchronizer != null) unsynchronizer.add(to);
         }
     }
@@ -512,7 +552,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * 
      * @return A {@link Signal} that notify the change of this value.
      */
-    default Signal<V> observe() {
+    default Signal<V> signal() {
         return Viewtify.observe(valueProperty()).skipNull();
     }
 
@@ -536,7 +576,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self observe(WiseRunnable listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observe().to(listener);
+            Disposable stop = signal().to(listener);
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
@@ -562,7 +602,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self observe(WiseConsumer<V> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observe().to(listener);
+            Disposable stop = signal().to(listener);
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
@@ -588,7 +628,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self observe(WiseBiConsumer<V, V> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observe().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
+            Disposable stop = signal().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
@@ -599,8 +639,8 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * 
      * @return A {@link Signal} that notify the change of this value.
      */
-    default Signal<V> observeNow() {
-        return observe().startWith(value()).skipNull();
+    default Signal<V> observing() {
+        return signal().startWith(value()).skipNull();
     }
 
     /**
@@ -609,8 +649,8 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param listener A modification listener.
      * @return Chainable API.
      */
-    default Self observeNow(WiseRunnable listener) {
-        return observeNow(listener, null);
+    default Self observing(WiseRunnable listener) {
+        return observing(listener, null);
     }
 
     /**
@@ -621,9 +661,9 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self observeNow(WiseRunnable listener, Disposable disposer) {
+    default Self observing(WiseRunnable listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observeNow().to(listener);
+            Disposable stop = observing().to(listener);
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
@@ -635,8 +675,8 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param listener A modification listener.
      * @return Chainable API.
      */
-    default Self observeNow(WiseConsumer<V> listener) {
-        return observeNow(listener, null);
+    default Self observing(WiseConsumer<V> listener) {
+        return observing(listener, null);
     }
 
     /**
@@ -647,9 +687,9 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self observeNow(WiseConsumer<V> listener, Disposable disposer) {
+    default Self observing(WiseConsumer<V> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observeNow().to(listener);
+            Disposable stop = observing().to(listener);
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
@@ -661,8 +701,8 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param listener A modification listener.
      * @return Chainable API.
      */
-    default Self observeNow(WiseBiConsumer<V, V> listener) {
-        return observeNow(listener, null);
+    default Self observing(WiseBiConsumer<V, V> listener) {
+        return observing(listener, null);
     }
 
     /**
@@ -673,91 +713,11 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      *            {@link Disposable#dispose()}.
      * @return Chainable API.
      */
-    default Self observeNow(WiseBiConsumer<V, V> listener, Disposable disposer) {
+    default Self observing(WiseBiConsumer<V, V> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observe().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
+            Disposable stop = signal().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
-    }
-
-    /**
-     * Checks if this value is the same as the specified value.
-     * 
-     * @param value A value to test.
-     * @return A result.
-     */
-    default boolean is(V value) {
-        return value() == value;
-    }
-
-    /**
-     * Checks if this value is the same as the specified value.
-     * 
-     * @param condition A condition.
-     * @return A result.
-     */
-    default boolean is(Predicate<V> condition) {
-        return condition.test(value());
-    }
-
-    /**
-     * Continue to monitor whether this value meets the specified condition.
-     * 
-     * @param value A value condition.
-     * @return A result stream.
-     */
-    default Signal<Boolean> isToBe(V value) {
-        return observeNow().is(value);
-    }
-
-    /**
-     * Continue to monitor whether this value meets the specified condition.
-     * 
-     * @param condition A value condition.
-     * @return A result stream.
-     */
-    default Signal<Boolean> isToBe(Predicate<V> condition) {
-        return observeNow().is(condition);
-    }
-
-    /**
-     * Checks if this value is NOT the same as the specified value.
-     * 
-     * @param value A value to test.
-     * @return A result.
-     */
-    default boolean isNot(V value) {
-        return value() != value;
-    }
-
-    /**
-     * Checks if this value is NOT the same as the specified value.
-     * 
-     * @param condition A condition.
-     * @return A result.
-     */
-    default boolean isNot(Predicate<V> condition) {
-        return !condition.test(value());
-    }
-
-    /**
-     * Continue to monitor whether this value DOESN'T meets the specified condition.
-     * 
-     * @param value A value condition.
-     * @return A result stream.
-     */
-    default Signal<Boolean> isNotToBe(V value) {
-        return observeNow().isNot(value);
-    }
-
-    /**
-     * Continue to monitor whether this value DOESN'T meets the specified condition.
-     * 
-     * @param condition A value condition.
-     * @return A result stream.
-     */
-    default Signal<Boolean> isNotToBe(Predicate<V> condition) {
-        return observeNow().isNot(condition);
     }
 }

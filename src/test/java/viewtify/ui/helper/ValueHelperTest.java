@@ -382,26 +382,6 @@ class ValueHelperTest {
     }
 
     @Test
-    void isToBe() {
-        StringValue v = new StringValue("123");
-        Variable<Boolean> result = v.isToBe("123").to();
-        assert result.is(true);
-
-        v.value("456");
-        assert result.is(false);
-    }
-
-    @Test
-    void isToBePredicate() {
-        StringValue v = new StringValue("123");
-        Variable<Boolean> result = v.isToBe(o -> o.equals("123")).to();
-        assert result.is(true);
-
-        v.value("456");
-        assert result.is(false);
-    }
-
-    @Test
     void isNot() {
         StringValue v = new StringValue("123");
         assert v.isNot("123") == false;
@@ -413,26 +393,6 @@ class ValueHelperTest {
         StringValue v = new StringValue("123");
         assert v.isNot(o -> o.equals("123")) == false;
         assert v.isNot(o -> o.equals("456")) == true;
-    }
-
-    @Test
-    void isNotToBe() {
-        StringValue v = new StringValue("123");
-        Variable<Boolean> result = v.isNotToBe("123").to();
-        assert result.is(false);
-
-        v.value("456");
-        assert result.is(true);
-    }
-
-    @Test
-    void isNotToBePredicate() {
-        StringValue v = new StringValue("123");
-        Variable<Boolean> result = v.isNotToBe(o -> o.equals("123")).to();
-        assert result.is(false);
-
-        v.value("456");
-        assert result.is(true);
     }
 
     /**

@@ -69,7 +69,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      */
     default <V> Self disableWhen(ValueHelper<?, V> context, Predicate<V> condition) {
         if (context != null && condition != null) {
-            disableWhen(context.observeNow().map(condition::test));
+            disableWhen(context.observing().map(condition::test));
         }
         return (Self) this;
     }
