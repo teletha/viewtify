@@ -36,6 +36,7 @@ import kiss.Managed;
 import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.WiseConsumer;
 import kiss.WiseRunnable;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -124,7 +125,7 @@ public class UserInterface<Self extends UserInterface, W extends Node> extends R
      * @param validator A validator.
      * @return Chainable API.
      */
-    public final Self require(Predicate<Self> validator) {
+    public final Self require(Predicate<? super Self> validator) {
         return require(() -> {
             assert validator.test((Self) this);
         });
@@ -138,6 +139,18 @@ public class UserInterface<Self extends UserInterface, W extends Node> extends R
      */
     public final Self require(WiseRunnable validator) {
         validation().require(validator);
+
+        return (Self) this;
+    }
+
+    /**
+     * Set the validator for this {@link UserInterface}.
+     * 
+     * @param validator A validator.
+     * @return Chainable API.
+     */
+    public final Self require(WiseConsumer<? super Self> validator) {
+        validation().require(() -> validator.accept((Self) this));
 
         return (Self) this;
     }
