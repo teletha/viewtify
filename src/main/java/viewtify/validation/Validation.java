@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify.model;
+package viewtify.validation;
 
 import java.util.HashSet;
 import java.util.Set;

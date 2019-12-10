@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.model;
+package viewtify.validation;
 
 import kiss.I;
 import kiss.Signal;

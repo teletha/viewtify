@@ -40,7 +40,6 @@ import kiss.WiseRunnable;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
-import viewtify.model.Validation;
 import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.PropertyAccessHelper;
 import viewtify.ui.helper.ReferenceHolder;
@@ -50,6 +49,7 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.util.Icon;
+import viewtify.validation.Validation;
 
 public class UserInterface<Self extends UserInterface, W extends Node> extends ReferenceHolder
         implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, TooltipHelper<Self, W>, UserInterfaceProvider<W>,
