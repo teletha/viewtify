@@ -14,13 +14,9 @@ import javafx.scene.control.TextField;
 
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.ValueHelper;
-import viewtify.util.RegulatableProperty;
 
 public abstract class AbstractTextField<Self extends AbstractTextField, F extends TextField> extends UserInterface<Self, F>
         implements ValueHelper<Self, String>, ContextMenuHelper<Self> {
-
-    /** The model. */
-    private final RegulatableProperty<String> text = new RegulatableProperty<>(ui.textProperty());
 
     /**
      * Enchanced view.
@@ -36,7 +32,7 @@ public abstract class AbstractTextField<Self extends AbstractTextField, F extend
      */
     @Override
     public final Property<String> valueProperty() {
-        return text;
+        return ui.textProperty();
     }
 
     /**
