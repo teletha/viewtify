@@ -605,7 +605,7 @@ public final class Viewtify {
         return new Calculated<E>(variable::get, null) {
 
             /** The binding disposer. */
-            private final Disposable disposer = variable.observeNow().to(v -> {
+            private final Disposable disposer = variable.observing().to(v -> {
                 invalidate();
                 for (InvalidationListener listener : listeners) {
                     listener.invalidated(this);
@@ -984,7 +984,7 @@ public final class Viewtify {
      * @param set A set to observe its modification.
      * @return A modification stream.
      */
-    public static <E> Signal<ObservableSet<E>> observeNow(ObservableSet<E> set) {
+    public static <E> Signal<ObservableSet<E>> observing(ObservableSet<E> set) {
         return observe(set).startWith(set);
     }
 
@@ -994,7 +994,7 @@ public final class Viewtify {
      * @param list A list to observe its modification.
      * @return A modification stream.
      */
-    public static <E> Signal<ObservableList<E>> observeNow(ObservableList<E> list) {
+    public static <E> Signal<ObservableList<E>> observing(ObservableList<E> list) {
         return observe(list).startWith(list);
     }
 
@@ -1004,7 +1004,7 @@ public final class Viewtify {
      * @param map A map to observe its modification.
      * @return A modification stream.
      */
-    public static <K, V> Signal<ObservableMap<K, V>> observeNow(ObservableMap<K, V> map) {
+    public static <K, V> Signal<ObservableMap<K, V>> observing(ObservableMap<K, V> map) {
         return observe(map).startWith(map);
     }
 
@@ -1014,7 +1014,7 @@ public final class Viewtify {
      * @param values
      * @return
      */
-    public static <T> Signal<T> observeNow(ObservableValue<T> value) {
+    public static <T> Signal<T> observing(ObservableValue<T> value) {
         return observe(value).startWith(value.getValue());
     }
 

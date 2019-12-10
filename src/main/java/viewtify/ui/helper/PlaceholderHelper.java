@@ -64,7 +64,7 @@ public interface PlaceholderHelper<Self extends PlaceholderHelper> extends Prope
      * @return Chainable API.
      */
     private Self placeholder(Function<Lang, Signal<String>> text) {
-        Lang.observe().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
+        Lang.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
             placeholder(translated);
         });
         return (Self) this;
@@ -77,7 +77,7 @@ public interface PlaceholderHelper<Self extends PlaceholderHelper> extends Prope
      * @return Chainable API.
      */
     default Self placeholder(Variable text) {
-        text.observeNow().on(Viewtify.UIThread).to((Consumer) this::placeholder);
+        text.observing().on(Viewtify.UIThread).to((Consumer) this::placeholder);
         return (Self) this;
     }
 

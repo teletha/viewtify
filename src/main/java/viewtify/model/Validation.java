@@ -23,7 +23,7 @@ public class Validation {
     public final Variable<String> message = Variable.empty();
 
     /** The exposed validation result. */
-    public final Signal<Boolean> valid = message.observeNow().map(m -> m == null || m.isEmpty());
+    public final Signal<Boolean> valid = message.observing().map(m -> m == null || m.isEmpty());
 
     /** The exposed validation result. */
     public final Signal<Boolean> invalid = valid.map(v -> !v);

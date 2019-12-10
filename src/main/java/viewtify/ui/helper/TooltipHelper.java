@@ -65,7 +65,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param text A text {@link Supplier} to set.
      */
     private Self tooltip(Function<Lang, Signal<String>> text) {
-        Lang.observe().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
+        Lang.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
             tooltip(translated);
         });
         return (Self) this;

@@ -246,7 +246,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default <P extends WritableValue<V> & ObservableValue<V>> Self sync(P value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
-            sync(Viewtify.observeNow(value), value::setValue, synchronizer, unsynchronizer);
+            sync(Viewtify.observing(value), value::setValue, synchronizer, unsynchronizer);
         }
         return (Self) this;
     }
@@ -295,7 +295,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self syncFrom(ObservableValue<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
-            sync(Viewtify.observeNow(value), null, synchronizer, unsynchronizer);
+            sync(Viewtify.observing(value), null, synchronizer, unsynchronizer);
         }
         return (Self) this;
     }
@@ -393,7 +393,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self sync(Variable<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
-            sync(value.observeNow(), value::set, synchronizer, unsynchronizer);
+            sync(value.observing(), value::set, synchronizer, unsynchronizer);
         }
         return (Self) this;
     }
@@ -442,7 +442,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self syncFrom(Variable<V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
-            sync(value.observeNow(), null, synchronizer, unsynchronizer);
+            sync(value.observing(), null, synchronizer, unsynchronizer);
         }
         return (Self) this;
     }

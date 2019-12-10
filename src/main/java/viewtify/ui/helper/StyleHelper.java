@@ -100,7 +100,7 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
      * @return Chainable API.
      */
     default Self styleOnly(Variable<Style> style) {
-        return styleOnly(style.observeNow());
+        return styleOnly(style.observing());
     }
 
     /**

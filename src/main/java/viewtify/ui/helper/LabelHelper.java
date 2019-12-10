@@ -79,7 +79,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     private Self text(Function<Lang, Signal<String>> text) {
-        Lang.observe().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
+        Lang.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
             text(translated);
         });
         return (Self) this;
@@ -92,7 +92,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Variable text) {
-        text.observeNow().on(Viewtify.UIThread).to((Consumer) this::text);
+        text.observing().on(Viewtify.UIThread).to((Consumer) this::text);
         return (Self) this;
     }
 

@@ -357,7 +357,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default <C> Self take(ObservableValue<C> context, BiPredicate<E, C> filter) {
-        Viewtify.observeNow(context).to(c -> take(e -> filter.test(e, c)));
+        Viewtify.observing(context).to(c -> take(e -> filter.test(e, c)));
         return (Self) this;
     }
 
@@ -444,7 +444,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
         private Ð(CollectableHelper<?, E> helper) {
             items.setValue(helper.itemsProperty().getValue());
 
-            Viewtify.observeNow(items).combineLatest(filter.observeNow(), sorter.observeNow()).to(v -> {
+            Viewtify.observing(items).combineLatest(filter.observing(), sorter.observing()).to(v -> {
                 ObservableList items = v.ⅰ;
 
                 if (v.ⅱ != null) {
