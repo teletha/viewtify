@@ -10,25 +10,29 @@
 package viewtify.ui;
 
 import java.awt.Label;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import kiss.I;
 import kiss.Tree;
+import kiss.Variable;
 import kiss.WiseRunnable;
 import stylist.Style;
 import transcript.Transcript;
+import viewtify.Viewtify;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.util.TextNotation;
 
@@ -66,6 +70,62 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      */
     final Node build() {
         return (Node) root.get(0).node;
+    }
+
+    /**
+     * Declara the spcified {@link UserInterfaceProvider}.
+     * 
+     * @param provider UI provider.
+     */
+    protected final void $(Variable<? extends UserInterfaceProvider> provider) {
+        Pane pane = new Pane();
+        provider.observing().to(p -> {
+            ObservableList<Node> children = pane.getChildren();
+
+            if (p == null) {
+                children.clear();
+            } else {
+                if (p instanceof View) {
+                    View.build((View) p, null);
+                }
+
+                Styleable ui = p.ui();
+
+                if (ui == null || ui instanceof Node == false) {
+                    children.clear();
+                } else {
+                    Node node = (Node) ui;
+                    if (children.isEmpty()) {
+                        children.add(node);
+                    } else {
+                        children.set(0, node);
+                    }
+                }
+            }
+        });
+
+        $(() -> pane);
+    }
+
+    /**
+     * Declara the spcified {@link UserInterfaceProvider}.
+     * 
+     * @param provider UI provider.
+     */
+    protected final void $(ObservableList<? extends UserInterfaceProvider> providers) {
+        VBox box = new VBox();
+        Viewtify.observing(providers).to(list -> {
+            List<Node> nodes = I.signal(providers).map(p -> {
+                if (p instanceof View) {
+                    View.build((View) p, null);
+                }
+                return p.ui();
+            }).as(Node.class).toList();
+
+            box.getChildren().setAll(nodes);
+        });
+
+        $(() -> box);
     }
 
     /**
@@ -189,5 +249,9 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
         public P ui() {
             return I.make(type);
         }
+    }
+
+    private static final class Area extends Parent {
+
     }
 }

@@ -25,6 +25,38 @@ public class UIPane extends UserInterface<UIPane, Pane> {
     }
 
     /**
+     * Set the specified {@link UserInterfaceProvider}.
+     * 
+     * @param node
+     * @return
+     */
+    public final UIPane set(Node node) {
+        if (node != null) {
+            ObservableList<Node> children = ui.getChildren();
+
+            if (children.isEmpty()) {
+                children.add(node);
+            } else {
+                children.set(0, node);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Set the specified {@link UserInterfaceProvider}.
+     * 
+     * @param view
+     * @return
+     */
+    public final UIPane set(UserInterface provider) {
+        if (provider != null) {
+            set(provider.ui());
+        }
+        return this;
+    }
+
+    /**
      * Set the specified {@link View}.
      * 
      * @param view
@@ -44,13 +76,7 @@ public class UIPane extends UserInterface<UIPane, Pane> {
         if (view != null) {
             View.build(view, this.view);
 
-            ObservableList<Node> children = ui.getChildren();
-
-            if (children.isEmpty()) {
-                children.add(view.ui());
-            } else {
-                children.set(0, view.ui());
-            }
+            set(view.ui());
         }
         return this;
     }
