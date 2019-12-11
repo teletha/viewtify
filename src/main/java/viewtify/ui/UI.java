@@ -112,8 +112,8 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      * 
      * @param provider UI provider.
      */
-    protected final void $(ObservableList<? extends UserInterfaceProvider> providers) {
-        VBox box = new VBox();
+    protected final void $(UserInterfaceProvider root, ObservableList<? extends UserInterfaceProvider> providers) {
+        Pane pane = (Pane) root.ui();
         Viewtify.observing(providers).to(list -> {
             List<Node> nodes = I.signal(providers).map(p -> {
                 if (p instanceof View) {
@@ -122,10 +122,10 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
                 return p.ui();
             }).as(Node.class).toList();
 
-            box.getChildren().setAll(nodes);
+            pane.getChildren().setAll(nodes);
         });
 
-        $(() -> box);
+        $(() -> pane);
     }
 
     /**
