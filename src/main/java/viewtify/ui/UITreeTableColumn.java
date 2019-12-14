@@ -11,7 +11,9 @@ package viewtify.ui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -152,23 +154,27 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * {@inheritDoc}
      */
     @Override
-    public UITreeTableColumn<RowValue, ColumnValue> renderByNode(Function<ColumnValue, ? extends Node> renderer) {
-        ui.setCellFactory(table -> new GenericCell(renderer));
+    public <C> UITreeTableColumn<RowValue, ColumnValue> renderByNode(Supplier<C> context, BiFunction<C, ColumnValue, ? extends Node> renderer) {
+        ui.setCellFactory(table -> new GenericCell(context, renderer));
         return this;
     }
 
     /**
      * 
      */
-    private static class GenericCell<RowValue, ColumnValue> extends TreeTableCell<RowValue, ColumnValue> {
+    private static class GenericCell<RowValue, ColumnValue, C> extends TreeTableCell<RowValue, ColumnValue> {
+
+        /** The context. */
+        private final C context;
 
         /** The user defined cell renderer. */
-        private final Function<ColumnValue, Node> renderer;
+        private final BiFunction<C, ColumnValue, Node> renderer;
 
         /**
          * @param renderer
          */
-        private GenericCell(Function<ColumnValue, Node> renderer) {
+        private GenericCell(Supplier<C> context, BiFunction<C, ColumnValue, Node> renderer) {
+            this.context = context.get();
             this.renderer = renderer;
         }
 
@@ -182,7 +188,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
             if (item == null || empty) {
                 setGraphic(null);
             } else {
-                setGraphic(renderer.apply(item));
+                setGraphic(renderer.apply(context, item));
             }
         }
     }

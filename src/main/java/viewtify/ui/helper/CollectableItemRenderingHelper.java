@@ -11,10 +11,11 @@ package viewtify.ui.helper;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
@@ -33,7 +34,7 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      */
     default Self render(Function<E, String> renderer) {
         Objects.requireNonNull(renderer);
-        return renderByProperty(e -> new SimpleObjectProperty(renderer.apply(e)));
+        return render((label, e) -> label.text(renderer.apply(e)));
     }
 
     /**
@@ -44,8 +45,7 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      */
     default Self render(BiConsumer<UILabel, E> renderer) {
         Objects.requireNonNull(renderer);
-        return renderByUI(e -> {
-            UILabel label = UIBuilder.createUILabel();
+        return renderByUI(UIBuilder::createUILabel, (label, e) -> {
             renderer.accept(label, e);
             return label;
         });
@@ -57,9 +57,9 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    default Self renderByVariable(Function<E, Variable<String>> renderer) {
+    default <C> Self renderByVariable(Supplier<C> context, BiFunction<C, E, Variable<String>> renderer) {
         Objects.requireNonNull(renderer);
-        return renderByProperty(e -> Viewtify.property(renderer.apply(e)));
+        return renderByProperty(context, (c, e) -> Viewtify.property(renderer.apply(c, e)));
     }
 
     /**
@@ -68,11 +68,11 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    default Self renderByProperty(Function<E, Property<String>> renderer) {
+    default <C> Self renderByProperty(Supplier<C> context, BiFunction<C, E, Property<String>> renderer) {
         Objects.requireNonNull(renderer);
-        return renderByNode(e -> {
+        return renderByNode(context, (c, e) -> {
             Label label = new Label();
-            label.textProperty().bind(renderer.apply(e));
+            label.textProperty().bind(renderer.apply(c, e));
             return label;
         });
     }
@@ -83,9 +83,9 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    default Self renderByUI(Function<E, ? extends UserInterfaceProvider<? extends Node>> renderer) {
+    default <C> Self renderByUI(Supplier<C> context, BiFunction<C, E, ? extends UserInterfaceProvider<? extends Node>> renderer) {
         Objects.requireNonNull(renderer);
-        return renderByNode(e -> renderer.apply(e).ui());
+        return renderByNode(context, (c, e) -> renderer.apply(c, e).ui());
     }
 
     /**
@@ -94,5 +94,5 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    Self renderByNode(Function<E, ? extends Node> renderer);
+    <C> Self renderByNode(Supplier<C> context, BiFunction<C, E, ? extends Node> renderer);
 }
