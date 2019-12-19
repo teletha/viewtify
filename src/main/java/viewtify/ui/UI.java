@@ -10,7 +10,6 @@
 package viewtify.ui;
 
 import java.awt.Label;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -21,11 +20,13 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
 import kiss.Tree;
 import kiss.Variable;
@@ -85,22 +86,15 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
             if (p == null) {
                 children.clear();
             } else {
-                if (p instanceof View) {
-                    View.build((View) p, null);
-                }
-
-                Styleable ui = p.ui();
-
-                if (ui == null || ui instanceof Node == false) {
-                    children.clear();
-                } else {
-                    Node node = (Node) ui;
+                makeNode(p).to(node -> {
                     if (children.isEmpty()) {
                         children.add(node);
                     } else {
                         children.set(0, node);
                     }
-                }
+                }, () -> {
+                    children.clear();
+                });
             }
         });
 
@@ -115,17 +109,29 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
     protected final void $(UserInterfaceProvider root, ObservableList<? extends UserInterfaceProvider> providers) {
         Pane pane = (Pane) root.ui();
         Viewtify.observing(providers).to(list -> {
-            List<Node> nodes = I.signal(providers).map(p -> {
-                if (p instanceof View) {
-                    View.build((View) p, null);
-                }
-                return p.ui();
-            }).as(Node.class).toList();
-
-            pane.getChildren().setAll(nodes);
+            pane.getChildren().setAll(I.signal(providers).flatVariable(this::makeNode).toList());
         });
 
         $(() -> pane);
+    }
+
+    /**
+     * Build node from {@link UserInterfaceProvider}.
+     * 
+     * @param provider
+     * @return
+     */
+    private Variable<Node> makeNode(UserInterfaceProvider provider) {
+        if (provider instanceof View) {
+            View.build((View) provider, null);
+        }
+        Styleable ui = provider.ui();
+
+        if (ui instanceof Node) {
+            return Variable.of((Node) ui);
+        } else {
+            return Variable.empty();
+        }
     }
 
     /**
@@ -192,6 +198,14 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      */
     protected final void label(Transcript text, Consumer<UINode>... followers) {
         $(() -> TextNotation.parse(text), followers);
+    }
+
+    protected final void titled(Object text, UserInterfaceProvider content) {
+        TitledPane pane = new TitledPane();
+        pane.graphicProperty().set(TextNotation.parse(String.valueOf(text)));
+        makeNode(content).to(pane::setContent);
+
+        $(pane);
     }
 
     /**

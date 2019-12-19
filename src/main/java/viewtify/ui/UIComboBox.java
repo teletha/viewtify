@@ -13,6 +13,7 @@ import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
+import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.User;
@@ -30,7 +31,7 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
         super(new ComboBox(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.
-        when(User.Scroll, Action.traverse(ui.getSelectionModel()));
+        when(User.Scroll, Actions.traverse(ui.getSelectionModel()));
     }
 
     /**

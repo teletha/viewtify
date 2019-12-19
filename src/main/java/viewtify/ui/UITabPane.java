@@ -20,6 +20,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 
 import kiss.Disposable;
+import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.SelectableHelper;
@@ -40,7 +41,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
         super(new TabPane(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.
-        when(User.Scroll).take(Action.inside(() -> ui.lookup(".tab-header-background"))).to(Action.traverse(ui.getSelectionModel()));
+        when(User.Scroll).take(Actions.inside(() -> ui.lookup(".tab-header-background"))).to(Actions.traverse(ui.getSelectionModel()));
     }
 
     /**
