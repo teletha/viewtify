@@ -22,7 +22,11 @@ public interface MultiSelectableHelper<Self extends MultiSelectableHelper<Self, 
      * @return
      */
     private MultipleSelectionModel<E> model() {
-        return (MultipleSelectionModel<E>) property(Type.SelectionModel).getValue();
+        try {
+            return (MultipleSelectionModel<E>) property(Type.SelectionModel).getValue();
+        } catch (Exception e) {
+            return new MultipleCheckModel(property(Type.CheckModel).getValue());
+        }
     }
 
     /**

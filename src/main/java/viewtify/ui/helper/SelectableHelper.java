@@ -21,7 +21,11 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return
      */
     private SelectionModel<E> model() {
-        return property(Type.SelectionModel).getValue();
+        try {
+            return property(Type.SelectionModel).getValue();
+        } catch (Exception e) {
+            return new MultipleCheckModel(property(Type.CheckModel).getValue());
+        }
     }
 
     /**

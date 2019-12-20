@@ -22,6 +22,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+
+import org.controlsfx.control.IndexedCheckModel;
+
 import kiss.I;
 
 public interface PropertyAccessHelper {
@@ -54,6 +57,9 @@ public interface PropertyAccessHelper {
     class Type<T> {
         /** The defined property type. */
         public static final Type<Pos> Alignment = new Type("alignment");
+
+        /** The defined property type. */
+        public static final Type<IndexedCheckModel> CheckModel = new Type("checkModel");
 
         /** The defined property type. */
         public static final Type<ContentDisplay> ContentDisplay = new Type("contentDisplay");

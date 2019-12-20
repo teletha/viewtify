@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.ValueHelper;
 
-public abstract class AbstractTextField<Self extends AbstractTextField, F extends TextField> extends UserInterface<Self, F>
+public abstract class AbstractTextField<Self extends AbstractTextField<Self, F>, F extends TextField> extends UserInterface<Self, F>
         implements ValueHelper<Self, String>, ContextMenuHelper<Self> {
 
     /**

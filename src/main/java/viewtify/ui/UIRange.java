@@ -13,6 +13,7 @@ import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+
 import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -21,7 +22,7 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.util.Range;
 
-public class UIRange<V extends Comparable<V>> extends UserInterface<UIRange, HBox> implements ValueHelper<UIRange<V>, Range<V>> {
+public class UIRange<V extends Comparable<V>> extends UserInterface<UIRange<V>, HBox> implements ValueHelper<UIRange<V>, Range<V>> {
 
     /** The start value editor. */
     private final UIText startEditor;
