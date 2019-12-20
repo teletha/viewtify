@@ -544,7 +544,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
         }
 
         if (receiver != null) {
-            Disposable to = (publisher == null ? observing() : signal()).plug(synchronizer).to(receiver);
+            Disposable to = (publisher == null ? observing() : observe()).plug(synchronizer).to(receiver);
             if (unsynchronizer != null) unsynchronizer.add(to);
         }
     }
@@ -554,7 +554,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * 
      * @return A {@link Signal} that notify the change of this value.
      */
-    default Signal<V> signal() {
+    default Signal<V> observe() {
         return Viewtify.observe(valueProperty()).skipNull();
     }
 
@@ -578,7 +578,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self observe(WiseRunnable listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = signal().to(listener);
+            Disposable stop = observe().to(listener);
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
@@ -604,7 +604,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self observe(WiseConsumer<V> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = signal().to(listener);
+            Disposable stop = observe().to(listener);
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
@@ -630,7 +630,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self observe(WiseBiConsumer<V, V> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = signal().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
+            Disposable stop = observe().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
@@ -642,7 +642,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return A {@link Signal} that notify the change of this value.
      */
     default Signal<V> observing() {
-        return signal().startWith(value()).skipNull();
+        return observe().startWith(value()).skipNull();
     }
 
     /**
@@ -717,7 +717,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self observing(WiseBiConsumer<V, V> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = signal().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
+            Disposable stop = observe().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;

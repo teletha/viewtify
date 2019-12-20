@@ -43,7 +43,6 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -54,12 +53,9 @@ import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Region;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -915,6 +911,16 @@ public final class Viewtify {
      * @param values
      * @return
      */
+    public static <T> Signal<T> observe(ObservableValue<T> value) {
+        return observe(new ObservableValue[] {value});
+    }
+
+    /**
+     * Signal value changing.
+     * 
+     * @param values
+     * @return
+     */
     public static <T> Signal<T> observe(ObservableValue<T>... values) {
         return new Signal<>((observer, disposer) -> {
             ChangeListener<T> listener = (s, o, n) -> {
@@ -1231,44 +1237,6 @@ public final class Viewtify {
             // If this exception will be thrown, it is bug of this program. So we must rethrow the
             // wrapped error in here.
             throw new Error();
-        }
-    }
-
-    /**
-     * Clip the specified node by its parent node.
-     * 
-     * @param node A target node to clip.
-     */
-    public static final void clip(Node node) {
-        if (node != null) {
-            clip(node, node.parentProperty());
-        }
-    }
-
-    /**
-     * Clip the specified node by the specified clipper.
-     * 
-     * @param node A target node to clip.
-     * @param clipper A clip area.
-     */
-    public static final void clip(Node node, Parent clipper) {
-        if (node != null && clipper != null) {
-            clip(node, new SimpleObjectProperty(clipper));
-        }
-    }
-
-    /**
-     * Clip the specified node by the specified clipper.
-     * 
-     * @param node A target node to clip.
-     * @param clipper A clip area.
-     */
-    public static final void clip(Node node, ObservableValue<? extends Parent> clipper) {
-        if (node != null && clipper != null) {
-            Calculated<Double> width = calculate(clipper).as(Region.class).flatDouble(Region::widthProperty);
-            Calculated<Double> height = calculate(clipper).as(Region.class).flatDouble(Region::heightProperty);
-
-            node.clipProperty().bind(calculate(width, height, () -> new Rectangle(width.get(), height.get())));
         }
     }
 

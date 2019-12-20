@@ -80,4 +80,20 @@ public class Actions {
             }
         };
     }
+
+    /**
+     * Create new action to traverse the {@link SelectionModel} by scroll.
+     * 
+     * @param model A target {@link SelectionModel}.
+     * @return New action.
+     */
+    public static final <X extends ValueHelper<X, Double>> WiseBiConsumer<ScrollEvent, X> traverseDouble(Supplier<Double> step) {
+        return (e, helper) -> {
+            if (e.getDeltaY() > 0) {
+                helper.value(v -> v + step.get());
+            } else {
+                helper.value(v -> v - step.get());
+            }
+        };
+    }
 }
