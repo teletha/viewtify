@@ -10,7 +10,6 @@
 package viewtify.ui.helper;
 
 import javafx.scene.control.SelectionModel;
-
 import kiss.Variable;
 
 public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> extends PropertyAccessHelper {
@@ -35,5 +34,41 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      */
     default Variable<E> selectedItem() {
         return Variable.of(model().getSelectedItem());
+    }
+
+    /**
+     * Select the specified item.
+     * 
+     * @param item
+     * @return Chainable API.
+     */
+    default Self select(E item) {
+        if (item != null) {
+            model().select(item);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Select the item by index.
+     * 
+     * @param index An item index.
+     * @return Chainable API.
+     */
+    default Self selectAt(int index) {
+        if (0 <= index) {
+            model().select(index);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Clear selection.
+     * 
+     * @return Chainable API.
+     */
+    default Self unselect() {
+        model().clearSelection();
+        return (Self) this;
     }
 }
