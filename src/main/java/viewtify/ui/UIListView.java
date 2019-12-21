@@ -17,14 +17,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.MultiSelectableHelper;
+import viewtify.ui.helper.SelectableHelper;
 
 public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
-        implements MultiSelectableHelper<UIListView<E>, E>, CollectableHelper<UIListView<E>, E>,
+        implements SelectableHelper<UIListView<E>, E>, CollectableHelper<UIListView<E>, E>,
         CollectableItemRenderingHelper<UIListView<E>, E>, ContextMenuHelper<UIListView<E>> {
 
     /**

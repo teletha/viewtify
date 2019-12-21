@@ -9,22 +9,47 @@
  */
 package viewtify.ui.helper;
 
+import javafx.collections.ObservableList;
+import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SelectionModel;
+import javafx.scene.control.SingleSelectionModel;
 import kiss.Variable;
+import viewtify.ui.helper.SelectionModelWrappers.IndexedCheckModelWrapper;
+import viewtify.ui.helper.SelectionModelWrappers.SingleSelectionModelWrapper;
 
 public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> extends PropertyAccessHelper {
 
     /**
-     * Retrieve the {@link SelectionModel}.
+     * Retrieve the {@link MultipleSelectionModel}.
      * 
      * @return
      */
-    private SelectionModel<E> model() {
+    private MultipleSelectionModel<E> model() {
         try {
-            return property(Type.SelectionModel).getValue();
+            SelectionModel<E> model = property(Type.SelectionModel).getValue();
+
+            if (model instanceof MultipleSelectionModel) {
+                return (MultipleSelectionModel<E>) model;
+            } else {
+                return new SingleSelectionModelWrapper((SingleSelectionModel) model);
+            }
         } catch (Exception e) {
-            return new MultipleCheckModel(property(Type.CheckModel).getValue());
+            return new IndexedCheckModelWrapper(property(Type.CheckModel).getValue());
         }
+    }
+
+    /**
+     * Config {@link SelectionMode}.
+     * 
+     * @param mode
+     * @return Chainable API.
+     */
+    default Self mode(SelectionMode mode) {
+        if (mode != null) {
+            model().setSelectionMode(mode);
+        }
+        return (Self) this;
     }
 
     /**
@@ -34,6 +59,15 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      */
     default Variable<E> selectedItem() {
         return Variable.of(model().getSelectedItem());
+    }
+
+    /**
+     * Get live-state list of the selected items.
+     * 
+     * @return
+     */
+    default ObservableList<E> selectedItems() {
+        return model().getSelectedItems();
     }
 
     /**

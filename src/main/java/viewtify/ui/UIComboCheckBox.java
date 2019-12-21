@@ -9,19 +9,18 @@
  */
 package viewtify.ui;
 
+import org.controlsfx.control.CheckComboBox;
+
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-
-import org.controlsfx.control.CheckComboBox;
-
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.MultiSelectableHelper;
+import viewtify.ui.helper.SelectableHelper;
 
 public class UIComboCheckBox<T> extends UserInterface<UIComboCheckBox<T>, CheckComboBox<T>>
-        implements CollectableHelper<UIComboCheckBox<T>, T>, MultiSelectableHelper<UIComboCheckBox<T>, T>,
+        implements CollectableHelper<UIComboCheckBox<T>, T>, SelectableHelper<UIComboCheckBox<T>, T>,
         ContextMenuHelper<UIComboCheckBox<T>> {
 
     /** The item property. */

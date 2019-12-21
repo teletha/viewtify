@@ -16,15 +16,14 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
-
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.MultiSelectableHelper;
 import viewtify.ui.helper.PlaceholderHelper;
+import viewtify.ui.helper.SelectableHelper;
 
 public class UITreeTableView<T> extends UserInterface<UITreeTableView<T>, TreeTableView<T>>
-        implements MultiSelectableHelper<UITreeTableView<T>, T>, CollectableHelper<UITreeTableView<T>, T>,
-        PlaceholderHelper<UITreeTableView<T>>, ContextMenuHelper<UITreeTableView<T>> {
+        implements SelectableHelper<UITreeTableView<T>, T>, CollectableHelper<UITreeTableView<T>, T>, PlaceholderHelper<UITreeTableView<T>>,
+        ContextMenuHelper<UITreeTableView<T>> {
 
     /** The root item. */
     public final UITreeItem<T> root;
