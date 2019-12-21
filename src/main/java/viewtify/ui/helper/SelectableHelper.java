@@ -145,4 +145,32 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
         model().clearSelection();
         return (Self) this;
     }
+
+    /**
+     * Clear selection.
+     * 
+     * @param item Item to unselect.
+     * @return Chainable API.
+     */
+    default Self unselect(E item) {
+        if (item != null) {
+            MultipleSelectionModel<E> model = model();
+            int index = model.getSelectedItems().indexOf(item);
+            if (index != -1) {
+                model.clearAndSelect(index);
+            }
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Clear selection.
+     * 
+     * @param index Item index to unselect.
+     * @return Chainable API.
+     */
+    default Self unselectAt(int index) {
+        model().clearSelection(index);
+        return (Self) this;
+    }
 }
