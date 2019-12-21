@@ -63,6 +63,46 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
+     * Traverse selection.
+     * 
+     * @return Chainable API.
+     */
+    default Self selectNext() {
+        model().selectNext();
+        return (Self) this;
+    }
+
+    /**
+     * Traverse selection.
+     * 
+     * @return Chainable API.
+     */
+    default Self selectPrevious() {
+        model().selectPrevious();
+        return (Self) this;
+    }
+
+    /**
+     * Traverse selection.
+     * 
+     * @return Chainable API.
+     */
+    default Self selectFirst() {
+        model().selectFirst();
+        return (Self) this;
+    }
+
+    /**
+     * Traverse selection.
+     * 
+     * @return Chainable API.
+     */
+    default Self selectLast() {
+        model().selectLast();
+        return (Self) this;
+    }
+
+    /**
      * Clear selection.
      * 
      * @return Chainable API.
