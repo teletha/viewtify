@@ -40,11 +40,16 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll, e -> {
             if (e.getDeltaY() < 0) {
-                value(value().minusDays(1));
-            } else {
-                value(value().plusDays(1));
+                value(v -> v.minusDays(1));
+            } else if (e.getDeltaY() > 0) {
+                value(v -> v.plusDays(1));
+            } else if (e.getDeltaX() < 0) {
+                value(v -> v.minusMonths(1));
+            } else if (e.getDeltaX() > 0) {
+                value(v -> v.plusMonths(1));
             }
         });
+
     }
 
     /**
