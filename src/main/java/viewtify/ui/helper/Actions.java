@@ -9,6 +9,7 @@
  */
 package viewtify.ui.helper;
 
+import java.math.BigDecimal;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -90,9 +91,9 @@ public class Actions {
     public static final <X extends ValueHelper<X, Double>> WiseBiConsumer<ScrollEvent, X> traverseDouble(Supplier<Double> step) {
         return (e, helper) -> {
             if (e.getDeltaY() > 0) {
-                helper.value(v -> v + step.get());
+                helper.value(v -> BigDecimal.valueOf(v).add(BigDecimal.valueOf(step.get())).doubleValue());
             } else {
-                helper.value(v -> v - step.get());
+                helper.value(v -> BigDecimal.valueOf(v).subtract(BigDecimal.valueOf(step.get())).doubleValue());
             }
         };
     }
