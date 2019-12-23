@@ -9,12 +9,13 @@
  */
 package viewtify.ui;
 
-import org.controlsfx.control.CheckComboBox;
-
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+
+import org.controlsfx.control.CheckComboBox;
+
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.SelectableHelper;
@@ -43,5 +44,19 @@ public class UIComboCheckBox<T> extends UserInterface<UIComboCheckBox<T>, CheckC
     @Override
     public Property<ObservableList<T>> itemsProperty() {
         return itemProperty;
+    }
+
+    /**
+     * Set title.
+     * 
+     * @param title
+     * @return
+     */
+    public UIComboCheckBox<T> title(CharSequence title) {
+        if (title != null) {
+            ui.setTitle(title.toString());
+            ui.setShowCheckedCount(true);
+        }
+        return this;
     }
 }
