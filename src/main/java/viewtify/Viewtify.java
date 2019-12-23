@@ -392,23 +392,20 @@ public final class Viewtify {
             // create application specified directory for lock
             Directory root = Locator.directory(".lock-" + applicationName.toLowerCase()).touch();
 
-            root.lock().retryWhen(NullPointerException.class, e -> e.effect(() -> {
-                System.out.println("NPE");
-                // another application is activated
-                if (policy == ActivationPolicy.Earliest) {
-                    // make the window active
-                    root.file("active").touch();
+            root.lock()
+                    .retryWhen(NullPointerException.class, e -> e.effect(() -> {
+                        // another application is activated
+                        if (policy == ActivationPolicy.Earliest) {
+                            // make the window active
+                            root.file("active").touch();
 
-                    throw new Error("Application is running already.");
-                } else {
-                    // close the window
-                    root.file("close").touch();
-                }
-            }).wait(500, TimeUnit.MILLISECONDS).take(10)).to(e -> {
-                System.out.println("Accept " + e);
-            }, e -> {
-                System.out.println("Erorr " + e);
-            });
+                            throw new Error("Application is running already.");
+                        } else {
+                            // close the window
+                            root.file("close").touch();
+                        }
+                    }).delay(500, TimeUnit.MILLISECONDS).take(30))
+                    .to();
 
             // observe lock directory for next application
             root.observe().map(WatchEvent::context).to(path -> {
