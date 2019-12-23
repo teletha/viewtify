@@ -404,7 +404,7 @@ public final class Viewtify {
                             // close the window
                             root.file("close").touch();
                         }
-                    }).delay(500, TimeUnit.MILLISECONDS).take(30))
+                    }).wait(500, TimeUnit.MILLISECONDS).take(50))
                     .to();
 
             // observe lock directory for next application
