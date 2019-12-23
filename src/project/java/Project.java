@@ -25,7 +25,7 @@ public class Project extends bee.api.Project {
         require("org.openjfx", "javafx-graphics", fx);
         require("org.openjfx", "javafx-media", fx);
         require("org.openjfx", "javafx-web", fx);
-        require("org.controlsfx", "controlsfx", "11.0.0");
+        require("org.controlsfx", "controlsfx");
 
         versionControlSystem("https://github.com/teletha/viewtify");
     }
