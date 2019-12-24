@@ -34,6 +34,7 @@ import kiss.WiseRunnable;
 import stylist.Style;
 import transcript.Transcript;
 import viewtify.Viewtify;
+import viewtify.style.FormStyles;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.util.TextNotation;
 
@@ -50,6 +51,10 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
 
     /** The stack box. */
     protected static final UserInterfaceProvider sbox = new Box(StackPane.class);
+
+    private Style formLabelStyle = FormStyles.FormLabel;
+
+    private Style formControlStyle = FormStyles.FormInput;
 
     /**
      * 
@@ -198,6 +203,44 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      */
     protected final void label(Transcript text, Consumer<UINode>... followers) {
         $(() -> TextNotation.parse(text), followers);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param text
+     * @param ui
+     * @param followers
+     */
+    protected final void form(String text, UserInterfaceProvider... uis) {
+        form(() -> TextNotation.parse(text), uis);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param text
+     * @param ui
+     * @param followers
+     */
+    protected final void form(Transcript text, UserInterfaceProvider... uis) {
+        form(() -> TextNotation.parse(text), uis);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param text
+     * @param ui
+     * @param followers
+     */
+    protected final void form(UserInterfaceProvider text, UserInterfaceProvider... uis) {
+        $(hbox, FormStyles.FormRow, () -> {
+            $(text, formLabelStyle);
+            for (UserInterfaceProvider ui : uis) {
+                $(ui, formControlStyle);
+            }
+        });
     }
 
     protected final void titled(Object text, UserInterfaceProvider content) {

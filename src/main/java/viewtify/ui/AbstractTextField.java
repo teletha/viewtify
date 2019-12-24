@@ -9,14 +9,16 @@
  */
 package viewtify.ui;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.scene.control.TextField;
 
 import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.ValueHelper;
 
 public abstract class AbstractTextField<Self extends AbstractTextField<Self, F>, F extends TextField> extends UserInterface<Self, F>
-        implements ValueHelper<Self, String>, ContextMenuHelper<Self> {
+        implements ValueHelper<Self, String>, ContextMenuHelper<Self>, EditableHelper<Self> {
 
     /**
      * Enchanced view.
@@ -33,6 +35,14 @@ public abstract class AbstractTextField<Self extends AbstractTextField<Self, F>,
     @Override
     public final Property<String> valueProperty() {
         return ui.textProperty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BooleanProperty edit() {
+        return ui.editableProperty();
     }
 
     /**

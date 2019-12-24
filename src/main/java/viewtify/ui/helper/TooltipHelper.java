@@ -18,11 +18,14 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
+import org.controlsfx.control.PopOver;
+
 import kiss.I;
 import kiss.Signal;
 import transcript.Lang;
 import transcript.Transcript;
 import viewtify.Viewtify;
+import viewtify.ui.View;
 
 public interface TooltipHelper<Self extends TooltipHelper, W extends Node> extends StyleHelper<Self, W> {
 
@@ -71,4 +74,15 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
         return (Self) this;
     }
 
+    default Self popover(View view) {
+        if (view != null) {
+            ui().setOnMouseClicked(e -> {
+                PopOver pop = new PopOver();
+                pop.setDetachable(false);
+                pop.setContentNode(View.build(view).ui());
+                pop.show(ui());
+            });
+        }
+        return (Self) this;
+    }
 }
