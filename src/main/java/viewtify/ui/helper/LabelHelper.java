@@ -20,6 +20,9 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.INamedCharacter;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -104,6 +107,19 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      */
     default Self text(Property text) {
         property(Type.Text).bindBidirectional(text);
+        return (Self) this;
+    }
+
+    /**
+     * Set text.
+     * 
+     * @param text A text {@link Variable} to set.
+     * @return Chainable API.
+     */
+    default Self text(INamedCharacter text) {
+        if (text != null) {
+            text(new Glyph("FontAwesome", text));
+        }
         return (Self) this;
     }
 
