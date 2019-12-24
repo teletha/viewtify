@@ -212,7 +212,7 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      * @param ui
      * @param followers
      */
-    protected final void form(String text, UserInterfaceProvider... uis) {
+    protected final void form(String text, UserInterface... uis) {
         form(() -> TextNotation.parse(text), uis);
     }
 
@@ -223,7 +223,7 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      * @param ui
      * @param followers
      */
-    protected final void form(Transcript text, UserInterfaceProvider... uis) {
+    protected final void form(Transcript text, UserInterface... uis) {
         form(() -> TextNotation.parse(text), uis);
     }
 
@@ -234,11 +234,11 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
      * @param ui
      * @param followers
      */
-    protected final void form(UserInterfaceProvider text, UserInterfaceProvider... uis) {
+    protected final void form(UserInterfaceProvider text, UserInterface... uis) {
         $(hbox, FormStyles.FormRow, () -> {
             $(text, formLabelStyle);
-            for (UserInterfaceProvider ui : uis) {
-                $(ui, formControlStyle);
+            for (UserInterface ui : uis) {
+                $(ui, ui instanceof UICheckBox ? FormStyles.FormCheck : FormStyles.FormInput);
             }
         });
     }
