@@ -53,8 +53,46 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
      * @param enable
      * @return
      */
-    public Self sortable(boolean enable) {
+    public final Self sortable(boolean enable) {
         ui.setSortable(enable);
+        return (Self) this;
+    }
+
+    /**
+     * Used to indicate whether the width of this column can change. It is up to the resizing policy
+     * to enforce this however.
+     * 
+     * @param enable
+     * @return
+     */
+    public final Self resizable(boolean enable) {
+        ui.setResizable(enable);
+        return (Self) this;
+    }
+
+    /**
+     * A boolean property to toggle on and off the 'reorderability' of this column (with drag and
+     * drop - reordering by modifying the appropriate <code>columns</code> list is always allowed).
+     * When this property is true, this column can be reordered by users simply by dragging and
+     * dropping the columns into their desired positions. When this property is false, this ability
+     * to drag and drop columns is not available.
+     *
+     * @param enable
+     * @return
+     */
+    public final Self reorderable(boolean enable) {
+        ui.setReorderable(enable);
+        return (Self) this;
+    }
+
+    /**
+     * @param enable
+     * @return
+     */
+    public final Self operatable(boolean enable) {
+        sortable(enable);
+        resizable(enable);
+        reorderable(enable);
         return (Self) this;
     }
 }

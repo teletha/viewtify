@@ -51,10 +51,6 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
     /** The stack box. */
     protected static final UserInterfaceProvider sbox = new Box(StackPane.class);
 
-    private Style formLabelStyle = FormStyles.FormLabel;
-
-    private Style[] formControlStyle = new Style[0];
-
     /**
      * 
      */
@@ -235,70 +231,11 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
      */
     protected final void form(UserInterfaceProvider text, UserInterface... uis) {
         $(hbox, FormStyles.FormRow, () -> {
-            $(text, formLabelStyle);
+            $(text, FormStyles.FormLabel);
             for (UserInterface ui : uis) {
                 $(ui, ui instanceof UICheckBox ? FormStyles.FormCheck : FormStyles.FormInput);
             }
         });
-    }
-
-    protected final void header(CharSequence... texts) {
-        for (int i = 0; i < texts.length; i++) {
-
-        }
-    }
-
-    /**
-     * Declare Form
-     * 
-     * @param styles
-     * @param process
-     */
-    protected final void usingForm(Style first, Style second, Runnable process) {
-        usingForm(new Style[] {first, second}, process);
-    }
-
-    /**
-     * Declare Form
-     * 
-     * @param styles
-     * @param process
-     */
-    protected final void usingForm(Style first, Style second, Style third, Runnable process) {
-        usingForm(new Style[] {first, second, third}, process);
-    }
-
-    /**
-     * Declare Form
-     * 
-     * @param styles
-     * @param process
-     */
-    protected final void usingForm(Style first, Style second, Style third, Style fourth, Runnable process) {
-        usingForm(new Style[] {first, second, third, fourth}, process);
-    }
-
-    /**
-     * Declare Form
-     * 
-     * @param styles
-     * @param process
-     */
-    protected final void usingForm(Style first, Style second, Style third, Style fourth, Style fifth, Runnable process) {
-        usingForm(new Style[] {first, second, third, fourth, fifth}, process);
-    }
-
-    /**
-     * Declare Form
-     * 
-     * @param styles
-     * @param process
-     */
-    protected final void usingForm(Style[] styles, Runnable process) {
-        Style[] prev = formControlStyle;
-        formControlStyle = styles;
-        process.run();
-        formControlStyle = prev;
     }
 
     protected final void titled(Object text, UserInterfaceProvider content) {
