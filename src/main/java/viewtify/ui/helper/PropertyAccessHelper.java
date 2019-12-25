@@ -95,6 +95,12 @@ public interface PropertyAccessHelper {
         public static final Type<Double> LineSpacing = new Type("lineSpacing");
 
         /** The defined property type. */
+        public static final Type<Double> MaxWidth = new Type("maxWidth");
+
+        /** The defined property type. */
+        public static final Type<Double> MinWidth = new Type("minWidth");
+
+        /** The defined property type. */
         public static final Type<Boolean> MnemonicParsing = new Type("mnemonicParsing");
 
         /** The defined property type. */
@@ -126,6 +132,9 @@ public interface PropertyAccessHelper {
 
         /** The defined property type. */
         public static final Type<Boolean> Visible = new Type("visible");
+
+        /** The defined property type. */
+        public static final Type<Double> Width = new Type("prefWidth");
 
         /** The defined property type. */
         public static final Type<Boolean> WrapText = new Type("wrapText");

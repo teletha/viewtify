@@ -26,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
 import kiss.Tree;
 import kiss.Variable;
@@ -191,49 +192,59 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
     }
 
     /**
-     * Declare the {@link Label}.
+     * Declare Form UI simply.
      * 
-     * @param text A label text.
-     * @param followers
+     * @param label A form label.
+     * @param userInterfaces A list of form controls.
      */
-    protected final void label(Transcript text, Consumer<UINode>... followers) {
-        $(() -> TextNotation.parse(text), followers);
+    protected final void form(String label, UserInterface... userInterfaces) {
+        form(() -> TextNotation.parse(label), null, userInterfaces);
     }
 
     /**
      * Declare Form UI simply.
      * 
-     * @param text
-     * @param ui
-     * @param followers
+     * @param label A form label.
+     * @param style Additional style for controls.
+     * @param userInterfaces A list of form controls.
      */
-    protected final void form(String text, UserInterface... uis) {
-        form(() -> TextNotation.parse(text), uis);
+    protected final void form(String label, Style style, UserInterface... userInterfaces) {
+        form(() -> TextNotation.parse(label), style, userInterfaces);
     }
 
     /**
      * Declare Form UI simply.
      * 
-     * @param text
-     * @param ui
-     * @param followers
+     * @param label A form label.
+     * @param userInterfaces A list of form controls.
      */
-    protected final void form(Transcript text, UserInterface... uis) {
-        form(() -> TextNotation.parse(text), uis);
+    protected final void form(Transcript label, UserInterface... userInterfaces) {
+        form(() -> TextNotation.parse(label), null, userInterfaces);
     }
 
     /**
      * Declare Form UI simply.
      * 
-     * @param text
-     * @param ui
-     * @param followers
+     * @param label A form label.
+     * @param style Additional style for controls.
+     * @param userInterfaces A list of form controls.
      */
-    protected final void form(UserInterfaceProvider text, UserInterface... uis) {
+    protected final void form(Transcript label, Style style, UserInterface... userInterfaces) {
+        form(() -> TextNotation.parse(label), style, userInterfaces);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     * @param style Additional style for controls.
+     * @param userInterfaces A list of form controls.
+     */
+    private void form(UserInterfaceProvider label, Style style, UserInterface... userInterfaces) {
         $(hbox, FormStyles.FormRow, () -> {
-            $(text, FormStyles.FormLabel);
-            for (UserInterface ui : uis) {
-                $(ui, ui instanceof UICheckBox ? FormStyles.FormCheck : FormStyles.FormInput);
+            $(label, FormStyles.FormLabel);
+            for (UserInterface userInterface : userInterfaces) {
+                $(userInterface, style == null ? new Style[] {FormStyles.FormInput} : new Style[] {FormStyles.FormInput, style});
             }
         });
     }
