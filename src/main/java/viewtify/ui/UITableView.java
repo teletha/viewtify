@@ -12,7 +12,9 @@ package viewtify.ui;
 import java.util.function.Function;
 
 import javafx.beans.property.Property;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import viewtify.ui.helper.CollectableHelper;
@@ -46,6 +48,25 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
      */
     public UITableView<T> render(Function<UITableView<T>, TableRow<T>> renderer) {
         ui.setRowFactory(table -> renderer.apply(this));
+        return this;
+    }
+
+    public UITableView<T> operatable(boolean enable) {
+        for (TableColumn column : ui.getColumns()) {
+            column.setSortable(enable);
+            column.setResizable(enable);
+            column.setReorderable(enable);
+        }
+
+        ui.getColumns().addListener((ListChangeListener<TableColumn<T, ?>>) change -> {
+            while (change.next()) {
+                for (TableColumn column : change.getAddedSubList()) {
+                    column.setSortable(enable);
+                    column.setResizable(enable);
+                    column.setReorderable(enable);
+                }
+            }
+        });
         return this;
     }
 }
