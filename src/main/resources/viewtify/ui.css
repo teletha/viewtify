@@ -1,0 +1,78 @@
+/* ==========================================================================
+  Hyperlink
+===========================================================================*/
+.hyperlink {
+		-fx-text-fill: -fx-link;
+		-fx-underline: false;
+		-fx-border-width: 0;
+}
+
+.hyperlink:hover {
+		-fx-underline: true;
+}
+
+
+/* ==========================================================================
+  Tab
+===========================================================================*/
+.tab-pane:top *.tab-header-area {
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0em 0em 0.0em 0em;
+}
+
+.tab-pane {
+  	-fx-tab-min-width: 11em;
+  	-fx-tab-max-width: 11em;
+}
+
+.tab {
+		-fx-background-insets: 0, 0, 1 1 0 1;
+    -fx-background-radius: 0;
+    -fx-padding: 0.4em 1.2em 0.4em 1.2em;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* ==========================================================================
+  Table
+===========================================================================*/
+.table-column {
+  	-fx-alignment: CENTER;
+}
+
+.tree-table-row-cell {
+		-fx-indent: 0;
+}
+
+.table-view .table-cell {
+		-fx-table-cell-border-color: derive(-fx-color,5%);
+}
+
+.table-view .table-cell:filled {
+		-fx-table-cell-border-color: derive(-fx-color,20%);
+}
+
+.table-row-cell{
+    -fx-table-cell-border-color:transparent;
+}
+
+.simple.table-view,
+.simple.table-view .column-header-background,
+.simple.table-view .filler,
+.simple.table-view .table-column {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* ==========================================================================
+  Popover
+===========================================================================*/
+.popover {
+		-fx-padding: 8px;
+}
+
+.popover > .border {
+		-fx-opacity: 0.94;
+    -fx-fill: -fx-background !important;
+}
+

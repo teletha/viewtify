@@ -322,6 +322,7 @@ public final class Viewtify {
 
                 Scene scene = new Scene((Parent) view.ui());
                 scene.getStylesheets().add(theme.url);
+                scene.getStylesheets().add(Theme.locateCSS("viewtify/ui.css"));
                 scene.getStylesheets().add(applicationStyles.toUri().toURL().toExternalForm());
 
                 // observe stylesheets

@@ -9,9 +9,6 @@
  */
 package viewtify;
 
-/**
- * @version 2018/09/16 16:11:12
- */
 public enum Theme {
 
     Light(""), Dark("viewtify/dark.css");
@@ -23,6 +20,16 @@ public enum Theme {
      * @param path
      */
     private Theme(String path) {
-        this.url = ClassLoader.getSystemResource(path).toExternalForm();
+        this.url = locateCSS(path);
+    }
+
+    /**
+     * Locate css file resource.
+     * 
+     * @param path
+     * @return
+     */
+    static String locateCSS(String path) {
+        return ClassLoader.getSystemResource(path).toExternalForm();
     }
 }

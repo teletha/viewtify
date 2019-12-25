@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PlaceholderHelper;
@@ -67,6 +68,14 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
                 }
             }
         });
+        return this;
+    }
+
+    public UITableView<T> simplify() {
+        ui.getStyleClass().add("simple");
+        ui.setSelectionModel(null);
+        ui.setFocusTraversable(false);
+
         return this;
     }
 }
