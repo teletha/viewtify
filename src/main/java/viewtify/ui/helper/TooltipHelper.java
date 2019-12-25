@@ -16,6 +16,7 @@ import java.util.function.Supplier;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
+import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
 
 import org.controlsfx.control.PopOver;
@@ -30,9 +31,10 @@ import viewtify.ui.View;
 public interface TooltipHelper<Self extends TooltipHelper, W extends Node> extends StyleHelper<Self, W> {
 
     /**
-     * Set text.
+     * Set the text to be displayed as a tooltip.
      * 
-     * @param text A text to set.
+     * @param text Tooltip text.
+     * @return Chainable API.
      */
     default Self tooltip(Object text) {
         Tooltip tooltip = new Tooltip(Objects.toString(text));
@@ -45,27 +47,30 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
     }
 
     /**
-     * Set text.
+     * Set the text to be displayed as a tooltip.
      * 
-     * @param text A text {@link Supplier} to set.
+     * @param text Tooltip text.
+     * @return Chainable API.
      */
     default Self tooltip(Supplier text) {
         return tooltip(lang -> I.signal(text).map(String::valueOf));
     }
 
     /**
-     * Set text.
+     * Set the text to be displayed as a tooltip.
      * 
-     * @param text A text {@link Supplier} to set.
+     * @param text Tooltip text.
+     * @return Chainable API.
      */
     default Self tooltip(Transcript text) {
         return tooltip(text::as);
     }
 
     /**
-     * Set text.
+     * Set the text to be displayed as a tooltip.
      * 
-     * @param text A text {@link Supplier} to set.
+     * @param text Tooltip text.
+     * @return Chainable API.
      */
     private Self tooltip(Function<Lang, Signal<String>> text) {
         Lang.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
@@ -74,13 +79,39 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
         return (Self) this;
     }
 
-    default Self popover(View view) {
-        if (view != null) {
+    /**
+     * Set the content to be displayed as a popup.
+     * 
+     * @param contents Popup contents
+     * @return Chainable API.
+     */
+    default Self popup(View contents) {
+        return popup(AnchorLocation.WINDOW_TOP_LEFT, contents);
+    }
+
+    /**
+     * Set the content to be displayed as a popup.
+     * 
+     * @param location Sets the position of the anchor used when popping up.
+     * @param contents Popup contents
+     * @return Chainable API.
+     */
+    default Self popup(AnchorLocation location, View contents) {
+        if (contents != null) {
             ui().setOnMouseClicked(e -> {
-                PopOver pop = new PopOver();
-                pop.setDetachable(false);
-                pop.setContentNode(View.build(view).ui());
-                pop.show(ui());
+                PopOver pop = (PopOver) ui().getProperties().computeIfAbsent("viewtify-popover", k -> {
+                    PopOver p = new PopOver();
+                    p.setDetachable(false);
+                    p.setAnchorLocation(location);
+                    p.setContentNode(View.build(contents).ui());
+                    return p;
+                });
+
+                if (pop.isShowing()) {
+                    pop.hide();
+                } else {
+                    pop.show(ui());
+                }
             });
         }
         return (Self) this;
