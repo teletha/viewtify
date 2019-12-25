@@ -41,7 +41,7 @@ import viewtify.util.TextNotation;
 /**
  * Declared user interface.
  */
-public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
+public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
 
     /** The horizontal box. */
     protected static final UserInterfaceProvider hbox = new Box(HBox.class);
@@ -59,8 +59,8 @@ public class UI extends Tree<UserInterfaceProvider, UI.UINode> {
     /**
      * 
      */
-    protected UI() {
-        super(UI.UINode::new, null, (follower, current) -> {
+    protected ViewDSL() {
+        super(ViewDSL.UINode::new, null, (follower, current) -> {
             if (follower instanceof Style && current.node instanceof Styleable) {
                 StyleHelper.of((Styleable) current.node).style((Style) follower);
             } else {

@@ -55,12 +55,12 @@ public abstract class View implements Extensible, UserInterfaceProvider {
      * 
      * @return
      */
-    protected UI declareUI() {
+    protected ViewDSL declareUI() {
         // auto detect UI definition
         for (Class<?> member : getClass().getDeclaredClasses()) {
-            if (UI.class.isAssignableFrom(member)) {
+            if (ViewDSL.class.isAssignableFrom(member)) {
                 if (Modifier.isStatic(member.getModifiers())) {
-                    return I.make((Class<UI>) member);
+                    return I.make((Class<ViewDSL>) member);
                 } else {
                     for (Constructor constructor : member.getDeclaredConstructors()) {
                         Class[] paramTypes = constructor.getParameterTypes();
@@ -68,7 +68,7 @@ public abstract class View implements Extensible, UserInterfaceProvider {
                         if (paramTypes.length == 1 && paramTypes[0] == getClass()) {
                             try {
                                 constructor.setAccessible(true);
-                                return (UI) constructor.newInstance(this);
+                                return (ViewDSL) constructor.newInstance(this);
                             } catch (Exception e) {
                                 throw I.quiet(e);
                             }
@@ -77,7 +77,7 @@ public abstract class View implements Extensible, UserInterfaceProvider {
                 }
             }
         }
-        throw I.quiet(new ClassNotFoundException(getClass() + " don't have UI definition. Define member class which is subclassed by " + UI.class
+        throw I.quiet(new ClassNotFoundException(getClass() + " don't have UI definition. Define member class which is subclassed by " + ViewDSL.class
                 .getName() + "."));
     }
 

@@ -26,7 +26,7 @@ class UIDeclarationTest extends JavaFXTester {
 
     @Test
     void label() {
-        UI fxml = new UI() {
+        ViewDSL fxml = new ViewDSL() {
             {
                 $(label);
             }
@@ -38,7 +38,7 @@ class UIDeclarationTest extends JavaFXTester {
 
     @Test
     void vbox() {
-        UI fxml = new UI() {
+        ViewDSL fxml = new ViewDSL() {
             {
                 $(vbox, () -> {
                     $(label);
@@ -52,7 +52,7 @@ class UIDeclarationTest extends JavaFXTester {
 
     @Test
     void vboxLambda() {
-        UI fxml = new UI() {
+        ViewDSL fxml = new ViewDSL() {
             {
                 $(vbox, () -> {
                     $(label);
@@ -66,7 +66,7 @@ class UIDeclarationTest extends JavaFXTester {
 
     @Test
     void vboxNest() {
-        UI fxml = new UI() {
+        ViewDSL fxml = new ViewDSL() {
             {
                 $(vbox, () -> {
                     $(vbox, () -> {
@@ -83,7 +83,7 @@ class UIDeclarationTest extends JavaFXTester {
 
     @Test
     void vboxNestLambda() {
-        UI fxml = new UI() {
+        ViewDSL fxml = new ViewDSL() {
             {
                 $(vbox, () -> {
                     $(vbox, () -> {
