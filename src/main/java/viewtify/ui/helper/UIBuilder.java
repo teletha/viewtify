@@ -14,6 +14,8 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Constructor;
 
 import kiss.I;
+import viewtify.ui.UICheckBox;
+import viewtify.ui.UIComboBox;
 import viewtify.ui.UILabel;
 import viewtify.ui.View;
 
@@ -21,11 +23,23 @@ class UIBuilder {
 
     private static final MethodHandle UILabelBuilder;
 
+    private static final MethodHandle UIComboBuilder;
+
+    private static final MethodHandle UICheckBoxBuilder;
+
     static {
         try {
             Constructor c = UILabel.class.getDeclaredConstructor(View.class);
             c.setAccessible(true);
             UILabelBuilder = MethodHandles.lookup().unreflectConstructor(c);
+
+            c = UIComboBox.class.getDeclaredConstructor(View.class);
+            c.setAccessible(true);
+            UIComboBuilder = MethodHandles.lookup().unreflectConstructor(c);
+
+            c = UICheckBox.class.getDeclaredConstructor(View.class);
+            c.setAccessible(true);
+            UICheckBoxBuilder = MethodHandles.lookup().unreflectConstructor(c);
         } catch (Exception e) {
             throw I.quiet(e);
         }
@@ -39,6 +53,32 @@ class UIBuilder {
     static UILabel createUILabel() {
         try {
             return (UILabel) UILabelBuilder.invokeExact((View) null);
+        } catch (Throwable e) {
+            throw I.quiet(e);
+        }
+    }
+
+    /**
+     * Create emtpy {@link UIComboBox}.
+     * 
+     * @return
+     */
+    static UIComboBox createUIComboBox() {
+        try {
+            return (UIComboBox) UIComboBuilder.invokeExact((View) null);
+        } catch (Throwable e) {
+            throw I.quiet(e);
+        }
+    }
+
+    /**
+     * Create emtpy {@link UICheckBox}.
+     * 
+     * @return
+     */
+    static UICheckBox createUICheckBox() {
+        try {
+            return (UICheckBox) UICheckBoxBuilder.invokeExact((View) null);
         } catch (Throwable e) {
             throw I.quiet(e);
         }

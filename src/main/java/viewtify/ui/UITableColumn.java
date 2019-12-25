@@ -20,7 +20,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
@@ -41,6 +40,8 @@ public class UITableColumn<RowValue, ColumnValue>
      */
     private UITableColumn(View view) {
         super(new TableColumn());
+
+        ui.setCellValueFactory(v -> new SimpleObjectProperty(v.getValue()));
     }
 
     /**

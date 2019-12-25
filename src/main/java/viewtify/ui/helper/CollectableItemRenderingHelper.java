@@ -18,9 +18,10 @@ import java.util.function.Supplier;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.ui.UICheckBox;
+import viewtify.ui.UIComboBox;
 import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
 
@@ -95,4 +96,18 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @return
      */
     <C> Self renderByNode(Supplier<C> context, BiFunction<C, E, ? extends Node> renderer);
+
+    default Self renderAsCheckBox(Function<E, Variable<Boolean>> modeler, BiConsumer<UICheckBox, Variable<Boolean>> renderer) {
+        return renderByUI(UIBuilder::createUICheckBox, (ui, value) -> {
+            renderer.accept(ui, modeler.apply(value));
+            return ui;
+        });
+    }
+
+    default <V> Self renderAsComboBox(Function<E, Variable<V>> modeler, BiConsumer<UIComboBox<V>, Variable<V>> renderer) {
+        return renderByUI(UIBuilder::createUIComboBox, (ui, value) -> {
+            renderer.accept(ui, modeler.apply(value));
+            return ui;
+        });
+    }
 }

@@ -26,7 +26,7 @@ public interface FormStyles extends StyleDeclarations {
     };
 
     Style FormLabel = () -> {
-        display.minWidth(120, px);
+        display.minWidth(120, px).width(120, px);
         padding.top(4, px);
     };
 
@@ -35,7 +35,7 @@ public interface FormStyles extends StyleDeclarations {
     };
 
     Style FormInput = () -> {
-        display.minWidth(170, px);
+        display.minWidth(170, px).width(170, px);
         margin.right(10, px);
     };
 

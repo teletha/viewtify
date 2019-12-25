@@ -26,7 +26,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import kiss.I;
 import kiss.Tree;
 import kiss.Variable;
@@ -54,7 +53,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
 
     private Style formLabelStyle = FormStyles.FormLabel;
 
-    private Style formControlStyle = FormStyles.FormInput;
+    private Style[] formControlStyle = new Style[0];
 
     /**
      * 
@@ -241,6 +240,65 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
                 $(ui, ui instanceof UICheckBox ? FormStyles.FormCheck : FormStyles.FormInput);
             }
         });
+    }
+
+    protected final void header(CharSequence... texts) {
+        for (int i = 0; i < texts.length; i++) {
+
+        }
+    }
+
+    /**
+     * Declare Form
+     * 
+     * @param styles
+     * @param process
+     */
+    protected final void usingForm(Style first, Style second, Runnable process) {
+        usingForm(new Style[] {first, second}, process);
+    }
+
+    /**
+     * Declare Form
+     * 
+     * @param styles
+     * @param process
+     */
+    protected final void usingForm(Style first, Style second, Style third, Runnable process) {
+        usingForm(new Style[] {first, second, third}, process);
+    }
+
+    /**
+     * Declare Form
+     * 
+     * @param styles
+     * @param process
+     */
+    protected final void usingForm(Style first, Style second, Style third, Style fourth, Runnable process) {
+        usingForm(new Style[] {first, second, third, fourth}, process);
+    }
+
+    /**
+     * Declare Form
+     * 
+     * @param styles
+     * @param process
+     */
+    protected final void usingForm(Style first, Style second, Style third, Style fourth, Style fifth, Runnable process) {
+        usingForm(new Style[] {first, second, third, fourth, fifth}, process);
+    }
+
+    /**
+     * Declare Form
+     * 
+     * @param styles
+     * @param process
+     */
+    protected final void usingForm(Style[] styles, Runnable process) {
+        Style[] prev = formControlStyle;
+        formControlStyle = styles;
+        process.run();
+        formControlStyle = prev;
     }
 
     protected final void titled(Object text, UserInterfaceProvider content) {
