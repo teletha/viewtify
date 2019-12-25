@@ -21,12 +21,12 @@ import javafx.scene.control.TableColumnBase;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
 import kiss.Extensible;
 import kiss.I;
 import kiss.Variable;
 import kiss.model.Model;
 import transcript.Lang;
+import transcript.Transcript;
 import viewtify.Viewtify;
 
 public abstract class View implements Extensible, UserInterfaceProvider {
@@ -335,5 +335,25 @@ public abstract class View implements Extensible, UserInterfaceProvider {
         } else if (ui instanceof TableColumnBase) {
             ((TableColumnBase) ui).setId(id);
         }
+    }
+
+    /**
+     * Create the localized text. (base lang is english)
+     * 
+     * @param text Your english text.
+     * @return Localized text.
+     */
+    protected final Transcript en(String text) {
+        return Transcript.en(text, getClass().getPackageName().replace(".", "_"));
+    }
+
+    /**
+     * Create the localized text. (base lang is japanese)
+     * 
+     * @param text Your japanese text.
+     * @return Localized text.
+     */
+    protected final Transcript ja(String text) {
+        return Transcript.ja(text, getClass().getPackageName().replace(".", "_"));
     }
 }

@@ -12,7 +12,6 @@ package viewtify.ui;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.scene.control.TextField;
-
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.ValueHelper;
