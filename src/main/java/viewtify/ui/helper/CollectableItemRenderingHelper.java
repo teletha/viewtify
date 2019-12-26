@@ -46,7 +46,7 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      */
     default Self render(BiConsumer<UILabel, E> renderer) {
         Objects.requireNonNull(renderer);
-        return renderByUI(UIBuilder::createUILabel, (label, e) -> {
+        return renderByUI(() -> new UILabel(null), (label, e) -> {
             renderer.accept(label, e);
             return label;
         });
@@ -98,14 +98,14 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
     <C> Self renderByNode(Supplier<C> context, BiFunction<C, E, ? extends Node> renderer);
 
     default Self renderAsCheckBox(Function<E, Variable<Boolean>> modeler, BiConsumer<UICheckBox, Variable<Boolean>> renderer) {
-        return renderByUI(UIBuilder::createUICheckBox, (ui, value) -> {
+        return renderByUI(() -> new UICheckBox(null), (ui, value) -> {
             renderer.accept(ui, modeler.apply(value));
             return ui;
         });
     }
 
     default <V> Self renderAsComboBox(Function<E, Variable<V>> modeler, BiConsumer<UIComboBox<V>, Variable<V>> renderer) {
-        return renderByUI(UIBuilder::createUIComboBox, (ui, value) -> {
+        return renderByUI(() -> new UIComboBox(null), (ui, value) -> {
             renderer.accept(ui, modeler.apply(value));
             return ui;
         });
