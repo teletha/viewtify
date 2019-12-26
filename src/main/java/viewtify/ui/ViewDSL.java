@@ -21,13 +21,14 @@ import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
+import kiss.Signal;
 import kiss.Tree;
 import kiss.Variable;
 import stylist.Style;
@@ -96,15 +97,13 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
             if (p == null) {
                 children.clear();
             } else {
-                makeNode(p).to(node -> {
-                    if (children.isEmpty()) {
-                        children.add(node);
-                    } else {
-                        children.set(0, node);
-                    }
-                }, () -> {
-                    children.clear();
-                });
+                Node node = (Node) p.ui();
+
+                if (children.isEmpty()) {
+                    children.add(node);
+                } else {
+                    children.set(0, node);
+                }
             }
         });
 
@@ -116,13 +115,22 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
      * 
      * @param provider UI provider.
      */
-    protected final void $(UserInterfaceProvider root, ObservableList<? extends UserInterfaceProvider> providers) {
-        Pane pane = (Pane) root.ui();
-        Viewtify.observing(providers).to(list -> {
-            pane.getChildren().setAll(I.signal(providers).flatVariable(this::makeNode).toList());
-        });
+    protected final void $(ObservableList<? extends UserInterfaceProvider<? extends Node>> providers) {
 
-        $(() -> pane);
+        $(() -> new Holder(Viewtify.observe(providers), list -> {
+            list.setAll(I.signal(providers).map(UserInterfaceProvider::ui).toList());
+        }));
+    }
+
+    private static class Holder extends Group {
+
+        /**
+         * @param updater
+         */
+        private Holder(Signal<?> timing, Consumer<ObservableList<Node>> updater) {
+            timing.to(e -> updater.accept(getChildren()));
+            Viewtify.observe(parentProperty()).to(e -> updater.accept(getChildren()));
+        }
     }
 
     /**
@@ -222,14 +230,6 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
         });
     }
 
-    protected final void titled(Object text, UserInterfaceProvider content) {
-        TitledPane pane = new TitledPane();
-        pane.graphicProperty().set(TextNotation.parse(String.valueOf(text)));
-        makeNode(content).to(pane::setContent);
-
-        $(ui(pane));
-    }
-
     /**
      * UI tree structure node for javafx's {@link Node}.
      */
@@ -249,9 +249,6 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
          * @param context Unused.
          */
         private UINode(UserInterfaceProvider provider, int id, Object context) {
-            if (provider instanceof View) {
-                ((View) provider).initializeLazy(context instanceof View ? (View) context : null);
-            }
             this.node = provider.ui();
         }
 

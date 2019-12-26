@@ -21,6 +21,7 @@ import javafx.scene.control.TableColumnBase;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import kiss.Extensible;
 import kiss.I;
 import kiss.Variable;
@@ -29,7 +30,7 @@ import transcript.Lang;
 import transcript.Transcript;
 import viewtify.Viewtify;
 
-public abstract class View implements Extensible, UserInterfaceProvider {
+public abstract class View implements Extensible, UserInterfaceProvider<Node> {
 
     protected static Lang lang() {
         return Lang.current();
@@ -109,6 +110,8 @@ public abstract class View implements Extensible, UserInterfaceProvider {
      */
     @Override
     public final Node ui() {
+        initializeLazy(parent);
+
         if (root != null) {
             return root;
         }
