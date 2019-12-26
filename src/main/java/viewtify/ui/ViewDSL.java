@@ -18,6 +18,8 @@ import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeTableView;
@@ -229,17 +231,28 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
     }
 
     /**
-     * @version 2018/08/29 11:25:30
+     * UI tree structure node for javafx's {@link Node}.
      */
     static class UINode implements Consumer<UINode> {
 
-        protected Styleable node;
+        /**
+         * The actual javafx {@link Node} like object (using {@link Styleable} because
+         * {@link TableColumn} and {@link MenuItem} are not {@link Node}).
+         */
+        private Styleable node;
 
         /**
-         * @param name
+         * Internal tree node.
+         * 
+         * @param provider Actual UI provider.
+         * @param id Unused.
+         * @param context Unused.
          */
-        private UINode(UserInterfaceProvider ui, int id, Object context) {
-            this.node = ui.ui();
+        private UINode(UserInterfaceProvider provider, int id, Object context) {
+            if (provider instanceof View) {
+                ((View) provider).initializeLazy(context instanceof View ? (View) context : null);
+            }
+            this.node = provider.ui();
         }
 
         /**
