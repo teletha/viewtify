@@ -143,15 +143,6 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
     }
 
     /**
-     * Declare the specified {@link View}.
-     * 
-     * @param node A {@link View} to compose.
-     */
-    protected final void $(View view) {
-        $(() -> View.build(view).ui());
-    }
-
-    /**
      * Declare the {@link Label}.
      * 
      * @param text A label text.
