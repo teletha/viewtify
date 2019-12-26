@@ -11,7 +11,6 @@ package viewtify.ui;
 
 import javafx.css.Styleable;
 
-@SuppressWarnings("hiding")
 public interface UserInterfaceProvider<UI extends Styleable> {
 
     /**

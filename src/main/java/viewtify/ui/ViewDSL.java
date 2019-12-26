@@ -26,7 +26,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import kiss.I;
 import kiss.Tree;
 import kiss.Variable;
@@ -57,8 +56,8 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
      */
     protected ViewDSL() {
         super(ViewDSL.UINode::new, null, (follower, current) -> {
-            if (follower instanceof Style && current.node instanceof Styleable) {
-                StyleHelper.of((Styleable) current.node).style((Style) follower);
+            if (follower instanceof Style) {
+                StyleHelper.of(current.node).style((Style) follower);
             } else {
                 follower.accept(current);
             }
@@ -260,9 +259,9 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
     /**
      * @version 2018/08/29 11:25:30
      */
-    public static class UINode implements Consumer<UINode> {
+    static class UINode implements Consumer<UINode> {
 
-        protected Object node;
+        protected Styleable node;
 
         /**
          * @param name
