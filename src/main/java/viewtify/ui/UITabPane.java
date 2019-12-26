@@ -89,10 +89,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
 
         tab.selectedProperty().addListener(change -> {
             if (loaded.getAndSet(true) == false) {
-                V view = viewBuilder.apply(new UITab(tab));
-                view.initializeLazy(this.view);
-
-                tab.setContent(view.ui());
+                tab.setContent(viewBuilder.apply(new UITab(tab)).ui());
             }
         });
 

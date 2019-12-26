@@ -214,7 +214,7 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
     /**
      * Initialize myself.
      */
-    synchronized void initializeLazy(View parent) {
+    private synchronized void initializeLazy(View parent) {
         if (initialized == false) {
             initialized = true;
             this.parent = parent;
