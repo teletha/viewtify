@@ -251,6 +251,16 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
                             return sub;
                         }));
                     }
+                } else if (Node.class.isAssignableFrom(type)) {
+                    if (assigned == null) {
+                        Constructor constructor = Model.collectConstructors(type)[0];
+                        constructor.setAccessible(true);
+
+                        Node node = (Node) constructor.newInstance(this);
+
+                        assignId(node, field.getName());
+                        field.set(this, node);
+                    }
                 } else if (UserInterfaceProvider.class.isAssignableFrom(type)) {
                     if (assigned == null) {
                         Constructor constructor = Model.collectConstructors(type)[0];
