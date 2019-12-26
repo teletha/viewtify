@@ -18,8 +18,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
-
 import kiss.Disposable;
+import kiss.I;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
@@ -72,7 +72,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
      * @return
      */
     public <V extends View> UITabPane load(String label, Class<V> loadingViewType) {
-        return load(label, tab -> View.build(loadingViewType));
+        return load(label, tab -> I.make(loadingViewType));
     }
 
     /**

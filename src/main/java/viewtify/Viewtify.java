@@ -59,7 +59,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -312,15 +311,14 @@ public final class Viewtify {
                 // trace window size and position
                 I.make(WindowLocator.class).restore().locate(application.getClass(), stage);
 
-                View view = View.build(application);
-                views.add(view);
+                views.add(application);
 
                 if (icon.length() != 0) {
                     stage.getIcons().add(loadImage(icon));
-                    if (tray) buildSystemTray(view);
+                    if (tray) buildSystemTray(application);
                 }
 
-                Scene scene = new Scene((Parent) view.ui());
+                Scene scene = new Scene((Parent) application.ui());
                 scene.getStylesheets().add(theme.url);
                 scene.getStylesheets().add(Theme.locateCSS("viewtify/ui.css"));
                 scene.getStylesheets().add(applicationStyles.toUri().toURL().toExternalForm());

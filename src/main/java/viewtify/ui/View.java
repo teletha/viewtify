@@ -21,7 +21,6 @@ import javafx.scene.control.TableColumnBase;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
 import kiss.Extensible;
 import kiss.I;
 import kiss.Variable;
@@ -209,47 +208,6 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
         }
     }
 
-    /**
-     * Build {@link View} properly.
-     * 
-     * @param viewType
-     * @return
-     */
-    public static <V extends View> V build(Class<V> viewType) {
-        return build(viewType, null);
-    }
-
-    /**
-     * Build {@link View} properly.
-     * 
-     * @param view
-     * @return
-     */
-    public static <V extends View> V build(V view) {
-        return build(view, null);
-    }
-
-    /**
-     * Build {@link View} properly.
-     * 
-     * @param viewType
-     * @return
-     */
-    private static <V extends View> V build(Class<V> viewType, View parent) {
-        return build(I.make(viewType), parent);
-    }
-
-    /**
-     * Build {@link View} properly.
-     * 
-     * @param view
-     * @return
-     */
-    static <V extends View> V build(V view, View parent) {
-        view.initializeLazy(parent);
-        return view;
-    }
-
     /** The initialization state. */
     private boolean initialized;
 
@@ -287,7 +245,11 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
                         ((View) assigned).initializeLazy(this);
                     } else {
                         Class<View> viewType = (Class<View>) type;
-                        field.set(this, findAncestorView(viewType).or(() -> View.build(viewType, this)));
+                        field.set(this, findAncestorView(viewType).or(() -> {
+                            View sub = I.make(viewType);
+                            sub.initializeLazy(this);
+                            return sub;
+                        }));
                     }
                 } else if (UserInterfaceProvider.class.isAssignableFrom(type)) {
                     if (assigned == null) {
