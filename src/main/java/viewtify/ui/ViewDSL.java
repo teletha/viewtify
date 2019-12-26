@@ -10,6 +10,7 @@
 package viewtify.ui;
 
 import java.awt.Label;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -26,7 +27,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Tree;
@@ -85,71 +85,40 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
     }
 
     /**
-     * Declara the spcified {@link UserInterfaceProvider}.
+     * Declare the dynamic child {@link UserInterfaceProvider}.
      * 
-     * @param provider UI provider.
+     * @param provider A child UI provider.
+     * @param containerAttributes Attributes for container UI.
      */
-    protected final void $(Variable<? extends UserInterfaceProvider> provider) {
-        Pane pane = new Pane();
-        provider.observing().to(p -> {
-            ObservableList<Node> children = pane.getChildren();
+    protected final void $(Variable<? extends UserInterfaceProvider> provider, Consumer<UINode>... containerAttributes) {
+        $(() -> new Pane(), provider.observing().skipNull().map(I::list), containerAttributes);
+    }
 
-            if (p == null) {
-                children.clear();
-            } else {
-                Node node = (Node) p.ui();
+    /**
+     * Declare the dynamic children {@link UserInterfaceProvider}s.
+     * 
+     * @param container A container UI provider.
+     * @param providers A children UI provider.
+     * @param containerAttributes Attributes for container UI.
+     */
+    protected final void $(UserInterfaceProvider<Pane> container, ObservableList<? extends UserInterfaceProvider<? extends Node>> providers, Consumer<UINode>... containerAttributes) {
+        $(container, Viewtify.observing(providers), containerAttributes);
+    }
 
-                if (children.isEmpty()) {
-                    children.add(node);
-                } else {
-                    children.set(0, node);
-                }
-            }
+    /**
+     * Declare the dynamic children {@link UserInterfaceProvider}s.
+     * 
+     * @param container A container UI provider.
+     * @param providers A children UI provider.
+     * @param containerAttributes Attributes for container UI.
+     */
+    private void $(UserInterfaceProvider<Pane> container, Signal<? extends List<? extends UserInterfaceProvider<? extends Node>>> providers, Consumer<UINode>... containerAttributes) {
+        Pane pane = container.ui();
+        providers.to(list -> {
+            pane.getChildren().setAll(I.signal(list).map(UserInterfaceProvider::ui).toList());
         });
 
-        $(() -> pane);
-    }
-
-    /**
-     * Declara the spcified {@link UserInterfaceProvider}.
-     * 
-     * @param provider UI provider.
-     */
-    protected final void $(ObservableList<? extends UserInterfaceProvider<? extends Node>> providers) {
-
-        $(() -> new Holder(Viewtify.observe(providers), list -> {
-            list.setAll(I.signal(providers).map(UserInterfaceProvider::ui).toList());
-        }));
-    }
-
-    private static class Holder extends Group {
-
-        /**
-         * @param updater
-         */
-        private Holder(Signal<?> timing, Consumer<ObservableList<Node>> updater) {
-            timing.to(e -> updater.accept(getChildren()));
-            Viewtify.observe(parentProperty()).to(e -> updater.accept(getChildren()));
-        }
-    }
-
-    /**
-     * Build node from {@link UserInterfaceProvider}.
-     * 
-     * @param provider
-     * @return
-     */
-    private Variable<Node> makeNode(UserInterfaceProvider provider) {
-        if (provider instanceof View) {
-            View.build((View) provider, null);
-        }
-        Styleable ui = provider.ui();
-
-        if (ui instanceof Node) {
-            return Variable.of((Node) ui);
-        } else {
-            return Variable.empty();
-        }
+        $(() -> pane, containerAttributes);
     }
 
     /**
