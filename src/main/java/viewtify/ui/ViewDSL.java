@@ -39,7 +39,7 @@ import viewtify.ui.helper.StyleHelper;
 import viewtify.util.TextNotation;
 
 /**
- * Declared user interface.
+ * Domain specific language for user interface declaration.
  */
 public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> implements UserInterfaceProvider<Node> {
 
@@ -66,6 +66,14 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Node ui() {
+        return (Node) root.get(0).node;
+    }
+
+    /**
      * Convert {@link Node} to {@link UserInterfaceProvider}.
      * 
      * @param node A node to convert.
@@ -73,14 +81,6 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      */
     protected final UserInterfaceProvider ui(Node node) {
         return () -> node;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Node ui() {
-        return (Node) root.get(0).node;
     }
 
     /**
