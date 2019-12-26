@@ -10,7 +10,6 @@
 package viewtify.ui;
 
 import javafx.scene.control.Label;
-
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 
@@ -21,7 +20,7 @@ public class UILabel extends UserInterface<UILabel, Label> implements LabelHelpe
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    UILabel(View view) {
+    public UILabel(View view) {
         super(new Label(), view);
     }
 }

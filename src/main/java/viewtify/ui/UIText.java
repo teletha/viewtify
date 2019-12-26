@@ -18,7 +18,7 @@ public class UIText extends AbstractTextField<UIText, TextField> {
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UIText(View view) {
+    public UIText(View view) {
         super(new TextField(), view);
     }
 }

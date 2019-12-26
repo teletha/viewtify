@@ -12,7 +12,6 @@ package viewtify.ui;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.TextField;
-
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.ui.helper.ValueHelper;
@@ -27,7 +26,7 @@ public class UITextValue<E> extends UserInterface<UITextValue<E>, TextField> imp
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UITextValue(View view) {
+    public UITextValue(View view) {
         super(new TextField(), view);
 
         Viewtify.observe(property).to(v -> {

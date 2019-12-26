@@ -271,24 +271,6 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
     }
 
     /**
-     * Create {@link UserInterface}.
-     * 
-     * @param <T>
-     * @param type
-     * @return
-     */
-    protected final <T extends UserInterface> T make(Class<T> type) {
-        try {
-            Constructor constructor = Model.collectConstructors(type)[0];
-            constructor.setAccessible(true);
-
-            return (T) constructor.newInstance(this);
-        } catch (Exception e) {
-            throw I.quiet(e);
-        }
-    }
-
-    /**
      * Assign id to {@link Styleable}.
      * 
      * @param ui

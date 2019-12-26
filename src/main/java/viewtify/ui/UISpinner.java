@@ -18,7 +18,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.SpinnerValueFactory.ListSpinnerValueFactory;
 import javafx.util.StringConverter;
-
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.User;
@@ -32,7 +31,7 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UISpinner(View view) {
+    public UISpinner(View view) {
         super(new Spinner(new SpinnerValueFactory.ListSpinnerValueFactory(FXCollections.observableArrayList())), view);
 
         when(User.Scroll, e -> {

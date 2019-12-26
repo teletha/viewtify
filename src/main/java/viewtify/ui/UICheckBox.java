@@ -12,7 +12,6 @@ package viewtify.ui;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.scene.control.CheckBox;
-
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.ValueHelper;
@@ -25,7 +24,7 @@ public class UICheckBox extends UserInterface<UICheckBox, CheckBox>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UICheckBox(View view) {
+    public UICheckBox(View view) {
         super(new CheckBox(), view);
     }
 
