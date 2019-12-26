@@ -28,7 +28,6 @@ import javafx.scene.layout.VBox;
 import kiss.I;
 import kiss.Tree;
 import kiss.Variable;
-import kiss.WiseRunnable;
 import stylist.Style;
 import transcript.Transcript;
 import viewtify.Viewtify;
@@ -61,6 +60,16 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
                 follower.accept(current);
             }
         });
+    }
+
+    /**
+     * Convert {@link Node} to {@link UserInterfaceProvider}.
+     * 
+     * @param node A node to convert.
+     * @return
+     */
+    protected final UserInterfaceProvider ui(Node node) {
+        return () -> node;
     }
 
     /**
@@ -141,16 +150,6 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
     protected final void $(View view) {
         $(() -> View.build(view).ui());
     }
-
-    /**
-     * Declare the specified {@link Node}.
-     * 
-     * @param node A JavaFX {@link Node} to compose.
-     */
-    protected final void $(Node node) {
-        $(() -> node);
-    }
-
 
     /**
      * Declare the {@link Label}.
@@ -235,7 +234,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
         pane.graphicProperty().set(TextNotation.parse(String.valueOf(text)));
         makeNode(content).to(pane::setContent);
 
-        $(pane);
+        $(ui(pane));
     }
 
     /**
