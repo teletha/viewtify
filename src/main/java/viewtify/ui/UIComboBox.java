@@ -12,7 +12,6 @@ package viewtify.ui;
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
@@ -27,7 +26,7 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UIComboBox(View view) {
+    public UIComboBox(View view) {
         super(new ComboBox(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.

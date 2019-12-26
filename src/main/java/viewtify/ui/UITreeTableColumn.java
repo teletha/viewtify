@@ -20,7 +20,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
-
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
@@ -42,7 +41,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UITreeTableColumn(View view) {
+    public UITreeTableColumn(View view) {
         super(new TreeTableColumn());
     }
 

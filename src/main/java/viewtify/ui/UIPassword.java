@@ -18,7 +18,7 @@ public class UIPassword extends AbstractTextField<UIPassword, PasswordField> {
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UIPassword(View view) {
+    public UIPassword(View view) {
         super(new PasswordField(), view);
     }
 }

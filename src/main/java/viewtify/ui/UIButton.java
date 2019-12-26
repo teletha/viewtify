@@ -10,7 +10,6 @@
 package viewtify.ui;
 
 import javafx.scene.control.Button;
-
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 
@@ -21,7 +20,7 @@ public class UIButton extends UserInterface<UIButton, Button> implements LabelHe
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UIButton(View view) {
+    public UIButton(View view) {
         super(new Button(), view);
     }
 }

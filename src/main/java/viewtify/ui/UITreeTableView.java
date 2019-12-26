@@ -33,7 +33,7 @@ public class UITreeTableView<T> extends UserInterface<UITreeTableView<T>, TreeTa
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UITreeTableView(View view) {
+    public UITreeTableView(View view) {
         super(new TreeTableView(), view);
 
         TreeItem item = new TreeItem();

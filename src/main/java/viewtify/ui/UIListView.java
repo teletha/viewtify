@@ -31,7 +31,7 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UIListView(View view) {
+    public UIListView(View view) {
         super(new ListView<E>(), view);
     }
 

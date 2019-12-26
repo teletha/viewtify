@@ -12,7 +12,6 @@ package viewtify.ui;
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
-
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
@@ -27,7 +26,7 @@ public class UIChoiceBox<T> extends UserInterface<UIChoiceBox<T>, ChoiceBox<T>>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UIChoiceBox(View view) {
+    public UIChoiceBox(View view) {
         super(new ChoiceBox(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.

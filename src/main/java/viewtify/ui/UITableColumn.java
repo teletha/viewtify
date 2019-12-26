@@ -38,7 +38,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UITableColumn(View view) {
+    public UITableColumn(View view) {
         super(new TableColumn());
 
         ui.setCellValueFactory(v -> new SimpleObjectProperty(v.getValue()));

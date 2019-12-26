@@ -13,7 +13,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
-
 import stylist.value.Color;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
@@ -32,7 +31,7 @@ public class UIColorPicker extends UserInterface<UIColorPicker, ColorPicker>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    protected UIColorPicker(View view) {
+    public UIColorPicker(View view) {
         super(new ColorPicker(), view);
     }
 

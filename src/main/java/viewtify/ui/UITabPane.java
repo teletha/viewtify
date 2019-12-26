@@ -37,7 +37,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UITabPane(View view) {
+    public UITabPane(View view) {
         super(new TabPane(), view);
 
         // FUNCTIONALITY : wheel scroll will change selection.

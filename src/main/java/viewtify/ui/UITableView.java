@@ -17,7 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PlaceholderHelper;
@@ -32,7 +31,7 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    private UITableView(View view) {
+    public UITableView(View view) {
         super(new TableView(), view);
     }
 
