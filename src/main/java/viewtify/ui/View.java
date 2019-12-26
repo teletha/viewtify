@@ -223,7 +223,7 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
             try {
                 buildUI();
 
-                this.root = declareUI().build();
+                this.root = declareUI().ui();
             } catch (Exception e) {
                 e.printStackTrace();
                 throw I.quiet(e);

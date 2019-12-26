@@ -25,7 +25,7 @@ import kiss.Signal;
 import transcript.Lang;
 import transcript.Transcript;
 import viewtify.Viewtify;
-import viewtify.ui.View;
+import viewtify.ui.UserInterfaceProvider;
 
 public interface TooltipHelper<Self extends TooltipHelper, W extends Node> extends StyleHelper<Self, W> {
 
@@ -84,7 +84,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param contents Popup contents
      * @return Chainable API.
      */
-    default Self popup(View contents) {
+    default Self popup(UserInterfaceProvider<Node> contents) {
         return popup(AnchorLocation.WINDOW_TOP_LEFT, contents);
     }
 
@@ -95,7 +95,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param contents Popup contents
      * @return Chainable API.
      */
-    default Self popup(AnchorLocation location, View contents) {
+    default Self popup(AnchorLocation location, UserInterfaceProvider<Node> contents) {
         if (contents != null) {
             ui().setOnMouseClicked(e -> {
                 PopOver pop = (PopOver) ui().getProperties().computeIfAbsent("viewtify-popover", k -> {

@@ -9,12 +9,11 @@
  */
 package viewtify.ui;
 
+import org.junit.jupiter.api.Test;
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-
-import org.junit.jupiter.api.Test;
-
 import viewtify.JavaFXTester;
 
 /**
@@ -32,7 +31,7 @@ class UIDeclarationTest extends JavaFXTester {
             }
         };
 
-        Node node = fxml.build();
+        Node node = fxml.ui();
         assert node instanceof Label;
     }
 
@@ -46,7 +45,7 @@ class UIDeclarationTest extends JavaFXTester {
             }
         };
 
-        VBox root = as(fxml.build(), VBox.class);
+        VBox root = as(fxml.ui(), VBox.class);
         as(root.getChildren().get(0), Label.class);
     }
 
@@ -60,7 +59,7 @@ class UIDeclarationTest extends JavaFXTester {
             }
         };
 
-        VBox root = as(fxml.build(), VBox.class);
+        VBox root = as(fxml.ui(), VBox.class);
         as(root.getChildren().get(0), Label.class);
     }
 
@@ -76,7 +75,7 @@ class UIDeclarationTest extends JavaFXTester {
             }
         };
 
-        VBox root = as(fxml.build(), VBox.class);
+        VBox root = as(fxml.ui(), VBox.class);
         VBox child = as(root.getChildren().get(0), VBox.class);
         as(child.getChildren().get(0), Label.class);
     }
@@ -93,7 +92,7 @@ class UIDeclarationTest extends JavaFXTester {
             }
         };
 
-        VBox root = as(fxml.build(), VBox.class);
+        VBox root = as(fxml.ui(), VBox.class);
         VBox child = as(root.getChildren().get(0), VBox.class);
         as(child.getChildren().get(0), Label.class);
     }

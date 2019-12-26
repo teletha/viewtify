@@ -41,7 +41,7 @@ import viewtify.util.TextNotation;
 /**
  * Declared user interface.
  */
-public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
+public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> implements UserInterfaceProvider<Node> {
 
     /** The horizontal box. */
     protected static final UserInterfaceProvider hbox = new Box(HBox.class);
@@ -76,11 +76,10 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
     }
 
     /**
-     * Build node tree.
-     * 
-     * @return
+     * {@inheritDoc}
      */
-    final Node build() {
+    @Override
+    public Node ui() {
         return (Node) root.get(0).node;
     }
 
