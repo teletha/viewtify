@@ -18,7 +18,6 @@ import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeTableView;
@@ -152,23 +151,6 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
         $(() -> node);
     }
 
-    /**
-     * Declare the specified {@link Node}.
-     * 
-     * @param node A JavaFX {@link Node} to compose.
-     */
-    protected final void $(Node node, WiseRunnable writer) {
-        $(() -> node, writer);
-    }
-
-    /**
-     * Declare the specified {@link Node}.
-     * 
-     * @param node A JavaFX {@link Node} to compose.
-     */
-    protected final void $(Node node, Style style, WiseRunnable writer) {
-        $(() -> node, style, writer);
-    }
 
     /**
      * Declare the {@link Label}.
@@ -311,9 +293,5 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> {
         public P ui() {
             return I.make(type);
         }
-    }
-
-    private static final class Area extends Parent {
-
     }
 }
