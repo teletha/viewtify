@@ -12,12 +12,12 @@ package viewtify.style;
 import static stylist.StyleDSL.*;
 
 import stylist.Style;
-import stylist.StyleDeclarations;
+import stylist.StyleDeclarable;
 
 /**
  * Built-in form CSS
  */
-public interface FormStyles extends StyleDeclarations {
+public interface FormStyles extends StyleDeclarable {
 
     Style FormRow = () -> {
         display.minHeight(30, px);
