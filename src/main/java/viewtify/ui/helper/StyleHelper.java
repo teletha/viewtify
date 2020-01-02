@@ -43,10 +43,10 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
 
                 for (Style style : styles) {
                     if (style != null) {
-                        String name = style.name();
-
-                        if (!classes.contains(name)) {
-                            classes.add(name);
+                        for (String name : style.className()) {
+                            if (!classes.contains(name)) {
+                                classes.add(name);
+                            }
                         }
                     }
                 }
@@ -67,14 +67,16 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
                 ObservableList<String> classes = ui().getStyleClass();
 
                 for (Style member : style.group()) {
-                    String clazz = member.name();
+                    String[] names = member.className();
 
                     if (member == style) {
-                        if (!classes.contains(clazz)) {
-                            classes.add(clazz);
+                        for (String name : names) {
+                            if (!classes.contains(name)) {
+                                classes.add(name);
+                            }
                         }
                     } else {
-                        classes.remove(clazz);
+                        classes.removeAll(names);
                     }
                 }
             });
@@ -127,7 +129,7 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
 
                 for (Style style : styles) {
                     if (style != null) {
-                        classes.remove(style.name());
+                        classes.removeAll(style.className());
                     }
                 }
             });
