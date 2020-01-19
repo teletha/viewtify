@@ -14,6 +14,7 @@ import static java.util.concurrent.TimeUnit.*;
 import java.awt.AWTException;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -59,6 +60,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -130,6 +132,9 @@ public final class Viewtify {
     /** The estimated application class. */
     private static Class applicatonEntryClass;
 
+    /** The latest application. */
+    private static Viewtify latest;
+
     /** All managed views. */
     private static List<View> views = new ArrayList();
 
@@ -147,6 +152,9 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private boolean tray = false;
+
+    /** The configurable setting. */
+    private TrayIcon trayIcon;
 
     /** The configurable setting. */
     private Class<? extends View> trayView;
@@ -464,9 +472,9 @@ public final class Viewtify {
      * Create system tray.
      */
     private void buildSystemTray(View root) {
-        TrayIcon tray = new TrayIcon(loadAWTImage(icon));
-        tray.setImageAutoSize(true);
-        tray.addMouseListener(new MouseAdapter() {
+        trayIcon = new TrayIcon(loadAWTImage(icon));
+        trayIcon.setImageAutoSize(true);
+        trayIcon.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -487,8 +495,8 @@ public final class Viewtify {
 
         try {
             SystemTray system = SystemTray.getSystemTray();
-            system.add(tray);
-            onTerminating(() -> system.remove(tray));
+            system.add(trayIcon);
+            onTerminating(() -> system.remove(trayIcon));
         } catch (AWTException e) {
             throw I.quiet(e);
         }
@@ -501,7 +509,7 @@ public final class Viewtify {
      */
     public static final Viewtify application() {
         applicatonEntryClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).getCallerClass();
-        return new Viewtify();
+        return latest = new Viewtify();
     }
 
     /**
@@ -567,6 +575,51 @@ public final class Viewtify {
         } catch (Throwable e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    /**
+     * Show your message on the platform's notification system.
+     * 
+     * @param message
+     */
+    public final static void notify(String title, String message) {
+        notify(title, message, MessageType.NONE);
+    }
+
+    /**
+     * Show your message on the platform's notification system.
+     * 
+     * @param message
+     */
+    public final static void notifyInfo(String title, String message) {
+        notify(title, message, MessageType.INFO);
+    }
+
+    /**
+     * Show your message on the platform's notification system.
+     * 
+     * @param message
+     */
+    public final static void notifyWarn(String title, String message) {
+        notify(title, message, MessageType.WARNING);
+    }
+
+    /**
+     * Show your message on the platform's notification system.
+     * 
+     * @param message
+     */
+    public final static void notifyError(String title, String message) {
+        notify(title, message, MessageType.ERROR);
+    }
+
+    /**
+     * Show your message on the platform's notification system.
+     */
+    private final static void notify(String title, String message, MessageType type) {
+        if (latest != null && latest.trayIcon != null) {
+            latest.trayIcon.displayMessage(title, message, type);
         }
     }
 
