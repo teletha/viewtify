@@ -14,7 +14,7 @@ public class Project extends bee.api.Project {
 
         product("com.github.teletha", "viewtify", "1.0");
 
-        require("com.github.teletha", "customfx");
+        require("com.github.teletha", "altfx");
         require("com.github.teletha", "sinobu");
         require("com.github.teletha", "psychopath");
         require("com.github.teletha", "stylist");

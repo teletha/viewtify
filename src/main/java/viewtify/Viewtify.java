@@ -11,12 +11,6 @@ package viewtify;
 
 import static java.util.concurrent.TimeUnit.*;
 
-import java.awt.AWTException;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
-import java.awt.TrayIcon.MessageType;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.StackWalker.Option;
@@ -36,8 +30,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-
-import javax.imageio.ImageIO;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -60,6 +52,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import org.controlsfx.control.Notifications;
 
 import kiss.Decoder;
 import kiss.Disposable;
@@ -151,15 +145,6 @@ public final class Viewtify {
     private String icon = "";
 
     /** The configurable setting. */
-    private boolean tray = false;
-
-    /** The configurable setting. */
-    private TrayIcon trayIcon;
-
-    /** The configurable setting. */
-    private Class<? extends View> trayView;
-
-    /** The configurable setting. */
     private double width;
 
     /** The configurable setting. */
@@ -220,27 +205,6 @@ public final class Viewtify {
         if (theme != null) {
             this.theme = theme;
         }
-        return this;
-    }
-
-    /**
-     * Configure the functionality of system tray.
-     * 
-     * @return
-     */
-    public Viewtify useSystemTray() {
-        return useSystemTray(null);
-    }
-
-    /**
-     * Configure the functionality of system tray.
-     * 
-     * @param trayView
-     * @return
-     */
-    public Viewtify useSystemTray(Class<? extends View> trayView) {
-        this.tray = true;
-        this.trayView = trayView;
         return this;
     }
 
@@ -323,7 +287,6 @@ public final class Viewtify {
 
                 if (icon.length() != 0) {
                     stage.getIcons().add(loadImage(icon));
-                    if (tray) buildSystemTray(application);
                 }
 
                 Scene scene = new Scene((Parent) application.ui());
@@ -357,20 +320,6 @@ public final class Viewtify {
      */
     private Image loadImage(String path) {
         return new Image(loadResource(path));
-    }
-
-    /**
-     * Load the image resource which is located by the path.
-     * 
-     * @param path
-     * @return
-     */
-    private java.awt.Image loadAWTImage(String path) {
-        try {
-            return ImageIO.read(loadResource(path));
-        } catch (IOException e) {
-            throw I.quiet(e);
-        }
     }
 
     /**
@@ -469,40 +418,6 @@ public final class Viewtify {
     }
 
     /**
-     * Create system tray.
-     */
-    private void buildSystemTray(View root) {
-        trayIcon = new TrayIcon(loadAWTImage(icon));
-        trayIcon.setImageAutoSize(true);
-        trayIcon.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                switch (e.getButton()) {
-                case MouseEvent.BUTTON1: // left
-                    // if the user double-clicks on the tray icon, show the main app stage.
-                    inUI(root::show);
-                    break;
-
-                case MouseEvent.BUTTON2: // middle
-                    break;
-
-                case MouseEvent.BUTTON3: // right
-                    break;
-                }
-            }
-        });
-
-        try {
-            SystemTray system = SystemTray.getSystemTray();
-            system.add(trayIcon);
-            onTerminating(() -> system.remove(trayIcon));
-        } catch (AWTException e) {
-            throw I.quiet(e);
-        }
-    }
-
-    /**
      * Gain application builder.
      * 
      * @return
@@ -584,7 +499,7 @@ public final class Viewtify {
      * @param message
      */
     public final static void notify(String title, String message) {
-        notify(title, message, MessageType.NONE);
+        notify(title, message, Notifications::show);
     }
 
     /**
@@ -593,7 +508,7 @@ public final class Viewtify {
      * @param message
      */
     public final static void notifyInfo(String title, String message) {
-        notify(title, message, MessageType.INFO);
+        notify(title, message, Notifications::showInformation);
     }
 
     /**
@@ -602,7 +517,7 @@ public final class Viewtify {
      * @param message
      */
     public final static void notifyWarn(String title, String message) {
-        notify(title, message, MessageType.WARNING);
+        notify(title, message, Notifications::showWarning);
     }
 
     /**
@@ -611,16 +526,16 @@ public final class Viewtify {
      * @param message
      */
     public final static void notifyError(String title, String message) {
-        notify(title, message, MessageType.ERROR);
+        notify(title, message, Notifications::showError);
     }
 
     /**
      * Show your message on the platform's notification system.
      */
-    private final static void notify(String title, String message, MessageType type) {
-        if (latest != null && latest.trayIcon != null) {
-            latest.trayIcon.displayMessage(title, message, type);
-        }
+    private final static void notify(String title, String message, Consumer<Notifications> show) {
+        inUI(() -> {
+            show.accept(Notifications.create().darkStyle().title(title).text(message).owner(Screen.getPrimary()));
+        });
     }
 
     /**
