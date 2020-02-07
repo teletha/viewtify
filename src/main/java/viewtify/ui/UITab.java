@@ -1,40 +1,42 @@
 /*
- * Copyright (C) 2019 viewtify Development Team
+ * Copyright (C) 2018 Nameless Production Committee
  *
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *          https://opensource.org/licenses/MIT
+ *          http://opensource.org/licenses/mit-license.php
  */
 package viewtify.ui;
 
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
+
 import javafx.scene.control.Tab;
 
-import kiss.Signal;
-import viewtify.Viewtify;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 
-public class UITab implements StyleHelper<UITab, Tab>, LabelHelper<UITab>, ContextMenuHelper<UITab> {
+public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<UITab>, ContextMenuHelper<UITab> {
 
-    /** The actual ui. */
-    public final Tab ui;
+    /** The parent view. */
+    private final View parent;
 
-    /** The event signal. */
-    public final Signal<UITab> closing;
+    /** The actual view builder. */
+    private final Function<UITab, View> viewBuilder;
 
-    /** The event signal. */
-    public final Signal<UITab> closed;
+    private final AtomicBoolean loaded = new AtomicBoolean();
 
     /**
-     * @param tab
+     * 
      */
-    public UITab(Tab tab) {
-        this.ui = tab;
-        this.closing = Viewtify.observe(ui.onCloseRequestProperty(), this);
-        this.closed = Viewtify.observe(ui.onClosedProperty(), this);
+    public UITab(View parent, Function<UITab, View> viewBuilder) {
+        this.parent = Objects.requireNonNull(parent);
+        this.viewBuilder = Objects.requireNonNull(viewBuilder);
+
+        selectedProperty().addListener(change -> load());
     }
 
     /**
@@ -42,6 +44,26 @@ public class UITab implements StyleHelper<UITab, Tab>, LabelHelper<UITab>, Conte
      */
     @Override
     public Tab ui() {
-        return ui;
+        return this;
+    }
+
+    /**
+     * Test if this tab has been already loaded.
+     * 
+     * @return
+     */
+    public final boolean isLoaded() {
+        return loaded.get();
+    }
+
+    /**
+     * Load tab contents explicitly.
+     */
+    public final void load() {
+        if (loaded.getAndSet(true) == false) {
+            View view = viewBuilder.apply(this);
+            view.initializeLazy(parent);
+            setContent(view.ui());
+        }
     }
 }

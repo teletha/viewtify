@@ -9,13 +9,11 @@
  */
 package viewtify.ui;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 
@@ -84,17 +82,9 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
      * @param loadingViewType A view type to load.
      * @return
      */
-    public <V extends View> UITabPane load(String label, Function<UITab, V> viewBuilder) {
-        Tab tab = new Tab(label);
-        AtomicBoolean loaded = new AtomicBoolean();
-
-        tab.selectedProperty().addListener(change -> {
-            if (loaded.getAndSet(true) == false) {
-                V view = viewBuilder.apply(new UITab(tab));
-                view.initializeLazy(this.view);
-                tab.setContent(view.ui());
-            }
-        });
+    public <V extends View> UITabPane load(String label, Function<UITab, View> viewBuilder) {
+        UITab tab = new UITab(view, viewBuilder);
+        tab.text(label);
 
         ui.getTabs().add(tab);
         return this;
