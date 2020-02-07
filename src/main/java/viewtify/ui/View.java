@@ -21,6 +21,7 @@ import javafx.scene.control.TableColumnBase;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import kiss.Extensible;
 import kiss.I;
 import kiss.Variable;
@@ -214,7 +215,7 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
     /**
      * Initialize myself.
      */
-    private synchronized void initializeLazy(View parent) {
+    synchronized void initializeLazy(View parent) {
         if (initialized == false) {
             initialized = true;
             this.parent = parent;

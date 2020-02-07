@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
+
 import kiss.Disposable;
 import kiss.I;
 import viewtify.ui.helper.Actions;
@@ -89,7 +90,9 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
 
         tab.selectedProperty().addListener(change -> {
             if (loaded.getAndSet(true) == false) {
-                tab.setContent(viewBuilder.apply(new UITab(tab)).ui());
+                V view = viewBuilder.apply(new UITab(tab));
+                view.initializeLazy(this.view);
+                tab.setContent(view.ui());
             }
         });
 
