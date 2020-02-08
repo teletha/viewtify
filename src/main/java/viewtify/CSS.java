@@ -134,7 +134,7 @@ final class CSS {
 
         Pos p = StackPane.getAlignment(node);
         if (p == null) {
-            p = Pos.TOP_LEFT;
+            p = marginSide;
         }
 
         if (has("TOP", p)) {
