@@ -21,8 +21,10 @@ import javafx.css.StyleableProperty;
 import javafx.css.converter.InsetsConverter;
 import javafx.css.converter.SizeConverter;
 import javafx.css.converter.StringConverter;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
@@ -116,72 +118,42 @@ final class CSS {
             marginSize = 0;
         }
 
-        switch (marginSide) {
-        case TOP_CENTER:
-            m = new Insets(marginSize.doubleValue(), m.getRight(), m.getBottom(), m.getLeft());
-            break;
-        case CENTER_RIGHT:
-            m = new Insets(m.getTop(), marginSize.doubleValue(), m.getBottom(), m.getLeft());
-            break;
-        case BOTTOM_CENTER:
-            m = new Insets(m.getTop(), m.getRight(), marginSize.doubleValue(), m.getLeft());
-            break;
-        case CENTER_LEFT:
-            m = new Insets(m.getTop(), m.getRight(), m.getBottom(), marginSize.doubleValue());
-            break;
-        }
-        StackPane.setMargin(node, m);
-
         Pos p = StackPane.getAlignment(node);
         if (p == null) {
             p = marginSide;
         }
 
-        if (has("TOP", p)) {
-            if (has("RIGHT", marginSide)) {
-                p = Pos.TOP_RIGHT;
-            } else if (has("LEFT", marginSide)) {
-                p = Pos.TOP_LEFT;
-            } else {
-                p = Pos.TOP_CENTER;
-            }
-        } else if (has("RIGHT", p)) {
-            if (has("TOP", marginSide)) {
-                p = Pos.TOP_RIGHT;
-            } else if (has("BOTTOM", marginSide)) {
-                p = Pos.BOTTOM_RIGHT;
-            } else {
-                p = Pos.CENTER_RIGHT;
-            }
-        } else if (has("BOTTOM", p)) {
-            if (has("RIGHT", marginSide)) {
-                p = Pos.BOTTOM_RIGHT;
-            } else if (has("LEFT", marginSide)) {
-                p = Pos.BOTTOM_LEFT;
-            } else {
-                p = Pos.BOTTOM_CENTER;
-            }
-        } else {
-            if (has("TOP", marginSide)) {
-                p = Pos.TOP_LEFT;
-            } else if (has("BOTTOM", marginSide)) {
-                p = Pos.BOTTOM_LEFT;
-            } else {
-                p = Pos.CENTER_LEFT;
-            }
+        switch (marginSide) {
+        case TOP_CENTER:
+            m = new Insets(marginSize.doubleValue(), m.getRight(), m.getBottom(), m.getLeft());
+            p = compose(VPos.TOP, p.getHpos());
+            break;
+        case BOTTOM_CENTER:
+            m = new Insets(m.getTop(), m.getRight(), marginSize.doubleValue(), m.getLeft());
+            p = compose(VPos.BOTTOM, p.getHpos());
+            break;
+        case CENTER_RIGHT:
+            m = new Insets(m.getTop(), marginSize.doubleValue(), m.getBottom(), m.getLeft());
+            p = compose(p.getVpos(), HPos.RIGHT);
+            break;
+        case CENTER_LEFT:
+            m = new Insets(m.getTop(), m.getRight(), m.getBottom(), marginSize.doubleValue());
+            p = compose(p.getVpos(), HPos.LEFT);
+            break;
         }
+        StackPane.setMargin(node, m);
         StackPane.setAlignment(node, p);
     }
 
     /**
-     * Helper.
+     * Build {@link Pos} by {@link VPos} and {@link HPos}.
      * 
-     * @param side
-     * @param pos
+     * @param v
+     * @param h
      * @return
      */
-    private static final boolean has(String side, Pos pos) {
-        return pos.name().contains(side);
+    private static final Pos compose(VPos v, HPos h) {
+        return Pos.valueOf(v.name() + "_" + h.name());
     }
 
     /** The extra property. */
