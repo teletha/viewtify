@@ -175,6 +175,21 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
     }
 
     /**
+     * Find {@link Stage} of this {@link View}.
+     * 
+     * @return
+     */
+    public final Variable<Stage> stage() {
+        Window window = ui().getScene().getWindow();
+    
+        if (window instanceof Stage) {
+            return Variable.of((Stage) window);
+        } else {
+            return Variable.empty();
+        }
+    }
+
+    /**
      * Force to show the current application window which this {@link View} is displayed.
      */
     public final void show() {
@@ -192,21 +207,6 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      */
     public final void blink() {
         I.signal(stage()).skipNull().on(Viewtify.UIThread).to(Stage::toFront);
-    }
-
-    /**
-     * Find {@link Stage} of this {@link View}.
-     * 
-     * @return
-     */
-    private Variable<Stage> stage() {
-        Window window = ui().getScene().getWindow();
-
-        if (window instanceof Stage) {
-            return Variable.of((Stage) window);
-        } else {
-            return Variable.empty();
-        }
     }
 
     /** The initialization state. */
