@@ -9,17 +9,28 @@
  */
 package viewtify.ui;
 
+import java.util.function.Function;
+
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+
+import kiss.Disposable;
+import kiss.Signal;
+import kiss.Signaling;
+import viewtify.Viewtify;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.ValueHelper;
+import viewtify.ui.helper.ValuedLabelHelper;
 
 public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
-        implements CollectableHelper<UIComboBox<T>, T>, ValueHelper<UIComboBox<T>, T>, ContextMenuHelper<UIComboBox<T>> {
+        implements CollectableHelper<UIComboBox<T>, T>, ValueHelper<UIComboBox<T>, T>, ValuedLabelHelper<UIComboBox<T>, T>,
+        ContextMenuHelper<UIComboBox<T>> {
 
     /**
      * Builde {@link ComboBox}.
@@ -47,5 +58,45 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
     @Override
     public Property<ObservableList<T>> itemsProperty() {
         return ui.itemsProperty();
+    }
+
+    @Override
+    public UIComboBox<T> textWhen(Function<Signal<T>, Signal<String>> text) {
+        ListCell<T> cell = ui.getButtonCell();
+
+        // clear previous cell
+        if (cell instanceof DynamicLabel) {
+            ((DynamicLabel) cell).disposer.dispose();
+        }
+
+        // assign new cell
+        ui.setButtonCell(text == null ? null : new DynamicLabel(text));
+
+        // API definition
+        return this;
+    }
+
+    /**
+     * Dynamic label.
+     */
+    private static class DynamicLabel<T> extends ListCell<T> {
+
+        private final Signaling<T> signal = new Signaling();
+
+        private final Disposable disposer;
+
+        private DynamicLabel(Function<Signal<T>, Signal<String>> text) {
+            Label label = new Label();
+            setGraphic(label);
+            disposer = text.apply(signal.expose).on(Viewtify.UIThread).to(label::setText);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void updateItem(T item, boolean empty) {
+            signal.accept(item);
+        }
     }
 }
