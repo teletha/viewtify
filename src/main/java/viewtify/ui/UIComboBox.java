@@ -81,12 +81,13 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
      */
     private static class DynamicLabel<T> extends ListCell<T> {
 
+        private final Label label = new Label();
+
         private final Signaling<T> signal = new Signaling();
 
         private final Disposable disposer;
 
         private DynamicLabel(Function<Signal<T>, Signal<String>> text) {
-            Label label = new Label();
             setGraphic(label);
             disposer = text.apply(signal.expose).on(Viewtify.UIThread).to(label::setText);
         }
@@ -96,7 +97,11 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
          */
         @Override
         protected void updateItem(T item, boolean empty) {
-            signal.accept(item);
+            if (empty) {
+                label.setText("");
+            } else {
+                signal.accept(item);
+            }
         }
     }
 }
