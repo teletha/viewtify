@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UICheckBox;

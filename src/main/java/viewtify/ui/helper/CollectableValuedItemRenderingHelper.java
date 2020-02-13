@@ -13,7 +13,8 @@ import java.util.function.Function;
 
 import kiss.Signal;
 
-public interface ValuedLabelHelper<Self extends ValuedLabelHelper, V> extends ValueHelper<Self, V> {
+public interface CollectableValuedItemRenderingHelper<Self extends CollectableValuedItemRenderingHelper, V>
+        extends ValueHelper<Self, V>, CollectableItemRenderingHelper<Self, V> {
 
     /**
      * Set text for the current value.
@@ -21,8 +22,8 @@ public interface ValuedLabelHelper<Self extends ValuedLabelHelper, V> extends Va
      * @param text A text to set.
      * @return Chainable API.
      */
-    default Self text(String text) {
-        return textWhen(s -> s.mapTo(text));
+    default Self renderSelected(Function<V, String> text) {
+        return renderSelectedWhen(s -> s.map(text::apply));
     }
 
     /**
@@ -31,15 +32,5 @@ public interface ValuedLabelHelper<Self extends ValuedLabelHelper, V> extends Va
      * @param text A text to set.
      * @return Chainable API.
      */
-    default Self text(Function<V, String> text) {
-        return textWhen(s -> s.map(text::apply));
-    }
-
-    /**
-     * Set text for the current value.
-     * 
-     * @param text A text to set.
-     * @return Chainable API.
-     */
-    Self textWhen(Function<Signal<V>, Signal<String>> text);
+    Self renderSelectedWhen(Function<Signal<V>, Signal<String>> text);
 }

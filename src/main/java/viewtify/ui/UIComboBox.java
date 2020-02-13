@@ -9,10 +9,13 @@
  */
 package viewtify.ui;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -23,13 +26,12 @@ import kiss.Signaling;
 import viewtify.Viewtify;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
+import viewtify.ui.helper.CollectableValuedItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.User;
-import viewtify.ui.helper.ValueHelper;
-import viewtify.ui.helper.ValuedLabelHelper;
 
 public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
-        implements CollectableHelper<UIComboBox<T>, T>, ValueHelper<UIComboBox<T>, T>, ValuedLabelHelper<UIComboBox<T>, T>,
+        implements CollectableHelper<UIComboBox<T>, T>, CollectableValuedItemRenderingHelper<UIComboBox<T>, T>,
         ContextMenuHelper<UIComboBox<T>> {
 
     /**
@@ -60,8 +62,11 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
         return ui.itemsProperty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public UIComboBox<T> textWhen(Function<Signal<T>, Signal<String>> text) {
+    public UIComboBox<T> renderSelectedWhen(Function<Signal<T>, Signal<String>> text) {
         ListCell<T> cell = ui.getButtonCell();
 
         // clear previous cell
@@ -103,5 +108,14 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
                 signal.accept(item);
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <C> UIComboBox<T> renderByNode(Supplier<C> context, BiFunction<C, T, ? extends Node> renderer) {
+        ui.setCellFactory(view -> new UIListView.GenericListCell<C, T>(context, renderer));
+        return this;
     }
 }

@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
@@ -48,14 +49,14 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
      */
     @Override
     public <C> UIListView<E> renderByNode(Supplier<C> context, BiFunction<C, E, ? extends Node> renderer) {
-        ui.setCellFactory(view -> new GenericCell<C, E>(context, renderer));
+        ui.setCellFactory(view -> new GenericListCell<C, E>(context, renderer));
         return this;
     }
 
     /**
      * 
      */
-    private static class GenericCell<C, E> extends ListCell<E> {
+    static final class GenericListCell<C, E> extends ListCell<E> {
 
         /** The context. */
         private final C context;
@@ -66,7 +67,7 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
         /**
          * @param renderer
          */
-        private GenericCell(Supplier<C> context, BiFunction<C, E, ? extends Node> renderer) {
+        GenericListCell(Supplier<C> context, BiFunction<C, E, ? extends Node> renderer) {
             this.context = context.get();
             this.renderer = renderer;
         }
