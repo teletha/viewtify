@@ -140,6 +140,11 @@ final class CSS {
             m = new Insets(m.getTop(), m.getRight(), m.getBottom(), marginSize.doubleValue());
             p = compose(p.getVpos(), HPos.LEFT);
             break;
+
+        default:
+            // If this exception will be thrown, it is bug of this program. So we must rethrow the
+            // wrapped error in here.
+            throw new Error();
         }
         StackPane.setMargin(node, m);
         StackPane.setAlignment(node, p);
