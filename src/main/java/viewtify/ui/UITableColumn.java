@@ -20,7 +20,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+
 import kiss.I;
+import kiss.Signal;
 import kiss.Variable;
 import kiss.WiseFunction;
 import viewtify.Viewtify;
@@ -42,6 +44,17 @@ public class UITableColumn<RowValue, ColumnValue>
         super(new TableColumn());
 
         ui.setCellValueFactory(v -> new SimpleObjectProperty(v.getValue()));
+    }
+
+    public UITableColumn<RowValue, ColumnValue> modelBySignal(WiseFunction<RowValue, Signal<ColumnValue>> mapper) {
+        if (mapper != null) {
+            ui.setCellValueFactory(data -> {
+                SimpleObjectProperty p = mapper.apply(data.getValue()).to(SimpleObjectProperty.class, SimpleObjectProperty::set);
+                new Error().printStackTrace();
+                return p;
+            });
+        }
+        return this;
     }
 
     /**
