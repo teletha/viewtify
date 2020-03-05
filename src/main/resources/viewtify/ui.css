@@ -21,14 +21,14 @@
 }
 
 .tab-pane {
-  	-fx-tab-min-width: 9.5em;
-  	-fx-tab-max-width: 9.5em;
+  	-fx-tab-min-width: 8.0em;
+  	-fx-tab-max-width: 8.0em;
 }
 
 .tab {
 	-fx-background-insets: 0, 0, 1 1 0 1;
     -fx-background-radius: 0;
-    -fx-padding: 0.4em 1em 0.4em 1em;
+    -fx-padding: 0.4em 0.8em 0.4em 0.8em;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }

@@ -11,6 +11,7 @@ package viewtify.ui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -20,6 +21,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.util.Callback;
 
 import kiss.I;
 import kiss.Signal;
@@ -48,11 +51,7 @@ public class UITableColumn<RowValue, ColumnValue>
 
     public UITableColumn<RowValue, ColumnValue> modelBySignal(WiseFunction<RowValue, Signal<ColumnValue>> mapper) {
         if (mapper != null) {
-            ui.setCellValueFactory(data -> {
-                SimpleObjectProperty p = mapper.apply(data.getValue()).to(SimpleObjectProperty.class, SimpleObjectProperty::set);
-                new Error().printStackTrace();
-                return p;
-            });
+            modelByProperty(v -> mapper.apply(v).to(SimpleObjectProperty.class, SimpleObjectProperty::set));
         }
         return this;
     }
@@ -94,7 +93,17 @@ public class UITableColumn<RowValue, ColumnValue>
      * @return
      */
     public UITableColumn<RowValue, ColumnValue> modelByProperty(Function<RowValue, ObservableValue<ColumnValue>> provider) {
-        ui.setCellValueFactory(data -> provider.apply(data.getValue()));
+        if (provider != null) {
+            ui.setCellValueFactory(new Callback<>() {
+
+                private final WeakHashMap<RowValue, ObservableValue<ColumnValue>> properties = new WeakHashMap();
+
+                @Override
+                public ObservableValue<ColumnValue> call(CellDataFeatures<RowValue, ColumnValue> param) {
+                    return properties.computeIfAbsent(param.getValue(), provider::apply);
+                }
+            });
+        }
         return this;
     }
 
