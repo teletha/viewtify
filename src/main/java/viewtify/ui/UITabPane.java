@@ -16,6 +16,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
+import javafx.scene.control.TabPane.TabDragPolicy;
 
 import kiss.Disposable;
 import kiss.I;
@@ -24,6 +25,7 @@ import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.SelectableHelper;
 import viewtify.ui.helper.User;
+import viewtify.ui.tab.TabPaneDetacher;
 
 public class UITabPane extends UserInterface<UITabPane, TabPane>
         implements ContextMenuHelper<UITabPane>, SelectableHelper<UITabPane, UITab>, CollectableHelper<UITabPane, UITab> {
@@ -41,6 +43,8 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll).take(Actions.inside(() -> ui.lookup(".tab-header-background"))).to(Actions.traverse(ui.getSelectionModel()));
+
+        TabPaneDetacher.create().makeTabsDetachable(ui);
     }
 
     /**
@@ -98,7 +102,20 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
      */
     public UITabPane policy(TabClosingPolicy policy) {
         if (policy != null) {
-            ui.tabClosingPolicyProperty().set(policy);
+            ui.setTabClosingPolicy(policy);
+        }
+        return this;
+    }
+
+    /**
+     * The closing policy for the tabs.
+     * 
+     * @param policy The closing policy for the tabs.
+     * @return Chainable API.
+     */
+    public UITabPane policy(TabDragPolicy policy) {
+        if (policy != null) {
+            ui.setTabDragPolicy(policy);
         }
         return this;
     }
