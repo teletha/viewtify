@@ -14,18 +14,21 @@ import java.util.function.Function;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TabPane.TabDragPolicy;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import kiss.Disposable;
 import kiss.I;
+import transcript.Transcript;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.SelectableHelper;
 import viewtify.ui.helper.User;
-import viewtify.ui.tab.TabPaneDetacher;
 
 public class UITabPane extends UserInterface<UITabPane, TabPane>
         implements ContextMenuHelper<UITabPane>, SelectableHelper<UITabPane, UITab>, CollectableHelper<UITabPane, UITab> {
@@ -43,8 +46,6 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll).take(Actions.inside(() -> ui.lookup(".tab-header-background"))).to(Actions.traverse(ui.getSelectionModel()));
-
-        TabPaneDetacher.create().makeTabsDetachable(ui);
     }
 
     /**
@@ -88,7 +89,10 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
      */
     public <V extends View> UITabPane load(String label, Function<UITab, View> viewBuilder) {
         UITab tab = new UITab(view, viewBuilder);
-        tab.text(label);
+        tab.text(label).context(c -> {
+            c.menu().text(Transcript.en("Tile")).when(User.Action, () -> tile(tab));
+            c.menu().text(Transcript.en("Detach")).when(User.Action, () -> detach(tab));
+        });
 
         ui.getTabs().add(tab);
         return this;
@@ -108,7 +112,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
     }
 
     /**
-     * The closing policy for the tabs.
+     * detach The closing policy for the tabs.
      * 
      * @param policy The closing policy for the tabs.
      * @return Chainable API.
@@ -118,5 +122,41 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
             ui.setTabDragPolicy(policy);
         }
         return this;
+    }
+
+    /**
+     * Detach the specified tab.
+     * 
+     * @param tab
+     */
+    private void detach(UITab tab) {
+        int originalIndex = ui.getTabs().indexOf(tab);
+
+        Pane content = (Pane) tab.getContent();
+        tab.setContent(null);
+
+        Scene scene = new Scene(content, content.getPrefWidth(), content.getPrefHeight());
+        scene.getStylesheets().addAll(ui.getScene().getStylesheets());
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.getIcons().addAll(((Stage) ui.getScene().getWindow()).getIcons());
+        stage.setTitle(tab.getText());
+        stage.setOnShown(e -> ui.getTabs().remove(tab));
+        stage.setOnCloseRequest(e -> {
+            stage.close();
+            tab.setContent(content);
+            ui.getTabs().add(originalIndex, tab);
+        });
+        stage.show();
+    }
+
+    /**
+     * Tile the specified tab.
+     * 
+     * @param tab
+     */
+    private void tile(UITab tab) {
+        System.out.println("tiling");
     }
 }
