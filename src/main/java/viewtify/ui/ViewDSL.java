@@ -21,6 +21,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
@@ -233,6 +234,8 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
                 ((TreeTableView) context.node).getColumns().add(node);
             } else if (context.node instanceof ScrollPane) {
                 ((ScrollPane) context.node).setContent((Node) node);
+            } else if (context.node instanceof SplitPane) {
+                ((SplitPane) context.node).getItems().add((Node) node);
             } else if (context.node instanceof Group) {
                 ((Group) context.node).getChildren().add((Node) node);
             } else if (context.node instanceof Pane) {
