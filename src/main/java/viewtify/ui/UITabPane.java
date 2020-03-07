@@ -15,6 +15,7 @@ import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
@@ -59,7 +60,7 @@ public class UITabPane extends UserInterface<UITabPane, SplitPane>
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<UITab>> itemsProperty() {
+    public final Property<ObservableList<UITab>> itemsProperty() {
         return new SimpleObjectProperty(main.getTabs());
     }
 
@@ -69,7 +70,7 @@ public class UITabPane extends UserInterface<UITabPane, SplitPane>
      * @param initialSelectedIndex
      * @return
      */
-    public UITabPane initial(int initialSelectedIndex) {
+    public final UITabPane initial(int initialSelectedIndex) {
         restore(main.getSelectionModel().selectedIndexProperty(), v -> main.getSelectionModel().select(v.intValue()), initialSelectedIndex);
         return this;
     }
@@ -82,7 +83,7 @@ public class UITabPane extends UserInterface<UITabPane, SplitPane>
      * @param loadingViewType A view type to load.
      * @return
      */
-    public <V extends View> UITabPane load(String label, Class<V> loadingViewType) {
+    public final <V extends View> UITabPane load(String label, Class<V> loadingViewType) {
         return load(label, tab -> I.make(loadingViewType));
     }
 
@@ -111,7 +112,7 @@ public class UITabPane extends UserInterface<UITabPane, SplitPane>
      * @param policy The closing policy for the tabs.
      * @return Chainable API.
      */
-    public UITabPane policy(TabClosingPolicy policy) {
+    public final UITabPane policy(TabClosingPolicy policy) {
         if (policy != null) {
             main.setTabClosingPolicy(policy);
         }
@@ -124,7 +125,7 @@ public class UITabPane extends UserInterface<UITabPane, SplitPane>
      * @param policy The closing policy for the tabs.
      * @return Chainable API.
      */
-    public UITabPane policy(TabDragPolicy policy) {
+    public final UITabPane policy(TabDragPolicy policy) {
         if (policy != null) {
             main.setTabDragPolicy(policy);
         }
@@ -167,19 +168,9 @@ public class UITabPane extends UserInterface<UITabPane, SplitPane>
         int originalIndex = main.getTabs().indexOf(tab);
 
         main.getTabs().remove(tab);
+        Node content = tab.getContent();
 
-        TabPane tabs = new TabPane();
-        tabs.getTabs().add(tab);
-        tab.ui().setOnClosed(e -> {
-            main.getTabs().add(originalIndex, tab);
-
-            if (tabs.getTabs().isEmpty()) {
-                ui.getItems().remove(tabs);
-            }
-            allocateEvenWidth();
-        });
-
-        ui.getItems().add(tabs);
+        ui.getItems().add(content);
         allocateEvenWidth();
     }
 
