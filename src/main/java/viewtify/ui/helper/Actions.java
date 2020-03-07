@@ -49,6 +49,7 @@ public class Actions {
             } else {
                 model.selectPrevious();
             }
+            e.consume();
         };
     }
 

@@ -13,6 +13,8 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Tab;
 
 import viewtify.ui.helper.ContextMenuHelper;
@@ -21,12 +23,16 @@ import viewtify.ui.helper.StyleHelper;
 
 public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<UITab>, ContextMenuHelper<UITab> {
 
+    /** Tab state. */
+    public final BooleanProperty detached = new SimpleBooleanProperty();
+
     /** The parent view. */
     private final View parent;
 
     /** The actual view builder. */
     private final Function<UITab, View> viewBuilder;
 
+    /** Tab state. */
     private final AtomicBoolean loaded = new AtomicBoolean();
 
     /**

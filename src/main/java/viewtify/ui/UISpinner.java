@@ -18,6 +18,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.SpinnerValueFactory.ListSpinnerValueFactory;
 import javafx.util.StringConverter;
+
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.User;
@@ -40,6 +41,7 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
             } else if (e.getDeltaY() < 0) {
                 ui.decrement();
             }
+            e.consume();
         });
     }
 

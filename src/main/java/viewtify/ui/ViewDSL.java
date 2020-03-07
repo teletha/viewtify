@@ -20,6 +20,7 @@ import javafx.css.Styleable;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
@@ -27,6 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Tree;
@@ -229,6 +231,8 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
                 ((TableView) context.node).getColumns().add(node);
             } else if (context.node instanceof TreeTableView) {
                 ((TreeTableView) context.node).getColumns().add(node);
+            } else if (context.node instanceof ScrollPane) {
+                ((ScrollPane) context.node).setContent((Node) node);
             } else if (context.node instanceof Group) {
                 ((Group) context.node).getChildren().add((Node) node);
             } else if (context.node instanceof Pane) {
