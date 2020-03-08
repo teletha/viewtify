@@ -13,13 +13,14 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import org.controlsfx.control.PopOver;
-
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
+
+import org.controlsfx.control.PopOver;
+
 import kiss.I;
 import kiss.Signal;
 import transcript.Lang;

@@ -24,11 +24,14 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToolBar;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import org.controlsfx.control.HiddenSidesPane;
 
 import kiss.I;
 import kiss.Signal;
@@ -236,6 +239,10 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
                 ((ScrollPane) context.node).setContent((Node) node);
             } else if (context.node instanceof SplitPane) {
                 ((SplitPane) context.node).getItems().add((Node) node);
+            } else if (context.node instanceof HiddenSidesPane) {
+                ((HiddenSidesPane) context.node).setContent((Node) node);
+            } else if (context.node instanceof ToolBar) {
+                ((ToolBar) context.node).getItems().add((Node) node);
             } else if (context.node instanceof Group) {
                 ((Group) context.node).getChildren().add((Node) node);
             } else if (context.node instanceof Pane) {

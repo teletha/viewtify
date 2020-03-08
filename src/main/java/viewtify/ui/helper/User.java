@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventType;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -24,13 +25,13 @@ import kiss.I;
 import kiss.Signal;
 import viewtify.Key;
 
-/**
- * @version 2018/08/02 10:24:27
- */
 public final class User<E extends Event> {
 
     /** User Action */
     public static final User<ActionEvent> Action = new User(ActionEvent.ACTION);
+
+    /** User Action */
+    public static final User<ContextMenuEvent> ContextMenu = new User(ContextMenuEvent.CONTEXT_MENU_REQUESTED);
 
     /** User Action */
     public static final User<GestureEvent> Gesture = GestureBy(MouseButton.NONE);

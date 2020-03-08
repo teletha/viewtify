@@ -14,6 +14,7 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.SingleSelectionModel;
+
 import kiss.Variable;
 import viewtify.ui.helper.SelectionModelWrappers.IndexedCheckModelWrapper;
 import viewtify.ui.helper.SelectionModelWrappers.SingleSelectionModelWrapper;
@@ -28,7 +29,6 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     private MultipleSelectionModel<E> model() {
         try {
             SelectionModel<E> model = property(Type.SelectionModel).getValue();
-
             if (model instanceof MultipleSelectionModel) {
                 return (MultipleSelectionModel<E>) model;
             } else {

@@ -9,6 +9,7 @@
  */
 package viewtify.ui;
 
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
@@ -27,12 +28,24 @@ public class UIContextMenu {
     }
 
     /**
-     * Add text menu.
+     * Declare simple menu.
      * 
      * @return
      */
     public UIMenuItem menu() {
         MenuItem menu = new MenuItem();
+        ui.getItems().add(menu);
+
+        return new UIMenuItem(menu);
+    }
+
+    /**
+     * Declare checkbox menu.
+     * 
+     * @return
+     */
+    public UIMenuItem checkMenu() {
+        CheckMenuItem menu = new CheckMenuItem();
         ui.getItems().add(menu);
 
         return new UIMenuItem(menu);

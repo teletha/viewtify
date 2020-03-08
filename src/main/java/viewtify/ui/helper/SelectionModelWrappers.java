@@ -9,12 +9,13 @@
  */
 package viewtify.ui.helper;
 
-import org.controlsfx.control.IndexedCheckModel;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SingleSelectionModel;
+
+import org.controlsfx.control.IndexedCheckModel;
+
 import viewtify.Viewtify;
 
 class SelectionModelWrappers {
@@ -36,8 +37,10 @@ class SelectionModelWrappers {
         /**
          * 
          */
-        SingleSelectionModelWrapper(SingleSelectionModel model) {
+        SingleSelectionModelWrapper(SingleSelectionModel<E> model) {
             this.model = model;
+            setSelectedIndex(model.getSelectedIndex());
+            setSelectedItem(model.getSelectedItem());
         }
 
         /**
@@ -48,6 +51,7 @@ class SelectionModelWrappers {
             if (indices == null) {
                 indices = FXCollections.observableArrayList();
                 Viewtify.observe(model.selectedIndexProperty()).as(Integer.class).to(index -> {
+                    setSelectedIndex(index);
                     if (indices.isEmpty()) {
                         indices.add(index);
                     } else {
@@ -66,6 +70,7 @@ class SelectionModelWrappers {
             if (items == null) {
                 items = FXCollections.observableArrayList();
                 Viewtify.observe(model.selectedItemProperty()).to(item -> {
+                    setSelectedItem(item);
                     if (items.isEmpty()) {
                         items.add(item);
                     } else {
