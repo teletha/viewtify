@@ -9,9 +9,6 @@
  */
 package viewtify.ui;
 
-import java.util.function.Consumer;
-
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
@@ -35,19 +32,22 @@ public class UIContextMenu {
     /**
      * Declare menu ui.
      * 
-     * @param menu
+     * @param provider
      */
-    public final void menu(UserInterfaceProvider<? extends Node> menu) {
-        menu(menu.ui());
+    public final void menu(UserInterfaceProvider<? extends Node> provider) {
+        menu(provider, true);
     }
 
     /**
-     * Declare menu node.
+     * Declare menu ui.
      * 
-     * @param menu
+     * @param provider
      */
-    public final void menu(Node menu) {
-        ui.getItems().add(new CustomMenuItem(menu));
+    public final void menu(UserInterfaceProvider<? extends Node> provider, boolean hideOnClick) {
+        CustomMenuItem item = new CustomMenuItem(provider.ui());
+        item.setHideOnClick(hideOnClick);
+
+        ui.getItems().add(item);
     }
 
     /**
@@ -72,43 +72,5 @@ public class UIContextMenu {
         ui.getItems().add(menu);
 
         return new UIMenuItem(menu);
-    }
-
-    public static void declareOn(UserInterfaceProvider<? extends Node> node, Consumer<UIContextMenu> context) {
-        declareOn(node.ui(), context);
-    }
-
-    public static void declareOn(Node node, Consumer<UIContextMenu> context) {
-        node.setOnContextMenuRequested(e -> {
-            e.consume();
-
-            ContextMenu c = new ContextMenu();
-            context.accept(new UIContextMenu(c));
-            c.setAutoHide(true);
-            c.setAutoFix(true);
-            c.setConsumeAutoHidingEvents(true);
-            c.setForceIntegerRenderScale(true);
-
-            Point2D localToScreen = node.localToScreen(e.getX(), e.getY());
-            c.show(node, localToScreen.getX(), localToScreen.getY());
-
-            c.setOnCloseRequest(x -> {
-                System.out.println("CloseRequest " + x);
-            });
-            c.setOnAutoHide(x -> {
-                System.out.println("AutoHide " + x);
-            });
-
-            c.setOnHiding(x -> {
-                System.out.println("Hidden " + x);
-            });
-            c.setOnHiding(x -> {
-                System.out.println("Hiding " + x);
-            });
-
-            c.sceneProperty().addListener(invalid -> {
-                System.out.println("invalid " + invalid);
-            });
-        });
     }
 }
