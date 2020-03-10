@@ -11,15 +11,12 @@ package viewtify.ui;
 
 import java.util.function.Consumer;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.WindowEvent;
 
 public class UIContextMenu {
 
@@ -87,46 +84,31 @@ public class UIContextMenu {
 
             ContextMenu c = new ContextMenu();
             context.accept(new UIContextMenu(c));
-            fix(c, true);
+            c.setAutoHide(true);
+            c.setAutoFix(true);
+            c.setConsumeAutoHidingEvents(true);
+            c.setForceIntegerRenderScale(true);
 
             Point2D localToScreen = node.localToScreen(e.getX(), e.getY());
             c.show(node, localToScreen.getX(), localToScreen.getY());
-        });
-    }
 
-    private static void fix(ContextMenu contextMenu, boolean hideOnMouseReleased) {
-        contextMenu.addEventHandler(WindowEvent.WINDOW_SHOWING, new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent windowEvent) {
-                Node contextMenuNode = contextMenu.getStyleableNode();
-                for (MenuItem menuItem : contextMenu.getItems()) {
-                    Node menuItemNode = menuItem.getStyleableNode();
-                    if (menuItemNode == null) {
-                        continue;
-                    }
+            c.setOnCloseRequest(x -> {
+                System.out.println("CloseRequest " + x);
+            });
+            c.setOnAutoHide(x -> {
+                System.out.println("AutoHide " + x);
+            });
 
-                    // マウスカーソルがメニューアイテムの外側に出てとき、
-                    // 他ノードにフォーカス要求を出すことでメニューアイテムからフォーカスを外します。
-                    // ここでは他ノードとして親であるcontextMenuNodeを指定してます。（他の適当なノードでもOK）
-                    menuItemNode.addEventHandler(MouseEvent.MOUSE_EXITED, mouseEvent -> {
-                        contextMenuNode.requestFocus();
-                    });
+            c.setOnHiding(x -> {
+                System.out.println("Hidden " + x);
+            });
+            c.setOnHiding(x -> {
+                System.out.println("Hiding " + x);
+            });
 
-                    // メニューアイテムで押下されたマウスボタンが離されたとき、
-                    // メニューアイテムがフォーカスされていなければ、マウスイベントを消費します。
-                    // これによってメニューアイテムのアクション発動を抑止することができます。
-                    // また、hideOnMouseReleased の指定に従ってコンテキスト・メニューを非表示にします。
-                    menuItemNode.addEventFilter(MouseEvent.MOUSE_RELEASED, mouseEvent -> {
-                        if (!menuItemNode.isFocused()) {
-                            mouseEvent.consume();
-                            if (hideOnMouseReleased) {
-                                contextMenu.hide();
-                            }
-                        }
-                    });
-                }
-                contextMenu.removeEventHandler(WindowEvent.WINDOW_SHOWING, this);
-            }
+            c.sceneProperty().addListener(invalid -> {
+                System.out.println("invalid " + invalid);
+            });
         });
     }
 }
