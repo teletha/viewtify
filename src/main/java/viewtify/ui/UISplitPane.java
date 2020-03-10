@@ -12,7 +12,9 @@ package viewtify.ui;
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 
-public class UISplitPane extends UserInterface<UISplitPane, SplitPane> {
+import viewtify.ui.helper.ContextMenuHelper;
+
+public class UISplitPane extends UserInterface<UISplitPane, SplitPane> implements ContextMenuHelper<UISplitPane> {
 
     /**
      * @param ui

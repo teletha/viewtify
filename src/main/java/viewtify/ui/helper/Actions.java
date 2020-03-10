@@ -15,6 +15,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.input.GestureEvent;
@@ -23,6 +24,7 @@ import javafx.scene.input.ScrollEvent;
 import kiss.WiseBiConsumer;
 import kiss.WiseConsumer;
 import kiss.WiseTriFunction;
+import viewtify.ui.helper.PropertyAccessHelper.Type;
 
 public class Actions {
 
@@ -45,12 +47,50 @@ public class Actions {
     public static WiseConsumer<ScrollEvent> traverse(SelectionModel model) {
         return e -> {
             if (e.getDeltaY() < 0) {
-                model.selectNext();
+                selectNext(model);
             } else {
-                model.selectPrevious();
+                selectPrev(model);
             }
             e.consume();
         };
+    }
+
+    /**
+     * Select the next item. (skip disabled item)
+     * 
+     * @param model
+     */
+    private static void selectNext(SelectionModel model) {
+        Object current = model.getSelectedItem();
+        model.selectNext();
+        Object next = model.getSelectedItem();
+
+        if (current != next && next instanceof PropertyAccessHelper) {
+            PropertyAccessHelper helper = (PropertyAccessHelper) next;
+            Property<Boolean> property = helper.property(Type.Disable);
+            if (property.getValue()) {
+                selectNext(model);
+            }
+        }
+    }
+
+    /**
+     * Select the previous item. (skip disabled item)
+     * 
+     * @param model
+     */
+    private static void selectPrev(SelectionModel model) {
+        Object current = model.getSelectedItem();
+        model.selectPrevious();
+        Object prev = model.getSelectedItem();
+
+        if (current != prev && prev instanceof PropertyAccessHelper) {
+            PropertyAccessHelper helper = (PropertyAccessHelper) prev;
+            Property<Boolean> property = helper.property(Type.Disable);
+            if (property.getValue()) {
+                selectPrev(model);
+            }
+        }
     }
 
     /**
