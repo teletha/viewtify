@@ -39,6 +39,50 @@ public class Actions {
     }
 
     /**
+     * Select the next item. (skip disabled item)
+     * 
+     * @param model
+     */
+    public static boolean selectNext(SelectionModel model) {
+        Object current = model.getSelectedItem();
+        model.selectNext();
+        Object next = model.getSelectedItem();
+
+        if (current != next && next instanceof PropertyAccessHelper) {
+            PropertyAccessHelper helper = (PropertyAccessHelper) next;
+            Property<Boolean> property = helper.property(Type.Disable);
+            if (property.getValue()) {
+                return selectNext(model);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Select the previous item. (skip disabled item)
+     * 
+     * @param model
+     */
+    public static boolean selectPrev(SelectionModel model) {
+        Object current = model.getSelectedItem();
+        model.selectPrevious();
+        Object prev = model.getSelectedItem();
+
+        if (current != prev && prev instanceof PropertyAccessHelper) {
+            PropertyAccessHelper helper = (PropertyAccessHelper) prev;
+            Property<Boolean> property = helper.property(Type.Disable);
+            if (property.getValue()) {
+                return selectPrev(model);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Creates an action that changes the value when a scroll event occurs.
      * 
      * @param model A selection model to traverse.
@@ -53,44 +97,6 @@ public class Actions {
             }
             e.consume();
         };
-    }
-
-    /**
-     * Select the next item. (skip disabled item)
-     * 
-     * @param model
-     */
-    private static void selectNext(SelectionModel model) {
-        Object current = model.getSelectedItem();
-        model.selectNext();
-        Object next = model.getSelectedItem();
-
-        if (current != next && next instanceof PropertyAccessHelper) {
-            PropertyAccessHelper helper = (PropertyAccessHelper) next;
-            Property<Boolean> property = helper.property(Type.Disable);
-            if (property.getValue()) {
-                selectNext(model);
-            }
-        }
-    }
-
-    /**
-     * Select the previous item. (skip disabled item)
-     * 
-     * @param model
-     */
-    private static void selectPrev(SelectionModel model) {
-        Object current = model.getSelectedItem();
-        model.selectPrevious();
-        Object prev = model.getSelectedItem();
-
-        if (current != prev && prev instanceof PropertyAccessHelper) {
-            PropertyAccessHelper helper = (PropertyAccessHelper) prev;
-            Property<Boolean> property = helper.property(Type.Disable);
-            if (property.getValue()) {
-                selectPrev(model);
-            }
-        }
     }
 
     /**
