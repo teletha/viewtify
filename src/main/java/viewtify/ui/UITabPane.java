@@ -9,6 +9,7 @@
  */
 package viewtify.ui;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import javafx.beans.property.Property;
@@ -83,8 +84,20 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
      * @param loadingViewType A view type to load.
      * @return
      */
-    public <V extends View> UITabPane load(String label, Function<UITab, View> viewBuilder) {
-        UITab tab = new UITab(view, viewBuilder);
+    public final <V extends View> UITabPane load(String label, Function<UITab, View> viewBuilder) {
+        return load(label, viewBuilder, null);
+    }
+
+    /**
+     * Load tab with the specified view.
+     * 
+     * @param label Specify the label of the tab. This is used as a temporary label until the
+     *            contents of the tab are read, as tab loading is delayed until needed actually.
+     * @param loadingViewType A view type to load.
+     * @return
+     */
+    public final <V extends View> UITabPane load(String label, Function<UITab, View> viewBuilder, Consumer<UITab> viewBuilt) {
+        UITab tab = new UITab(view, viewBuilder, viewBuilt);
         tab.text(label);
 
         ui.getTabs().add(tab);
