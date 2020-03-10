@@ -181,7 +181,7 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      */
     public final Variable<Stage> stage() {
         Window window = ui().getScene().getWindow();
-    
+
         if (window instanceof Stage) {
             return Variable.of((Stage) window);
         } else {
@@ -207,6 +207,16 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      */
     public final void blink() {
         I.signal(stage()).skipNull().on(Viewtify.UIThread).to(Stage::toFront);
+    }
+
+    /**
+     * Config view visibility.
+     * 
+     * @param visibility
+     */
+    public final void visible(boolean visibility) {
+        ui().setVisible(visibility);
+        ui().setManaged(visibility);
     }
 
     /** The initialization state. */
