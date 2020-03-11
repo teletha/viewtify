@@ -112,7 +112,7 @@ final class RootArea extends ViewArea {
     /**
      * Add the view to this area at position.
      * <p/>
-     * If position is {@link Position#CENTER} it will be added to that child that is defined as
+     * If position is {@link ViewPosition#CENTER} it will be added to that child that is defined as
      * editor area. Otherwise this area is split and the view will be positioned according the
      * position parameter.
      *
@@ -120,7 +120,7 @@ final class RootArea extends ViewArea {
      * @param position Add the view at this position.
      */
     @Override
-    protected void add(ViewStatus view, Position position) {
+    protected void add(ViewStatus view, ViewPosition position) {
         getFirstChild().add(view, position);
     }
 

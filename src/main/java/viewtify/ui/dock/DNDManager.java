@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -33,7 +33,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 
 /**
  * The drag&drop manager. The implementations handles the full dnd management of views.
@@ -102,7 +101,7 @@ class DNDManager {
 
         Dragboard db = pane.startDragAndDrop(TransferMode.MOVE);
         ClipboardContent content = new ClipboardContent();
-        content.put(DATAFORMAT, view.getView().id());
+        content.put(DATAFORMAT, view.view.id());
 
         db.setContent(content);
         if (dropStage == null) {
@@ -145,18 +144,28 @@ class DNDManager {
      * @param dropStage The stage where the view was dropped.
      */
     void onDragDroppedNewStage(DragEvent event, Stage dropStage) {
-
         if (isInvalidDragboard(event)) {
             return;
         }
 
         RootArea area = new RootArea(this, true);
-        Stage stage = initManagedWindow(dropStage, area);
+
+        Node ui = dragedViewStatus.view.ui();
+        Bounds bounds = ui.getBoundsInLocal();
+
+        Scene scene = new Scene(area.getNode(), bounds.getWidth(), bounds.getHeight());
+        scene.getStylesheets().addAll(ui.getScene().getStylesheets());
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setX(event.getX());
+        stage.setY(event.getY());
+        stage.setOnCloseRequest(e -> windowManager.remove(area));
 
         dragedViewStatus.getArea().remove(dragedViewStatus, false);
-        dragedViewStatus.setPosition(Position.CENTER);
-        area.add(dragedViewStatus, Position.CENTER);
-        stage.setTitle(dragedViewStatus.getView().id());
+        dragedViewStatus.setPosition(ViewPosition.CENTER);
+        area.add(dragedViewStatus, ViewPosition.CENTER);
+        stage.setTitle(dragedViewStatus.view.id());
         stage.show();
         droppedStage = stage;
         windowManager.register(area);
@@ -183,7 +192,7 @@ class DNDManager {
             ViewArea target = (ViewArea) targetNode.getUserData();
             dragedViewStatus.getArea().remove(dragedViewStatus, false);
             dragedViewStatus.setPosition(detectPosition(event, targetNode));
-            Position position = detectPosition(event, targetNode);
+            ViewPosition position = detectPosition(event, targetNode);
             target.add(dragedViewStatus, position);
             success = true;
         }
@@ -223,10 +232,10 @@ class DNDManager {
         effect.setMode(BlendMode.COLOR_BURN);
         dropOverlay.setPaint(Color.LIGHTSTEELBLUE);
         effect.setBottomInput(dropOverlay);
-        Position position = detectPosition(event, target);
+        ViewPosition position = detectPosition(event, target);
 
         ViewArea area = (ViewArea) target.getUserData();
-        if (!area.canDropToCenter() && position == Position.CENTER) {
+        if (!area.canDropToCenter() && position == ViewPosition.CENTER) {
             event.consume();
             target.setEffect(null);
             effectTarget = null;
@@ -264,7 +273,7 @@ class DNDManager {
     private boolean isInvalidDragboard(DragEvent event) {
         // Check if dropped content is valid for dropping here
         Dragboard dragboard = event.getDragboard();
-        return !dragboard.hasContent(DATAFORMAT) || !dragboard.getContent(DATAFORMAT).equals(dragedViewStatus.getView().id());
+        return !dragboard.hasContent(DATAFORMAT) || !dragboard.getContent(DATAFORMAT).equals(dragedViewStatus.view.id());
     }
 
     /**
@@ -273,23 +282,23 @@ class DNDManager {
      * @param event The drag event
      * @return The position value for the detected sub area.
      */
-    private Position detectPosition(DragEvent event, Control source) {
+    private ViewPosition detectPosition(DragEvent event, Control source) {
         double areaX = event.getX() / source.getWidth();
         double areaY = event.getY() / source.getHeight();
         if (0.25 <= areaX && areaX < 0.75 && 0.25 <= areaY && areaY < 0.75) {
-            return Position.CENTER;
+            return ViewPosition.CENTER;
         } else if (areaY < 0.25) {
-            return Position.TOP;
+            return ViewPosition.TOP;
         } else if (areaY >= 0.75) {
-            return Position.BOTTOM;
+            return ViewPosition.BOTTOM;
         } else if (areaX < 0.25) {
-            return Position.LEFT;
+            return ViewPosition.LEFT;
         } else {
-            return Position.RIGHT;
+            return ViewPosition.RIGHT;
         }
     }
 
-    private void adjustOverlay(Control target, Position position) {
+    private void adjustOverlay(Control target, ViewPosition position) {
         switch (position) {
         case CENTER:
             dropOverlay.setX(0);
@@ -321,31 +330,6 @@ class DNDManager {
             dropOverlay.setWidth(target.getWidth());
             dropOverlay.setHeight(target.getHeight() * 0.5);
         }
-    }
-
-    /**
-     * Initialize a new managed window.
-     *
-     * @param dropStage The stage where the view was dropped.
-     * @param area The new root area which should be the new root node for the new stage.
-     * @return The new created stage.
-     */
-    private Stage initManagedWindow(Stage dropStage, final RootArea area) {
-        Scene scene = new Scene(area.getNode(), dropStage.getWidth(), dropStage.getHeight());
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setWidth(dropStage.getWidth());
-        stage.setHeight(dropStage.getHeight());
-        stage.setX(dropStage.getX());
-        stage.setY(dropStage.getY());
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-
-            @Override
-            public void handle(WindowEvent event) {
-                windowManager.remove(area);
-            }
-        });
-        return stage;
     }
 
     /**

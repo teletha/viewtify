@@ -9,8 +9,6 @@
  */
 package viewtify.ui.dock;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 
@@ -22,22 +20,22 @@ import viewtify.ui.View;
 final class ViewStatus {
 
     /** The registered view */
-    private final View view;
+    final View view;
 
-    private final Position defaultPosition;
+    private final ViewPosition defaultPosition;
 
-    private final ViewStatus parent;
+    final ViewStatus parent;
+
+    /** The tab which contains this view. */
+    final Tab tab;
 
     /** The status whether this view is visible or hidden (or something else) */
     private Status status;
 
     /** The current position within the window */
-    private Position position;
+    private ViewPosition position;
 
     private TabArea area;
-
-    /** The tab which contains this view. */
-    private Tab tab;
 
     /**
      * Create a new view status.
@@ -57,15 +55,21 @@ final class ViewStatus {
      */
     ViewStatus(View view, ViewStatus parent) {
         this.view = view;
-        this.position = Position.CENTER;
-        this.defaultPosition = Position.CENTER;
+        this.position = ViewPosition.CENTER;
+        this.defaultPosition = ViewPosition.CENTER;
         this.setStatus(Status.VISIBLE);
         this.parent = parent;
-        this.initTab();
-    }
 
-    public ViewStatus getParent() {
-        return parent;
+        tab = new Tab(view.id());
+        tab.setClosable(true);
+        tab.setContent(view.ui());
+        tab.setId(view.id());
+        tab.setUserData(this);
+        tab.setOnClosed(event -> {
+            ViewStatus status = ViewStatus.this;
+            status.getArea().remove(status);
+            status.setStatus(Status.HIDDEN);
+        });
     }
 
     public Status getStatus() {
@@ -76,20 +80,12 @@ final class ViewStatus {
         this.status = status;
     }
 
-    public View getView() {
-        return view;
-    }
-
-    public Position getPosition() {
+    public ViewPosition getPosition() {
         return position;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(ViewPosition position) {
         this.position = position;
-    }
-
-    public Tab getTab() {
-        return tab;
     }
 
     /**
@@ -98,26 +94,6 @@ final class ViewStatus {
     public void restoreDefault() {
         status = Status.VISIBLE;
         position = defaultPosition;
-    }
-
-    /**
-     * Initialize the javafx tab.
-     */
-    private void initTab() {
-        tab = new Tab(view.id());
-        tab.setClosable(true);
-        tab.setContent(view.ui());
-        tab.setId(view.id());
-        tab.setUserData(this);
-
-        tab.setOnClosed(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                ViewStatus status = ViewStatus.this;
-                status.getArea().remove(status);
-                status.setStatus(Status.HIDDEN);
-            }
-        });
     }
 
     public TabArea getArea() {

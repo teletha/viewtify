@@ -14,12 +14,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import viewtify.Viewtify;
 import viewtify.ui.View;
 
 /**
@@ -30,7 +30,7 @@ public class WindowManager {
 
     protected Pane rootPane = new HBox();
 
-    private final DNDManager dragNDropManager = new DNDManager(this);
+    private final DNDManager dndManager = new DNDManager(this);
 
     private final List<RootArea> subWindows = new ArrayList<>();
 
@@ -46,14 +46,11 @@ public class WindowManager {
      * Called to initialize a controller after its root element has been completely processed.
      */
     public void init() {
-        dragNDropManager.init();
-        Platform.runLater(new Runnable() {
+        dndManager.init();
 
-            @Override
-            public void run() {
-                for (ViewStatus status : views.values()) {
-                    status.setDeviderPositions();
-                }
+        Viewtify.inUI(() -> {
+            for (ViewStatus status : views.values()) {
+                status.setDeviderPositions();
             }
         });
     }
@@ -65,28 +62,19 @@ public class WindowManager {
      *
      * @param view The view to register.
      */
-    public void register(final View view) {
-        if (!Platform.isFxApplicationThread()) {
-            Platform.runLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    register(view);
-                }
-            });
-            return;
-        }
-
-        ViewStatus v = new ViewStatus(view);
-        if (views.containsKey(view.id())) {
-            ViewStatus oldView = views.get(view.id());
-            TabArea area = oldView.getArea();
-            area.add(v, Position.CENTER);
-            area.remove(oldView);
-        } else {
-            getMainRootArea().add(v, v.getPosition());
-        }
-        views.put(view.id(), v);
+    public void register(View view) {
+        Viewtify.inUI(() -> {
+            ViewStatus current = new ViewStatus(view);
+            if (views.containsKey(view.id())) {
+                ViewStatus old = views.get(view.id());
+                TabArea area = old.getArea();
+                area.add(current, ViewPosition.CENTER);
+                area.remove(old);
+            } else {
+                getMainRootArea().add(current, current.getPosition());
+            }
+            views.put(view.id(), current);
+        });
     }
 
     /**
@@ -96,30 +84,22 @@ public class WindowManager {
      * @param view The view to register.
      * @param parent An already registered view which defines the exact position to insert the view.
      */
-    public void register(final View view, final View parent) {
-        if (!Platform.isFxApplicationThread()) {
-            Platform.runLater(new Runnable() {
+    public void register(View view, View parent) {
+        Viewtify.inUI(() -> {
 
-                @Override
-                public void run() {
-                    register(view, parent);
-                }
-            });
-            return;
-        }
+            if (!views.containsKey(parent.id())) {
+                throw new IllegalArgumentException("Can not find parent view");
+            }
+            ViewStatus parentStatus = views.get(parent.id());
+            ViewStatus viewStatus = new ViewStatus(view, parentStatus);
 
-        if (!views.containsKey(parent.id())) {
-            throw new IllegalArgumentException("Can not find parent view");
-        }
-        ViewStatus parentStatus = views.get(parent.id());
-        ViewStatus viewStatus = new ViewStatus(view, parentStatus);
-
-        if (views.containsKey(view.id())) {
-            ViewStatus oldView = views.get(view.id());
-            oldView.getArea().remove(viewStatus);
-        }
-        parentStatus.getArea().add(viewStatus, viewStatus.getPosition());
-        views.put(view.id(), viewStatus);
+            if (views.containsKey(view.id())) {
+                ViewStatus oldView = views.get(view.id());
+                oldView.getArea().remove(viewStatus);
+            }
+            parentStatus.getArea().add(viewStatus, viewStatus.getPosition());
+            views.put(view.id(), viewStatus);
+        });
     }
 
     /**
@@ -147,11 +127,42 @@ public class WindowManager {
         this.views = new LinkedHashMap<>();
         for (ViewStatus view : views.values()) {
             view.restoreDefault();
-            if (view.getParent() == null) {
-                register(view.getView());
+            if (view.parent == null) {
+                register(view.view);
             } else {
-                register(view.getView(), view.getParent().getView());
+                register(view.view, view.parent.view);
             }
+        }
+    }
+
+    /**
+     * Show a closed view again. The view will be shown at the same position where it was on close.
+     * The given view must be registered within the {@link WindowManager}. If it is not registered a
+     * {@link IllegalArgumentException} will be thrown.
+     *
+     * @param view The view to show.
+     */
+    public final void show(View view) {
+        ViewStatus viewStatus = views.get(view.id());
+        if (viewStatus == null || viewStatus.view != view) {
+            throw new IllegalArgumentException(String.format("View with id '%s' is not registered", view.id()));
+        }
+        viewStatus.restoreDefault();
+
+        ViewStatus parent = viewStatus.parent;
+        boolean added = false;
+        views.remove(view.id());
+
+        while (!added && parent != null) {
+            if (parent.getStatus() == ViewStatus.Status.VISIBLE) {
+
+                register(view, parent.view);
+                added = true;
+            }
+            parent = parent.parent;
+        }
+        if (!added) {
+            register(view);
         }
     }
 
@@ -164,61 +175,13 @@ public class WindowManager {
      *
      * @param view That view that should be closed
      */
-    public void closeView(View view) {
+    public final void close(View view) {
         if (!views.containsKey(view.id())) {
             throw new IllegalArgumentException(String.format("View with id '%s' is not registered", view.id()));
         }
         ViewStatus viewStatus = views.get(view.id());
         viewStatus.getArea().remove(viewStatus);
         viewStatus.setStatus(ViewStatus.Status.HIDDEN);
-    }
-
-    /**
-     * Clone the specified view.
-     * <p/>
-     * The cloned view will be placed next to the given view in the same tab area.
-     * <p/>
-     * The given view must be registered within the
-     * {@link de.qaware.sdfx.windowmtg.api.WindowManager}. If it is not registered a
-     * {@link IllegalArgumentException} will be thrown.
-     *
-     * @param view Clone the given view.
-     * @return The cloned view object.
-     */
-    public View cloneView(View view) {
-        return null;
-    }
-
-    /**
-     * Show a closed view again. The view will be shown at the same position where it was on close.
-     * The given view must be registered within the
-     * {@link de.qaware.sdfx.windowmtg.api.WindowManager}. If it is not registered a
-     * {@link IllegalArgumentException} will be thrown.
-     *
-     * @param view The view to show.
-     */
-    public void showView(View view) {
-        ViewStatus viewStatus = views.get(view.id());
-        if (viewStatus == null || viewStatus.getView() != view) {
-            throw new IllegalArgumentException(String.format("View with id '%s' is not registered", view.id()));
-        }
-        viewStatus.restoreDefault();
-
-        ViewStatus parent = viewStatus.getParent();
-        boolean added = false;
-        views.remove(view.id());
-
-        while (!added && parent != null) {
-            if (parent.getStatus() == ViewStatus.Status.VISIBLE) {
-
-                register(view, parent.getView());
-                added = true;
-            }
-            parent = parent.getParent();
-        }
-        if (!added) {
-            register(view);
-        }
     }
 
     /**
@@ -230,11 +193,11 @@ public class WindowManager {
      * @param viewID The view id to search.
      * @return The registered view or null if it was not found.
      */
-    public View findView(String viewID) {
+    public final View findViewBy(String viewID) {
         if (!views.containsKey(viewID)) {
             return null;
         }
-        return views.get(viewID).getView();
+        return views.get(viewID).view;
     }
 
     /**
@@ -302,13 +265,13 @@ public class WindowManager {
     }
 
     /**
-     * Get the main area. If it not exists it will be created.
+     * Get the main area.
      *
      * @return The main area.
      */
-    public RootArea getMainRootArea() {
+    RootArea getMainRootArea() {
         if (mainArea == null) {
-            mainArea = new RootArea(rootPane, dragNDropManager, false);
+            mainArea = new RootArea(rootPane, dndManager, false);
         }
         return mainArea;
     }
@@ -316,7 +279,7 @@ public class WindowManager {
     /**
      * Request the redrawing of all areas.
      */
-    public void redrawAreas() {
+    void redrawAreas() {
         getRootPane().requestLayout();
         for (RootArea area : subWindows) {
             area.getNode().requestLayout();
@@ -329,7 +292,7 @@ public class WindowManager {
      * @param area The requested root area.
      * @return A list with all views which are registered under the given area.
      */
-    private List<ViewStatus> getForRootArea(final RootArea area) {
+    private List<ViewStatus> getForRootArea(RootArea area) {
         List<ViewStatus> areaViews = new ArrayList<>();
         for (ViewStatus view : views.values()) {
             if (view.getArea() != null && view.getArea().getRootArea() == area) {

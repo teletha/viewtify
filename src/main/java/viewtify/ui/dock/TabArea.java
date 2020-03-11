@@ -66,7 +66,7 @@ class TabArea extends ViewArea {
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean old, Boolean newValue) {
                 if (newValue && tabPane.getSelectionModel().getSelectedItem() != null) {
                     ViewStatus status = (ViewStatus) tabPane.getSelectionModel().getSelectedItem().getUserData();
-                    getDragNDropManager().windowManager.setFocusedView(status.getView());
+                    getDragNDropManager().windowManager.setFocusedView(status.view);
                 }
             }
         });
@@ -76,7 +76,7 @@ class TabArea extends ViewArea {
             public void changed(ObservableValue<? extends Tab> observableValue, Tab oldTab, Tab newTab) {
                 if (newTab != null) {
                     ViewStatus status = (ViewStatus) newTab.getUserData();
-                    getDragNDropManager().windowManager.setFocusedView(status.getView());
+                    getDragNDropManager().windowManager.setFocusedView(status.view);
                 }
             }
         });
@@ -124,7 +124,7 @@ class TabArea extends ViewArea {
         views.remove(view);
         view.setArea(null);
         view.setPosition(null);
-        tabPane.getTabs().remove(view.getTab());
+        tabPane.getTabs().remove(view.tab);
         if (checkEmpty) {
             handleEmpty();
         }
@@ -155,15 +155,15 @@ class TabArea extends ViewArea {
      * {@inheritDoc}
      */
     @Override
-    protected void add(ViewStatus view, Position position) {
-        if (position != Position.CENTER) {
+    protected void add(ViewStatus view, ViewPosition position) {
+        if (position != ViewPosition.CENTER) {
             super.add(view, position);
             return;
         }
         views.add(view);
         view.setArea(this);
         view.setPosition(position);
-        tabPane.getTabs().add(view.getTab());
+        tabPane.getTabs().add(view.tab);
     }
 
     /**

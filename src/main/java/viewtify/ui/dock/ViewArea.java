@@ -146,14 +146,14 @@ public class ViewArea {
     /**
      * Add the view to this area at position.
      * <p/>
-     * If position is {@link Position#CENTER} it will be added to that child that is defined as
+     * If position is {@link ViewPosition#CENTER} it will be added to that child that is defined as
      * editor area. Otherwise this area is split and the view will be positioned according the
      * position parameter.
      *
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    protected void add(ViewStatus view, Position position) {
+    protected void add(ViewStatus view, ViewPosition position) {
         switch (position) {
         case CENTER:
             getEditorArea().add(view, position);
@@ -163,7 +163,7 @@ public class ViewArea {
                 getFirstChild().add(view, position);
             } else {
                 ViewArea target = new TabArea(dragNDropManager);
-                target.add(view, Position.CENTER);
+                target.add(view, ViewPosition.CENTER);
                 split(target, this, Orientation.VERTICAL);
             }
             break;
@@ -172,7 +172,7 @@ public class ViewArea {
                 getSecondChild().add(view, position);
             } else {
                 ViewArea target = new TabArea(dragNDropManager);
-                target.add(view, Position.CENTER);
+                target.add(view, ViewPosition.CENTER);
                 split(this, target, Orientation.VERTICAL);
             }
             break;
@@ -181,7 +181,7 @@ public class ViewArea {
                 getSecondChild().add(view, position);
             } else {
                 ViewArea target = new TabArea(dragNDropManager);
-                target.add(view, Position.CENTER);
+                target.add(view, ViewPosition.CENTER);
                 split(target, this, Orientation.HORIZONTAL);
             }
             break;
@@ -190,7 +190,7 @@ public class ViewArea {
                 getSecondChild().add(view, position);
             } else {
                 ViewArea target = new TabArea(dragNDropManager);
-                target.add(view, Position.CENTER);
+                target.add(view, ViewPosition.CENTER);
                 split(this, target, Orientation.HORIZONTAL);
             }
             break;
