@@ -133,7 +133,7 @@ class DNDManager {
             dragedViewStatus.setDeviderPositions();
             dragedViewStatus = null;
         }
-        windowManager.redrawAreas();
+        windowManager.layoutAreas();
         event.consume();
     }
 
@@ -160,15 +160,14 @@ class DNDManager {
         stage.setScene(scene);
         stage.setX(event.getX());
         stage.setY(event.getY());
-        stage.setOnCloseRequest(e -> windowManager.remove(area));
+        stage.setOnShown(e -> windowManager.register(area));
+        stage.setOnCloseRequest(e -> windowManager.unregister(area));
 
         dragedViewStatus.getArea().remove(dragedViewStatus, false);
         dragedViewStatus.setPosition(ViewPosition.CENTER);
         area.add(dragedViewStatus, ViewPosition.CENTER);
-        stage.setTitle(dragedViewStatus.view.id());
         stage.show();
         droppedStage = stage;
-        windowManager.register(area);
         completeDropped(event, true);
     }
 

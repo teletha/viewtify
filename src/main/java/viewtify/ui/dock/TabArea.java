@@ -12,11 +12,8 @@ package viewtify.ui.dock;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
@@ -40,8 +37,6 @@ class TabArea extends ViewArea {
     TabArea(DNDManager dragNDropManager) {
         super(dragNDropManager);
         registerDragEvents();
-
-        initFocusEvents();
     }
 
     /**
@@ -53,33 +48,6 @@ class TabArea extends ViewArea {
     TabArea(ViewArea parent, DNDManager dragNDropManager) {
         super(parent, dragNDropManager);
         registerDragEvents();
-        initFocusEvents();
-    }
-
-    /**
-     * Initialize the focused events. This event handlers handles all the events which would change
-     * the current focused view.
-     */
-    private void initFocusEvents() {
-        tabPane.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean old, Boolean newValue) {
-                if (newValue && tabPane.getSelectionModel().getSelectedItem() != null) {
-                    ViewStatus status = (ViewStatus) tabPane.getSelectionModel().getSelectedItem().getUserData();
-                    getDragNDropManager().windowManager.setFocusedView(status.view);
-                }
-            }
-        });
-
-        tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-            @Override
-            public void changed(ObservableValue<? extends Tab> observableValue, Tab oldTab, Tab newTab) {
-                if (newTab != null) {
-                    ViewStatus status = (ViewStatus) newTab.getUserData();
-                    getDragNDropManager().windowManager.setFocusedView(status.view);
-                }
-            }
-        });
     }
 
     /**

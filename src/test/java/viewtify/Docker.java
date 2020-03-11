@@ -28,8 +28,6 @@ public class Docker extends View {
      */
     @Override
     protected void initialize() {
-        manager.init();
-
         manager.register(new ViewPane("First"));
         manager.register(new ViewPane("Second"));
         manager.register(new ViewPane("Third"));

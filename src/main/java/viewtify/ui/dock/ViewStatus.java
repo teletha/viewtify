@@ -22,15 +22,8 @@ final class ViewStatus {
     /** The registered view */
     final View view;
 
-    private final ViewPosition defaultPosition;
-
-    final ViewStatus parent;
-
     /** The tab which contains this view. */
     final Tab tab;
-
-    /** The status whether this view is visible or hidden (or something else) */
-    private Status status;
 
     /** The current position within the window */
     private ViewPosition position;
@@ -43,22 +36,8 @@ final class ViewStatus {
      * @param view The view to display.
      */
     ViewStatus(View view) {
-        this(view, null);
-    }
-
-    /**
-     * Create a new view status from a view with the given parent to define the exact position for
-     * this view.
-     *
-     * @param view The view to display.
-     * @param parent The parent view status for exact positioning.
-     */
-    ViewStatus(View view, ViewStatus parent) {
         this.view = view;
         this.position = ViewPosition.CENTER;
-        this.defaultPosition = ViewPosition.CENTER;
-        this.setStatus(Status.VISIBLE);
-        this.parent = parent;
 
         tab = new Tab(view.id());
         tab.setClosable(true);
@@ -66,18 +45,8 @@ final class ViewStatus {
         tab.setId(view.id());
         tab.setUserData(this);
         tab.setOnClosed(event -> {
-            ViewStatus status = ViewStatus.this;
-            status.getArea().remove(status);
-            status.setStatus(Status.HIDDEN);
+            getArea().remove(this);
         });
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public ViewPosition getPosition() {
@@ -86,14 +55,6 @@ final class ViewStatus {
 
     public void setPosition(ViewPosition position) {
         this.position = position;
-    }
-
-    /**
-     * Restore the defaults for this view.
-     */
-    public void restoreDefault() {
-        status = Status.VISIBLE;
-        position = defaultPosition;
     }
 
     public TabArea getArea() {
@@ -136,26 +97,6 @@ final class ViewStatus {
 
     @Override
     public String toString() {
-        return "ViewStatus{" + "view=" + view + ", parent=" + parent + ", status=" + status + ", position=" + position + '}';
-    }
-
-    /**
-     * The status of a view.
-     */
-    enum Status {
-        /**
-         * Indicates that a view is visible as tab within a view area.
-         */
-        VISIBLE,
-
-        /**
-         * Indicates that a view is docked to the side.
-         */
-        DOCKED,
-
-        /**
-         * Indicates that the view is registered but neither docked or viewed.
-         */
-        HIDDEN,
+        return "ViewStatus{" + "view=" + view + ", position=" + position + '}';
     }
 }
