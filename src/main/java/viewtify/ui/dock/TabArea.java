@@ -24,13 +24,12 @@ import javafx.scene.input.MouseEvent;
 /**
  * Describes a logical view area which displays the views within a tab pane.
  */
-public class TabArea extends ViewArea {
+class TabArea extends ViewArea {
 
+    /** The actual root pane. */
     private final TabPane tabPane = new TabPane();
 
-    /**
-     * A list with all contained views.
-     */
+    /** A list with all contained views. */
     private final Set<ViewStatus> views = new LinkedHashSet<>();
 
     /**
@@ -38,7 +37,7 @@ public class TabArea extends ViewArea {
      *
      * @param dragNDropManager Use this drag&drop manager to handle the view management.
      */
-    public TabArea(DNDManager dragNDropManager) {
+    TabArea(DNDManager dragNDropManager) {
         super(dragNDropManager);
         registerDragEvents();
 
@@ -51,7 +50,7 @@ public class TabArea extends ViewArea {
      * @param parent Use this area as parent area.
      * @param dragNDropManager Use this drag&drop manager to handle the view management.
      */
-    public TabArea(ViewArea parent, DNDManager dragNDropManager) {
+    TabArea(ViewArea parent, DNDManager dragNDropManager) {
         super(parent, dragNDropManager);
         registerDragEvents();
         initFocusEvents();
@@ -107,7 +106,7 @@ public class TabArea extends ViewArea {
      *
      * @param view The view to remove
      */
-    public void remove(ViewStatus view) {
+    void remove(ViewStatus view) {
         remove(view, true);
     }
 
@@ -118,7 +117,7 @@ public class TabArea extends ViewArea {
      * @param view The view to remove.
      * @param checkEmpty Should this area be removed if it is empty?
      */
-    public void remove(ViewStatus view, boolean checkEmpty) {
+    void remove(ViewStatus view, boolean checkEmpty) {
         if (!views.contains(view)) {
             return;
         }
@@ -136,8 +135,8 @@ public class TabArea extends ViewArea {
      *
      * @return True if this area is empty and was successfully removed.
      */
-    public boolean handleEmpty() {
-        if (views.isEmpty() && (!isEditor() || getRootArea().isCloseStage())) {
+    boolean handleEmpty() {
+        if (views.isEmpty() && (!isEditor() || getRootArea().closeStage)) {
             getParent().remove(this);
             return true;
         }
@@ -145,23 +144,18 @@ public class TabArea extends ViewArea {
     }
 
     /**
-     * Get the javafx scene graph node which represents this area.
-     *
-     * @return The scene graph node.
+     * {@inheritDoc}
      */
     @Override
-    public Parent getNode() {
+    protected Parent getNode() {
         return tabPane;
     }
 
     /**
-     * Add the view to this area.
-     *
-     * @param view The view to add.
-     * @param position Add the view at this position.
+     * {@inheritDoc}
      */
     @Override
-    public void add(ViewStatus view, Position position) {
+    protected void add(ViewStatus view, Position position) {
         if (position != Position.CENTER) {
             super.add(view, position);
             return;
@@ -173,12 +167,10 @@ public class TabArea extends ViewArea {
     }
 
     /**
-     * Is the drop gesture to this area with position center allowed?
-     *
-     * @return True if a drop to center is allowed.
+     * {@inheritDoc}
      */
     @Override
-    public boolean dropToCenter() {
+    protected boolean canDropToCenter() {
         return true;
     }
 }

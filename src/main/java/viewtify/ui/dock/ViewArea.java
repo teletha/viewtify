@@ -9,12 +9,10 @@
  */
 package viewtify.ui.dock;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.SplitPane;
-import javafx.scene.input.DragEvent;
 import javafx.scene.layout.Pane;
 
 /**
@@ -34,9 +32,7 @@ public class ViewArea {
 
     private Orientation orientation;
 
-    /**
-     * Did this area contains the editor pane?
-     */
+    /** Did this area contains the editor pane? */
     private boolean editor;
 
     /**
@@ -69,29 +65,46 @@ public class ViewArea {
      *
      * @param node Register the event handlers on this node.
      */
-    protected void registerDragEvents(Node node) {
+    protected final void registerDragEvents(Node node) {
         node.setUserData(this);
-        node.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                dragNDropManager.onDragOver(event);
-            }
-        });
-        node.setOnDragExited(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                dragNDropManager.onDragExited(event);
-            }
-        });
-        node.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                dragNDropManager.onDragDropped(event);
-            }
-        });
+        node.setOnDragOver(dragNDropManager::onDragOver);
+        node.setOnDragExited(dragNDropManager::onDragExited);
+        node.setOnDragDropped(dragNDropManager::onDragDropped);
     }
 
-    protected ViewArea getFirstChild() {
+    /**
+     * Get the javafx scene graph node which represents this area.
+     *
+     * @return The scene graph node.
+     */
+    protected Parent getNode() {
+        return outerPane;
+    }
+
+    /**
+     * Get the parent area.
+     * 
+     * @return
+     */
+    protected final ViewArea getParent() {
+        return parent;
+    }
+
+    /**
+     * Set the parent area.
+     * 
+     * @param parent
+     */
+    protected void setParent(ViewArea parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * Get the first area.
+     * 
+     * @return
+     */
+    protected final ViewArea getFirstChild() {
         return firstChild;
     }
 
@@ -109,15 +122,11 @@ public class ViewArea {
     }
 
     /**
-     * Get the javafx scene graph node which represents this area.
-     *
-     * @return The scene graph node.
+     * Get the second area.
+     * 
+     * @return
      */
-    public Parent getNode() {
-        return outerPane;
-    }
-
-    protected ViewArea getSecondChild() {
+    protected final ViewArea getSecondChild() {
         return secondChild;
     }
 
@@ -135,31 +144,6 @@ public class ViewArea {
     }
 
     /**
-     * Split this area by {@param orientation}.
-     * <p/>
-     * Either the parameter {@param first} or {@param second} must be this area. Otherwise a
-     * {@link IllegalArgumentException} is thrown.
-     *
-     * @param first The first element.
-     * @param second The second element.
-     * @param orientation The split orientation.
-     * @throws IllegalArgumentException In case of both params {@param first} and {@param second}
-     *             are this or none of them.
-     */
-    protected void split(ViewArea first, ViewArea second, Orientation orientation) {
-        if (!(first == this ^ second == this)) {
-            throw new IllegalArgumentException("Either first or second area must be this.");
-        }
-
-        ViewArea area = new ViewArea(parent, dragNDropManager);
-        parent.replace(this, area);
-        area.setOrientation(orientation);
-        area.setFirstChild(first);
-        area.setSecondChild(second);
-        area.setEditor(area.getFirstChild().isEditor() || area.getSecondChild().isEditor());
-    }
-
-    /**
      * Add the view to this area at position.
      * <p/>
      * If position is {@link Position#CENTER} it will be added to that child that is defined as
@@ -169,7 +153,7 @@ public class ViewArea {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    public void add(ViewStatus view, Position position) {
+    protected void add(ViewStatus view, Position position) {
         switch (position) {
         case CENTER:
             getEditorArea().add(view, position);
@@ -236,7 +220,7 @@ public class ViewArea {
      * @param oldArea The old area.
      * @param newArea The new area.
      */
-    protected void replace(ViewArea oldArea, ViewArea newArea) {
+    protected final void replace(ViewArea oldArea, ViewArea newArea) {
         if (oldArea == firstChild) {
             setFirstChild(newArea);
         } else if (oldArea == secondChild) {
@@ -244,12 +228,29 @@ public class ViewArea {
         }
     }
 
-    protected ViewArea getParent() {
-        return parent;
-    }
+    /**
+     * Split this area by {@param orientation}.
+     * <p/>
+     * Either the parameter {@param first} or {@param second} must be this area. Otherwise a
+     * {@link IllegalArgumentException} is thrown.
+     *
+     * @param first The first element.
+     * @param second The second element.
+     * @param orientation The split orientation.
+     * @throws IllegalArgumentException In case of both params {@param first} and {@param second}
+     *             are this or none of them.
+     */
+    protected void split(ViewArea first, ViewArea second, Orientation orientation) {
+        if (!(first == this ^ second == this)) {
+            throw new IllegalArgumentException("Either first or second area must be this.");
+        }
 
-    protected void setParent(ViewArea parent) {
-        this.parent = parent;
+        ViewArea area = new ViewArea(parent, dragNDropManager);
+        parent.replace(this, area);
+        area.setOrientation(orientation);
+        area.setFirstChild(first);
+        area.setSecondChild(second);
+        area.setEditor(area.getFirstChild().isEditor() || area.getSecondChild().isEditor());
     }
 
     /**
@@ -271,7 +272,7 @@ public class ViewArea {
      *
      * @return True if this or one of the childs is the editor area.
      */
-    public boolean isEditor() {
+    public final boolean isEditor() {
         return editor;
     }
 
@@ -280,7 +281,7 @@ public class ViewArea {
      *
      * @param editor Is this area the editor area.
      */
-    public void setEditor(boolean editor) {
+    public final void setEditor(boolean editor) {
         this.editor = editor;
     }
 
@@ -289,7 +290,7 @@ public class ViewArea {
      *
      * @return The root area of this view.
      */
-    public RootArea getRootArea() {
+    public final RootArea getRootArea() {
         ViewArea parent = this;
         while (parent.getParent() != null) {
             parent = parent.getParent();
@@ -297,7 +298,7 @@ public class ViewArea {
         return (RootArea) parent;
     }
 
-    protected DNDManager getDragNDropManager() {
+    protected final DNDManager getDragNDropManager() {
         return dragNDropManager;
     }
 
@@ -316,7 +317,7 @@ public class ViewArea {
      *
      * @return True if a drop to center is allowed.
      */
-    public boolean dropToCenter() {
+    protected boolean canDropToCenter() {
         return false;
     }
 }

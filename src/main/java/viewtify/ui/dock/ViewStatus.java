@@ -19,32 +19,24 @@ import viewtify.ui.View;
 /**
  * Stores the current status and additional metadata of an window manager view.
  */
-public final class ViewStatus {
+final class ViewStatus {
 
-    /**
-     * The registered view
-     */
+    /** The registered view */
     private final View view;
 
     private final Position defaultPosition;
 
     private final ViewStatus parent;
 
-    /**
-     * The status whether this view is visible or hidden (or something else)
-     */
+    /** The status whether this view is visible or hidden (or something else) */
     private Status status;
 
-    /**
-     * The current position within the window
-     */
+    /** The current position within the window */
     private Position position;
 
     private TabArea area;
 
-    /**
-     * The tab which contains this view.
-     */
+    /** The tab which contains this view. */
     private Tab tab;
 
     /**
@@ -52,7 +44,7 @@ public final class ViewStatus {
      *
      * @param view The view to display.
      */
-    public ViewStatus(View view) {
+    ViewStatus(View view) {
         this(view, null);
     }
 
@@ -63,7 +55,7 @@ public final class ViewStatus {
      * @param view The view to display.
      * @param parent The parent view status for exact positioning.
      */
-    public ViewStatus(View view, ViewStatus parent) {
+    ViewStatus(View view, ViewStatus parent) {
         this.view = view;
         this.position = Position.CENTER;
         this.defaultPosition = Position.CENTER;
@@ -112,7 +104,6 @@ public final class ViewStatus {
      * Initialize the javafx tab.
      */
     private void initTab() {
-
         tab = new Tab(view.id());
         tab.setClosable(true);
         tab.setContent(view.ui());
@@ -175,7 +166,7 @@ public final class ViewStatus {
     /**
      * The status of a view.
      */
-    protected enum Status {
+    enum Status {
         /**
          * Indicates that a view is visible as tab within a view area.
          */

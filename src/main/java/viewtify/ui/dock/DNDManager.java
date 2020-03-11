@@ -35,13 +35,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
-import kiss.Managed;
-import kiss.Singleton;
-
 /**
  * The drag&drop manager. The implementations handles the full dnd management of views.
  */
-@Managed(Singleton.class)
 class DNDManager {
 
     /** The specialized data format to handle the drag&drop gestures with managed tabs. */
@@ -230,7 +226,7 @@ class DNDManager {
         Position position = detectPosition(event, target);
 
         ViewArea area = (ViewArea) target.getUserData();
-        if (!area.dropToCenter() && position == Position.CENTER) {
+        if (!area.canDropToCenter() && position == Position.CENTER) {
             event.consume();
             target.setEffect(null);
             effectTarget = null;

@@ -20,41 +20,51 @@ import javafx.stage.Stage;
 /**
  * A RootArea is a special {@link ViewArea} which has no parent and is directly used as root.
  */
-public final class RootArea extends ViewArea {
+final class RootArea extends ViewArea {
+
+    /** The actual root pane. */
     private final Pane box;
 
-    /**
-     * Close the stage containing this area when removing the child.
-     */
-    private final boolean closeStage;
+    /** Close the stage containing this area when removing the child. */
+    final boolean closeStage;
 
     /**
      * Create a new root area.
      *
-     * @param dragNDropManager The drag&drop manager
+     * @param dndManager The drag&drop manager
      * @param closeStage Close the stage containing this area when the last view was removed?
      */
-    public RootArea(DNDManager dragNDropManager, boolean closeStage) {
-        this(new VBox(), dragNDropManager, closeStage);
+    RootArea(DNDManager dndManager, boolean closeStage) {
+        this(new VBox(), dndManager, closeStage);
     }
 
     /**
      * Create a new root area.
      *
      * @param box Use this pane to draw all the content.
-     * @param dragNDropManager The drag&drop manager
+     * @param dndManager The drag&drop manager
      * @param closeStage Close the stage containing this area when the last view was removed?
      */
-    public RootArea(Pane box, DNDManager dragNDropManager, boolean closeStage) {
-        super(dragNDropManager);
+    RootArea(Pane box, DNDManager dndManager, boolean closeStage) {
+        super(dndManager);
+
         this.closeStage = closeStage;
         this.box = box;
-        ViewArea editorArea = new TabArea(this, dragNDropManager);
+        ViewArea editorArea = new TabArea(this, dndManager);
         editorArea.setEditor(true);
         this.box.getChildren().add(editorArea.getNode());
         setFirstChild(editorArea);
         HBox.setHgrow(box, Priority.ALWAYS);
         VBox.setVgrow(box, Priority.ALWAYS);
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Override
+    protected Parent getNode() {
+        return box;
     }
 
     /**
@@ -72,16 +82,28 @@ public final class RootArea extends ViewArea {
         VBox.setVgrow(child.getNode(), Priority.ALWAYS);
     }
 
-    @Override
-    public Parent getNode() {
-        return box;
-    }
-
+    /**
+     * 
+     * {@inheritDoc}
+     */
     @Override
     protected void setSecondChild(ViewArea child) {
         throw new UnsupportedOperationException("Root Areas can not contain more than one ");
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Override
+    protected void setParent(ViewArea parent) {
+        throw new UnsupportedOperationException("Root Areas can not have any parent area");
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
     @Override
     protected void split(ViewArea first, ViewArea second, Orientation orientation) {
         throw new UnsupportedOperationException("Root Areas can not be split");
@@ -98,24 +120,19 @@ public final class RootArea extends ViewArea {
      * @param position Add the view at this position.
      */
     @Override
-    public void add(ViewStatus view, Position position) {
+    protected void add(ViewStatus view, Position position) {
         getFirstChild().add(view, position);
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
     @Override
     protected void remove(ViewArea area) {
         if (!closeStage) {
             throw new UnsupportedOperationException("Root Areas must have exactly one child");
         }
         ((Stage) box.getScene().getWindow()).close();
-    }
-
-    @Override
-    protected void setParent(ViewArea parent) {
-        throw new UnsupportedOperationException("Root Areas can not have any parent area");
-    }
-
-    public boolean isCloseStage() {
-        return closeStage;
     }
 }

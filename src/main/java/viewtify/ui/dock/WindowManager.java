@@ -45,7 +45,6 @@ public class WindowManager {
     /**
      * Called to initialize a controller after its root element has been completely processed.
      */
-
     public void init() {
         dragNDropManager.init();
         Platform.runLater(new Runnable() {
@@ -66,7 +65,6 @@ public class WindowManager {
      *
      * @param view The view to register.
      */
-
     public void register(final View view) {
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(new Runnable() {
@@ -98,7 +96,6 @@ public class WindowManager {
      * @param view The view to register.
      * @param parent An already registered view which defines the exact position to insert the view.
      */
-
     public void register(final View view, final View parent) {
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(new Runnable() {
@@ -130,7 +127,6 @@ public class WindowManager {
      *
      * @return The root pane.
      */
-
     public Parent getRootPane() {
         return getMainRootArea().getNode();
     }
@@ -140,7 +136,6 @@ public class WindowManager {
      * <p/>
      * The layout is recreated in the same way as it was the first time initialized.
      */
-
     public void restoreDefaultLayout() {
         mainArea = null;
         List<RootArea> immuteAbleSubWindows = List.copyOf(subWindows);
@@ -169,7 +164,6 @@ public class WindowManager {
      *
      * @param view That view that should be closed
      */
-
     public void closeView(View view) {
         if (!views.containsKey(view.id())) {
             throw new IllegalArgumentException(String.format("View with id '%s' is not registered", view.id()));
@@ -191,7 +185,6 @@ public class WindowManager {
      * @param view Clone the given view.
      * @return The cloned view object.
      */
-
     public View cloneView(View view) {
         return null;
     }
@@ -204,7 +197,6 @@ public class WindowManager {
      *
      * @param view The view to show.
      */
-
     public void showView(View view) {
         ViewStatus viewStatus = views.get(view.id());
         if (viewStatus == null || viewStatus.getView() != view) {
@@ -238,7 +230,6 @@ public class WindowManager {
      * @param viewID The view id to search.
      * @return The registered view or null if it was not found.
      */
-
     public View findView(String viewID) {
         if (!views.containsKey(viewID)) {
             return null;
@@ -251,7 +242,6 @@ public class WindowManager {
      *
      * @return That view that holds the focus.
      */
-
     public View getFocusedView() {
         return focusedView;
     }
@@ -261,7 +251,6 @@ public class WindowManager {
      *
      * @return That view that hodls recently the focus.
      */
-
     public View getLastFocusedView() {
         return lastFocusedView;
     }
@@ -271,7 +260,6 @@ public class WindowManager {
      *
      * @param focusedView The view that should hold the focus.
      */
-
     public void setFocusedView(View focusedView) {
         this.lastFocusedView = this.focusedView;
         this.focusedView = focusedView;
@@ -282,7 +270,6 @@ public class WindowManager {
      *
      * @param area The new root area.
      */
-
     public void register(RootArea area) {
         subWindows.add(area);
     }
@@ -290,7 +277,6 @@ public class WindowManager {
     /**
      * Bring all windows managed by this window manager to front.
      */
-
     public void bringToFront() {
 
         for (RootArea area : subWindows) {
@@ -306,7 +292,6 @@ public class WindowManager {
      *
      * @param area The root area to remove.
      */
-
     public void remove(RootArea area) {
         List<ViewStatus> views = getForRootArea(area);
         for (ViewStatus view : views) {
@@ -321,7 +306,6 @@ public class WindowManager {
      *
      * @return The main area.
      */
-
     public RootArea getMainRootArea() {
         if (mainArea == null) {
             mainArea = new RootArea(rootPane, dragNDropManager, false);
@@ -332,7 +316,6 @@ public class WindowManager {
     /**
      * Request the redrawing of all areas.
      */
-
     public void redrawAreas() {
         getRootPane().requestLayout();
         for (RootArea area : subWindows) {
