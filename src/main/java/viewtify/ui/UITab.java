@@ -14,6 +14,7 @@ import java.util.function.Function;
 
 import javafx.scene.control.Tab;
 
+import kiss.I;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
@@ -32,9 +33,8 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
     /**
      * 
      */
-    public UITab(View parent, Function<UITab, View> viewBuilder) {
+    protected UITab(View parent) {
         this.parent = parent;
-        this.viewBuilder = viewBuilder;
 
         selectedProperty().addListener(change -> load());
     }
@@ -45,6 +45,16 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
     @Override
     public Tab ui() {
         return this;
+    }
+
+    /**
+     * Set contents.
+     * 
+     * @param contents
+     * @return
+     */
+    public final UITab contents(Class<? extends View> contents) {
+        return contents(I.make(contents));
     }
 
     /**

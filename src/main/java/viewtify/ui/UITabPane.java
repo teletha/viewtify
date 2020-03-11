@@ -9,7 +9,7 @@
  */
 package viewtify.ui;
 
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
@@ -19,7 +19,6 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TabPane.TabDragPolicy;
 
 import kiss.Disposable;
-import kiss.I;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
@@ -64,39 +63,33 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
     }
 
     /**
-     * Add new tab.
+     * Add new tab at last with the specified contents.
+     * 
+     * @param builder A tab builder.
+     * @return Chainable API.
      */
-    public UITab addTab() {
-        UITab tab = new UITab(view, null);
-        addItemAtLast(tab);
-        return tab;
+    public final UITabPane tab(Consumer<UITab> builder) {
+        if (builder != null) {
+            UITab tab = new UITab(view);
+            builder.accept(tab);
+            addItemAtLast(tab);
+        }
+        return this;
     }
 
     /**
-     * Load tab with the specified view.
+     * Add new tab at the specified index with the specified contents.
      * 
-     * @param label Specify the label of the tab. This is used as a temporary label until the
-     *            contents of the tab are read, as tab loading is delayed until needed actually.
-     * @param loadingViewType A view type to load.
-     * @return
+     * @param index An index to insert tab.
+     * @param builder A tab builder.
+     * @return Chainable API.
      */
-    public final <V extends View> UITabPane load(String label, Class<V> loadingViewType) {
-        return load(label, tab -> I.make(loadingViewType));
-    }
-
-    /**
-     * Load tab with the specified view.
-     * 
-     * @param label Specify the label of the tab. This is used as a temporary label until the
-     *            contents of the tab are read, as tab loading is delayed until needed actually.
-     * @param loadingViewType A view type to load.
-     * @return
-     */
-    public final UITabPane load(String label, Function<UITab, View> contentsBuilder) {
-        UITab tab = new UITab(view, contentsBuilder);
-        tab.text(label);
-
-        ui.getTabs().add(tab);
+    public final UITabPane tab(int index, Consumer<UITab> builder) {
+        if (builder != null) {
+            UITab tab = new UITab(view);
+            builder.accept(tab);
+            addItemAt(index, tab);
+        }
         return this;
     }
 
