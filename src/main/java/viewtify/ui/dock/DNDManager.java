@@ -162,7 +162,6 @@ class DNDManager {
         stage.setOnCloseRequest(e -> windowManager.unregister(area));
 
         dragedViewStatus.getArea().remove(dragedViewStatus, false);
-        dragedViewStatus.setPosition(ViewPosition.CENTER);
         area.add(dragedViewStatus, ViewPosition.CENTER);
         stage.show();
         droppedStage = stage;
@@ -188,7 +187,6 @@ class DNDManager {
         if (targetNode.getUserData() instanceof ViewArea) {
             ViewArea target = (ViewArea) targetNode.getUserData();
             dragedViewStatus.getArea().remove(dragedViewStatus, false);
-            dragedViewStatus.setPosition(detectPosition(event, targetNode));
             ViewPosition position = detectPosition(event, targetNode);
             target.add(dragedViewStatus, position);
             success = true;

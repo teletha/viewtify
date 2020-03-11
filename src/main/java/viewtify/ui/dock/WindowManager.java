@@ -71,7 +71,7 @@ public class WindowManager {
                 area.add(current, ViewPosition.CENTER);
                 area.remove(old);
             } else {
-                root().add(current, current.getPosition());
+                root().add(current, ViewPosition.CENTER);
             }
             views.put(view.id(), current);
         });

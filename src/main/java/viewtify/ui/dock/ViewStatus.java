@@ -24,9 +24,6 @@ final class ViewStatus {
     /** The tab which contains this view. */
     final Tab tab;
 
-    /** The current position within the window */
-    private ViewPosition position;
-
     private TabArea area;
 
     /**
@@ -36,7 +33,6 @@ final class ViewStatus {
      */
     ViewStatus(View view) {
         this.view = view;
-        this.position = ViewPosition.CENTER;
 
         tab = new Tab(view.id());
         tab.setClosable(true);
@@ -46,14 +42,6 @@ final class ViewStatus {
         tab.setOnClosed(event -> {
             getArea().remove(this);
         });
-    }
-
-    public ViewPosition getPosition() {
-        return position;
-    }
-
-    public void setPosition(ViewPosition position) {
-        this.position = position;
     }
 
     public TabArea getArea() {
@@ -66,6 +54,6 @@ final class ViewStatus {
 
     @Override
     public String toString() {
-        return "ViewStatus{" + "view=" + view + ", position=" + position + '}';
+        return "ViewStatus{" + "view=" + view + '}';
     }
 }

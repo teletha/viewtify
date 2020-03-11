@@ -82,7 +82,6 @@ class TabArea extends ViewArea {
         }
         views.remove(view);
         view.setArea(null);
-        view.setPosition(null);
         tabPane.getTabs().remove(view.tab);
         if (checkEmpty) {
             handleEmpty();
@@ -117,7 +116,6 @@ class TabArea extends ViewArea {
         }
         views.add(view);
         view.setArea(this);
-        view.setPosition(position);
         tabPane.getTabs().add(view.tab);
     }
 

@@ -96,15 +96,6 @@ final class RootArea extends ViewArea {
      * {@inheritDoc}
      */
     @Override
-    protected void setParent(ViewArea parent) {
-        throw new UnsupportedOperationException("Root Areas can not have any parent area");
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Override
     protected void split(ViewArea first, ViewArea second, Orientation orientation) {
         throw new UnsupportedOperationException("Root Areas can not be split");
     }

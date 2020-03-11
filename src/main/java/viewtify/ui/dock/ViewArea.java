@@ -91,15 +91,6 @@ public class ViewArea {
     }
 
     /**
-     * Set the parent area.
-     * 
-     * @param parent
-     */
-    protected void setParent(ViewArea parent) {
-        this.parent = parent;
-    }
-
-    /**
      * Get the first area.
      * 
      * @return
@@ -118,7 +109,7 @@ public class ViewArea {
     protected void setFirstChild(ViewArea child) {
         this.firstChild = child;
         outerPane.getItems().set(0, child.getNode());
-        child.setParent(this);
+        child.parent = this;
     }
 
     /**
@@ -140,7 +131,7 @@ public class ViewArea {
     protected void setSecondChild(ViewArea child) {
         this.secondChild = child;
         outerPane.getItems().set(1, child.getNode());
-        child.setParent(this);
+        child.parent = this;
     }
 
     /**
@@ -195,7 +186,6 @@ public class ViewArea {
             }
             break;
         }
-        view.setPosition(position);
         view.getArea().getNode().requestLayout();
     }
 
