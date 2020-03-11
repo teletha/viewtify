@@ -101,7 +101,7 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      * 
      * @return
      */
-    public final String id() {
+    public String id() {
         return parent == null ? name() : parent.name() + IDSeparator + name();
     }
 

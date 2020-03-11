@@ -9,8 +9,6 @@
  */
 package viewtify.ui;
 
-import java.util.Arrays;
-
 import javafx.scene.control.SplitPane;
 
 import viewtify.ui.helper.ContextMenuHelper;
@@ -32,35 +30,61 @@ public class UIWorkbench extends UserInterface<UIWorkbench, SplitPane> implement
         }
     }
 
-    static class StructureTree {
+    static class AreaTree {
 
         /** The empty tree. */
-        private static final StructureTree EMPTY = new StructureTree();
+        private static final AreaTree EMPTY = new AreaTree();
 
-        public StructureTree left;
+        public AreaTree left;
 
-        public StructureTree right;
+        public AreaTree right;
 
         /** Horizontal : 0 ~ 1, Vertical : 0 ~ -1 , None : 0 */
-        public double ratio;
+        private double ratio;
 
-        SplitableArea build() {
-            SplitableArea area = new SplitableArea();
-
-            if (ratio == 0) {
-                return area;
-            } else {
-                area.setDividerPositions(ratio);
-                System.out.println(Arrays.toString(area.getDividerPositions()) + "  " + ratio);
-                return area;
-            }
-
+        /**
+         * Get the ratio property of this {@link UIWorkbench.AreaTree}.
+         * 
+         * @return The ratio property.
+         */
+        private double getRatio() {
+            return ratio;
         }
 
         /**
+         * Set the ratio property of this {@link UIWorkbench.AreaTree}.
          * 
+         * @param ratio The ratio value to set.
          */
-        private void SplitableArea() {
+        final void setRatio(double ratio) {
+            this.ratio = ratio;
+        }
+
+        /**
+         * Is this contents node or not.
+         * 
+         * @return
+         */
+        final boolean isContentNode() {
+            return ratio == 0d;
+        }
+
+        /**
+         * Is this layout node or not.
+         * 
+         * @return
+         */
+        final boolean isHorizontalLayoutNode() {
+            return 0 < ratio && ratio <= 1;
+        }
+
+        /**
+         * Is this layout node or not.
+         * 
+         * @return
+         */
+        final boolean isVerticalLayoutNode() {
+            return -1 <= ratio && ratio < 0;
         }
     }
 }
