@@ -109,16 +109,6 @@ public class WindowManager {
     }
 
     /**
-     * Request the re-layout of all areas.
-     */
-    final void layoutAreas() {
-        getRootPane().requestLayout();
-        for (RootArea area : windows) {
-            area.getNode().requestLayout();
-        }
-    }
-
-    /**
      * Bring all windows managed by this window manager to front.
      */
     final void bringToFront() {
@@ -149,12 +139,6 @@ public class WindowManager {
         if (initialized == false) {
             initialized = true;
             dndManager.init();
-
-            Viewtify.inUI(() -> {
-                for (ViewStatus status : views.values()) {
-                    status.setDeviderPositions();
-                }
-            });
         }
     }
 }

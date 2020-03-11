@@ -9,7 +9,6 @@
  */
 package viewtify.ui.dock;
 
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 
 import viewtify.ui.View;
@@ -63,36 +62,6 @@ final class ViewStatus {
 
     public void setArea(TabArea area) {
         this.area = area;
-    }
-
-    /**
-     * Resize the area of this view to the defined value.
-     */
-    public void setDeviderPositions() {
-        SplitPane splitPane;
-        final double space = 0.5;
-
-        if (getArea().getParent().getNode() instanceof SplitPane) {
-            splitPane = (SplitPane) getArea().getParent().getNode();
-        } else {
-            return;
-        }
-
-        if (space < 0.05 || space > 0.95) {
-            return;
-        }
-        switch (position) {
-        case LEFT: // fall trough
-        case TOP:
-            splitPane.setDividerPositions(space);
-            break;
-        case RIGHT: // all trough
-        case BOTTOM:
-            splitPane.setDividerPositions(1 - space);
-            break;
-        default:
-            break;
-        }
     }
 
     @Override

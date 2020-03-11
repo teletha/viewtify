@@ -130,10 +130,8 @@ class DNDManager {
         if (event.getTransferMode() == TransferMode.MOVE && db.hasContent(DATAFORMAT)) {
             area.handleEmpty();
             closeDropStages();
-            dragedViewStatus.setDeviderPositions();
             dragedViewStatus = null;
         }
-        windowManager.layoutAreas();
         event.consume();
     }
 
