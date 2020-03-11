@@ -11,15 +11,11 @@ package viewtify;
 
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.dock.DragNDropManager;
-import viewtify.ui.dock.DragNDropManager;
 import viewtify.ui.dock.WindowManager;
 
 public class Docker extends View {
 
     private WindowManager manager = new WindowManager();
-
-    private DragNDropManager dnd = new DragNDropManager(manager);
 
     class view extends ViewDSL {
         {
@@ -33,7 +29,6 @@ public class Docker extends View {
     @Override
     protected void initialize() {
         manager.init();
-        dnd.init();
 
         manager.register(new ViewPane("First"));
         manager.register(new ViewPane("Second"));

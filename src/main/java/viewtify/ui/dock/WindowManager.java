@@ -30,7 +30,7 @@ public class WindowManager {
 
     protected Pane rootPane = new HBox();
 
-    private final DragNDropManager dragNDropManager = new DragNDropManager(this);
+    private final DNDManager dragNDropManager = new DNDManager(this);
 
     private final List<RootArea> subWindows = new ArrayList<>();
 

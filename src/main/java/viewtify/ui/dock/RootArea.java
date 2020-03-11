@@ -34,7 +34,7 @@ public final class RootArea extends ViewArea {
      * @param dragNDropManager The drag&drop manager
      * @param closeStage Close the stage containing this area when the last view was removed?
      */
-    public RootArea(DragNDropManager dragNDropManager, boolean closeStage) {
+    public RootArea(DNDManager dragNDropManager, boolean closeStage) {
         this(new VBox(), dragNDropManager, closeStage);
     }
 
@@ -45,7 +45,7 @@ public final class RootArea extends ViewArea {
      * @param dragNDropManager The drag&drop manager
      * @param closeStage Close the stage containing this area when the last view was removed?
      */
-    public RootArea(Pane box, DragNDropManager dragNDropManager, boolean closeStage) {
+    public RootArea(Pane box, DNDManager dragNDropManager, boolean closeStage) {
         super(dragNDropManager);
         this.closeStage = closeStage;
         this.box = box;

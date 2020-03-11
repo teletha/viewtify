@@ -24,7 +24,7 @@ public class ViewArea {
 
     private final SplitPane outerPane;
 
-    private final DragNDropManager dragNDropManager;
+    private final DNDManager dragNDropManager;
 
     private ViewArea parent;
 
@@ -45,7 +45,7 @@ public class ViewArea {
      * @param parent The parent area.
      * @param dragNDropManager The drag&drop manager to handle moving the contained views.
      */
-    protected ViewArea(ViewArea parent, DragNDropManager dragNDropManager) {
+    protected ViewArea(ViewArea parent, DNDManager dragNDropManager) {
         this(dragNDropManager);
         this.parent = parent;
     }
@@ -55,7 +55,7 @@ public class ViewArea {
      *
      * @param dragNDropManager The drag&drop manager to handle moving the contained views.
      */
-    protected ViewArea(DragNDropManager dragNDropManager) {
+    protected ViewArea(DNDManager dragNDropManager) {
         outerPane = new SplitPane();
         outerPane.setOrientation(Orientation.VERTICAL);
         outerPane.getItems().add(new Pane());
@@ -297,7 +297,7 @@ public class ViewArea {
         return (RootArea) parent;
     }
 
-    protected DragNDropManager getDragNDropManager() {
+    protected DNDManager getDragNDropManager() {
         return dragNDropManager;
     }
 

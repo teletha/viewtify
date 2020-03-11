@@ -9,7 +9,12 @@
  */
 package viewtify.ui.dock;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
@@ -23,53 +28,44 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import kiss.Managed;
+import kiss.Singleton;
 
 /**
  * The drag&drop manager. The implementations handles the full dnd management of views.
  */
-public class DragNDropManager {
+@Managed(Singleton.class)
+class DNDManager {
 
-    /**
-     * The specialized data format to handle the drag&drop gestures with managed tabs.
-     */
-    static final DataFormat DATAFORMAT = new DataFormat("de.qaware.sdfx.DragNDrop");
+    /** The specialized data format to handle the drag&drop gestures with managed tabs. */
+    private static final DataFormat DATAFORMAT = new DataFormat("drag and drop manager");
 
-    /**
-     * Temporal storage for the draged view
-     */
+    /** Temporal storage for the draged view */
     private static ViewStatus dragedViewStatus;
 
-    /**
-     * The window manager.
-     */
-    private final WindowManager windowManager;
+    /** The window manager. */
+    final WindowManager windowManager;
 
-    /**
-     * The effect for the current drop zone.
-     */
+    /** The effect for the current drop zone. */
     private final Blend effect = new Blend();
 
-    /**
-     * The visible effect.
-     */
+    /** The visible effect. */
     private final ColorInput dropOverlay = new ColorInput();
 
-    /**
-     * Handler for drag&drop outside a window
-     */
+    /** Handler for drag&drop outside a window. */
     private DropStage dropStage;
 
-    /**
-     * The current node where the effect is active.
-     */
+    /** The current node where the effect is active. */
     private Node effectTarget;
 
-    /**
-     * Temp stage when the view was dropped outside a stagediver.fx window.
-     */
+    /** Temp stage when the view was dropped outside a stagediver.fx window. */
     private Stage droppedStage;
 
     /**
@@ -77,33 +73,20 @@ public class DragNDropManager {
      *
      * @param windowManager The window manager which handles the views and sub windows.
      */
-    public DragNDropManager(WindowManager windowManager) {
+    DNDManager(WindowManager windowManager) {
         this.windowManager = windowManager;
-    }
-
-    public static ViewStatus getDragedViewStatus() {
-        return dragedViewStatus;
-    }
-
-    public static void setDragedViewStatus(ViewStatus dragedViewStatus) {
-        DragNDropManager.dragedViewStatus = dragedViewStatus;
     }
 
     /**
      * Called to initialize a controller after its root element has been completely processed.
      */
-    public void init() {
-        windowManager.getRootPane().getScene().setOnDragExited(new EventHandler<DragEvent>() {
-
-            @Override
-            public void handle(DragEvent event) {
-                System.out.println("exit " + dropStage);
-                if (dropStage == null) {
-                    dropStage = new DropStage(DragNDropManager.this);
-                    dropStage.show();
-                }
-                event.consume();
+    void init() {
+        windowManager.getRootPane().getScene().setOnDragExited(e -> {
+            if (dropStage == null) {
+                dropStage = new DropStage();
+                dropStage.open();
             }
+            e.consume();
         });
     }
 
@@ -112,14 +95,14 @@ public class DragNDropManager {
      *
      * @param event The mouse event.
      */
-    public void onDragDetected(MouseEvent event) {
+    void onDragDetected(MouseEvent event) {
         if (!(event.getSource() instanceof TabPane)) {
             return;
         }
 
         TabPane pane = (TabPane) event.getSource();
         ViewStatus view = (ViewStatus) pane.getSelectionModel().getSelectedItem().getUserData();
-        setDragedViewStatus(view);
+        dragedViewStatus = view;
 
         Dragboard db = pane.startDragAndDrop(TransferMode.MOVE);
         ClipboardContent content = new ClipboardContent();
@@ -127,8 +110,8 @@ public class DragNDropManager {
 
         db.setContent(content);
         if (dropStage == null) {
-            dropStage = new DropStage(DragNDropManager.this);
-            dropStage.show();
+            dropStage = new DropStage();
+            dropStage.open();
         }
         event.consume();
     }
@@ -138,8 +121,7 @@ public class DragNDropManager {
      *
      * @param event The drag event
      */
-
-    public void onDragDone(DragEvent event) {
+    void onDragDone(DragEvent event) {
         if (!(event.getSource() instanceof TabPane) && ((TabPane) event.getSource()).getUserData() instanceof TabArea) {
             return;
         }
@@ -153,8 +135,8 @@ public class DragNDropManager {
         if (event.getTransferMode() == TransferMode.MOVE && db.hasContent(DATAFORMAT)) {
             area.handleEmpty();
             closeDropStages();
-            getDragedViewStatus().setDeviderPositions();
-            setDragedViewStatus(null);
+            dragedViewStatus.setDeviderPositions();
+            dragedViewStatus = null;
         }
         windowManager.redrawAreas();
         event.consume();
@@ -166,8 +148,7 @@ public class DragNDropManager {
      * @param event The fired event.
      * @param dropStage The stage where the view was dropped.
      */
-
-    public void onDragDroppedNewStage(DragEvent event, Stage dropStage) {
+    void onDragDroppedNewStage(DragEvent event, Stage dropStage) {
 
         if (isInvalidDragboard(event)) {
             return;
@@ -176,10 +157,10 @@ public class DragNDropManager {
         RootArea area = new RootArea(this, true);
         Stage stage = initManagedWindow(dropStage, area);
 
-        getDragedViewStatus().getArea().remove(getDragedViewStatus(), false);
-        getDragedViewStatus().setPosition(Position.CENTER);
-        area.add(getDragedViewStatus(), Position.CENTER);
-        stage.setTitle(getDragedViewStatus().getView().id());
+        dragedViewStatus.getArea().remove(dragedViewStatus, false);
+        dragedViewStatus.setPosition(Position.CENTER);
+        area.add(dragedViewStatus, Position.CENTER);
+        stage.setTitle(dragedViewStatus.getView().id());
         stage.show();
         droppedStage = stage;
         windowManager.register(area);
@@ -192,8 +173,7 @@ public class DragNDropManager {
      *
      * @param event The drag event.
      */
-
-    public void onDragDropped(DragEvent event) {
+    void onDragDropped(DragEvent event) {
         boolean success = false;
         if (isInvalidDragboard(event)) {
             return;
@@ -205,10 +185,10 @@ public class DragNDropManager {
         // Add view to new area
         if (targetNode.getUserData() instanceof ViewArea) {
             ViewArea target = (ViewArea) targetNode.getUserData();
-            getDragedViewStatus().getArea().remove(getDragedViewStatus(), false);
-            getDragedViewStatus().setPosition(detectPosition(event, targetNode));
+            dragedViewStatus.getArea().remove(dragedViewStatus, false);
+            dragedViewStatus.setPosition(detectPosition(event, targetNode));
             Position position = detectPosition(event, targetNode);
-            target.add(getDragedViewStatus(), position);
+            target.add(dragedViewStatus, position);
             success = true;
         }
         completeDropped(event, success);
@@ -219,8 +199,7 @@ public class DragNDropManager {
      *
      * @param event the drag event.
      */
-
-    public void onDragExited(DragEvent event) {
+    void onDragExited(DragEvent event) {
         if (!(event.getSource() instanceof Node)) {
             return;
         }
@@ -234,8 +213,7 @@ public class DragNDropManager {
      *
      * @param event The drag event.
      */
-
-    public void onDragOver(DragEvent event) {
+    void onDragOver(DragEvent event) {
         if (!(event.getSource() instanceof Control)) {
             return;
         }
@@ -265,16 +243,6 @@ public class DragNDropManager {
     }
 
     /**
-     * Get the window manager instance.
-     *
-     * @return The window manager instance.
-     */
-
-    public WindowManager getWindowManager() {
-        return windowManager;
-    }
-
-    /**
      * Complete the dropped event. This contains the cleaning the effects and other status.
      *
      * @param event The drag event
@@ -300,7 +268,7 @@ public class DragNDropManager {
     private boolean isInvalidDragboard(DragEvent event) {
         // Check if dropped content is valid for dropping here
         Dragboard dragboard = event.getDragboard();
-        return !dragboard.hasContent(DATAFORMAT) || !dragboard.getContent(DATAFORMAT).equals(getDragedViewStatus().getView().id());
+        return !dragboard.hasContent(DATAFORMAT) || !dragboard.getContent(DATAFORMAT).equals(dragedViewStatus.getView().id());
     }
 
     /**
@@ -388,10 +356,96 @@ public class DragNDropManager {
      * Close all the invisible drop stages.
      */
     private void closeDropStages() {
-
         if (dropStage != null) {
             dropStage.close();
             dropStage = null;
         }
     }
+
+    /**
+     * The DropStage is a container which handles the drop events of views outside the the
+     * application windows.
+     * <p/>
+     * This drop events are captured by one undecorated and transparent stage per screen. This
+     * stages covers the whole screen.
+     */
+    private final class DropStage {
+
+        /** The the primary stage containing the window manager. */
+        private final Stage owner;
+
+        /** A list with all stages (one per screen) which are used as drop areas. */
+        private final List<Stage> stages = new ArrayList<>();
+
+        /**
+         * Initialize the drop stages for a new drag&drop gesture.
+         */
+        private DropStage() {
+            this.owner = (Stage) windowManager.getRootPane().getScene().getWindow();
+        }
+
+        /**
+         * Open the drop stages.
+         */
+        private void open() {
+            for (Screen screen : Screen.getScreens()) {
+                // Initialize a drop stage for the given screen.
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UTILITY);
+                stage.setOpacity(0.01);
+
+                // set Stage boundaries to visible bounds of the main screen
+                Rectangle2D bounds = screen.getVisualBounds();
+                stage.setX(bounds.getMinX());
+                stage.setY(bounds.getMinY());
+                stage.setWidth(bounds.getWidth());
+                stage.setHeight(bounds.getHeight());
+
+                // root transparent pane as dummy
+                Pane pane = new Pane();
+                pane.setStyle("-fx-background-color: transparent");
+
+                // create scene and apply event drag&drop handlers
+                Scene scene = new Scene(pane, bounds.getWidth(), bounds.getHeight(), Color.TRANSPARENT);
+                scene.setOnDragEntered(e -> {
+                    owner.requestFocus();
+                    windowManager.bringToFront();
+                    e.consume();
+                });
+                scene.setOnDragExited(e -> {
+                    owner.requestFocus();
+                    windowManager.bringToFront();
+                    e.consume();
+                });
+                scene.setOnDragOver(e -> {
+                    if (e.getDragboard().hasContent(DATAFORMAT)) {
+                        e.acceptTransferModes(TransferMode.MOVE);
+                    }
+                    e.consume();
+                });
+                scene.setOnDragDropped(e -> {
+                    onDragDroppedNewStage(e, stage);
+                });
+
+                // show stage
+                stage.setScene(scene);
+                stage.show();
+
+                // register
+                stages.add(stage);
+            }
+        }
+
+        /**
+         * Close all open stages which are used for the drag&drop gesture.
+         */
+        private void close() {
+            Iterator<Stage> iterator = stages.iterator();
+            while (iterator.hasNext()) {
+                iterator.next().close();
+                iterator.remove();
+            }
+        }
+    }
+
 }

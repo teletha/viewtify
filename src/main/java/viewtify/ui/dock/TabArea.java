@@ -38,7 +38,7 @@ public class TabArea extends ViewArea {
      *
      * @param dragNDropManager Use this drag&drop manager to handle the view management.
      */
-    public TabArea(DragNDropManager dragNDropManager) {
+    public TabArea(DNDManager dragNDropManager) {
         super(dragNDropManager);
         registerDragEvents();
 
@@ -51,7 +51,7 @@ public class TabArea extends ViewArea {
      * @param parent Use this area as parent area.
      * @param dragNDropManager Use this drag&drop manager to handle the view management.
      */
-    public TabArea(ViewArea parent, DragNDropManager dragNDropManager) {
+    public TabArea(ViewArea parent, DNDManager dragNDropManager) {
         super(parent, dragNDropManager);
         registerDragEvents();
         initFocusEvents();
@@ -67,7 +67,7 @@ public class TabArea extends ViewArea {
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean old, Boolean newValue) {
                 if (newValue && tabPane.getSelectionModel().getSelectedItem() != null) {
                     ViewStatus status = (ViewStatus) tabPane.getSelectionModel().getSelectedItem().getUserData();
-                    getDragNDropManager().getWindowManager().setFocusedView(status.getView());
+                    getDragNDropManager().windowManager.setFocusedView(status.getView());
                 }
             }
         });
@@ -77,7 +77,7 @@ public class TabArea extends ViewArea {
             public void changed(ObservableValue<? extends Tab> observableValue, Tab oldTab, Tab newTab) {
                 if (newTab != null) {
                     ViewStatus status = (ViewStatus) newTab.getUserData();
-                    getDragNDropManager().getWindowManager().setFocusedView(status.getView());
+                    getDragNDropManager().windowManager.setFocusedView(status.getView());
                 }
             }
         });
