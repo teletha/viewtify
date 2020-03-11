@@ -95,7 +95,7 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
      * Load tab contents explicitly.
      */
     public final void load() {
-        if (loaded.getAndSet(true) == false) {
+        if (viewBuilder != null && loaded.getAndSet(true) == false) {
             View view = viewBuilder.apply(this);
             view.initializeLazy(parent);
             setContent(view.ui());

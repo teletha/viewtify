@@ -12,14 +12,14 @@ package viewtify;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.dock.DragNDropManager;
-import viewtify.ui.dock.DragNDropManagerImpl;
-import viewtify.ui.dock.WindowManagerImpl;
+import viewtify.ui.dock.DragNDropManager;
+import viewtify.ui.dock.WindowManager;
 
 public class Docker extends View {
 
-    private WindowManagerImpl manager = new WindowManagerImpl();
+    private WindowManager manager = new WindowManager();
 
-    private DragNDropManager dnd = new DragNDropManagerImpl(manager);
+    private DragNDropManager dnd = new DragNDropManager(manager);
 
     class view extends ViewDSL {
         {

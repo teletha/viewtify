@@ -77,7 +77,8 @@ class DropStage {
      */
     private Stage initDropStage(Screen screen) {
         Stage stage = new Stage();
-        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.initStyle(StageStyle.UTILITY);
+        stage.setOpacity(0.01);
         // stage.initOwner(owner);
         Rectangle2D screenBounds = screen.getVisualBounds();
         // set Stage boundaries to visible bounds of the main screen
