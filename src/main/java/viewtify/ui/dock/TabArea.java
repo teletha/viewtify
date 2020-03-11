@@ -12,11 +12,8 @@ package viewtify.ui.dock;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.TabPane;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
 
 /**
  * Describes a logical view area which displays the views within a tab pane.
@@ -54,17 +51,11 @@ class TabArea extends ViewArea {
      * Register the event handler for drag&drop of views.
      */
     private void registerDragEvents() {
-        tabPane.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                getDragNDropManager().onDragDetected(event);
-            }
+        tabPane.setOnDragDetected(event -> {
+            dndManager.onDragDetected(event);
         });
-        tabPane.setOnDragDone(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                getDragNDropManager().onDragDone(event);
-            }
+        tabPane.setOnDragDone(event -> {
+            dndManager.onDragDone(event);
         });
         super.registerDragEvents(tabPane);
     }

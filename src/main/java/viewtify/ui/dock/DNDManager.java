@@ -226,8 +226,8 @@ class DNDManager {
             }
             target.setEffect(effect);
         }
-        effect.setMode(BlendMode.COLOR_BURN);
-        dropOverlay.setPaint(Color.LIGHTSTEELBLUE);
+        effect.setMode(BlendMode.OVERLAY);
+        dropOverlay.setPaint(Color.LIGHTBLUE);
         effect.setBottomInput(dropOverlay);
         ViewPosition position = detectPosition(event, target);
 
@@ -257,7 +257,6 @@ class DNDManager {
         effectTarget = null;
 
         event.setDropCompleted(success);
-        // closeDropStages();
         event.consume();
     }
 

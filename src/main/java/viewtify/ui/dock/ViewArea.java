@@ -22,7 +22,7 @@ public class ViewArea {
 
     private final SplitPane outerPane;
 
-    private final DNDManager dragNDropManager;
+    protected final DNDManager dndManager;
 
     private ViewArea parent;
 
@@ -39,24 +39,24 @@ public class ViewArea {
      * Create a new view area and register the given area as parent.
      *
      * @param parent The parent area.
-     * @param dragNDropManager The drag&drop manager to handle moving the contained views.
+     * @param dndManager The drag&drop manager to handle moving the contained views.
      */
-    protected ViewArea(ViewArea parent, DNDManager dragNDropManager) {
-        this(dragNDropManager);
+    protected ViewArea(ViewArea parent, DNDManager dndManager) {
+        this(dndManager);
         this.parent = parent;
     }
 
     /**
      * Create a new view area.
      *
-     * @param dragNDropManager The drag&drop manager to handle moving the contained views.
+     * @param dndManager The drag&drop manager to handle moving the contained views.
      */
-    protected ViewArea(DNDManager dragNDropManager) {
+    protected ViewArea(DNDManager dndManager) {
         outerPane = new SplitPane();
         outerPane.setOrientation(Orientation.VERTICAL);
         outerPane.getItems().add(new Pane());
         outerPane.getItems().add(new Pane());
-        this.dragNDropManager = dragNDropManager;
+        this.dndManager = dndManager;
         registerDragEvents(outerPane);
     }
 
@@ -67,9 +67,9 @@ public class ViewArea {
      */
     protected final void registerDragEvents(Node node) {
         node.setUserData(this);
-        node.setOnDragOver(dragNDropManager::onDragOver);
-        node.setOnDragExited(dragNDropManager::onDragExited);
-        node.setOnDragDropped(dragNDropManager::onDragDropped);
+        node.setOnDragOver(dndManager::onDragOver);
+        node.setOnDragExited(dndManager::onDragExited);
+        node.setOnDragDropped(dndManager::onDragDropped);
     }
 
     /**
@@ -162,7 +162,7 @@ public class ViewArea {
             if (orientation == Orientation.VERTICAL) {
                 getFirstChild().add(view, position);
             } else {
-                ViewArea target = new TabArea(dragNDropManager);
+                ViewArea target = new TabArea(dndManager);
                 target.add(view, ViewPosition.CENTER);
                 split(target, this, Orientation.VERTICAL);
             }
@@ -171,7 +171,7 @@ public class ViewArea {
             if (orientation == Orientation.VERTICAL) {
                 getSecondChild().add(view, position);
             } else {
-                ViewArea target = new TabArea(dragNDropManager);
+                ViewArea target = new TabArea(dndManager);
                 target.add(view, ViewPosition.CENTER);
                 split(this, target, Orientation.VERTICAL);
             }
@@ -180,7 +180,7 @@ public class ViewArea {
             if (orientation == Orientation.HORIZONTAL) {
                 getSecondChild().add(view, position);
             } else {
-                ViewArea target = new TabArea(dragNDropManager);
+                ViewArea target = new TabArea(dndManager);
                 target.add(view, ViewPosition.CENTER);
                 split(target, this, Orientation.HORIZONTAL);
             }
@@ -189,7 +189,7 @@ public class ViewArea {
             if (orientation == Orientation.HORIZONTAL) {
                 getSecondChild().add(view, position);
             } else {
-                ViewArea target = new TabArea(dragNDropManager);
+                ViewArea target = new TabArea(dndManager);
                 target.add(view, ViewPosition.CENTER);
                 split(this, target, Orientation.HORIZONTAL);
             }
@@ -245,7 +245,7 @@ public class ViewArea {
             throw new IllegalArgumentException("Either first or second area must be this.");
         }
 
-        ViewArea area = new ViewArea(parent, dragNDropManager);
+        ViewArea area = new ViewArea(parent, dndManager);
         parent.replace(this, area);
         area.setOrientation(orientation);
         area.setFirstChild(first);
@@ -296,10 +296,6 @@ public class ViewArea {
             parent = parent.getParent();
         }
         return (RootArea) parent;
-    }
-
-    protected final DNDManager getDragNDropManager() {
-        return dragNDropManager;
     }
 
     /**
