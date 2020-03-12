@@ -28,11 +28,8 @@ class TabArea extends ViewArea {
 
     /**
      * Create a new tab area.
-     *
-     * @param dragNDropManager Use this drag&drop manager to handle the view management.
      */
-    TabArea(DNDManager dragNDropManager) {
-        super(dragNDropManager);
+    TabArea() {
         registerDragEvents();
     }
 
@@ -41,10 +38,10 @@ class TabArea extends ViewArea {
      */
     private void registerDragEvents() {
         tabPane.setOnDragDetected(event -> {
-            dndManager.onDragDetected(event);
+            DNDManager.onDragDetected(event);
         });
         tabPane.setOnDragDone(event -> {
-            dndManager.onDragDone(event);
+            DNDManager.onDragDone(event);
         });
         super.registerDragEvents(tabPane);
     }

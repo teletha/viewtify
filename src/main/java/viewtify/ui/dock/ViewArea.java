@@ -22,8 +22,6 @@ public class ViewArea {
 
     private final SplitPane outerPane;
 
-    protected final DNDManager dndManager;
-
     private ViewArea parent;
 
     private ViewArea firstChild;
@@ -34,15 +32,12 @@ public class ViewArea {
 
     /**
      * Create a new view area.
-     *
-     * @param dndManager The drag&drop manager to handle moving the contained views.
      */
-    protected ViewArea(DNDManager dndManager) {
+    protected ViewArea() {
         outerPane = new SplitPane();
         outerPane.setOrientation(Orientation.VERTICAL);
         outerPane.getItems().add(new Pane());
         outerPane.getItems().add(new Pane());
-        this.dndManager = dndManager;
         registerDragEvents(outerPane);
     }
 
@@ -53,9 +48,9 @@ public class ViewArea {
      */
     protected final void registerDragEvents(Node node) {
         node.setUserData(this);
-        node.setOnDragOver(dndManager::onDragOver);
-        node.setOnDragExited(dndManager::onDragExited);
-        node.setOnDragDropped(dndManager::onDragDropped);
+        node.setOnDragOver(DNDManager::onDragOver);
+        node.setOnDragExited(DNDManager::onDragExited);
+        node.setOnDragDropped(DNDManager::onDragDropped);
     }
 
     /**
@@ -147,7 +142,7 @@ public class ViewArea {
             if (orientation == Orientation.VERTICAL) {
                 getFirstChild().add(view, position);
             } else {
-                ViewArea target = new TabArea(dndManager);
+                ViewArea target = new TabArea();
                 target.add(view, ViewPosition.CENTER);
                 split(target, this, Orientation.VERTICAL);
             }
@@ -156,7 +151,7 @@ public class ViewArea {
             if (orientation == Orientation.VERTICAL) {
                 getSecondChild().add(view, position);
             } else {
-                ViewArea target = new TabArea(dndManager);
+                ViewArea target = new TabArea();
                 target.add(view, ViewPosition.CENTER);
                 split(this, target, Orientation.VERTICAL);
             }
@@ -165,7 +160,7 @@ public class ViewArea {
             if (orientation == Orientation.HORIZONTAL) {
                 getSecondChild().add(view, position);
             } else {
-                ViewArea target = new TabArea(dndManager);
+                ViewArea target = new TabArea();
                 target.add(view, ViewPosition.CENTER);
                 split(target, this, Orientation.HORIZONTAL);
             }
@@ -174,7 +169,7 @@ public class ViewArea {
             if (orientation == Orientation.HORIZONTAL) {
                 getSecondChild().add(view, position);
             } else {
-                ViewArea target = new TabArea(dndManager);
+                ViewArea target = new TabArea();
                 target.add(view, ViewPosition.CENTER);
                 split(this, target, Orientation.HORIZONTAL);
             }
@@ -215,7 +210,7 @@ public class ViewArea {
             throw new IllegalArgumentException("Either first or second area must be this.");
         }
 
-        ViewArea area = new ViewArea(dndManager);
+        ViewArea area = new ViewArea();
         parent.replace(this, area);
         area.setOrientation(orientation);
         area.setFirstChild(first);

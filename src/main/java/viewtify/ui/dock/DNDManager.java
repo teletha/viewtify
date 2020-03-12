@@ -37,7 +37,7 @@ import javafx.stage.StageStyle;
 /**
  * The drag&drop manager. The implementations handles the full dnd management of views.
  */
-class DNDManager {
+final class DNDManager {
 
     /** The specialized data format to handle the drag&drop gestures with managed tabs. */
     private static final DataFormat DATAFORMAT = new DataFormat("drag and drop manager");
@@ -46,32 +46,30 @@ class DNDManager {
     private static ViewStatus dragedViewStatus;
 
     /** The effect for the current drop zone. */
-    private final Blend effect = new Blend();
+    private static final Blend effect = new Blend();
 
     /** The visible effect. */
-    private final ColorInput dropOverlay = new ColorInput();
+    private static final ColorInput dropOverlay = new ColorInput();
 
     /** Handler for drag&drop outside a window. */
-    private DropStage dropStage;
+    private static DropStage dropStage;
 
     /** The current node where the effect is active. */
-    private Node effectTarget;
+    private static Node effectTarget;
 
     /** Temp stage when the view was dropped outside a stagediver.fx window. */
-    private Stage droppedStage;
+    private static Stage droppedStage;
 
     /**
-     * Create a new drag&drop manager instance.
-     *
-     * @param windowManager The window manager which handles the views and sub windows.
+     * Hide.
      */
-    DNDManager() {
+    private DNDManager() {
     }
 
     /**
      * Called to initialize a controller after its root element has been completely processed.
      */
-    void init() {
+    static void init() {
         WindowManager.getRootPane().getScene().setOnDragExited(e -> {
             if (dropStage == null) {
                 dropStage = new DropStage();
@@ -86,7 +84,7 @@ class DNDManager {
      *
      * @param event The mouse event.
      */
-    void onDragDetected(MouseEvent event) {
+    static void onDragDetected(MouseEvent event) {
         if (!(event.getSource() instanceof TabPane)) {
             return;
         }
@@ -112,7 +110,7 @@ class DNDManager {
      *
      * @param event The drag event
      */
-    void onDragDone(DragEvent event) {
+    static void onDragDone(DragEvent event) {
         if (!(event.getSource() instanceof TabPane) && ((TabPane) event.getSource()).getUserData() instanceof TabArea) {
             return;
         }
@@ -137,12 +135,12 @@ class DNDManager {
      * @param event The fired event.
      * @param dropStage The stage where the view was dropped.
      */
-    void onDragDroppedNewStage(DragEvent event, Stage dropStage) {
+    static void onDragDroppedNewStage(DragEvent event, Stage dropStage) {
         if (isInvalidDragboard(event)) {
             return;
         }
 
-        RootArea area = new RootArea(this, true);
+        RootArea area = new RootArea(true);
 
         Node ui = dragedViewStatus.view.ui();
         Bounds bounds = ui.getBoundsInLocal();
@@ -170,7 +168,7 @@ class DNDManager {
      *
      * @param event The drag event.
      */
-    void onDragDropped(DragEvent event) {
+    static void onDragDropped(DragEvent event) {
         boolean success = false;
         if (isInvalidDragboard(event)) {
             return;
@@ -195,7 +193,7 @@ class DNDManager {
      *
      * @param event the drag event.
      */
-    void onDragExited(DragEvent event) {
+    static void onDragExited(DragEvent event) {
         if (!(event.getSource() instanceof Node)) {
             return;
         }
@@ -209,7 +207,7 @@ class DNDManager {
      *
      * @param event The drag event.
      */
-    void onDragOver(DragEvent event) {
+    static void onDragOver(DragEvent event) {
         if (!(event.getSource() instanceof Control)) {
             return;
         }
@@ -244,7 +242,7 @@ class DNDManager {
      * @param event The drag event
      * @param success Was the drop gesture successful
      */
-    private void completeDropped(DragEvent event, boolean success) {
+    private static void completeDropped(DragEvent event, boolean success) {
         if (effectTarget != null) {
             effectTarget.setEffect(null);
         }
@@ -260,7 +258,7 @@ class DNDManager {
      * @param event The drag drop event.
      * @return False if the dragboard of the event contains a valid view id.
      */
-    private boolean isInvalidDragboard(DragEvent event) {
+    private static boolean isInvalidDragboard(DragEvent event) {
         // Check if dropped content is valid for dropping here
         Dragboard dragboard = event.getDragboard();
         return !dragboard.hasContent(DATAFORMAT) || !dragboard.getContent(DATAFORMAT).equals(dragedViewStatus.view.id());
@@ -272,7 +270,7 @@ class DNDManager {
      * @param event The drag event
      * @return The position value for the detected sub area.
      */
-    private ViewPosition detectPosition(DragEvent event, Control source) {
+    private static ViewPosition detectPosition(DragEvent event, Control source) {
         double areaX = event.getX() / source.getWidth();
         double areaY = event.getY() / source.getHeight();
         if (0.25 <= areaX && areaX < 0.75 && 0.25 <= areaY && areaY < 0.75) {
@@ -288,7 +286,7 @@ class DNDManager {
         }
     }
 
-    private void adjustOverlay(Control target, ViewPosition position) {
+    private static void adjustOverlay(Control target, ViewPosition position) {
         switch (position) {
         case CENTER:
             dropOverlay.setX(0);
@@ -325,7 +323,7 @@ class DNDManager {
     /**
      * Close all the invisible drop stages.
      */
-    private void closeDropStages() {
+    private static void closeDropStages() {
         if (dropStage != null) {
             dropStage.close();
             dropStage = null;
@@ -339,7 +337,7 @@ class DNDManager {
      * This drop events are captured by one undecorated and transparent stage per screen. This
      * stages covers the whole screen.
      */
-    private final class DropStage {
+    private static final class DropStage {
 
         /** The the primary stage containing the window manager. */
         private final Stage owner;

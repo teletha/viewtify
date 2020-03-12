@@ -26,13 +26,10 @@ import viewtify.ui.View;
  * Handles the full window management with fully customizable layout and drag&drop into new not
  * existing windows.
  */
-public class WindowManager {
-
-    /** Drag & Drop manager. */
-    private static final DNDManager dndManager = new DNDManager();
+public final class WindowManager {
 
     /** Managed windows. */
-    static final List<RootArea> windows = new ArrayList<>();
+    private static final List<RootArea> windows = new ArrayList<>();
 
     /** Managed views. */
     private static final Map<String, ViewStatus> views = new LinkedHashMap<>();
@@ -54,7 +51,7 @@ public class WindowManager {
      *
      * @return The root pane.
      */
-    public static final Parent getRootPane() {
+    public static Parent getRootPane() {
         return root().getNode();
     }
 
@@ -87,7 +84,7 @@ public class WindowManager {
      *
      * @param area The new root area.
      */
-    static final void register(RootArea area) {
+    static void register(RootArea area) {
         windows.add(area);
     }
 
@@ -96,7 +93,7 @@ public class WindowManager {
      *
      * @param area The root area to remove.
      */
-    static final void unregister(RootArea area) {
+    static void unregister(RootArea area) {
         // remove and close views on the specified area
         Iterator<Entry<String, ViewStatus>> iterator = views.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -116,7 +113,7 @@ public class WindowManager {
     /**
      * Bring all windows managed by this window manager to front.
      */
-    static final void bringToFront() {
+    static void bringToFront() {
         for (RootArea area : windows) {
             if (area.getNode().getScene().getWindow() instanceof Stage) {
                 ((Stage) area.getNode().getScene().getWindow()).toFront();
@@ -132,7 +129,7 @@ public class WindowManager {
      */
     private static synchronized RootArea root() {
         if (root == null) {
-            root = new RootArea(dndManager, false);
+            root = new RootArea(false);
         }
         return root;
     }
@@ -143,7 +140,7 @@ public class WindowManager {
     private static synchronized void initializeLazy() {
         if (initialized == false) {
             initialized = true;
-            dndManager.init();
+            DNDManager.init();
         }
     }
 }

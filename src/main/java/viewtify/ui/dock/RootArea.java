@@ -33,12 +33,11 @@ final class RootArea extends ViewArea {
      * @param dndManager The drag&drop manager
      * @param canCloseStage Close the stage containing this area when the last view was removed?
      */
-    RootArea(DNDManager dndManager, boolean canCloseStage) {
-        super(dndManager);
+    RootArea(boolean canCloseStage) {
         this.box = new HBox();
         this.canCloseStage = canCloseStage;
 
-        setFirstChild(new TabArea(dndManager));
+        setFirstChild(new TabArea());
     }
 
     /**
