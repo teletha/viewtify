@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
@@ -57,6 +58,9 @@ public final class DockSystem {
     /** Managed views. */
     private static final Map<String, ViewStatus> views = new LinkedHashMap<>();
 
+    /** Managed views. */
+    private static final Map<Parent, ViewStatus> nodes = new ConcurrentHashMap();
+
     /** FLAG */
     private static boolean initialized;
 
@@ -83,8 +87,8 @@ public final class DockSystem {
             ViewStatus current = new ViewStatus(view);
             if (views.containsKey(view.id())) {
                 ViewStatus old = views.get(view.id());
-                old.area.add(current, ViewPosition.CENTER);
-                old.area.remove(old);
+                old.area().add(current, ViewPosition.CENTER);
+                old.area().remove(old);
             } else {
                 root().add(current, ViewPosition.CENTER);
             }
@@ -111,8 +115,8 @@ public final class DockSystem {
         Iterator<Entry<String, ViewStatus>> iterator = views.entrySet().iterator();
         while (iterator.hasNext()) {
             ViewStatus status = iterator.next().getValue();
-            if (status.area.getRootArea() == area) {
-                status.area.remove(status);
+            if (status.area().getRootArea() == area) {
+                status.area().remove(status);
                 iterator.remove();
             }
         }
@@ -264,7 +268,7 @@ public final class DockSystem {
         stage.setOnShown(e -> DockSystem.register(area));
         stage.setOnCloseRequest(e -> DockSystem.unregister(area));
 
-        dragedViewStatus.area.remove(dragedViewStatus, false);
+        dragedViewStatus.area().remove(dragedViewStatus, false);
         area.add(dragedViewStatus, ViewPosition.CENTER);
         stage.show();
         droppedStage = stage;
@@ -286,10 +290,11 @@ public final class DockSystem {
             return;
         }
         Control targetNode = (Control) event.getGestureTarget();
+        System.out.println(targetNode);
         // Add view to new area
         if (targetNode.getUserData() instanceof ViewArea) {
             ViewArea target = (ViewArea) targetNode.getUserData();
-            dragedViewStatus.area.remove(dragedViewStatus, false);
+            dragedViewStatus.area().remove(dragedViewStatus, false);
             ViewPosition position = detectPosition(event, targetNode);
             target.add(dragedViewStatus, position);
             success = true;

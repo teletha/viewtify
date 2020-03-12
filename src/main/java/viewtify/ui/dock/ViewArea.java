@@ -142,7 +142,7 @@ abstract class ViewArea<P extends Parent> {
             }
             break;
         }
-        view.area.node.requestLayout();
+        view.area().node.requestLayout();
     }
 
     /**
