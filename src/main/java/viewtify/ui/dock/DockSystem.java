@@ -11,11 +11,15 @@ package viewtify.ui.dock;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.control.TabPane;
@@ -34,11 +38,141 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-/**
- * The drag&drop manager. The implementations handles the full dnd management of views.
- */
-final class DNDManager {
+import viewtify.Viewtify;
+import viewtify.ui.View;
 
+/**
+ * Handles the full window management with fully customizable layout and drag&drop into new not
+ * existing windows.
+ */
+public final class DockSystem {
+
+    /** Managed windows. */
+    private static final List<RootArea> windows = new ArrayList<>();
+
+    /** Managed views. */
+    private static final Map<String, ViewStatus> views = new LinkedHashMap<>();
+
+    /** FLAG */
+    private static boolean initialized;
+
+    /** The main root area. */
+    private static RootArea root;
+
+    /**
+     * Hide.
+     */
+    private DockSystem() {
+    }
+
+    /**
+     * Get the root pane for this window manager.
+     *
+     * @return The root pane.
+     */
+    public static Parent getRootPane() {
+        return root().getNode();
+    }
+
+    /**
+     * Register a new view within this window manager.
+     * <p/>
+     * The Position will give an advice where this view should be placed.
+     *
+     * @param view The view to register.
+     */
+    public static void register(View view) {
+        initializeLazy();
+
+        Viewtify.inUI(() -> {
+            ViewStatus current = new ViewStatus(view);
+            if (views.containsKey(view.id())) {
+                ViewStatus old = views.get(view.id());
+                TabArea area = old.getArea();
+                area.add(current, ViewPosition.CENTER);
+                area.remove(old);
+            } else {
+                root().add(current, ViewPosition.CENTER);
+            }
+            views.put(view.id(), current);
+        });
+    }
+
+    /**
+     * Register a new root area as subwindow.
+     *
+     * @param area The new root area.
+     */
+    static void register(RootArea area) {
+        windows.add(area);
+    }
+
+    /**
+     * Unregister and close the given root area.
+     *
+     * @param area The root area to remove.
+     */
+    static void unregister(RootArea area) {
+        // remove and close views on the specified area
+        Iterator<Entry<String, ViewStatus>> iterator = views.entrySet().iterator();
+        while (iterator.hasNext()) {
+            ViewStatus status = iterator.next().getValue();
+            TabArea tabArea = status.getArea();
+            if (tabArea.getRootArea() == area) {
+                tabArea.remove(status);
+                iterator.remove();
+            }
+        }
+
+        // remove and close window of the specified area
+        ((Stage) area.getNode().getScene().getWindow()).close();
+        windows.remove(area);
+    }
+
+    /**
+     * Bring all windows managed by this window manager to front.
+     */
+    static void bringToFront() {
+        for (RootArea area : windows) {
+            if (area.getNode().getScene().getWindow() instanceof Stage) {
+                ((Stage) area.getNode().getScene().getWindow()).toFront();
+            }
+        }
+        ((Stage) root.getNode().getScene().getWindow()).toFront();
+    }
+
+    /**
+     * Create the main root area lazy.
+     *
+     * @return The main area.
+     */
+    private static synchronized RootArea root() {
+        if (root == null) {
+            root = new RootArea(false);
+        }
+        return root;
+    }
+
+    /**
+     * Called to initialize a controller after its root element has been completely processed.
+     */
+    private static synchronized void initializeLazy() {
+        if (initialized == false) {
+            initialized = true;
+
+            getRootPane().getScene().setOnDragExited(e -> {
+                if (dropStage == null) {
+                    dropStage = new DropStage();
+                    dropStage.open();
+                }
+                e.consume();
+            });
+        }
+    }
+
+    // ==================================================================================
+    // The drag&drop manager. The implementations handles the full dnd management of views.
+    // ==================================================================================
     /** The specialized data format to handle the drag&drop gestures with managed tabs. */
     private static final DataFormat DATAFORMAT = new DataFormat("drag and drop manager");
 
@@ -59,25 +193,6 @@ final class DNDManager {
 
     /** Temp stage when the view was dropped outside a stagediver.fx window. */
     private static Stage droppedStage;
-
-    /**
-     * Hide.
-     */
-    private DNDManager() {
-    }
-
-    /**
-     * Called to initialize a controller after its root element has been completely processed.
-     */
-    static void init() {
-        WindowManager.getRootPane().getScene().setOnDragExited(e -> {
-            if (dropStage == null) {
-                dropStage = new DropStage();
-                dropStage.open();
-            }
-            e.consume();
-        });
-    }
 
     /**
      * Initialize the drag&drop for a view.
@@ -152,8 +267,8 @@ final class DNDManager {
         stage.setScene(scene);
         stage.setX(event.getX());
         stage.setY(event.getY());
-        stage.setOnShown(e -> WindowManager.register(area));
-        stage.setOnCloseRequest(e -> WindowManager.unregister(area));
+        stage.setOnShown(e -> DockSystem.register(area));
+        stage.setOnCloseRequest(e -> DockSystem.unregister(area));
 
         dragedViewStatus.getArea().remove(dragedViewStatus, false);
         area.add(dragedViewStatus, ViewPosition.CENTER);
@@ -349,7 +464,7 @@ final class DNDManager {
          * Initialize the drop stages for a new drag&drop gesture.
          */
         private DropStage() {
-            this.owner = (Stage) WindowManager.getRootPane().getScene().getWindow();
+            this.owner = (Stage) DockSystem.getRootPane().getScene().getWindow();
         }
 
         /**
@@ -377,12 +492,12 @@ final class DNDManager {
                 Scene scene = new Scene(pane, bounds.getWidth(), bounds.getHeight(), Color.TRANSPARENT);
                 scene.setOnDragEntered(e -> {
                     owner.requestFocus();
-                    WindowManager.bringToFront();
+                    DockSystem.bringToFront();
                     e.consume();
                 });
                 scene.setOnDragExited(e -> {
                     owner.requestFocus();
-                    WindowManager.bringToFront();
+                    DockSystem.bringToFront();
                     e.consume();
                 });
                 scene.setOnDragOver(e -> {
@@ -415,5 +530,4 @@ final class DNDManager {
             }
         }
     }
-
 }

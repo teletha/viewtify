@@ -11,13 +11,13 @@ package viewtify;
 
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.dock.WindowManager;
+import viewtify.ui.dock.DockSystem;
 
 public class Docker extends View {
 
     class view extends ViewDSL {
         {
-            $(() -> WindowManager.getRootPane());
+            $(() -> DockSystem.getRootPane());
         }
     }
 
@@ -26,10 +26,10 @@ public class Docker extends View {
      */
     @Override
     protected void initialize() {
-        WindowManager.register(new ViewPane("First"));
-        WindowManager.register(new ViewPane("Second"));
-        WindowManager.register(new ViewPane("Third"));
-        WindowManager.register(new ViewPane("Fourth"));
+        DockSystem.register(new ViewPane("First"));
+        DockSystem.register(new ViewPane("Second"));
+        DockSystem.register(new ViewPane("Third"));
+        DockSystem.register(new ViewPane("Fourth"));
     }
 
     private class ViewPane extends View {

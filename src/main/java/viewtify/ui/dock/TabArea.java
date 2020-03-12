@@ -38,10 +38,10 @@ class TabArea extends ViewArea {
      */
     private void registerDragEvents() {
         tabPane.setOnDragDetected(event -> {
-            DNDManager.onDragDetected(event);
+            DockSystem.onDragDetected(event);
         });
         tabPane.setOnDragDone(event -> {
-            DNDManager.onDragDone(event);
+            DockSystem.onDragDone(event);
         });
         super.registerDragEvents(tabPane);
     }

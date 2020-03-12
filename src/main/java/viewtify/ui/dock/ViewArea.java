@@ -48,9 +48,9 @@ public class ViewArea {
      */
     protected final void registerDragEvents(Node node) {
         node.setUserData(this);
-        node.setOnDragOver(DNDManager::onDragOver);
-        node.setOnDragExited(DNDManager::onDragExited);
-        node.setOnDragDropped(DNDManager::onDragDropped);
+        node.setOnDragOver(DockSystem::onDragOver);
+        node.setOnDragExited(DockSystem::onDragExited);
+        node.setOnDragDropped(DockSystem::onDragDropped);
     }
 
     /**
