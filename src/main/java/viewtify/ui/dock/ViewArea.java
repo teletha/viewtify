@@ -9,36 +9,39 @@
  */
 package viewtify.ui.dock;
 
+import java.util.Objects;
+
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.SplitPane;
-import javafx.scene.layout.Pane;
 
 /**
  * A ViewArea is a node within the area tree. It has two children which are self view areas.
  */
-public class ViewArea {
+public abstract class ViewArea<P extends Parent> {
 
-    private final SplitPane outerPane;
+    /** The actual root node. */
+    protected final P node;
 
-    private ViewArea parent;
+    /** The paretn area. */
+    protected ViewArea parent;
 
-    private ViewArea firstChild;
+    /** The related area. */
+    protected ViewArea firstChild;
 
-    private ViewArea secondChild;
+    /** The realated area. */
+    protected ViewArea secondChild;
 
+    /** The area orientation. */
     private Orientation orientation;
 
     /**
-     * Create a new view area.
+     * Specify root node.
+     * 
+     * @param node The root node of this area.
      */
-    protected ViewArea() {
-        outerPane = new SplitPane();
-        outerPane.setOrientation(Orientation.VERTICAL);
-        outerPane.getItems().add(new Pane());
-        outerPane.getItems().add(new Pane());
-        registerDragEvents(outerPane);
+    protected ViewArea(P node) {
+        this.node = Objects.requireNonNull(node);
     }
 
     /**
@@ -54,33 +57,6 @@ public class ViewArea {
     }
 
     /**
-     * Get the javafx scene graph node which represents this area.
-     *
-     * @return The scene graph node.
-     */
-    protected Parent getNode() {
-        return outerPane;
-    }
-
-    /**
-     * Get the parent area.
-     * 
-     * @return
-     */
-    protected final ViewArea getParent() {
-        return parent;
-    }
-
-    /**
-     * Get the first area.
-     * 
-     * @return
-     */
-    protected final ViewArea getFirstChild() {
-        return firstChild;
-    }
-
-    /**
      * Set {@param child} as first child of this view area.
      * <p/>
      * It will also update the javafx scene graph and the childs parent value.
@@ -91,17 +67,6 @@ public class ViewArea {
         // make relationship
         this.firstChild = child;
         child.parent = this;
-
-        outerPane.getItems().set(0, child.getNode());
-    }
-
-    /**
-     * Get the second area.
-     * 
-     * @return
-     */
-    protected final ViewArea getSecondChild() {
-        return secondChild;
     }
 
     /**
@@ -115,8 +80,6 @@ public class ViewArea {
         // make relationship
         this.secondChild = child;
         child.parent = this;
-
-        outerPane.getItems().set(1, child.getNode());
     }
 
     /**
@@ -140,7 +103,7 @@ public class ViewArea {
             break;
         case TOP:
             if (orientation == Orientation.VERTICAL) {
-                getFirstChild().add(view, position);
+                firstChild.add(view, position);
             } else {
                 ViewArea target = new TabArea();
                 target.add(view, ViewPosition.CENTER);
@@ -149,7 +112,7 @@ public class ViewArea {
             break;
         case BOTTOM:
             if (orientation == Orientation.VERTICAL) {
-                getSecondChild().add(view, position);
+                secondChild.add(view, position);
             } else {
                 ViewArea target = new TabArea();
                 target.add(view, ViewPosition.CENTER);
@@ -158,7 +121,7 @@ public class ViewArea {
             break;
         case LEFT:
             if (orientation == Orientation.HORIZONTAL) {
-                getSecondChild().add(view, position);
+                secondChild.add(view, position);
             } else {
                 ViewArea target = new TabArea();
                 target.add(view, ViewPosition.CENTER);
@@ -167,7 +130,7 @@ public class ViewArea {
             break;
         case RIGHT:
             if (orientation == Orientation.HORIZONTAL) {
-                getSecondChild().add(view, position);
+                secondChild.add(view, position);
             } else {
                 ViewArea target = new TabArea();
                 target.add(view, ViewPosition.CENTER);
@@ -175,7 +138,7 @@ public class ViewArea {
             }
             break;
         }
-        view.getArea().getNode().requestLayout();
+        view.getArea().node.requestLayout();
     }
 
     /**
@@ -187,9 +150,9 @@ public class ViewArea {
      */
     protected void remove(ViewArea area) {
         if (area == firstChild) {
-            getParent().replace(this, secondChild);
+            parent.replace(this, secondChild);
         } else if (area == secondChild) {
-            getParent().replace(this, firstChild);
+            parent.replace(this, firstChild);
         }
     }
 
@@ -210,7 +173,7 @@ public class ViewArea {
             throw new IllegalArgumentException("Either first or second area must be this.");
         }
 
-        ViewArea area = new ViewArea();
+        ViewArea area = new SplitArea();
         parent.replace(this, area);
         area.setOrientation(orientation);
         area.setFirstChild(first);
@@ -237,11 +200,11 @@ public class ViewArea {
      * @return The root area of this view.
      */
     public final RootArea getRootArea() {
-        ViewArea parent = this;
-        while (parent.getParent() != null) {
-            parent = parent.getParent();
+        ViewArea current = this;
+        while (current.parent != null) {
+            current = current.parent;
         }
-        return (RootArea) parent;
+        return (RootArea) current;
     }
 
     /**
@@ -249,9 +212,8 @@ public class ViewArea {
      *
      * @param orientation The orientation of splitting.
      */
-    private void setOrientation(Orientation orientation) {
+    protected void setOrientation(Orientation orientation) {
         this.orientation = orientation;
-        outerPane.setOrientation(orientation);
     }
 
     /**

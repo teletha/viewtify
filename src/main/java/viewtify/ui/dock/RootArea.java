@@ -9,19 +9,14 @@
  */
 package viewtify.ui.dock;
 
-import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 /**
  * A RootArea is a special {@link ViewArea} which has no parent and is directly used as root.
  */
-final class RootArea extends ViewArea {
-
-    /** The actual root node. */
-    private final Pane box;
+final class RootArea extends ViewArea<HBox> {
 
     /** Close the stage containing this area when removing the child. */
     private final boolean canCloseStage;
@@ -34,18 +29,11 @@ final class RootArea extends ViewArea {
      * @param canCloseStage Close the stage containing this area when the last view was removed?
      */
     RootArea(boolean canCloseStage) {
-        this.box = new HBox();
+        super(new HBox());
+
         this.canCloseStage = canCloseStage;
 
         setFirstChild(new TabArea());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Parent getNode() {
-        return box;
     }
 
     /**
@@ -59,12 +47,12 @@ final class RootArea extends ViewArea {
     protected void setFirstChild(ViewArea child) {
         super.setFirstChild(child);
 
-        if (box.getChildren().isEmpty()) {
-            box.getChildren().add(child.getNode());
+        if (node.getChildren().isEmpty()) {
+            node.getChildren().add(child.node);
         } else {
-            box.getChildren().set(0, child.getNode());
+            node.getChildren().set(0, child.node);
         }
-        HBox.setHgrow(child.getNode(), Priority.ALWAYS);
+        HBox.setHgrow(child.node, Priority.ALWAYS);
     }
 
     /**
@@ -79,7 +67,7 @@ final class RootArea extends ViewArea {
      */
     @Override
     protected void add(ViewStatus view, ViewPosition position) {
-        getFirstChild().add(view, position);
+        firstChild.add(view, position);
     }
 
     /**
@@ -88,7 +76,7 @@ final class RootArea extends ViewArea {
     @Override
     protected void remove(ViewArea area) {
         if (canCloseStage) {
-            ((Stage) box.getScene().getWindow()).close();
+            ((Stage) node.getScene().getWindow()).close();
         }
     }
 }

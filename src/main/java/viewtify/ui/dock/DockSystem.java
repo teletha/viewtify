@@ -71,7 +71,7 @@ public final class DockSystem {
      * @return The root pane.
      */
     public static Parent getRootPane() {
-        return root().getNode();
+        return root().node;
     }
 
     /**
@@ -125,7 +125,7 @@ public final class DockSystem {
         }
 
         // remove and close window of the specified area
-        ((Stage) area.getNode().getScene().getWindow()).close();
+        ((Stage) area.node.getScene().getWindow()).close();
         windows.remove(area);
     }
 
@@ -134,11 +134,11 @@ public final class DockSystem {
      */
     static void bringToFront() {
         for (RootArea area : windows) {
-            if (area.getNode().getScene().getWindow() instanceof Stage) {
-                ((Stage) area.getNode().getScene().getWindow()).toFront();
+            if (area.node.getScene().getWindow() instanceof Stage) {
+                ((Stage) area.node.getScene().getWindow()).toFront();
             }
         }
-        ((Stage) root.getNode().getScene().getWindow()).toFront();
+        ((Stage) root.node.getScene().getWindow()).toFront();
     }
 
     /**
@@ -260,7 +260,7 @@ public final class DockSystem {
         Node ui = dragedViewStatus.view.ui();
         Bounds bounds = ui.getBoundsInLocal();
 
-        Scene scene = new Scene(area.getNode(), bounds.getWidth(), bounds.getHeight());
+        Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight());
         scene.getStylesheets().addAll(ui.getScene().getStylesheets());
 
         Stage stage = new Stage();

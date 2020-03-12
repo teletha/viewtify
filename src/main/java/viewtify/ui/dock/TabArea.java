@@ -12,16 +12,12 @@ package viewtify.ui.dock;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javafx.scene.Parent;
 import javafx.scene.control.TabPane;
 
 /**
  * Describes a logical view area which displays the views within a tab pane.
  */
-class TabArea extends ViewArea {
-
-    /** The actual root pane. */
-    private final TabPane tabPane = new TabPane();
+class TabArea extends ViewArea<TabPane> {
 
     /** A list with all contained views. */
     private final Set<ViewStatus> views = new LinkedHashSet<>();
@@ -30,6 +26,8 @@ class TabArea extends ViewArea {
      * Create a new tab area.
      */
     TabArea() {
+        super(new TabPane());
+
         registerDragEvents();
     }
 
@@ -37,13 +35,13 @@ class TabArea extends ViewArea {
      * Register the event handler for drag&drop of views.
      */
     private void registerDragEvents() {
-        tabPane.setOnDragDetected(event -> {
+        node.setOnDragDetected(event -> {
             DockSystem.onDragDetected(event);
         });
-        tabPane.setOnDragDone(event -> {
+        node.setOnDragDone(event -> {
             DockSystem.onDragDone(event);
         });
-        super.registerDragEvents(tabPane);
+        super.registerDragEvents(node);
     }
 
     /**
@@ -68,7 +66,7 @@ class TabArea extends ViewArea {
         }
         views.remove(view);
         view.setArea(null);
-        tabPane.getTabs().remove(view.tab);
+        node.getTabs().remove(view.tab);
         if (checkEmpty) {
             handleEmpty();
         }
@@ -79,16 +77,8 @@ class TabArea extends ViewArea {
      */
     void handleEmpty() {
         if (views.isEmpty()) {
-            getParent().remove(this);
+            parent.remove(this);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Parent getNode() {
-        return tabPane;
     }
 
     /**
@@ -102,7 +92,7 @@ class TabArea extends ViewArea {
         }
         views.add(view);
         view.setArea(this);
-        tabPane.getTabs().add(view.tab);
+        node.getTabs().add(view.tab);
     }
 
     /**
