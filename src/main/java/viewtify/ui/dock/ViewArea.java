@@ -9,24 +9,17 @@
  */
 package viewtify.ui.dock;
 
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 
-import viewtify.ui.View;
-
 /**
  * A ViewArea is a node within the area tree. It has two children which are self view areas.
  */
 abstract class ViewArea<P extends Parent> {
-
-    /** Managed views. */
-    private static final Map<Parent, View> views = new ConcurrentHashMap();
 
     /** The actual root node. */
     protected final P node;

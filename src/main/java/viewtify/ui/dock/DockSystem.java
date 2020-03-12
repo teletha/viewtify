@@ -11,10 +11,7 @@ package viewtify.ui.dock;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
@@ -55,9 +52,6 @@ public final class DockSystem {
     /** Managed windows. */
     private static final List<RootArea> windows = new ArrayList<>();
 
-    /** Managed views. */
-    private static final Map<String, Tab> views = new LinkedHashMap<>();
-
     /** FLAG */
     private static boolean initialized;
 
@@ -77,7 +71,7 @@ public final class DockSystem {
      *
      * @param view The view to register.
      */
-    public static void show(View view) {
+    public static void register(View view) {
         initializeLazy();
 
         Viewtify.inUI(() -> {
@@ -89,16 +83,7 @@ public final class DockSystem {
                 TabArea.of(tab).remove(tab);
             });
 
-            if (views.containsKey(view.id())) {
-                Tab old = views.get(view.id());
-                TabArea tabArea = TabArea.of(old);
-
-                tabArea.add(tab, ViewPosition.CENTER);
-                tabArea.remove(old);
-            } else {
-                root().add(tab, ViewPosition.CENTER);
-            }
-            views.put(view.id(), tab);
+            root().add(tab, ViewPosition.CENTER);
         });
     }
 
@@ -107,7 +92,7 @@ public final class DockSystem {
      *
      * @param area The new root area.
      */
-    static void register(RootArea area) {
+    private static void register(RootArea area) {
         windows.add(area);
     }
 
@@ -116,20 +101,7 @@ public final class DockSystem {
      *
      * @param area The root area to remove.
      */
-    static void unregister(RootArea area) {
-        // remove and close views on the specified area
-        Iterator<Entry<String, Tab>> iterator = views.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Tab tab = iterator.next().getValue();
-            TabArea tabarea = TabArea.of(tab);
-
-            if (tabarea.getRootArea() == area) {
-                tabarea.remove(tab);
-                iterator.remove();
-            }
-        }
-
-        // remove and close window of the specified area
+    private static void unregister(RootArea area) {
         ((Stage) area.node.getScene().getWindow()).close();
         windows.remove(area);
     }
@@ -137,7 +109,7 @@ public final class DockSystem {
     /**
      * Bring all windows managed by this dock system to front.
      */
-    static void bringToFront() {
+    private static void bringToFront() {
         for (RootArea area : windows) {
             if (area.node.getScene().getWindow() instanceof Stage) {
                 ((Stage) area.node.getScene().getWindow()).toFront();
@@ -181,8 +153,8 @@ public final class DockSystem {
     /** The specialized data format to handle the drag&drop gestures with managed tabs. */
     private static final DataFormat DATAFORMAT = new DataFormat("drag and drop manager");
 
-    /** Temporal storage for the draged view */
-    private static Tab dragedViewStatus;
+    /** Temporal storage for the draged tab */
+    private static Tab dragedTab;
 
     /** The effect for the current drop zone. */
     private static final Blend effect = new Blend();
@@ -211,12 +183,11 @@ public final class DockSystem {
         }
 
         TabPane pane = (TabPane) source;
-        Tab tab = pane.getSelectionModel().getSelectedItem();
-        dragedViewStatus = tab;
+        dragedTab = pane.getSelectionModel().getSelectedItem();
 
         Dragboard db = pane.startDragAndDrop(TransferMode.MOVE);
         ClipboardContent content = new ClipboardContent();
-        content.put(DATAFORMAT, tab.getId());
+        content.put(DATAFORMAT, dragedTab.getId());
 
         db.setContent(content);
         if (dropStage == null) {
@@ -245,7 +216,7 @@ public final class DockSystem {
         if (event.getTransferMode() == TransferMode.MOVE && db.hasContent(DATAFORMAT)) {
             area.handleEmpty();
             closeDropStages();
-            dragedViewStatus = null;
+            dragedTab = null;
         }
         event.consume();
     }
@@ -263,7 +234,7 @@ public final class DockSystem {
 
         RootArea area = new RootArea(true);
 
-        Node ui = dragedViewStatus.getContent();
+        Node ui = dragedTab.getContent();
         Bounds bounds = ui.getBoundsInLocal();
 
         Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight());
@@ -276,8 +247,8 @@ public final class DockSystem {
         stage.setOnShown(e -> DockSystem.register(area));
         stage.setOnCloseRequest(e -> DockSystem.unregister(area));
 
-        TabArea.of(dragedViewStatus).remove(dragedViewStatus, false);
-        area.add(dragedViewStatus, ViewPosition.CENTER);
+        TabArea.of(dragedTab).remove(dragedTab, false);
+        area.add(dragedTab, ViewPosition.CENTER);
         stage.show();
         droppedStage = stage;
         completeDropped(event, true);
@@ -302,9 +273,9 @@ public final class DockSystem {
         // Add view to new area
         if (targetNode.getUserData() instanceof ViewArea) {
             ViewArea target = (ViewArea) targetNode.getUserData();
-            TabArea.of(dragedViewStatus).remove(dragedViewStatus, false);
+            TabArea.of(dragedTab).remove(dragedTab, false);
             ViewPosition position = detectPosition(event, targetNode);
-            target.add(dragedViewStatus, position);
+            target.add(dragedTab, position);
             success = true;
         }
         completeDropped(event, success);
@@ -383,7 +354,7 @@ public final class DockSystem {
     private static boolean isInvalidDragboard(DragEvent event) {
         // Check if dropped content is valid for dropping here
         Dragboard dragboard = event.getDragboard();
-        return !dragboard.hasContent(DATAFORMAT) || !dragboard.getContent(DATAFORMAT).equals(dragedViewStatus.getId());
+        return !dragboard.hasContent(DATAFORMAT) || !dragboard.getContent(DATAFORMAT).equals(dragedTab.getId());
     }
 
     /**
