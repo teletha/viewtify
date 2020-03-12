@@ -12,6 +12,7 @@ package viewtify.ui.dock;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
 /**
@@ -20,7 +21,7 @@ import javafx.scene.control.TabPane;
 class TabArea extends ViewArea<TabPane> {
 
     /** A list with all contained views. */
-    private final Set<ViewStatus> views = new LinkedHashSet<>();
+    private final Set<Tab> views = new LinkedHashSet<>();
 
     /**
      * Create a new tab area.
@@ -49,7 +50,7 @@ class TabArea extends ViewArea<TabPane> {
      *
      * @param view The view to remove
      */
-    void remove(ViewStatus view) {
+    void remove(Tab view) {
         remove(view, true);
     }
 
@@ -60,12 +61,12 @@ class TabArea extends ViewArea<TabPane> {
      * @param view The view to remove.
      * @param checkEmpty Should this area be removed if it is empty?
      */
-    void remove(ViewStatus view, boolean checkEmpty) {
+    void remove(Tab view, boolean checkEmpty) {
         if (!views.contains(view)) {
             return;
         }
         views.remove(view);
-        node.getTabs().remove(view.tab);
+        node.getTabs().remove(view);
         if (checkEmpty) {
             handleEmpty();
         }
@@ -84,13 +85,13 @@ class TabArea extends ViewArea<TabPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(ViewStatus view, ViewPosition position) {
+    protected void add(Tab view, ViewPosition position) {
         if (position != ViewPosition.CENTER) {
             super.add(view, position);
             return;
         }
         views.add(view);
-        node.getTabs().add(view.tab);
+        node.getTabs().add(view);
     }
 
     /**
@@ -99,5 +100,9 @@ class TabArea extends ViewArea<TabPane> {
     @Override
     protected boolean canDropToCenter() {
         return true;
+    }
+
+    static TabArea of(Tab tab) {
+        return (TabArea) tab.getTabPane().getUserData();
     }
 }

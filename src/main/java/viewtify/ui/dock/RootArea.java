@@ -9,6 +9,7 @@
  */
 package viewtify.ui.dock;
 
+import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
@@ -66,7 +67,7 @@ final class RootArea extends ViewArea<HBox> {
      * @param position Add the view at this position.
      */
     @Override
-    protected void add(ViewStatus view, ViewPosition position) {
+    protected void add(Tab view, ViewPosition position) {
         firstChild.add(view, position);
     }
 

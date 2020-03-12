@@ -15,7 +15,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
@@ -23,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
@@ -56,10 +56,7 @@ public final class DockSystem {
     private static final List<RootArea> windows = new ArrayList<>();
 
     /** Managed views. */
-    private static final Map<String, ViewStatus> views = new LinkedHashMap<>();
-
-    /** Managed views. */
-    private static final Map<Parent, ViewStatus> nodes = new ConcurrentHashMap();
+    private static final Map<String, Tab> views = new LinkedHashMap<>();
 
     /** FLAG */
     private static boolean initialized;
@@ -84,15 +81,24 @@ public final class DockSystem {
         initializeLazy();
 
         Viewtify.inUI(() -> {
-            ViewStatus current = new ViewStatus(view);
+            Tab tab = new Tab(view.id());
+            tab.setClosable(true);
+            tab.setContent(view.ui());
+            tab.setId(view.id());
+            tab.setOnCloseRequest(event -> {
+                TabArea.of(tab).remove(tab);
+            });
+
             if (views.containsKey(view.id())) {
-                ViewStatus old = views.get(view.id());
-                old.area().add(current, ViewPosition.CENTER);
-                old.area().remove(old);
+                Tab old = views.get(view.id());
+                TabArea tabArea = TabArea.of(old);
+
+                tabArea.add(tab, ViewPosition.CENTER);
+                tabArea.remove(old);
             } else {
-                root().add(current, ViewPosition.CENTER);
+                root().add(tab, ViewPosition.CENTER);
             }
-            views.put(view.id(), current);
+            views.put(view.id(), tab);
         });
     }
 
@@ -112,11 +118,13 @@ public final class DockSystem {
      */
     static void unregister(RootArea area) {
         // remove and close views on the specified area
-        Iterator<Entry<String, ViewStatus>> iterator = views.entrySet().iterator();
+        Iterator<Entry<String, Tab>> iterator = views.entrySet().iterator();
         while (iterator.hasNext()) {
-            ViewStatus status = iterator.next().getValue();
-            if (status.area().getRootArea() == area) {
-                status.area().remove(status);
+            Tab tab = iterator.next().getValue();
+            TabArea tabarea = TabArea.of(tab);
+
+            if (tabarea.getRootArea() == area) {
+                tabarea.remove(tab);
                 iterator.remove();
             }
         }
@@ -174,7 +182,7 @@ public final class DockSystem {
     private static final DataFormat DATAFORMAT = new DataFormat("drag and drop manager");
 
     /** Temporal storage for the draged view */
-    private static ViewStatus dragedViewStatus;
+    private static Tab dragedViewStatus;
 
     /** The effect for the current drop zone. */
     private static final Blend effect = new Blend();
@@ -203,12 +211,12 @@ public final class DockSystem {
         }
 
         TabPane pane = (TabPane) source;
-        ViewStatus view = (ViewStatus) pane.getSelectionModel().getSelectedItem().getUserData();
-        dragedViewStatus = view;
+        Tab tab = pane.getSelectionModel().getSelectedItem();
+        dragedViewStatus = tab;
 
         Dragboard db = pane.startDragAndDrop(TransferMode.MOVE);
         ClipboardContent content = new ClipboardContent();
-        content.put(DATAFORMAT, view.view.id());
+        content.put(DATAFORMAT, tab.getId());
 
         db.setContent(content);
         if (dropStage == null) {
@@ -255,7 +263,7 @@ public final class DockSystem {
 
         RootArea area = new RootArea(true);
 
-        Node ui = dragedViewStatus.view.ui();
+        Node ui = dragedViewStatus.getContent();
         Bounds bounds = ui.getBoundsInLocal();
 
         Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight());
@@ -268,7 +276,7 @@ public final class DockSystem {
         stage.setOnShown(e -> DockSystem.register(area));
         stage.setOnCloseRequest(e -> DockSystem.unregister(area));
 
-        dragedViewStatus.area().remove(dragedViewStatus, false);
+        TabArea.of(dragedViewStatus).remove(dragedViewStatus, false);
         area.add(dragedViewStatus, ViewPosition.CENTER);
         stage.show();
         droppedStage = stage;
@@ -294,7 +302,7 @@ public final class DockSystem {
         // Add view to new area
         if (targetNode.getUserData() instanceof ViewArea) {
             ViewArea target = (ViewArea) targetNode.getUserData();
-            dragedViewStatus.area().remove(dragedViewStatus, false);
+            TabArea.of(dragedViewStatus).remove(dragedViewStatus, false);
             ViewPosition position = detectPosition(event, targetNode);
             target.add(dragedViewStatus, position);
             success = true;
@@ -375,7 +383,7 @@ public final class DockSystem {
     private static boolean isInvalidDragboard(DragEvent event) {
         // Check if dropped content is valid for dropping here
         Dragboard dragboard = event.getDragboard();
-        return !dragboard.hasContent(DATAFORMAT) || !dragboard.getContent(DATAFORMAT).equals(dragedViewStatus.view.id());
+        return !dragboard.hasContent(DATAFORMAT) || !dragboard.getContent(DATAFORMAT).equals(dragedViewStatus.getId());
     }
 
     /**
