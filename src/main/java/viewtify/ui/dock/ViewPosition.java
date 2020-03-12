@@ -12,7 +12,7 @@ package viewtify.ui.dock;
 /**
  * The possible positions to place a view within the a window.
  */
-public enum ViewPosition {
+enum ViewPosition {
 
     /**
      * Place the view on the top side.

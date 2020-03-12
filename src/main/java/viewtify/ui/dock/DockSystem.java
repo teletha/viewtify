@@ -39,6 +39,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import viewtify.Viewtify;
+import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
 
 /**
@@ -46,6 +47,9 @@ import viewtify.ui.View;
  * existing windows.
  */
 public final class DockSystem {
+
+    /** The root user interface for the docking system. */
+    public static final UserInterfaceProvider<Parent> UI = () -> root().node;
 
     /** Managed windows. */
     private static final List<RootArea> windows = new ArrayList<>();
@@ -66,22 +70,13 @@ public final class DockSystem {
     }
 
     /**
-     * Get the root pane for this window manager.
-     *
-     * @return The root pane.
-     */
-    public static Parent getRootPane() {
-        return root().node;
-    }
-
-    /**
-     * Register a new view within this window manager.
+     * Register a new view within this dock system.
      * <p/>
      * The Position will give an advice where this view should be placed.
      *
      * @param view The view to register.
      */
-    public static void register(View view) {
+    public static void show(View view) {
         initializeLazy();
 
         Viewtify.inUI(() -> {
@@ -128,7 +123,7 @@ public final class DockSystem {
     }
 
     /**
-     * Bring all windows managed by this window manager to front.
+     * Bring all windows managed by this dock system to front.
      */
     static void bringToFront() {
         for (RootArea area : windows) {
@@ -158,7 +153,7 @@ public final class DockSystem {
         if (initialized == false) {
             initialized = true;
 
-            getRootPane().getScene().setOnDragExited(e -> {
+            root().node.getScene().setOnDragExited(e -> {
                 if (dropStage == null) {
                     dropStage = new DropStage();
                     dropStage.open();
@@ -198,11 +193,12 @@ public final class DockSystem {
      * @param event The mouse event.
      */
     static void onDragDetected(MouseEvent event) {
-        if (!(event.getSource() instanceof TabPane)) {
+        Object source = event.getSource();
+        if (source instanceof TabPane == false) {
             return;
         }
 
-        TabPane pane = (TabPane) event.getSource();
+        TabPane pane = (TabPane) source;
         ViewStatus view = (ViewStatus) pane.getSelectionModel().getSelectedItem().getUserData();
         dragedViewStatus = view;
 
@@ -224,7 +220,7 @@ public final class DockSystem {
      * @param event The drag event
      */
     static void onDragDone(DragEvent event) {
-        if (!(event.getSource() instanceof TabPane) && ((TabPane) event.getSource()).getUserData() instanceof TabArea) {
+        if (event.getSource() instanceof TabPane == false && ((TabPane) event.getSource()).getUserData() instanceof TabArea) {
             return;
         }
         TabPane source = (TabPane) event.getSource();
@@ -286,7 +282,7 @@ public final class DockSystem {
         if (isInvalidDragboard(event)) {
             return;
         }
-        if (!(event.getGestureTarget() instanceof Control)) {
+        if (event.getGestureTarget() instanceof Control == false) {
             return;
         }
         Control targetNode = (Control) event.getGestureTarget();
@@ -307,7 +303,7 @@ public final class DockSystem {
      * @param event the drag event.
      */
     static void onDragExited(DragEvent event) {
-        if (!(event.getSource() instanceof Node)) {
+        if (event.getSource() instanceof Node == false) {
             return;
         }
         Node target = (Node) event.getSource();
@@ -321,7 +317,7 @@ public final class DockSystem {
      * @param event The drag event.
      */
     static void onDragOver(DragEvent event) {
-        if (!(event.getSource() instanceof Control)) {
+        if (event.getSource() instanceof Control == false) {
             return;
         }
         Control target = (Control) event.getSource();
@@ -452,7 +448,7 @@ public final class DockSystem {
      */
     private static final class DropStage {
 
-        /** The the primary stage containing the window manager. */
+        /** The the primary stage containing the dock system. */
         private final Stage owner;
 
         /** A list with all stages (one per screen) which are used as drop areas. */
@@ -462,7 +458,7 @@ public final class DockSystem {
          * Initialize the drop stages for a new drag&drop gesture.
          */
         private DropStage() {
-            this.owner = (Stage) DockSystem.getRootPane().getScene().getWindow();
+            this.owner = (Stage) root().node.getScene().getWindow();
         }
 
         /**

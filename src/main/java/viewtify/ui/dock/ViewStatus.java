@@ -43,9 +43,4 @@ final class ViewStatus {
             area.remove(this);
         });
     }
-
-    @Override
-    public String toString() {
-        return "ViewStatus{" + "view=" + view + '}';
-    }
 }

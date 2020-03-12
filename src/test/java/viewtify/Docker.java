@@ -17,7 +17,7 @@ public class Docker extends View {
 
     class view extends ViewDSL {
         {
-            $(() -> DockSystem.getRootPane());
+            $(DockSystem.UI);
         }
     }
 
@@ -26,10 +26,10 @@ public class Docker extends View {
      */
     @Override
     protected void initialize() {
-        DockSystem.register(new ViewPane("First"));
-        DockSystem.register(new ViewPane("Second"));
-        DockSystem.register(new ViewPane("Third"));
-        DockSystem.register(new ViewPane("Fourth"));
+        DockSystem.show(new ViewPane("First"));
+        DockSystem.show(new ViewPane("Second"));
+        DockSystem.show(new ViewPane("Third"));
+        DockSystem.show(new ViewPane("Fourth"));
     }
 
     private class ViewPane extends View {

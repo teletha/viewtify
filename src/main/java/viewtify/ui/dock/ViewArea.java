@@ -18,7 +18,7 @@ import javafx.scene.Parent;
 /**
  * A ViewArea is a node within the area tree. It has two children which are self view areas.
  */
-public abstract class ViewArea<P extends Parent> {
+abstract class ViewArea<P extends Parent> {
 
     /** The actual root node. */
     protected final P node;
