@@ -29,26 +29,32 @@ import viewtify.ui.View;
 public class WindowManager {
 
     /** Drag & Drop manager. */
-    private final DNDManager dndManager = new DNDManager(this);
+    private static final DNDManager dndManager = new DNDManager();
 
     /** Managed windows. */
-    final List<RootArea> windows = new ArrayList<>();
+    static final List<RootArea> windows = new ArrayList<>();
 
     /** Managed views. */
-    private final Map<String, ViewStatus> views = new LinkedHashMap<>();
+    private static final Map<String, ViewStatus> views = new LinkedHashMap<>();
 
     /** FLAG */
-    private boolean initialized;
+    private static boolean initialized;
 
     /** The main root area. */
-    private RootArea root;
+    private static RootArea root;
+
+    /**
+     * Hide.
+     */
+    private WindowManager() {
+    }
 
     /**
      * Get the root pane for this window manager.
      *
      * @return The root pane.
      */
-    public final Parent getRootPane() {
+    public static final Parent getRootPane() {
         return root().getNode();
     }
 
@@ -59,7 +65,7 @@ public class WindowManager {
      *
      * @param view The view to register.
      */
-    public void register(View view) {
+    public static void register(View view) {
         initializeLazy();
 
         Viewtify.inUI(() -> {
@@ -81,7 +87,7 @@ public class WindowManager {
      *
      * @param area The new root area.
      */
-    final void register(RootArea area) {
+    static final void register(RootArea area) {
         windows.add(area);
     }
 
@@ -90,7 +96,7 @@ public class WindowManager {
      *
      * @param area The root area to remove.
      */
-    final void unregister(RootArea area) {
+    static final void unregister(RootArea area) {
         // remove and close views on the specified area
         Iterator<Entry<String, ViewStatus>> iterator = views.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -110,7 +116,7 @@ public class WindowManager {
     /**
      * Bring all windows managed by this window manager to front.
      */
-    final void bringToFront() {
+    static final void bringToFront() {
         for (RootArea area : windows) {
             if (area.getNode().getScene().getWindow() instanceof Stage) {
                 ((Stage) area.getNode().getScene().getWindow()).toFront();
@@ -124,7 +130,7 @@ public class WindowManager {
      *
      * @return The main area.
      */
-    private synchronized RootArea root() {
+    private static synchronized RootArea root() {
         if (root == null) {
             root = new RootArea(dndManager, false);
         }
@@ -134,7 +140,7 @@ public class WindowManager {
     /**
      * Called to initialize a controller after its root element has been completely processed.
      */
-    private synchronized void initializeLazy() {
+    private static synchronized void initializeLazy() {
         if (initialized == false) {
             initialized = true;
             dndManager.init();

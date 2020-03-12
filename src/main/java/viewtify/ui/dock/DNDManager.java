@@ -45,9 +45,6 @@ class DNDManager {
     /** Temporal storage for the draged view */
     private static ViewStatus dragedViewStatus;
 
-    /** The window manager. */
-    final WindowManager windowManager;
-
     /** The effect for the current drop zone. */
     private final Blend effect = new Blend();
 
@@ -68,15 +65,14 @@ class DNDManager {
      *
      * @param windowManager The window manager which handles the views and sub windows.
      */
-    DNDManager(WindowManager windowManager) {
-        this.windowManager = windowManager;
+    DNDManager() {
     }
 
     /**
      * Called to initialize a controller after its root element has been completely processed.
      */
     void init() {
-        windowManager.getRootPane().getScene().setOnDragExited(e -> {
+        WindowManager.getRootPane().getScene().setOnDragExited(e -> {
             if (dropStage == null) {
                 dropStage = new DropStage();
                 dropStage.open();
@@ -158,8 +154,8 @@ class DNDManager {
         stage.setScene(scene);
         stage.setX(event.getX());
         stage.setY(event.getY());
-        stage.setOnShown(e -> windowManager.register(area));
-        stage.setOnCloseRequest(e -> windowManager.unregister(area));
+        stage.setOnShown(e -> WindowManager.register(area));
+        stage.setOnCloseRequest(e -> WindowManager.unregister(area));
 
         dragedViewStatus.getArea().remove(dragedViewStatus, false);
         area.add(dragedViewStatus, ViewPosition.CENTER);
@@ -355,7 +351,7 @@ class DNDManager {
          * Initialize the drop stages for a new drag&drop gesture.
          */
         private DropStage() {
-            this.owner = (Stage) windowManager.getRootPane().getScene().getWindow();
+            this.owner = (Stage) WindowManager.getRootPane().getScene().getWindow();
         }
 
         /**
@@ -383,12 +379,12 @@ class DNDManager {
                 Scene scene = new Scene(pane, bounds.getWidth(), bounds.getHeight(), Color.TRANSPARENT);
                 scene.setOnDragEntered(e -> {
                     owner.requestFocus();
-                    windowManager.bringToFront();
+                    WindowManager.bringToFront();
                     e.consume();
                 });
                 scene.setOnDragExited(e -> {
                     owner.requestFocus();
-                    windowManager.bringToFront();
+                    WindowManager.bringToFront();
                     e.consume();
                 });
                 scene.setOnDragOver(e -> {

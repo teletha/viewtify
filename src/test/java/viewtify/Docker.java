@@ -15,11 +15,9 @@ import viewtify.ui.dock.WindowManager;
 
 public class Docker extends View {
 
-    private WindowManager manager = new WindowManager();
-
     class view extends ViewDSL {
         {
-            $(() -> manager.getRootPane());
+            $(() -> WindowManager.getRootPane());
         }
     }
 
@@ -28,10 +26,10 @@ public class Docker extends View {
      */
     @Override
     protected void initialize() {
-        manager.register(new ViewPane("First"));
-        manager.register(new ViewPane("Second"));
-        manager.register(new ViewPane("Third"));
-        manager.register(new ViewPane("Fourth"));
+        WindowManager.register(new ViewPane("First"));
+        WindowManager.register(new ViewPane("Second"));
+        WindowManager.register(new ViewPane("Third"));
+        WindowManager.register(new ViewPane("Fourth"));
     }
 
     private class ViewPane extends View {
