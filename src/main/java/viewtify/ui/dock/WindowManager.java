@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javafx.scene.Parent;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import viewtify.Viewtify;
@@ -127,7 +126,7 @@ public class WindowManager {
      */
     private synchronized RootArea root() {
         if (root == null) {
-            root = new RootArea(new HBox(), dndManager, false);
+            root = new RootArea(dndManager, false);
         }
         return root;
     }

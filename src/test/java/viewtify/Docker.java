@@ -32,11 +32,6 @@ public class Docker extends View {
         manager.register(new ViewPane("Second"));
         manager.register(new ViewPane("Third"));
         manager.register(new ViewPane("Fourth"));
-
-        // Pane pane = new Pane();
-        // RootArea root = new RootArea(pane, dnd, true);
-        // root.add(new ViewStatus(new ViewPane("Fifth Luna")), Position.CENTER);
-        // manager.register(root);
     }
 
     private class ViewPane extends View {

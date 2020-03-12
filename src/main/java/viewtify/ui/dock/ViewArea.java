@@ -206,20 +206,6 @@ public class ViewArea {
     }
 
     /**
-     * Replace the {@param oldArea} with the {@param newArea}.
-     *
-     * @param oldArea The old area.
-     * @param newArea The new area.
-     */
-    protected final void replace(ViewArea oldArea, ViewArea newArea) {
-        if (oldArea == firstChild) {
-            setFirstChild(newArea);
-        } else if (oldArea == secondChild) {
-            setSecondChild(newArea);
-        }
-    }
-
-    /**
      * Split this area by {@param orientation}.
      * <p/>
      * Either the parameter {@param first} or {@param second} must be this area. Otherwise a
@@ -231,7 +217,7 @@ public class ViewArea {
      * @throws IllegalArgumentException In case of both params {@param first} and {@param second}
      *             are this or none of them.
      */
-    protected void split(ViewArea first, ViewArea second, Orientation orientation) {
+    private void split(ViewArea first, ViewArea second, Orientation orientation) {
         if (!(first == this ^ second == this)) {
             throw new IllegalArgumentException("Either first or second area must be this.");
         }
@@ -241,6 +227,20 @@ public class ViewArea {
         area.setOrientation(orientation);
         area.setFirstChild(first);
         area.setSecondChild(second);
+    }
+
+    /**
+     * Replace the {@param oldArea} with the {@param newArea}.
+     *
+     * @param oldArea The old area.
+     * @param newArea The new area.
+     */
+    private void replace(ViewArea oldArea, ViewArea newArea) {
+        if (oldArea == firstChild) {
+            setFirstChild(newArea);
+        } else if (oldArea == secondChild) {
+            setSecondChild(newArea);
+        }
     }
 
     /**
