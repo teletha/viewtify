@@ -24,7 +24,7 @@ final class ViewStatus {
     /** The tab which contains this view. */
     final Tab tab;
 
-    private TabArea area;
+    TabArea area;
 
     /**
      * Create a new view status.
@@ -40,16 +40,8 @@ final class ViewStatus {
         tab.setId(view.id());
         tab.setUserData(this);
         tab.setOnClosed(event -> {
-            getArea().remove(this);
+            area.remove(this);
         });
-    }
-
-    public TabArea getArea() {
-        return area;
-    }
-
-    public void setArea(TabArea area) {
-        this.area = area;
     }
 
     @Override

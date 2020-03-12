@@ -13,7 +13,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.Pane;
 
-public class SplitArea extends ViewArea<SplitPane> {
+class SplitArea extends ViewArea<SplitPane> {
 
     /**
      * Create a new view area.

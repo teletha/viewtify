@@ -88,9 +88,8 @@ public final class DockSystem {
             ViewStatus current = new ViewStatus(view);
             if (views.containsKey(view.id())) {
                 ViewStatus old = views.get(view.id());
-                TabArea area = old.getArea();
-                area.add(current, ViewPosition.CENTER);
-                area.remove(old);
+                old.area.add(current, ViewPosition.CENTER);
+                old.area.remove(old);
             } else {
                 root().add(current, ViewPosition.CENTER);
             }
@@ -117,9 +116,8 @@ public final class DockSystem {
         Iterator<Entry<String, ViewStatus>> iterator = views.entrySet().iterator();
         while (iterator.hasNext()) {
             ViewStatus status = iterator.next().getValue();
-            TabArea tabArea = status.getArea();
-            if (tabArea.getRootArea() == area) {
-                tabArea.remove(status);
+            if (status.area.getRootArea() == area) {
+                status.area.remove(status);
                 iterator.remove();
             }
         }
@@ -270,7 +268,7 @@ public final class DockSystem {
         stage.setOnShown(e -> DockSystem.register(area));
         stage.setOnCloseRequest(e -> DockSystem.unregister(area));
 
-        dragedViewStatus.getArea().remove(dragedViewStatus, false);
+        dragedViewStatus.area.remove(dragedViewStatus, false);
         area.add(dragedViewStatus, ViewPosition.CENTER);
         stage.show();
         droppedStage = stage;
@@ -295,7 +293,7 @@ public final class DockSystem {
         // Add view to new area
         if (targetNode.getUserData() instanceof ViewArea) {
             ViewArea target = (ViewArea) targetNode.getUserData();
-            dragedViewStatus.getArea().remove(dragedViewStatus, false);
+            dragedViewStatus.area.remove(dragedViewStatus, false);
             ViewPosition position = detectPosition(event, targetNode);
             target.add(dragedViewStatus, position);
             success = true;

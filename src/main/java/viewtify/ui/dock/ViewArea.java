@@ -101,6 +101,7 @@ public abstract class ViewArea<P extends Parent> {
                 secondChild.add(view, position);
             }
             break;
+
         case TOP:
             if (orientation == Orientation.VERTICAL) {
                 firstChild.add(view, position);
@@ -110,6 +111,7 @@ public abstract class ViewArea<P extends Parent> {
                 split(target, this, Orientation.VERTICAL);
             }
             break;
+
         case BOTTOM:
             if (orientation == Orientation.VERTICAL) {
                 secondChild.add(view, position);
@@ -119,6 +121,7 @@ public abstract class ViewArea<P extends Parent> {
                 split(this, target, Orientation.VERTICAL);
             }
             break;
+
         case LEFT:
             if (orientation == Orientation.HORIZONTAL) {
                 secondChild.add(view, position);
@@ -128,6 +131,7 @@ public abstract class ViewArea<P extends Parent> {
                 split(target, this, Orientation.HORIZONTAL);
             }
             break;
+
         case RIGHT:
             if (orientation == Orientation.HORIZONTAL) {
                 secondChild.add(view, position);
@@ -138,7 +142,7 @@ public abstract class ViewArea<P extends Parent> {
             }
             break;
         }
-        view.getArea().node.requestLayout();
+        view.area.node.requestLayout();
     }
 
     /**
