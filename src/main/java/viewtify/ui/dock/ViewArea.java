@@ -199,7 +199,7 @@ public abstract class ViewArea<P extends Parent> {
      *
      * @return The root area of this view.
      */
-    public final RootArea getRootArea() {
+    protected final RootArea getRootArea() {
         ViewArea current = this;
         while (current.parent != null) {
             current = current.parent;
