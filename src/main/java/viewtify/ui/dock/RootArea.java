@@ -38,7 +38,7 @@ final class RootArea extends ViewArea {
         this.box = new HBox();
         this.canCloseStage = canCloseStage;
 
-        setFirstChild(new TabArea(this, dndManager));
+        setFirstChild(new TabArea(dndManager));
     }
 
     /**

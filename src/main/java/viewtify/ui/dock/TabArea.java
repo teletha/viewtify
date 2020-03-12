@@ -37,17 +37,6 @@ class TabArea extends ViewArea {
     }
 
     /**
-     * Create a new tab area.
-     *
-     * @param parent Use this area as parent area.
-     * @param dragNDropManager Use this drag&drop manager to handle the view management.
-     */
-    TabArea(ViewArea parent, DNDManager dragNDropManager) {
-        super(parent, dragNDropManager);
-        registerDragEvents();
-    }
-
-    /**
      * Register the event handler for drag&drop of views.
      */
     private void registerDragEvents() {

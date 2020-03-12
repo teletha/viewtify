@@ -33,17 +33,6 @@ public class ViewArea {
     private Orientation orientation;
 
     /**
-     * Create a new view area and register the given area as parent.
-     *
-     * @param parent The parent area.
-     * @param dndManager The drag&drop manager to handle moving the contained views.
-     */
-    protected ViewArea(ViewArea parent, DNDManager dndManager) {
-        this(dndManager);
-        this.parent = parent;
-    }
-
-    /**
      * Create a new view area.
      *
      * @param dndManager The drag&drop manager to handle moving the contained views.
@@ -104,9 +93,11 @@ public class ViewArea {
      * @param child The new child.
      */
     protected void setFirstChild(ViewArea child) {
+        // make relationship
         this.firstChild = child;
-        outerPane.getItems().set(0, child.getNode());
         child.parent = this;
+
+        outerPane.getItems().set(0, child.getNode());
     }
 
     /**
@@ -126,9 +117,11 @@ public class ViewArea {
      * @param child The new child.
      */
     protected void setSecondChild(ViewArea child) {
+        // make relationship
         this.secondChild = child;
-        outerPane.getItems().set(1, child.getNode());
         child.parent = this;
+
+        outerPane.getItems().set(1, child.getNode());
     }
 
     /**
@@ -222,7 +215,7 @@ public class ViewArea {
             throw new IllegalArgumentException("Either first or second area must be this.");
         }
 
-        ViewArea area = new ViewArea(parent, dndManager);
+        ViewArea area = new ViewArea(dndManager);
         parent.replace(this, area);
         area.setOrientation(orientation);
         area.setFirstChild(first);
