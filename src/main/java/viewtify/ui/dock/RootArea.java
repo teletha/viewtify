@@ -51,7 +51,6 @@ final class RootArea extends ViewArea {
         this.closeStage = closeStage;
         this.box = box;
         ViewArea editorArea = new TabArea(this, dndManager);
-        editorArea.setEditor(true);
         this.box.getChildren().add(editorArea.getNode());
         setFirstChild(editorArea);
         HBox.setHgrow(box, Priority.ALWAYS);
@@ -59,7 +58,6 @@ final class RootArea extends ViewArea {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Override
@@ -83,7 +81,6 @@ final class RootArea extends ViewArea {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Override
@@ -92,7 +89,6 @@ final class RootArea extends ViewArea {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Override
@@ -116,7 +112,6 @@ final class RootArea extends ViewArea {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Override

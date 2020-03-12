@@ -32,9 +32,6 @@ public class ViewArea {
 
     private Orientation orientation;
 
-    /** Did this area contains the editor pane? */
-    private boolean editor;
-
     /**
      * Create a new view area and register the given area as parent.
      *
@@ -147,7 +144,11 @@ public class ViewArea {
     protected void add(ViewStatus view, ViewPosition position) {
         switch (position) {
         case CENTER:
-            getEditorArea().add(view, position);
+            if (firstChild != null) {
+                firstChild.add(view, position);
+            } else if (secondChild != null) {
+                secondChild.add(view, position);
+            }
             break;
         case TOP:
             if (orientation == Orientation.VERTICAL) {
@@ -240,39 +241,6 @@ public class ViewArea {
         area.setOrientation(orientation);
         area.setFirstChild(first);
         area.setSecondChild(second);
-        area.setEditor(area.getFirstChild().isEditor() || area.getSecondChild().isEditor());
-    }
-
-    /**
-     * Get that child that is defined as editor
-     *
-     * @return The editor area.
-     */
-    private ViewArea getEditorArea() {
-        if (getFirstChild().isEditor()) {
-            return getFirstChild();
-        } else if (getSecondChild().isEditor()) {
-            return getSecondChild();
-        }
-        return null;
-    }
-
-    /**
-     * Is this area or one of its childs the editor area.
-     *
-     * @return True if this or one of the childs is the editor area.
-     */
-    public final boolean isEditor() {
-        return editor;
-    }
-
-    /**
-     * Define this area as editor area.
-     *
-     * @param editor Is this area the editor area.
-     */
-    public final void setEditor(boolean editor) {
-        this.editor = editor;
     }
 
     /**
