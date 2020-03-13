@@ -51,6 +51,31 @@ public final class DockSystem {
     /** Managed windows. */
     private static final List<RootArea> windows = new ArrayList<>();
 
+    /**
+     * Place the view on the top side.
+     */
+    static final int TOP = 0;
+
+    /**
+     * Place the view on the left side.
+     */
+    static final int LEFT = 1;
+
+    /**
+     * Place the view within the center.
+     */
+    static final int CENTER = 2;
+
+    /**
+     * Place the window on the right side.
+     */
+    static final int RIGHT = 3;
+
+    /**
+     * Place the window on the bottom.
+     */
+    static final int BOTTOM = 4;
+
     /** The main root area. */
     private static RootArea root;
 
@@ -73,7 +98,7 @@ public final class DockSystem {
             tab.setClosable(true);
             tab.setContent(view.ui());
 
-            root().add(tab, ViewPosition.CENTER);
+            root().add(tab, CENTER);
         });
     }
 
@@ -190,7 +215,7 @@ public final class DockSystem {
             stage.setOnCloseRequest(e -> windows.remove(area));
 
             dragedTabArea.remove(dragedTab, false);
-            area.add(dragedTab, ViewPosition.CENTER);
+            area.add(dragedTab, CENTER);
             stage.show();
 
             event.setDropCompleted(true);
@@ -292,19 +317,19 @@ public final class DockSystem {
      * @param event The drag event
      * @return The position value for the detected sub area.
      */
-    private static ViewPosition detectPosition(DragEvent event, Control source) {
+    private static int detectPosition(DragEvent event, Control source) {
         double areaX = event.getX() / source.getWidth();
         double areaY = event.getY() / source.getHeight();
         if (0.25 <= areaX && areaX < 0.75 && 0.25 <= areaY && areaY < 0.75) {
-            return ViewPosition.CENTER;
+            return CENTER;
         } else if (areaY < 0.25) {
-            return ViewPosition.TOP;
+            return TOP;
         } else if (areaY >= 0.75) {
-            return ViewPosition.BOTTOM;
+            return BOTTOM;
         } else if (areaX < 0.25) {
-            return ViewPosition.LEFT;
+            return LEFT;
         } else {
-            return ViewPosition.RIGHT;
+            return RIGHT;
         }
     }
 

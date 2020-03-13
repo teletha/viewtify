@@ -57,17 +57,10 @@ final class RootArea extends ViewArea<HBox> {
     }
 
     /**
-     * Add the view to this area at position.
-     * <p/>
-     * If position is {@link ViewPosition#CENTER} it will be added to that child that is defined as
-     * editor area. Otherwise this area is split and the view will be positioned according the
-     * position parameter.
-     *
-     * @param view The view to add.
-     * @param position Add the view at this position.
+     * {@inheritDoc}
      */
     @Override
-    protected void add(Tab view, ViewPosition position) {
+    protected void add(Tab view, int position) {
         firstChild.add(view, position);
     }
 

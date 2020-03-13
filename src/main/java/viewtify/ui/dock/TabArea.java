@@ -77,8 +77,8 @@ class TabArea extends ViewArea<TabPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(Tab tab, ViewPosition position) {
-        if (position != ViewPosition.CENTER) {
+    protected void add(Tab tab, int position) {
+        if (position != DockSystem.CENTER) {
             super.add(tab, position);
         } else {
             node.getTabs().add(tab);
