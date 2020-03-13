@@ -14,6 +14,7 @@ import java.util.Set;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
 import kiss.I;
@@ -40,10 +41,12 @@ class TabArea extends ViewArea<TabPane> {
                         DockSystem.onDragDetected(event, node.getSelectionModel().getSelectedItem());
                     });
         });
-        node.setOnDragDone(event -> {
-            DockSystem.onDragDone(event, this);
-        });
-        registerDragEvents(node);
+
+        node.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
+        node.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
+        node.addEventHandler(DragEvent.DRAG_DONE, e -> DockSystem.onDragDone(e, this));
+        node.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
+        node.setUserData(this);
     }
 
     /**
@@ -93,14 +96,6 @@ class TabArea extends ViewArea<TabPane> {
         }
         views.add(view);
         node.getTabs().add(view);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected boolean canDropToCenter() {
-        return true;
     }
 
     static TabArea of(Tab tab) {

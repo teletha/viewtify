@@ -139,11 +139,14 @@ public final class DockSystem {
     /** The visible effect. */
     private static final ColorInput dropOverlay = new ColorInput();
 
+    static {
+        dropOverlay.setPaint(Color.LIGHTBLUE);
+        effect.setMode(BlendMode.OVERLAY);
+        effect.setBottomInput(dropOverlay);
+    }
+
     /** Handler for drag&drop outside a window. */
     private static final DropStage dropStage = new DropStage();
-
-    /** The current node where the effect is active. */
-    private static Node effectTarget;
 
     /** Temp stage when the view was dropped outside a managed window. */
     private static Stage droppedStage;
@@ -216,7 +219,9 @@ public final class DockSystem {
             area.add(dragedTab, ViewPosition.CENTER);
             stage.show();
             droppedStage = stage;
-            completeDropped(event, true);
+
+            event.setDropCompleted(true);
+            event.consume();
         }
     }
 
@@ -226,25 +231,15 @@ public final class DockSystem {
      *
      * @param event The drag event.
      */
-    static void onDragDropped(DragEvent event) {
-        boolean success = false;
-        if (isInvalidDragboard(event)) {
-            return;
-        }
-        if (event.getGestureTarget() instanceof Control == false) {
-            return;
-        }
-        Control targetNode = (Control) event.getGestureTarget();
-
-        // Add view to new area
-        if (targetNode.getUserData() instanceof ViewArea) {
-            ViewArea target = (ViewArea) targetNode.getUserData();
+    static void onDragDropped(DragEvent event, TabArea area) {
+        if (isValidDragboard(event)) {
+            // Add view to new area
             TabArea.of(dragedTab).remove(dragedTab, false);
-            ViewPosition position = detectPosition(event, targetNode);
-            target.add(dragedTab, position);
-            success = true;
+            area.add(dragedTab, detectPosition(event, area.node));
+
+            event.setDropCompleted(true);
+            event.consume();
         }
-        completeDropped(event, success);
     }
 
     /**
@@ -252,13 +247,12 @@ public final class DockSystem {
      *
      * @param event the drag event.
      */
-    static void onDragExited(DragEvent event) {
-        if (event.getSource() instanceof Node == false) {
-            return;
+    static void onDragExited(DragEvent event, TabArea area) {
+        if (isValidDragboard(event)) {
+            System.out.println("remove effect on drag exit");
+            area.node.setEffect(null);
+            event.consume();
         }
-        Node target = (Node) event.getSource();
-        target.setEffect(null);
-        event.consume();
     }
 
     /**
@@ -266,76 +260,26 @@ public final class DockSystem {
      *
      * @param event The drag event.
      */
-    static void onDragOver(DragEvent event) {
-        if (isInvalidDragboard(event)) {
-            return;
-        }
+    static void onDragOver(DragEvent event, TabArea area) {
+        if (isValidDragboard(event)) {
+            area.node.setEffect(effect);
 
-        if (event.getSource() instanceof Control == false) {
-            return;
-        }
-        Control target = (Control) event.getSource();
-        if (target != effectTarget) {
-            if (effectTarget != null) {
-                effectTarget.setEffect(null);
-            }
-            target.setEffect(effect);
-        }
-        effect.setMode(BlendMode.OVERLAY);
-        dropOverlay.setPaint(Color.LIGHTBLUE);
-        effect.setBottomInput(dropOverlay);
-        ViewPosition position = detectPosition(event, target);
+            adjustOverlay(area.node, detectPosition(event, area.node));
 
-        ViewArea area = (ViewArea) target.getUserData();
-        if (!area.canDropToCenter() && position == ViewPosition.CENTER) {
+            event.acceptTransferModes(TransferMode.MOVE);
             event.consume();
-            target.setEffect(null);
-            effectTarget = null;
-            return;
         }
-        adjustOverlay(target, position);
-        effectTarget = target;
-        event.acceptTransferModes(TransferMode.MOVE);
-        event.consume();
-    }
-
-    /**
-     * Complete the dropped event. This contains the cleaning the effects and other status.
-     *
-     * @param event The drag event
-     * @param success Was the drop gesture successful
-     */
-    private static void completeDropped(DragEvent event, boolean success) {
-        if (effectTarget != null) {
-            effectTarget.setEffect(null);
-        }
-        effectTarget = null;
-
-        event.setDropCompleted(success);
-        event.consume();
     }
 
     /**
      * Validates the dragboard content.
      *
      * @param event The drag drop event.
-     * @return False if the dragboard of the event contains a valid view id.
+     * @return True if the dragboard of the event is valid.
      */
     private static boolean isValidDragboard(DragEvent event) {
         Dragboard board = event.getDragboard();
         return board.hasContent(DnD) && board.getContent(DnD).equals(DnD.toString());
-    }
-
-    /**
-     * Validates the dragboard content.
-     *
-     * @param event The drag drop event.
-     * @return False if the dragboard of the event contains a valid view id.
-     */
-    private static boolean isInvalidDragboard(DragEvent event) {
-        // Check if dropped content is valid for dropping here
-        Dragboard dragboard = event.getDragboard();
-        return !dragboard.hasContent(DnD) && !dragboard.getContent(DnD).equals(DnD.toString());
     }
 
     /**

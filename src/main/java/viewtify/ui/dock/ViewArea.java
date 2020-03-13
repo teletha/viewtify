@@ -12,7 +12,6 @@ package viewtify.ui.dock;
 import java.util.Objects;
 
 import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 
@@ -43,18 +42,6 @@ abstract class ViewArea<P extends Parent> {
      */
     protected ViewArea(P node) {
         this.node = Objects.requireNonNull(node);
-    }
-
-    /**
-     * Register the event handler for drag&drop of views.
-     *
-     * @param node Register the event handlers on this node.
-     */
-    protected final void registerDragEvents(Node node) {
-        node.setUserData(this);
-        node.setOnDragOver(DockSystem::onDragOver);
-        node.setOnDragExited(DockSystem::onDragExited);
-        node.setOnDragDropped(DockSystem::onDragDropped);
     }
 
     /**
@@ -219,14 +206,5 @@ abstract class ViewArea<P extends Parent> {
      */
     protected void setOrientation(Orientation orientation) {
         this.orientation = orientation;
-    }
-
-    /**
-     * Is the drop gesture to this area with position center allowed?
-     *
-     * @return True if a drop to center is allowed.
-     */
-    protected boolean canDropToCenter() {
-        return false;
     }
 }

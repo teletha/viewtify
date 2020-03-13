@@ -24,7 +24,6 @@ class SplitArea extends ViewArea<SplitPane> {
         node.setOrientation(Orientation.VERTICAL);
         node.getItems().add(new Pane());
         node.getItems().add(new Pane());
-        registerDragEvents(node);
     }
 
     /**
