@@ -72,10 +72,6 @@ public final class DockSystem {
             Tab tab = new Tab(view.id());
             tab.setClosable(true);
             tab.setContent(view.ui());
-            tab.setId(view.id());
-            tab.setOnCloseRequest(event -> {
-                TabArea.of(tab).remove(tab);
-            });
 
             root().add(tab, ViewPosition.CENTER);
         });
@@ -114,6 +110,9 @@ public final class DockSystem {
     /** Temporal storage for the draged tab */
     private static Tab dragedTab;
 
+    /** Temporal storage for the draged tab */
+    private static TabArea dragedTabArea;
+
     /** The effect for the current drop zone. */
     private static final Blend effect = new Blend();
 
@@ -135,10 +134,11 @@ public final class DockSystem {
      * @param event The mouse event.
      * @param tab The target tab.
      */
-    static void onDragDetected(MouseEvent event, Tab tab) {
+    static void onDragDetected(MouseEvent event, TabArea area, Tab tab) {
         event.consume(); // stop event propagation
 
         dragedTab = tab;
+        dragedTabArea = area;
 
         ClipboardContent content = new ClipboardContent();
         content.put(DnD, DnD.toString());
@@ -189,7 +189,7 @@ public final class DockSystem {
             stage.setOnShown(e -> windows.add(area));
             stage.setOnCloseRequest(e -> windows.remove(area));
 
-            TabArea.of(dragedTab).remove(dragedTab, false);
+            dragedTabArea.remove(dragedTab, false);
             area.add(dragedTab, ViewPosition.CENTER);
             stage.show();
 
@@ -207,7 +207,7 @@ public final class DockSystem {
     static void onDragDropped(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
             // Add view to new area
-            TabArea.of(dragedTab).remove(dragedTab, false);
+            dragedTabArea.remove(dragedTab, false);
             area.add(dragedTab, detectPosition(event, area.node));
 
             event.setDropCompleted(true);

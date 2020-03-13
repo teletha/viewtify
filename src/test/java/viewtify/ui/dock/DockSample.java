@@ -7,13 +7,16 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify;
+package viewtify.ui.dock;
 
+import viewtify.ActivationPolicy;
+import viewtify.Theme;
+import viewtify.Viewtify;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.dock.DockSystem;
 
-public class Docker extends View {
+public class DockSample extends View {
 
     class view extends ViewDSL {
         {
@@ -66,6 +69,6 @@ public class Docker extends View {
     }
 
     public static void main(String[] args) {
-        Viewtify.application().use(ActivationPolicy.Latest).use(Theme.Dark).activate(Docker.class);
+        Viewtify.application().use(ActivationPolicy.Latest).use(Theme.Dark).activate(DockSample.class);
     }
 }

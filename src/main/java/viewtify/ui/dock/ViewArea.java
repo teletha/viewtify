@@ -130,7 +130,6 @@ abstract class ViewArea<P extends Parent> {
             }
             break;
         }
-        TabArea.of(view).node.requestLayout();
     }
 
     /**

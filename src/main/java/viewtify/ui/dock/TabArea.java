@@ -9,9 +9,6 @@
  */
 package viewtify.ui.dock;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
@@ -24,29 +21,24 @@ import kiss.I;
  */
 class TabArea extends ViewArea<TabPane> {
 
-    /** A list with all contained views. */
-    private final Set<Tab> views = new LinkedHashSet<>();
-
     /**
      * Create a new tab area.
      */
     TabArea() {
         super(new TabPane());
 
-        node.addEventHandler(MouseEvent.DRAG_DETECTED, event -> {
-            I.signal(node.lookupAll(".tab"))
-                    .take(tab -> tab.localToScene(tab.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY()))
-                    .first()
-                    .to(tab -> {
-                        DockSystem.onDragDetected(event, node.getSelectionModel().getSelectedItem());
-                    });
-        });
-
         node.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
         node.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
         node.addEventHandler(DragEvent.DRAG_DONE, e -> DockSystem.onDragDone(e, this));
         node.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
-        node.setUserData(this);
+        node.addEventHandler(MouseEvent.DRAG_DETECTED, e -> {
+            I.signal(node.lookupAll(".tab"))
+                    .take(tab -> tab.localToScene(tab.getBoundsInLocal()).contains(e.getSceneX(), e.getSceneY()))
+                    .first()
+                    .to(tab -> {
+                        DockSystem.onDragDetected(e, this, node.getSelectionModel().getSelectedItem());
+                    });
+        });
     }
 
     /**
@@ -66,10 +58,6 @@ class TabArea extends ViewArea<TabPane> {
      * @param checkEmpty Should this area be removed if it is empty?
      */
     void remove(Tab view, boolean checkEmpty) {
-        if (!views.contains(view)) {
-            return;
-        }
-        views.remove(view);
         node.getTabs().remove(view);
         if (checkEmpty) {
             handleEmpty();
@@ -80,7 +68,7 @@ class TabArea extends ViewArea<TabPane> {
      * Check if this area is empty, so remove it.
      */
     void handleEmpty() {
-        if (views.isEmpty()) {
+        if (node.getTabs().isEmpty()) {
             parent.remove(this);
         }
     }
@@ -89,16 +77,12 @@ class TabArea extends ViewArea<TabPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(Tab view, ViewPosition position) {
+    protected void add(Tab tab, ViewPosition position) {
         if (position != ViewPosition.CENTER) {
-            super.add(view, position);
-            return;
+            super.add(tab, position);
+        } else {
+            node.getTabs().add(tab);
+            tab.setOnCloseRequest(e -> remove(tab));
         }
-        views.add(view);
-        node.getTabs().add(view);
-    }
-
-    static TabArea of(Tab tab) {
-        return (TabArea) tab.getTabPane().getUserData();
     }
 }
