@@ -51,9 +51,6 @@ public final class DockSystem {
     /** Managed windows. */
     private static final List<RootArea> windows = new ArrayList<>();
 
-    /** FLAG */
-    private static boolean initialized;
-
     /** The main root area. */
     private static RootArea root;
 
@@ -71,8 +68,6 @@ public final class DockSystem {
      * @param view The view to register.
      */
     public static void register(View view) {
-        initializeLazy();
-
         Viewtify.inUI(() -> {
             Tab tab = new Tab(view.id());
             tab.setClosable(true);
@@ -110,20 +105,6 @@ public final class DockSystem {
         return root;
     }
 
-    /**
-     * Called to initialize a controller after its root element has been completely processed.
-     */
-    private static synchronized void initializeLazy() {
-        if (initialized == false) {
-            initialized = true;
-
-            root().node.getScene().setOnDragExited(e -> {
-                dropStage.open();
-                e.consume();
-            });
-        }
-    }
-
     // ==================================================================================
     // The drag&drop manager. The implementations handles the full dnd management of views.
     // ==================================================================================
@@ -145,11 +126,8 @@ public final class DockSystem {
         effect.setBottomInput(dropOverlay);
     }
 
-    /** Handler for drag&drop outside a window. */
-    private static final DropStage dropStage = new DropStage();
-
     /** Temp stage when the view was dropped outside a managed window. */
-    private static Stage droppedStage;
+    private static final DropStage dropStage = new DropStage();
 
     /**
      * Initialize the drag&drop for tab.
@@ -181,10 +159,6 @@ public final class DockSystem {
             event.consume(); // stop event propagation
 
             Dragboard board = event.getDragboard();
-            if (droppedStage != null) {
-                droppedStage.setWidth(droppedStage.getWidth() - 1);
-                droppedStage = null;
-            }
             if (event.getTransferMode() == TransferMode.MOVE && board.hasContent(DnD)) {
                 area.handleEmpty();
                 dropStage.close();
@@ -218,7 +192,6 @@ public final class DockSystem {
             TabArea.of(dragedTab).remove(dragedTab, false);
             area.add(dragedTab, ViewPosition.CENTER);
             stage.show();
-            droppedStage = stage;
 
             event.setDropCompleted(true);
             event.consume();
@@ -249,9 +222,10 @@ public final class DockSystem {
      */
     static void onDragExited(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
-            System.out.println("remove effect on drag exit");
-            area.node.setEffect(null);
             event.consume();
+
+            // erase overlay effect
+            area.node.setEffect(null);
         }
     }
 
@@ -262,12 +236,42 @@ public final class DockSystem {
      */
     static void onDragOver(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
-            area.node.setEffect(effect);
-
-            adjustOverlay(area.node, detectPosition(event, area.node));
-
-            event.acceptTransferModes(TransferMode.MOVE);
             event.consume();
+            event.acceptTransferModes(TransferMode.MOVE);
+
+            // apply overlay effect
+            area.node.setEffect(effect);
+            switch (detectPosition(event, area.node)) {
+            case CENTER:
+                dropOverlay.setX(0);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(area.node.getWidth());
+                dropOverlay.setHeight(area.node.getHeight());
+                break;
+            case LEFT:
+                dropOverlay.setX(0);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(area.node.getWidth() * 0.5);
+                dropOverlay.setHeight(area.node.getHeight());
+                break;
+            case RIGHT:
+                dropOverlay.setX(area.node.getWidth() * 0.5);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(area.node.getWidth() * 0.5);
+                dropOverlay.setHeight(area.node.getHeight());
+                break;
+            case TOP:
+                dropOverlay.setX(0);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(area.node.getWidth());
+                dropOverlay.setHeight(area.node.getHeight() * 0.5);
+                break;
+            case BOTTOM:
+                dropOverlay.setX(0);
+                dropOverlay.setY(area.node.getHeight() * 0.5);
+                dropOverlay.setWidth(area.node.getWidth());
+                dropOverlay.setHeight(area.node.getHeight() * 0.5);
+            }
         }
     }
 
@@ -301,40 +305,6 @@ public final class DockSystem {
             return ViewPosition.LEFT;
         } else {
             return ViewPosition.RIGHT;
-        }
-    }
-
-    private static void adjustOverlay(Control target, ViewPosition position) {
-        switch (position) {
-        case CENTER:
-            dropOverlay.setX(0);
-            dropOverlay.setY(0);
-            dropOverlay.setWidth(target.getWidth());
-            dropOverlay.setHeight(target.getHeight());
-            break;
-        case LEFT:
-            dropOverlay.setX(0);
-            dropOverlay.setY(0);
-            dropOverlay.setWidth(target.getWidth() * 0.5);
-            dropOverlay.setHeight(target.getHeight());
-            break;
-        case RIGHT:
-            dropOverlay.setX(target.getWidth() * 0.5);
-            dropOverlay.setY(0);
-            dropOverlay.setWidth(target.getWidth() * 0.5);
-            dropOverlay.setHeight(target.getHeight());
-            break;
-        case TOP:
-            dropOverlay.setX(0);
-            dropOverlay.setY(0);
-            dropOverlay.setWidth(target.getWidth());
-            dropOverlay.setHeight(target.getHeight() * 0.5);
-            break;
-        case BOTTOM:
-            dropOverlay.setX(0);
-            dropOverlay.setY(target.getHeight() * 0.5);
-            dropOverlay.setWidth(target.getWidth());
-            dropOverlay.setHeight(target.getHeight() * 0.5);
         }
     }
 
