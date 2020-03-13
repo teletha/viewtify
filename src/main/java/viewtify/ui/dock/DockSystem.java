@@ -128,6 +128,7 @@ public final class DockSystem {
             layout = I.make(DockLayout.class);
 
             if (layout.windows.isEmpty()) {
+                System.out.println("EMPT");
                 root = new RootArea();
                 layout.windows.add(root);
             } else {

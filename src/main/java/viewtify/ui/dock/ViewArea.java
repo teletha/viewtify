@@ -27,10 +27,10 @@ abstract class ViewArea<P extends Parent> {
     protected ViewArea parent;
 
     /** The related area. */
-    protected ViewArea firstChild;
+    ViewArea firstChild;
 
     /** The realated area. */
-    protected ViewArea secondChild;
+    ViewArea secondChild;
 
     /** The area orientation. */
     private Orientation orientation;
@@ -44,52 +44,50 @@ abstract class ViewArea<P extends Parent> {
         this.node = Objects.requireNonNull(node);
     }
 
+    protected void setChild(int index, ViewArea child) {
+        child.parent = this;
+
+        if (index == 0) {
+            firstChild = child;
+        } else {
+            secondChild = child;
+        }
+    }
+
     /**
-     * Get the first child pane.
+     * Get the firstChild property of this {@link ViewArea}.
      * 
-     * @return
+     * @return The firstChild property.
      */
-    protected final ViewArea getFirstChild() {
+    final ViewArea getFirstChild() {
         return firstChild;
     }
 
     /**
-     * Set {@param child} as first child of this view area.
-     * <p/>
-     * It will also update the javafx scene graph and the childs parent value.
-     *
-     * @param child The new child.
+     * Set the firstChild property of this {@link ViewArea}.
+     * 
+     * @param firstChild The firstChild value to set.
      */
-    protected void setFirstChild(ViewArea child) {
-        if (child != null) {
-            // make relationship
-            this.firstChild = child;
-            child.parent = this;
-        }
+    final void setFirstChild(ViewArea firstChild) {
+        setChild(0, firstChild);
     }
 
     /**
-     * Get the first child pane.
+     * Get the secondChild property of this {@link ViewArea}.
      * 
-     * @return
+     * @return The secondChild property.
      */
-    protected final ViewArea getSecondChild() {
+    final ViewArea getSecondChild() {
         return secondChild;
     }
 
     /**
-     * Set {@param child} as second child of this view area.
-     * <p/>
-     * It will also update the javafx scene graph and the childs parent value.
-     *
-     * @param child The new child.
+     * Set the secondChild property of this {@link ViewArea}.
+     * 
+     * @param secondChild The secondChild value to set.
      */
-    protected void setSecondChild(ViewArea child) {
-        if (child != null) {
-            // make relationship
-            this.secondChild = child;
-            child.parent = this;
-        }
+    final void setSecondChild(ViewArea secondChild) {
+        setChild(1, secondChild);
     }
 
     /**
@@ -189,8 +187,8 @@ abstract class ViewArea<P extends Parent> {
         ViewArea area = new SplitArea();
         parent.replace(this, area);
         area.setOrientation(orientation);
-        area.setFirstChild(first);
-        area.setSecondChild(second);
+        area.setChild(0, first);
+        area.setChild(1, second);
     }
 
     /**
@@ -201,9 +199,9 @@ abstract class ViewArea<P extends Parent> {
      */
     private void replace(ViewArea oldArea, ViewArea newArea) {
         if (oldArea == firstChild) {
-            setFirstChild(newArea);
+            setChild(0, newArea);
         } else if (oldArea == secondChild) {
-            setSecondChild(newArea);
+            setChild(1, newArea);
         }
     }
 

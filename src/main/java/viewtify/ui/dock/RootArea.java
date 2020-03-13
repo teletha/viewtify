@@ -31,7 +31,6 @@ final class RootArea extends ViewArea<HBox> {
      */
     RootArea() {
         super(new HBox());
-
     }
 
     /**
@@ -53,15 +52,11 @@ final class RootArea extends ViewArea<HBox> {
     }
 
     /**
-     * Set {@param child} as first child of this view area.
-     * <p/>
-     * It will also update the javafx scene graph and the childs parent value.
-     *
-     * @param child The new child.
+     * {@inheritDoc}
      */
     @Override
-    protected void setFirstChild(ViewArea child) {
-        super.setFirstChild(child);
+    protected void setChild(int index, ViewArea child) {
+        super.setChild(index, child);
 
         if (node.getChildren().isEmpty()) {
             node.getChildren().add(child.node);
@@ -76,6 +71,9 @@ final class RootArea extends ViewArea<HBox> {
      */
     @Override
     protected void add(Tab view, int position) {
+        if (firstChild == null) {
+            setChild(0, new TabArea());
+        }
         firstChild.add(view, position);
     }
 

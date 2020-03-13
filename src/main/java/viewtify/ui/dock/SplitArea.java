@@ -30,20 +30,10 @@ class SplitArea extends ViewArea<SplitPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void setFirstChild(ViewArea child) {
-        super.setFirstChild(child);
+    protected void setChild(int index, ViewArea child) {
+        super.setChild(index, child);
 
-        node.getItems().set(0, child.node);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void setSecondChild(ViewArea child) {
-        super.setSecondChild(child);
-
-        node.getItems().set(1, child.node);
+        node.getItems().set(index, child.node);
     }
 
     /**
