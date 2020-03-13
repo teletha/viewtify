@@ -113,6 +113,9 @@ public final class DockSystem {
     /** Temporal storage for the draged tab */
     private static TabArea dragedTabArea;
 
+    /** Temp stage when the view was dropped outside a managed window. */
+    private static final DropStage dropStage = new DropStage();
+
     /** The effect for the current drop zone. */
     private static final Blend effect = new Blend();
 
@@ -124,9 +127,6 @@ public final class DockSystem {
         effect.setMode(BlendMode.OVERLAY);
         effect.setBottomInput(dropOverlay);
     }
-
-    /** Temp stage when the view was dropped outside a managed window. */
-    private static final DropStage dropStage = new DropStage();
 
     /**
      * Initialize the drag&drop for tab.
@@ -158,11 +158,11 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             event.consume(); // stop event propagation
 
-            Dragboard board = event.getDragboard();
-            if (event.getTransferMode() == TransferMode.MOVE && board.hasContent(DnD)) {
+            if (event.getTransferMode() == TransferMode.MOVE && event.getDragboard().hasContent(DnD)) {
                 area.handleEmpty();
                 dropStage.close();
                 dragedTab = null;
+                dragedTabArea = null;
             }
         }
     }
