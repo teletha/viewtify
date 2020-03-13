@@ -138,10 +138,7 @@ public final class DockSystem {
             initialized = true;
 
             root().node.getScene().setOnDragExited(e -> {
-                if (dropStage == null) {
-                    dropStage = new DropStage();
-                    dropStage.open();
-                }
+                dropStage.open();
                 e.consume();
             });
         }
@@ -151,7 +148,7 @@ public final class DockSystem {
     // The drag&drop manager. The implementations handles the full dnd management of views.
     // ==================================================================================
     /** The specialized data format to handle the drag&drop gestures with managed tabs. */
-    private static final DataFormat DATAFORMAT = new DataFormat("drag and drop manager");
+    private static final DataFormat DnD = new DataFormat("drag and drop manager");
 
     /** Temporal storage for the draged tab */
     private static Tab dragedTab;
@@ -163,7 +160,7 @@ public final class DockSystem {
     private static final ColorInput dropOverlay = new ColorInput();
 
     /** Handler for drag&drop outside a window. */
-    private static DropStage dropStage;
+    private static final DropStage dropStage = new DropStage();
 
     /** The current node where the effect is active. */
     private static Node effectTarget;
@@ -172,28 +169,22 @@ public final class DockSystem {
     private static Stage droppedStage;
 
     /**
-     * Initialize the drag&drop for a view.
+     * Initialize the drag&drop for tab.
      *
      * @param event The mouse event.
+     * @param tab The target tab.
      */
-    static void onDragDetected(MouseEvent event) {
-        Object source = event.getSource();
-        if (source instanceof TabPane == false) {
-            return;
-        }
+    static void onDragDetected(MouseEvent event, Tab tab) {
+        dragedTab = tab;
 
-        TabPane pane = (TabPane) source;
-        dragedTab = pane.getSelectionModel().getSelectedItem();
-
-        Dragboard db = pane.startDragAndDrop(TransferMode.MOVE);
         ClipboardContent content = new ClipboardContent();
-        content.put(DATAFORMAT, dragedTab.getId());
+        content.put(DnD, DnD.toString());
 
+        Dragboard db = tab.getTabPane().startDragAndDrop(TransferMode.MOVE);
         db.setContent(content);
-        if (dropStage == null) {
-            dropStage = new DropStage();
-            dropStage.open();
-        }
+
+        dropStage.open();
+
         event.consume();
     }
 
@@ -203,6 +194,10 @@ public final class DockSystem {
      * @param event The drag event
      */
     static void onDragDone(DragEvent event) {
+        if (isInvalidDragboard(event)) {
+            return;
+        }
+
         if (event.getSource() instanceof TabPane == false && ((TabPane) event.getSource()).getUserData() instanceof TabArea) {
             return;
         }
@@ -213,9 +208,9 @@ public final class DockSystem {
             droppedStage.setWidth(droppedStage.getWidth() - 1);
             droppedStage = null;
         }
-        if (event.getTransferMode() == TransferMode.MOVE && db.hasContent(DATAFORMAT)) {
+        if (event.getTransferMode() == TransferMode.MOVE && db.hasContent(DnD)) {
             area.handleEmpty();
-            closeDropStages();
+            dropStage.close();
             dragedTab = null;
         }
         event.consume();
@@ -269,7 +264,7 @@ public final class DockSystem {
             return;
         }
         Control targetNode = (Control) event.getGestureTarget();
-        System.out.println(targetNode);
+
         // Add view to new area
         if (targetNode.getUserData() instanceof ViewArea) {
             ViewArea target = (ViewArea) targetNode.getUserData();
@@ -301,6 +296,10 @@ public final class DockSystem {
      * @param event The drag event.
      */
     static void onDragOver(DragEvent event) {
+        if (isInvalidDragboard(event)) {
+            return;
+        }
+
         if (event.getSource() instanceof Control == false) {
             return;
         }
@@ -354,7 +353,7 @@ public final class DockSystem {
     private static boolean isInvalidDragboard(DragEvent event) {
         // Check if dropped content is valid for dropping here
         Dragboard dragboard = event.getDragboard();
-        return !dragboard.hasContent(DATAFORMAT) || !dragboard.getContent(DATAFORMAT).equals(dragedTab.getId());
+        return !dragboard.hasContent(DnD) && !dragboard.getContent(DnD).equals(DnD.toString());
     }
 
     /**
@@ -414,16 +413,6 @@ public final class DockSystem {
     }
 
     /**
-     * Close all the invisible drop stages.
-     */
-    private static void closeDropStages() {
-        if (dropStage != null) {
-            dropStage.close();
-            dropStage = null;
-        }
-    }
-
-    /**
      * The DropStage is a container which handles the drop events of views outside the the
      * application windows.
      * <p/>
@@ -432,23 +421,21 @@ public final class DockSystem {
      */
     private static final class DropStage {
 
-        /** The the primary stage containing the dock system. */
-        private final Stage owner;
-
         /** A list with all stages (one per screen) which are used as drop areas. */
         private final List<Stage> stages = new ArrayList<>();
 
         /**
-         * Initialize the drop stages for a new drag&drop gesture.
+         * Hide
          */
         private DropStage() {
-            this.owner = (Stage) root().node.getScene().getWindow();
         }
 
         /**
          * Open the drop stages.
          */
         private void open() {
+            Stage owner = (Stage) root().node.getScene().getWindow();
+
             for (Screen screen : Screen.getScreens()) {
                 // Initialize a drop stage for the given screen.
                 Stage stage = new Stage();
@@ -479,7 +466,7 @@ public final class DockSystem {
                     e.consume();
                 });
                 scene.setOnDragOver(e -> {
-                    if (e.getDragboard().hasContent(DATAFORMAT)) {
+                    if (e.getDragboard().hasContent(DnD)) {
                         e.acceptTransferModes(TransferMode.MOVE);
                     }
                     e.consume();

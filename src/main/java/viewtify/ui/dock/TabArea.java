@@ -14,6 +14,9 @@ import java.util.Set;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseEvent;
+
+import kiss.I;
 
 /**
  * Describes a logical view area which displays the views within a tab pane.
@@ -29,20 +32,18 @@ class TabArea extends ViewArea<TabPane> {
     TabArea() {
         super(new TabPane());
 
-        registerDragEvents();
-    }
-
-    /**
-     * Register the event handler for drag&drop of views.
-     */
-    private void registerDragEvents() {
-        node.setOnDragDetected(event -> {
-            DockSystem.onDragDetected(event);
+        node.addEventHandler(MouseEvent.DRAG_DETECTED, event -> {
+            I.signal(node.lookupAll(".tab"))
+                    .take(tab -> tab.localToScene(tab.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY()))
+                    .first()
+                    .to(tab -> {
+                        DockSystem.onDragDetected(event, node.getSelectionModel().getSelectedItem());
+                    });
         });
         node.setOnDragDone(event -> {
             DockSystem.onDragDone(event);
         });
-        super.registerDragEvents(node);
+        registerDragEvents(node);
     }
 
     /**
