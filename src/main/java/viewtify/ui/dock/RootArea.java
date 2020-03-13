@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 final class RootArea extends ViewArea<HBox> {
 
     /** Close the stage containing this area when removing the child. */
-    private final boolean canCloseStage;
+    private boolean canCloseStage;
 
     /**
      * Create a new root area.
@@ -29,12 +29,27 @@ final class RootArea extends ViewArea<HBox> {
      * @param dndManager The drag&drop manager
      * @param canCloseStage Close the stage containing this area when the last view was removed?
      */
-    RootArea(boolean canCloseStage) {
+    RootArea() {
         super(new HBox());
 
-        this.canCloseStage = canCloseStage;
+    }
 
-        setFirstChild(new TabArea());
+    /**
+     * Get the canCloseStage property of this {@link RootArea}.
+     * 
+     * @return The canCloseStage property.
+     */
+    final boolean isCanCloseStage() {
+        return canCloseStage;
+    }
+
+    /**
+     * Set the canCloseStage property of this {@link RootArea}.
+     * 
+     * @param canCloseStage The canCloseStage value to set.
+     */
+    final void setCanCloseStage(boolean canCloseStage) {
+        this.canCloseStage = canCloseStage;
     }
 
     /**

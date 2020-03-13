@@ -45,6 +45,15 @@ abstract class ViewArea<P extends Parent> {
     }
 
     /**
+     * Get the first child pane.
+     * 
+     * @return
+     */
+    protected final ViewArea getFirstChild() {
+        return firstChild;
+    }
+
+    /**
      * Set {@param child} as first child of this view area.
      * <p/>
      * It will also update the javafx scene graph and the childs parent value.
@@ -52,9 +61,20 @@ abstract class ViewArea<P extends Parent> {
      * @param child The new child.
      */
     protected void setFirstChild(ViewArea child) {
-        // make relationship
-        this.firstChild = child;
-        child.parent = this;
+        if (child != null) {
+            // make relationship
+            this.firstChild = child;
+            child.parent = this;
+        }
+    }
+
+    /**
+     * Get the first child pane.
+     * 
+     * @return
+     */
+    protected final ViewArea getSecondChild() {
+        return secondChild;
     }
 
     /**
@@ -65,9 +85,11 @@ abstract class ViewArea<P extends Parent> {
      * @param child The new child.
      */
     protected void setSecondChild(ViewArea child) {
-        // make relationship
-        this.secondChild = child;
-        child.parent = this;
+        if (child != null) {
+            // make relationship
+            this.secondChild = child;
+            child.parent = this;
+        }
     }
 
     /**
@@ -186,16 +208,12 @@ abstract class ViewArea<P extends Parent> {
     }
 
     /**
-     * Get the the root area where this view is registered.
-     *
-     * @return The root area of this view.
+     * Get the pane orientation.
+     * 
+     * @return
      */
-    protected final RootArea getRootArea() {
-        ViewArea current = this;
-        while (current.parent != null) {
-            current = current.parent;
-        }
-        return (RootArea) current;
+    protected final Orientation getOrientation() {
+        return orientation;
     }
 
     /**

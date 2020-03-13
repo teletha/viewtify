@@ -35,6 +35,10 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import kiss.I;
+import kiss.Managed;
+import kiss.Singleton;
+import kiss.Storable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
@@ -48,8 +52,8 @@ public final class DockSystem {
     /** The root user interface for the docking system. */
     public static final UserInterfaceProvider<Parent> UI = () -> root().node;
 
-    /** Managed windows. */
-    private static final List<RootArea> windows = new ArrayList<>();
+    /** Layout Store */
+    private static DockLayout layout;
 
     /**
      * Place the view on the top side.
@@ -106,7 +110,7 @@ public final class DockSystem {
      * Bring all windows managed by this dock system to front.
      */
     private static void bringToFront() {
-        for (RootArea area : windows) {
+        for (RootArea area : layout.windows) {
             if (area.node.getScene().getWindow() instanceof Stage) {
                 ((Stage) area.node.getScene().getWindow()).toFront();
             }
@@ -121,9 +125,28 @@ public final class DockSystem {
      */
     private static synchronized RootArea root() {
         if (root == null) {
-            root = new RootArea(false);
+            layout = I.make(DockLayout.class);
+
+            if (layout.windows.isEmpty()) {
+                root = new RootArea();
+                layout.windows.add(root);
+            } else {
+                root = layout.windows.get(0);
+            }
         }
         return root;
+    }
+
+    /**
+     * 
+     */
+    @Managed(Singleton.class)
+    private static class DockLayout implements Storable<DockLayout> {
+        public List<RootArea> windows = new ArrayList();
+
+        private DockLayout() {
+            restore();
+        }
     }
 
     // ==================================================================================
@@ -203,7 +226,8 @@ public final class DockSystem {
             Node ui = dragedTab.getContent();
             Bounds bounds = ui.getBoundsInLocal();
 
-            RootArea area = new RootArea(true);
+            RootArea area = new RootArea();
+            area.setCanCloseStage(true);
             Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight());
             scene.getStylesheets().addAll(ui.getScene().getStylesheets());
 
@@ -211,8 +235,8 @@ public final class DockSystem {
             stage.setScene(scene);
             stage.setX(event.getX());
             stage.setY(event.getY());
-            stage.setOnShown(e -> windows.add(area));
-            stage.setOnCloseRequest(e -> windows.remove(area));
+            stage.setOnShown(e -> layout.windows.add(area));
+            stage.setOnCloseRequest(e -> layout.windows.remove(area));
 
             dragedTabArea.remove(dragedTab, false);
             area.add(dragedTab, CENTER);
@@ -220,6 +244,8 @@ public final class DockSystem {
 
             event.setDropCompleted(true);
             event.consume();
+
+            layout.store();
         }
     }
 
@@ -237,6 +263,8 @@ public final class DockSystem {
 
             event.setDropCompleted(true);
             event.consume();
+
+            layout.store();
         }
     }
 

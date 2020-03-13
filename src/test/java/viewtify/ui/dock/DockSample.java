@@ -14,7 +14,6 @@ import viewtify.Theme;
 import viewtify.Viewtify;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.dock.DockSystem;
 
 public class DockSample extends View {
 
