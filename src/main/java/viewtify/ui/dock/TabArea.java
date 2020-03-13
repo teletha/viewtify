@@ -41,7 +41,7 @@ class TabArea extends ViewArea<TabPane> {
                     });
         });
         node.setOnDragDone(event -> {
-            DockSystem.onDragDone(event);
+            DockSystem.onDragDone(event, this);
         });
         registerDragEvents(node);
     }

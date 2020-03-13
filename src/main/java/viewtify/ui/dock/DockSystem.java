@@ -20,7 +20,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
@@ -88,25 +87,6 @@ public final class DockSystem {
     }
 
     /**
-     * Register a new root area as subwindow.
-     *
-     * @param area The new root area.
-     */
-    private static void register(RootArea area) {
-        windows.add(area);
-    }
-
-    /**
-     * Unregister and close the given root area.
-     *
-     * @param area The root area to remove.
-     */
-    private static void unregister(RootArea area) {
-        ((Stage) area.node.getScene().getWindow()).close();
-        windows.remove(area);
-    }
-
-    /**
      * Bring all windows managed by this dock system to front.
      */
     private static void bringToFront() {
@@ -165,7 +145,7 @@ public final class DockSystem {
     /** The current node where the effect is active. */
     private static Node effectTarget;
 
-    /** Temp stage when the view was dropped outside a stagediver.fx window. */
+    /** Temp stage when the view was dropped outside a managed window. */
     private static Stage droppedStage;
 
     /**
@@ -175,17 +155,17 @@ public final class DockSystem {
      * @param tab The target tab.
      */
     static void onDragDetected(MouseEvent event, Tab tab) {
+        event.consume(); // stop event propagation
+
         dragedTab = tab;
 
         ClipboardContent content = new ClipboardContent();
         content.put(DnD, DnD.toString());
 
-        Dragboard db = tab.getTabPane().startDragAndDrop(TransferMode.MOVE);
-        db.setContent(content);
+        Dragboard board = tab.getTabPane().startDragAndDrop(TransferMode.MOVE);
+        board.setContent(content);
 
         dropStage.open();
-
-        event.consume();
     }
 
     /**
@@ -193,60 +173,51 @@ public final class DockSystem {
      *
      * @param event The drag event
      */
-    static void onDragDone(DragEvent event) {
-        if (isInvalidDragboard(event)) {
-            return;
-        }
+    static void onDragDone(DragEvent event, TabArea area) {
+        if (isValidDragboard(event)) {
+            event.consume(); // stop event propagation
 
-        if (event.getSource() instanceof TabPane == false && ((TabPane) event.getSource()).getUserData() instanceof TabArea) {
-            return;
+            Dragboard board = event.getDragboard();
+            if (droppedStage != null) {
+                droppedStage.setWidth(droppedStage.getWidth() - 1);
+                droppedStage = null;
+            }
+            if (event.getTransferMode() == TransferMode.MOVE && board.hasContent(DnD)) {
+                area.handleEmpty();
+                dropStage.close();
+                dragedTab = null;
+            }
         }
-        TabPane source = (TabPane) event.getSource();
-        TabArea area = (TabArea) source.getUserData();
-        Dragboard db = event.getDragboard();
-        if (droppedStage != null) {
-            droppedStage.setWidth(droppedStage.getWidth() - 1);
-            droppedStage = null;
-        }
-        if (event.getTransferMode() == TransferMode.MOVE && db.hasContent(DnD)) {
-            area.handleEmpty();
-            dropStage.close();
-            dragedTab = null;
-        }
-        event.consume();
     }
 
     /**
      * Handle Drag&Drop to a invisible stage => opens a new window
      *
      * @param event The fired event.
-     * @param dropStage The stage where the view was dropped.
      */
-    static void onDragDroppedNewStage(DragEvent event, Stage dropStage) {
-        if (isInvalidDragboard(event)) {
-            return;
+    static void onDragDroppedNewStage(DragEvent event) {
+        if (isValidDragboard(event)) {
+            // create new window
+            Node ui = dragedTab.getContent();
+            Bounds bounds = ui.getBoundsInLocal();
+
+            RootArea area = new RootArea(true);
+            Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight());
+            scene.getStylesheets().addAll(ui.getScene().getStylesheets());
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setX(event.getX());
+            stage.setY(event.getY());
+            stage.setOnShown(e -> windows.add(area));
+            stage.setOnCloseRequest(e -> windows.remove(area));
+
+            TabArea.of(dragedTab).remove(dragedTab, false);
+            area.add(dragedTab, ViewPosition.CENTER);
+            stage.show();
+            droppedStage = stage;
+            completeDropped(event, true);
         }
-
-        RootArea area = new RootArea(true);
-
-        Node ui = dragedTab.getContent();
-        Bounds bounds = ui.getBoundsInLocal();
-
-        Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight());
-        scene.getStylesheets().addAll(ui.getScene().getStylesheets());
-
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setX(event.getX());
-        stage.setY(event.getY());
-        stage.setOnShown(e -> DockSystem.register(area));
-        stage.setOnCloseRequest(e -> DockSystem.unregister(area));
-
-        TabArea.of(dragedTab).remove(dragedTab, false);
-        area.add(dragedTab, ViewPosition.CENTER);
-        stage.show();
-        droppedStage = stage;
-        completeDropped(event, true);
     }
 
     /**
@@ -342,6 +313,17 @@ public final class DockSystem {
 
         event.setDropCompleted(success);
         event.consume();
+    }
+
+    /**
+     * Validates the dragboard content.
+     *
+     * @param event The drag drop event.
+     * @return False if the dragboard of the event contains a valid view id.
+     */
+    private static boolean isValidDragboard(DragEvent event) {
+        Dragboard board = event.getDragboard();
+        return board.hasContent(DnD) && board.getContent(DnD).equals(DnD.toString());
     }
 
     /**
@@ -471,9 +453,7 @@ public final class DockSystem {
                     }
                     e.consume();
                 });
-                scene.setOnDragDropped(e -> {
-                    onDragDroppedNewStage(e, stage);
-                });
+                scene.setOnDragDropped(DockSystem::onDragDroppedNewStage);
 
                 // show stage
                 stage.setScene(scene);
