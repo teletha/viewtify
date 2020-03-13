@@ -101,7 +101,6 @@ abstract class ViewArea<P extends Parent> {
      * @param position Add the view at this position.
      */
     protected void add(Tab view, int position) {
-        System.out.println(view);
         switch (position) {
         case DockSystem.CENTER:
             if (firstChild != null) {

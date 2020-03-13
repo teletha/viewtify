@@ -11,7 +11,7 @@ package viewtify.ui.dock;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.Tab;
+import javafx.scene.layout.Pane;
 
 class SplitArea extends ViewArea<SplitPane> {
 
@@ -22,17 +22,8 @@ class SplitArea extends ViewArea<SplitPane> {
         super(new SplitPane());
 
         node.setOrientation(Orientation.VERTICAL);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void add(Tab view, int position) {
-        if (firstChild == null) {
-            setChild(0, new TabArea());
-        }
-        firstChild.add(view, position);
+        node.getItems().add(new Pane());
+        node.getItems().add(new Pane());
     }
 
     /**
@@ -42,11 +33,7 @@ class SplitArea extends ViewArea<SplitPane> {
     protected void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
-        if (index < node.getItems().size()) {
-            node.getItems().set(index, child.node);
-        } else {
-            node.getItems().add(child.node);
-        }
+        node.getItems().set(index, child.node);
     }
 
     /**
