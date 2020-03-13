@@ -81,7 +81,7 @@ public final class DockSystem {
     static final int BOTTOM = 4;
 
     /** The main root area. */
-    private static RootArea root;
+    private static SplitArea root;
 
     /**
      * Hide.
@@ -110,7 +110,7 @@ public final class DockSystem {
      * Bring all windows managed by this dock system to front.
      */
     private static void bringToFront() {
-        for (RootArea area : layout.windows) {
+        for (SplitArea area : layout.windows) {
             if (area.node.getScene().getWindow() instanceof Stage) {
                 ((Stage) area.node.getScene().getWindow()).toFront();
             }
@@ -123,13 +123,13 @@ public final class DockSystem {
      *
      * @return The main area.
      */
-    private static synchronized RootArea root() {
+    private static synchronized SplitArea root() {
         if (root == null) {
             layout = I.make(DockLayout.class);
 
             if (layout.windows.isEmpty()) {
                 System.out.println("EMPT");
-                root = new RootArea();
+                root = new SplitArea();
                 layout.windows.add(root);
             } else {
                 root = layout.windows.get(0);
@@ -143,7 +143,7 @@ public final class DockSystem {
      */
     @Managed(Singleton.class)
     private static class DockLayout implements Storable<DockLayout> {
-        public List<RootArea> windows = new ArrayList();
+        public List<SplitArea> windows = new ArrayList();
 
         private DockLayout() {
             restore();
@@ -227,8 +227,7 @@ public final class DockSystem {
             Node ui = dragedTab.getContent();
             Bounds bounds = ui.getBoundsInLocal();
 
-            RootArea area = new RootArea();
-            area.setCanCloseStage(true);
+            SplitArea area = new SplitArea();
             Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight());
             scene.getStylesheets().addAll(ui.getScene().getStylesheets());
 
