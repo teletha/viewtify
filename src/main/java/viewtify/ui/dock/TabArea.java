@@ -9,6 +9,9 @@
  */
 package viewtify.ui.dock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.geometry.Orientation;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -21,6 +24,8 @@ import kiss.I;
  * Describes a logical view area which displays the views within a tab pane.
  */
 class TabArea extends ViewArea<TabPane> {
+
+    public List<String> ids = new ArrayList();
 
     /**
      * Create a new tab area.
@@ -59,6 +64,7 @@ class TabArea extends ViewArea<TabPane> {
      * @param checkEmpty Should this area be removed if it is empty?
      */
     void remove(Tab view, boolean checkEmpty) {
+        ids.remove(view.getId());
         node.getTabs().remove(view);
         if (checkEmpty) {
             handleEmpty();
@@ -83,6 +89,10 @@ class TabArea extends ViewArea<TabPane> {
         case DockSystem.CENTER:
             node.getTabs().add(view);
             view.setOnCloseRequest(e -> remove(view));
+
+            if (!ids.contains(view.getId())) {
+                ids.add(view.getId());
+            }
             break;
 
         case DockSystem.TOP:
