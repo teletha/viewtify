@@ -227,17 +227,18 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             // create new window
             Node ui = dragedTab.getContent();
-            Bounds bounds = ui.getBoundsInLocal();
+            Bounds bounds = ui.getBoundsInParent();
+            double titleBarHeight = ui.getScene().getWindow().getHeight() - ui.getScene().getHeight() - 8;
 
             RootArea area = new RootArea();
             area.setCanCloseStage(true);
-            Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight());
+            Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight() + titleBarHeight);
             scene.getStylesheets().addAll(ui.getScene().getStylesheets());
 
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setX(event.getX());
-            stage.setY(event.getY());
+            stage.setX(event.getScreenX());
+            stage.setY(event.getScreenY());
             stage.setOnShown(e -> layout.windows.add(area));
             stage.setOnCloseRequest(e -> layout.windows.remove(area));
 
