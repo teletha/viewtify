@@ -53,28 +53,14 @@ class TabArea extends ViewArea<TabPane> {
      * @param view The view to remove
      */
     void remove(Tab view) {
-        remove(view, true);
-    }
-
-    /**
-     * Remove a view from this area. If checkEmpty is true it checks if this area is empty and
-     * remove this area.
-     *
-     * @param view The view to remove.
-     * @param checkEmpty Should this area be removed if it is empty?
-     */
-    void remove(Tab view, boolean checkEmpty) {
         ids.remove(view.getId());
         node.getTabs().remove(view);
-        if (checkEmpty) {
-            handleEmpty();
-        }
     }
 
     /**
      * Check if this area is empty, so remove it.
      */
-    void handleEmpty() {
+    void removeWhenEmpty() {
         if (node.getTabs().isEmpty()) {
             parent.remove(this);
         }
@@ -88,7 +74,10 @@ class TabArea extends ViewArea<TabPane> {
         switch (position) {
         case DockSystem.CENTER:
             node.getTabs().add(view);
-            view.setOnCloseRequest(e -> remove(view));
+            view.setOnCloseRequest(e -> {
+                remove(view);
+                removeWhenEmpty();
+            });
 
             if (!ids.contains(view.getId())) {
                 ids.add(view.getId());

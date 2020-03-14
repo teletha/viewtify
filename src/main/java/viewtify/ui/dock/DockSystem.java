@@ -209,7 +209,7 @@ public final class DockSystem {
             event.consume(); // stop event propagation
 
             if (event.getTransferMode() == TransferMode.MOVE && event.getDragboard().hasContent(DnD)) {
-                area.handleEmpty();
+                area.removeWhenEmpty();
                 dropStage.close();
                 dragedTab = null;
                 dragedTabArea = null;
@@ -240,8 +240,9 @@ public final class DockSystem {
             stage.setOnShown(e -> layout.windows.add(area));
             stage.setOnCloseRequest(e -> layout.windows.remove(area));
 
-            dragedTabArea.remove(dragedTab, false);
+            dragedTabArea.remove(dragedTab);
             area.add(dragedTab, CENTER);
+            dragedTabArea.removeWhenEmpty();
             stage.show();
 
             event.setDropCompleted(true);
@@ -260,8 +261,9 @@ public final class DockSystem {
     static void onDragDropped(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
             // Add view to new area
-            dragedTabArea.remove(dragedTab, false);
+            dragedTabArea.remove(dragedTab);
             area.add(dragedTab, detectPosition(event, area.node));
+            dragedTabArea.removeWhenEmpty();
 
             event.setDropCompleted(true);
             event.consume();
