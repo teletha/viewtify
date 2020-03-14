@@ -91,6 +91,24 @@ abstract class ViewArea<P extends Parent> {
     }
 
     /**
+     * Get the pane orientation.
+     * 
+     * @return
+     */
+    final Orientation getOrientation() {
+        return orientation;
+    }
+
+    /**
+     * Set the orientation of the split area.
+     *
+     * @param orientation The orientation of splitting.
+     */
+    void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+    }
+
+    /**
      * Add the view to this area at position.
      * <p/>
      * If position is {@link DockSystem#CENTER} it will be added to that child that is defined as
@@ -159,13 +177,7 @@ abstract class ViewArea<P extends Parent> {
      *
      * @param area The area that should be removed.
      */
-    protected void remove(ViewArea area) {
-        if (area == firstChild) {
-            parent.replace(this, secondChild);
-        } else if (area == secondChild) {
-            parent.replace(this, firstChild);
-        }
-    }
+    abstract void remove(ViewArea area);
 
     /**
      * Split this area by {@param orientation}.
@@ -179,7 +191,7 @@ abstract class ViewArea<P extends Parent> {
      * @throws IllegalArgumentException In case of both params {@param first} and {@param second}
      *             are this or none of them.
      */
-    private void split(ViewArea first, ViewArea second, Orientation orientation) {
+    void split(ViewArea first, ViewArea second, Orientation orientation) {
         if (!(first == this ^ second == this)) {
             throw new IllegalArgumentException("Either first or second area must be this.");
         }
@@ -197,29 +209,11 @@ abstract class ViewArea<P extends Parent> {
      * @param oldArea The old area.
      * @param newArea The new area.
      */
-    private void replace(ViewArea oldArea, ViewArea newArea) {
+    void replace(ViewArea oldArea, ViewArea newArea) {
         if (oldArea == firstChild) {
             setChild(0, newArea);
         } else if (oldArea == secondChild) {
             setChild(1, newArea);
         }
-    }
-
-    /**
-     * Get the pane orientation.
-     * 
-     * @return
-     */
-    protected final Orientation getOrientation() {
-        return orientation;
-    }
-
-    /**
-     * Set the orientation of the split area.
-     *
-     * @param orientation The orientation of splitting.
-     */
-    protected void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
     }
 }

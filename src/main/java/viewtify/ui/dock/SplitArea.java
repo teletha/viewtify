@@ -30,6 +30,18 @@ class SplitArea extends ViewArea<SplitPane> {
      * {@inheritDoc}
      */
     @Override
+    void remove(ViewArea area) {
+        if (area == firstChild) {
+            parent.replace(this, secondChild);
+        } else if (area == secondChild) {
+            parent.replace(this, firstChild);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 

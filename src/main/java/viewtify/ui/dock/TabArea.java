@@ -51,6 +51,14 @@ class TabArea extends ViewArea<TabPane> {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    void remove(ViewArea area) {
+        // do nothing
+    }
+
+    /**
      * Remove a view from this area. If checkEmpty is true it checks if this area is empty and
      * remove this area.
      *
