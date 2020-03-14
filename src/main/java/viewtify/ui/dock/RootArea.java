@@ -56,7 +56,7 @@ final class RootArea extends ViewArea<HBox> {
      * {@inheritDoc}
      */
     @Override
-    protected void setChild(int index, ViewArea child) {
+    void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
         if (node.getChildren().isEmpty()) {
@@ -71,7 +71,7 @@ final class RootArea extends ViewArea<HBox> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(Tab view, int position) {
+    void add(Tab view, int position) {
         if (firstChild == null) {
             setChild(0, new TabArea());
         }
@@ -82,7 +82,7 @@ final class RootArea extends ViewArea<HBox> {
      * {@inheritDoc}
      */
     @Override
-    protected void remove(ViewArea area) {
+    void remove(ViewArea area) {
         if (canCloseStage) {
             ((Stage) node.getScene().getWindow()).close();
         }
@@ -97,4 +97,5 @@ final class RootArea extends ViewArea<HBox> {
         // wrapped error in here.
         throw new Error();
     }
+
 }

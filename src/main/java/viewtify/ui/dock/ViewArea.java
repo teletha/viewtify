@@ -44,7 +44,7 @@ abstract class ViewArea<P extends Parent> {
         this.node = Objects.requireNonNull(node);
     }
 
-    protected void setChild(int index, ViewArea child) {
+    void setChild(int index, ViewArea child) {
         child.parent = this;
 
         if (index == 0) {
@@ -149,7 +149,10 @@ abstract class ViewArea<P extends Parent> {
      * @param oldArea The old area.
      * @param newArea The new area.
      */
-    void replace(ViewArea oldArea, ViewArea newArea) {
+    /**
+     * {@inheritDoc}
+     */
+    final void replace(ViewArea oldArea, ViewArea newArea) {
         if (oldArea == firstChild) {
             setChild(0, newArea);
         } else if (oldArea == secondChild) {
