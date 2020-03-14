@@ -9,6 +9,7 @@
  */
 package viewtify.ui.dock;
 
+import javafx.geometry.Orientation;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -85,5 +86,15 @@ final class RootArea extends ViewArea<HBox> {
         if (canCloseStage) {
             ((Stage) node.getScene().getWindow()).close();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    void split(ViewArea first, ViewArea second, Orientation orientation) {
+        // If this exception will be thrown, it is bug of this program. So we must rethrow the
+        // wrapped error in here.
+        throw new Error();
     }
 }

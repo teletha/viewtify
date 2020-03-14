@@ -33,7 +33,7 @@ abstract class ViewArea<P extends Parent> {
     ViewArea secondChild;
 
     /** The area orientation. */
-    private Orientation orientation;
+    Orientation orientation;
 
     /**
      * Specify root node.
@@ -118,57 +118,7 @@ abstract class ViewArea<P extends Parent> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    protected void add(Tab view, int position) {
-        switch (position) {
-        case DockSystem.CENTER:
-            if (firstChild != null) {
-                firstChild.add(view, position);
-            } else if (secondChild != null) {
-                secondChild.add(view, position);
-            }
-            break;
-
-        case DockSystem.TOP:
-            if (orientation == Orientation.VERTICAL) {
-                firstChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(target, this, Orientation.VERTICAL);
-            }
-            break;
-
-        case DockSystem.BOTTOM:
-            if (orientation == Orientation.VERTICAL) {
-                secondChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(this, target, Orientation.VERTICAL);
-            }
-            break;
-
-        case DockSystem.LEFT:
-            if (orientation == Orientation.HORIZONTAL) {
-                secondChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(target, this, Orientation.HORIZONTAL);
-            }
-            break;
-
-        case DockSystem.RIGHT:
-            if (orientation == Orientation.HORIZONTAL) {
-                secondChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(this, target, Orientation.HORIZONTAL);
-            }
-            break;
-        }
-    }
+    abstract void add(Tab view, int position);
 
     /**
      * Remove the given area as child from this area.
@@ -191,17 +141,7 @@ abstract class ViewArea<P extends Parent> {
      * @throws IllegalArgumentException In case of both params {@param first} and {@param second}
      *             are this or none of them.
      */
-    void split(ViewArea first, ViewArea second, Orientation orientation) {
-        if (!(first == this ^ second == this)) {
-            throw new IllegalArgumentException("Either first or second area must be this.");
-        }
-
-        ViewArea area = new SplitArea();
-        parent.replace(this, area);
-        area.setOrientation(orientation);
-        area.setChild(0, first);
-        area.setChild(1, second);
-    }
+    abstract void split(ViewArea first, ViewArea second, Orientation orientation);
 
     /**
      * Replace the {@param oldArea} with the {@param newArea}.
