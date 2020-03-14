@@ -11,13 +11,9 @@ package viewtify.ui.dock;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 
 class SplitArea extends ViewArea<SplitPane> {
-
-    /** The area orientation. */
-    private Orientation orientation;
 
     /**
      * Create a new view area.
@@ -59,88 +55,4 @@ class SplitArea extends ViewArea<SplitPane> {
         this.node.setOrientation(orientation);
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Override
-    void add(Tab view, int position) {
-        switch (position) {
-        case DockSystem.CENTER:
-            children.get(0).add(view, position);
-            break;
-
-        case DockSystem.TOP:
-            if (orientation == Orientation.VERTICAL) {
-                first().add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(target, this, Orientation.VERTICAL);
-            }
-            break;
-
-        case DockSystem.BOTTOM:
-            if (orientation == Orientation.VERTICAL) {
-                last().add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(this, target, Orientation.VERTICAL);
-            }
-            break;
-
-        case DockSystem.LEFT:
-            if (orientation == Orientation.HORIZONTAL) {
-                last().add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(target, this, Orientation.HORIZONTAL);
-            }
-            break;
-
-        case DockSystem.RIGHT:
-            if (orientation == Orientation.HORIZONTAL) {
-                last().add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(this, target, Orientation.HORIZONTAL);
-            }
-            break;
-        }
-    }
-
-    /**
-     * Split this area by {@param orientation}.
-     * <p/>
-     * Either the parameter {@param first} or {@param second} must be this area. Otherwise a
-     * {@link IllegalArgumentException} is thrown.
-     *
-     * @param first The first element.
-     * @param second The second element.
-     * @param orientation The split orientation.
-     * @throws IllegalArgumentException In case of both params {@param first} and {@param second}
-     *             are this or none of them.
-     */
-    void split(ViewArea first, ViewArea second, Orientation orientation) {
-        if (!(first == this ^ second == this)) {
-            throw new IllegalArgumentException("Either first or second area must be this.");
-        }
-
-        SplitArea area = new SplitArea();
-        parent.replace(this, area);
-        area.setOrientation(orientation);
-        area.setChild(0, first);
-        area.setChild(1, second);
-    }
-
-    ViewArea first() {
-        return children.get(0);
-    }
-
-    ViewArea last() {
-        return children.get(children.size() - 1);
-    }
 }

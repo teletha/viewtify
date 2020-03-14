@@ -94,7 +94,7 @@ class TabArea extends ViewArea<TabPane> {
     @Override
     void add(Tab tab, int position) {
         if (position != DockSystem.CENTER) {
-            parent.add(tab, position);
+            super.add(tab, position);
         } else {
             if (!ids.contains(tab.getId())) ids.add(tab.getId());
             node.getTabs().add(tab);

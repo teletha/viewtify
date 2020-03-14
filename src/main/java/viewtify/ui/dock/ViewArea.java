@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 
@@ -20,6 +21,9 @@ import javafx.scene.control.Tab;
  * A ViewArea is a node within the area tree. It has two children which are self view areas.
  */
 abstract class ViewArea<P extends Parent> {
+
+    /** The area orientation. */
+    Orientation orientation;
 
     /** The actual root node. */
     protected final P node;
@@ -78,7 +82,85 @@ abstract class ViewArea<P extends Parent> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    abstract void add(Tab view, int position);
+    void add(Tab view, int position) {
+        switch (position) {
+        case DockSystem.CENTER:
+            children.get(0).add(view, position);
+            break;
+
+        case DockSystem.TOP:
+            if (orientation == Orientation.VERTICAL) {
+                first().add(view, position);
+            } else {
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.CENTER);
+                split(target, this, Orientation.VERTICAL);
+            }
+            break;
+
+        case DockSystem.BOTTOM:
+            if (orientation == Orientation.VERTICAL) {
+                last().add(view, position);
+            } else {
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.CENTER);
+                split(this, target, Orientation.VERTICAL);
+            }
+            break;
+
+        case DockSystem.LEFT:
+            if (orientation == Orientation.HORIZONTAL) {
+                last().add(view, position);
+            } else {
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.CENTER);
+                split(target, this, Orientation.HORIZONTAL);
+            }
+            break;
+
+        case DockSystem.RIGHT:
+            if (orientation == Orientation.HORIZONTAL) {
+                last().add(view, position);
+            } else {
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.CENTER);
+                split(this, target, Orientation.HORIZONTAL);
+            }
+            break;
+        }
+    }
+
+    /**
+     * Split this area by {@param orientation}.
+     * <p/>
+     * Either the parameter {@param first} or {@param second} must be this area. Otherwise a
+     * {@link IllegalArgumentException} is thrown.
+     *
+     * @param first The first element.
+     * @param second The second element.
+     * @param orientation The split orientation.
+     * @throws IllegalArgumentException In case of both params {@param first} and {@param second}
+     *             are this or none of them.
+     */
+    void split(ViewArea first, ViewArea second, Orientation orientation) {
+        if (!(first == this ^ second == this)) {
+            throw new IllegalArgumentException("Either first or second area must be this.");
+        }
+
+        SplitArea area = new SplitArea();
+        parent.replace(this, area);
+        area.setOrientation(orientation);
+        area.setChild(0, first);
+        area.setChild(1, second);
+    }
+
+    ViewArea first() {
+        return children.get(0);
+    }
+
+    ViewArea last() {
+        return children.get(children.size() - 1);
+    }
 
     /**
      * Remove the given area as child from this area.
