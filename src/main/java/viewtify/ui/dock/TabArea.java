@@ -35,7 +35,7 @@ class TabArea extends ViewArea<TabPane> {
 
         node.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
         node.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
-        node.addEventHandler(DragEvent.DRAG_DONE, e -> DockSystem.onDragDone(e, this));
+        // node.addEventHandler(DragEvent.DRAG_DONE, e -> DockSystem.onDragDone(e, this));
         node.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
         node.addEventHandler(MouseEvent.DRAG_DETECTED, e -> {
             I.signal(node.lookupAll(".tab"))
@@ -70,59 +70,19 @@ class TabArea extends ViewArea<TabPane> {
      * {@inheritDoc}
      */
     @Override
-    void add(Tab view, int position) {
-        switch (position) {
-        case DockSystem.CENTER:
-            node.getTabs().add(view);
-            view.setOnCloseRequest(e -> {
-                remove(view);
+    void add(Tab tab, int position) {
+        if (position != DockSystem.CENTER) {
+            super.add(tab, position);
+        } else {
+            node.getTabs().add(tab);
+            tab.setOnCloseRequest(e -> {
+                remove(tab);
                 removeWhenEmpty();
             });
 
-            if (!ids.contains(view.getId())) {
-                ids.add(view.getId());
+            if (!ids.contains(tab.getId())) {
+                ids.add(tab.getId());
             }
-            break;
-
-        case DockSystem.TOP:
-            if (orientation == Orientation.VERTICAL) {
-                firstChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(target, this, Orientation.VERTICAL);
-            }
-            break;
-
-        case DockSystem.BOTTOM:
-            if (orientation == Orientation.VERTICAL) {
-                secondChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(this, target, Orientation.VERTICAL);
-            }
-            break;
-
-        case DockSystem.LEFT:
-            if (orientation == Orientation.HORIZONTAL) {
-                secondChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(target, this, Orientation.HORIZONTAL);
-            }
-            break;
-
-        case DockSystem.RIGHT:
-            if (orientation == Orientation.HORIZONTAL) {
-                secondChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(this, target, Orientation.HORIZONTAL);
-            }
-            break;
         }
     }
 
@@ -141,7 +101,7 @@ class TabArea extends ViewArea<TabPane> {
      */
     @Override
     void split(ViewArea first, ViewArea second, Orientation orientation) {
-        ViewArea area = new SplitArea();
+        SplitArea area = new SplitArea();
         parent.replace(this, area);
         area.setOrientation(orientation);
         area.setChild(0, first);

@@ -200,29 +200,12 @@ public final class DockSystem {
     }
 
     /**
-     * Finish the drag&drop gesture.
-     *
-     * @param event The drag event
-     */
-    static void onDragDone(DragEvent event, TabArea area) {
-        if (isValidDragboard(event)) {
-            event.consume(); // stop event propagation
-
-            if (event.getTransferMode() == TransferMode.MOVE && event.getDragboard().hasContent(DnD)) {
-                area.removeWhenEmpty();
-                dropStage.close();
-                dragedTab = null;
-                dragedTabArea = null;
-            }
-        }
-    }
-
-    /**
      * Handle Drag&Drop to a invisible stage => opens a new window
      *
      * @param event The fired event.
      */
     static void onDragDroppedNewStage(DragEvent event) {
+        System.out.println("DroppedNewStage");
         if (isValidDragboard(event)) {
             // create new window
             Node ui = dragedTab.getContent();
@@ -247,6 +230,7 @@ public final class DockSystem {
 
             event.setDropCompleted(true);
             event.consume();
+            clear();
 
             layout.store();
         }
@@ -259,6 +243,7 @@ public final class DockSystem {
      * @param event The drag event.
      */
     static void onDragDropped(DragEvent event, TabArea area) {
+        System.out.println("Dropped");
         if (isValidDragboard(event)) {
             // Add view to new area
             dragedTabArea.remove(dragedTab);
@@ -267,6 +252,7 @@ public final class DockSystem {
 
             event.setDropCompleted(true);
             event.consume();
+            clear();
 
             layout.store();
         }
@@ -333,6 +319,16 @@ public final class DockSystem {
     }
 
     /**
+     * Finish the drag&drop gesture.
+     *
+     */
+    private static void clear() {
+        dropStage.close();
+        dragedTab = null;
+        dragedTabArea = null;
+    }
+
+    /**
      * Validates the dragboard content.
      *
      * @param event The drag drop event.
@@ -393,7 +389,7 @@ public final class DockSystem {
                 // Initialize a drop stage for the given screen.
                 Stage stage = new Stage();
                 stage.initStyle(StageStyle.UTILITY);
-                stage.setOpacity(0.01);
+                stage.setOpacity(0.51);
 
                 // set Stage boundaries to visible bounds of the main screen
                 Rectangle2D bounds = screen.getVisualBounds();
@@ -409,12 +405,10 @@ public final class DockSystem {
                 // create scene and apply event drag&drop handlers
                 Scene scene = new Scene(pane, bounds.getWidth(), bounds.getHeight(), Color.TRANSPARENT);
                 scene.setOnDragEntered(e -> {
-                    owner.requestFocus();
                     DockSystem.bringToFront();
                     e.consume();
                 });
                 scene.setOnDragExited(e -> {
-                    owner.requestFocus();
                     DockSystem.bringToFront();
                     e.consume();
                 });

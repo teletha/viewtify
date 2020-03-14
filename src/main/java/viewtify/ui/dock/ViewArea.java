@@ -32,9 +32,6 @@ abstract class ViewArea<P extends Parent> {
     /** The realated area. */
     ViewArea secondChild;
 
-    /** The area orientation. */
-    Orientation orientation;
-
     /**
      * Specify root node.
      * 
@@ -42,6 +39,10 @@ abstract class ViewArea<P extends Parent> {
      */
     protected ViewArea(P node) {
         this.node = Objects.requireNonNull(node);
+    }
+
+    Orientation getOrientation() {
+        return null;
     }
 
     void setChild(int index, ViewArea child) {
@@ -91,24 +92,6 @@ abstract class ViewArea<P extends Parent> {
     }
 
     /**
-     * Get the pane orientation.
-     * 
-     * @return
-     */
-    final Orientation getOrientation() {
-        return orientation;
-    }
-
-    /**
-     * Set the orientation of the split area.
-     *
-     * @param orientation The orientation of splitting.
-     */
-    void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
-    }
-
-    /**
      * Add the view to this area at position.
      * <p/>
      * If position is {@link DockSystem#CENTER} it will be added to that child that is defined as
@@ -118,7 +101,57 @@ abstract class ViewArea<P extends Parent> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    abstract void add(Tab view, int position);
+    void add(Tab view, int position) {
+        switch (position) {
+        case DockSystem.CENTER:
+            if (firstChild != null) {
+                firstChild.add(view, position);
+            } else if (secondChild != null) {
+                secondChild.add(view, position);
+            }
+            break;
+
+        case DockSystem.TOP:
+            if (getOrientation() == Orientation.VERTICAL) {
+                firstChild.add(view, position);
+            } else {
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.CENTER);
+                split(target, this, Orientation.VERTICAL);
+            }
+            break;
+
+        case DockSystem.BOTTOM:
+            if (getOrientation() == Orientation.VERTICAL) {
+                secondChild.add(view, position);
+            } else {
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.CENTER);
+                split(this, target, Orientation.VERTICAL);
+            }
+            break;
+
+        case DockSystem.LEFT:
+            if (getOrientation() == Orientation.HORIZONTAL) {
+                secondChild.add(view, position);
+            } else {
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.CENTER);
+                split(target, this, Orientation.HORIZONTAL);
+            }
+            break;
+
+        case DockSystem.RIGHT:
+            if (getOrientation() == Orientation.HORIZONTAL) {
+                secondChild.add(view, position);
+            } else {
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.CENTER);
+                split(this, target, Orientation.HORIZONTAL);
+            }
+            break;
+        }
+    }
 
     /**
      * Remove the given area as child from this area.

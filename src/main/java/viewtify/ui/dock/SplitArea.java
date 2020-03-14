@@ -11,10 +11,12 @@ package viewtify.ui.dock;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 
 class SplitArea extends ViewArea<SplitPane> {
+
+    /** The area orientation. */
+    private Orientation orientation;
 
     /**
      * Create a new view area.
@@ -28,59 +30,23 @@ class SplitArea extends ViewArea<SplitPane> {
     }
 
     /**
-     * {@inheritDoc}
+     * Get the orientation property of this {@link SplitArea}.
+     * 
+     * @return The orientation property.
      */
     @Override
-    void add(Tab view, int position) {
-        switch (position) {
-        case DockSystem.CENTER:
-            if (firstChild != null) {
-                firstChild.add(view, position);
-            } else if (secondChild != null) {
-                secondChild.add(view, position);
-            }
-            break;
+    final Orientation getOrientation() {
+        return orientation;
+    }
 
-        case DockSystem.TOP:
-            if (orientation == Orientation.VERTICAL) {
-                firstChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(target, this, Orientation.VERTICAL);
-            }
-            break;
-
-        case DockSystem.BOTTOM:
-            if (orientation == Orientation.VERTICAL) {
-                secondChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(this, target, Orientation.VERTICAL);
-            }
-            break;
-
-        case DockSystem.LEFT:
-            if (orientation == Orientation.HORIZONTAL) {
-                secondChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(target, this, Orientation.HORIZONTAL);
-            }
-            break;
-
-        case DockSystem.RIGHT:
-            if (orientation == Orientation.HORIZONTAL) {
-                secondChild.add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(this, target, Orientation.HORIZONTAL);
-            }
-            break;
-        }
+    /**
+     * Set the orientation property of this {@link SplitArea}.
+     * 
+     * @param orientation The orientation value to set.
+     */
+    final void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+        this.node.setOrientation(orientation);
     }
 
     /**
@@ -109,18 +75,8 @@ class SplitArea extends ViewArea<SplitPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void setOrientation(Orientation orientation) {
-        super.setOrientation(orientation);
-
-        node.setOrientation(orientation);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     void split(ViewArea first, ViewArea second, Orientation orientation) {
-        ViewArea area = new SplitArea();
+        SplitArea area = new SplitArea();
         parent.replace(this, area);
         area.setOrientation(orientation);
         area.setChild(0, first);
