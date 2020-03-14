@@ -37,22 +37,13 @@ class SplitArea extends ViewArea<SplitPane> {
     }
 
     /**
-     * Get the pane orientation.
-     * 
-     * @return
+     * {@inheritDoc}
      */
-    final Orientation getOrientation() {
-        return orientation;
-    }
+    @Override
+    protected void setOrientation(Orientation orientation) {
+        super.setOrientation(orientation);
 
-    /**
-     * Set the orientation of the split area.
-     *
-     * @param orientation The orientation of splitting.
-     */
-    void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
-        this.node.setOrientation(orientation);
+        node.setOrientation(orientation);
     }
 
 }

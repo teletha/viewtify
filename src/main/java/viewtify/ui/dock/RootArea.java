@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 final class RootArea extends ViewArea<HBox> {
 
     /** Close the stage containing this area when removing the child. */
-    public boolean canCloseStage;
+    private boolean canCloseStage;
 
     /**
      * Create a new root area.
@@ -31,6 +31,24 @@ final class RootArea extends ViewArea<HBox> {
      */
     RootArea() {
         super(new HBox());
+    }
+
+    /**
+     * Get the canCloseStage property of this {@link RootArea}.
+     * 
+     * @return The canCloseStage property.
+     */
+    final boolean isCanCloseStage() {
+        return canCloseStage;
+    }
+
+    /**
+     * Set the canCloseStage property of this {@link RootArea}.
+     * 
+     * @param canCloseStage The canCloseStage value to set.
+     */
+    final void setCanCloseStage(boolean canCloseStage) {
+        this.canCloseStage = canCloseStage;
     }
 
     /**
@@ -53,10 +71,10 @@ final class RootArea extends ViewArea<HBox> {
      */
     @Override
     protected void add(Tab view, int position) {
-        if (children.isEmpty()) {
+        if (firstChild == null) {
             setChild(0, new TabArea());
         }
-        children.get(0).add(view, position);
+        firstChild.add(view, position);
     }
 
     /**
