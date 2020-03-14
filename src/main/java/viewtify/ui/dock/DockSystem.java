@@ -227,12 +227,12 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             // create new window
             Node ui = dragedTab.getContent();
-            Bounds bounds = ui.getBoundsInParent();
+            Bounds contentsBound = ui.getBoundsInLocal();
             double titleBarHeight = ui.getScene().getWindow().getHeight() - ui.getScene().getHeight() - 8;
 
             RootArea area = new RootArea();
             area.setCanCloseStage(true);
-            Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight() + titleBarHeight);
+            Scene scene = new Scene(area.node, contentsBound.getWidth(), contentsBound.getHeight() + titleBarHeight);
             scene.getStylesheets().addAll(ui.getScene().getStylesheets());
 
             Stage stage = new Stage();
@@ -330,6 +330,16 @@ public final class DockSystem {
                 dropOverlay.setHeight(area.node.getHeight() * 0.5);
             }
         }
+    }
+
+    /**
+     * Handle the closing window event.
+     */
+    static void onClosingWindow(RootArea area) {
+        ((Stage) area.node.getScene().getWindow()).close();
+
+        layout.windows.remove(area);
+        layout.store();
     }
 
     /**

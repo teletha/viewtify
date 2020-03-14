@@ -12,7 +12,6 @@ package viewtify.ui.dock;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.stage.Stage;
 
 /**
  * A RootArea is a special {@link ViewArea} which has no parent and is directly used as root.
@@ -83,7 +82,7 @@ final class RootArea extends ViewArea<HBox> {
     @Override
     protected void remove(ViewArea area) {
         if (canCloseStage) {
-            ((Stage) node.getScene().getWindow()).close();
+            DockSystem.onClosingWindow(this);
         }
     }
 }
