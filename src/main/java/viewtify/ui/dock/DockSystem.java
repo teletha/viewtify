@@ -197,6 +197,7 @@ public final class DockSystem {
         board.setContent(content);
 
         dropStage.open();
+        bringToFront();
     }
 
     /**
@@ -385,8 +386,6 @@ public final class DockSystem {
          * Open the drop stages.
          */
         private void open() {
-            Stage owner = (Stage) root().node.getScene().getWindow();
-
             for (Screen screen : Screen.getScreens()) {
                 // Initialize a drop stage for the given screen.
                 Stage stage = new Stage();
@@ -406,16 +405,6 @@ public final class DockSystem {
 
                 // create scene and apply event drag&drop handlers
                 Scene scene = new Scene(pane, bounds.getWidth(), bounds.getHeight(), Color.TRANSPARENT);
-                scene.setOnDragEntered(e -> {
-                    owner.requestFocus();
-                    DockSystem.bringToFront();
-                    e.consume();
-                });
-                scene.setOnDragExited(e -> {
-                    owner.requestFocus();
-                    DockSystem.bringToFront();
-                    e.consume();
-                });
                 scene.setOnDragOver(e -> {
                     if (e.getDragboard().hasContent(DnD)) {
                         e.acceptTransferModes(TransferMode.MOVE);
