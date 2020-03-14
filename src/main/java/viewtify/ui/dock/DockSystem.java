@@ -101,6 +101,7 @@ public final class DockSystem {
             Tab tab = new Tab(view.id());
             tab.setClosable(true);
             tab.setContent(view.ui());
+            tab.setId(view.id());
 
             root().add(tab, CENTER);
         });
