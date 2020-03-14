@@ -11,9 +11,13 @@ package viewtify.ui.dock;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Tab;
+import javafx.stage.Stage;
 
 class SplitArea extends ViewArea<SplitPane> {
+
+    /** Close the stage containing this area when removing the child. */
+    private boolean canCloseStage;
 
     /**
      * Create a new view area.
@@ -22,8 +26,49 @@ class SplitArea extends ViewArea<SplitPane> {
         super(new SplitPane());
 
         node.setOrientation(Orientation.VERTICAL);
-        node.getItems().add(new Pane());
-        node.getItems().add(new Pane());
+    }
+
+    /**
+     * Get the canCloseStage property of this {@link RootArea}.
+     * 
+     * @return The canCloseStage property.
+     */
+    final boolean isCanCloseStage() {
+        return canCloseStage;
+    }
+
+    /**
+     * Set the canCloseStage property of this {@link RootArea}.
+     * 
+     * @param canCloseStage The canCloseStage value to set.
+     */
+    final void setCanCloseStage(boolean canCloseStage) {
+        this.canCloseStage = canCloseStage;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void add(Tab view, int position) {
+        if (firstChild == null) {
+            setChild(0, new TabArea());
+        }
+        firstChild.add(view, position);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void remove(ViewArea area) {
+        if (parent == null) {
+            if (canCloseStage) {
+                ((Stage) node.getScene().getWindow()).close();
+            }
+        } else {
+            super.remove(area);
+        }
     }
 
     /**
@@ -33,7 +78,11 @@ class SplitArea extends ViewArea<SplitPane> {
     protected void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
-        node.getItems().set(index, child.node);
+        if (index < node.getItems().size()) {
+            node.getItems().set(index, child.node);
+        } else {
+            node.getItems().add(child.node);
+        }
     }
 
     /**
