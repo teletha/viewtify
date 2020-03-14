@@ -9,10 +9,6 @@
  */
 package viewtify.ui.dock;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javafx.geometry.Orientation;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
@@ -25,8 +21,6 @@ import kiss.I;
  */
 class TabArea extends ViewArea<TabPane> {
 
-    public List<String> ids = new ArrayList();
-
     /**
      * Create a new tab area.
      */
@@ -35,7 +29,7 @@ class TabArea extends ViewArea<TabPane> {
 
         node.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
         node.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
-        // node.addEventHandler(DragEvent.DRAG_DONE, e -> DockSystem.onDragDone(e, this));
+        node.addEventHandler(DragEvent.DRAG_DONE, e -> DockSystem.onDragDone(e, this));
         node.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
         node.addEventHandler(MouseEvent.DRAG_DETECTED, e -> {
             I.signal(node.lookupAll(".tab"))
@@ -53,14 +47,27 @@ class TabArea extends ViewArea<TabPane> {
      * @param view The view to remove
      */
     void remove(Tab view) {
-        ids.remove(view.getId());
+        remove(view, true);
+    }
+
+    /**
+     * Remove a view from this area. If checkEmpty is true it checks if this area is empty and
+     * remove this area.
+     *
+     * @param view The view to remove.
+     * @param checkEmpty Should this area be removed if it is empty?
+     */
+    void remove(Tab view, boolean checkEmpty) {
         node.getTabs().remove(view);
+        if (checkEmpty) {
+            handleEmpty();
+        }
     }
 
     /**
      * Check if this area is empty, so remove it.
      */
-    void removeWhenEmpty() {
+    void handleEmpty() {
         if (node.getTabs().isEmpty()) {
             parent.remove(this);
         }
@@ -70,41 +77,12 @@ class TabArea extends ViewArea<TabPane> {
      * {@inheritDoc}
      */
     @Override
-    void add(Tab tab, int position) {
+    protected void add(Tab tab, int position) {
         if (position != DockSystem.CENTER) {
             super.add(tab, position);
         } else {
             node.getTabs().add(tab);
-            tab.setOnCloseRequest(e -> {
-                remove(tab);
-                removeWhenEmpty();
-            });
-
-            if (!ids.contains(tab.getId())) {
-                ids.add(tab.getId());
-            }
+            tab.setOnCloseRequest(e -> remove(tab));
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    void remove(ViewArea area) {
-        // If this exception will be thrown, it is bug of this program. So we must rethrow the
-        // wrapped error in here.
-        throw new Error();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    void split(ViewArea first, ViewArea second, Orientation orientation) {
-        SplitArea area = new SplitArea();
-        parent.replace(this, area);
-        area.setOrientation(orientation);
-        area.setChild(0, first);
-        area.setChild(1, second);
     }
 }

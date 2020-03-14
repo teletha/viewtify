@@ -15,9 +15,6 @@ import javafx.scene.layout.Pane;
 
 class SplitArea extends ViewArea<SplitPane> {
 
-    /** The area orientation. */
-    private Orientation orientation;
-
     /**
      * Create a new view area.
      */
@@ -27,38 +24,6 @@ class SplitArea extends ViewArea<SplitPane> {
         node.setOrientation(Orientation.VERTICAL);
         node.getItems().add(new Pane());
         node.getItems().add(new Pane());
-    }
-
-    /**
-     * Get the orientation property of this {@link SplitArea}.
-     * 
-     * @return The orientation property.
-     */
-    @Override
-    final Orientation getOrientation() {
-        return orientation;
-    }
-
-    /**
-     * Set the orientation property of this {@link SplitArea}.
-     * 
-     * @param orientation The orientation value to set.
-     */
-    final void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
-        this.node.setOrientation(orientation);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    void remove(ViewArea area) {
-        if (area == firstChild) {
-            parent.replace(this, secondChild);
-        } else if (area == secondChild) {
-            parent.replace(this, firstChild);
-        }
     }
 
     /**
@@ -75,11 +40,10 @@ class SplitArea extends ViewArea<SplitPane> {
      * {@inheritDoc}
      */
     @Override
-    void split(ViewArea first, ViewArea second, Orientation orientation) {
-        SplitArea area = new SplitArea();
-        parent.replace(this, area);
-        area.setOrientation(orientation);
-        area.setChild(0, first);
-        area.setChild(1, second);
+    protected void setOrientation(Orientation orientation) {
+        super.setOrientation(orientation);
+
+        node.setOrientation(orientation);
     }
+
 }
