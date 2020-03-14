@@ -54,7 +54,7 @@ final class RootArea extends ViewArea<HBox> {
     @Override
     protected void add(Tab view, int position) {
         if (children.isEmpty()) {
-            setChild(0, new SplitArea());
+            setChild(0, new TabArea());
         }
         children.get(0).add(view, position);
     }
