@@ -9,6 +9,9 @@
  */
 package viewtify.ui.dock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
@@ -20,6 +23,8 @@ import kiss.I;
  * Describes a logical view area which displays the views within a tab pane.
  */
 class TabArea extends ViewArea<TabPane> {
+
+    public List<String> ids = new ArrayList();
 
     /**
      * Create a new tab area.
@@ -44,21 +49,22 @@ class TabArea extends ViewArea<TabPane> {
     /**
      * Remove a view from this area. If this area is empty it will also be removed.
      *
-     * @param view The view to remove
+     * @param tab The view to remove
      */
-    void remove(Tab view) {
-        remove(view, true);
+    void remove(Tab tab) {
+        remove(tab, true);
     }
 
     /**
      * Remove a view from this area. If checkEmpty is true it checks if this area is empty and
      * remove this area.
      *
-     * @param view The view to remove.
+     * @param tab The view to remove.
      * @param checkEmpty Should this area be removed if it is empty?
      */
-    void remove(Tab view, boolean checkEmpty) {
-        node.getTabs().remove(view);
+    void remove(Tab tab, boolean checkEmpty) {
+        ids.remove(tab.getId());
+        node.getTabs().remove(tab);
         if (checkEmpty) {
             handleEmpty();
         }
@@ -77,10 +83,20 @@ class TabArea extends ViewArea<TabPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(Tab tab, int position) {
+    ViewArea findBy(String id) {
+        return ids.contains(id) ? this : null;
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Override
+    void add(Tab tab, int position) {
         if (position != DockSystem.CENTER) {
-            super.add(tab, position);
+            parent.add(tab, position);
         } else {
+            if (!ids.contains(tab.getId())) ids.add(tab.getId());
             node.getTabs().add(tab);
             tab.setOnCloseRequest(e -> remove(tab));
         }

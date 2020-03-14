@@ -98,11 +98,19 @@ public final class DockSystem {
      */
     public static void register(View view) {
         Viewtify.inUI(() -> {
-            Tab tab = new Tab(view.id());
+            String id = view.id();
+
+            Tab tab = new Tab(id);
             tab.setClosable(true);
             tab.setContent(view.ui());
+            tab.setId(id);
 
-            root().add(tab, CENTER);
+            ViewArea area = root().findBy(id);
+            if (area == null) {
+                root().add(tab, CENTER);
+            } else {
+                area.add(tab, CENTER);
+            }
         });
     }
 
@@ -128,7 +136,6 @@ public final class DockSystem {
             layout = I.make(DockLayout.class);
 
             if (layout.windows.isEmpty()) {
-                System.out.println("EMPT");
                 root = new RootArea();
                 layout.windows.add(root);
             } else {
@@ -228,7 +235,7 @@ public final class DockSystem {
             Bounds bounds = ui.getBoundsInLocal();
 
             RootArea area = new RootArea();
-            area.setCanCloseStage(true);
+            area.canCloseStage = true;
             Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight());
             scene.getStylesheets().addAll(ui.getScene().getStylesheets());
 

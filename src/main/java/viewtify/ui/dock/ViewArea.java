@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 
@@ -29,9 +28,6 @@ abstract class ViewArea<P extends Parent> {
     protected ViewArea parent;
 
     List<ViewArea> children = new ArrayList();
-
-    /** The area orientation. */
-    private Orientation orientation;
 
     /**
      * Specify root node.
@@ -67,15 +63,9 @@ abstract class ViewArea<P extends Parent> {
      * @param children The children value to set.
      */
     final void setChildren(List<ViewArea> children) {
-        this.children = children;
-    }
-
-    private ViewArea first() {
-        return children.get(0);
-    }
-
-    private ViewArea last() {
-        return children.get(children.size() - 1);
+        for (int i = 0; i < children.size(); i++) {
+            setChild(i, children.get(i));
+        }
     }
 
     /**
@@ -88,53 +78,7 @@ abstract class ViewArea<P extends Parent> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    protected void add(Tab view, int position) {
-        switch (position) {
-        case DockSystem.CENTER:
-            children.get(0).add(view, position);
-            break;
-
-        case DockSystem.TOP:
-            if (orientation == Orientation.VERTICAL) {
-                first().add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(target, this, Orientation.VERTICAL);
-            }
-            break;
-
-        case DockSystem.BOTTOM:
-            if (orientation == Orientation.VERTICAL) {
-                last().add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(this, target, Orientation.VERTICAL);
-            }
-            break;
-
-        case DockSystem.LEFT:
-            if (orientation == Orientation.HORIZONTAL) {
-                last().add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(target, this, Orientation.HORIZONTAL);
-            }
-            break;
-
-        case DockSystem.RIGHT:
-            if (orientation == Orientation.HORIZONTAL) {
-                last().add(view, position);
-            } else {
-                ViewArea target = new TabArea();
-                target.add(view, DockSystem.CENTER);
-                split(this, target, Orientation.HORIZONTAL);
-            }
-            break;
-        }
-    }
+    abstract void add(Tab view, int position);
 
     /**
      * Remove the given area as child from this area.
@@ -152,36 +96,12 @@ abstract class ViewArea<P extends Parent> {
     }
 
     /**
-     * Split this area by {@param orientation}.
-     * <p/>
-     * Either the parameter {@param first} or {@param second} must be this area. Otherwise a
-     * {@link IllegalArgumentException} is thrown.
-     *
-     * @param first The first element.
-     * @param second The second element.
-     * @param orientation The split orientation.
-     * @throws IllegalArgumentException In case of both params {@param first} and {@param second}
-     *             are this or none of them.
-     */
-    private void split(ViewArea first, ViewArea second, Orientation orientation) {
-        if (!(first == this ^ second == this)) {
-            throw new IllegalArgumentException("Either first or second area must be this.");
-        }
-
-        ViewArea area = new SplitArea();
-        parent.replace(this, area);
-        area.setOrientation(orientation);
-        area.setChild(0, first);
-        area.setChild(1, second);
-    }
-
-    /**
      * Replace the {@param oldArea} with the {@param newArea}.
      *
      * @param oldArea The old area.
      * @param newArea The new area.
      */
-    private void replace(ViewArea oldArea, ViewArea newArea) {
+    void replace(ViewArea oldArea, ViewArea newArea) {
         for (int i = 0; i < children.size(); i++) {
             if (children.get(i) == oldArea) {
                 setChild(i, newArea);
@@ -190,21 +110,14 @@ abstract class ViewArea<P extends Parent> {
         }
     }
 
-    /**
-     * Get the pane orientation.
-     * 
-     * @return
-     */
-    protected final Orientation getOrientation() {
-        return orientation;
-    }
+    ViewArea findBy(String id) {
+        for (ViewArea child : children) {
+            ViewArea view = child.findBy(id);
 
-    /**
-     * Set the orientation of the split area.
-     *
-     * @param orientation The orientation of splitting.
-     */
-    protected void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
+            if (view != null) {
+                return view;
+            }
+        }
+        return null;
     }
 }
