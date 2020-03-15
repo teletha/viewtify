@@ -291,7 +291,7 @@ public final class Viewtify {
             views.add(application);
 
             Scene scene = new Scene((Parent) application.ui());
-            applyStyles(scene);
+            applyStyles(scene, stage);
 
             // observe stylesheets
             observeStylesheet(scene.getStylesheets());
@@ -313,7 +313,7 @@ public final class Viewtify {
      * 
      * @param scene
      */
-    private void applyStyles(Scene scene) {
+    private void applyStyles(Scene scene, Stage stage) {
         // apply styles from stylesheet
         scene.getStylesheets().add(theme.url);
         scene.getStylesheets().add(Theme.locateCSS("viewtify/ui.css"));
@@ -321,7 +321,7 @@ public final class Viewtify {
 
         // apply icon
         if (icon.length() != 0) {
-            ((Stage) scene.getWindow()).getIcons().add(loadImage(icon));
+            stage.getIcons().add(loadImage(icon));
         }
 
     }
@@ -559,7 +559,7 @@ public final class Viewtify {
      */
     public static void applyApplicationStyle(Scene scene) {
         if (scene != null && latest != null) {
-            latest.applyStyles(scene);
+            latest.applyStyles(scene, (Stage) scene.getWindow());
         }
     }
 

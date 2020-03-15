@@ -58,7 +58,7 @@ public final class DockSystem {
     public static final UserInterfaceProvider<Parent> UI = () -> root().node;
 
     /** Layout Store */
-    private static DockLayout layout;
+    static DockLayout layout;
 
     /**
      * Place the view on the top side.
@@ -180,7 +180,7 @@ public final class DockSystem {
      * 
      */
     @Managed(Singleton.class)
-    private static class DockLayout implements Storable<DockLayout> {
+    static class DockLayout implements Storable<DockLayout> {
         public List<RootArea> windows = new ArrayList();
 
         private DockLayout() {
