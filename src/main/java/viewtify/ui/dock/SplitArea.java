@@ -9,9 +9,14 @@
  */
 package viewtify.ui.dock;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
+
+import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.Pane;
 
 class SplitArea extends ViewArea<SplitPane> {
 
@@ -22,8 +27,6 @@ class SplitArea extends ViewArea<SplitPane> {
         super(new SplitPane());
 
         node.setOrientation(Orientation.VERTICAL);
-        node.getItems().add(new Pane());
-        node.getItems().add(new Pane());
     }
 
     /**
@@ -33,7 +36,12 @@ class SplitArea extends ViewArea<SplitPane> {
     protected void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
-        node.getItems().set(index, child.node);
+        ObservableList<Node> items = node.getItems();
+        if (index < items.size()) {
+            items.set(index, child.node);
+        } else {
+            items.add(child.node);
+        }
     }
 
     /**
@@ -47,7 +55,31 @@ class SplitArea extends ViewArea<SplitPane> {
     /**
      * {@inheritDoc}
      */
-    protected void setOrientation(Orientation orientation) {
+    void setOrientation(Orientation orientation) {
         node.setOrientation(orientation);
+    }
+
+    /**
+     * Get the dividers property of this {@link SplitArea}.
+     * 
+     * @return The dividers property.
+     */
+    @SuppressWarnings("unused")
+    private final List<Double> getDividers() {
+        return DoubleStream.of(node.getDividerPositions()).boxed().collect(Collectors.toList());
+    }
+
+    /**
+     * Set the dividers property of this {@link SplitArea}.
+     * 
+     * @param dividers The dividers value to set.
+     */
+    @SuppressWarnings("unused")
+    private final void setDividers(List<Double> dividers) {
+        double[] values = new double[dividers.size()];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = dividers.get(i);
+        }
+        node.setDividerPositions(values);
     }
 }
