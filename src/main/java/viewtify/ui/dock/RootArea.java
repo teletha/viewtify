@@ -18,6 +18,9 @@ import javafx.scene.layout.Priority;
  */
 final class RootArea extends ViewArea<HBox> {
 
+    /** The dock window id. */
+    public String id = "DockWindow-" + (int) (Math.random() * 100000000);
+
     /** Close the stage containing this area when removing the child. */
     private boolean canCloseStage;
 

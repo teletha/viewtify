@@ -16,7 +16,6 @@ import java.io.InputStream;
 import java.lang.StackWalker.Option;
 import java.lang.management.ManagementFactory;
 import java.net.MalformedURLException;
-import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,6 +144,9 @@ public final class Viewtify {
     private String icon = "";
 
     /** The configurable setting. */
+    private String applicationStyle = "";
+
+    /** The configurable setting. */
     private double width;
 
     /** The configurable setting. */
@@ -271,45 +273,57 @@ public final class Viewtify {
         I.load(application.getClass());
 
         // build application stylesheet
-        Path applicationStyles = CSSProcessor.pretty().formatTo(".preferences/application.css");
+        try {
+            applicationStyle = CSSProcessor.pretty().formatTo(".preferences/application.css").toUri().toURL().toExternalForm();
+        } catch (MalformedURLException e) {
+            throw I.quiet(e);
+        }
 
         // launch JavaFX UI
         Platform.startup(() -> {
-            try {
-                Stage stage = new Stage(stageStyle);
-                stage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
-                stage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
+            Stage stage = new Stage(stageStyle);
+            stage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
+            stage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
 
-                // trace window size and position
-                I.make(WindowLocator.class).restore().locate(application.getClass(), stage);
+            // trace window size and position
+            trackLocation(application.getClass().getName(), stage);
 
-                views.add(application);
+            views.add(application);
 
-                if (icon.length() != 0) {
-                    stage.getIcons().add(loadImage(icon));
+            Scene scene = new Scene((Parent) application.ui());
+            applyStyles(scene);
+
+            // observe stylesheets
+            observeStylesheet(scene.getStylesheets());
+            observeStylesheet(scene.getRoot().getStylesheets());
+
+            stage.showingProperty().addListener((observable, oldValue, newValue) -> {
+                if (oldValue == true && newValue == false) {
+                    deactivate();
                 }
+            });
 
-                Scene scene = new Scene((Parent) application.ui());
-                scene.getStylesheets().add(theme.url);
-                scene.getStylesheets().add(Theme.locateCSS("viewtify/ui.css"));
-                scene.getStylesheets().add(applicationStyles.toUri().toURL().toExternalForm());
-
-                // observe stylesheets
-                observeStylesheet(scene.getStylesheets());
-                observeStylesheet(scene.getRoot().getStylesheets());
-
-                stage.showingProperty().addListener((observable, oldValue, newValue) -> {
-                    if (oldValue == true && newValue == false) {
-                        deactivate();
-                    }
-                });
-
-                stage.setScene(scene);
-                stage.show();
-            } catch (MalformedURLException e) {
-                throw I.quiet(e);
-            }
+            stage.setScene(scene);
+            stage.show();
         });
+    }
+
+    /**
+     * Apply various styles to {@link Scene}.
+     * 
+     * @param scene
+     */
+    private void applyStyles(Scene scene) {
+        // apply styles from stylesheet
+        scene.getStylesheets().add(theme.url);
+        scene.getStylesheets().add(Theme.locateCSS("viewtify/ui.css"));
+        scene.getStylesheets().add(applicationStyle);
+
+        // apply icon
+        if (icon.length() != 0) {
+            ((Stage) scene.getWindow()).getIcons().add(loadImage(icon));
+        }
+
     }
 
     /**
@@ -536,6 +550,17 @@ public final class Viewtify {
         inUI(() -> {
             show.accept(Notifications.create().darkStyle().title(title).text(message).owner(Screen.getPrimary()));
         });
+    }
+
+    /**
+     * Apply the application styles (design, icon etc) to the specified {@link Scene}.
+     * 
+     * @param scene
+     */
+    public static void applyApplicationStyle(Scene scene) {
+        if (scene != null && latest != null) {
+            latest.applyStyles(scene);
+        }
     }
 
     /**
@@ -1060,6 +1085,32 @@ public final class Viewtify {
     }
 
     /**
+     * Apply window size and location setting and track the upcoming modification.
+     * 
+     * @param id An identical name of the stage.
+     * @param stage A target to apply.
+     */
+    public static void trackLocation(String id, Stage stage) {
+        if (id != null && stage != null) {
+            I.make(WindowLocator.class).locate(id, stage);
+        }
+    }
+
+    /**
+     * Stop window size and location tracking.
+     * 
+     * @param id
+     */
+    public static void untrackLocation(String id) {
+        if (id != null) {
+            WindowLocator locator = I.make(WindowLocator.class);
+            if (locator.remove(id) != null) {
+                locator.store();
+            }
+        }
+    }
+
+    /**
      * Thin {@link Property} wrapper for {@link Variable}.
      */
     private static class PropertyVariable<V> implements Property<V> {
@@ -1208,11 +1259,11 @@ public final class Viewtify {
     }
 
     /**
-     * @version 2017/11/25 23:59:20
+     * 
      */
     @SuppressWarnings("serial")
     @Managed(value = Singleton.class)
-    private static class WindowLocator extends HashMap<Class, Location> implements Storable<WindowLocator> {
+    private static class WindowLocator extends HashMap<String, Location> implements Storable<WindowLocator> {
 
         /** Magic Number for window state. */
         private static final int Normal = 0;
@@ -1224,14 +1275,19 @@ public final class Viewtify {
         private static final int Min = 2;
 
         /**
-         * <p>
+         * Hide
+         */
+        private WindowLocator() {
+            restore();
+        }
+
+        /**
          * Apply window size and location setting.
-         * </p>
          * 
          * @param stage A target to apply.
          */
-        void locate(Class view, Stage stage) {
-            Location location = get(view);
+        void locate(String id, Stage stage) {
+            Location location = get(id);
 
             if (location != null) {
                 // restore window location
@@ -1260,7 +1316,7 @@ public final class Viewtify {
                     .observe(stage.xProperty(), stage.yProperty(), stage.widthProperty(), stage.heightProperty());
 
             windowState.merge(windowLocation.mapTo(true)).debounce(500, MILLISECONDS).to(() -> {
-                Location store = computeIfAbsent(view, key -> new Location());
+                Location store = computeIfAbsent(id, key -> new Location());
 
                 if (stage.isMaximized()) {
                     store.state = Max;
@@ -1279,7 +1335,7 @@ public final class Viewtify {
     }
 
     /**
-     * @version 2017/11/25 23:31:06
+     * 
      */
     static class Location implements Decoder<Location>, Encoder<Location> {
 

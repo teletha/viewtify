@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -35,11 +37,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 import kiss.I;
 import kiss.Managed;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
@@ -105,7 +109,7 @@ public final class DockSystem {
             tab.setContent(view.ui());
             tab.setId(id);
 
-            root().findAreaBy(id).or(root()).add(tab, CENTER);
+            layout.findAreaBy(id).or(root()).add(tab, CENTER);
         });
     }
 
@@ -131,14 +135,45 @@ public final class DockSystem {
             layout = I.make(DockLayout.class);
 
             if (layout.windows.isEmpty()) {
-                System.out.println("EMPT");
                 root = new RootArea();
                 layout.windows.add(root);
             } else {
-                root = layout.windows.get(0);
+                for (int i = 0; i < layout.windows.size(); i++) {
+                    RootArea area = layout.windows.get(i);
+
+                    if (i == 0) {
+                        root = area;
+                    } else {
+                        openNewWindow(area, new BoundingBox(0, 0, 0, 0), null);
+                    }
+                }
             }
         }
         return root;
+    }
+
+    /**
+     * Open new window with the specified {@link RootArea}.
+     * 
+     * @param area
+     * @param bounds
+     * @param shown
+     */
+    private static void openNewWindow(RootArea area, Bounds bounds, EventHandler<WindowEvent> shown) {
+        Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight());
+        Viewtify.applyApplicationStyle(scene);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+        stage.setOnShown(shown);
+        stage.setOnCloseRequest(e -> {
+            layout.windows.remove(area);
+            Viewtify.untrackLocation(area.id);
+        });
+        Viewtify.trackLocation(area.id, stage);
+        stage.show();
     }
 
     /**
@@ -150,6 +185,22 @@ public final class DockSystem {
 
         private DockLayout() {
             restore();
+        }
+
+        private Variable<ViewArea> findAreaBy(String id) {
+            for (RootArea root : windows) {
+                Variable<ViewArea> area = root.findAreaBy(id);
+
+                if (area.isPresent()) {
+                    return area;
+                }
+            }
+            return Variable.empty();
+        }
+
+        private void build() {
+            for (RootArea area : windows) {
+            }
         }
     }
 
@@ -236,20 +287,15 @@ public final class DockSystem {
 
             RootArea area = new RootArea();
             area.setCanCloseStage(true);
-            Scene scene = new Scene(area.node, contentsBound.getWidth(), contentsBound.getHeight() + titleBarHeight);
-            scene.getStylesheets().addAll(ui.getScene().getStylesheets());
 
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setX(event.getScreenX());
-            stage.setY(event.getScreenY() - titleBarHeight);
-            stage.setOnShown(e -> {
+            Bounds bounds = new BoundingBox(event.getScreenX(), event.getScreenY() - titleBarHeight, contentsBound
+                    .getWidth(), contentsBound.getHeight() + titleBarHeight);
+
+            openNewWindow(area, bounds, e -> {
                 dragedTabArea.remove(dragedTab, false);
                 area.add(dragedTab, CENTER);
                 layout.windows.add(area);
             });
-            stage.setOnCloseRequest(e -> layout.windows.remove(area));
-            stage.show();
 
             event.setDropCompleted(true);
             event.consume();
