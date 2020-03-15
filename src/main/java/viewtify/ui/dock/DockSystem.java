@@ -238,7 +238,7 @@ public final class DockSystem {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setX(event.getScreenX());
-            stage.setY(event.getScreenY());
+            stage.setY(event.getScreenY() - titleBarHeight);
             stage.setOnShown(e -> layout.windows.add(area));
             stage.setOnCloseRequest(e -> layout.windows.remove(area));
 
