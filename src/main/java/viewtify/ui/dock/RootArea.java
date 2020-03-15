@@ -21,8 +21,8 @@ final class RootArea extends ViewArea<HBox> {
     /** The dock window id. */
     public String id = "DockWindow-" + (int) (Math.random() * 100000000);
 
-    /** Close the stage containing this area when removing the child. */
-    private boolean canCloseStage;
+    /** Window Kind */
+    public boolean sub;
 
     /**
      * Create a new root area.
@@ -33,24 +33,6 @@ final class RootArea extends ViewArea<HBox> {
      */
     RootArea() {
         super(new HBox());
-    }
-
-    /**
-     * Get the canCloseStage property of this {@link RootArea}.
-     * 
-     * @return The canCloseStage property.
-     */
-    final boolean isCanCloseStage() {
-        return canCloseStage;
-    }
-
-    /**
-     * Set the canCloseStage property of this {@link RootArea}.
-     * 
-     * @param canCloseStage The canCloseStage value to set.
-     */
-    final void setCanCloseStage(boolean canCloseStage) {
-        this.canCloseStage = canCloseStage;
     }
 
     /**
@@ -84,7 +66,7 @@ final class RootArea extends ViewArea<HBox> {
      */
     @Override
     protected void remove(ViewArea area) {
-        if (canCloseStage) {
+        if (sub) {
             DockSystem.requestCloseWindow(this);
         }
     }

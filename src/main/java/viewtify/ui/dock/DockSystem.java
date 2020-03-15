@@ -286,7 +286,7 @@ public final class DockSystem {
             double titleBarHeight = ui.getScene().getWindow().getHeight() - ui.getScene().getHeight() - 8;
 
             RootArea area = new RootArea();
-            area.setCanCloseStage(true);
+            area.sub = true;
 
             Bounds bounds = new BoundingBox(event.getScreenX(), event.getScreenY() - titleBarHeight, contentsBound
                     .getWidth(), contentsBound.getHeight() + titleBarHeight);
