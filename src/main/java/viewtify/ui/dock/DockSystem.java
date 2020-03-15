@@ -393,6 +393,7 @@ public final class DockSystem {
 
             layout.windows.remove(area);
             layout.store();
+            Viewtify.untrackLocation(area.id);
         });
     }
 
