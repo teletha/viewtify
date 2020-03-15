@@ -40,10 +40,14 @@ class SplitArea extends ViewArea<SplitPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void setOrientation(Orientation orientation) {
-        super.setOrientation(orientation);
-
-        node.setOrientation(orientation);
+    protected Orientation getOrientation() {
+        return node.getOrientation();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    protected void setOrientation(Orientation orientation) {
+        node.setOrientation(orientation);
+    }
 }

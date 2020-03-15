@@ -33,9 +33,6 @@ abstract class ViewArea<P extends Parent> {
     /** The related area. */
     List<ViewArea> children = new ArrayList();
 
-    /** The area orientation. */
-    private Orientation orientation;
-
     /**
      * Specify root node.
      * 
@@ -92,7 +89,7 @@ abstract class ViewArea<P extends Parent> {
             break;
 
         case DockSystem.TOP:
-            if (orientation == Orientation.VERTICAL) {
+            if (getOrientation() == Orientation.VERTICAL) {
                 children.get(0).add(view, position);
             } else {
                 ViewArea target = new TabArea();
@@ -102,7 +99,7 @@ abstract class ViewArea<P extends Parent> {
             break;
 
         case DockSystem.BOTTOM:
-            if (orientation == Orientation.VERTICAL) {
+            if (getOrientation() == Orientation.VERTICAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {
                 ViewArea target = new TabArea();
@@ -112,7 +109,7 @@ abstract class ViewArea<P extends Parent> {
             break;
 
         case DockSystem.LEFT:
-            if (orientation == Orientation.HORIZONTAL) {
+            if (getOrientation() == Orientation.HORIZONTAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {
                 ViewArea target = new TabArea();
@@ -122,7 +119,7 @@ abstract class ViewArea<P extends Parent> {
             break;
 
         case DockSystem.RIGHT:
-            if (orientation == Orientation.HORIZONTAL) {
+            if (getOrientation() == Orientation.HORIZONTAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {
                 ViewArea target = new TabArea();
@@ -160,7 +157,7 @@ abstract class ViewArea<P extends Parent> {
      *             are this or none of them.
      */
     private void split(ViewArea first, ViewArea second, Orientation orientation) {
-        ViewArea area = new SplitArea();
+        SplitArea area = new SplitArea();
         area.parent = this;
         parent.replace(this, area);
         area.setOrientation(orientation);
@@ -189,17 +186,8 @@ abstract class ViewArea<P extends Parent> {
      * 
      * @return
      */
-    protected final Orientation getOrientation() {
-        return orientation;
-    }
-
-    /**
-     * Set the orientation of the split area.
-     *
-     * @param orientation The orientation of splitting.
-     */
-    protected void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
+    protected Orientation getOrientation() {
+        return null;
     }
 
     /**
