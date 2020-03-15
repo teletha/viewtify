@@ -99,12 +99,13 @@ public final class DockSystem {
      */
     public static void register(View view) {
         Viewtify.inUI(() -> {
-            Tab tab = new Tab(view.id());
+            String id = view.id();
+            Tab tab = new Tab(id);
             tab.setClosable(true);
             tab.setContent(view.ui());
-            tab.setId(view.id());
+            tab.setId(id);
 
-            root().add(tab, CENTER);
+            root().findAreaBy(id).or(root()).add(tab, CENTER);
         });
     }
 

@@ -18,6 +18,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
 import kiss.I;
+import kiss.Variable;
 
 /**
  * Describes a logical view area which displays the views within a tab pane.
@@ -94,5 +95,13 @@ class TabArea extends ViewArea<TabPane> {
                 ids.add(tab.getId());
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Variable<ViewArea> findAreaBy(String id) {
+        return Variable.of(ids.contains(id) ? this : null);
     }
 }

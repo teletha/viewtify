@@ -17,6 +17,8 @@ import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 
+import kiss.Variable;
+
 /**
  * A ViewArea is a node within the area tree. It has two children which are self view areas.
  */
@@ -198,5 +200,22 @@ abstract class ViewArea<P extends Parent> {
      */
     protected void setOrientation(Orientation orientation) {
         this.orientation = orientation;
+    }
+
+    /**
+     * Find {@link ViewArea} from descendent nodes.
+     * 
+     * @param id
+     * @return
+     */
+    protected Variable<ViewArea> findAreaBy(String id) {
+        for (ViewArea child : children) {
+            Variable<ViewArea> area = child.findAreaBy(id);
+
+            if (area.isPresent()) {
+                return area;
+            }
+        }
+        return Variable.empty();
     }
 }
