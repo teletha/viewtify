@@ -82,7 +82,7 @@ final class RootArea extends ViewArea<HBox> {
     @Override
     protected void remove(ViewArea area) {
         if (canCloseStage) {
-            DockSystem.onClosingWindow(this);
+            DockSystem.requestCloseWindow(this);
         }
     }
 }

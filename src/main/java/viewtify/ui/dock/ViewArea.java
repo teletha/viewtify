@@ -140,7 +140,6 @@ abstract class ViewArea<P extends Parent> {
      */
     protected void remove(ViewArea area) {
         children.remove(area);
-
         if (children.size() == 1) {
             parent.replace(this, children.remove(0));
         }
@@ -176,6 +175,7 @@ abstract class ViewArea<P extends Parent> {
     private void replace(ViewArea oldArea, ViewArea newArea) {
         for (int i = 0; i < children.size(); i++) {
             if (children.get(i) == oldArea) {
+                oldArea.parent = null;
                 setChild(i, newArea);
                 return;
             }

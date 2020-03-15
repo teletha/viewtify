@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -214,6 +215,8 @@ public final class DockSystem {
                 dropStage.close();
                 dragedTab = null;
                 dragedTabArea = null;
+
+                layout.store();
             }
         }
     }
@@ -239,11 +242,12 @@ public final class DockSystem {
             stage.setScene(scene);
             stage.setX(event.getScreenX());
             stage.setY(event.getScreenY() - titleBarHeight);
-            stage.setOnShown(e -> layout.windows.add(area));
+            stage.setOnShown(e -> {
+                dragedTabArea.remove(dragedTab, false);
+                area.add(dragedTab, CENTER);
+                layout.windows.add(area);
+            });
             stage.setOnCloseRequest(e -> layout.windows.remove(area));
-
-            dragedTabArea.remove(dragedTab, false);
-            area.add(dragedTab, CENTER);
             stage.show();
 
             event.setDropCompleted(true);
@@ -267,8 +271,6 @@ public final class DockSystem {
 
             event.setDropCompleted(true);
             event.consume();
-
-            layout.store();
         }
     }
 
@@ -333,13 +335,18 @@ public final class DockSystem {
     }
 
     /**
-     * Handle the closing window event.
+     * Request the closing window event.
      */
-    static void onClosingWindow(RootArea area) {
-        ((Stage) area.node.getScene().getWindow()).close();
+    static void requestCloseWindow(RootArea area) {
+        // Close the window only after all node related operations have been completed. If you close
+        // the window immediately at this time, the window will disappear before the tab removal
+        // process and a native error will occur. So here we have to ask only to close the window.
+        Platform.runLater(() -> {
+            ((Stage) area.node.getScene().getWindow()).close();
 
-        layout.windows.remove(area);
-        layout.store();
+            layout.windows.remove(area);
+            layout.store();
+        });
     }
 
     /**
