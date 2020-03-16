@@ -54,7 +54,7 @@ final class RootArea extends ViewArea<HBox> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(Tab tab, int position) {
+    protected void add(Tab tab, DockPosition position) {
         if (children.isEmpty()) {
             setChild(0, new TabArea());
         }

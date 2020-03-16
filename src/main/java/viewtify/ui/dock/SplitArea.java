@@ -46,7 +46,7 @@ class SplitArea extends ViewArea<SplitPane> {
             while (c.next()) {
                 for (Divider added : c.getAddedSubList()) {
                     Viewtify.observe(added.positionProperty()).debounce(1000, TimeUnit.MILLISECONDS).to(v -> {
-                        DockSystem.layout.store();
+                        DockSystem.saveLayout();
                         snapshot = node.getDividerPositions();
                     });
                 }

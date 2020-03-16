@@ -44,8 +44,6 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import kiss.I;
-import kiss.Managed;
-import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import viewtify.Viewtify;
@@ -62,32 +60,7 @@ public final class DockSystem {
     public static final UserInterfaceProvider<Parent> UI = () -> root().node;
 
     /** Layout Store */
-    static DockLayout layout;
-
-    /**
-     * Place the view on the top side.
-     */
-    static final int TOP = 0;
-
-    /**
-     * Place the view on the left side.
-     */
-    static final int LEFT = 1;
-
-    /**
-     * Place the view within the center.
-     */
-    static final int CENTER = 2;
-
-    /**
-     * Place the window on the right side.
-     */
-    static final int RIGHT = 3;
-
-    /**
-     * Place the window on the bottom.
-     */
-    static final int BOTTOM = 4;
+    private static DockLayout layout;
 
     /** The main root area. */
     private static RootArea root;
@@ -113,7 +86,7 @@ public final class DockSystem {
             tab.setContent(view.ui());
             tab.setId(id);
 
-            layout.findAreaBy(id).or(root()).add(tab, CENTER);
+            layout.findAreaBy(id).or(root()).add(tab, DockPosition.CENTER);
         });
     }
 
@@ -145,6 +118,15 @@ public final class DockSystem {
     }
 
     /**
+     * Save the current layout info.
+     */
+    static void saveLayout() {
+        if (layout != null) {
+            layout.store();
+        }
+    }
+
+    /**
      * Open new window with the specified {@link RootArea}.
      * 
      * @param area
@@ -171,8 +153,7 @@ public final class DockSystem {
     /**
      * 
      */
-    @Managed(Singleton.class)
-    static class DockLayout implements Storable<DockLayout> {
+    private static class DockLayout implements Storable<DockLayout> {
         public List<RootArea> windows = new ArrayList();
 
         private DockLayout() {
@@ -280,7 +261,7 @@ public final class DockSystem {
 
             openNewWindow(area, bounds, e -> {
                 dragedTabArea.remove(dragedTab, false);
-                area.add(dragedTab, CENTER);
+                area.add(dragedTab, DockPosition.CENTER);
                 layout.windows.add(area);
             });
 
@@ -414,19 +395,19 @@ public final class DockSystem {
      * @param event The drag event
      * @return The position value for the detected sub area.
      */
-    private static int detectPosition(DragEvent event, Control source) {
+    private static DockPosition detectPosition(DragEvent event, Control source) {
         double areaX = event.getX() / source.getWidth();
         double areaY = event.getY() / source.getHeight();
         if (0.25 <= areaX && areaX < 0.75 && 0.25 <= areaY && areaY < 0.75) {
-            return CENTER;
+            return DockPosition.CENTER;
         } else if (areaY < 0.25) {
-            return TOP;
+            return DockPosition.TOP;
         } else if (areaY >= 0.75) {
-            return BOTTOM;
+            return DockPosition.BOTTOM;
         } else if (areaX < 0.25) {
-            return LEFT;
+            return DockPosition.LEFT;
         } else {
-            return RIGHT;
+            return DockPosition.RIGHT;
         }
     }
 
