@@ -16,6 +16,7 @@ import java.util.Objects;
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.control.Tab;
+import javafx.stage.Stage;
 
 import kiss.Variable;
 
@@ -40,6 +41,15 @@ abstract class ViewArea<P extends Parent> {
      */
     protected ViewArea(P node) {
         this.node = Objects.requireNonNull(node);
+    }
+
+    /**
+     * Get the {@link Stage} for this area.
+     * 
+     * @return
+     */
+    protected final Stage getStage() {
+        return (Stage) node.getScene().getWindow();
     }
 
     protected void setChild(int index, ViewArea child) {

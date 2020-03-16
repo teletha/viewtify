@@ -10,8 +10,10 @@
 package viewtify.ui.dock;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -114,18 +116,6 @@ public final class DockSystem {
     }
 
     /**
-     * Bring all windows managed by this dock system to front.
-     */
-    private static void bringToFront() {
-        for (RootArea area : layout.windows) {
-            if (area.node.getScene().getWindow() instanceof Stage) {
-                ((Stage) area.node.getScene().getWindow()).toFront();
-            }
-        }
-        ((Stage) root.node.getScene().getWindow()).toFront();
-    }
-
-    /**
      * Create the main root area lazy.
      *
      * @return The main area.
@@ -197,11 +187,6 @@ public final class DockSystem {
             }
             return Variable.empty();
         }
-
-        private void build() {
-            for (RootArea area : windows) {
-            }
-        }
     }
 
     // ==================================================================================
@@ -250,7 +235,6 @@ public final class DockSystem {
         board.setContent(content);
 
         dropStage.open();
-        bringToFront();
     }
 
     /**
@@ -466,6 +450,14 @@ public final class DockSystem {
          * Open the drop stages.
          */
         private void open() {
+            Map<Stage, Boolean> temporaryOnTop = new HashMap();
+
+            for (RootArea root : layout.windows) {
+                Stage stage = root.getStage();
+                temporaryOnTop.put(stage, stage.isAlwaysOnTop());
+                stage.setAlwaysOnTop(true);
+            }
+
             for (Screen screen : Screen.getScreens()) {
                 // Initialize a drop stage for the given screen.
                 Stage stage = new Stage();
@@ -499,6 +491,11 @@ public final class DockSystem {
 
                 // register
                 stages.add(stage);
+            }
+
+            for (RootArea root : layout.windows) {
+                Stage stage = root.getStage();
+                stage.setAlwaysOnTop(temporaryOnTop.remove(stage));
             }
         }
 
