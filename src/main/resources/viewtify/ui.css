@@ -25,6 +25,11 @@
   	-fx-tab-max-width: 8.0em;
 }
 
+.tab-pane.stop-anime {
+		-fx-open-tab-animation: NONE;
+		-fx-close-tab-animation: NONE
+}
+
 .tab {
 	-fx-background-insets: 0, 0, 1 1 0 1;
     -fx-background-radius: 0;

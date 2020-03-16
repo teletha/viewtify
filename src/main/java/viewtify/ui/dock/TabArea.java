@@ -35,6 +35,7 @@ class TabArea extends ViewArea<TabPane> {
     TabArea() {
         super(new TabPane());
 
+        node.getStyleClass().add("stop-anime");
         node.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
         node.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
         node.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
@@ -54,8 +55,8 @@ class TabArea extends ViewArea<TabPane> {
         return I.signal(node.lookupAll(".tab")).take(tab -> tab.localToScene(tab.getBoundsInLocal()).contains(x, y)).first();
     }
 
-    boolean withinTabHeader(double x, double y) {
-        return node.lookup(".tab-header-area").contains(x, y);
+    boolean inTabHeader(DragEvent e) {
+        return node.lookup(".tab-header-area").contains(e.getX(), e.getY());
     }
 
     /**

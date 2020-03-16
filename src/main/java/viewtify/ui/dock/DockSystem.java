@@ -25,7 +25,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
@@ -234,7 +233,6 @@ public final class DockSystem {
                 area.handleEmpty();
                 dragedTab = null;
                 dragedTabArea = null;
-                clearDummy();
 
                 layout.store();
             }
@@ -280,9 +278,14 @@ public final class DockSystem {
      */
     static void onDragDropped(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
-            dragedTabArea.remove(dragedTab, false);
-            area.add(dragedTab, area.withinTabHeader(event.getX(), event.getY()) ? area.node.getTabs().indexOf(copy)
-                    : detectPosition(event, area.node));
+            revertTabOrder(area);
+
+            if (area.inTabHeader(event)) {
+                relocator.replace(area, event);
+            } else {
+                dragedTabArea.remove(dragedTab, false);
+                area.add(dragedTab, detectPosition(event, area.node));
+            }
 
             event.setDropCompleted(true);
             event.consume();
@@ -313,15 +316,14 @@ public final class DockSystem {
 
             // erase overlay effect
             area.node.setEffect(null);
+            relocator.revert(area);
         }
     }
 
-    private static final Tab copy = new Tab();
-
-    private static void clearDummy() {
-        TabPane previous = copy.getTabPane();
-        if (previous != null) {
-            previous.getTabs().remove(copy);
+    static void revertTabOrder(TabArea area) {
+        for (Node node : area.node.lookupAll(".tab")) {
+            node.setTranslateX(0);
+            node.setViewOrder(0);
         }
     }
 
@@ -335,29 +337,12 @@ public final class DockSystem {
             event.consume();
             event.acceptTransferModes(TransferMode.MOVE);
 
-            if (area.withinTabHeader(event.getX(), event.getY())) {
+            if (area.inTabHeader(event)) {
                 area.node.setEffect(null);
 
-                ObservableList<Tab> tabs = area.node.getTabs();
-                int tabWidth = (int) area.node.lookup(".tab").prefWidth(-1);
-                int actualIndex = tabs.indexOf(copy);
-                int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 2) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
-
-                if (actualIndex != expectedIndex) {
-                    if (area == dragedTabArea) {
-                        int currentIndex = tabs.indexOf(dragedTab);
-                        if (expectedIndex == currentIndex || expectedIndex == currentIndex + 1) {
-                            clearDummy();
-                            return;
-                        }
-                    }
-
-                    clearDummy();
-
-                    tabs.add(expectedIndex, copy);
-                }
+                relocator.relocate(area, event);
             } else {
-                clearDummy();
+                relocator.revert(area);
 
                 // apply overlay effect
                 area.node.setEffect(effect);
@@ -571,6 +556,98 @@ public final class DockSystem {
                 boolean state = stage.isAlwaysOnTop();
                 stage.setAlwaysOnTop(true);
                 stage.setAlwaysOnTop(state);
+            }
+        }
+    }
+
+    /** The tab location manager. */
+    private static final TabRelocator relocator = new TabRelocator();
+
+    /**
+     * Tab location manager.
+     */
+    private static final class TabRelocator {
+
+        private static TabArea last;
+
+        private void replace(TabArea area, DragEvent event) {
+            ObservableList<Tab> tabs = area.node.getTabs();
+            List<Node> nodes = new ArrayList(area.node.lookupAll(".tab"));
+            int tabWidth = (int) nodes.get(0).prefWidth(-1);
+            int actualIndex = tabs.indexOf(dragedTab);
+            int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
+
+            dragedTabArea.remove(dragedTab, false);
+            area.add(dragedTab, expectedIndex);
+            area.node.getSelectionModel().select(expectedIndex);
+        }
+
+        private void revert(TabArea area) {
+            for (Node node : area.node.lookupAll(".tab")) {
+                node.setTranslateX(0);
+                node.setViewOrder(0);
+            }
+        }
+
+        /**
+         * Make tab relocatable on the specified {@link TabArea}.
+         * 
+         * @param area
+         * @param event
+         */
+        private void relocate(TabArea area, DragEvent event) {
+            if (dragedTabArea == area) {
+                ObservableList<Tab> tabs = area.node.getTabs();
+                List<Node> nodes = new ArrayList(area.node.lookupAll(".tab"));
+                int tabWidth = (int) nodes.get(0).prefWidth(-1);
+                int actualIndex = tabs.indexOf(dragedTab);
+                int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
+
+                for (int i = 0; i < nodes.size(); i++) {
+                    Node node = nodes.get(i);
+
+                    if (i == actualIndex) {
+                        double lowerBound = -actualIndex * tabWidth;
+                        double upperBound = (nodes.size() - actualIndex - 1) * tabWidth;
+                        node.setTranslateX(Math.max(lowerBound, Math.min(event.getX() - tabWidth * i - tabWidth / 2, upperBound)));
+                        node.setViewOrder(-100);
+                    } else if (i < actualIndex) {
+                        if (i < expectedIndex) {
+                            node.setTranslateX(0);
+                            node.setViewOrder(0);
+                        } else {
+                            node.setTranslateX(tabWidth);
+                            node.setViewOrder(0);
+                        }
+                    } else {
+                        if (i <= expectedIndex) {
+                            node.setTranslateX(-tabWidth);
+                            node.setViewOrder(0);
+                        } else {
+                            node.setTranslateX(0);
+                            node.setViewOrder(0);
+                        }
+                    }
+                }
+            } else {
+                ObservableList<Tab> tabs = area.node.getTabs();
+                if (tabs.contains(dragedTab) == false) tabs.add(dragedTab);
+
+                List<Node> nodes = new ArrayList(area.node.lookupAll(".tab"));
+                int tabWidth = (int) nodes.get(0).prefWidth(-1);
+                int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size());
+                System.out.println(expectedIndex);
+                for (int i = 0; i < nodes.size(); i++) {
+                    Node node = nodes.get(i);
+
+                    if (i < expectedIndex) {
+                        node.setTranslateX(0);
+                        node.setViewOrder(0);
+                    } else {
+                        node.setTranslateX(tabWidth);
+                        node.setViewOrder(0);
+                    }
+                }
             }
         }
     }
