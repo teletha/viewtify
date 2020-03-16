@@ -92,13 +92,13 @@ abstract class ViewArea<P extends Parent> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    protected void add(Tab view, DockPosition position) {
+    protected void add(Tab view, int position) {
         switch (position) {
-        case CENTER:
+        case DockPosition.CENTER:
             children.get(0).add(view, position);
             break;
 
-        case TOP:
+        case DockPosition.TOP:
             if (getOrientation() == Orientation.VERTICAL) {
                 children.get(0).add(view, position);
             } else {
@@ -108,7 +108,7 @@ abstract class ViewArea<P extends Parent> {
             }
             break;
 
-        case BOTTOM:
+        case DockPosition.BOTTOM:
             if (getOrientation() == Orientation.VERTICAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {
@@ -118,7 +118,7 @@ abstract class ViewArea<P extends Parent> {
             }
             break;
 
-        case LEFT:
+        case DockPosition.LEFT:
             if (getOrientation() == Orientation.HORIZONTAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {
@@ -128,7 +128,7 @@ abstract class ViewArea<P extends Parent> {
             }
             break;
 
-        case RIGHT:
+        case DockPosition.RIGHT:
             if (getOrientation() == Orientation.HORIZONTAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {

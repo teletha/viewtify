@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
@@ -24,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
@@ -224,7 +226,6 @@ public final class DockSystem {
      * @param event The drag event
      */
     static void onDragDone(DragEvent event, TabArea area) {
-
         if (isValidDragboard(event)) {
             event.consume(); // stop event propagation
             dropStage.close();
@@ -233,6 +234,7 @@ public final class DockSystem {
                 area.handleEmpty();
                 dragedTab = null;
                 dragedTabArea = null;
+                clearDummy();
 
                 layout.store();
             }
@@ -278,9 +280,9 @@ public final class DockSystem {
      */
     static void onDragDropped(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
-            // Add view to new area
             dragedTabArea.remove(dragedTab, false);
-            area.add(dragedTab, detectPosition(event, area.node));
+            area.add(dragedTab, area.withinTabHeader(event.getX(), event.getY()) ? area.node.getTabs().indexOf(copy)
+                    : detectPosition(event, area.node));
 
             event.setDropCompleted(true);
             event.consume();
@@ -314,6 +316,15 @@ public final class DockSystem {
         }
     }
 
+    private static final Tab copy = new Tab();
+
+    private static void clearDummy() {
+        TabPane previous = copy.getTabPane();
+        if (previous != null) {
+            previous.getTabs().remove(copy);
+        }
+    }
+
     /**
      * Handle the drag over event. It draws the drop position for the current cursor position.
      *
@@ -324,38 +335,63 @@ public final class DockSystem {
             event.consume();
             event.acceptTransferModes(TransferMode.MOVE);
 
-            // apply overlay effect
-            area.node.setEffect(effect);
-            switch (detectPosition(event, area.node)) {
-            case CENTER:
-                dropOverlay.setX(0);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(area.node.getWidth());
-                dropOverlay.setHeight(area.node.getHeight());
-                break;
-            case LEFT:
-                dropOverlay.setX(0);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(area.node.getWidth() * 0.5);
-                dropOverlay.setHeight(area.node.getHeight());
-                break;
-            case RIGHT:
-                dropOverlay.setX(area.node.getWidth() * 0.5);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(area.node.getWidth() * 0.5);
-                dropOverlay.setHeight(area.node.getHeight());
-                break;
-            case TOP:
-                dropOverlay.setX(0);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(area.node.getWidth());
-                dropOverlay.setHeight(area.node.getHeight() * 0.5);
-                break;
-            case BOTTOM:
-                dropOverlay.setX(0);
-                dropOverlay.setY(area.node.getHeight() * 0.5);
-                dropOverlay.setWidth(area.node.getWidth());
-                dropOverlay.setHeight(area.node.getHeight() * 0.5);
+            if (area.withinTabHeader(event.getX(), event.getY())) {
+                area.node.setEffect(null);
+
+                ObservableList<Tab> tabs = area.node.getTabs();
+                int tabWidth = (int) area.node.lookup(".tab").prefWidth(-1);
+                int actualIndex = tabs.indexOf(copy);
+                int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 2) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
+
+                if (actualIndex != expectedIndex) {
+                    if (area == dragedTabArea) {
+                        int currentIndex = tabs.indexOf(dragedTab);
+                        if (expectedIndex == currentIndex || expectedIndex == currentIndex + 1) {
+                            clearDummy();
+                            return;
+                        }
+                    }
+
+                    clearDummy();
+
+                    tabs.add(expectedIndex, copy);
+                }
+            } else {
+                clearDummy();
+
+                // apply overlay effect
+                area.node.setEffect(effect);
+                switch (detectPosition(event, area.node)) {
+                case DockPosition.CENTER:
+                    dropOverlay.setX(0);
+                    dropOverlay.setY(0);
+                    dropOverlay.setWidth(area.node.getWidth());
+                    dropOverlay.setHeight(area.node.getHeight());
+                    break;
+                case DockPosition.LEFT:
+                    dropOverlay.setX(0);
+                    dropOverlay.setY(0);
+                    dropOverlay.setWidth(area.node.getWidth() * 0.5);
+                    dropOverlay.setHeight(area.node.getHeight());
+                    break;
+                case DockPosition.RIGHT:
+                    dropOverlay.setX(area.node.getWidth() * 0.5);
+                    dropOverlay.setY(0);
+                    dropOverlay.setWidth(area.node.getWidth() * 0.5);
+                    dropOverlay.setHeight(area.node.getHeight());
+                    break;
+                case DockPosition.TOP:
+                    dropOverlay.setX(0);
+                    dropOverlay.setY(0);
+                    dropOverlay.setWidth(area.node.getWidth());
+                    dropOverlay.setHeight(area.node.getHeight() * 0.5);
+                    break;
+                case DockPosition.BOTTOM:
+                    dropOverlay.setX(0);
+                    dropOverlay.setY(area.node.getHeight() * 0.5);
+                    dropOverlay.setWidth(area.node.getWidth());
+                    dropOverlay.setHeight(area.node.getHeight() * 0.5);
+                }
             }
         }
     }
@@ -393,7 +429,7 @@ public final class DockSystem {
      * @param event The drag event
      * @return The position value for the detected sub area.
      */
-    private static DockPosition detectPosition(DragEvent event, Control source) {
+    private static int detectPosition(DragEvent event, Control source) {
         double areaX = event.getX() / source.getWidth();
         double areaY = event.getY() / source.getHeight();
         if (0.25 <= areaX && areaX < 0.75 && 0.25 <= areaY && areaY < 0.75) {

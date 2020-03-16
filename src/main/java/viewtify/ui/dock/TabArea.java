@@ -12,12 +12,14 @@ package viewtify.ui.dock;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
 import kiss.I;
+import kiss.Signal;
 import kiss.Variable;
 
 /**
@@ -46,6 +48,14 @@ class TabArea extends ViewArea<TabPane> {
                         DockSystem.onDragDetected(e, this, node.getSelectionModel().getSelectedItem());
                     });
         });
+    }
+
+    Signal<Node> withinTab(double x, double y) {
+        return I.signal(node.lookupAll(".tab")).take(tab -> tab.localToScene(tab.getBoundsInLocal()).contains(x, y)).first();
+    }
+
+    boolean withinTabHeader(double x, double y) {
+        return node.lookup(".tab-header-area").contains(x, y);
     }
 
     /**
@@ -85,16 +95,26 @@ class TabArea extends ViewArea<TabPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(Tab tab, DockPosition position) {
-        if (position != DockPosition.CENTER) {
+    protected void add(Tab tab, int position) {
+        switch (position) {
+        case DockPosition.TOP:
+        case DockPosition.BOTTOM:
+        case DockPosition.LEFT:
+        case DockPosition.RIGHT:
             super.add(tab, position);
-        } else {
-            node.getTabs().add(tab);
+            break;
+
+        // case DockPosition.CENTER:
+        // break;
+
+        default:
+            node.getTabs().add(position == DockPosition.CENTER ? node.getTabs().size() : position, tab);
             tab.setOnCloseRequest(e -> remove(tab));
 
             if (!ids.contains(tab.getId())) {
                 ids.add(tab.getId());
             }
+            break;
         }
     }
 
