@@ -518,7 +518,7 @@ public final class DockSystem {
             Rectangle rect = new Rectangle(dragedTabArea.node.getWidth(), dragedTabArea.node.getHeight());
             rect.setStroke(dropOverlay.getPaint());
             rect.setStrokeWidth(5);
-            rect.setFill(Color.TRANSPARENT);
+            rect.setFill(Color.WHITE.deriveColor(0, 0, 0, 0.3));
 
             Group group = new Group();
             group.setStyle("-fx-background-color: rgba(0,0,0,0);");
