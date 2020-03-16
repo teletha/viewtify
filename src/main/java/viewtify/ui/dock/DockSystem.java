@@ -10,10 +10,8 @@
 package viewtify.ui.dock;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -433,14 +431,6 @@ public final class DockSystem {
          * Open the drop stages.
          */
         private void open() {
-            Map<Stage, Boolean> temporaryOnTop = new HashMap();
-
-            for (RootArea root : layout.windows) {
-                Stage stage = root.getStage();
-                temporaryOnTop.put(stage, stage.isAlwaysOnTop());
-                stage.setAlwaysOnTop(true);
-            }
-
             for (Screen screen : Screen.getScreens()) {
                 // Initialize a drop stage for the given screen.
                 Stage stage = new Stage();
@@ -483,10 +473,7 @@ public final class DockSystem {
                 stages.add(stage);
             }
 
-            for (RootArea root : layout.windows) {
-                Stage stage = root.getStage();
-                stage.setAlwaysOnTop(temporaryOnTop.remove(stage));
-            }
+            bringAllWindowsToFront();
         }
 
         /**
@@ -527,6 +514,8 @@ public final class DockSystem {
             // show box
             borderBox.setScene(new Scene(group, rect.getWidth(), rect.getHeight(), Color.TRANSPARENT));
             borderBox.show();
+
+            bringAllWindowsToFront();
         }
 
         /**
@@ -535,6 +524,18 @@ public final class DockSystem {
         private void hideBorderBox() {
             borderBox.close();
             borderBox = null;
+        }
+
+        /**
+         * Brings all windows to the front.
+         */
+        private void bringAllWindowsToFront() {
+            for (RootArea root : layout.windows) {
+                Stage stage = root.getStage();
+                boolean state = stage.isAlwaysOnTop();
+                stage.setAlwaysOnTop(true);
+                stage.setAlwaysOnTop(state);
+            }
         }
     }
 }
