@@ -20,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -36,6 +37,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -480,9 +482,16 @@ public final class DockSystem {
                 scene.setOnDragOver(e -> {
                     if (e.getDragboard().hasContent(DnD)) {
                         e.acceptTransferModes(TransferMode.MOVE);
+
+                        if (borderBox != null && borderBox.isShowing()) {
+                            borderBox.setX(e.getScreenX() + 4);
+                            borderBox.setY(e.getScreenY() + 4);
+                        }
                     }
                     e.consume();
                 });
+                scene.setOnDragEntered(e -> showBorderBox());
+                scene.setOnDragExited(e -> hideBorderBox());
                 scene.setOnDragDropped(DockSystem::onDragDroppedNewStage);
 
                 // show stage
@@ -508,6 +517,43 @@ public final class DockSystem {
                 iterator.next().close();
                 iterator.remove();
             }
+        }
+
+        /** A useful auxiliary line to predict the display position of a new window. */
+        private Stage borderBox;
+
+        /**
+         * Displays a useful auxiliary line to predict the display position of the new window.
+         */
+        private void showBorderBox() {
+            borderBox = new Stage();
+            borderBox.initOwner(stages.get(0));
+            borderBox.initStyle(StageStyle.TRANSPARENT);
+            borderBox.setAlwaysOnTop(true);
+            // The initial position is off the screen.
+            borderBox.setX(-1000);
+            borderBox.setY(-1000);
+
+            Rectangle rect = new Rectangle(dragedTabArea.node.getWidth(), dragedTabArea.node.getHeight());
+            rect.setStroke(dropOverlay.getPaint());
+            rect.setStrokeWidth(5);
+            rect.setFill(Color.TRANSPARENT);
+
+            Group group = new Group();
+            group.setStyle("-fx-background-color: rgba(0,0,0,0);");
+            group.getChildren().add(rect);
+
+            // show box
+            borderBox.setScene(new Scene(group, rect.getWidth(), rect.getHeight(), Color.TRANSPARENT));
+            borderBox.show();
+        }
+
+        /**
+         * Erases a useful auxiliary line to predict the display position of a new window.
+         */
+        private void hideBorderBox() {
+            borderBox.close();
+            borderBox = null;
         }
     }
 }
