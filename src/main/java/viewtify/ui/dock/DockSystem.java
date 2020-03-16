@@ -323,6 +323,19 @@ public final class DockSystem {
     }
 
     /**
+     * Handle the drag entered event for panes.
+     *
+     * @param event the drag event.
+     */
+    static void onDragEntered(DragEvent event, TabArea area) {
+        if (isValidDragboard(event)) {
+            event.consume();
+
+            ((Stage) area.node.getScene().getWindow()).toFront();
+        }
+    }
+
+    /**
      * Handle the drag exited event for panes.
      *
      * @param event the drag event.

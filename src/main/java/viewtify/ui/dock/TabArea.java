@@ -34,6 +34,7 @@ class TabArea extends ViewArea<TabPane> {
         super(new TabPane());
 
         node.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
+        node.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
         node.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
         node.addEventHandler(DragEvent.DRAG_DONE, e -> DockSystem.onDragDone(e, this));
         node.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
