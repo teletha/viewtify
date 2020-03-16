@@ -11,7 +11,6 @@ package viewtify.ui.dock;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -24,11 +23,13 @@ import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.SplitPane.Divider;
-import javafx.scene.control.skin.SplitPaneSkin;
 
 import viewtify.Viewtify;
 
 class SplitArea extends ViewArea<SplitPane> {
+
+    /** The latest divider's positions. */
+    private double[] snapshot = new double[0];
 
     /**
      * Create a new view area.
@@ -36,20 +37,21 @@ class SplitArea extends ViewArea<SplitPane> {
     protected SplitArea() {
         super(new SplitPane());
 
-        System.out.println("Create splitarea " + node);
-        node.setSkin(new DumbSplitPaneSkin(node));
+        // The SplitPane implements content replacement in two stages: removal and addition.
+        // For this reason, when removing content, divider is also removed, and the divider's
+        // position information will be lost.
+        // Therefore, each time the divider's position information is changed, it is stored in
+        // the cache and restored every time the dividier increases or decreases.
         node.getDividers().addListener((ListChangeListener<Divider>) c -> {
             while (c.next()) {
                 for (Divider added : c.getAddedSubList()) {
                     Viewtify.observe(added.positionProperty()).debounce(1000, TimeUnit.MILLISECONDS).to(v -> {
                         DockSystem.layout.store();
-                    });
-
-                    added.positionProperty().addListener((o, p, n) -> {
-                        new Error("Change from " + p + "  to " + n).printStackTrace();
+                        snapshot = node.getDividerPositions();
                     });
                 }
             }
+            node.setDividerPositions(snapshot);
         });
     }
 
@@ -112,21 +114,5 @@ class SplitArea extends ViewArea<SplitPane> {
             }
             node.setDividerPositions(values);
         });
-    }
-
-    private static class DumbSplitPaneSkin extends SplitPaneSkin {
-
-        public DumbSplitPaneSkin(SplitPane splitPane) {
-            super(splitPane);
-        }
-
-        @Override
-        protected void layoutChildren(double x, double y, double w, double h) {
-            double[] dividerPositions = getSkinnable().getDividerPositions();
-            super.layoutChildren(x, y, w, h);
-            getSkinnable().setDividerPositions(dividerPositions);
-            System.out.println("Layout SplitArea " + Arrays.toString(dividerPositions) + "    " + Arrays
-                    .toString(getSkinnable().getDividerPositions()));
-        }
     }
 }
