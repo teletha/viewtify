@@ -259,12 +259,13 @@ public final class DockSystem {
      * @param event The drag event
      */
     static void onDragDone(DragEvent event, TabArea area) {
+
         if (isValidDragboard(event)) {
             event.consume(); // stop event propagation
+            dropStage.close();
 
             if (event.getTransferMode() == TransferMode.MOVE && event.getDragboard().hasContent(DnD)) {
                 area.handleEmpty();
-                dropStage.close();
                 dragedTab = null;
                 dragedTabArea = null;
 
