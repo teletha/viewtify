@@ -400,6 +400,11 @@ public final class DockSystem {
         }
     }
 
+    /**
+     * Handle the drag over event. It draws the drop position for the current cursor position.
+     *
+     * @param event The drag event.
+     */
     static void onHeaderDragOver(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
             event.consume();
@@ -455,7 +460,8 @@ public final class DockSystem {
             ObservableList<Tab> tabs = area.node.getTabs();
             List<Node> nodes = new ArrayList(area.node.lookupAll(".tab"));
             int tabWidth = (int) nodes.get(0).prefWidth(-1);
-            int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size());
+            int actualIndex = tabs.indexOf(dragedTab);
+            int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
             dragedTabArea.remove(dragedTab, false);
             area.add(dragedTab, expectedIndex);
             area.node.getSelectionModel().select(expectedIndex);
