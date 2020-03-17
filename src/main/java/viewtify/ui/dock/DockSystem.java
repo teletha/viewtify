@@ -461,9 +461,11 @@ public final class DockSystem {
             revert(area);
 
             ObservableList<Tab> tabs = area.node.getTabs();
+
             int tabWidth = (int) tabs.get(0).getStyleableNode().prefWidth(-1);
             int actualIndex = tabs.indexOf(dragedTab);
             int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
+
             dragedTabArea.remove(dragedTab, false);
             area.add(dragedTab, expectedIndex);
             area.node.getSelectionModel().select(expectedIndex);

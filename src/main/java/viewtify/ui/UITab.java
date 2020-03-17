@@ -10,34 +10,19 @@
 package viewtify.ui;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.StackPane;
 
 import kiss.I;
-import kiss.WiseFunction;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 
 public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<UITab>, ContextMenuHelper<UITab> {
-
-    /** Cache to find tab node. */
-    private static final WiseFunction<Node, Object> findTab;
-
-    static {
-        try {
-            Method m = Class.forName("javafx.scene.control.skin.TabPaneSkin$TabHeaderSkin").getMethod("getTab");
-            m.setAccessible(true);
-
-            findTab = m::invoke;
-        } catch (Exception e) {
-            throw I.quiet(e);
-        }
-    }
 
     /** The parent view. */
     private final View parent;
@@ -137,8 +122,13 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
             return styleable.get();
         }
 
-        for (Node node : getTabPane().lookupAll(".tab")) {
-            if (findTab.apply(node) == this) {
+        // If you use Node#lookupAll, it will be a search target even within the contents of the
+        // tab, so there is a concern that the performance will down. So I will go through the
+        // components one by one.
+        StackPane header = (StackPane) getTabPane().lookup(".tab-header-area");
+        for (Node node : ((StackPane) header.getChildren().get(1)).getChildren()) {
+            System.out.println(node);
+            if (node.getId() == getId()) {
                 styleable = new WeakReference(node);
                 break;
             }
