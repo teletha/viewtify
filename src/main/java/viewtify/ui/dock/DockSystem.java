@@ -46,6 +46,7 @@ import kiss.I;
 import kiss.Storable;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.ui.UITab;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
 
@@ -80,7 +81,8 @@ public final class DockSystem {
     public static void register(View view) {
         Viewtify.inUI(() -> {
             String id = view.id();
-            Tab tab = new Tab(id);
+            UITab tab = new UITab();
+            tab.text(id);
             tab.setClosable(true);
             tab.setContent(view.ui());
             tab.setId(id);
@@ -184,7 +186,7 @@ public final class DockSystem {
     private static TabArea dragedTabArea;
 
     /** The Doppelganger of the tab being dragged. */
-    private static final Tab dragedDoppelganger = new Tab();
+    private static final UITab dragedDoppelganger = new UITab();
 
     /** Temp stage when the view was dropped outside a managed window. */
     private static final DropStage dropStage = new DropStage();
@@ -412,18 +414,19 @@ public final class DockSystem {
 
             area.node.setEffect(null);
 
+            Tab draggingTab = area == dragedTabArea ? dragedTab : dragedDoppelganger;
             ObservableList<Tab> tabs = area.node.getTabs();
-            List<Node> nodes = new ArrayList(area.node.lookupAll(".tab"));
-            int tabWidth = (int) nodes.get(0).prefWidth(-1);
-            int actualIndex = tabs.indexOf(dragedTabArea == area ? dragedTab : dragedDoppelganger);
+
+            int tabWidth = (int) tabs.get(0).getStyleableNode().prefWidth(-1);
+            int actualIndex = tabs.indexOf(draggingTab);
             int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
 
-            for (int i = 0; i < nodes.size(); i++) {
-                Node node = nodes.get(i);
+            for (int i = 0; i < tabs.size(); i++) {
+                Node node = tabs.get(i).getStyleableNode();
 
                 if (i == actualIndex) {
                     double lowerBound = -actualIndex * tabWidth;
-                    double upperBound = (nodes.size() - actualIndex - 1) * tabWidth;
+                    double upperBound = (tabs.size() - actualIndex - 1) * tabWidth;
                     node.setTranslateX(Math.max(lowerBound, Math.min(event.getX() - tabWidth * i - tabWidth / 2, upperBound)));
                     node.setViewOrder(-100);
                 } else if (i < actualIndex) {
@@ -458,8 +461,7 @@ public final class DockSystem {
             revert(area);
 
             ObservableList<Tab> tabs = area.node.getTabs();
-            List<Node> nodes = new ArrayList(area.node.lookupAll(".tab"));
-            int tabWidth = (int) nodes.get(0).prefWidth(-1);
+            int tabWidth = (int) tabs.get(0).getStyleableNode().prefWidth(-1);
             int actualIndex = tabs.indexOf(dragedTab);
             int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
             dragedTabArea.remove(dragedTab, false);

@@ -62,6 +62,7 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
         this.parent = parent;
 
         selectedProperty().addListener(change -> load());
+        tabPaneProperty().addListener(invalidaed -> styleable = null);
     }
 
     /**
@@ -131,19 +132,17 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
      * {@inheritDoc}
      */
     @Override
-    public synchronized Node getStyleableNode() {
-        if (styleable == null) {
-            for (Node node : getTabPane().lookupAll(".tab")) {
-                if (findTab.apply(node) == this) {
-                    styleable = new WeakReference(node);
-                    break;
-                }
-            }
+    public Node getStyleableNode() {
+        if (styleable != null) {
+            return styleable.get();
+        }
 
-            if (styleable == null) {
-                return null;
+        for (Node node : getTabPane().lookupAll(".tab")) {
+            if (findTab.apply(node) == this) {
+                styleable = new WeakReference(node);
+                break;
             }
         }
-        return styleable.get();
+        return styleable == null ? null : styleable.get();
     }
 }

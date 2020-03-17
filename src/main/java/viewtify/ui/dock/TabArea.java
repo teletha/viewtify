@@ -20,7 +20,6 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
 import kiss.I;
-import kiss.Signal;
 import kiss.Variable;
 
 /**
@@ -61,14 +60,6 @@ class TabArea extends ViewArea<TabPane> {
         header.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onHeaderDragExited(e, this));
         header.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onHeaderDragDropped(e, this));
         header.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onHeaderDragOver(e, this));
-    }
-
-    Signal<Node> withinTab(double x, double y) {
-        return I.signal(node.lookupAll(".tab")).take(tab -> tab.localToScene(tab.getBoundsInLocal()).contains(x, y)).first();
-    }
-
-    boolean inTabHeader(DragEvent e) {
-        return node.lookup(".tab-header-area").contains(e.getX(), e.getY());
     }
 
     /**
