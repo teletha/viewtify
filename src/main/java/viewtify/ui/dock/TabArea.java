@@ -15,6 +15,7 @@ import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -49,6 +50,17 @@ class TabArea extends ViewArea<TabPane> {
                         DockSystem.onDragDetected(e, this, node.getSelectionModel().getSelectedItem());
                     });
         });
+
+        // Since TabPane implementation delays the initialization of Skin and internal nodes
+        // are not generated. So we should create Skin eagerly.
+        TabPaneSkin skin = new TabPaneSkin(node);
+        node.setSkin(skin);
+
+        Node header = node.lookup(".tab-header-area");
+        header.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onHeaderDragEntered(e, this));
+        header.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onHeaderDragExited(e, this));
+        header.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onHeaderDragDropped(e, this));
+        header.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onHeaderDragOver(e, this));
     }
 
     Signal<Node> withinTab(double x, double y) {

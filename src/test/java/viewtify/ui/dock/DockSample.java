@@ -32,6 +32,7 @@ public class DockSample extends View {
         DockSystem.register(new ViewPane("Second"));
         DockSystem.register(new ViewPane("Third"));
         DockSystem.register(new ViewPane("Fourth"));
+        DockSystem.register(new ViewPane("Fifth"));
     }
 
     private class ViewPane extends View {

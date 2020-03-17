@@ -183,6 +183,9 @@ public final class DockSystem {
     /** Temporal storage for the draged tab */
     private static TabArea dragedTabArea;
 
+    /** The Doppelganger of the tab being dragged. */
+    private static final Tab dragedDoppelganger = new Tab();
+
     /** Temp stage when the view was dropped outside a managed window. */
     private static final DropStage dropStage = new DropStage();
 
@@ -209,6 +212,7 @@ public final class DockSystem {
 
         dragedTab = tab;
         dragedTabArea = area;
+        dragedDoppelganger.setText(tab.getText());
 
         ClipboardContent content = new ClipboardContent();
         content.put(DnD, DnD.toString());
@@ -236,6 +240,98 @@ public final class DockSystem {
 
                 layout.store();
             }
+        }
+    }
+
+    /**
+     * Handle the drag entered event for panes.
+     *
+     * @param event the drag event.
+     */
+    static void onDragEntered(DragEvent event, TabArea area) {
+        if (isValidDragboard(event)) {
+            event.consume();
+
+            ((Stage) area.node.getScene().getWindow()).toFront();
+        }
+    }
+
+    /**
+     * Handle the drag exited event for panes.
+     *
+     * @param event the drag event.
+     */
+    static void onDragExited(DragEvent event, TabArea area) {
+        if (isValidDragboard(event)) {
+            event.consume();
+
+            // erase overlay effect
+            area.node.setEffect(null);
+            revert(area);
+        }
+    }
+
+    /**
+     * Handle the drag over event. It draws the drop position for the current cursor position.
+     *
+     * @param event The drag event.
+     */
+    static void onDragOver(DragEvent event, TabArea area) {
+        if (isValidDragboard(event)) {
+            event.consume();
+            event.acceptTransferModes(TransferMode.MOVE);
+
+            revert(area);
+
+            // apply overlay effect
+            area.node.setEffect(effect);
+            switch (detectPosition(event, area.node)) {
+            case DockPosition.CENTER:
+                dropOverlay.setX(0);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(area.node.getWidth());
+                dropOverlay.setHeight(area.node.getHeight());
+                break;
+            case DockPosition.LEFT:
+                dropOverlay.setX(0);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(area.node.getWidth() * 0.5);
+                dropOverlay.setHeight(area.node.getHeight());
+                break;
+            case DockPosition.RIGHT:
+                dropOverlay.setX(area.node.getWidth() * 0.5);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(area.node.getWidth() * 0.5);
+                dropOverlay.setHeight(area.node.getHeight());
+                break;
+            case DockPosition.TOP:
+                dropOverlay.setX(0);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(area.node.getWidth());
+                dropOverlay.setHeight(area.node.getHeight() * 0.5);
+                break;
+            case DockPosition.BOTTOM:
+                dropOverlay.setX(0);
+                dropOverlay.setY(area.node.getHeight() * 0.5);
+                dropOverlay.setWidth(area.node.getWidth());
+                dropOverlay.setHeight(area.node.getHeight() * 0.5);
+            }
+        }
+    }
+
+    /**
+     * Handle the dropped event for panes. Mainly this event removes the view from the old position
+     * and adds it at the new position.
+     *
+     * @param event The drag event.
+     */
+    static void onDragDropped(DragEvent event, TabArea area) {
+        if (isValidDragboard(event)) {
+            dragedTabArea.remove(dragedTab, false);
+            area.add(dragedTab, detectPosition(event, area.node));
+
+            event.setDropCompleted(true);
+            event.consume();
         }
     }
 
@@ -271,37 +367,19 @@ public final class DockSystem {
     }
 
     /**
-     * Handle the dropped event for panes. Mainly this event removes the view from the old position
-     * and adds it at the new position.
-     *
-     * @param event The drag event.
-     */
-    static void onDragDropped(DragEvent event, TabArea area) {
-        if (isValidDragboard(event)) {
-            revertTabOrder(area);
-
-            if (area.inTabHeader(event)) {
-                relocator.replace(area, event);
-            } else {
-                dragedTabArea.remove(dragedTab, false);
-                area.add(dragedTab, detectPosition(event, area.node));
-            }
-
-            event.setDropCompleted(true);
-            event.consume();
-        }
-    }
-
-    /**
      * Handle the drag entered event for panes.
      *
      * @param event the drag event.
      */
-    static void onDragEntered(DragEvent event, TabArea area) {
+    static void onHeaderDragEntered(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
             event.consume();
 
-            ((Stage) area.node.getScene().getWindow()).toFront();
+            if (area == dragedTabArea) {
+
+            } else {
+                area.add(dragedDoppelganger, 0);
+            }
         }
     }
 
@@ -310,74 +388,89 @@ public final class DockSystem {
      *
      * @param event the drag event.
      */
-    static void onDragExited(DragEvent event, TabArea area) {
+    static void onHeaderDragExited(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
             event.consume();
 
-            // erase overlay effect
-            area.node.setEffect(null);
-            relocator.revert(area);
+            if (area == dragedTabArea) {
+
+            } else {
+                revert(area);
+            }
         }
     }
 
-    static void revertTabOrder(TabArea area) {
-        for (Node node : area.node.lookupAll(".tab")) {
-            node.setTranslateX(0);
-            node.setViewOrder(0);
-        }
-    }
-
-    /**
-     * Handle the drag over event. It draws the drop position for the current cursor position.
-     *
-     * @param event The drag event.
-     */
-    static void onDragOver(DragEvent event, TabArea area) {
+    static void onHeaderDragOver(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
             event.consume();
             event.acceptTransferModes(TransferMode.MOVE);
 
-            if (area.inTabHeader(event)) {
-                area.node.setEffect(null);
+            area.node.setEffect(null);
 
-                relocator.relocate(area, event);
-            } else {
-                relocator.revert(area);
+            ObservableList<Tab> tabs = area.node.getTabs();
+            List<Node> nodes = new ArrayList(area.node.lookupAll(".tab"));
+            int tabWidth = (int) nodes.get(0).prefWidth(-1);
+            int actualIndex = tabs.indexOf(dragedTabArea == area ? dragedTab : dragedDoppelganger);
+            int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
 
-                // apply overlay effect
-                area.node.setEffect(effect);
-                switch (detectPosition(event, area.node)) {
-                case DockPosition.CENTER:
-                    dropOverlay.setX(0);
-                    dropOverlay.setY(0);
-                    dropOverlay.setWidth(area.node.getWidth());
-                    dropOverlay.setHeight(area.node.getHeight());
-                    break;
-                case DockPosition.LEFT:
-                    dropOverlay.setX(0);
-                    dropOverlay.setY(0);
-                    dropOverlay.setWidth(area.node.getWidth() * 0.5);
-                    dropOverlay.setHeight(area.node.getHeight());
-                    break;
-                case DockPosition.RIGHT:
-                    dropOverlay.setX(area.node.getWidth() * 0.5);
-                    dropOverlay.setY(0);
-                    dropOverlay.setWidth(area.node.getWidth() * 0.5);
-                    dropOverlay.setHeight(area.node.getHeight());
-                    break;
-                case DockPosition.TOP:
-                    dropOverlay.setX(0);
-                    dropOverlay.setY(0);
-                    dropOverlay.setWidth(area.node.getWidth());
-                    dropOverlay.setHeight(area.node.getHeight() * 0.5);
-                    break;
-                case DockPosition.BOTTOM:
-                    dropOverlay.setX(0);
-                    dropOverlay.setY(area.node.getHeight() * 0.5);
-                    dropOverlay.setWidth(area.node.getWidth());
-                    dropOverlay.setHeight(area.node.getHeight() * 0.5);
+            for (int i = 0; i < nodes.size(); i++) {
+                Node node = nodes.get(i);
+
+                if (i == actualIndex) {
+                    double lowerBound = -actualIndex * tabWidth;
+                    double upperBound = (nodes.size() - actualIndex - 1) * tabWidth;
+                    node.setTranslateX(Math.max(lowerBound, Math.min(event.getX() - tabWidth * i - tabWidth / 2, upperBound)));
+                    node.setViewOrder(-100);
+                } else if (i < actualIndex) {
+                    if (i < expectedIndex) {
+                        node.setTranslateX(0);
+                        node.setViewOrder(0);
+                    } else {
+                        node.setTranslateX(tabWidth);
+                        node.setViewOrder(0);
+                    }
+                } else {
+                    if (i <= expectedIndex) {
+                        node.setTranslateX(-tabWidth);
+                        node.setViewOrder(0);
+                    } else {
+                        node.setTranslateX(0);
+                        node.setViewOrder(0);
+                    }
                 }
             }
+        }
+    }
+
+    /**
+     * Handle the dropped event for panes. Mainly this event removes the view from the old position
+     * and adds it at the new position.
+     *
+     * @param event The drag event.
+     */
+    static void onHeaderDragDropped(DragEvent event, TabArea area) {
+        if (isValidDragboard(event)) {
+            revert(area);
+
+            ObservableList<Tab> tabs = area.node.getTabs();
+            List<Node> nodes = new ArrayList(area.node.lookupAll(".tab"));
+            int tabWidth = (int) nodes.get(0).prefWidth(-1);
+            int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size());
+            dragedTabArea.remove(dragedTab, false);
+            area.add(dragedTab, expectedIndex);
+            area.node.getSelectionModel().select(expectedIndex);
+
+            event.setDropCompleted(true);
+            event.consume();
+        }
+    }
+
+    private static void revert(TabArea area) {
+        area.remove(dragedDoppelganger, false);
+
+        for (Node node : area.node.lookupAll(".tab")) {
+            node.setTranslateX(0);
+            node.setViewOrder(0);
         }
     }
 
@@ -556,98 +649,6 @@ public final class DockSystem {
                 boolean state = stage.isAlwaysOnTop();
                 stage.setAlwaysOnTop(true);
                 stage.setAlwaysOnTop(state);
-            }
-        }
-    }
-
-    /** The tab location manager. */
-    private static final TabRelocator relocator = new TabRelocator();
-
-    /**
-     * Tab location manager.
-     */
-    private static final class TabRelocator {
-
-        private static TabArea last;
-
-        private void replace(TabArea area, DragEvent event) {
-            ObservableList<Tab> tabs = area.node.getTabs();
-            List<Node> nodes = new ArrayList(area.node.lookupAll(".tab"));
-            int tabWidth = (int) nodes.get(0).prefWidth(-1);
-            int actualIndex = tabs.indexOf(dragedTab);
-            int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
-
-            dragedTabArea.remove(dragedTab, false);
-            area.add(dragedTab, expectedIndex);
-            area.node.getSelectionModel().select(expectedIndex);
-        }
-
-        private void revert(TabArea area) {
-            for (Node node : area.node.lookupAll(".tab")) {
-                node.setTranslateX(0);
-                node.setViewOrder(0);
-            }
-        }
-
-        /**
-         * Make tab relocatable on the specified {@link TabArea}.
-         * 
-         * @param area
-         * @param event
-         */
-        private void relocate(TabArea area, DragEvent event) {
-            if (dragedTabArea == area) {
-                ObservableList<Tab> tabs = area.node.getTabs();
-                List<Node> nodes = new ArrayList(area.node.lookupAll(".tab"));
-                int tabWidth = (int) nodes.get(0).prefWidth(-1);
-                int actualIndex = tabs.indexOf(dragedTab);
-                int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
-
-                for (int i = 0; i < nodes.size(); i++) {
-                    Node node = nodes.get(i);
-
-                    if (i == actualIndex) {
-                        double lowerBound = -actualIndex * tabWidth;
-                        double upperBound = (nodes.size() - actualIndex - 1) * tabWidth;
-                        node.setTranslateX(Math.max(lowerBound, Math.min(event.getX() - tabWidth * i - tabWidth / 2, upperBound)));
-                        node.setViewOrder(-100);
-                    } else if (i < actualIndex) {
-                        if (i < expectedIndex) {
-                            node.setTranslateX(0);
-                            node.setViewOrder(0);
-                        } else {
-                            node.setTranslateX(tabWidth);
-                            node.setViewOrder(0);
-                        }
-                    } else {
-                        if (i <= expectedIndex) {
-                            node.setTranslateX(-tabWidth);
-                            node.setViewOrder(0);
-                        } else {
-                            node.setTranslateX(0);
-                            node.setViewOrder(0);
-                        }
-                    }
-                }
-            } else {
-                ObservableList<Tab> tabs = area.node.getTabs();
-                if (tabs.contains(dragedTab) == false) tabs.add(dragedTab);
-
-                List<Node> nodes = new ArrayList(area.node.lookupAll(".tab"));
-                int tabWidth = (int) nodes.get(0).prefWidth(-1);
-                int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size());
-                System.out.println(expectedIndex);
-                for (int i = 0; i < nodes.size(); i++) {
-                    Node node = nodes.get(i);
-
-                    if (i < expectedIndex) {
-                        node.setTranslateX(0);
-                        node.setViewOrder(0);
-                    } else {
-                        node.setTranslateX(tabWidth);
-                        node.setViewOrder(0);
-                    }
-                }
             }
         }
     }
