@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
@@ -90,6 +92,9 @@ public final class DockSystem {
      */
     static final int PositionRestore = -6;
 
+    /** Configuration store. */
+    static final BooleanProperty HideTab = new SimpleBooleanProperty(false);
+
     /** Layout Store */
     private static DockLayout layout;
 
@@ -100,6 +105,15 @@ public final class DockSystem {
      * Hide.
      */
     private DockSystem() {
+    }
+
+    /**
+     * Configuration.
+     * 
+     * @param hide
+     */
+    public static void configHideTabInSubArea(boolean hide) {
+        HideTab.set(hide);
     }
 
     /**
