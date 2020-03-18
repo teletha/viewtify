@@ -12,6 +12,7 @@ package viewtify.ui.dock;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -91,6 +92,20 @@ class TabArea extends ViewArea<TabPane> {
      */
     @Override
     protected void add(Tab tab, int position) {
+        if (position == DockSystem.PositionRestore) {
+            ObservableList<Tab> items = node.getTabs();
+            position = items.size();
+
+            for (int i = 0; i < position; i++) {
+                Tab item = items.get(i);
+
+                if (compare(item.getId(), tab.getId())) {
+                    position = i;
+                    break;
+                }
+            }
+        }
+
         switch (position) {
         case DockSystem.PositionTop:
         case DockSystem.PositionBottom:
@@ -112,6 +127,24 @@ class TabArea extends ViewArea<TabPane> {
             }
             break;
         }
+    }
+
+    /**
+     * Compare tab order by id.
+     * 
+     * @param tester
+     * @param test
+     * @return
+     */
+    private boolean compare(String tester, String test) {
+        for (String id : ids) {
+            if (id.equals(tester)) {
+                return false;
+            } else if (id.equals(test)) {
+                return true;
+            }
+        }
+        return true;
     }
 
     /**

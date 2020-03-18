@@ -85,6 +85,11 @@ public final class DockSystem {
      */
     static final int PositionBottom = -5;
 
+    /**
+     * Place the view on the restored order.
+     */
+    static final int PositionRestore = -6;
+
     /** Layout Store */
     private static DockLayout layout;
 
@@ -113,7 +118,7 @@ public final class DockSystem {
             tab.setContent(view.ui());
             tab.setId(id);
 
-            layout.findAreaBy(id).or(root()).add(tab, PositionCenter);
+            layout.findAreaBy(id).or(root()).add(tab, PositionRestore);
         });
     }
 
