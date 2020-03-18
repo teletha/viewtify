@@ -11,6 +11,7 @@ package viewtify.ui.dock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -22,13 +23,21 @@ import javafx.scene.input.MouseEvent;
 
 import kiss.I;
 import kiss.Variable;
+import viewtify.Viewtify;
 
 /**
  * Describes a logical view area which displays the views within a tab pane.
  */
 class TabArea extends ViewArea<TabPane> {
 
+    /** The tab id manager. */
     public List<String> ids = new ArrayList();
+
+    /** The selected id. */
+    private String selected;
+
+    /** The initial selected id. We are doing a very tricky code to restore the tab selection. */
+    private String selectedInitial;
 
     /**
      * Create a new tab area.
@@ -36,6 +45,7 @@ class TabArea extends ViewArea<TabPane> {
     TabArea() {
         super(new TabPane());
 
+        saveSelectedTab();
         node.getStyleClass().add("stop-anime");
         node.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
         node.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
@@ -61,6 +71,54 @@ class TabArea extends ViewArea<TabPane> {
         header.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onHeaderDragExited(e, this));
         header.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onHeaderDragDropped(e, this));
         header.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onHeaderDragOver(e, this));
+    }
+
+    /**
+     * Get the selected property of this {@link TabArea}.
+     * 
+     * @return The selected property.
+     */
+    @SuppressWarnings("unused")
+    private String getSelected() {
+        return selected;
+    }
+
+    /**
+     * Set the selected property of this {@link TabArea}.
+     * 
+     * @param value The selected value to set.
+     */
+    @SuppressWarnings("unused")
+    private void setSelected(String value) {
+        // The selctedInitial field is guaranteed to be initialized only once.
+        // This initialization should only be performed when restoring from a configuration file.
+        if (selectedInitial == null && selected == null) selectedInitial = value;
+        this.selected = value;
+    }
+
+    /**
+     * Select if the specified tab must be selected at initialization. This selection is guaranteed
+     * to be performed only once.
+     * 
+     * @param tab
+     */
+    private void selectInitialTabOnlyOnce(Tab tab) {
+        if (selectedInitial != null && Objects.equals(tab.getId(), selectedInitial)) {
+            node.getSelectionModel().select(tab);
+            selectedInitial = null;
+        }
+    }
+
+    /**
+     * Save the current selected tab countinuously.
+     */
+    private void saveSelectedTab() {
+        Viewtify.observe(node.getSelectionModel().selectedItemProperty()).to(tab -> {
+            if (tab != null) {
+                selected = tab.getId();
+                DockSystem.saveLayout();
+            }
+        });
     }
 
     /**
@@ -125,6 +183,8 @@ class TabArea extends ViewArea<TabPane> {
             if (!ids.contains(tab.getId())) {
                 ids.add(position, tab.getId());
             }
+
+            selectInitialTabOnlyOnce(tab);
             break;
         }
     }
