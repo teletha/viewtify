@@ -377,9 +377,9 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             event.consume();
 
-            if (area == dragedTabArea) {
+            area.node.setEffect(null);
 
-            } else {
+            if (area != dragedTabArea) {
                 area.add(dragedDoppelganger, 0);
             }
         }
@@ -394,9 +394,7 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             event.consume();
 
-            if (area == dragedTabArea) {
-
-            } else {
+            if (area != dragedTabArea) {
                 revert(area);
             }
         }
@@ -412,34 +410,31 @@ public final class DockSystem {
             event.consume();
             event.acceptTransferModes(TransferMode.MOVE);
 
-            area.node.setEffect(null);
+            int[] values = calculate(area, event);
+            int actualIndex = values[0];
+            int pointerIndex = values[1];
+            int width = values[2];
 
-            Tab draggingTab = area == dragedTabArea ? dragedTab : dragedDoppelganger;
             ObservableList<Tab> tabs = area.node.getTabs();
-
-            int tabWidth = (int) tabs.get(0).getStyleableNode().prefWidth(-1);
-            int actualIndex = tabs.indexOf(draggingTab);
-            int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
-
             for (int i = 0; i < tabs.size(); i++) {
                 Node node = tabs.get(i).getStyleableNode();
 
                 if (i == actualIndex) {
-                    double lowerBound = -actualIndex * tabWidth;
-                    double upperBound = (tabs.size() - actualIndex - 1) * tabWidth;
-                    node.setTranslateX(Math.max(lowerBound, Math.min(event.getX() - tabWidth * i - tabWidth / 2, upperBound)));
+                    double lowerBound = -actualIndex * width;
+                    double upperBound = (tabs.size() - actualIndex - 1) * width;
+                    node.setTranslateX(Math.max(lowerBound, Math.min(event.getX() - width * (i + 0.5), upperBound)));
                     node.setViewOrder(-100);
                 } else if (i < actualIndex) {
-                    if (i < expectedIndex) {
+                    if (i < pointerIndex) {
                         node.setTranslateX(0);
                         node.setViewOrder(0);
                     } else {
-                        node.setTranslateX(tabWidth);
+                        node.setTranslateX(width);
                         node.setViewOrder(0);
                     }
                 } else {
-                    if (i <= expectedIndex) {
-                        node.setTranslateX(-tabWidth);
+                    if (i <= pointerIndex) {
+                        node.setTranslateX(-width);
                         node.setViewOrder(0);
                     } else {
                         node.setTranslateX(0);
@@ -460,25 +455,44 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             revert(area);
 
-            ObservableList<Tab> tabs = area.node.getTabs();
-
-            int tabWidth = (int) tabs.get(0).getStyleableNode().prefWidth(-1);
-            int actualIndex = tabs.indexOf(dragedTab);
-            int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
+            int[] values = calculate(area, event);
 
             dragedTabArea.remove(dragedTab, false);
-            area.add(dragedTab, expectedIndex);
-            area.node.getSelectionModel().select(expectedIndex);
+            area.add(dragedTab, values[1]);
+            area.node.getSelectionModel().select(values[1]);
 
             event.setDropCompleted(true);
             event.consume();
         }
     }
 
+    /**
+     * Calculate values (current dragging tab index, tab index on pointer and tab width)
+     * 
+     * @param area
+     * @param event
+     * @return
+     */
+    private static int[] calculate(TabArea area, DragEvent event) {
+        Tab draggingTab = area == dragedTabArea ? dragedTab : dragedDoppelganger;
+        ObservableList<Tab> tabs = area.node.getTabs();
+        int tabWidth = (int) tabs.get(0).getStyleableNode().prefWidth(-1);
+        int actualIndex = tabs.indexOf(draggingTab);
+        int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
+
+        return new int[] {actualIndex, expectedIndex, tabWidth};
+    }
+
+    /**
+     * Revert tab's location and remove doppelganger tab.
+     * 
+     * @param area
+     */
     private static void revert(TabArea area) {
         area.remove(dragedDoppelganger, false);
 
-        for (Node node : area.node.lookupAll(".tab")) {
+        for (Tab tab : area.node.getTabs()) {
+            Node node = tab.getStyleableNode();
             node.setTranslateX(0);
             node.setViewOrder(0);
         }

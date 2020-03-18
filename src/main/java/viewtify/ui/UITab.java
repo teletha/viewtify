@@ -128,7 +128,7 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
 
         // When searching for elements with Node#lookupAll, it searches even within
         // the contents of tabs, so it is very inefficient.
-        // Therefore, we will follow the child node one by one in order.
+        // Therefore, we will search the child node one by one in order.
         ObservableList<Node> children = getTabPane().getChildrenUnmodifiable();
         StackPane headerArea = (StackPane) children.get(children.size() - 1);
         StackPane headerRegion = (StackPane) headerArea.getChildren().get(1);
