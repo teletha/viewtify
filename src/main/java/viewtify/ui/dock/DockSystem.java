@@ -285,39 +285,7 @@ public final class DockSystem {
 
             revert(area);
 
-            // apply overlay effect
-            area.node.setEffect(effect);
-            switch (detectPosition(event, area.node)) {
-            case DockPosition.CENTER:
-                dropOverlay.setX(0);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(area.node.getWidth());
-                dropOverlay.setHeight(area.node.getHeight());
-                break;
-            case DockPosition.LEFT:
-                dropOverlay.setX(0);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(area.node.getWidth() * 0.5);
-                dropOverlay.setHeight(area.node.getHeight());
-                break;
-            case DockPosition.RIGHT:
-                dropOverlay.setX(area.node.getWidth() * 0.5);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(area.node.getWidth() * 0.5);
-                dropOverlay.setHeight(area.node.getHeight());
-                break;
-            case DockPosition.TOP:
-                dropOverlay.setX(0);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(area.node.getWidth());
-                dropOverlay.setHeight(area.node.getHeight() * 0.5);
-                break;
-            case DockPosition.BOTTOM:
-                dropOverlay.setX(0);
-                dropOverlay.setY(area.node.getHeight() * 0.5);
-                dropOverlay.setWidth(area.node.getWidth());
-                dropOverlay.setHeight(area.node.getHeight() * 0.5);
-            }
+            applyOverlay(area.node, detectPosition(event, area.node));
         }
     }
 
@@ -369,6 +337,53 @@ public final class DockSystem {
     }
 
     /**
+     * Apply overlay effect to the specified node.
+     * 
+     * @param node
+     * @param position
+     */
+    private static void applyOverlay(Node node, int position) {
+        node.setEffect(effect);
+
+        Bounds bounds = node.getBoundsInLocal();
+        if (position == 0) {
+            position = DockPosition.CENTER;
+            bounds = dragedTab.getStyleableNode().getBoundsInLocal();
+        }
+        switch (position) {
+        case DockPosition.CENTER:
+            dropOverlay.setX(0);
+            dropOverlay.setY(0);
+            dropOverlay.setWidth(bounds.getWidth());
+            dropOverlay.setHeight(bounds.getHeight());
+            break;
+        case DockPosition.LEFT:
+            dropOverlay.setX(0);
+            dropOverlay.setY(0);
+            dropOverlay.setWidth(bounds.getWidth() * 0.5);
+            dropOverlay.setHeight(bounds.getHeight());
+            break;
+        case DockPosition.RIGHT:
+            dropOverlay.setX(bounds.getWidth() * 0.5);
+            dropOverlay.setY(0);
+            dropOverlay.setWidth(bounds.getWidth() * 0.5);
+            dropOverlay.setHeight(bounds.getHeight());
+            break;
+        case DockPosition.TOP:
+            dropOverlay.setX(0);
+            dropOverlay.setY(0);
+            dropOverlay.setWidth(bounds.getWidth());
+            dropOverlay.setHeight(bounds.getHeight() * 0.5);
+            break;
+        case DockPosition.BOTTOM:
+            dropOverlay.setX(0);
+            dropOverlay.setY(bounds.getHeight() * 0.5);
+            dropOverlay.setWidth(bounds.getWidth());
+            dropOverlay.setHeight(bounds.getHeight() * 0.5);
+        }
+    }
+
+    /**
      * Handle the drag entered event for panes.
      *
      * @param event the drag event.
@@ -379,8 +394,11 @@ public final class DockSystem {
 
             area.node.setEffect(null);
 
-            if (area != dragedTabArea) {
-                area.add(dragedDoppelganger, 0);
+            if (area == dragedTabArea) {
+                applyOverlay(dragedTab.getStyleableNode(), DockPosition.CENTER);
+            } else {
+                area.add(dragedDoppelganger, DockPosition.CENTER);
+                applyOverlay(dragedDoppelganger.getStyleableNode(), 0);
             }
         }
     }
@@ -394,7 +412,9 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             event.consume();
 
-            if (area != dragedTabArea) {
+            if (area == dragedTabArea) {
+                dragedTab.getStyleableNode().setEffect(null);
+            } else {
                 revert(area);
             }
         }
@@ -474,10 +494,9 @@ public final class DockSystem {
      * @return
      */
     private static int[] calculate(TabArea area, DragEvent event) {
-        Tab draggingTab = area == dragedTabArea ? dragedTab : dragedDoppelganger;
         ObservableList<Tab> tabs = area.node.getTabs();
         int tabWidth = (int) tabs.get(0).getStyleableNode().prefWidth(-1);
-        int actualIndex = tabs.indexOf(draggingTab);
+        int actualIndex = tabs.indexOf(area == dragedTabArea ? dragedTab : dragedDoppelganger);
         int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
 
         return new int[] {actualIndex, expectedIndex, tabWidth};
