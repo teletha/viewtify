@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
+import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -297,8 +298,14 @@ public final class DockSystem {
      */
     static void onDragDropped(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
+            // The insertion point is determined from the position of the pointer, but at that time
+            // it is necessary to calculate the actual tab size, and if the tab is removed, the size
+            // cannot be calculated.
+            // Therefore, it is necessary to calculate it first.
+            int position = detectPosition(event, area.node);
+
             dragedTabArea.remove(dragedTab, false);
-            area.add(dragedTab, detectPosition(event, area.node));
+            area.add(dragedTab, position);
 
             event.setDropCompleted(true);
             event.consume();
@@ -551,18 +558,32 @@ public final class DockSystem {
      * @return The position value for the detected sub area.
      */
     private static int detectPosition(DragEvent event, Control source) {
-        double areaX = event.getX() / source.getWidth();
-        double areaY = event.getY() / source.getHeight();
-        if (0.25 <= areaX && areaX < 0.75 && 0.25 <= areaY && areaY < 0.75) {
-            return DockPosition.CENTER;
-        } else if (areaY < 0.25) {
-            return DockPosition.TOP;
-        } else if (areaY >= 0.75) {
-            return DockPosition.BOTTOM;
-        } else if (areaX < 0.25) {
-            return DockPosition.LEFT;
-        } else {
-            return DockPosition.RIGHT;
+        try {
+            Side side = dragedTabArea.node.getSide();
+            double horizontalPadding = side.isHorizontal() ? dragedTab.getStyleableNode().prefHeight(-1) : 0;
+            double verticalPadding = side.isVertical() ? dragedTab.getStyleableNode().prefWidth(-1) : 0;
+            double width = source.getWidth() - verticalPadding;
+            double height = source.getHeight() - horizontalPadding;
+
+            boolean bottom = event.getX() * height / width < event.getY() - horizontalPadding;
+            boolean right = (height - event.getX() * height / width) < event.getY() - horizontalPadding;
+
+            if (bottom) {
+                if (right) {
+                    return DockPosition.BOTTOM;
+                } else {
+                    return DockPosition.LEFT;
+                }
+            } else {
+                if (right) {
+                    return DockPosition.RIGHT;
+                } else {
+                    return DockPosition.TOP;
+                }
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+            throw I.quiet(e);
         }
     }
 
