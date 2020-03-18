@@ -293,8 +293,8 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             event.consume();
 
-            // erase overlay effect
             area.node.setEffect(null);
+
             revert(area);
         }
     }

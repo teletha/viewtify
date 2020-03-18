@@ -63,15 +63,6 @@ class TabArea extends ViewArea<TabPane> {
     }
 
     /**
-     * Remove a view from this area. If this area is empty it will also be removed.
-     *
-     * @param tab The view to remove
-     */
-    void remove(Tab tab) {
-        remove(tab, true);
-    }
-
-    /**
      * Remove a view from this area. If checkEmpty is true it checks if this area is empty and
      * remove this area.
      *
@@ -108,15 +99,16 @@ class TabArea extends ViewArea<TabPane> {
             super.add(tab, position);
             break;
 
-        // case DockPosition.CENTER:
-        // break;
+        case DockSystem.PositionCenter:
+            position = node.getTabs().size();
+            // fall-through
 
         default:
-            node.getTabs().add(position == DockSystem.PositionCenter ? node.getTabs().size() : position, tab);
-            tab.setOnCloseRequest(e -> remove(tab));
+            node.getTabs().add(position, tab);
+            tab.setOnCloseRequest(e -> remove(tab, true));
 
             if (!ids.contains(tab.getId())) {
-                ids.add(tab.getId());
+                ids.add(position, tab.getId());
             }
             break;
         }
