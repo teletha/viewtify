@@ -47,6 +47,7 @@ import javafx.stage.WindowEvent;
 import kiss.I;
 import kiss.Storable;
 import kiss.Variable;
+import kiss.WiseFunction;
 import viewtify.Viewtify;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterfaceProvider;
@@ -92,7 +93,7 @@ public final class DockSystem {
     static final int PositionRestore = -6;
 
     /** Configuration store. */
-    static final BooleanProperty HideTab = new SimpleBooleanProperty(false);
+    static final BooleanProperty HideTab = new SimpleBooleanProperty(true);
 
     /** Layout Store */
     private static DockLayout layout;
@@ -171,6 +172,24 @@ public final class DockSystem {
         }
     }
 
+    static TabArea mainTabArea() {
+        WiseFunction<ViewArea<?>, TabArea> finder = I.recurse((self, area) -> {
+            if (area instanceof TabArea) {
+                return (TabArea) area;
+            }
+
+            for (ViewArea child : area.children) {
+                TabArea c = self.apply(child);
+
+                if (c != null) {
+                    return c;
+                }
+            }
+            return null;
+        });
+        return finder.apply(root());
+    }
+
     /**
      * Open new window with the specified {@link RootArea}.
      * 
@@ -224,7 +243,7 @@ public final class DockSystem {
     private static final DataFormat DnD = new DataFormat("drag and drop manager");
 
     /** Temporal storage for the draged tab */
-    private static Tab dragedTab;
+    private static UITab dragedTab;
 
     /** Temporal storage for the draged tab */
     private static TabArea dragedTabArea;
@@ -253,7 +272,7 @@ public final class DockSystem {
      * @param event The mouse event.
      * @param tab The target tab.
      */
-    static void onDragDetected(MouseEvent event, TabArea area, Tab tab) {
+    static void onDragDetected(MouseEvent event, TabArea area, UITab tab) {
         event.consume(); // stop event propagation
 
         dragedTab = tab;
@@ -564,6 +583,7 @@ public final class DockSystem {
 
         for (Tab tab : area.node.getTabs()) {
             Node node = tab.getStyleableNode();
+            System.out.println(tab.getId());
             node.setTranslateX(0);
             node.setViewOrder(0);
         }

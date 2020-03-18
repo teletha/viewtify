@@ -15,10 +15,10 @@ import java.util.Objects;
 
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
-import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 
 import kiss.Variable;
+import viewtify.ui.UITab;
 
 /**
  * A ViewArea is a node within the area tree. It has two children which are self view areas.
@@ -94,7 +94,7 @@ abstract class ViewArea<P extends Parent> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    protected void add(Tab view, int position) {
+    protected void add(UITab view, int position) {
         switch (position) {
         case DockSystem.PositionCenter:
             children.get(0).add(view, position);
@@ -104,7 +104,7 @@ abstract class ViewArea<P extends Parent> {
             if (getOrientation() == Orientation.VERTICAL) {
                 children.get(0).add(view, position);
             } else {
-                ViewArea target = new TabArea();
+                ViewArea target = createArea();
                 target.add(view, DockSystem.PositionCenter);
                 split(target, this, Orientation.VERTICAL);
             }
@@ -114,7 +114,7 @@ abstract class ViewArea<P extends Parent> {
             if (getOrientation() == Orientation.VERTICAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {
-                ViewArea target = new TabArea();
+                ViewArea target = createArea();
                 target.add(view, DockSystem.PositionCenter);
                 split(this, target, Orientation.VERTICAL);
             }
@@ -124,7 +124,7 @@ abstract class ViewArea<P extends Parent> {
             if (getOrientation() == Orientation.HORIZONTAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {
-                ViewArea target = new TabArea();
+                ViewArea target = createArea();
                 target.add(view, DockSystem.PositionCenter);
                 split(target, this, Orientation.HORIZONTAL);
             }
@@ -134,12 +134,16 @@ abstract class ViewArea<P extends Parent> {
             if (getOrientation() == Orientation.HORIZONTAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {
-                ViewArea target = new TabArea();
+                ViewArea target = createArea();
                 target.add(view, DockSystem.PositionCenter);
                 split(this, target, Orientation.HORIZONTAL);
             }
             break;
         }
+    }
+
+    private ViewArea createArea() {
+        return DockSystem.HideTab.get() ? new TileArea() : new TabArea();
     }
 
     /**

@@ -9,9 +9,10 @@
  */
 package viewtify.ui.dock;
 
-import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+
+import viewtify.ui.UITab;
 
 /**
  * A RootArea is a special {@link ViewArea} which has no parent and is directly used as root.
@@ -54,7 +55,7 @@ final class RootArea extends ViewArea<HBox> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(Tab tab, int position) {
+    protected void add(UITab tab, int position) {
         if (children.isEmpty()) {
             setChild(0, new TabArea());
         }

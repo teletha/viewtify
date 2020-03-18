@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.ui.UITab;
 
 /**
  * Describes a logical view area which displays the views within a tab pane.
@@ -32,6 +33,9 @@ class TabArea extends ViewArea<TabPane> {
 
     /** The tab id manager. */
     public List<String> ids = new ArrayList();
+
+    /** The tiled id manager. */
+    public List<String> tiled = new ArrayList();
 
     /** The selected id. */
     private String selected;
@@ -58,7 +62,7 @@ class TabArea extends ViewArea<TabPane> {
                     .take(tab -> tab.localToScene(tab.getBoundsInLocal()).contains(e.getSceneX(), e.getSceneY()))
                     .first()
                     .to(tab -> {
-                        DockSystem.onDragDetected(e, this, node.getSelectionModel().getSelectedItem());
+                        DockSystem.onDragDetected(e, this, (UITab) node.getSelectionModel().getSelectedItem());
                     });
         });
 
@@ -150,7 +154,7 @@ class TabArea extends ViewArea<TabPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(Tab tab, int position) {
+    protected void add(UITab tab, int position) {
         if (position == DockSystem.PositionRestore) {
             ObservableList<Tab> items = node.getTabs();
             position = items.size();
