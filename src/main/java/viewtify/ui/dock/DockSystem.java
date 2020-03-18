@@ -312,11 +312,16 @@ public final class DockSystem {
     static void onDragOver(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
             event.consume();
-            event.acceptTransferModes(TransferMode.MOVE);
 
             revert(area);
 
-            applyOverlay(area.node, detectPosition(event, area.node));
+            int position = detectPosition(event, area.node);
+            if (position == PositionCenter && area == dragedTabArea) {
+                area.node.setEffect(null);
+            } else {
+                applyOverlay(area.node, position);
+                event.acceptTransferModes(TransferMode.MOVE);
+            }
         }
     }
 
@@ -333,9 +338,10 @@ public final class DockSystem {
             // cannot be calculated.
             // Therefore, it is necessary to calculate it first.
             int position = detectPosition(event, area.node);
-
-            dragedTabArea.remove(dragedTab, false);
-            area.add(dragedTab, position);
+            if (position != PositionCenter || area != dragedTabArea) {
+                dragedTabArea.remove(dragedTab, false);
+                area.add(dragedTab, position);
+            }
 
             event.setDropCompleted(true);
             event.consume();

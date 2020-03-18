@@ -53,7 +53,8 @@ class TabArea extends ViewArea<TabPane> {
         node.addEventHandler(DragEvent.DRAG_DONE, e -> DockSystem.onDragDone(e, this));
         node.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
         node.addEventHandler(MouseEvent.DRAG_DETECTED, e -> {
-            I.signal(node.lookupAll(".tab"))
+            I.signal(node.getTabs())
+                    .map(tab -> tab.getStyleableNode())
                     .take(tab -> tab.localToScene(tab.getBoundsInLocal()).contains(e.getSceneX(), e.getSceneY()))
                     .first()
                     .to(tab -> {
