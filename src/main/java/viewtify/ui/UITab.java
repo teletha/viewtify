@@ -13,6 +13,7 @@ import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.StackPane;
@@ -36,6 +37,9 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
     /** The cached reference for the styleable node . */
     private WeakReference<Node> styleable;
 
+    /**
+     * 
+     */
     public UITab() {
         this(null);
     }
@@ -117,17 +121,18 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
      * {@inheritDoc}
      */
     @Override
-    public Node getStyleableNode() {
+    public synchronized Node getStyleableNode() {
         if (styleable != null) {
             return styleable.get();
         }
 
-        // If you use Node#lookupAll, it will be a search target even within the contents of the
-        // tab, so there is a concern that the performance will down. So I will go through the
-        // components one by one.
-        StackPane header = (StackPane) getTabPane().lookup(".tab-header-area");
-        for (Node node : ((StackPane) header.getChildren().get(1)).getChildren()) {
-            System.out.println(node);
+        // When searching for elements with Node#lookupAll, it searches even within
+        // the contents of tabs, so it is very inefficient.
+        // Therefore, we will follow the child node one by one in order.
+        ObservableList<Node> children = getTabPane().getChildrenUnmodifiable();
+        StackPane headerArea = (StackPane) children.get(children.size() - 1);
+        StackPane headerRegion = (StackPane) headerArea.getChildren().get(1);
+        for (Node node : headerRegion.getChildren()) {
             if (node.getId() == getId()) {
                 styleable = new WeakReference(node);
                 break;
