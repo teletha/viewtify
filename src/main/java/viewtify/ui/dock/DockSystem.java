@@ -558,42 +558,37 @@ public final class DockSystem {
      * @return The position value for the detected sub area.
      */
     private static int detectPosition(DragEvent event, Control source) {
-        try {
-            Side side = dragedTabArea.node.getSide();
-            double horizontalPadding = side.isHorizontal() ? dragedTab.getStyleableNode().prefHeight(-1) : 0;
-            double verticalPadding = side.isVertical() ? dragedTab.getStyleableNode().prefWidth(-1) : 0;
-            double x = event.getX() - verticalPadding;
-            double y = event.getY() - horizontalPadding;
-            double width = source.getWidth() - verticalPadding;
-            double height = source.getHeight() - horizontalPadding;
+        Side side = dragedTabArea.node.getSide();
+        double horizontalPadding = side.isHorizontal() ? dragedTab.getStyleableNode().prefHeight(-1) : 0;
+        double verticalPadding = side.isVertical() ? dragedTab.getStyleableNode().prefWidth(-1) : 0;
+        double x = event.getX() - verticalPadding;
+        double y = event.getY() - horizontalPadding;
+        double width = source.getWidth() - verticalPadding;
+        double height = source.getHeight() - horizontalPadding;
 
-            double min = 0.3;
-            double max = 1 - min;
-            double areaX = x / width;
-            double areaY = y / height;
-            if (min <= areaX && areaX < max && min <= areaY && areaY < max) {
-                return DockPosition.CENTER;
-            }
+        double min = 0.3;
+        double max = 1 - min;
+        double areaX = x / width;
+        double areaY = y / height;
+        if (min <= areaX && areaX < max && min <= areaY && areaY < max) {
+            return DockPosition.CENTER;
+        }
 
-            boolean bottom = event.getX() * height / width < y;
-            boolean right = (height - event.getX() * height / width) < y;
+        boolean bottom = event.getX() * height / width < y;
+        boolean right = (height - event.getX() * height / width) < y;
 
-            if (bottom) {
-                if (right) {
-                    return DockPosition.BOTTOM;
-                } else {
-                    return DockPosition.LEFT;
-                }
+        if (bottom) {
+            if (right) {
+                return DockPosition.BOTTOM;
             } else {
-                if (right) {
-                    return DockPosition.RIGHT;
-                } else {
-                    return DockPosition.TOP;
-                }
+                return DockPosition.LEFT;
             }
-        } catch (Throwable e) {
-            e.printStackTrace();
-            throw I.quiet(e);
+        } else {
+            if (right) {
+                return DockPosition.RIGHT;
+            } else {
+                return DockPosition.TOP;
+            }
         }
     }
 
