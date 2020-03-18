@@ -562,11 +562,21 @@ public final class DockSystem {
             Side side = dragedTabArea.node.getSide();
             double horizontalPadding = side.isHorizontal() ? dragedTab.getStyleableNode().prefHeight(-1) : 0;
             double verticalPadding = side.isVertical() ? dragedTab.getStyleableNode().prefWidth(-1) : 0;
+            double x = event.getX() - verticalPadding;
+            double y = event.getY() - horizontalPadding;
             double width = source.getWidth() - verticalPadding;
             double height = source.getHeight() - horizontalPadding;
 
-            boolean bottom = event.getX() * height / width < event.getY() - horizontalPadding;
-            boolean right = (height - event.getX() * height / width) < event.getY() - horizontalPadding;
+            double min = 0.3;
+            double max = 1 - min;
+            double areaX = x / width;
+            double areaY = y / height;
+            if (min <= areaX && areaX < max && min <= areaY && areaY < max) {
+                return DockPosition.CENTER;
+            }
+
+            boolean bottom = event.getX() * height / width < y;
+            boolean right = (height - event.getX() * height / width) < y;
 
             if (bottom) {
                 if (right) {
