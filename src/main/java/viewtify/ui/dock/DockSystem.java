@@ -26,7 +26,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Control;
 import javafx.scene.control.Tab;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
@@ -295,7 +294,7 @@ public final class DockSystem {
      *
      * @param event the drag event.
      */
-    static void onDragEntered(DragEvent event, TabArea area) {
+    static void onDragEntered(DragEvent event, ViewArea area) {
         if (isValidDragboard(event)) {
             event.consume();
 
@@ -308,13 +307,11 @@ public final class DockSystem {
      *
      * @param event the drag event.
      */
-    static void onDragExited(DragEvent event, TabArea area) {
+    static void onDragExited(DragEvent event, ViewArea area) {
         if (isValidDragboard(event)) {
             event.consume();
 
             area.node.setEffect(null);
-
-            revert(area);
         }
     }
 
@@ -323,11 +320,9 @@ public final class DockSystem {
      *
      * @param event The drag event.
      */
-    static void onDragOver(DragEvent event, TabArea area) {
+    static void onDragOver(DragEvent event, ViewArea area) {
         if (isValidDragboard(event)) {
             event.consume();
-
-            revert(area);
 
             int position = detectPosition(event, area.node);
             if (position == PositionCenter && area == dragedTabArea) {
@@ -345,7 +340,7 @@ public final class DockSystem {
      *
      * @param event The drag event.
      */
-    static void onDragDropped(DragEvent event, TabArea area) {
+    static void onDragDropped(DragEvent event, ViewArea area) {
         if (isValidDragboard(event)) {
             // The insertion point is determined from the position of the pointer, but at that time
             // it is necessary to calculate the actual tab size, and if the tab is removed, the size
@@ -469,10 +464,10 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             event.consume();
 
+            revert(area);
+
             if (area == dragedTabArea) {
                 dragedTab.getStyleableNode().setEffect(null);
-            } else {
-                revert(area);
             }
         }
     }
@@ -607,14 +602,15 @@ public final class DockSystem {
      * @param event The drag event
      * @return The position value for the detected sub area.
      */
-    private static int detectPosition(DragEvent event, Control source) {
+    private static int detectPosition(DragEvent event, Parent source) {
         Side side = dragedTabArea.node.getSide();
+        Bounds bound = source.getBoundsInLocal();
         double horizontalPadding = side.isHorizontal() ? dragedTab.getStyleableNode().prefHeight(-1) : 0;
         double verticalPadding = side.isVertical() ? dragedTab.getStyleableNode().prefWidth(-1) : 0;
         double x = event.getX() - verticalPadding;
         double y = event.getY() - horizontalPadding;
-        double width = source.getWidth() - verticalPadding;
-        double height = source.getHeight() - horizontalPadding;
+        double width = bound.getWidth() - verticalPadding;
+        double height = bound.getHeight() - horizontalPadding;
 
         double min = 0.3;
         double max = 1 - min;

@@ -67,7 +67,8 @@ abstract class ViewArea<P extends Parent> {
      * 
      * @return The children property.
      */
-    final List<ViewArea> getChildren() {
+    @SuppressWarnings("unused")
+    private final List<ViewArea> getChildren() {
         return children;
     }
 
@@ -76,7 +77,8 @@ abstract class ViewArea<P extends Parent> {
      * 
      * @param children The children value to set.
      */
-    final void setChildren(List<ViewArea> children) {
+    @SuppressWarnings("unused")
+    private final void setChildren(List<ViewArea> children) {
         for (int i = 0; i < children.size(); i++) {
             setChild(i, children.get(i));
         }
@@ -85,9 +87,9 @@ abstract class ViewArea<P extends Parent> {
     /**
      * Add the view to this area at position.
      * <p/>
-     * If position is {@link DockSystem#PositionCenter} it will be added to that child that is defined as
-     * editor area. Otherwise this area is split and the view will be positioned according the
-     * position parameter.
+     * If position is {@link DockSystem#PositionCenter} it will be added to that child that is
+     * defined as editor area. Otherwise this area is split and the view will be positioned
+     * according the position parameter.
      *
      * @param view The view to add.
      * @param position Add the view at this position.
