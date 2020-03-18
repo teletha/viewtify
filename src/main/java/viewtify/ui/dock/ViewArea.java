@@ -85,7 +85,7 @@ abstract class ViewArea<P extends Parent> {
     /**
      * Add the view to this area at position.
      * <p/>
-     * If position is {@link DockSystem#CENTER} it will be added to that child that is defined as
+     * If position is {@link DockSystem#PositionCenter} it will be added to that child that is defined as
      * editor area. Otherwise this area is split and the view will be positioned according the
      * position parameter.
      *
@@ -94,46 +94,46 @@ abstract class ViewArea<P extends Parent> {
      */
     protected void add(Tab view, int position) {
         switch (position) {
-        case DockPosition.CENTER:
+        case DockSystem.PositionCenter:
             children.get(0).add(view, position);
             break;
 
-        case DockPosition.TOP:
+        case DockSystem.PositionTop:
             if (getOrientation() == Orientation.VERTICAL) {
                 children.get(0).add(view, position);
             } else {
                 ViewArea target = new TabArea();
-                target.add(view, DockPosition.CENTER);
+                target.add(view, DockSystem.PositionCenter);
                 split(target, this, Orientation.VERTICAL);
             }
             break;
 
-        case DockPosition.BOTTOM:
+        case DockSystem.PositionBottom:
             if (getOrientation() == Orientation.VERTICAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {
                 ViewArea target = new TabArea();
-                target.add(view, DockPosition.CENTER);
+                target.add(view, DockSystem.PositionCenter);
                 split(this, target, Orientation.VERTICAL);
             }
             break;
 
-        case DockPosition.LEFT:
+        case DockSystem.PositionLeft:
             if (getOrientation() == Orientation.HORIZONTAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {
                 ViewArea target = new TabArea();
-                target.add(view, DockPosition.CENTER);
+                target.add(view, DockSystem.PositionCenter);
                 split(target, this, Orientation.HORIZONTAL);
             }
             break;
 
-        case DockPosition.RIGHT:
+        case DockSystem.PositionRight:
             if (getOrientation() == Orientation.HORIZONTAL) {
                 children.get(children.size() - 1).add(view, position);
             } else {
                 ViewArea target = new TabArea();
-                target.add(view, DockPosition.CENTER);
+                target.add(view, DockSystem.PositionCenter);
                 split(this, target, Orientation.HORIZONTAL);
             }
             break;

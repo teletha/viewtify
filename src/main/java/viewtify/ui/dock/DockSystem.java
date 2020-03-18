@@ -60,6 +60,31 @@ public final class DockSystem {
     /** The root user interface for the docking system. */
     public static final UserInterfaceProvider<Parent> UI = () -> root().node;
 
+    /**
+     * Place the view within the center.
+     */
+    static final int PositionCenter = -1;
+
+    /**
+     * Place the view on the top side.
+     */
+    static final int PositionTop = -2;
+
+    /**
+     * Place the view on the left side.
+     */
+    static final int PositionLeft = -3;
+
+    /**
+     * Place the window on the right side.
+     */
+    static final int PositionRight = -4;
+
+    /**
+     * Place the window on the bottom.
+     */
+    static final int PositionBottom = -5;
+
     /** Layout Store */
     private static DockLayout layout;
 
@@ -88,7 +113,7 @@ public final class DockSystem {
             tab.setContent(view.ui());
             tab.setId(id);
 
-            layout.findAreaBy(id).or(root()).add(tab, DockPosition.CENTER);
+            layout.findAreaBy(id).or(root()).add(tab, PositionCenter);
         });
     }
 
@@ -332,7 +357,7 @@ public final class DockSystem {
 
             openNewWindow(area, bounds, e -> {
                 dragedTabArea.remove(dragedTab, false);
-                area.add(dragedTab, DockPosition.CENTER);
+                area.add(dragedTab, PositionCenter);
                 layout.windows.add(area);
             });
 
@@ -354,35 +379,35 @@ public final class DockSystem {
 
         Bounds bounds = node.getBoundsInLocal();
         if (position == 0) {
-            position = DockPosition.CENTER;
+            position = PositionCenter;
             bounds = dragedTab.getStyleableNode().getBoundsInLocal();
         }
         switch (position) {
-        case DockPosition.CENTER:
+        case PositionCenter:
             dropOverlay.setX(0);
             dropOverlay.setY(0);
             dropOverlay.setWidth(bounds.getWidth());
             dropOverlay.setHeight(bounds.getHeight());
             break;
-        case DockPosition.LEFT:
+        case PositionLeft:
             dropOverlay.setX(0);
             dropOverlay.setY(0);
             dropOverlay.setWidth(bounds.getWidth() * 0.5);
             dropOverlay.setHeight(bounds.getHeight());
             break;
-        case DockPosition.RIGHT:
+        case PositionRight:
             dropOverlay.setX(bounds.getWidth() * 0.5);
             dropOverlay.setY(0);
             dropOverlay.setWidth(bounds.getWidth() * 0.5);
             dropOverlay.setHeight(bounds.getHeight());
             break;
-        case DockPosition.TOP:
+        case PositionTop:
             dropOverlay.setX(0);
             dropOverlay.setY(0);
             dropOverlay.setWidth(bounds.getWidth());
             dropOverlay.setHeight(bounds.getHeight() * 0.5);
             break;
-        case DockPosition.BOTTOM:
+        case PositionBottom:
             dropOverlay.setX(0);
             dropOverlay.setY(bounds.getHeight() * 0.5);
             dropOverlay.setWidth(bounds.getWidth());
@@ -402,9 +427,9 @@ public final class DockSystem {
             area.node.setEffect(null);
 
             if (area == dragedTabArea) {
-                applyOverlay(dragedTab.getStyleableNode(), DockPosition.CENTER);
+                applyOverlay(dragedTab.getStyleableNode(), PositionCenter);
             } else {
-                area.add(dragedDoppelganger, DockPosition.CENTER);
+                area.add(dragedDoppelganger, PositionCenter);
                 applyOverlay(dragedDoppelganger.getStyleableNode(), 0);
             }
         }
@@ -571,7 +596,7 @@ public final class DockSystem {
         double areaX = x / width;
         double areaY = y / height;
         if (min <= areaX && areaX < max && min <= areaY && areaY < max) {
-            return DockPosition.CENTER;
+            return PositionCenter;
         }
 
         boolean bottom = event.getX() * height / width < y;
@@ -579,15 +604,15 @@ public final class DockSystem {
 
         if (bottom) {
             if (right) {
-                return DockPosition.BOTTOM;
+                return PositionBottom;
             } else {
-                return DockPosition.LEFT;
+                return PositionLeft;
             }
         } else {
             if (right) {
-                return DockPosition.RIGHT;
+                return PositionRight;
             } else {
-                return DockPosition.TOP;
+                return PositionTop;
             }
         }
     }

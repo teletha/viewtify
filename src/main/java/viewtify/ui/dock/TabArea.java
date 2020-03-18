@@ -101,10 +101,10 @@ class TabArea extends ViewArea<TabPane> {
     @Override
     protected void add(Tab tab, int position) {
         switch (position) {
-        case DockPosition.TOP:
-        case DockPosition.BOTTOM:
-        case DockPosition.LEFT:
-        case DockPosition.RIGHT:
+        case DockSystem.PositionTop:
+        case DockSystem.PositionBottom:
+        case DockSystem.PositionLeft:
+        case DockSystem.PositionRight:
             super.add(tab, position);
             break;
 
@@ -112,7 +112,7 @@ class TabArea extends ViewArea<TabPane> {
         // break;
 
         default:
-            node.getTabs().add(position == DockPosition.CENTER ? node.getTabs().size() : position, tab);
+            node.getTabs().add(position == DockSystem.PositionCenter ? node.getTabs().size() : position, tab);
             tab.setOnCloseRequest(e -> remove(tab));
 
             if (!ids.contains(tab.getId())) {
