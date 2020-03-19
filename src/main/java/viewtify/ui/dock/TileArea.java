@@ -11,12 +11,13 @@ package viewtify.ui.dock;
 
 import java.util.Objects;
 
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.Pane;
 
+import kiss.I;
 import kiss.Variable;
+import kiss.WiseRunnable;
 import viewtify.ui.UITab;
 import viewtify.ui.helper.User;
 
@@ -28,12 +29,16 @@ class TileArea extends ViewArea<Pane> {
     /** The id manager. */
     public String id;
 
+    /** The operation to remove content. */
+    private WiseRunnable removePreviousContent = I.NoOP;
+
     /**
      * Create a new tab area.
      */
     TileArea() {
         super(new Pane());
 
+        node.getChildren().add(new Pane());
         node.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
         node.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
         node.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
@@ -54,36 +59,37 @@ class TileArea extends ViewArea<Pane> {
             break;
 
         default:
-            this.id = tab.getId();
+            removePreviousContent.run();
 
-            TabArea main = DockSystem.mainTabArea();
-            tab.setId("Tiled#" + tab.getId());
-            main.add(tab, position, true);
-
+            String id = tab.getId();
+            String tiledId = "Tiled#" + id;
             Node content = tab.getContent();
+            TabArea main = DockSystem.mainTabArea();
+
+            removePreviousContent = () -> {
+                tab.setDisable(false);
+                tab.setContent(content);
+                tab.removeContext();
+
+                // HACK : replace tiled ID
+                int index = main.ids.indexOf(tiledId);
+                main.ids.set(index, id);
+                tab.setId(id);
+
+                parent.remove(this);
+            };
+
             tab.setDisable(true);
-            tab.context(TileArea.class, c -> {
-                c.menu().text("Close").when(User.Action, () -> {
-                    tab.setDisable(false);
-                    tab.setContent(content);
-
-                    int index = main.ids.indexOf(tab.getId());
-                    main.ids.set(index, this.id);
-                    tab.setId(this.id);
-
-                    parent.remove(this);
-
-                    tab.removeContext(TileArea.class);
-                });
+            tab.setContent(null);
+            tab.context(c -> {
+                c.menu().text("Close").when(User.Action, removePreviousContent);
             });
 
-            ObservableList<Node> items = node.getChildren();
-            if (items.isEmpty()) {
-                items.add(content);
-            } else {
-                items.set(0, content);
-            }
+            this.id = id;
+            this.node.getChildren().set(0, content);
 
+            tab.setId(tiledId);
+            main.add(tab, position, true);
             break;
         }
     }
