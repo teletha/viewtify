@@ -18,13 +18,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
 
 import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UITab;
 import viewtify.ui.UITabPane;
+import viewtify.ui.helper.User;
 
 /**
  * Describes a logical view area which displays the views within a tab pane.
@@ -47,13 +47,13 @@ class TabArea extends ViewArea<UITabPane> {
         super(new UITabPane(null));
 
         saveSelectedTab();
-        node.ui.getStyleClass().add("stop-anime");
-        node.ui.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
-        node.ui.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
-        node.ui.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
-        node.ui.addEventHandler(DragEvent.DRAG_DONE, e -> DockSystem.onDragDone(e, this));
-        node.ui.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
-        node.ui.addEventHandler(MouseEvent.DRAG_DETECTED, e -> {
+        node.style("stop-anime");
+        node.when(User.DragOver, e -> DockSystem.onDragOver(e, this));
+        node.when(User.DragEnter, e -> DockSystem.onDragEntered(e, this));
+        node.when(User.DragExit, e -> DockSystem.onDragExited(e, this));
+        node.when(User.DragDrop, e -> DockSystem.onDragDropped(e, this));
+        node.when(User.DragFinish, e -> DockSystem.onDragDone(e, this));
+        node.when(User.DragStart, e -> {
             I.signal(node.ui.getTabs())
                     .map(tab -> tab.getStyleableNode())
                     .take(tab -> tab.localToScene(tab.getBoundsInLocal()).contains(e.getSceneX(), e.getSceneY()))

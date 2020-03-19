@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -123,6 +124,24 @@ public final class User<E extends Event> {
     public static final User<MouseEvent> click(MouseButton button) {
         return new User<>(MouseEvent.MOUSE_CLICKED, (helper, signal) -> signal.take(e -> e.getButton() == button));
     }
+
+    /** User Action */
+    public static final User<MouseEvent> DragStart = new User(MouseEvent.DRAG_DETECTED);
+
+    /** User Action */
+    public static final User<DragEvent> DragEnter = new User(DragEvent.DRAG_ENTERED);
+
+    /** User Action */
+    public static final User<DragEvent> DragExit = new User(DragEvent.DRAG_EXITED);
+
+    /** User Action */
+    public static final User<DragEvent> DragOver = new User(DragEvent.DRAG_OVER);
+
+    /** User Action */
+    public static final User<DragEvent> DragDrop = new User(DragEvent.DRAG_DROPPED);
+
+    /** User Action */
+    public static final User<DragEvent> DragFinish = new User(DragEvent.DRAG_DONE);
 
     /** User Action */
     public static final User<MouseEvent> MouseClick = new User(MouseEvent.MOUSE_CLICKED);

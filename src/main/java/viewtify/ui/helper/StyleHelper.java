@@ -9,10 +9,13 @@
  */
 package viewtify.ui.helper;
 
+import java.util.List;
+
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 
+import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import stylist.Style;
@@ -31,27 +34,43 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     S ui();
 
     /**
+     * Apply style class name to user interface.
+     * 
+     * @param className A list of class names to apply.
+     * @return Chainable API.
+     */
+    default Self style(String... classNames) {
+        return style(List.of(classNames));
+    }
+
+    /**
      * Apply {@link Style} to user interface;
      * 
      * @param styles A list of {@link Style}s to apply.
      * @return Chainable API.
      */
     default Self style(Style... styles) {
-        if (styles != null && styles.length != 0) {
-            Viewtify.inUI(() -> {
-                ObservableList<String> classes = ui().getStyleClass();
+        return style(I.signal(styles).flatArray(Style::className).toList());
+    }
 
-                for (Style style : styles) {
-                    if (style != null) {
-                        for (String name : style.className()) {
-                            if (!classes.contains(name)) {
-                                classes.add(name);
-                            }
-                        }
+    /**
+     * Apply style to user interface;
+     * 
+     * @param styles A list of styles to apply.
+     * @return Chainable API.
+     */
+    private Self style(List<String> classNames) {
+        Viewtify.inUI(() -> {
+            ObservableList<String> classes = ui().getStyleClass();
+
+            for (String className : classNames) {
+                if (classes != null && className.length() != 0) {
+                    if (!classes.contains(className)) {
+                        classes.add(className);
                     }
                 }
-            });
-        }
+            }
+        });
         return (Self) this;
     }
 
@@ -130,6 +149,27 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
                 for (Style style : styles) {
                     if (style != null) {
                         classes.removeAll(style.className());
+                    }
+                }
+            });
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Unapply class name from user interface;
+     * 
+     * @param classNames A list of class names to unapply.
+     * @return Chainable API.
+     */
+    default Self unstyle(String... classNames) {
+        if (classNames != null && classNames.length != 0) {
+            Viewtify.inUI(() -> {
+                ObservableList<String> classes = ui().getStyleClass();
+
+                for (String className : classNames) {
+                    if (className != null && className.length() != 0) {
+                        classes.remove(className);
                     }
                 }
             });
