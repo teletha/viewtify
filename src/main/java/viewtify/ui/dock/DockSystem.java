@@ -32,7 +32,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
@@ -92,7 +91,7 @@ public final class DockSystem {
     static final int PositionRestore = -6;
 
     /** Configuration store. */
-    static boolean tabMode = true;
+    private static boolean tabMode = true;
 
     /** Layout Store */
     private static DockLayout layout;
@@ -250,6 +249,9 @@ public final class DockSystem {
     /** The Doppelganger of the tab being dragged. */
     private static final UITab dragedDoppelganger = new UITab();
 
+    /** Temporal storage for the draged tab */
+    private static boolean dragedMode;
+
     /** Temp stage when the view was dropped outside a managed window. */
     private static final DropStage dropStage = new DropStage();
 
@@ -277,6 +279,7 @@ public final class DockSystem {
         dragedTab = tab;
         dragedTabArea = area;
         dragedDoppelganger.setText(tab.getText());
+        dragedMode = event.isControlDown() || event.isShiftDown() || event.isMetaDown() || event.isAltDown() ? !tabMode : tabMode;
 
         ClipboardContent content = new ClipboardContent();
         content.put(DnD, DnD.toString());
@@ -367,7 +370,7 @@ public final class DockSystem {
             int position = detectPosition(event, area.node);
             if (position != PositionCenter || area != dragedTabArea) {
                 dragedTabArea.remove(dragedTab, false);
-                area.add(dragedTab, position, tabMode);
+                area.add(dragedTab, position, dragedMode);
             }
 
             event.setDropCompleted(true);
@@ -404,14 +407,6 @@ public final class DockSystem {
 
             layout.store();
         }
-    }
-
-    static void onKeyPress(KeyEvent event) {
-        System.out.println(event);
-    }
-
-    static void onKeyRelease(KeyEvent event) {
-        System.out.println(event);
     }
 
     /**
@@ -590,7 +585,6 @@ public final class DockSystem {
 
         for (Tab tab : area.node.getTabs()) {
             Node node = tab.getStyleableNode();
-            System.out.println(tab.getId());
             node.setTranslateX(0);
             node.setViewOrder(0);
         }

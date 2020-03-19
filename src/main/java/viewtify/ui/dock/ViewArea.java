@@ -104,7 +104,7 @@ abstract class ViewArea<P extends Parent> {
             if (getOrientation() == Orientation.VERTICAL) {
                 children.get(0).add(view, position, tabMode);
             } else {
-                ViewArea target = createArea();
+                ViewArea target = createArea(tabMode);
                 target.add(view, DockSystem.PositionCenter, tabMode);
                 split(target, this, Orientation.VERTICAL);
             }
@@ -114,7 +114,7 @@ abstract class ViewArea<P extends Parent> {
             if (getOrientation() == Orientation.VERTICAL) {
                 children.get(children.size() - 1).add(view, position, tabMode);
             } else {
-                ViewArea target = createArea();
+                ViewArea target = createArea(tabMode);
                 target.add(view, DockSystem.PositionCenter, tabMode);
                 split(this, target, Orientation.VERTICAL);
             }
@@ -124,7 +124,7 @@ abstract class ViewArea<P extends Parent> {
             if (getOrientation() == Orientation.HORIZONTAL) {
                 children.get(children.size() - 1).add(view, position, tabMode);
             } else {
-                ViewArea target = createArea();
+                ViewArea target = createArea(tabMode);
                 target.add(view, DockSystem.PositionCenter, tabMode);
                 split(target, this, Orientation.HORIZONTAL);
             }
@@ -134,7 +134,7 @@ abstract class ViewArea<P extends Parent> {
             if (getOrientation() == Orientation.HORIZONTAL) {
                 children.get(children.size() - 1).add(view, position, tabMode);
             } else {
-                ViewArea target = createArea();
+                ViewArea target = createArea(tabMode);
                 target.add(view, DockSystem.PositionCenter, tabMode);
                 split(this, target, Orientation.HORIZONTAL);
             }
@@ -142,8 +142,8 @@ abstract class ViewArea<P extends Parent> {
         }
     }
 
-    private ViewArea createArea() {
-        return DockSystem.tabMode ? new TabArea() : new TileArea();
+    private ViewArea createArea(boolean tabMode) {
+        return tabMode ? new TabArea() : new TileArea();
     }
 
     /**
