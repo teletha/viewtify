@@ -11,8 +11,6 @@ package viewtify.ui.dock;
 
 import java.util.Objects;
 
-import javax.print.Doc;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
@@ -58,7 +56,26 @@ class TileArea extends ViewArea<Pane> {
         default:
             this.id = tab.getId();
 
+            TabArea main = DockSystem.mainTabArea();
+            tab.setId("Tiled#" + tab.getId());
+            main.add(tab, position);
+
             Node content = tab.getContent();
+            tab.setDisable(true);
+            tab.context(TileArea.class, c -> {
+                c.menu().text("Close").when(User.Action, () -> {
+                    tab.setDisable(false);
+                    tab.setContent(content);
+
+                    int index = main.ids.indexOf(tab.getId());
+                    main.ids.set(index, this.id);
+                    tab.setId(this.id);
+
+                    parent.remove(this);
+
+                    tab.removeContext(TileArea.class);
+                });
+            });
 
             ObservableList<Node> items = node.getChildren();
             if (items.isEmpty()) {
@@ -67,23 +84,6 @@ class TileArea extends ViewArea<Pane> {
                 items.set(0, content);
             }
 
-            TabArea main = DockSystem.mainTabArea();
-            tab.setDisable(true);
-            tab.setContent(null);
-            tab.setId("Tiled#" + tab.getId());
-            tab.context(c -> {
-                c.menu().text("Close").when(User.Action, () -> {
-                    tab.setDisable(false);
-                    tab.setContent(content);
-                    
-                    int index = main.ids.indexOf(tab.getId());
-                    main.ids.set(index, this.id);
-                    tab.setId(this.id);
-
-                    parent.remove(this);
-                });
-            });
-            main.add(tab, position);
             break;
         }
     }

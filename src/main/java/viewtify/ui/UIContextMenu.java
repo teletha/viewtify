@@ -20,12 +20,14 @@ public class UIContextMenu {
     /** The actual ui. */
     private final ContextMenu ui;
 
+    /** The identifier of context menu. */
+    private final Object id;
+
     /**
      * Enchanced view.
-     * 
-     * @param ui
      */
-    public UIContextMenu(ContextMenu ui) {
+    public UIContextMenu(Object id, ContextMenu ui) {
+        this.id = id;
         this.ui = ui;
     }
 
@@ -44,7 +46,7 @@ public class UIContextMenu {
      * @param provider
      */
     public final void menu(UserInterfaceProvider<? extends Node> provider, boolean hideOnClick) {
-        CustomMenuItem item = new CustomMenuItem(provider.ui());
+        CustomMenuItem item = assignID(new CustomMenuItem(provider.ui()));
         item.setHideOnClick(hideOnClick);
 
         ui.getItems().add(item);
@@ -56,7 +58,8 @@ public class UIContextMenu {
      * @return
      */
     public UIMenuItem menu() {
-        MenuItem menu = new MenuItem();
+        MenuItem menu = assignID(new MenuItem());
+        menu.getProperties().put(id, null);
         ui.getItems().add(menu);
 
         return new UIMenuItem(menu);
@@ -68,9 +71,20 @@ public class UIContextMenu {
      * @return
      */
     public UIMenuItem checkMenu() {
-        CheckMenuItem menu = new CheckMenuItem();
+        CheckMenuItem menu = assignID(new CheckMenuItem());
         ui.getItems().add(menu);
 
         return new UIMenuItem(menu);
+    }
+
+    /**
+     * Assign ID to menu.
+     * 
+     * @param item
+     */
+    private <M extends MenuItem> M assignID(M item) {
+        item.getProperties().put(id, null);
+
+        return item;
     }
 }
