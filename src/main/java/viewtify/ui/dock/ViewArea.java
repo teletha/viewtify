@@ -28,13 +28,17 @@ public abstract class ViewArea<P extends Parent> {
     private final P node;
 
     /** The paretn area. */
-    protected ViewArea parent;
+    private ViewArea parent;
 
     /** The related area. */
-    List<ViewArea> children = new ArrayList();
+    private List<ViewArea> children = new ArrayList();
 
     public P ui() {
         return node;
+    }
+
+    public ViewArea parent() {
+        return parent;
     }
 
     /**
@@ -61,8 +65,7 @@ public abstract class ViewArea<P extends Parent> {
      * 
      * @return The children property.
      */
-    @SuppressWarnings("unused")
-    private final List<ViewArea> getChildren() {
+    public final List<ViewArea> getChildren() {
         return children;
     }
 
@@ -168,7 +171,6 @@ public abstract class ViewArea<P extends Parent> {
      */
     private void split(ViewArea first, ViewArea second, Orientation orientation) {
         SplitArea area = new SplitArea();
-        area.parent = this;
         parent.replace(this, area);
         area.setOrientation(orientation);
         area.setChild(0, first);

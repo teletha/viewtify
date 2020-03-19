@@ -56,10 +56,10 @@ final class RootArea extends ViewArea<HBox> {
      */
     @Override
     public void add(UITab tab, ViewArea from, int position, boolean tabMode) {
-        if (children.isEmpty()) {
+        if (getChildren().isEmpty()) {
             setChild(0, new TabArea());
         }
-        children.get(0).add(tab, from, position, tabMode);
+        getChildren().get(0).add(tab, from, position, tabMode);
     }
 
     /**

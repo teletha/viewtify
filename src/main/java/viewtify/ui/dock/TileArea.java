@@ -72,7 +72,7 @@ class TileArea extends ViewArea<Pane> {
                 tab.setContent(content);
                 tab.removeContext();
 
-                parent.remove(this);
+                parent().remove(this);
                 DockSystem.saveLayout();
             };
 

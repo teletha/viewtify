@@ -162,7 +162,7 @@ class TabArea extends ViewArea<TabPane> {
      */
     void handleEmpty() {
         if (ui().getTabs().isEmpty()) {
-            parent.remove(this);
+            parent().remove(this);
         }
     }
 

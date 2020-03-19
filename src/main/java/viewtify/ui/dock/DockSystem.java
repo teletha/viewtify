@@ -176,7 +176,7 @@ public final class DockSystem {
                 return (TabArea) area;
             }
 
-            for (ViewArea child : area.children) {
+            for (ViewArea child : area.getChildren()) {
                 TabArea c = self.apply(child);
 
                 if (c != null) {
