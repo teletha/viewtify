@@ -25,13 +25,17 @@ import viewtify.ui.UITab;
 public abstract class ViewArea<P extends Parent> {
 
     /** The actual root node. */
-    protected final P node;
+    private final P node;
 
     /** The paretn area. */
     protected ViewArea parent;
 
     /** The related area. */
     List<ViewArea> children = new ArrayList();
+
+    public P ui() {
+        return node;
+    }
 
     /**
      * Specify root node.

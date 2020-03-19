@@ -38,11 +38,11 @@ class TileArea extends ViewArea<Pane> {
     TileArea() {
         super(new Pane());
 
-        node.getChildren().add(new Pane());
-        node.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
-        node.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
-        node.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
-        node.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
+        ui().getChildren().add(new Pane());
+        ui().addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
+        ui().addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
+        ui().addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
+        ui().addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
     }
 
     /**
@@ -84,7 +84,7 @@ class TileArea extends ViewArea<Pane> {
             });
 
             this.id = id;
-            this.node.getChildren().set(0, content);
+            this.ui().getChildren().set(0, content);
 
             main.add(tab, from, position, true);
             break;

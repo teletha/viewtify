@@ -43,12 +43,12 @@ final class RootArea extends ViewArea<HBox> {
     public void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
-        if (node.getChildren().isEmpty()) {
-            node.getChildren().add(child.node);
+        if (ui().getChildren().isEmpty()) {
+            ui().getChildren().add(child.ui());
         } else {
-            node.getChildren().set(0, child.node);
+            ui().getChildren().set(0, child.ui());
         }
-        HBox.setHgrow(child.node, Priority.ALWAYS);
+        HBox.setHgrow(child.ui(), Priority.ALWAYS);
     }
 
     /**

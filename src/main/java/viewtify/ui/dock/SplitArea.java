@@ -42,16 +42,16 @@ class SplitArea extends ViewArea<SplitPane> {
         // position information will be lost.
         // Therefore, each time the divider's position information is changed, it is stored in
         // the cache and restored every time the dividier increases or decreases.
-        node.getDividers().addListener((ListChangeListener<Divider>) c -> {
+        ui().getDividers().addListener((ListChangeListener<Divider>) c -> {
             while (c.next()) {
                 for (Divider added : c.getAddedSubList()) {
                     Viewtify.observe(added.positionProperty()).debounce(1000, TimeUnit.MILLISECONDS).to(v -> {
                         DockSystem.saveLayout();
-                        snapshot = node.getDividerPositions();
+                        snapshot = ui().getDividerPositions();
                     });
                 }
             }
-            node.setDividerPositions(snapshot);
+            ui().setDividerPositions(snapshot);
         });
     }
 
@@ -62,11 +62,11 @@ class SplitArea extends ViewArea<SplitPane> {
     public void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
-        ObservableList<Node> items = node.getItems();
+        ObservableList<Node> items = ui().getItems();
         if (index < items.size()) {
-            items.set(index, child.node);
+            items.set(index, child.ui());
         } else {
-            items.add(child.node);
+            items.add(child.ui());
         }
     }
 
@@ -75,14 +75,14 @@ class SplitArea extends ViewArea<SplitPane> {
      */
     @Override
     public Orientation getOrientation() {
-        return node.getOrientation();
+        return ui().getOrientation();
     }
 
     /**
      * {@inheritDoc}
      */
     void setOrientation(Orientation orientation) {
-        node.setOrientation(orientation);
+        ui().setOrientation(orientation);
     }
 
     /**
@@ -92,7 +92,7 @@ class SplitArea extends ViewArea<SplitPane> {
      */
     @SuppressWarnings("unused")
     private final List<BigDecimal> getDividers() {
-        return DoubleStream.of(node.getDividerPositions())
+        return DoubleStream.of(ui().getDividerPositions())
                 .mapToObj(v -> new BigDecimal(v).setScale(3, RoundingMode.HALF_DOWN))
                 .collect(Collectors.toList());
     }
@@ -112,7 +112,7 @@ class SplitArea extends ViewArea<SplitPane> {
             for (int i = 0; i < values.length; i++) {
                 values[i] = dividers.get(i).doubleValue();
             }
-            node.setDividerPositions(values);
+            ui().setDividerPositions(values);
         });
     }
 }
