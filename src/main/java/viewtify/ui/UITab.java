@@ -10,6 +10,7 @@
 package viewtify.ui;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
@@ -19,11 +20,26 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.StackPane;
 
 import kiss.I;
+import kiss.WiseFunction;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 
 public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<UITab>, ContextMenuHelper<UITab> {
+
+    /** Cache to find tab node. */
+    private static final WiseFunction<Node, Object> findTab;
+
+    static {
+        try {
+            Field field = Class.forName("javafx.scene.control.skin.TabPaneSkin$TabHeaderSkin").getDeclaredField("tab");
+            field.setAccessible(true);
+
+            findTab = field::get;
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
+    }
 
     /** The parent view. */
     private final View parent;
@@ -133,7 +149,7 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
         StackPane headerArea = (StackPane) children.get(children.size() - 1);
         StackPane headerRegion = (StackPane) headerArea.getChildren().get(1);
         for (Node node : headerRegion.getChildren()) {
-            if (node.getId() == getId()) {
+            if (findTab.apply(node) == this) {
                 styleable = new WeakReference(node);
                 break;
             }
