@@ -31,17 +31,14 @@ import viewtify.ui.UITab;
  */
 class TabArea extends ViewArea<TabPane> {
 
-    /** The tab id manager. */
-    public List<String> ids = new ArrayList();
-
-    /** The tiled id manager. */
-    public List<String> tiled = new ArrayList();
-
     /** The selected id. */
     private String selected;
 
     /** The initial selected id. We are doing a very tricky code to restore the tab selection. */
     private String selectedInitial;
+
+    /** The initial view id manager. */
+    private List<String> viewInitial = new ArrayList();
 
     /**
      * Create a new tab area.
@@ -76,6 +73,26 @@ class TabArea extends ViewArea<TabPane> {
         header.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onHeaderDragExited(e, this));
         header.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onHeaderDragDropped(e, this));
         header.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onHeaderDragOver(e, this));
+    }
+
+    /**
+     * Get the ids property of this {@link TabArea}.
+     * 
+     * @return The ids property.
+     */
+    @SuppressWarnings("unused")
+    private List<String> getIds() {
+        return I.signal(node.getTabs()).map(Tab::getId).toList();
+    }
+
+    /**
+     * Set the ids property of this {@link TabArea}.
+     * 
+     * @param ids The ids value to set.
+     */
+    @SuppressWarnings("unused")
+    private void setIds(List<String> ids) {
+        this.viewInitial = ids;
     }
 
     /**
@@ -134,7 +151,6 @@ class TabArea extends ViewArea<TabPane> {
      * @param checkEmpty Should this area be removed if it is empty?
      */
     void remove(Tab tab, boolean checkEmpty) {
-        ids.remove(tab.getId());
         node.getTabs().remove(tab);
         if (checkEmpty) {
             handleEmpty();
@@ -185,10 +201,6 @@ class TabArea extends ViewArea<TabPane> {
             node.getTabs().add(position, tab);
             tab.setOnCloseRequest(e -> remove(tab, true));
 
-            if (!ids.contains(tab.getId())) {
-                ids.add(position, tab.getId());
-            }
-
             selectInitialTabOnlyOnce(tab);
             break;
         }
@@ -202,7 +214,7 @@ class TabArea extends ViewArea<TabPane> {
      * @return
      */
     private boolean compare(String tester, String test) {
-        for (String id : ids) {
+        for (String id : viewInitial) {
             if (id.equals(tester)) {
                 return false;
             } else if (id.equals(test)) {
@@ -217,6 +229,6 @@ class TabArea extends ViewArea<TabPane> {
      */
     @Override
     protected Variable<ViewArea> findAreaBy(String id) {
-        return Variable.of(ids.contains(id) ? this : null);
+        return Variable.of(viewInitial.contains(id) ? this : null);
     }
 }

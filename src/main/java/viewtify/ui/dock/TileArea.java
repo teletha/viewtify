@@ -67,18 +67,16 @@ class TileArea extends ViewArea<Pane> {
             TabArea main = DockSystem.mainTabArea();
 
             removePreviousContent = () -> {
+                tab.setId(id);
                 tab.setDisable(false);
                 tab.setContent(content);
                 tab.removeContext();
 
-                // HACK : replace tiled ID
-                int index = main.ids.indexOf(tiledId);
-                main.ids.set(index, id);
-                tab.setId(id);
-
                 parent.remove(this);
+                DockSystem.saveLayout();
             };
 
+            tab.setId(tiledId);
             tab.setDisable(true);
             tab.setContent(null);
             tab.context(c -> {
@@ -88,7 +86,6 @@ class TileArea extends ViewArea<Pane> {
             this.id = id;
             this.node.getChildren().set(0, content);
 
-            tab.setId(tiledId);
             main.add(tab, position, true);
             break;
         }
