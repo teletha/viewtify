@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
@@ -109,8 +110,8 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
         if (menus != null) {
             Iterator<MenuItem> iterator = menus.iterator();
             while (iterator.hasNext()) {
-                MenuItem menuItem = iterator.next();
-                if (menuItem.getProperties().containsKey(id)) {
+                ObservableMap props = iterator.next().getProperties();
+                if (props.remove(id, null)) {
                     iterator.remove();
                 }
             }
