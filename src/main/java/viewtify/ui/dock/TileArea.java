@@ -38,18 +38,18 @@ class TileArea extends ViewArea<Pane> {
     TileArea() {
         super(new Pane());
 
-        ui().getChildren().add(new Pane());
-        ui().addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
-        ui().addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
-        ui().addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
-        ui().addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
+        node.getChildren().add(new Pane());
+        node.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
+        node.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
+        node.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
+        node.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void add(UITab tab, ViewArea from, int position, boolean tabMode) {
+    protected void add(UITab tab, ViewArea from, int position, boolean tabMode) {
         switch (position) {
         case DockSystem.PositionTop:
         case DockSystem.PositionBottom:
@@ -72,7 +72,7 @@ class TileArea extends ViewArea<Pane> {
                 tab.setContent(content);
                 tab.removeContext();
 
-                parent().remove(this);
+                parent.remove(this);
                 DockSystem.saveLayout();
             };
 
@@ -84,7 +84,7 @@ class TileArea extends ViewArea<Pane> {
             });
 
             this.id = id;
-            this.ui().getChildren().set(0, content);
+            this.node.getChildren().set(0, content);
 
             main.add(tab, from, position, true);
             break;
@@ -95,7 +95,7 @@ class TileArea extends ViewArea<Pane> {
      * {@inheritDoc}
      */
     @Override
-    public Variable<ViewArea> findAreaBy(String id) {
+    protected Variable<ViewArea> findAreaBy(String id) {
         return Variable.of(Objects.equals(this.id, id) ? this : null);
     }
 }

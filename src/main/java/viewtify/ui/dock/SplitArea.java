@@ -42,16 +42,16 @@ class SplitArea extends ViewArea<SplitPane> {
         // position information will be lost.
         // Therefore, each time the divider's position information is changed, it is stored in
         // the cache and restored every time the dividier increases or decreases.
-        ui().getDividers().addListener((ListChangeListener<Divider>) c -> {
+        node.getDividers().addListener((ListChangeListener<Divider>) c -> {
             while (c.next()) {
                 for (Divider added : c.getAddedSubList()) {
                     Viewtify.observe(added.positionProperty()).debounce(1000, TimeUnit.MILLISECONDS).to(v -> {
                         DockSystem.saveLayout();
-                        snapshot = ui().getDividerPositions();
+                        snapshot = node.getDividerPositions();
                     });
                 }
             }
-            ui().setDividerPositions(snapshot);
+            node.setDividerPositions(snapshot);
         });
     }
 
@@ -59,14 +59,14 @@ class SplitArea extends ViewArea<SplitPane> {
      * {@inheritDoc}
      */
     @Override
-    public void setChild(int index, ViewArea child) {
+    protected void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
-        ObservableList<Node> items = ui().getItems();
+        ObservableList<Node> items = node.getItems();
         if (index < items.size()) {
-            items.set(index, child.ui());
+            items.set(index, child.node);
         } else {
-            items.add(child.ui());
+            items.add(child.node);
         }
     }
 
@@ -74,15 +74,15 @@ class SplitArea extends ViewArea<SplitPane> {
      * {@inheritDoc}
      */
     @Override
-    public Orientation getOrientation() {
-        return ui().getOrientation();
+    protected Orientation getOrientation() {
+        return node.getOrientation();
     }
 
     /**
      * {@inheritDoc}
      */
     void setOrientation(Orientation orientation) {
-        ui().setOrientation(orientation);
+        node.setOrientation(orientation);
     }
 
     /**
@@ -92,7 +92,7 @@ class SplitArea extends ViewArea<SplitPane> {
      */
     @SuppressWarnings("unused")
     private final List<BigDecimal> getDividers() {
-        return DoubleStream.of(ui().getDividerPositions())
+        return DoubleStream.of(node.getDividerPositions())
                 .mapToObj(v -> new BigDecimal(v).setScale(3, RoundingMode.HALF_DOWN))
                 .collect(Collectors.toList());
     }
@@ -112,7 +112,7 @@ class SplitArea extends ViewArea<SplitPane> {
             for (int i = 0; i < values.length; i++) {
                 values[i] = dividers.get(i).doubleValue();
             }
-            ui().setDividerPositions(values);
+            node.setDividerPositions(values);
         });
     }
 }

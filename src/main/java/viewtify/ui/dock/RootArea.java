@@ -40,33 +40,33 @@ final class RootArea extends ViewArea<HBox> {
      * {@inheritDoc}
      */
     @Override
-    public void setChild(int index, ViewArea child) {
+    protected void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
-        if (ui().getChildren().isEmpty()) {
-            ui().getChildren().add(child.ui());
+        if (node.getChildren().isEmpty()) {
+            node.getChildren().add(child.node);
         } else {
-            ui().getChildren().set(0, child.ui());
+            node.getChildren().set(0, child.node);
         }
-        HBox.setHgrow(child.ui(), Priority.ALWAYS);
+        HBox.setHgrow(child.node, Priority.ALWAYS);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void add(UITab tab, ViewArea from, int position, boolean tabMode) {
-        if (getChildren().isEmpty()) {
+    protected void add(UITab tab, ViewArea from, int position, boolean tabMode) {
+        if (children.isEmpty()) {
             setChild(0, new TabArea());
         }
-        getChildren().get(0).add(tab, from, position, tabMode);
+        children.get(0).add(tab, from, position, tabMode);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void remove(ViewArea area) {
+    protected void remove(ViewArea area) {
         if (sub) {
             DockSystem.requestCloseWindow(this);
         }

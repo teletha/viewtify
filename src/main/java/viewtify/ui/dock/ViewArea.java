@@ -15,6 +15,7 @@ import java.util.Objects;
 
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
+import javafx.stage.Stage;
 
 import kiss.Variable;
 import viewtify.ui.UITab;
@@ -22,35 +23,36 @@ import viewtify.ui.UITab;
 /**
  * A ViewArea is a node within the area tree. It has two children which are self view areas.
  */
-public abstract class ViewArea<P extends Parent> {
+abstract class ViewArea<P extends Parent> {
 
     /** The actual root node. */
-    private final P node;
+    protected final P node;
 
     /** The paretn area. */
-    private ViewArea parent;
+    protected ViewArea parent;
 
     /** The related area. */
-    private List<ViewArea> children = new ArrayList();
-
-    public P ui() {
-        return node;
-    }
-
-    public ViewArea parent() {
-        return parent;
-    }
+    List<ViewArea> children = new ArrayList();
 
     /**
      * Specify root node.
      * 
      * @param node The root node of this area.
      */
-    public ViewArea(P node) {
+    protected ViewArea(P node) {
         this.node = Objects.requireNonNull(node);
     }
 
-    public void setChild(int index, ViewArea child) {
+    /**
+     * Get the {@link Stage} for this area.
+     * 
+     * @return
+     */
+    protected final Stage getStage() {
+        return (Stage) node.getScene().getWindow();
+    }
+
+    protected void setChild(int index, ViewArea child) {
         child.parent = this;
 
         if (index < children.size()) {
@@ -65,7 +67,8 @@ public abstract class ViewArea<P extends Parent> {
      * 
      * @return The children property.
      */
-    public final List<ViewArea> getChildren() {
+    @SuppressWarnings("unused")
+    private final List<ViewArea> getChildren() {
         return children;
     }
 
@@ -91,7 +94,7 @@ public abstract class ViewArea<P extends Parent> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    public void add(UITab view, ViewArea from, int position, boolean tabMode) {
+    protected void add(UITab view, ViewArea from, int position, boolean tabMode) {
         switch (position) {
         case DockSystem.PositionCenter:
             children.get(0).add(view, from, position, tabMode);
@@ -150,7 +153,7 @@ public abstract class ViewArea<P extends Parent> {
      *
      * @param area The area that should be removed.
      */
-    public void remove(ViewArea area) {
+    protected void remove(ViewArea area) {
         children.remove(area);
         if (children.size() == 1) {
             parent.replace(this, children.remove(0));
@@ -171,6 +174,7 @@ public abstract class ViewArea<P extends Parent> {
      */
     private void split(ViewArea first, ViewArea second, Orientation orientation) {
         SplitArea area = new SplitArea();
+        area.parent = this;
         parent.replace(this, area);
         area.setOrientation(orientation);
         area.setChild(0, first);
@@ -198,7 +202,7 @@ public abstract class ViewArea<P extends Parent> {
      * 
      * @return
      */
-    public Orientation getOrientation() {
+    protected Orientation getOrientation() {
         return null;
     }
 
@@ -208,7 +212,7 @@ public abstract class ViewArea<P extends Parent> {
      * @param id
      * @return
      */
-    public Variable<ViewArea> findAreaBy(String id) {
+    protected Variable<ViewArea> findAreaBy(String id) {
         for (ViewArea child : children) {
             Variable<ViewArea> area = child.findAreaBy(id);
 
