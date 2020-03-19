@@ -49,13 +49,13 @@ class TileArea extends ViewArea<Pane> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(UITab tab, int position, boolean tabMode) {
+    protected void add(UITab tab, ViewArea from, int position, boolean tabMode) {
         switch (position) {
         case DockSystem.PositionTop:
         case DockSystem.PositionBottom:
         case DockSystem.PositionLeft:
         case DockSystem.PositionRight:
-            super.add(tab, position, tabMode);
+            super.add(tab, from, position, tabMode);
             break;
 
         default:
@@ -86,7 +86,7 @@ class TileArea extends ViewArea<Pane> {
             this.id = id;
             this.node.getChildren().set(0, content);
 
-            main.add(tab, position, true);
+            main.add(tab, from, position, true);
             break;
         }
     }

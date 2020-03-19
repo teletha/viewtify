@@ -94,48 +94,48 @@ abstract class ViewArea<P extends Parent> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    protected void add(UITab view, int position, boolean tabMode) {
+    protected void add(UITab view, ViewArea from, int position, boolean tabMode) {
         switch (position) {
         case DockSystem.PositionCenter:
-            children.get(0).add(view, position, tabMode);
+            children.get(0).add(view, from, position, tabMode);
             break;
 
         case DockSystem.PositionTop:
             if (getOrientation() == Orientation.VERTICAL) {
-                children.get(0).add(view, position, tabMode);
+                children.get(0).add(view, from, position, tabMode);
             } else {
                 ViewArea target = createArea(tabMode);
-                target.add(view, DockSystem.PositionCenter, tabMode);
+                target.add(view, from, DockSystem.PositionCenter, tabMode);
                 split(target, this, Orientation.VERTICAL);
             }
             break;
 
         case DockSystem.PositionBottom:
             if (getOrientation() == Orientation.VERTICAL) {
-                children.get(children.size() - 1).add(view, position, tabMode);
+                children.get(children.size() - 1).add(view, from, position, tabMode);
             } else {
                 ViewArea target = createArea(tabMode);
-                target.add(view, DockSystem.PositionCenter, tabMode);
+                target.add(view, from, DockSystem.PositionCenter, tabMode);
                 split(this, target, Orientation.VERTICAL);
             }
             break;
 
         case DockSystem.PositionLeft:
             if (getOrientation() == Orientation.HORIZONTAL) {
-                children.get(children.size() - 1).add(view, position, tabMode);
+                children.get(children.size() - 1).add(view, from, position, tabMode);
             } else {
                 ViewArea target = createArea(tabMode);
-                target.add(view, DockSystem.PositionCenter, tabMode);
+                target.add(view, from, DockSystem.PositionCenter, tabMode);
                 split(target, this, Orientation.HORIZONTAL);
             }
             break;
 
         case DockSystem.PositionRight:
             if (getOrientation() == Orientation.HORIZONTAL) {
-                children.get(children.size() - 1).add(view, position, tabMode);
+                children.get(children.size() - 1).add(view, from, position, tabMode);
             } else {
                 ViewArea target = createArea(tabMode);
-                target.add(view, DockSystem.PositionCenter, tabMode);
+                target.add(view, from, DockSystem.PositionCenter, tabMode);
                 split(this, target, Orientation.HORIZONTAL);
             }
             break;

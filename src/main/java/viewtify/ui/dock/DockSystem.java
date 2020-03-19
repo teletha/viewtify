@@ -130,7 +130,7 @@ public final class DockSystem {
             tab.setContent(view.ui());
             tab.setId(id);
 
-            layout.findAreaBy(id).or(root()).add(tab, PositionRestore, true);
+            layout.findAreaBy(id).or(root()).add(tab, null, PositionRestore, true);
         });
     }
 
@@ -369,8 +369,13 @@ public final class DockSystem {
             // Therefore, it is necessary to calculate it first.
             int position = detectPosition(event, area.node);
             if (position != PositionCenter || area != dragedTabArea) {
-                dragedTabArea.remove(dragedTab, false);
-                area.add(dragedTab, position, dragedMode);
+                if (dragedMode) {
+                    dragedTabArea.remove(dragedTab, false);
+                    area.add(dragedTab, dragedTabArea, position, dragedMode);
+                } else {
+                    dragedTabArea.remove(dragedTab, false);
+                    area.add(dragedTab, dragedTabArea, position, dragedMode);
+                }
             }
 
             event.setDropCompleted(true);
@@ -398,7 +403,7 @@ public final class DockSystem {
 
             openNewWindow(area, bounds, e -> {
                 dragedTabArea.remove(dragedTab, false);
-                area.add(dragedTab, PositionCenter, true);
+                area.add(dragedTab, dragedTabArea, PositionCenter, true);
                 layout.windows.add(area);
             });
 
@@ -470,7 +475,7 @@ public final class DockSystem {
             if (area == dragedTabArea) {
                 applyOverlay(dragedTab.getStyleableNode(), PositionCenter);
             } else {
-                area.add(dragedDoppelganger, PositionCenter, true);
+                area.add(dragedDoppelganger, dragedTabArea, PositionCenter, true);
                 applyOverlay(dragedDoppelganger.getStyleableNode(), 0);
             }
         }
@@ -551,7 +556,7 @@ public final class DockSystem {
             int[] values = calculate(area, event);
 
             dragedTabArea.remove(dragedTab, false);
-            area.add(dragedTab, values[1], true);
+            area.add(dragedTab, dragedTabArea, values[1], true);
             area.node.getSelectionModel().select(values[1]);
 
             event.setDropCompleted(true);
