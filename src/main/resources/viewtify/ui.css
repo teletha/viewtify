@@ -38,6 +38,14 @@
     -fx-faint-focus-color: transparent;
 }
 
+.tab-pane.hide-header {
+    -fx-tab-max-height: 0;
+} 
+.tab-pane.hide-header .tab-header-area {
+    visibility: hidden;
+    -fx-padding: -20 0 0 0;
+}
+
 /* ==========================================================================
   Table
 ===========================================================================*/

@@ -12,7 +12,6 @@ package viewtify.ui.dock;
 import java.util.Objects;
 
 import javafx.scene.Node;
-import javafx.scene.input.DragEvent;
 import javafx.scene.layout.Pane;
 
 import kiss.I;
@@ -40,10 +39,10 @@ class TileArea extends ViewArea<UIHBox> {
         super(new UIHBox(null));
 
         node.ui.getChildren().add(new Pane());
-        node.ui.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
-        node.ui.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
-        node.ui.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
-        node.ui.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
+        node.when(User.DragEnter, e -> DockSystem.onDragEntered(e, this));
+        node.when(User.DragExit, e -> DockSystem.onDragExited(e, this));
+        node.when(User.DragOver, e -> DockSystem.onDragOver(e, this));
+        node.when(User.DragDrop, e -> DockSystem.onDragDropped(e, this));
     }
 
     /**

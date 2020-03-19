@@ -13,14 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
+import javafx.scene.layout.StackPane;
 
 import kiss.I;
 import kiss.Variable;
+import viewtify.Key;
 import viewtify.Viewtify;
 import viewtify.ui.UITab;
 import viewtify.ui.UITabPane;
@@ -39,6 +41,9 @@ class TabArea extends ViewArea<UITabPane> {
 
     /** The initial view id manager. */
     private List<String> viewInitial = new ArrayList();
+
+    /** The header node. */
+    private final StackPane header;
 
     /**
      * Create a new tab area.
@@ -68,11 +73,38 @@ class TabArea extends ViewArea<UITabPane> {
         TabPaneSkin skin = new TabPaneSkin(node.ui);
         node.ui.setSkin(skin);
 
-        Node header = node.ui.lookup(".tab-header-area");
+        header = (StackPane) node.ui.lookup(".tab-header-area");
         header.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onHeaderDragEntered(e, this));
         header.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onHeaderDragExited(e, this));
         header.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onHeaderDragDropped(e, this));
         header.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onHeaderDragOver(e, this));
+        node.when(User.input(Key.Alt)).to(e -> setHeader(!header.isVisible()));
+    }
+
+    /**
+     * Get the header property of this {@link TabArea}.
+     * 
+     * @return The header property.
+     */
+    @SuppressWarnings("unused")
+    private final boolean isHeader() {
+        return header.isVisible();
+    }
+
+    /**
+     * Set the header property of this {@link TabArea}.
+     * 
+     * @param show The header value to set.
+     */
+    private final void setHeader(boolean show) {
+        Platform.runLater(() -> {
+            if (show) {
+                node.unstyle("hide-header");
+            } else {
+                node.style("hide-header");
+            }
+            DockSystem.saveLayout();
+        });
     }
 
     /**
@@ -81,7 +113,7 @@ class TabArea extends ViewArea<UITabPane> {
      * @return The ids property.
      */
     @SuppressWarnings("unused")
-    private List<String> getIds() {
+    private final List<String> getIds() {
         return I.signal(node.ui.getTabs()).map(Tab::getId).toList();
     }
 
@@ -91,7 +123,7 @@ class TabArea extends ViewArea<UITabPane> {
      * @param ids The ids value to set.
      */
     @SuppressWarnings("unused")
-    private void setIds(List<String> ids) {
+    private final void setIds(List<String> ids) {
         this.viewInitial = ids;
     }
 
