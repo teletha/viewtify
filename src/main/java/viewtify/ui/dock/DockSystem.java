@@ -58,7 +58,7 @@ import viewtify.ui.View;
 public final class DockSystem {
 
     /** The root user interface for the docking system. */
-    public static final UserInterfaceProvider<Parent> UI = () -> root().node;
+    public static final UserInterfaceProvider<Parent> UI = () -> root().node.ui;
 
     /**
      * Place the view within the center.
@@ -196,7 +196,7 @@ public final class DockSystem {
      * @param shown
      */
     private static void openNewWindow(RootArea area, Bounds bounds, EventHandler<WindowEvent> shown) {
-        Scene scene = new Scene(area.node, bounds.getWidth(), bounds.getHeight());
+        Scene scene = new Scene(area.node.ui, bounds.getWidth(), bounds.getHeight());
         Viewtify.applyApplicationStyle(scene);
 
         Stage stage = new Stage();
@@ -319,7 +319,7 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             event.consume();
 
-            ((Stage) area.node.getScene().getWindow()).toFront();
+            ((Stage) area.node.ui.getScene().getWindow()).toFront();
         }
     }
 
@@ -332,7 +332,7 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             event.consume();
 
-            area.node.setEffect(null);
+            area.node.ui.setEffect(null);
         }
     }
 
@@ -345,11 +345,11 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             event.consume();
 
-            int position = detectPosition(event, area.node);
+            int position = detectPosition(event, area.node.ui);
             if (position == PositionCenter && area == dragedTabArea) {
-                area.node.setEffect(null);
+                area.node.ui.setEffect(null);
             } else {
-                applyOverlay(area.node, position);
+                applyOverlay(area.node.ui, position);
                 event.acceptTransferModes(TransferMode.MOVE);
             }
         }
@@ -367,7 +367,7 @@ public final class DockSystem {
             // it is necessary to calculate the actual tab size, and if the tab is removed, the size
             // cannot be calculated.
             // Therefore, it is necessary to calculate it first.
-            int position = detectPosition(event, area.node);
+            int position = detectPosition(event, area.node.ui);
             if (position != PositionCenter || area != dragedTabArea) {
                 if (dragedMode) {
                     dragedTabArea.remove(dragedTab, false);
@@ -470,7 +470,7 @@ public final class DockSystem {
         if (isValidDragboard(event)) {
             event.consume();
 
-            area.node.setEffect(null);
+            area.node.ui.setEffect(null);
 
             if (area == dragedTabArea) {
                 applyOverlay(dragedTab.getStyleableNode(), PositionCenter);
@@ -513,7 +513,7 @@ public final class DockSystem {
             int pointerIndex = values[1];
             int width = values[2];
 
-            ObservableList<Tab> tabs = area.node.getTabs();
+            ObservableList<Tab> tabs = area.node.ui.getTabs();
             for (int i = 0; i < tabs.size(); i++) {
                 Node node = tabs.get(i).getStyleableNode();
 
@@ -557,7 +557,7 @@ public final class DockSystem {
 
             dragedTabArea.remove(dragedTab, false);
             area.add(dragedTab, dragedTabArea, values[1], true);
-            area.node.getSelectionModel().select(values[1]);
+            area.node.ui.getSelectionModel().select(values[1]);
 
             event.setDropCompleted(true);
             event.consume();
@@ -572,7 +572,7 @@ public final class DockSystem {
      * @return
      */
     private static int[] calculate(TabArea area, DragEvent event) {
-        ObservableList<Tab> tabs = area.node.getTabs();
+        ObservableList<Tab> tabs = area.node.ui.getTabs();
         int tabWidth = (int) tabs.get(0).getStyleableNode().prefWidth(-1);
         int actualIndex = tabs.indexOf(area == dragedTabArea ? dragedTab : dragedDoppelganger);
         int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
@@ -588,7 +588,7 @@ public final class DockSystem {
     private static void revert(TabArea area) {
         area.remove(dragedDoppelganger, false);
 
-        for (Tab tab : area.node.getTabs()) {
+        for (Tab tab : area.node.ui.getTabs()) {
             Node node = tab.getStyleableNode();
             node.setTranslateX(0);
             node.setViewOrder(0);
@@ -603,7 +603,7 @@ public final class DockSystem {
         // the window immediately at this time, the window will disappear before the tab removal
         // process and a native error will occur. So here we have to ask only to close the window.
         Platform.runLater(() -> {
-            ((Stage) area.node.getScene().getWindow()).close();
+            ((Stage) area.node.ui.getScene().getWindow()).close();
 
             layout.windows.remove(area);
             layout.store();
@@ -628,8 +628,8 @@ public final class DockSystem {
      * @param event The drag event
      * @return The position value for the detected sub area.
      */
-    private static int detectPosition(DragEvent event, Parent source) {
-        Side side = dragedTabArea.node.getSide();
+    private static int detectPosition(DragEvent event, Node source) {
+        Side side = dragedTabArea.node.ui.getSide();
         Bounds bound = source.getBoundsInLocal();
         double horizontalPadding = side.isHorizontal() ? dragedTab.getStyleableNode().prefHeight(-1) : 0;
         double verticalPadding = side.isVertical() ? dragedTab.getStyleableNode().prefWidth(-1) : 0;
@@ -757,7 +757,7 @@ public final class DockSystem {
             borderBox.setX(-1000);
             borderBox.setY(-1000);
 
-            Rectangle rect = new Rectangle(dragedTabArea.node.getWidth(), dragedTabArea.node.getHeight());
+            Rectangle rect = new Rectangle(dragedTabArea.node.ui.getWidth(), dragedTabArea.node.ui.getHeight());
             rect.setStroke(dropOverlay.getPaint());
             rect.setStrokeWidth(5);
             rect.setFill(Color.WHITE.deriveColor(0, 0, 0, 0.3));

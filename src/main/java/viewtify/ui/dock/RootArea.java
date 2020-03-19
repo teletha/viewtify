@@ -12,12 +12,13 @@ package viewtify.ui.dock;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
+import viewtify.ui.UIHBox;
 import viewtify.ui.UITab;
 
 /**
  * A RootArea is a special {@link ViewArea} which has no parent and is directly used as root.
  */
-final class RootArea extends ViewArea<HBox> {
+final class RootArea extends ViewArea<UIHBox> {
 
     /** The dock window id. */
     public String id = "DockWindow-" + (int) (Math.random() * 100000000);
@@ -33,7 +34,7 @@ final class RootArea extends ViewArea<HBox> {
      * @param canCloseStage Close the stage containing this area when the last view was removed?
      */
     RootArea() {
-        super(new HBox());
+        super(new UIHBox(null));
     }
 
     /**
@@ -43,12 +44,12 @@ final class RootArea extends ViewArea<HBox> {
     protected void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
-        if (node.getChildren().isEmpty()) {
-            node.getChildren().add(child.node);
+        if (node.ui.getChildren().isEmpty()) {
+            node.ui.getChildren().add(child.node.ui);
         } else {
-            node.getChildren().set(0, child.node);
+            node.ui.getChildren().set(0, child.node.ui);
         }
-        HBox.setHgrow(child.node, Priority.ALWAYS);
+        HBox.setHgrow(child.node.ui, Priority.ALWAYS);
     }
 
     /**

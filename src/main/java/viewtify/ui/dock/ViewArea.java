@@ -14,16 +14,16 @@ import java.util.List;
 import java.util.Objects;
 
 import javafx.geometry.Orientation;
-import javafx.scene.Parent;
 import javafx.stage.Stage;
 
 import kiss.Variable;
 import viewtify.ui.UITab;
+import viewtify.ui.UserInterface;
 
 /**
  * A ViewArea is a node within the area tree. It has two children which are self view areas.
  */
-abstract class ViewArea<P extends Parent> {
+abstract class ViewArea<P extends UserInterface> {
 
     /** The actual root node. */
     protected final P node;
@@ -49,7 +49,7 @@ abstract class ViewArea<P extends Parent> {
      * @return
      */
     protected final Stage getStage() {
-        return (Stage) node.getScene().getWindow();
+        return (Stage) node.ui.getScene().getWindow();
     }
 
     protected void setChild(int index, ViewArea child) {

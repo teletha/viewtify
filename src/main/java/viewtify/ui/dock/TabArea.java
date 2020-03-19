@@ -16,7 +16,6 @@ import java.util.Objects;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
@@ -25,11 +24,12 @@ import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UITab;
+import viewtify.ui.UITabPane;
 
 /**
  * Describes a logical view area which displays the views within a tab pane.
  */
-class TabArea extends ViewArea<TabPane> {
+class TabArea extends ViewArea<UITabPane> {
 
     /** The selected id. */
     private String selected;
@@ -44,31 +44,31 @@ class TabArea extends ViewArea<TabPane> {
      * Create a new tab area.
      */
     TabArea() {
-        super(new TabPane());
+        super(new UITabPane(null));
 
         saveSelectedTab();
-        node.getStyleClass().add("stop-anime");
-        node.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
-        node.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
-        node.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
-        node.addEventHandler(DragEvent.DRAG_DONE, e -> DockSystem.onDragDone(e, this));
-        node.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
-        node.addEventHandler(MouseEvent.DRAG_DETECTED, e -> {
-            I.signal(node.getTabs())
+        node.ui.getStyleClass().add("stop-anime");
+        node.ui.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onDragOver(e, this));
+        node.ui.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onDragEntered(e, this));
+        node.ui.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onDragExited(e, this));
+        node.ui.addEventHandler(DragEvent.DRAG_DONE, e -> DockSystem.onDragDone(e, this));
+        node.ui.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onDragDropped(e, this));
+        node.ui.addEventHandler(MouseEvent.DRAG_DETECTED, e -> {
+            I.signal(node.ui.getTabs())
                     .map(tab -> tab.getStyleableNode())
                     .take(tab -> tab.localToScene(tab.getBoundsInLocal()).contains(e.getSceneX(), e.getSceneY()))
                     .first()
                     .to(tab -> {
-                        DockSystem.onDragDetected(e, this, (UITab) node.getSelectionModel().getSelectedItem());
+                        DockSystem.onDragDetected(e, this, (UITab) node.ui.getSelectionModel().getSelectedItem());
                     });
         });
 
         // Since TabPane implementation delays the initialization of Skin and internal nodes
         // are not generated. So we should create Skin eagerly.
-        TabPaneSkin skin = new TabPaneSkin(node);
-        node.setSkin(skin);
+        TabPaneSkin skin = new TabPaneSkin(node.ui);
+        node.ui.setSkin(skin);
 
-        Node header = node.lookup(".tab-header-area");
+        Node header = node.ui.lookup(".tab-header-area");
         header.addEventHandler(DragEvent.DRAG_ENTERED, e -> DockSystem.onHeaderDragEntered(e, this));
         header.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onHeaderDragExited(e, this));
         header.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onHeaderDragDropped(e, this));
@@ -82,7 +82,7 @@ class TabArea extends ViewArea<TabPane> {
      */
     @SuppressWarnings("unused")
     private List<String> getIds() {
-        return I.signal(node.getTabs()).map(Tab::getId).toList();
+        return I.signal(node.ui.getTabs()).map(Tab::getId).toList();
     }
 
     /**
@@ -126,7 +126,7 @@ class TabArea extends ViewArea<TabPane> {
      */
     private void selectInitialTabOnlyOnce(Tab tab) {
         if (selectedInitial != null && Objects.equals(tab.getId(), selectedInitial)) {
-            node.getSelectionModel().select(tab);
+            node.ui.getSelectionModel().select(tab);
             selectedInitial = null;
         }
     }
@@ -135,7 +135,7 @@ class TabArea extends ViewArea<TabPane> {
      * Save the current selected tab countinuously.
      */
     private void saveSelectedTab() {
-        Viewtify.observe(node.getSelectionModel().selectedItemProperty()).to(tab -> {
+        Viewtify.observe(node.ui.getSelectionModel().selectedItemProperty()).to(tab -> {
             if (tab != null) {
                 selected = tab.getId();
                 DockSystem.saveLayout();
@@ -151,7 +151,7 @@ class TabArea extends ViewArea<TabPane> {
      * @param checkEmpty Should this area be removed if it is empty?
      */
     void remove(Tab tab, boolean checkEmpty) {
-        node.getTabs().remove(tab);
+        node.ui.getTabs().remove(tab);
         if (checkEmpty) {
             handleEmpty();
         }
@@ -161,7 +161,7 @@ class TabArea extends ViewArea<TabPane> {
      * Check if this area is empty, so remove it.
      */
     void handleEmpty() {
-        if (node.getTabs().isEmpty()) {
+        if (node.ui.getTabs().isEmpty()) {
             parent.remove(this);
         }
     }
@@ -172,7 +172,7 @@ class TabArea extends ViewArea<TabPane> {
     @Override
     protected void add(UITab tab, ViewArea from, int position, boolean tabMode) {
         if (position == DockSystem.PositionRestore) {
-            ObservableList<Tab> items = node.getTabs();
+            ObservableList<Tab> items = node.ui.getTabs();
             position = items.size();
 
             for (int i = 0; i < position; i++) {
@@ -194,11 +194,11 @@ class TabArea extends ViewArea<TabPane> {
             break;
 
         case DockSystem.PositionCenter:
-            position = node.getTabs().size();
+            position = node.ui.getTabs().size();
             // fall-through
 
         default:
-            node.getTabs().add(position, tab);
+            node.ui.getTabs().add(position, tab);
             tab.setOnCloseRequest(e -> remove(tab, true));
 
             selectInitialTabOnlyOnce(tab);

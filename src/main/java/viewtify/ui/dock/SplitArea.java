@@ -21,12 +21,12 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.SplitPane.Divider;
 
 import viewtify.Viewtify;
+import viewtify.ui.UISplitPane;
 
-class SplitArea extends ViewArea<SplitPane> {
+class SplitArea extends ViewArea<UISplitPane> {
 
     /** The latest divider's positions. */
     private double[] snapshot = new double[0];
@@ -35,23 +35,23 @@ class SplitArea extends ViewArea<SplitPane> {
      * Create a new view area.
      */
     protected SplitArea() {
-        super(new SplitPane());
+        super(new UISplitPane(null));
 
         // The SplitPane implements content replacement in two stages: removal and addition.
         // For this reason, when removing content, divider is also removed, and the divider's
         // position information will be lost.
         // Therefore, each time the divider's position information is changed, it is stored in
         // the cache and restored every time the dividier increases or decreases.
-        node.getDividers().addListener((ListChangeListener<Divider>) c -> {
+        node.ui.getDividers().addListener((ListChangeListener<Divider>) c -> {
             while (c.next()) {
                 for (Divider added : c.getAddedSubList()) {
                     Viewtify.observe(added.positionProperty()).debounce(1000, TimeUnit.MILLISECONDS).to(v -> {
                         DockSystem.saveLayout();
-                        snapshot = node.getDividerPositions();
+                        snapshot = node.ui.getDividerPositions();
                     });
                 }
             }
-            node.setDividerPositions(snapshot);
+            node.ui.setDividerPositions(snapshot);
         });
     }
 
@@ -62,11 +62,11 @@ class SplitArea extends ViewArea<SplitPane> {
     protected void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
-        ObservableList<Node> items = node.getItems();
+        ObservableList<Node> items = node.ui.getItems();
         if (index < items.size()) {
-            items.set(index, child.node);
+            items.set(index, child.node.ui);
         } else {
-            items.add(child.node);
+            items.add(child.node.ui);
         }
     }
 
@@ -75,14 +75,14 @@ class SplitArea extends ViewArea<SplitPane> {
      */
     @Override
     protected Orientation getOrientation() {
-        return node.getOrientation();
+        return node.ui.getOrientation();
     }
 
     /**
      * {@inheritDoc}
      */
     void setOrientation(Orientation orientation) {
-        node.setOrientation(orientation);
+        node.ui.setOrientation(orientation);
     }
 
     /**
@@ -92,7 +92,7 @@ class SplitArea extends ViewArea<SplitPane> {
      */
     @SuppressWarnings("unused")
     private final List<BigDecimal> getDividers() {
-        return DoubleStream.of(node.getDividerPositions())
+        return DoubleStream.of(node.ui.getDividerPositions())
                 .mapToObj(v -> new BigDecimal(v).setScale(3, RoundingMode.HALF_DOWN))
                 .collect(Collectors.toList());
     }
@@ -112,7 +112,7 @@ class SplitArea extends ViewArea<SplitPane> {
             for (int i = 0; i < values.length; i++) {
                 values[i] = dividers.get(i).doubleValue();
             }
-            node.setDividerPositions(values);
+            node.ui.setDividerPositions(values);
         });
     }
 }
