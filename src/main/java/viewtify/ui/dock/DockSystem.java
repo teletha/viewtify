@@ -32,6 +32,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
@@ -403,6 +404,14 @@ public final class DockSystem {
 
             layout.store();
         }
+    }
+
+    static void onKeyPress(KeyEvent event) {
+        System.out.println(event);
+    }
+
+    static void onKeyRelease(KeyEvent event) {
+        System.out.println(event);
     }
 
     /**
