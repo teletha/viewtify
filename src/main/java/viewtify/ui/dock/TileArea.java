@@ -49,7 +49,7 @@ class TileArea extends ViewArea<Pane> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(UITab tab, ViewArea from, int position, boolean tabMode) {
+    public void add(UITab tab, ViewArea from, int position, boolean tabMode) {
         switch (position) {
         case DockSystem.PositionTop:
         case DockSystem.PositionBottom:
@@ -95,7 +95,7 @@ class TileArea extends ViewArea<Pane> {
      * {@inheritDoc}
      */
     @Override
-    protected Variable<ViewArea> findAreaBy(String id) {
+    public Variable<ViewArea> findAreaBy(String id) {
         return Variable.of(Objects.equals(this.id, id) ? this : null);
     }
 }

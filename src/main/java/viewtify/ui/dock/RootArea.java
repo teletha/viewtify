@@ -40,7 +40,7 @@ final class RootArea extends ViewArea<HBox> {
      * {@inheritDoc}
      */
     @Override
-    protected void setChild(int index, ViewArea child) {
+    public void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
         if (node.getChildren().isEmpty()) {
@@ -55,7 +55,7 @@ final class RootArea extends ViewArea<HBox> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(UITab tab, ViewArea from, int position, boolean tabMode) {
+    public void add(UITab tab, ViewArea from, int position, boolean tabMode) {
         if (children.isEmpty()) {
             setChild(0, new TabArea());
         }
@@ -66,7 +66,7 @@ final class RootArea extends ViewArea<HBox> {
      * {@inheritDoc}
      */
     @Override
-    protected void remove(ViewArea area) {
+    public void remove(ViewArea area) {
         if (sub) {
             DockSystem.requestCloseWindow(this);
         }

@@ -786,7 +786,7 @@ public final class DockSystem {
          */
         private void bringAllWindowsToFront() {
             for (RootArea root : layout.windows) {
-                Stage stage = root.getStage();
+                Stage stage = (Stage) root.node.getScene().getWindow();
                 boolean state = stage.isAlwaysOnTop();
                 stage.setAlwaysOnTop(true);
                 stage.setAlwaysOnTop(state);

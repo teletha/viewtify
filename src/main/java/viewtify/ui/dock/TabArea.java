@@ -170,7 +170,7 @@ class TabArea extends ViewArea<TabPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(UITab tab, ViewArea from, int position, boolean tabMode) {
+    public void add(UITab tab, ViewArea from, int position, boolean tabMode) {
         if (position == DockSystem.PositionRestore) {
             ObservableList<Tab> items = node.getTabs();
             position = items.size();
@@ -228,7 +228,7 @@ class TabArea extends ViewArea<TabPane> {
      * {@inheritDoc}
      */
     @Override
-    protected Variable<ViewArea> findAreaBy(String id) {
+    public Variable<ViewArea> findAreaBy(String id) {
         return Variable.of(viewInitial.contains(id) ? this : null);
     }
 }

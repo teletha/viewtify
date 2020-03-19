@@ -59,7 +59,7 @@ class SplitArea extends ViewArea<SplitPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void setChild(int index, ViewArea child) {
+    public void setChild(int index, ViewArea child) {
         super.setChild(index, child);
 
         ObservableList<Node> items = node.getItems();
@@ -74,7 +74,7 @@ class SplitArea extends ViewArea<SplitPane> {
      * {@inheritDoc}
      */
     @Override
-    protected Orientation getOrientation() {
+    public Orientation getOrientation() {
         return node.getOrientation();
     }
 

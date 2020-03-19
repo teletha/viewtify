@@ -15,7 +15,6 @@ import java.util.Objects;
 
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
-import javafx.stage.Stage;
 
 import kiss.Variable;
 import viewtify.ui.UITab;
@@ -23,7 +22,7 @@ import viewtify.ui.UITab;
 /**
  * A ViewArea is a node within the area tree. It has two children which are self view areas.
  */
-abstract class ViewArea<P extends Parent> {
+public abstract class ViewArea<P extends Parent> {
 
     /** The actual root node. */
     protected final P node;
@@ -39,20 +38,11 @@ abstract class ViewArea<P extends Parent> {
      * 
      * @param node The root node of this area.
      */
-    protected ViewArea(P node) {
+    public ViewArea(P node) {
         this.node = Objects.requireNonNull(node);
     }
 
-    /**
-     * Get the {@link Stage} for this area.
-     * 
-     * @return
-     */
-    protected final Stage getStage() {
-        return (Stage) node.getScene().getWindow();
-    }
-
-    protected void setChild(int index, ViewArea child) {
+    public void setChild(int index, ViewArea child) {
         child.parent = this;
 
         if (index < children.size()) {
@@ -94,7 +84,7 @@ abstract class ViewArea<P extends Parent> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    protected void add(UITab view, ViewArea from, int position, boolean tabMode) {
+    public void add(UITab view, ViewArea from, int position, boolean tabMode) {
         switch (position) {
         case DockSystem.PositionCenter:
             children.get(0).add(view, from, position, tabMode);
@@ -153,7 +143,7 @@ abstract class ViewArea<P extends Parent> {
      *
      * @param area The area that should be removed.
      */
-    protected void remove(ViewArea area) {
+    public void remove(ViewArea area) {
         children.remove(area);
         if (children.size() == 1) {
             parent.replace(this, children.remove(0));
@@ -202,7 +192,7 @@ abstract class ViewArea<P extends Parent> {
      * 
      * @return
      */
-    protected Orientation getOrientation() {
+    public Orientation getOrientation() {
         return null;
     }
 
@@ -212,7 +202,7 @@ abstract class ViewArea<P extends Parent> {
      * @param id
      * @return
      */
-    protected Variable<ViewArea> findAreaBy(String id) {
+    public Variable<ViewArea> findAreaBy(String id) {
         for (ViewArea child : children) {
             Variable<ViewArea> area = child.findAreaBy(id);
 
