@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Objects;
 
 import javafx.geometry.Orientation;
-import javafx.stage.Stage;
 
 import kiss.Variable;
 import viewtify.ui.UITab;
@@ -41,15 +40,6 @@ abstract class ViewArea<P extends UserInterface> {
      */
     protected ViewArea(P node) {
         this.node = Objects.requireNonNull(node);
-    }
-
-    /**
-     * Get the {@link Stage} for this area.
-     * 
-     * @return
-     */
-    protected final Stage getStage() {
-        return (Stage) node.ui.getScene().getWindow();
     }
 
     protected void setChild(int index, ViewArea child) {

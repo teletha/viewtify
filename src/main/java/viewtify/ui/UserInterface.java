@@ -12,6 +12,7 @@ package viewtify.ui;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -25,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import org.controlsfx.control.decoration.Decorator;
@@ -82,6 +84,15 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     @Override
     public W ui() {
         return ui;
+    }
+
+    /**
+     * Gets the A to which this UI currently belongs.
+     * 
+     * @return
+     */
+    public final Optional<Stage> stage() {
+        return Optional.ofNullable((Stage) ui.getScene().getWindow());
     }
 
     /**
