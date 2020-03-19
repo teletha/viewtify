@@ -154,7 +154,7 @@ class TabArea extends ViewArea<TabPane> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(UITab tab, int position) {
+    protected void add(UITab tab, int position, boolean tabMode) {
         if (position == DockSystem.PositionRestore) {
             ObservableList<Tab> items = node.getTabs();
             position = items.size();
@@ -174,7 +174,7 @@ class TabArea extends ViewArea<TabPane> {
         case DockSystem.PositionBottom:
         case DockSystem.PositionLeft:
         case DockSystem.PositionRight:
-            super.add(tab, position);
+            super.add(tab, position, tabMode);
             break;
 
         case DockSystem.PositionCenter:

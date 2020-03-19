@@ -14,8 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
@@ -93,7 +91,7 @@ public final class DockSystem {
     static final int PositionRestore = -6;
 
     /** Configuration store. */
-    static final BooleanProperty HideTab = new SimpleBooleanProperty(true);
+    static boolean tabMode = true;
 
     /** Layout Store */
     private static DockLayout layout;
@@ -110,10 +108,10 @@ public final class DockSystem {
     /**
      * Configuration.
      * 
-     * @param hide
+     * @param tab
      */
-    public static void configHideTabInSubArea(boolean hide) {
-        HideTab.set(hide);
+    public static void configDefaultMode(boolean tab) {
+        tabMode = tab;
     }
 
     /**
@@ -132,7 +130,7 @@ public final class DockSystem {
             tab.setContent(view.ui());
             tab.setId(id);
 
-            layout.findAreaBy(id).or(root()).add(tab, PositionRestore);
+            layout.findAreaBy(id).or(root()).add(tab, PositionRestore, true);
         });
     }
 
@@ -368,7 +366,7 @@ public final class DockSystem {
             int position = detectPosition(event, area.node);
             if (position != PositionCenter || area != dragedTabArea) {
                 dragedTabArea.remove(dragedTab, false);
-                area.add(dragedTab, position);
+                area.add(dragedTab, position, tabMode);
             }
 
             event.setDropCompleted(true);
@@ -396,7 +394,7 @@ public final class DockSystem {
 
             openNewWindow(area, bounds, e -> {
                 dragedTabArea.remove(dragedTab, false);
-                area.add(dragedTab, PositionCenter);
+                area.add(dragedTab, PositionCenter, true);
                 layout.windows.add(area);
             });
 
@@ -468,7 +466,7 @@ public final class DockSystem {
             if (area == dragedTabArea) {
                 applyOverlay(dragedTab.getStyleableNode(), PositionCenter);
             } else {
-                area.add(dragedDoppelganger, PositionCenter);
+                area.add(dragedDoppelganger, PositionCenter, true);
                 applyOverlay(dragedDoppelganger.getStyleableNode(), 0);
             }
         }
@@ -549,7 +547,7 @@ public final class DockSystem {
             int[] values = calculate(area, event);
 
             dragedTabArea.remove(dragedTab, false);
-            area.add(dragedTab, values[1]);
+            area.add(dragedTab, values[1], true);
             area.node.getSelectionModel().select(values[1]);
 
             event.setDropCompleted(true);
