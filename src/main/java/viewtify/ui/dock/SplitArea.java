@@ -12,7 +12,6 @@ package viewtify.ui.dock;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
@@ -23,7 +22,6 @@ import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane.Divider;
 
-import viewtify.Viewtify;
 import viewtify.ui.UISplitPane;
 
 class SplitArea extends ViewArea<UISplitPane> {
@@ -45,7 +43,7 @@ class SplitArea extends ViewArea<UISplitPane> {
         node.ui.getDividers().addListener((ListChangeListener<Divider>) c -> {
             while (c.next()) {
                 for (Divider added : c.getAddedSubList()) {
-                    Viewtify.observe(added.positionProperty()).debounce(1000, TimeUnit.MILLISECONDS).to(v -> {
+                    added.positionProperty().addListener((o, p, n) -> {
                         DockSystem.saveLayout();
                         snapshot = node.ui.getDividerPositions();
                     });

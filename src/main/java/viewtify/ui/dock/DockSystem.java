@@ -44,7 +44,9 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import kiss.I;
+import kiss.Managed;
 import kiss.Signaling;
+import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import viewtify.Viewtify;
@@ -91,9 +93,6 @@ public final class DockSystem {
      */
     static final int PositionRestore = -6;
 
-    /** Layout Store */
-    private static DockLayout layout;
-
     /** The main root area. */
     private static RootArea root;
 
@@ -101,6 +100,22 @@ public final class DockSystem {
      * Hide.
      */
     private DockSystem() {
+    }
+
+    /**
+     * Get the singleton docking window layout manager.
+     * 
+     * @return
+     */
+    private static DockLayout layout() {
+        return I.make(DockLayout.class);
+    }
+
+    /**
+     * Save the current layout info.
+     */
+    static void saveLayout() {
+        layout().save.accept(true);
     }
 
     /**
@@ -119,7 +134,7 @@ public final class DockSystem {
             tab.setContent(view.ui());
             tab.setId(id);
 
-            layout.findAreaBy(id).or(root()).add(tab, PositionRestore);
+            layout().findAreaBy(id).or(root()).add(tab, PositionRestore);
         });
     }
 
@@ -130,14 +145,12 @@ public final class DockSystem {
      */
     private static synchronized RootArea root() {
         if (root == null) {
-            layout = I.make(DockLayout.class);
-
-            if (layout.windows.isEmpty()) {
+            if (layout().roots.isEmpty()) {
                 root = new RootArea();
-                layout.windows.add(root);
+                layout().roots.add(root);
             } else {
-                for (int i = 0; i < layout.windows.size(); i++) {
-                    RootArea area = layout.windows.get(i);
+                for (int i = 0; i < layout().roots.size(); i++) {
+                    RootArea area = layout().roots.get(i);
 
                     if (i == 0) {
                         root = area;
@@ -148,15 +161,6 @@ public final class DockSystem {
             }
         }
         return root;
-    }
-
-    /**
-     * Save the current layout info.
-     */
-    static void saveLayout() {
-        if (layout != null) {
-            layout.requestSave.accept(true);
-        }
     }
 
     /**
@@ -176,7 +180,7 @@ public final class DockSystem {
         stage.setY(bounds.getMinY());
         stage.setOnShown(shown);
         stage.setOnCloseRequest(e -> {
-            layout.windows.remove(area);
+            layout().roots.remove(area);
             Viewtify.untrackLocation(area.id);
         });
         Viewtify.trackLocation(area.id, stage);
@@ -184,22 +188,34 @@ public final class DockSystem {
     }
 
     /**
-     * 
+     * Manage all docking windows and tabs.
      */
+    @Managed(Singleton.class)
     private static class DockLayout implements Storable<DockLayout> {
-        public List<RootArea> windows = new ArrayList();
 
-        private final Signaling<Boolean> requestSave = new Signaling();
+        /** Top level area. */
+        public List<RootArea> roots = new ArrayList();
 
+        /** The save event manager. */
+        private final Signaling<Boolean> save = new Signaling();
+
+        /**
+         * 
+         */
         private DockLayout() {
             restore();
-            requestSave.expose.debounce(1000, TimeUnit.MILLISECONDS).to(this::store);
+            save.expose.debounce(1000, TimeUnit.MILLISECONDS).to(this::store);
         }
 
+        /**
+         * Gets the area where the specified ID exists.
+         * 
+         * @param id An area ID.
+         * @return
+         */
         private Variable<ViewArea> findAreaBy(String id) {
-            for (RootArea root : windows) {
+            for (RootArea root : roots) {
                 Variable<ViewArea> area = root.findAreaBy(id);
-
                 if (area.isPresent()) {
                     return area;
                 }
@@ -275,7 +291,7 @@ public final class DockSystem {
                 dragedTab = null;
                 dragedTabArea = null;
 
-                layout.store();
+                saveLayout();
             }
         }
     }
@@ -396,13 +412,13 @@ public final class DockSystem {
             openNewWindow(area, bounds, e -> {
                 dragedTabArea.remove(dragedTab, false);
                 area.add(dragedTab, PositionCenter);
-                layout.windows.add(area);
+                layout().roots.add(area);
             });
 
             event.setDropCompleted(true);
             event.consume();
 
-            layout.store();
+            saveLayout();
         }
     }
 
@@ -597,8 +613,8 @@ public final class DockSystem {
         Platform.runLater(() -> {
             ((Stage) area.node.ui.getScene().getWindow()).close();
 
-            layout.windows.remove(area);
-            layout.store();
+            layout().roots.remove(area);
+            saveLayout();
             Viewtify.untrackLocation(area.id);
         });
     }
@@ -777,7 +793,7 @@ public final class DockSystem {
          * Brings all windows to the front.
          */
         private void bringAllWindowsToFront() {
-            for (RootArea root : layout.windows) {
+            for (RootArea root : layout().roots) {
                 root.node.stage().ifPresent(stage -> {
                     boolean state = stage.isAlwaysOnTop();
                     stage.setAlwaysOnTop(true);
