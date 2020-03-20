@@ -84,7 +84,7 @@ abstract class ViewArea<P extends UserInterface> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    protected void add(UITab view, ViewArea from, int position, boolean tabMode) {
+    public void add(UITab view, ViewArea from, int position, boolean tabMode) {
         switch (position) {
         case DockSystem.PositionCenter:
             children.get(0).add(view, from, position, tabMode);
@@ -143,7 +143,7 @@ abstract class ViewArea<P extends UserInterface> {
      *
      * @param area The area that should be removed.
      */
-    protected void remove(ViewArea area) {
+    public void remove(ViewArea area) {
         children.remove(area);
         if (children.size() == 1) {
             parent.replace(this, children.remove(0));

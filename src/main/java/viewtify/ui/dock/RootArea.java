@@ -56,7 +56,7 @@ final class RootArea extends ViewArea<UIHBox> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(UITab tab, ViewArea from, int position, boolean tabMode) {
+    public void add(UITab tab, ViewArea from, int position, boolean tabMode) {
         if (children.isEmpty()) {
             setChild(0, new TabArea());
         }
@@ -67,7 +67,7 @@ final class RootArea extends ViewArea<UIHBox> {
      * {@inheritDoc}
      */
     @Override
-    protected void remove(ViewArea area) {
+    public void remove(ViewArea area) {
         if (sub) {
             DockSystem.requestCloseWindow(this);
         }

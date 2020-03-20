@@ -49,7 +49,7 @@ class TileArea extends ViewArea<UIHBox> {
      * {@inheritDoc}
      */
     @Override
-    protected void add(UITab tab, ViewArea from, int position, boolean tabMode) {
+    public void add(UITab tab, ViewArea from, int position, boolean tabMode) {
         switch (position) {
         case DockSystem.PositionTop:
         case DockSystem.PositionBottom:
