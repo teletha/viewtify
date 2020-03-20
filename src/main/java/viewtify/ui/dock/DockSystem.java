@@ -285,7 +285,7 @@ public final class DockSystem {
      *
      * @param event the drag event.
      */
-    static void onDragEntered(DragEvent event, ViewArea area) {
+    static void onDragEntered(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
             event.consume();
 
@@ -298,7 +298,7 @@ public final class DockSystem {
      *
      * @param event the drag event.
      */
-    static void onDragExited(DragEvent event, ViewArea area) {
+    static void onDragExited(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
             event.consume();
 
@@ -311,16 +311,16 @@ public final class DockSystem {
      *
      * @param event The drag event.
      */
-    static void onDragOver(DragEvent event, ViewArea area) {
+    static void onDragOver(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
             event.consume();
 
             int position = detectPosition(event, area.node.ui);
-            if (position == PositionCenter && area == dragedTabArea) {
-                area.node.ui.setEffect(null);
-            } else {
+            if (canDrop(position, area)) {
                 applyOverlay(area.node.ui, position);
                 event.acceptTransferModes(TransferMode.MOVE);
+            } else {
+                area.node.ui.setEffect(null);
             }
         }
     }
@@ -331,14 +331,14 @@ public final class DockSystem {
      *
      * @param event The drag event.
      */
-    static void onDragDropped(DragEvent event, ViewArea area) {
+    static void onDragDropped(DragEvent event, TabArea area) {
         if (isValidDragboard(event)) {
             // The insertion point is determined from the position of the pointer, but at that time
             // it is necessary to calculate the actual tab size, and if the tab is removed, the size
             // cannot be calculated.
             // Therefore, it is necessary to calculate it first.
             int position = detectPosition(event, area.node.ui);
-            if (position != PositionCenter || area != dragedTabArea) {
+            if (canDrop(position, area)) {
                 dragedTabArea.remove(dragedTab, false);
                 area.add(dragedTab, position);
             }
@@ -346,6 +346,33 @@ public final class DockSystem {
             event.setDropCompleted(true);
             event.consume();
         }
+    }
+
+    /**
+     * Determine if item can be moved to destination.
+     * 
+     * @param position Drop position.
+     * @param area A destination area.
+     * @return Result
+     */
+    private static boolean canDrop(int position, TabArea area) {
+        switch (position) {
+        case PositionCenter:
+            // exclude if the source and destination are the same
+            if (area == dragedTabArea) {
+                return false;
+            }
+
+            // exclude if destination hides header
+            if (!area.node.isHeaderShown()) {
+                return false;
+            }
+            break;
+
+        default:
+            break;
+        }
+        return true;
     }
 
     /**
