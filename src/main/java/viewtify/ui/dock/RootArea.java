@@ -12,14 +12,14 @@ package viewtify.ui.dock;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
-import viewtify.ui.UIHBox;
+import viewtify.ui.UIPane;
 import viewtify.ui.UITab;
 import viewtify.ui.UITabPane;
 
 /**
  * A RootArea is a special {@link ViewArea} which has no parent and is directly used as root.
  */
-final class RootArea extends ViewArea<UIHBox> {
+final class RootArea extends ViewArea<UIPane> {
 
     /** The dock window id. */
     public String id = "DockWindow-" + (int) (Math.random() * 100000000);
@@ -29,21 +29,16 @@ final class RootArea extends ViewArea<UIHBox> {
 
     /**
      * Create a new root area.
-     *
-     * @param box Use this pane to draw all the content.
-     * @param dndManager The drag&drop manager
-     * @param canCloseStage Close the stage containing this area when the last view was removed?
      */
     RootArea() {
         this(null);
     }
 
+    /**
+     * Create a new root area.
+     */
     RootArea(UITabPane root) {
-        super(new UIHBox(null));
-        
-        if (root != null) {
-            setChild(0, new TabArea(root));
-        }
+        super(new UIPane(new HBox(), null));
     }
 
     /**
