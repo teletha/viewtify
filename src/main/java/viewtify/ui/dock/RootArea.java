@@ -14,6 +14,7 @@ import javafx.scene.layout.Priority;
 
 import viewtify.ui.UIHBox;
 import viewtify.ui.UITab;
+import viewtify.ui.UITabPane;
 
 /**
  * A RootArea is a special {@link ViewArea} which has no parent and is directly used as root.
@@ -34,7 +35,15 @@ final class RootArea extends ViewArea<UIHBox> {
      * @param canCloseStage Close the stage containing this area when the last view was removed?
      */
     RootArea() {
+        this(null);
+    }
+
+    RootArea(UITabPane root) {
         super(new UIHBox(null));
+        
+        if (root != null) {
+            setChild(0, new TabArea(root));
+        }
     }
 
     /**

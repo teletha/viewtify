@@ -51,6 +51,7 @@ import kiss.Storable;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UITab;
+import viewtify.ui.UITabPane;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
 
@@ -61,7 +62,7 @@ import viewtify.ui.View;
 public final class DockSystem {
 
     /** The root user interface for the docking system. */
-    public static final UserInterfaceProvider<Parent> UI = () -> root().node.ui;
+    public static final UserInterfaceProvider<Parent> UI = () -> layout().findRoot().node.ui;
 
     /**
      * Place the view within the center.
@@ -93,9 +94,6 @@ public final class DockSystem {
      */
     static final int PositionRestore = -6;
 
-    /** The main root area. */
-    private static RootArea root;
-
     /**
      * Hide.
      */
@@ -114,8 +112,19 @@ public final class DockSystem {
     /**
      * Save the current layout info.
      */
-    static void saveLayout() {
+    static void requestSavingLayout() {
         layout().save.accept(true);
+    }
+
+    /**
+     * Registers the specified TabPane as a docking tab.
+     * 
+     * @param tabs
+     */
+    public static void register(UITabPane tabs) {
+        if (tabs != null) {
+
+        }
     }
 
     /**
@@ -134,33 +143,8 @@ public final class DockSystem {
             tab.setContent(view.ui());
             tab.setId(id);
 
-            layout().findAreaBy(id).or(root()).add(tab, PositionRestore);
+            layout().findAreaBy(id).add(tab, PositionRestore);
         });
-    }
-
-    /**
-     * Create the main root area lazy.
-     *
-     * @return The main area.
-     */
-    private static synchronized RootArea root() {
-        if (root == null) {
-            if (layout().roots.isEmpty()) {
-                root = new RootArea();
-                layout().roots.add(root);
-            } else {
-                for (int i = 0; i < layout().roots.size(); i++) {
-                    RootArea area = layout().roots.get(i);
-
-                    if (i == 0) {
-                        root = area;
-                    } else {
-                        openNewWindow(area, new BoundingBox(0, 0, 0, 0), null);
-                    }
-                }
-            }
-        }
-        return root;
     }
 
     /**
@@ -193,6 +177,9 @@ public final class DockSystem {
     @Managed(Singleton.class)
     private static class DockLayout implements Storable<DockLayout> {
 
+        /** The main root area. */
+        private RootArea main;
+
         /** Top level area. */
         public List<RootArea> roots = new ArrayList();
 
@@ -208,19 +195,43 @@ public final class DockSystem {
         }
 
         /**
+         * Create the main root area lazy.
+         *
+         * @return The main area.
+         */
+        private synchronized RootArea findRoot() {
+            if (main == null) {
+                if (roots.isEmpty()) {
+                    main = new RootArea();
+                    roots.add(main);
+                } else {
+                    for (int i = 0; i < roots.size(); i++) {
+                        RootArea area = roots.get(i);
+                        if (i == 0) {
+                            main = area;
+                        } else {
+                            openNewWindow(area, new BoundingBox(0, 0, 0, 0), null);
+                        }
+                    }
+                }
+            }
+            return main;
+        }
+
+        /**
          * Gets the area where the specified ID exists.
          * 
          * @param id An area ID.
          * @return
          */
-        private Variable<ViewArea> findAreaBy(String id) {
+        private ViewArea findAreaBy(String id) {
             for (RootArea root : roots) {
                 Variable<ViewArea> area = root.findAreaBy(id);
                 if (area.isPresent()) {
-                    return area;
+                    return area.v;
                 }
             }
-            return Variable.empty();
+            return findRoot();
         }
     }
 
@@ -291,7 +302,7 @@ public final class DockSystem {
                 dragedTab = null;
                 dragedTabArea = null;
 
-                saveLayout();
+                requestSavingLayout();
             }
         }
     }
@@ -418,7 +429,7 @@ public final class DockSystem {
             event.setDropCompleted(true);
             event.consume();
 
-            saveLayout();
+            requestSavingLayout();
         }
     }
 
@@ -614,7 +625,7 @@ public final class DockSystem {
             ((Stage) area.node.ui.getScene().getWindow()).close();
 
             layout().roots.remove(area);
-            saveLayout();
+            requestSavingLayout();
             Viewtify.untrackLocation(area.id);
         });
     }

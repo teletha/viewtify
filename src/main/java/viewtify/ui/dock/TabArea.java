@@ -16,6 +16,7 @@ import java.util.Objects;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
@@ -49,7 +50,14 @@ class TabArea extends ViewArea<UITabPane> {
      * Create a new tab area.
      */
     TabArea() {
-        super(new UITabPane(null));
+        this(null);
+    }
+
+    /**
+     * Create a new tab area with the specified {@link TabPane}.
+     */
+    TabArea(UITabPane pane) {
+        super(pane != null ? pane : new UITabPane(null));
 
         saveSelectedTab();
         node.style("stop-anime");
@@ -99,7 +107,7 @@ class TabArea extends ViewArea<UITabPane> {
     private final void setHeader(boolean show) {
         Platform.runLater(() -> {
             node.showHeader(show);
-            DockSystem.saveLayout();
+            DockSystem.requestSavingLayout();
         });
     }
 
@@ -166,7 +174,7 @@ class TabArea extends ViewArea<UITabPane> {
         Viewtify.observe(node.ui.getSelectionModel().selectedItemProperty()).to(tab -> {
             if (tab != null) {
                 selected = tab.getId();
-                DockSystem.saveLayout();
+                DockSystem.requestSavingLayout();
             }
         });
     }

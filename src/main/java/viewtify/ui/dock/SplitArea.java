@@ -44,7 +44,7 @@ class SplitArea extends ViewArea<UISplitPane> {
             while (c.next()) {
                 for (Divider added : c.getAddedSubList()) {
                     added.positionProperty().addListener((o, p, n) -> {
-                        DockSystem.saveLayout();
+                        DockSystem.requestSavingLayout();
                         snapshot = node.ui.getDividerPositions();
                     });
                 }
