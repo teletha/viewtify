@@ -107,7 +107,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
     }
 
     /**
-     * detach The closing policy for the tabs.
+     * The closing policy for the tabs.
      * 
      * @param policy The closing policy for the tabs.
      * @return Chainable API.
@@ -115,6 +115,30 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
     public final UITabPane policy(TabDragPolicy policy) {
         if (policy != null) {
             ui.setTabDragPolicy(policy);
+        }
+        return this;
+    }
+
+    /**
+     * Check the visibility of tab header area.
+     * 
+     * @return Result.
+     */
+    public final boolean isHeaderShown() {
+        return hasStyle("hide-header") == false;
+    }
+
+    /**
+     * Switch the visibility of tab header area.
+     * 
+     * @param visible
+     * @return Chainable API.
+     */
+    public final UITabPane showHeader(boolean visible) {
+        if (visible) {
+            unstyle("hide-header");
+        } else {
+            style("hide-header");
         }
         return this;
     }

@@ -12,6 +12,7 @@ package viewtify.ui.dock;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -43,6 +44,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import kiss.I;
+import kiss.Signaling;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseFunction;
@@ -166,7 +168,7 @@ public final class DockSystem {
      */
     static void saveLayout() {
         if (layout != null) {
-            layout.store();
+            layout.requestSave.accept(true);
         }
     }
 
@@ -218,8 +220,11 @@ public final class DockSystem {
     private static class DockLayout implements Storable<DockLayout> {
         public List<RootArea> windows = new ArrayList();
 
+        private final Signaling<Boolean> requestSave = new Signaling();
+
         private DockLayout() {
             restore();
+            requestSave.expose.debounce(1000, TimeUnit.MILLISECONDS).to(this::store);
         }
 
         private Variable<ViewArea> findAreaBy(String id) {

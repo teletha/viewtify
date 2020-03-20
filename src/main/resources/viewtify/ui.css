@@ -40,10 +40,11 @@
 
 .tab-pane.hide-header {
     -fx-tab-max-height: 0;
+    -fx-tab-max-width: 0;
 } 
 .tab-pane.hide-header .tab-header-area {
     visibility: hidden;
-    -fx-padding: -20 0 0 0;
+    -fx-padding: -20 0 0 0; /* Tab debris will be left behind right after the layout, so forcibly hide it. */
 }
 
 /* ==========================================================================

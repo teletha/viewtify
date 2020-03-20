@@ -34,6 +34,16 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     S ui();
 
     /**
+     * Checks if the specified class has already been applied to this UI.
+     * 
+     * @param className A target class name.
+     * @return Result.
+     */
+    default boolean hasStyle(String className) {
+        return ui().getStyleClass().contains(className);
+    }
+
+    /**
      * Apply style class name to user interface.
      * 
      * @param className A list of class names to apply.

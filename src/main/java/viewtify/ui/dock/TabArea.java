@@ -88,7 +88,7 @@ class TabArea extends ViewArea<UITabPane> {
      */
     @SuppressWarnings("unused")
     private final boolean isHeader() {
-        return header.isVisible();
+        return node.isHeaderShown();
     }
 
     /**
@@ -98,11 +98,7 @@ class TabArea extends ViewArea<UITabPane> {
      */
     private final void setHeader(boolean show) {
         Platform.runLater(() -> {
-            if (show) {
-                node.unstyle("hide-header");
-            } else {
-                node.style("hide-header");
-            }
+            node.showHeader(show);
             DockSystem.saveLayout();
         });
     }
