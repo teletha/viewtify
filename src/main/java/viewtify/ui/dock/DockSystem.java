@@ -47,7 +47,6 @@ import kiss.I;
 import kiss.Signaling;
 import kiss.Storable;
 import kiss.Variable;
-import kiss.WiseFunction;
 import viewtify.Viewtify;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterfaceProvider;
@@ -158,24 +157,6 @@ public final class DockSystem {
         if (layout != null) {
             layout.requestSave.accept(true);
         }
-    }
-
-    static TabArea mainTabArea() {
-        WiseFunction<ViewArea<?>, TabArea> finder = I.recurse((self, area) -> {
-            if (area instanceof TabArea) {
-                return (TabArea) area;
-            }
-
-            for (ViewArea child : area.children) {
-                TabArea c = self.apply(child);
-
-                if (c != null) {
-                    return c;
-                }
-            }
-            return null;
-        });
-        return finder.apply(root());
     }
 
     /**

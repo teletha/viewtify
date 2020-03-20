@@ -78,7 +78,7 @@ class TabArea extends ViewArea<UITabPane> {
         header.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onHeaderDragExited(e, this));
         header.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onHeaderDragDropped(e, this));
         header.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onHeaderDragOver(e, this));
-        node.when(User.input(Key.Alt)).to(e -> setHeader(!header.isVisible()));
+        node.when(User.input(Key.Alt)).take(() -> node.items().size() == 1).to(e -> setHeader(!header.isVisible()));
     }
 
     /**
