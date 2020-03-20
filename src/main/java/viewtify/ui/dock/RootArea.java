@@ -56,11 +56,11 @@ final class RootArea extends ViewArea<UIHBox> {
      * {@inheritDoc}
      */
     @Override
-    public void add(UITab tab, ViewArea from, int position, boolean tabMode) {
+    public void add(UITab tab, int position) {
         if (children.isEmpty()) {
             setChild(0, new TabArea());
         }
-        children.get(0).add(tab, from, position, tabMode);
+        children.get(0).add(tab, position);
     }
 
     /**

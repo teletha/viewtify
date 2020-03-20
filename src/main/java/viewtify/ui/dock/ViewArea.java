@@ -84,56 +84,52 @@ abstract class ViewArea<P extends UserInterface> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    public void add(UITab view, ViewArea from, int position, boolean tabMode) {
+    public void add(UITab view, int position) {
         switch (position) {
         case DockSystem.PositionCenter:
-            children.get(0).add(view, from, position, tabMode);
+            children.get(0).add(view, position);
             break;
 
         case DockSystem.PositionTop:
             if (getOrientation() == Orientation.VERTICAL) {
-                children.get(0).add(view, from, position, tabMode);
+                children.get(0).add(view, position);
             } else {
-                ViewArea target = createArea(tabMode);
-                target.add(view, from, DockSystem.PositionCenter, tabMode);
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.PositionCenter);
                 split(target, this, Orientation.VERTICAL);
             }
             break;
 
         case DockSystem.PositionBottom:
             if (getOrientation() == Orientation.VERTICAL) {
-                children.get(children.size() - 1).add(view, from, position, tabMode);
+                children.get(children.size() - 1).add(view, position);
             } else {
-                ViewArea target = createArea(tabMode);
-                target.add(view, from, DockSystem.PositionCenter, tabMode);
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.PositionCenter);
                 split(this, target, Orientation.VERTICAL);
             }
             break;
 
         case DockSystem.PositionLeft:
             if (getOrientation() == Orientation.HORIZONTAL) {
-                children.get(children.size() - 1).add(view, from, position, tabMode);
+                children.get(children.size() - 1).add(view, position);
             } else {
-                ViewArea target = createArea(tabMode);
-                target.add(view, from, DockSystem.PositionCenter, tabMode);
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.PositionCenter);
                 split(target, this, Orientation.HORIZONTAL);
             }
             break;
 
         case DockSystem.PositionRight:
             if (getOrientation() == Orientation.HORIZONTAL) {
-                children.get(children.size() - 1).add(view, from, position, tabMode);
+                children.get(children.size() - 1).add(view, position);
             } else {
-                ViewArea target = createArea(tabMode);
-                target.add(view, from, DockSystem.PositionCenter, tabMode);
+                ViewArea target = new TabArea();
+                target.add(view, DockSystem.PositionCenter);
                 split(this, target, Orientation.HORIZONTAL);
             }
             break;
         }
-    }
-
-    private ViewArea createArea(boolean tabMode) {
-        return tabMode ? new TabArea() : new TileArea();
     }
 
     /**

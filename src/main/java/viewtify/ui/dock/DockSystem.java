@@ -92,9 +92,6 @@ public final class DockSystem {
      */
     static final int PositionRestore = -6;
 
-    /** Configuration store. */
-    private static boolean tabMode = true;
-
     /** Layout Store */
     private static DockLayout layout;
 
@@ -105,15 +102,6 @@ public final class DockSystem {
      * Hide.
      */
     private DockSystem() {
-    }
-
-    /**
-     * Configuration.
-     * 
-     * @param tab
-     */
-    public static void configDefaultMode(boolean tab) {
-        tabMode = tab;
     }
 
     /**
@@ -132,7 +120,7 @@ public final class DockSystem {
             tab.setContent(view.ui());
             tab.setId(id);
 
-            layout.findAreaBy(id).or(root()).add(tab, null, PositionRestore, true);
+            layout.findAreaBy(id).or(root()).add(tab, PositionRestore);
         });
     }
 
@@ -254,9 +242,6 @@ public final class DockSystem {
     /** The Doppelganger of the tab being dragged. */
     private static final UITab dragedDoppelganger = new UITab();
 
-    /** Temporal storage for the draged tab */
-    private static boolean dragedMode;
-
     /** Temp stage when the view was dropped outside a managed window. */
     private static final DropStage dropStage = new DropStage();
 
@@ -284,7 +269,6 @@ public final class DockSystem {
         dragedTab = tab;
         dragedTabArea = area;
         dragedDoppelganger.setText(tab.getText());
-        dragedMode = event.isControlDown() || event.isShiftDown() || event.isMetaDown() || event.isAltDown() ? !tabMode : tabMode;
 
         ClipboardContent content = new ClipboardContent();
         content.put(DnD, DnD.toString());
@@ -374,13 +358,8 @@ public final class DockSystem {
             // Therefore, it is necessary to calculate it first.
             int position = detectPosition(event, area.node.ui);
             if (position != PositionCenter || area != dragedTabArea) {
-                if (dragedMode) {
-                    dragedTabArea.remove(dragedTab, false);
-                    area.add(dragedTab, dragedTabArea, position, dragedMode);
-                } else {
-                    dragedTabArea.remove(dragedTab, false);
-                    area.add(dragedTab, dragedTabArea, position, dragedMode);
-                }
+                dragedTabArea.remove(dragedTab, false);
+                area.add(dragedTab, position);
             }
 
             event.setDropCompleted(true);
@@ -408,7 +387,7 @@ public final class DockSystem {
 
             openNewWindow(area, bounds, e -> {
                 dragedTabArea.remove(dragedTab, false);
-                area.add(dragedTab, dragedTabArea, PositionCenter, true);
+                area.add(dragedTab, PositionCenter);
                 layout.windows.add(area);
             });
 
@@ -480,7 +459,7 @@ public final class DockSystem {
             if (area == dragedTabArea) {
                 applyOverlay(dragedTab.getStyleableNode(), PositionCenter);
             } else {
-                area.add(dragedDoppelganger, dragedTabArea, PositionCenter, true);
+                area.add(dragedDoppelganger, PositionCenter);
                 applyOverlay(dragedDoppelganger.getStyleableNode(), 0);
             }
         }
@@ -561,7 +540,7 @@ public final class DockSystem {
             int[] values = calculate(area, event);
 
             dragedTabArea.remove(dragedTab, false);
-            area.add(dragedTab, dragedTabArea, values[1], true);
+            area.add(dragedTab, values[1]);
             area.node.ui.getSelectionModel().select(values[1]);
 
             event.setDropCompleted(true);
