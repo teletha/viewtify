@@ -30,9 +30,9 @@ public class DockSample extends View {
     protected void initialize() {
         DockSystem.register(new ViewPane("First"), DockSystem.PositionCenter);
         DockSystem.register(new ViewPane("Second"), DockSystem.PositionCenter);
-        DockSystem.register(new ViewPane("Third"), DockSystem.PositionCenter);
-        DockSystem.register(new ViewPane("Fourth"), DockSystem.PositionCenter);
-        DockSystem.register(new ViewPane("Fifth"), DockSystem.PositionCenter);
+        DockSystem.register(new ViewPane("Fourth"), DockSystem.PositionBottom, 0.7);
+        DockSystem.register(new ViewPane("Fifth"), DockSystem.PositionBottom);
+        DockSystem.register(new ViewPane("Third"), DockSystem.PositionLeft, 0.3);
     }
 
     private class ViewPane extends View {

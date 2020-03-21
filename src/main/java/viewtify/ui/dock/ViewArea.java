@@ -25,6 +25,9 @@ import viewtify.ui.UserInterface;
  */
 abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
 
+    /** The area position. */
+    private int position;
+
     /** The actual root node. */
     protected final P node;
 
@@ -41,6 +44,24 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
      */
     protected ViewArea(P node) {
         this.node = Objects.requireNonNull(node);
+    }
+
+    /**
+     * Get the position property of this {@link ViewArea}.
+     * 
+     * @return The position property.
+     */
+    final int getPosition() {
+        return position;
+    }
+
+    /**
+     * Set the position property of this {@link ViewArea}.
+     * 
+     * @param position The position value to set.
+     */
+    final void setPosition(int position) {
+        this.position = position;
     }
 
     protected void setChild(int index, ViewArea child) {
@@ -85,51 +106,46 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    public void add(UITab view, int position) {
+    public ViewArea add(UITab view, int position) {
         switch (position) {
         case DockSystem.PositionCenter:
-            children.get(0).add(view, position);
-            break;
+            return children.get(0).add(view, position);
 
         case DockSystem.PositionTop:
             if (getOrientation() == Orientation.VERTICAL) {
-                children.get(0).add(view, position);
+                return children.get(0).add(view, position);
             } else {
                 ViewArea target = new TabArea();
-                target.add(view, DockSystem.PositionCenter);
                 split(target, this, Orientation.VERTICAL);
+                return target.add(view, DockSystem.PositionCenter);
             }
-            break;
 
         case DockSystem.PositionBottom:
             if (getOrientation() == Orientation.VERTICAL) {
-                children.get(children.size() - 1).add(view, position);
+                return children.get(children.size() - 1).add(view, position);
             } else {
                 ViewArea target = new TabArea();
-                target.add(view, DockSystem.PositionCenter);
                 split(this, target, Orientation.VERTICAL);
+                return target.add(view, DockSystem.PositionCenter);
             }
-            break;
 
         case DockSystem.PositionLeft:
             if (getOrientation() == Orientation.HORIZONTAL) {
-                children.get(children.size() - 1).add(view, position);
+                return children.get(children.size() - 1).add(view, position);
             } else {
                 ViewArea target = new TabArea();
-                target.add(view, DockSystem.PositionCenter);
                 split(target, this, Orientation.HORIZONTAL);
+                return target.add(view, DockSystem.PositionCenter);
             }
-            break;
 
-        case DockSystem.PositionRight:
+        default:
             if (getOrientation() == Orientation.HORIZONTAL) {
-                children.get(children.size() - 1).add(view, position);
+                return children.get(children.size() - 1).add(view, position);
             } else {
                 ViewArea target = new TabArea();
-                target.add(view, DockSystem.PositionCenter);
                 split(this, target, Orientation.HORIZONTAL);
+                return target.add(view, DockSystem.PositionCenter);
             }
-            break;
         }
     }
 
@@ -161,7 +177,6 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
      */
     private void split(ViewArea first, ViewArea second, Orientation orientation) {
         SplitArea area = new SplitArea();
-        area.parent = this;
         parent.replace(this, area);
         area.setOrientation(orientation);
         area.setChild(0, first);

@@ -100,8 +100,7 @@ class SplitArea extends ViewArea<UISplitPane> {
      * 
      * @param dividers The dividers value to set.
      */
-    @SuppressWarnings("unused")
-    private final void setDividers(List<BigDecimal> dividers) {
+    final void setDividers(List<BigDecimal> dividers) {
         // During Stage initialization, window size changes several times until layout is completed.
         // Every change modifies divider positions. If we want to control divider positions, they
         // have to be set after Stage is fully initialized:

@@ -9,6 +9,7 @@
  */
 package viewtify.ui.dock;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -129,6 +130,17 @@ public final class DockSystem {
      * @param view The view to register.
      */
     public static void register(View view, int position) {
+        register(view, position, 0);
+    }
+
+    /**
+     * Register a new view within this dock system.
+     * <p/>
+     * The Position will give an advice where this view should be placed.
+     *
+     * @param view The view to register.
+     */
+    public static void register(View view, int position, double divider) {
         Viewtify.inUI(() -> {
             String id = view.id();
             UITab tab = new UITab();
@@ -138,13 +150,45 @@ public final class DockSystem {
             tab.setId(id);
 
             DockLayout layout = layout();
-            ViewArea area = layout.findAreaBy(id);
+
+            ViewArea area = layout.findAreaByViewId(id);
+
             if (area == null) {
-                layout.findRoot().add(tab, position);
+                area = findAreaByAreaId(layout.findRoot(), position);
+            }
+
+            if (area == null) {
+                ViewArea added = layout.findRoot().add(tab, position);
+                added.setPosition(position);
+
+                if (divider != 0 && added.parent instanceof SplitArea) {
+                    ((SplitArea) added.parent).setDividers(List.of(new BigDecimal(divider)));
+                }
             } else {
                 area.add(tab, PositionRestore);
             }
         });
+    }
+
+    /**
+     * Gets the area where the specified ID exists.
+     * 
+     * @param id An area ID.
+     * @return
+     */
+    private static ViewArea findAreaByAreaId(ViewArea<?> area, int id) {
+        if (area.getPosition() == id) {
+            return area;
+        }
+
+        for (ViewArea child : area.children) {
+            ViewArea found = findAreaByAreaId(child, id);
+
+            if (found != null) {
+                return found;
+            }
+        }
+        return null;
     }
 
     /**
@@ -165,9 +209,9 @@ public final class DockSystem {
         stage.setOnShown(shown);
         stage.setOnCloseRequest(e -> {
             layout().roots.remove(area);
-            Viewtify.untrackLocation(area.id);
+            Viewtify.untrackLocation(area.name);
         });
-        Viewtify.trackLocation(area.id, stage);
+        Viewtify.trackLocation(area.name, stage);
         stage.show();
     }
 
@@ -224,7 +268,7 @@ public final class DockSystem {
          * @param id An area ID.
          * @return
          */
-        private ViewArea findAreaBy(String id) {
+        private ViewArea findAreaByViewId(String id) {
             for (RootArea root : roots) {
                 Variable<ViewArea> area = root.findAreaBy(id);
                 if (area.isPresent()) {
@@ -626,7 +670,7 @@ public final class DockSystem {
 
             layout().roots.remove(area);
             requestSavingLayout();
-            Viewtify.untrackLocation(area.id);
+            Viewtify.untrackLocation(area.name);
         });
     }
 

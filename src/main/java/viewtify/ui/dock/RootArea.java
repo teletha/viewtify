@@ -21,8 +21,8 @@ import viewtify.ui.UITabPane;
  */
 final class RootArea extends ViewArea<UIPane> {
 
-    /** The dock window id. */
-    public String id = "DockWindow-" + (int) (Math.random() * 100000000);
+    /** The dock window name. */
+    public String name = "DockWindow-" + (int) (Math.random() * 100000000);
 
     /** Window Kind */
     public boolean sub;
@@ -60,11 +60,11 @@ final class RootArea extends ViewArea<UIPane> {
      * {@inheritDoc}
      */
     @Override
-    public void add(UITab tab, int position) {
+    public ViewArea add(UITab tab, int position) {
         if (children.isEmpty()) {
             setChild(0, new TabArea());
         }
-        children.get(0).add(tab, position);
+        return children.get(0).add(tab, position);
     }
 
     /**
