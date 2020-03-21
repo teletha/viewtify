@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -50,8 +51,8 @@ import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.ui.UIPane;
 import viewtify.ui.UITab;
-import viewtify.ui.UITabPane;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
 
@@ -100,6 +101,10 @@ public final class DockSystem {
     private DockSystem() {
     }
 
+    public static UIPane createArea(String id, Consumer<RootArea> initializer) {
+        return null;
+    }
+
     /**
      * Get the singleton docking window layout manager.
      * 
@@ -117,24 +122,13 @@ public final class DockSystem {
     }
 
     /**
-     * Registers the specified TabPane as a docking tab.
-     * 
-     * @param tabs
-     */
-    public static void register(UITabPane tabs) {
-        if (tabs != null) {
-
-        }
-    }
-
-    /**
      * Register a new view within this dock system.
      * <p/>
      * The Position will give an advice where this view should be placed.
      *
      * @param view The view to register.
      */
-    public static void register(View view) {
+    public static void register(View view, int position) {
         Viewtify.inUI(() -> {
             String id = view.id();
             UITab tab = new UITab();
@@ -143,7 +137,13 @@ public final class DockSystem {
             tab.setContent(view.ui());
             tab.setId(id);
 
-            layout().findAreaBy(id).add(tab, PositionRestore);
+            DockLayout layout = layout();
+            ViewArea area = layout.findAreaBy(id);
+            if (area == null) {
+                layout.findRoot().add(tab, position);
+            } else {
+                area.add(tab, PositionRestore);
+            }
         });
     }
 
@@ -231,7 +231,7 @@ public final class DockSystem {
                     return area.v;
                 }
             }
-            return findRoot();
+            return null;
         }
     }
 
