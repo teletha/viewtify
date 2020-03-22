@@ -16,6 +16,7 @@ import java.util.Objects;
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 
+import kiss.Managed;
 import kiss.Variable;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterface;
@@ -24,9 +25,6 @@ import viewtify.ui.UserInterface;
  * A ViewArea is a node within the area tree. It has two children which are self view areas.
  */
 abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
-
-    /** The area position. */
-    private int position;
 
     /** The actual root node. */
     protected final P node;
@@ -37,6 +35,10 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
     /** The related area. */
     List<ViewArea> children = new ArrayList();
 
+    /** The area location kind. */
+    @Managed
+    int location;
+
     /**
      * Specify root node.
      * 
@@ -44,24 +46,6 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
      */
     protected ViewArea(P node) {
         this.node = Objects.requireNonNull(node);
-    }
-
-    /**
-     * Get the position property of this {@link ViewArea}.
-     * 
-     * @return The position property.
-     */
-    final int getPosition() {
-        return position;
-    }
-
-    /**
-     * Set the position property of this {@link ViewArea}.
-     * 
-     * @param position The position value to set.
-     */
-    final void setPosition(int position) {
-        this.position = position;
     }
 
     protected void setChild(int index, ViewArea child) {
@@ -223,5 +207,25 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
             }
         }
         return Variable.empty();
+    }
+
+    /**
+     * Config the viewport ratio.
+     * 
+     * @param ratio
+     */
+    protected void setViewportRatio(double ratio) {
+        if (parent != null) {
+            parent.setViewportRatio(ratio);
+        }
+    }
+
+    /**
+     * Config the viewarea's location kind.
+     * 
+     * @param kind A location kind.
+     */
+    protected void setLocation(int kind) {
+
     }
 }

@@ -9,7 +9,6 @@
  */
 package viewtify.ui.dock;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -135,56 +134,44 @@ public final class DockSystem {
      *
      * @param view The view to register.
      */
-    public static void register(View view, UnaryOperator<DockLayoutOption> option) {
-        Viewtify.inUI(() -> {
-            String id = view.id();
-            UITab tab = new UITab();
-            tab.text(id);
-            tab.setClosable(true);
-            tab.setContent(view.ui());
-            tab.setId(id);
+    public static void register(View view, UnaryOperator<DockRecommendedLocation> option) {
+        String id = view.id();
+        UITab tab = new UITab();
+        tab.text(id);
+        tab.setClosable(true);
+        tab.setContent(view.ui());
+        tab.setId(id);
 
-            DockLayoutOption o = option.apply(new DockLayoutOption());
-            DockLayout layout = layout();
+        DockRecommendedLocation o = option.apply(new DockRecommendedLocation());
+        DockLayout layout = layout();
 
-            ViewArea area = layout.findAreaByViewId(id);
-
-            if (area == null) {
-                area = findAreaByAreaId(layout.findRoot(), o.recommendedArea);
-            }
-
-            if (area == null) {
-                ViewArea added = layout.findRoot().add(tab, o.recommendedArea);
-                added.setPosition(o.recommendedArea);
-
-                if (added.parent instanceof SplitArea) {
-                    ((SplitArea) added.parent).setDividers(List.of(new BigDecimal(o.recommendedRatio)));
-                }
-            } else {
-                area.add(tab, PositionRestore);
-            }
-        });
-    }
-
-    /**
-     * Gets the area where the specified ID exists.
-     * 
-     * @param id An area ID.
-     * @return
-     */
-    private static ViewArea findAreaByAreaId(ViewArea<?> area, int id) {
-        if (area.getPosition() == id) {
-            return area;
+        // First, if there is an area where the specified view's ID is registered,
+        // add the view there.
+        ViewArea area = layout.findAreaBy(id);
+        if (area != null) {
+            area.add(tab, PositionRestore);
+            return;
         }
 
-        for (ViewArea child : area.children) {
-            ViewArea found = findAreaByAreaId(child, id);
+        // Next, if there is an area where adding the specified view is recommended,
+        // add the view there.
+        area = I.signal(layout.roots)
+                .as(ViewArea.class)
+                .recurseMap(s -> s.flatIterable(v -> v.children))
+                .take(v -> v.location == o.recommendedArea)
+                .first()
+                .to().v;
 
-            if (found != null) {
-                return found;
-            }
+        if (area != null) {
+            area.add(tab, PositionRestore);
+            return;
         }
-        return null;
+
+        // Since the recommended area does not exist,
+        // add a view after creating that area.
+        area = layout.findRoot().add(tab, o.recommendedArea);
+        area.location = o.recommendedArea;
+        area.setViewportRatio(o.recommendedRatio);
     }
 
     /**
@@ -264,7 +251,7 @@ public final class DockSystem {
          * @param id An area ID.
          * @return
          */
-        private ViewArea findAreaByViewId(String id) {
+        private ViewArea findAreaBy(String id) {
             for (RootArea root : roots) {
                 Variable<ViewArea> area = root.findAreaBy(id);
                 if (area.isPresent()) {

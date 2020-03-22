@@ -9,7 +9,7 @@
  */
 package viewtify.ui.dock;
 
-public final class DockLayoutOption {
+public final class DockRecommendedLocation {
 
     /** Default value is center. */
     int recommendedArea = DockSystem.PositionCenter;
@@ -20,7 +20,7 @@ public final class DockLayoutOption {
     /**
      * Hide
      */
-    DockLayoutOption() {
+    DockRecommendedLocation() {
     }
 
     /**
@@ -28,7 +28,7 @@ public final class DockLayoutOption {
      * 
      * @return
      */
-    public DockLayoutOption center() {
+    public DockRecommendedLocation center() {
         recommendedArea = DockSystem.PositionCenter;
         return this;
     }
@@ -38,7 +38,7 @@ public final class DockLayoutOption {
      * 
      * @return
      */
-    public DockLayoutOption top() {
+    public DockRecommendedLocation top() {
         recommendedArea = DockSystem.PositionTop;
         return this;
     }
@@ -48,7 +48,7 @@ public final class DockLayoutOption {
      * 
      * @return
      */
-    public DockLayoutOption bottom() {
+    public DockRecommendedLocation bottom() {
         recommendedArea = DockSystem.PositionBottom;
         return this;
     }
@@ -58,7 +58,7 @@ public final class DockLayoutOption {
      * 
      * @return
      */
-    public DockLayoutOption right() {
+    public DockRecommendedLocation right() {
         recommendedArea = DockSystem.PositionRight;
         return this;
     }
@@ -68,7 +68,7 @@ public final class DockLayoutOption {
      * 
      * @return
      */
-    public DockLayoutOption left() {
+    public DockRecommendedLocation left() {
         recommendedArea = DockSystem.PositionLeft;
         return this;
     }
@@ -78,7 +78,7 @@ public final class DockLayoutOption {
      * 
      * @return
      */
-    public DockLayoutOption ratio(double division) {
+    public DockRecommendedLocation ratio(double division) {
         recommendedRatio = division;
         return this;
     }

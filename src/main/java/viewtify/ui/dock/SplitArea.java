@@ -9,8 +9,6 @@
  */
 package viewtify.ui.dock;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
@@ -89,10 +87,8 @@ class SplitArea extends ViewArea<UISplitPane> {
      * @return The dividers property.
      */
     @SuppressWarnings("unused")
-    private final List<BigDecimal> getDividers() {
-        return DoubleStream.of(node.ui.getDividerPositions())
-                .mapToObj(v -> new BigDecimal(v).setScale(3, RoundingMode.HALF_DOWN))
-                .collect(Collectors.toList());
+    private final List<Double> getDividers() {
+        return DoubleStream.of(node.ui.getDividerPositions()).boxed().collect(Collectors.toList());
     }
 
     /**
@@ -100,16 +96,24 @@ class SplitArea extends ViewArea<UISplitPane> {
      * 
      * @param dividers The dividers value to set.
      */
-    final void setDividers(List<BigDecimal> dividers) {
+    private final void setDividers(List<Double> dividers) {
         // During Stage initialization, window size changes several times until layout is completed.
         // Every change modifies divider positions. If we want to control divider positions, they
         // have to be set after Stage is fully initialized:
         Platform.runLater(() -> {
             double[] values = new double[dividers.size()];
             for (int i = 0; i < values.length; i++) {
-                values[i] = dividers.get(i).doubleValue();
+                values[i] = dividers.get(i);
             }
             node.ui.setDividerPositions(values);
         });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void setViewportRatio(double ratio) {
+        setDividers(List.of(ratio));
     }
 }

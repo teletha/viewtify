@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -75,6 +76,8 @@ class TabArea extends ViewArea<UITabPane> {
                         DockSystem.onDragDetected(e, this, (UITab) node.ui.getSelectionModel().getSelectedItem());
                     });
         });
+
+        node.ui.getTabs().addListener((InvalidationListener) c -> DockSystem.requestSavingLayout());
 
         // Since TabPane implementation delays the initialization of Skin and internal nodes
         // are not generated. So we should create Skin eagerly.
