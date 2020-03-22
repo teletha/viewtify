@@ -49,7 +49,6 @@ import kiss.Managed;
 import kiss.Signaling;
 import kiss.Singleton;
 import kiss.Storable;
-import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterfaceProvider;
@@ -147,7 +146,13 @@ public final class DockSystem {
 
         // First, if there is an area where the specified view's ID is registered,
         // add the view there.
-        ViewArea area = layout.findAreaBy(id);
+        ViewArea area = I.signal(layout.roots)
+                .as(ViewArea.class)
+                .recurseMap(s -> s.flatIterable(v -> v.children))
+                .take(v -> v.hasView(id))
+                .first()
+                .to().v;
+
         if (area != null) {
             area.add(tab, PositionRestore);
             return;
@@ -243,22 +248,6 @@ public final class DockSystem {
                 }
             }
             return main;
-        }
-
-        /**
-         * Gets the area where the specified ID exists.
-         * 
-         * @param id An area ID.
-         * @return
-         */
-        private ViewArea findAreaBy(String id) {
-            for (RootArea root : roots) {
-                Variable<ViewArea> area = root.findAreaBy(id);
-                if (area.isPresent()) {
-                    return area.v;
-                }
-            }
-            return null;
         }
     }
 

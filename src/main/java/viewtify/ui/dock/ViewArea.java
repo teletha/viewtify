@@ -17,7 +17,6 @@ import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 
 import kiss.Managed;
-import kiss.Variable;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterface;
 
@@ -193,20 +192,13 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
     }
 
     /**
-     * Find {@link ViewArea} from descendent nodes.
+     * Check whether this area contains the specified view or not.
      * 
      * @param id
      * @return
      */
-    protected Variable<ViewArea> findAreaBy(String id) {
-        for (ViewArea child : children) {
-            Variable<ViewArea> area = child.findAreaBy(id);
-
-            if (area.isPresent()) {
-                return area;
-            }
-        }
-        return Variable.empty();
+    protected boolean hasView(String id) {
+        return false;
     }
 
     /**

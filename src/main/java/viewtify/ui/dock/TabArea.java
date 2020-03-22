@@ -23,7 +23,6 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
 
 import kiss.I;
-import kiss.Variable;
 import viewtify.Key;
 import viewtify.Viewtify;
 import viewtify.ui.UITab;
@@ -266,7 +265,7 @@ class TabArea extends ViewArea<UITabPane> {
      * {@inheritDoc}
      */
     @Override
-    protected Variable<ViewArea> findAreaBy(String id) {
-        return Variable.of(viewInitial.contains(id) ? this : null);
+    protected boolean hasView(String id) {
+        return viewInitial.contains(id);
     }
 }
