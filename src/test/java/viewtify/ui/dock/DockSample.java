@@ -28,11 +28,11 @@ public class DockSample extends View {
      */
     @Override
     protected void initialize() {
-        DockSystem.register(new ViewPane("First"), DockSystem.PositionCenter);
-        DockSystem.register(new ViewPane("Second"), DockSystem.PositionCenter);
-        DockSystem.register(new ViewPane("Fourth"), DockSystem.PositionBottom, 0.7);
-        DockSystem.register(new ViewPane("Fifth"), DockSystem.PositionBottom);
-        DockSystem.register(new ViewPane("Third"), DockSystem.PositionLeft, 0.3);
+        DockSystem.register(new ViewPane("First"), o -> o.center());
+        DockSystem.register(new ViewPane("Second"), o -> o.center());
+        DockSystem.register(new ViewPane("Fourth"), o -> o.bottom().ratio(0.7));
+        DockSystem.register(new ViewPane("Fifth"), o -> o.bottom());
+        DockSystem.register(new ViewPane("Third"), o -> o.left().ratio(0.3));
     }
 
     private class ViewPane extends View {

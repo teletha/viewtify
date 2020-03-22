@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -52,7 +52,6 @@ import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import viewtify.Viewtify;
-import viewtify.ui.UIPane;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
@@ -102,10 +101,6 @@ public final class DockSystem {
     private DockSystem() {
     }
 
-    public static UIPane createArea(String id, Consumer<RootArea> initializer) {
-        return null;
-    }
-
     /**
      * Get the singleton docking window layout manager.
      * 
@@ -129,8 +124,8 @@ public final class DockSystem {
      *
      * @param view The view to register.
      */
-    public static void register(View view, int position) {
-        register(view, position, 0);
+    public static void register(View view) {
+        register(view, o -> o);
     }
 
     /**
@@ -140,7 +135,7 @@ public final class DockSystem {
      *
      * @param view The view to register.
      */
-    public static void register(View view, int position, double divider) {
+    public static void register(View view, UnaryOperator<DockLayoutOption> option) {
         Viewtify.inUI(() -> {
             String id = view.id();
             UITab tab = new UITab();
@@ -149,20 +144,21 @@ public final class DockSystem {
             tab.setContent(view.ui());
             tab.setId(id);
 
+            DockLayoutOption o = option.apply(new DockLayoutOption());
             DockLayout layout = layout();
 
             ViewArea area = layout.findAreaByViewId(id);
 
             if (area == null) {
-                area = findAreaByAreaId(layout.findRoot(), position);
+                area = findAreaByAreaId(layout.findRoot(), o.recommendedArea);
             }
 
             if (area == null) {
-                ViewArea added = layout.findRoot().add(tab, position);
-                added.setPosition(position);
+                ViewArea added = layout.findRoot().add(tab, o.recommendedArea);
+                added.setPosition(o.recommendedArea);
 
-                if (divider != 0 && added.parent instanceof SplitArea) {
-                    ((SplitArea) added.parent).setDividers(List.of(new BigDecimal(divider)));
+                if (added.parent instanceof SplitArea) {
+                    ((SplitArea) added.parent).setDividers(List.of(new BigDecimal(o.recommendedRatio)));
                 }
             } else {
                 area.add(tab, PositionRestore);

@@ -106,7 +106,7 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
      * @param view The view to add.
      * @param position Add the view at this position.
      */
-    public ViewArea add(UITab view, int position) {
+    public TabArea add(UITab view, int position) {
         switch (position) {
         case DockSystem.PositionCenter:
             return children.get(0).add(view, position);

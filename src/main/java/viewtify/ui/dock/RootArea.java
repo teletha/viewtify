@@ -60,7 +60,7 @@ final class RootArea extends ViewArea<UIPane> {
      * {@inheritDoc}
      */
     @Override
-    public ViewArea add(UITab tab, int position) {
+    public TabArea add(UITab tab, int position) {
         if (children.isEmpty()) {
             setChild(0, new TabArea());
         }
