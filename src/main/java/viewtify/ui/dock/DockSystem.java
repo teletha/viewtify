@@ -52,7 +52,6 @@ import kiss.Storable;
 import viewtify.Viewtify;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterfaceProvider;
-import viewtify.ui.View;
 
 /**
  * Handles the full window management with fully customizable layout and drag&drop into new not
@@ -122,8 +121,8 @@ public final class DockSystem {
      *
      * @param view The view to register.
      */
-    public static void register(View view) {
-        register(view, o -> o);
+    public static UITab register(String id) {
+        return register(id, o -> o);
     }
 
     /**
@@ -133,12 +132,13 @@ public final class DockSystem {
      *
      * @param view The view to register.
      */
-    public static void register(View view, UnaryOperator<DockRecommendedLocation> option) {
-        String id = view.id();
+    public static UITab register(String id, UnaryOperator<DockRecommendedLocation> option) {
+        if (id == null || id.isEmpty()) {
+            throw new IllegalArgumentException("Specify a unique ID for the tab.");
+        }
+
         UITab tab = new UITab();
         tab.text(id);
-        tab.setClosable(true);
-        tab.setContent(view.ui());
         tab.setId(id);
 
         DockRecommendedLocation o = option.apply(new DockRecommendedLocation());
@@ -155,7 +155,7 @@ public final class DockSystem {
 
         if (area != null) {
             area.add(tab, PositionRestore);
-            return;
+            return tab;
         }
 
         // Next, if there is an area where adding the specified view is recommended,
@@ -169,7 +169,7 @@ public final class DockSystem {
 
         if (area != null) {
             area.add(tab, PositionRestore);
-            return;
+            return tab;
         }
 
         // Since the recommended area does not exist,
@@ -177,6 +177,7 @@ public final class DockSystem {
         area = layout.findRoot().add(tab, o.recommendedArea);
         area.location = o.recommendedArea;
         area.setViewportRatio(o.recommendedRatio);
+        return tab;
     }
 
     /**

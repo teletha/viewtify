@@ -28,11 +28,11 @@ public class DockSample extends View {
      */
     @Override
     protected void initialize() {
-        DockSystem.register(new ViewPane("First"), o -> o.center());
-        DockSystem.register(new ViewPane("Second"), o -> o.center());
-        DockSystem.register(new ViewPane("Fourth"), o -> o.bottom().ratio(0.7));
-        DockSystem.register(new ViewPane("Fifth"), o -> o.bottom());
-        DockSystem.register(new ViewPane("Third"), o -> o.left().ratio(0.3));
+        DockSystem.register("First").contents(tab -> new ViewPane("First"));
+        DockSystem.register("Second").contents(tab -> new ViewPane("Second"));
+        DockSystem.register("Fourth", o -> o.bottom().ratio(0.7)).contents(tab -> new ViewPane("Fourth"));
+        DockSystem.register("Fifth", o -> o.bottom()).contents(tab -> new ViewPane("Fifth"));
+        DockSystem.register("Third", o -> o.left().ratio(0.3)).contents(tab -> new ViewPane("Third"));
     }
 
     private class ViewPane extends View {
@@ -43,6 +43,7 @@ public class DockSample extends View {
          * @param id
          */
         public ViewPane(String id) {
+            System.out.println("Load " + id);
             this.id = id;
         }
 
@@ -50,14 +51,6 @@ public class DockSample extends View {
             {
                 label(id + " area");
             }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String id() {
-            return id;
         }
 
         /**
