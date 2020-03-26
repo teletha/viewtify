@@ -189,8 +189,6 @@ public final class DockSystem {
      */
     private static void openNewWindow(RootArea area, Bounds bounds, EventHandler<WindowEvent> shown) {
         Scene scene = new Scene(area.node.ui, bounds.getWidth(), bounds.getHeight());
-        Viewtify.applyApplicationStyle(scene);
-
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setX(bounds.getMinX());
@@ -200,6 +198,8 @@ public final class DockSystem {
             layout().roots.remove(area);
             Viewtify.untrackLocation(area.name);
         });
+
+        Viewtify.applyApplicationStyle(scene);
         Viewtify.trackLocation(area.name, stage);
         stage.show();
     }
@@ -425,28 +425,33 @@ public final class DockSystem {
      * @param event The fired event.
      */
     static void onDragDroppedNewStage(DragEvent event) {
-        if (isValidDragboard(event)) {
-            // create new window
-            Node ui = dragedTab.getContent();
-            Bounds contentsBound = ui.getBoundsInLocal();
-            double titleBarHeight = ui.getScene().getWindow().getHeight() - ui.getScene().getHeight() - 8;
+        try {
+            if (isValidDragboard(event)) {
+                // create new window
+                Node ui = dragedTab.getContent();
+                Bounds contentsBound = ui.getBoundsInLocal();
+                double titleBarHeight = ui.getScene().getWindow().getHeight() - ui.getScene().getHeight() - 8;
 
-            RootArea area = new RootArea();
-            area.sub = true;
+                RootArea area = new RootArea();
+                area.sub = true;
 
-            Bounds bounds = new BoundingBox(event.getScreenX(), event.getScreenY() - titleBarHeight, contentsBound
-                    .getWidth(), contentsBound.getHeight() + titleBarHeight);
+                Bounds bounds = new BoundingBox(event.getScreenX(), event.getScreenY() - titleBarHeight, contentsBound
+                        .getWidth(), contentsBound.getHeight() + titleBarHeight);
 
-            openNewWindow(area, bounds, e -> {
-                dragedTabArea.remove(dragedTab, false);
-                area.add(dragedTab, PositionCenter);
-                layout().roots.add(area);
-            });
+                openNewWindow(area, bounds, e -> {
+                    dragedTabArea.remove(dragedTab, false);
+                    area.add(dragedTab, PositionCenter);
+                    layout().roots.add(area);
+                });
 
-            event.setDropCompleted(true);
-            event.consume();
+                event.setDropCompleted(true);
+                event.consume();
 
-            requestSavingLayout();
+                requestSavingLayout();
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+            throw I.quiet(e);
         }
     }
 

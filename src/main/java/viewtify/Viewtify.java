@@ -320,7 +320,7 @@ public final class Viewtify {
         scene.getStylesheets().add(applicationStyle);
 
         // apply icon
-        if (icon.length() != 0) {
+        if (stage != null && icon.length() != 0) {
             stage.getIcons().add(loadImage(icon));
         }
 
