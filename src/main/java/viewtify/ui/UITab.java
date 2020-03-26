@@ -107,6 +107,17 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
     }
 
     /**
+     * Make this tab closable.
+     * 
+     * @param enable
+     * @return
+     */
+    public final UITab closable(boolean enable) {
+        setClosable(enable);
+        return this;
+    }
+
+    /**
      * Test if this tab has been already loaded.
      * 
      * @return
@@ -130,7 +141,7 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
      * {@inheritDoc}
      */
     @Override
-    public synchronized Node getStyleableNode() {
+    public final synchronized Node getStyleableNode() {
         if (styleable != null) {
             return styleable.get();
         }
