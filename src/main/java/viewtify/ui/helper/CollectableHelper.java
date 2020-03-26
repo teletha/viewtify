@@ -213,6 +213,16 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     }
 
     /**
+     * Return the index of the specified item or -1 if it is not found.
+     * 
+     * @param item
+     * @return
+     */
+    default int indexOf(E item) {
+        return refer().items.getValue().indexOf(item);
+    }
+
+    /**
      * Add the specified item.
      * 
      * @param index An index to add.

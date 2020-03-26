@@ -383,8 +383,23 @@ public final class DockSystem {
             // Therefore, it is necessary to calculate it first.
             int position = detectPosition(event, area.node.ui);
             if (canDrop(position, area)) {
-                dragedTabArea.remove(dragedTab, false);
-                area.add(dragedTab, position);
+                if (area.node.isHeaderShown() || position != PositionCenter) {
+                    dragedTabArea.remove(dragedTab, false);
+                    area.add(dragedTab, position);
+                } else {
+                    // switch operation
+                    UITab tab = area.node.first().v;
+                    int dragedIndex = dragedTabArea.node.indexOf(dragedTab);
+
+                    // remove each tab
+                    area.remove(tab, false);
+                    dragedTabArea.remove(dragedTab, false);
+
+                    // add each tab
+                    area.add(dragedTab, PositionCenter);
+                    dragedTabArea.add(tab, dragedIndex);
+                    dragedTabArea.node.selectAt(dragedIndex);
+                }
             }
 
             event.setDropCompleted(true);
@@ -404,11 +419,6 @@ public final class DockSystem {
         case PositionCenter:
             // exclude if the source and destination are the same
             if (area == dragedTabArea) {
-                return false;
-            }
-
-            // exclude if destination hides header
-            if (!area.node.isHeaderShown()) {
                 return false;
             }
             break;
