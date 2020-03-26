@@ -137,7 +137,7 @@ public final class DockSystem {
             throw new IllegalArgumentException("Specify a unique ID for the tab.");
         }
 
-        UITab tab = new UITab();
+        UITab tab = new UITab(null);
         tab.text(id);
         tab.setId(id);
 
@@ -265,7 +265,7 @@ public final class DockSystem {
     private static TabArea dragedTabArea;
 
     /** The Doppelganger of the tab being dragged. */
-    private static final UITab dragedDoppelganger = new UITab();
+    private static final UITab dragedDoppelganger = new UITab(null);
 
     /** Temp stage when the view was dropped outside a managed window. */
     private static final DropStage dropStage = new DropStage();

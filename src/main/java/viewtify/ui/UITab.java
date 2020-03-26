@@ -56,14 +56,7 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
     /**
      * 
      */
-    public UITab() {
-        this(null);
-    }
-
-    /**
-     * 
-     */
-    protected UITab(View parent) {
+    public UITab(View parent) {
         this.parent = parent;
 
         selectedProperty().addListener(change -> load());
@@ -105,10 +98,10 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
      * @return
      */
     public final UITab contents(Function<UITab, View> contents) {
-        if (isLoaded()) {
-            setContent(contents.apply(this).ui());
-        } else {
-            viewBuilder = contents;
+        viewBuilder = contents;
+
+        if (isSelected()) {
+            load();
         }
         return this;
     }

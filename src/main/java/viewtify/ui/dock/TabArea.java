@@ -210,17 +210,7 @@ class TabArea extends ViewArea<UITabPane> {
     @Override
     public TabArea add(UITab tab, int position) {
         if (position == DockSystem.PositionRestore) {
-            ObservableList<Tab> items = node.ui.getTabs();
-            position = items.size();
-
-            for (int i = 0; i < position; i++) {
-                Tab item = items.get(i);
-
-                if (compare(item.getId(), tab.getId())) {
-                    position = i;
-                    break;
-                }
-            }
+            position = restorePosition(tab);
         }
 
         switch (position) {
@@ -244,6 +234,26 @@ class TabArea extends ViewArea<UITabPane> {
     }
 
     /**
+     * Restore tab order by id.
+     * 
+     * @param tab
+     * @return
+     */
+    private int restorePosition(UITab tab) {
+        ObservableList<Tab> items = node.ui.getTabs();
+        int size = items.size();
+
+        for (int i = 0; i < size; i++) {
+            Tab item = items.get(i);
+
+            if (compare(item.getId(), tab.getId())) {
+                return i;
+            }
+        }
+        return size;
+    }
+
+    /**
      * Compare tab order by id.
      * 
      * @param tester
@@ -258,7 +268,7 @@ class TabArea extends ViewArea<UITabPane> {
                 return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**
