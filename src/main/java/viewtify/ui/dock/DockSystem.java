@@ -277,7 +277,7 @@ public final class DockSystem {
     private static final ColorInput dropOverlay = new ColorInput();
 
     static {
-        dropOverlay.setPaint(Color.LIGHTBLUE);
+        dropOverlay.setPaint(Color.LIGHTBLUE.deriveColor(0, 1, 1, 0.5));
         effect.setMode(BlendMode.OVERLAY);
         effect.setBottomInput(dropOverlay);
     }
