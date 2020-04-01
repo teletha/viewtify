@@ -10,16 +10,22 @@
 package viewtify;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import javafx.scene.input.KeyEvent;
 
 import kiss.Managed;
 import kiss.Singleton;
 import kiss.Storable;
 
 @Managed(Singleton.class)
-public class ShortcutManager implements Storable<ShortcutManager> {
+public final class ShortcutManager implements Storable<ShortcutManager> {
 
-    private Map<Key, Command<? extends Enum>> normals = new HashMap();
+    private Map<Key, Command> overridden = new HashMap();
+
+    private Map<Key, Command> defaults = new HashMap();
 
     /**
      * Hide
@@ -28,7 +34,60 @@ public class ShortcutManager implements Storable<ShortcutManager> {
         restore();
     }
 
-    public void register(Key key, Command command) {
+    /**
+     * Assign the default shortcut key for the specified command.
+     * 
+     * @param key
+     * @param id
+     */
+    public void bindAsDefault(Key key, Command id) {
+        if (key != null && id != null) {
+            defaults.put(key, id);
+        }
+    }
 
+    /**
+     * Assign the shortcut key for the specified command.
+     * 
+     * @param key
+     * @param id
+     */
+    public void bind(Key key, Command id) {
+        if (key != null && id != null) {
+            overridden.put(key, id);
+        }
+    }
+
+    public void unbind(Command id) {
+        if (id != null) {
+            Iterator<Entry<Key, Command>> iterator = overridden.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Entry<Key, Command> entry = iterator.next();
+                if (entry.getValue() == id) {
+                    iterator.remove();
+                }
+            }
+        }
+    }
+
+    /**
+     * Activate command by {@link KeyEvent}.
+     * 
+     * @param e
+     */
+    void activate(KeyEvent e) {
+        Key key = new Key(e);
+
+        Command command = overridden.get(key);
+        if (command != null) {
+            command.activate();
+            return;
+        }
+
+        command = defaults.get(key);
+        if (command != null) {
+            command.activate();
+            return;
+        }
     }
 }

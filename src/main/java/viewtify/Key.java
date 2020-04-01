@@ -567,6 +567,24 @@ public class Key {
     }
 
     /**
+     * Create key from {@link KeyEvent}.
+     * 
+     * @param e
+     */
+    Key(KeyEvent e) {
+        int modifiers = 0;
+        if (e.isAltDown()) modifiers |= ALT;
+        if (e.isControlDown()) modifiers |= CTRL;
+        if (e.isMetaDown()) modifiers |= META;
+        if (e.isShiftDown()) modifiers |= SHIFT;
+        if (e.isShortcutDown()) modifiers |= SHORTCUT;
+
+        this.code = e.getCode().getCode();
+        this.name = e.getText();
+        this.modifiers = modifiers;
+    }
+
+    /**
      * With modifier.
      * 
      * @return A modified key combination.
@@ -641,5 +659,29 @@ public class Key {
             return false;
         }
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final int hashCode() {
+        int result = 1;
+        result = 31 * result + code;
+        result = 31 * result + modifiers;
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final boolean equals(Object obj) {
+        if (obj instanceof Key == false) {
+            return false;
+        }
+
+        Key other = (Key) obj;
+        return code == other.code && modifiers == other.modifiers;
     }
 }

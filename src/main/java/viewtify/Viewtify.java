@@ -18,10 +18,13 @@ import java.lang.management.ManagementFactory;
 import java.net.MalformedURLException;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -74,12 +77,19 @@ import transcript.Lang;
 import viewtify.bind.Calculated;
 import viewtify.bind.CalculatedList;
 import viewtify.ui.View;
+import viewtify.ui.helper.User;
+import viewtify.ui.helper.UserActionHelper;
 import viewtify.util.UIThreadSafeList;
 
 /**
  * @version 2018/09/16 16:21:29
  */
 public final class Viewtify {
+
+    /** Command Repository */
+    static final Map<Command, Deque<Runnable>> commands = new ConcurrentHashMap();
+
+    private static final ShortcutManager shortcut = I.make(ShortcutManager.class);
 
     /** The runtime info. */
     private static final boolean inTest;
@@ -292,6 +302,7 @@ public final class Viewtify {
 
             Scene scene = new Scene((Parent) application.ui());
             applyStyles(scene, stage);
+            applyEvents(scene);
 
             // observe stylesheets
             observeStylesheet(scene.getStylesheets());
@@ -323,7 +334,17 @@ public final class Viewtify {
         if (stage != null && icon.length() != 0) {
             stage.getIcons().add(loadImage(icon));
         }
+    }
 
+    /**
+     * Apply root event handler.
+     * 
+     * @param scene
+     */
+    private void applyEvents(Scene scene) {
+        // Prevent the KeyPress event from occurring continuously if you hold down a key.
+        UserActionHelper<?> helper = () -> scene;
+        helper.when(User.KeyPress).first().repeatWhen(e -> helper.when(User.KeyRelease)).to(shortcut::activate);
     }
 
     /**
@@ -560,6 +581,7 @@ public final class Viewtify {
     public static void applyApplicationStyle(Scene scene) {
         if (scene != null && latest != null) {
             latest.applyStyles(scene, (Stage) scene.getWindow());
+            latest.applyEvents(scene);
         }
     }
 
