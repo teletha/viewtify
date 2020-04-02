@@ -101,7 +101,7 @@ public interface Command<E extends Enum<E>> extends Extensible {
      * @param key
      * @return
      */
-    default E defaultKey(Key key) {
+    default E shortcut(Key key) {
         if (key != null) {
             I.make(ShortcutManager.class).bindAsDefault(key, this);;
         }

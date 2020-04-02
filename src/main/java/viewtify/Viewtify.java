@@ -48,6 +48,9 @@ import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -1094,6 +1097,31 @@ public final class Viewtify {
                 map.removeListener(listener);
             });
         });
+    }
+
+    /**
+     * Open new window with the specified {@link View}.
+     * 
+     * @param view
+     */
+    public static void openNewWindow(View view, Bounds bounds) {
+        if (bounds == null) {
+            Rectangle2D window = Screen.getPrimary().getBounds();
+            bounds = new BoundingBox(window.getWidth() / 4, window.getHeight() / 4, window.getWidth() / 2, window.getHeight() / 2);
+        }
+
+        Scene scene = new Scene((Parent) view.ui(), bounds.getWidth(), bounds.getHeight());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+        stage.setOnCloseRequest(e -> {
+            Viewtify.untrackLocation(view.id());
+        });
+
+        Viewtify.applyApplicationStyle(scene);
+        Viewtify.trackLocation(view.id(), stage);
+        stage.show();
     }
 
     /**
