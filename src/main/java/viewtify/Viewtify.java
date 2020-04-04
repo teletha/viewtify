@@ -48,9 +48,6 @@ import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -529,51 +526,6 @@ public final class Viewtify {
             e.printStackTrace();
             return false;
         }
-    }
-
-    /**
-     * Show your message on the platform's notification system.
-     * 
-     * @param message
-     */
-    public final static void notify(String title, String message) {
-        notify(title, message, Notifications::show);
-    }
-
-    /**
-     * Show your message on the platform's notification system.
-     * 
-     * @param message
-     */
-    public final static void notifyInfo(String title, String message) {
-        notify(title, message, Notifications::showInformation);
-    }
-
-    /**
-     * Show your message on the platform's notification system.
-     * 
-     * @param message
-     */
-    public final static void notifyWarn(String title, String message) {
-        notify(title, message, Notifications::showWarning);
-    }
-
-    /**
-     * Show your message on the platform's notification system.
-     * 
-     * @param message
-     */
-    public final static void notifyError(String title, String message) {
-        notify(title, message, Notifications::showError);
-    }
-
-    /**
-     * Show your message on the platform's notification system.
-     */
-    private final static void notify(String title, String message, Consumer<Notifications> show) {
-        inUI(() -> {
-            show.accept(Notifications.create().darkStyle().title(title).text(message).owner(Screen.getPrimary()));
-        });
     }
 
     /**
