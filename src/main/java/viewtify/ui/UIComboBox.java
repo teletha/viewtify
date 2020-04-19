@@ -28,11 +28,12 @@ import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.CollectableValuedItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.SelectableHelper;
 import viewtify.ui.helper.User;
 
 public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
         implements CollectableHelper<UIComboBox<T>, T>, CollectableValuedItemRenderingHelper<UIComboBox<T>, T>,
-        ContextMenuHelper<UIComboBox<T>> {
+        ContextMenuHelper<UIComboBox<T>>, SelectableHelper<UIComboBox<T>, T> {
 
     /**
      * Builde {@link ComboBox}.

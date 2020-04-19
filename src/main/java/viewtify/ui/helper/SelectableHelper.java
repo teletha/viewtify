@@ -9,6 +9,8 @@
  */
 package viewtify.ui.helper;
 
+import java.util.function.Consumer;
+
 import javafx.collections.ObservableList;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
@@ -171,6 +173,19 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      */
     default Self unselectAt(int index) {
         model().clearSelection(index);
+        return (Self) this;
+    }
+
+    /**
+     * Handle the selected item.
+     * 
+     * @param selected
+     * @return
+     */
+    default Self whenSelected(Consumer<E> selected) {
+        if (selected != null && this instanceof UserActionHelper) {
+            ((UserActionHelper<?>) this).when(User.Action).startWithNull().flatVariable(e -> selectedItem()).to(selected::accept);
+        }
         return (Self) this;
     }
 }

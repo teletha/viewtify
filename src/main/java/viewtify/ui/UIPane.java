@@ -9,6 +9,8 @@
  */
 package viewtify.ui;
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 public class UIPane extends UserInterface<UIPane, Pane> {
@@ -26,5 +28,25 @@ public class UIPane extends UserInterface<UIPane, Pane> {
      */
     public UIPane(Pane pane, View view) {
         super(pane, view);
+    }
+
+    /**
+     * Set the single child content.
+     * 
+     * @param provider
+     * @return
+     */
+    public final UIPane content(UserInterfaceProvider<Node> provider) {
+        if (provider != null) {
+            Node node = provider.ui();
+            ObservableList<Node> children = ui.getChildren();
+
+            if (children.isEmpty()) {
+                children.add(node);
+            } else {
+                children.set(0, node);
+            }
+        }
+        return this;
     }
 }
