@@ -14,10 +14,8 @@ import javafx.beans.Observable;
 import javafx.scene.Parent;
 
 import kiss.Signal;
+import viewtify.Viewtify;
 
-/**
- * @version 2018/06/26 12:42:21
- */
 public final class LayoutAssistant implements InvalidationListener {
 
     /** The target node. */
@@ -28,6 +26,9 @@ public final class LayoutAssistant implements InvalidationListener {
 
     /** Flag whether axis shoud layout on the next rendering phase or not. */
     private boolean shouldLayout;
+
+    /** The previous layout for relayout. */
+    private Runnable previousLayout;
 
     /**
      * Create {@link LayoutAssistant}.
@@ -58,6 +59,18 @@ public final class LayoutAssistant implements InvalidationListener {
     }
 
     /**
+     * Layout forcely if possible.
+     */
+    public void layoutForcely() {
+        if (previousLayout != null) {
+            Viewtify.inUI(() -> {
+                shouldLayout = true;
+                layout(previousLayout);
+            });
+        }
+    }
+
+    /**
      * Layout actually.
      * 
      * @param layout
@@ -66,6 +79,7 @@ public final class LayoutAssistant implements InvalidationListener {
         if (shouldLayout == true || parent.shouldLayout == true) {
             layout.run();
             shouldLayout = false;
+            previousLayout = layout;
         }
     }
 
