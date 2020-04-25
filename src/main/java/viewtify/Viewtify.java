@@ -55,8 +55,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import org.controlsfx.control.Notifications;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -274,7 +272,13 @@ public final class Viewtify {
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      */
     public void activate(View application) {
-        checkPolicy(application.getClass().getSimpleName());
+        String prefs = ".preferences for " + application.getClass().getSimpleName().toLowerCase();
+
+        // How to handle simultaneous application startup
+        checkPolicy(prefs);
+
+        // Separate settings for each application
+        I.envy("PreferenceDirectory", prefs);
 
         // load extensions in viewtify package
         I.load(Location.class);
@@ -284,7 +288,7 @@ public final class Viewtify {
 
         // build application stylesheet
         try {
-            applicationStyle = CSSProcessor.pretty().formatTo(".preferences/application.css").toUri().toURL().toExternalForm();
+            applicationStyle = CSSProcessor.pretty().formatTo(prefs + "/application.css").toUri().toURL().toExternalForm();
         } catch (MalformedURLException e) {
             throw I.quiet(e);
         }
@@ -376,12 +380,12 @@ public final class Viewtify {
     /**
      * Check {@link ActivationPolicy}.
      * 
-     * @param name A simple name of application.
+     * @param prefs An application preference root directory.
      */
-    private void checkPolicy(String applicationName) {
+    private void checkPolicy(String prefs) {
         if (policy != ActivationPolicy.Multiple) {
             // create application specified directory for lock
-            Directory root = Locator.directory(".lock-" + applicationName.toLowerCase()).touch();
+            Directory root = Locator.directory(prefs + "/lock").touch();
 
             root.lock()
                     .retryWhen(NullPointerException.class, e -> e.effect(() -> {
