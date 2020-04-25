@@ -30,6 +30,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -257,6 +258,21 @@ public final class Viewtify {
 
         if (0 < height) {
             this.height = height;
+        }
+        return this;
+    }
+
+    /**
+     * Configure error logging.
+     * 
+     * @param errorHandler
+     * @return
+     */
+    public Viewtify logging(BiConsumer<String, Throwable> errorHandler) {
+        if (errorHandler != null) {
+            Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {
+                errorHandler.accept("Error in " + thread.getName() + " : " + error.getLocalizedMessage(), error);
+            });
         }
         return this;
     }
