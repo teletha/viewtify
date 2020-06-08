@@ -22,7 +22,7 @@ import javafx.beans.value.ObservableValue;
 /**
  * @version 2018/09/11 9:45:06
  */
-public class DelegationProperty<Origin, Wrap> implements Property<Wrap> {
+public class DelegatingProperty<Origin, Wrap> implements Property<Wrap> {
 
     /** The original property, */
     private final Property<Origin> origin;
@@ -44,7 +44,7 @@ public class DelegationProperty<Origin, Wrap> implements Property<Wrap> {
      * @param encoder
      * @param decoder
      */
-    public DelegationProperty(Property<Origin> origin, Function<Origin, Wrap> encoder, Function<Wrap, Origin> decoder) {
+    public DelegatingProperty(Property<Origin> origin, Function<Origin, Wrap> encoder, Function<Wrap, Origin> decoder) {
         Objects.requireNonNull(encoder);
         Objects.requireNonNull(decoder);
 

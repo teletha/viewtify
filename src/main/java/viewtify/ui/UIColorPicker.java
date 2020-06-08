@@ -17,13 +17,13 @@ import stylist.value.Color;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.ValueHelper;
-import viewtify.util.DelegationProperty;
+import viewtify.util.DelegatingProperty;
 import viewtify.util.FXUtils;
 
 public class UIColorPicker extends UserInterface<UIColorPicker, ColorPicker>
         implements ValueHelper<UIColorPicker, Color>, EditableHelper<UIColorPicker>, ContextMenuHelper<UIColorPicker> {
 
-    private final DelegationProperty<javafx.scene.paint.Color, Color> color = new DelegationProperty<>(ui
+    private final DelegatingProperty<javafx.scene.paint.Color, Color> color = new DelegatingProperty<>(ui
             .valueProperty(), FXUtils::color, FXUtils::color);
 
     /**

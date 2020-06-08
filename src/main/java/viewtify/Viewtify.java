@@ -78,7 +78,7 @@ import viewtify.bind.CalculatedList;
 import viewtify.ui.View;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
-import viewtify.util.UIThreadSafeList;
+import viewtify.util.DelegatingObservableList;
 
 /**
  * @version 2018/09/16 16:21:29
@@ -892,6 +892,29 @@ public final class Viewtify {
      */
     public static final <E> ObservableList<E> inUI(ObservableList<E> list) {
         return list instanceof UIThreadSafeList ? list : new UIThreadSafeList<>(list);
+    }
+
+    /**
+     * Ensures that notifications of item change events are always executed on the JavaFX UI thread.
+     */
+    private static class UIThreadSafeList<E> extends DelegatingObservableList<E> {
+
+        /**
+         * Create UI thread-safe {@link ObservableList}.
+         * 
+         * @param delegate
+         */
+        private UIThreadSafeList(ObservableList<E> delegate) {
+            super(delegate);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void sourceChanged(ListChangeListener.Change<? extends E> change) {
+            Viewtify.inUI(() -> fireChange(change));
+        }
     }
 
     /**

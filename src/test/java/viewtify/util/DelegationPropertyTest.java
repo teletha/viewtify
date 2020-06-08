@@ -25,7 +25,7 @@ class DelegationPropertyTest {
 
     Property<String> base = new SimpleStringProperty();
 
-    DelegationProperty<String, Integer> wrap = new DelegationProperty<>(base, Integer::parseInt, String::valueOf);
+    DelegatingProperty<String, Integer> wrap = new DelegatingProperty<>(base, Integer::parseInt, String::valueOf);
 
     @Test
     void getValue() {
