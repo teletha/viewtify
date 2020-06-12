@@ -37,6 +37,7 @@ import java.util.function.Supplier;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
@@ -915,6 +916,16 @@ public final class Viewtify {
         protected void sourceChanged(ListChangeListener.Change<? extends E> change) {
             Viewtify.inUI(() -> fireChange(change));
         }
+    }
+
+    /**
+     * Signal value changing.
+     * 
+     * @param values
+     * @return
+     */
+    public static Signal<Double> observe(DoubleProperty value) {
+        return observe(new ObservableValue[] {value});
     }
 
     /**
