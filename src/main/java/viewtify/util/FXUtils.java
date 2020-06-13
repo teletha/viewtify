@@ -9,7 +9,7 @@
  */
 package viewtify.util;
 
-import static java.lang.Double.parseDouble;
+import static java.lang.Double.*;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -142,7 +142,7 @@ public class FXUtils {
      * @return
      */
     public static Color color(stylist.value.Color color) {
-        return Color.web(color.toRGB());
+        return Color.web(color.toRGB(), color.alpha);
     }
 
     /**

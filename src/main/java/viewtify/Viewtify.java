@@ -37,7 +37,10 @@ import java.util.function.Supplier;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.property.DoubleProperty;
+import javafx.beans.binding.DoubleExpression;
+import javafx.beans.binding.FloatExpression;
+import javafx.beans.binding.IntegerExpression;
+import javafx.beans.binding.LongExpression;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
@@ -924,7 +927,37 @@ public final class Viewtify {
      * @param values
      * @return
      */
-    public static Signal<Double> observe(DoubleProperty value) {
+    public static Signal<Integer> observe(IntegerExpression value) {
+        return observe(new ObservableValue[] {value});
+    }
+
+    /**
+     * Signal value changing.
+     * 
+     * @param values
+     * @return
+     */
+    public static Signal<Long> observe(LongExpression value) {
+        return observe(new ObservableValue[] {value});
+    }
+
+    /**
+     * Signal value changing.
+     * 
+     * @param values
+     * @return
+     */
+    public static Signal<Float> observe(FloatExpression value) {
+        return observe(new ObservableValue[] {value});
+    }
+
+    /**
+     * Signal value changing.
+     * 
+     * @param values
+     * @return
+     */
+    public static Signal<Double> observe(DoubleExpression value) {
         return observe(new ObservableValue[] {value});
     }
 
@@ -1035,6 +1068,46 @@ public final class Viewtify {
      */
     public static <K, V> Signal<ObservableMap<K, V>> observing(ObservableMap<K, V> map) {
         return observe(map).startWith(map);
+    }
+
+    /**
+     * Signal value changing.
+     * 
+     * @param values
+     * @return
+     */
+    public static Signal<Integer> observing(IntegerExpression value) {
+        return observe(value).startWith(value.getValue());
+    }
+
+    /**
+     * Signal value changing.
+     * 
+     * @param values
+     * @return
+     */
+    public static Signal<Long> observing(LongExpression value) {
+        return observe(value).startWith(value.getValue());
+    }
+
+    /**
+     * Signal value changing.
+     * 
+     * @param values
+     * @return
+     */
+    public static Signal<Float> observing(FloatExpression value) {
+        return observe(value).startWith(value.getValue());
+    }
+
+    /**
+     * Signal value changing.
+     * 
+     * @param values
+     * @return
+     */
+    public static Signal<Double> observing(DoubleExpression value) {
+        return observe(value).startWith(value.getValue());
     }
 
     /**
