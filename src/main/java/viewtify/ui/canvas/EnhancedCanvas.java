@@ -309,6 +309,20 @@ public class EnhancedCanvas extends Canvas implements StyleHelper<EnhancedCanvas
     }
 
     /**
+     * Fill text on the specified position.
+     * 
+     * @param x X position.
+     * @param y Y position.
+     * @param width A width.
+     * @param height A height.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas fillRect(double x, double y, double width, double height) {
+        getGraphicsContext2D().fillRect(x, y, width, height);
+        return this;
+    }
+
+    /**
      * Draw your art when the specified timing.
      * 
      * @param <T>
