@@ -10,16 +10,30 @@
 package viewtify.ui.canvas;
 
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
+import kiss.Signal;
+import viewtify.Viewtify;
+import viewtify.ui.helper.StyleHelper;
 import viewtify.util.FXUtils;
 
-public class EnhancedCanvas extends Canvas {
+public class EnhancedCanvas extends Canvas implements StyleHelper<EnhancedCanvas, EnhancedCanvas> {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnhancedCanvas ui() {
+        return this;
+    }
 
     /**
      * Bind the canvas size to the parent region.
@@ -27,9 +41,33 @@ public class EnhancedCanvas extends Canvas {
      * @param parent
      * @return
      */
-    public EnhancedCanvas fitOn(Region parent) {
-        widthProperty().bind(parent.widthProperty());
+    public EnhancedCanvas bindSizeTo(Region parent) {
         heightProperty().bind(parent.heightProperty());
+        widthProperty().bind(parent.widthProperty());
+        return this;
+    }
+
+    /**
+     * Bind the canvas size to the parent region.
+     * 
+     * @param height
+     * @return
+     */
+    public EnhancedCanvas bindSizeTo(double width, Region height) {
+        heightProperty().bind(height.heightProperty());
+        setWidth(width);
+        return this;
+    }
+
+    /**
+     * Bind the canvas size to the parent region.
+     * 
+     * @param width
+     * @return
+     */
+    public EnhancedCanvas bindSizeTo(Region width, double height) {
+        setHeight(height);
+        widthProperty().bind(width.widthProperty());
         return this;
     }
 
@@ -57,23 +95,162 @@ public class EnhancedCanvas extends Canvas {
     }
 
     /**
-     * Configure stroke style.
+     * Set the width and height of this canvas.
      * 
-     * @param color
+     * @param width A width to set.
+     * @param height A height to set.
      * @return Chainable API.
      */
-    public EnhancedCanvas configureStroke(stylist.value.Color color) {
-        return configureStroke(FXUtils.color(color));
+    public EnhancedCanvas width(double width) {
+        setWidth(width);
+        return this;
     }
 
     /**
-     * Configure stroke style.
+     * Set the width and height of this canvas.
      * 
-     * @param color
+     * @param width A width to set.
+     * @param height A height to set.
      * @return Chainable API.
      */
-    public EnhancedCanvas configureStroke(Color color) {
+    public EnhancedCanvas height(double height) {
+        setHeight(height);
+        return this;
+    }
+
+    /**
+     * Set the width and height of this canvas.
+     * 
+     * @param width A width to set.
+     * @param height A height to set.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas size(double width, double height) {
+        width(width);
+        height(height);
+        return this;
+    }
+
+    /**
+     * Set the width and height of this canvas.
+     * 
+     * @param width A width to set.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas lineWidth(double width) {
+        getGraphicsContext2D().setLineWidth(width);
+        return this;
+    }
+
+    /**
+     * Set the text base line of this canvas.
+     * 
+     * @param baseLine A baseLine to set.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas textBaseLine(VPos baseLine) {
+        getGraphicsContext2D().setTextBaseline(baseLine);
+        return this;
+    }
+
+    /**
+     * Configure fill color.
+     * 
+     * @param color A color to set.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas fillColor(stylist.value.Color color) {
+        return fillColor(FXUtils.color(color));
+    }
+
+    /**
+     * Configure fill color.
+     * 
+     * @param red A red element.
+     * @param green A green element.
+     * @param blue A blue element.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas fillColor(int red, int green, int blue) {
+        return fillColor(Color.rgb(red, green, blue));
+    }
+
+    /**
+     * Configure fill color.
+     * 
+     * @param red A red element.
+     * @param green A green element.
+     * @param blue A blue element.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas fillColor(int red, int green, int blue, double alpha) {
+        return fillColor(Color.rgb(red, green, blue, alpha));
+    }
+
+    /**
+     * Configure fill color.
+     * 
+     * @param color A color to set.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas fillColor(Color color) {
+        getGraphicsContext2D().setFill(color);
+        return this;
+    }
+
+    /**
+     * Configure stroke color.
+     * 
+     * @param color A color to set.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas strokeColor(stylist.value.Color color) {
+        return strokeColor(FXUtils.color(color));
+    }
+
+    /**
+     * Configure stroke color.
+     * 
+     * @param red A red element.
+     * @param green A green element.
+     * @param blue A blue element.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas strokeColor(int red, int green, int blue) {
+        return strokeColor(Color.rgb(red, green, blue));
+    }
+
+    /**
+     * Configure stroke color.
+     * 
+     * @param red A red element.
+     * @param green A green element.
+     * @param blue A blue element.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas strokeColor(int red, int green, int blue, double alpha) {
+        return strokeColor(Color.rgb(red, green, blue, alpha));
+    }
+
+    /**
+     * Configure stroke color.
+     * 
+     * @param color A color to set.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas strokeColor(Color color) {
         getGraphicsContext2D().setStroke(color);
+        return this;
+    }
+
+    /**
+     * Configure font size..
+     * 
+     * @param size A font size to set.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas fontSize(int size) {
+        getGraphicsContext2D().setFont(Font.font(size));
         return this;
     }
 
@@ -128,6 +305,21 @@ public class EnhancedCanvas extends Canvas {
      */
     public EnhancedCanvas fillText(Object text, double x, double y, double width) {
         getGraphicsContext2D().fillText(Objects.toString(text), x, y, width);
+        return this;
+    }
+
+    /**
+     * Draw your art when the specified timing.
+     * 
+     * @param <T>
+     * @param timing
+     * @param drawing
+     * @return Chainable API.
+     */
+    public <T> EnhancedCanvas drawWhen(Signal<T> timing, BiConsumer<T, EnhancedCanvas> drawing) {
+        if (timing != null && drawing != null) {
+            timing.on(Viewtify.UIThread).to(context -> drawing.accept(context, this));
+        }
         return this;
     }
 }
