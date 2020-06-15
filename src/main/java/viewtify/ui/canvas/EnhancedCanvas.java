@@ -103,4 +103,31 @@ public class EnhancedCanvas extends Canvas {
         getGraphicsContext2D().strokeText(Objects.toString(text), x, y, width);
         return this;
     }
+
+    /**
+     * Fill text on the specified position.
+     * 
+     * @param text A text to draw.
+     * @param x X position.
+     * @param y Y position.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas fillText(Object text, double x, double y) {
+        getGraphicsContext2D().fillText(Objects.toString(text), x, y);
+        return this;
+    }
+
+    /**
+     * Fill text on the specified position.
+     * 
+     * @param text A text to draw.
+     * @param x X position.
+     * @param y Y position.
+     * @param width A text width.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas fillText(Object text, double x, double y, double width) {
+        getGraphicsContext2D().fillText(Objects.toString(text), x, y, width);
+        return this;
+    }
 }
