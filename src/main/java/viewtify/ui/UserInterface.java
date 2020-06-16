@@ -9,7 +9,7 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.*;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -207,7 +207,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
      * @param icon
      * @param message
      */
-    private void decorateBy(Icon icon, String message) {
+    public final void decorateBy(Icon icon, String message) {
         I.signal(Decorator.getDecorations(ui))
                 .take(GraphicDecoration.class::isInstance)
                 .take(1)
@@ -235,7 +235,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     /**
      * Undecorate all icons.
      */
-    private void undecorate() {
+    public final void undecorate() {
         I.signal(Decorator.getDecorations(ui))
                 .take(GraphicDecoration.class::isInstance)
                 .take(1)
