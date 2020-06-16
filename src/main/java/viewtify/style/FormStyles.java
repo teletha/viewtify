@@ -30,6 +30,12 @@ public interface FormStyles extends StyleDeclarable {
         padding.top(4, px);
     };
 
+    Style FormLabelMin = () -> {
+        $.child().select(FormLabel, () -> {
+            display.width(70, px).minWidth(70, px);
+        });
+    };
+
     Style FormInput = () -> {
         display.width(160, px);
         margin.right(5, px);
@@ -38,5 +44,9 @@ public interface FormStyles extends StyleDeclarable {
     Style FormInputMin = () -> {
         display.width(80, px);
         margin.right(5, px);
+    };
+
+    Style FormButton = () -> {
+        display.width(62, px);
     };
 }

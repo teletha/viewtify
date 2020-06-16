@@ -447,7 +447,7 @@ public final class Viewtify {
     private void observeStylesheet(ObservableList<String> stylesheets) {
         for (String stylesheet : stylesheets) {
             if (stylesheet.startsWith("file:/")) {
-                File file = Locator.file(stylesheet.substring(6));
+                File file = Locator.file(stylesheet.substring(6).replace("%20", " "));
 
                 if (file.isPresent()) {
                     file.observe().debounce(1, SECONDS).to(e -> {
