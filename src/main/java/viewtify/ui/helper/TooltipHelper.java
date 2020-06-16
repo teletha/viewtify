@@ -31,6 +31,16 @@ import viewtify.ui.UserInterfaceProvider;
 public interface TooltipHelper<Self extends TooltipHelper, W extends Node> extends StyleHelper<Self, W> {
 
     /**
+     * Remove the tooltip from this user interface.
+     * 
+     * @return Chainable API.
+     */
+    default Self untooltip() {
+        Tooltip.uninstall(ui(), null);
+        return (Self) this;
+    }
+
+    /**
      * Set the text to be displayed as a tooltip.
      * 
      * @param text Tooltip text.
@@ -41,6 +51,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
         tooltip.setShowDelay(Duration.millis(100));
         tooltip.setShowDuration(Duration.INDEFINITE);
         tooltip.setFont(Font.font(12));
+        tooltip.setAutoHide(true);
 
         Tooltip.install(ui(), tooltip);
         return (Self) this;
