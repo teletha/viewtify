@@ -210,6 +210,52 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param value The value that is synchronized with each other.
      * @return Chainable API.
      */
+    default Self sync(ValueHelper<?, V> value) {
+        return sync(value, null, null);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self sync(ValueHelper<?, V> value, Disposable unsynchronizer) {
+        return sync(value, null, unsynchronizer);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @param synchronizer Synchronize at the specified timing.
+     * @return Chainable API.
+     */
+    default Self sync(ValueHelper<?, V> value, Function<Signal<V>, Signal<V>> synchronizer) {
+        return sync(value, synchronizer, null);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @param synchronizer Synchronize at the specified timing.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default Self sync(ValueHelper<?, V> value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
+        return sync(value.valueProperty(), synchronizer, unsynchronizer);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @return Chainable API.
+     */
     default <P extends WritableValue<V> & ObservableValue<V>> Self sync(P value) {
         return sync(value, null, null);
     }
