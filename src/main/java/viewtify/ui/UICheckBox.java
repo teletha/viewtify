@@ -12,6 +12,7 @@ package viewtify.ui;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.scene.control.CheckBox;
+
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.ValueHelper;

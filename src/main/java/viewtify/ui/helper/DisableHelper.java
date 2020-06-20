@@ -13,6 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ObservableValue;
 
 import kiss.I;
@@ -21,15 +22,6 @@ import kiss.Variable;
 import viewtify.Viewtify;
 
 public interface DisableHelper<Self extends DisableHelper> extends PropertyAccessHelper {
-
-    /**
-     * Gets whether it is enable.
-     * 
-     * @return A result.
-     */
-    default boolean isEnable() {
-        return property(Type.Disable).getValue() == false;
-    }
 
     /**
      * Gets whether it is disable.
@@ -141,5 +133,116 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      */
     default Self disableBriefly() {
         return disableDuring(400, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Gets whether it is enable.
+     * 
+     * @return A result.
+     */
+    default boolean isEnable() {
+        return property(Type.Disable).getValue() == false;
+    }
+
+    /**
+     * Disables itself.
+     * 
+     * @param state A disable state.
+     * @return Chainable API.
+     */
+    default Self enable(boolean state) {
+        return disable(!state);
+    }
+
+    /**
+     * Disables itself when the specified condition is True, and enables it when False.
+     * 
+     * @param condition A timing condition.
+     * @param conditions Additional timing conditions.
+     * @return Chainable API.
+     */
+    default <V> Self enableWhen(ValueHelper<?, V> context, Predicate<V> condition) {
+        if (context != null && condition != null) {
+            enableWhen(context.observing().map(condition::test));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Disables itself when the specified condition is True, and enables it when False.
+     * 
+     * @param condition A timing condition.
+     * @param conditions Additional timing conditions.
+     * @return Chainable API.
+     */
+    default Self enableWhen(Signal<Boolean> condition, Signal<Boolean>... conditions) {
+        if (condition != null) {
+            condition.combineLatest(conditions, (one, other) -> one || other).to(DisableHelper.this::enable);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Disables itself when the specified condition is True, and enables it when False.
+     * 
+     * @param condition A timing condition.
+     * @return Chainable API.
+     */
+    default Self enableWhen(Variable<Boolean> condition) {
+        if (condition != null) {
+            enableWhen(Viewtify.property(condition));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Disables itself when the specified condition is True, and enables it when False.
+     * 
+     * @param condition A timing condition.
+     * @return Chainable API.
+     */
+    default Self enableWhen(ObservableValue<Boolean> condition) {
+        if (condition != null) {
+            disableWhen(BooleanBinding.booleanExpression(condition).not());
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Disable itself for a specified time.
+     * 
+     * @param time A time value.
+     * @param unit A time unit.
+     * @return Chainable API.
+     */
+    default Self enableDuring(long time, TimeUnit unit) {
+        if (0 < time && unit != null) {
+            enable(true);
+            I.schedule(time, unit, () -> enable(false));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Disable itself for a specified time.
+     * 
+     * @param time A time value.
+     * @param unit A time unit.
+     * @return Chainable API.
+     */
+    default Self enableDuring(long time, ChronoUnit unit) {
+        if (0 < time && unit != null) {
+            enableDuring(time, TimeUnit.of(unit));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Disable itself for a bit.
+     * 
+     * @return Chainable API.
+     */
+    default Self enableBriefly() {
+        return enableDuring(400, TimeUnit.MILLISECONDS);
     }
 }
