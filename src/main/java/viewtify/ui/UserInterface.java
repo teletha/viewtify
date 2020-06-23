@@ -9,13 +9,12 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
@@ -31,15 +30,12 @@ import javafx.util.Duration;
 
 import org.controlsfx.control.decoration.Decorator;
 import org.controlsfx.control.decoration.GraphicDecoration;
-import org.controlsfx.validation.ValidationSupport;
 
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
-import kiss.WiseConsumer;
-import kiss.WiseRunnable;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
@@ -50,13 +46,14 @@ import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
+import viewtify.ui.helper.ValidationHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.util.Icon;
 import viewtify.validation.Validation;
 
 public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> extends ReferenceHolder
         implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, TooltipHelper<Self, W>, UserInterfaceProvider<W>,
-        PropertyAccessHelper {
+        PropertyAccessHelper, ValidationHelper<Self> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
@@ -131,66 +128,6 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     }
 
     /**
-     * Set the validator for this {@link UserInterface}.
-     * 
-     * @param validator A validator.
-     * @return Chainable API.
-     */
-    public final Self require(Predicate<? super Self> validator) {
-        return require(() -> {
-            assert validator.test((Self) this);
-        });
-    }
-
-    /**
-     * Set the validator for this {@link UserInterface}.
-     * 
-     * @param validator A validator.
-     * @return Chainable API.
-     */
-    public final Self require(WiseRunnable validator) {
-        validation().require(validator);
-
-        return (Self) this;
-    }
-
-    /**
-     * Set the validator for this {@link UserInterface}.
-     * 
-     * @param validator A validator.
-     * @return Chainable API.
-     */
-    public final Self require(WiseConsumer<? super Self> validator) {
-        validation().require(() -> validator.accept((Self) this));
-
-        return (Self) this;
-    }
-
-    /**
-     * Register the validation timing.
-     * 
-     * @param timing
-     * @return
-     */
-    public final Self requireWhen(Signal<?>... timings) {
-        I.signal(timings).skipNull().to(validation()::when);
-
-        return (Self) this;
-    }
-
-    /**
-     * Register the validation timing.
-     * 
-     * @param timing
-     * @return
-     */
-    public final Self requireWhen(UserInterface... timings) {
-        I.signal(timings).skipNull().map(UserInterface::validateWhen).to(validation()::when);
-
-        return (Self) this;
-    }
-
-    /**
      * Mark as valid interface.
      * 
      * @return
@@ -207,7 +144,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
      * @param icon
      * @param message
      */
-    public final void decorateBy(Icon icon, String message) {
+    private final void decorateBy(Icon icon, String message) {
         I.signal(Decorator.getDecorations(ui))
                 .take(GraphicDecoration.class::isInstance)
                 .take(1)
@@ -235,12 +172,22 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     /**
      * Undecorate all icons.
      */
-    public final void undecorate() {
+    private final void undecorate() {
         I.signal(Decorator.getDecorations(ui))
                 .take(GraphicDecoration.class::isInstance)
                 .take(1)
                 .on(Viewtify.UIThread)
                 .to(deco -> Decorator.removeDecoration(ui, deco));
+    }
+
+    /**
+     * Mark as valid interface.
+     * 
+     * @return
+     */
+    public final Self valid() {
+        validation().message.set((String) null);
+        return (Self) this;
     }
 
     /**
@@ -277,14 +224,13 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     }
 
     /**
-     * Retrieve the singleton {@link ValidationSupport} for this {@link UserInterface}.
-     * 
-     * @return
+     * {@inheritDoc}
      */
-    private synchronized Validation validation() {
+    @Override
+    public final synchronized Validation validation() {
         if (validation == null) {
             validation = new Validation();
-            validation.when(validateWhen());
+            validation.verifyWhen(verifyWhen());
             validation.message.observe().to(message -> {
                 if (message == null) {
                     undecorate();
@@ -297,13 +243,26 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     }
 
     /**
+     * Register the validation timing.
+     * 
+     * @param timing
+     * @return
+     */
+    public final Self requireWhen(UserInterface... timings) {
+        I.signal(timings).skipNull().map(UserInterface::verifyWhen).to(validation()::verifyWhen);
+
+        return (Self) this;
+    }
+
+    /**
      * Built-in validation timing for this {@link UserInterface}.
      * 
      * @return
      */
-    private Signal<?> validateWhen() {
+    private Signal<?> verifyWhen() {
         if (this instanceof ValueHelper) {
-            return Viewtify.observe(((ValueHelper) this).valueProperty());
+            ValueHelper helper = (ValueHelper) this;
+            return Viewtify.observe(helper.valueProperty());
         } else {
             return null;
         }

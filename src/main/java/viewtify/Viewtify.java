@@ -121,8 +121,6 @@ public final class Viewtify {
     public static final Consumer<Runnable> WorkerThread = pool::submit;
 
     static {
-        ClassLoader.getSystemClassLoader().setDefaultAssertionStatus(true);
-
         // For Test
         inTest = I.signal(new Error().getStackTrace())
                 .take(e -> e.getClassName().startsWith("org.junit."))

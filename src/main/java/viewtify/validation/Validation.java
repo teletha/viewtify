@@ -28,21 +28,40 @@ public class Validation {
     /** The exposed validation result. */
     public final Signal<Boolean> invalid = valid.map(v -> !v);
 
-    /** The list of validators. */
-    private final Set<Runnable> validators = new HashSet();
+    /** The self verifier. */
+    private final Set<Runnable> forSelf = new HashSet();
+
+    /** The value supplier. */
+    Object supplier;
 
     /**
-     * Register the validator.
+     * The current state of validation.
      * 
-     * @param validator
      * @return
      */
-    public Validation require(WiseRunnable validator) {
-        if (validator != null) {
-            validators.add(validator);
+    public boolean isValid() {
+        return message.isAbsent();
+    }
 
-            // apply validation immediately
-            validate();
+    /**
+     * The current state of validation.
+     * 
+     * @return
+     */
+    public boolean isInvalid() {
+        return message.isPresent();
+    }
+
+    /**
+     * Register the self verifier.
+     * 
+     * @param verifier
+     * @return
+     */
+    public Validation verifyBy(WiseRunnable verifier) {
+        if (verifier != null) {
+            forSelf.add(verifier);
+            verify(); // immediately
         }
         return this;
     }
@@ -53,21 +72,22 @@ public class Validation {
      * @param timing
      * @return
      */
-    public Validation when(Signal<?> timing) {
+    public Validation verifyWhen(Signal<?> timing) {
         if (timing != null) {
-            timing.to(this::validate);
+            timing.to(this::verify);
         }
         return this;
     }
 
     /**
-     * 
+     * Verify now!
      */
-    private void validate() {
+    private void verify() {
         try {
-            for (Runnable validator : validators) {
-                validator.run();
+            for (Runnable verifier : forSelf) {
+                verifier.run();
             }
+
             this.message.set((String) null);
         } catch (Throwable e) {
             String message = e.getLocalizedMessage();

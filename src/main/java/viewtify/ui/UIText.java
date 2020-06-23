@@ -15,6 +15,8 @@ import java.util.regex.Pattern;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextField;
 import javafx.scene.control.skin.TextFieldSkin;
 
@@ -25,6 +27,10 @@ import viewtify.ui.helper.ValueHelper;
 public class UIText extends UserInterface<UIText, TextField>
         implements ValueHelper<UIText, String>, ContextMenuHelper<UIText>, EditableHelper<UIText> {
 
+    private final StringProperty value = new SimpleStringProperty();
+
+    private boolean valueChanging = false;
+
     /**
      * Enchanced view.
      * 
@@ -32,6 +38,30 @@ public class UIText extends UserInterface<UIText, TextField>
      */
     public UIText(View view) {
         super(new VerifiableTextField(), view);
+
+        // from model value to UI text value
+        value.addListener((o, prev, next) -> {
+            if (valueChanging == false) {
+                try {
+                    valueChanging = true;
+                    ui.textProperty().set(next);
+                } finally {
+                    valueChanging = false;
+                }
+            }
+        });
+
+        // from UI text value to model value
+        ui.textProperty().addListener((o, prev, next) -> {
+            if (valueChanging == false) {
+                try {
+                    valueChanging = true;
+                    value.set(next);
+                } finally {
+                    valueChanging = false;
+                }
+            }
+        });
     }
 
     /**
@@ -39,7 +69,7 @@ public class UIText extends UserInterface<UIText, TextField>
      */
     @Override
     public final Property<String> valueProperty() {
-        return ui.textProperty();
+        return value;
     }
 
     /**
