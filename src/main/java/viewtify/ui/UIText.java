@@ -19,6 +19,6 @@ public class UIText extends AbstractTextField<UIText, TextField> {
      * @param view A {@link View} to which the widget belongs.
      */
     public UIText(View view) {
-        super(new TextField(), view);
+        super(new VerifiableTextField(), view);
     }
 }
