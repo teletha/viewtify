@@ -9,7 +9,7 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.*;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -46,14 +46,14 @@ import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
-import viewtify.ui.helper.ValidationHelper;
+import viewtify.ui.helper.VerifyHelper;
 import viewtify.ui.helper.ValueHelper;
+import viewtify.ui.helper.Verifier;
 import viewtify.util.Icon;
-import viewtify.validation.Validation;
 
 public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> extends ReferenceHolder
         implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, TooltipHelper<Self, W>, UserInterfaceProvider<W>,
-        PropertyAccessHelper, ValidationHelper<Self> {
+        PropertyAccessHelper, VerifyHelper<Self> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
@@ -65,7 +65,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     protected final View view;
 
     /** The validation system. */
-    private Validation validation;
+    private Verifier validation;
 
     /**
      * @param ui
@@ -186,7 +186,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
      * @return
      */
     public final Self valid() {
-        validation().message.set((String) null);
+        verifier().message.set((String) null);
         return (Self) this;
     }
 
@@ -205,31 +205,17 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
      * @return
      */
     public final Self invalid(Supplier<String> message) {
-        validation().message.set(message);
+        verifier().message.set(message);
         return (Self) this;
-    }
-
-    /**
-     * Return the validation result of this {@link UserInterface}.
-     */
-    public final Signal<Boolean> isValid() {
-        return validation().valid;
-    }
-
-    /**
-     * Return the validation result of this {@link UserInterface}.
-     */
-    public final Signal<Boolean> isInvalid() {
-        return validation().invalid;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final synchronized Validation validation() {
+    public final synchronized Verifier verifier() {
         if (validation == null) {
-            validation = new Validation();
+            validation = new Verifier();
             validation.verifyWhen(verifyWhen());
             validation.message.observe().to(message -> {
                 if (message == null) {
@@ -240,18 +226,6 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
             });
         }
         return validation;
-    }
-
-    /**
-     * Register the validation timing.
-     * 
-     * @param timing
-     * @return
-     */
-    public final Self requireWhen(UserInterface... timings) {
-        I.signal(timings).skipNull().map(UserInterface::verifyWhen).to(validation()::verifyWhen);
-
-        return (Self) this;
     }
 
     /**

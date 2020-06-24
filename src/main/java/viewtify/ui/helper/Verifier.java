@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify.validation;
+package viewtify.ui.helper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +17,7 @@ import kiss.Variable;
 import kiss.WiseRunnable;
 import transcript.Transcript;
 
-public class Validation {
+public class Verifier {
 
     /** The validation message. */
     public final Variable<String> message = Variable.empty();
@@ -58,7 +58,7 @@ public class Validation {
      * @param verifier
      * @return
      */
-    public Validation verifyBy(WiseRunnable verifier) {
+    public Verifier verifyBy(WiseRunnable verifier) {
         if (verifier != null) {
             forSelf.add(verifier);
             verify(); // immediately
@@ -72,7 +72,7 @@ public class Validation {
      * @param timing
      * @return
      */
-    public Validation verifyWhen(Signal<?> timing) {
+    public Verifier verifyWhen(Signal<?> timing) {
         if (timing != null) {
             timing.to(this::verify);
         }

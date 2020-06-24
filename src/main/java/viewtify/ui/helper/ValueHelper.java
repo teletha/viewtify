@@ -205,6 +205,15 @@ public interface ValueHelper<Self extends ValueHelper, V> {
     }
 
     /**
+     * It is defined as an alias for {@link #observe()}.
+     * 
+     * @return
+     */
+    default Signal<V> isChanged() {
+        return observe();
+    }
+
+    /**
      * Synchronizes with the specified value.
      * 
      * @param value The value that is synchronized with each other.
