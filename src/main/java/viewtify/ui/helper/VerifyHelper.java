@@ -24,6 +24,26 @@ public interface VerifyHelper<Self extends VerifyHelper<Self>> {
     Verifier verifier();
 
     /**
+     * Mark as valid interface.
+     * 
+     * @return
+     */
+    default Self valid() {
+        verifier().message.set((String) null);
+        return (Self) this;
+    }
+
+    /**
+     * Mark as invalid interface.
+     * 
+     * @return
+     */
+    default Self invalid(CharSequence message) {
+        verifier().message.set(String.valueOf(message));
+        return (Self) this;
+    }
+
+    /**
      * Get the current validity. true if all conditions registered in this verifier are met,
      * otherwise returns false.
      */
@@ -92,6 +112,19 @@ public interface VerifyHelper<Self extends VerifyHelper<Self>> {
      */
     default Self verifyWhen(Signal<?>... timings) {
         I.signal(timings).skipNull().to(verifier()::verifyWhen);
+
+        return (Self) this;
+    }
+
+    /**
+     * Register with the timing of the verification. The verification results can be obtained by
+     * using {@link #isValid()} or {@link #isInvalid()}.
+     * 
+     * @param timing Timing of verification.
+     * @return Chainable API.
+     */
+    default Self verifyWhenChanging(ValueHelper... timings) {
+        I.signal(timings).skipNull().map(ValueHelper::isChanged).to(verifier()::verifyWhen);
 
         return (Self) this;
     }

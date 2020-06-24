@@ -15,7 +15,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
@@ -33,7 +32,6 @@ import org.controlsfx.control.decoration.GraphicDecoration;
 
 import kiss.I;
 import kiss.Managed;
-import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
 import stylist.Style;
@@ -46,9 +44,9 @@ import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
-import viewtify.ui.helper.VerifyHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.Verifier;
+import viewtify.ui.helper.VerifyHelper;
 import viewtify.util.Icon;
 
 public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> extends ReferenceHolder
@@ -65,7 +63,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     protected final View view;
 
     /** The validation system. */
-    private Verifier validation;
+    private Verifier verifier;
 
     /**
      * @param ui
@@ -181,43 +179,14 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     }
 
     /**
-     * Mark as valid interface.
-     * 
-     * @return
-     */
-    public final Self valid() {
-        verifier().message.set((String) null);
-        return (Self) this;
-    }
-
-    /**
-     * Mark as invalid interface.
-     * 
-     * @return
-     */
-    public final Self invalid(String message) {
-        return invalid(() -> message);
-    }
-
-    /**
-     * Mark as invalid interface.
-     * 
-     * @return
-     */
-    public final Self invalid(Supplier<String> message) {
-        verifier().message.set(message);
-        return (Self) this;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public final synchronized Verifier verifier() {
-        if (validation == null) {
-            validation = new Verifier();
-            validation.verifyWhen(verifyWhen());
-            validation.message.observe().to(message -> {
+        if (verifier == null) {
+            verifier = new Verifier();
+            if (this instanceof ValueHelper) verifier.verifyWhen(((ValueHelper) this).isChanged());
+            verifier.message.observe().to(message -> {
                 if (message == null) {
                     undecorate();
                 } else {
@@ -225,21 +194,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
                 }
             });
         }
-        return validation;
-    }
-
-    /**
-     * Built-in validation timing for this {@link UserInterface}.
-     * 
-     * @return
-     */
-    private Signal<?> verifyWhen() {
-        if (this instanceof ValueHelper) {
-            ValueHelper helper = (ValueHelper) this;
-            return Viewtify.observe(helper.valueProperty());
-        } else {
-            return null;
-        }
+        return verifier;
     }
 
     /**
