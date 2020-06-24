@@ -610,14 +610,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return A {@link Signal} that notify the change of this value.
      */
     default Signal<V> observe() {
-        Signal<V> signal = Viewtify.observe(valueProperty()).skipNull();
-
-        if (this instanceof VerifyHelper) {
-            VerifyHelper helper = (VerifyHelper) this;
-            signal = signal.take(helper.verifier()::verifyNow);
-        }
-
-        return signal;
+        return Viewtify.observe(valueProperty()).skipNull();
     }
 
     /**

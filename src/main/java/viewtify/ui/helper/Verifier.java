@@ -9,11 +9,13 @@
  */
 package viewtify.ui.helper;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
 import kiss.Signal;
 import kiss.Variable;
+import kiss.WiseConsumer;
 import kiss.WiseRunnable;
 import transcript.Transcript;
 
@@ -82,14 +84,13 @@ public class Verifier {
     /**
      * Verify now!
      */
-    boolean verifyNow() {
+    private void verifyNow() {
         try {
             for (Runnable verifier : forSelf) {
                 verifier.run();
             }
 
             this.message.set((String) null);
-            return true;
         } catch (Throwable e) {
             String message = e.getLocalizedMessage();
 
@@ -97,7 +98,44 @@ public class Verifier {
                 message = Transcript.en("This is invalid value, please correct.").get();
             }
             this.message.set(message);
-            return false;
         }
+    }
+
+    /**
+     * Builtin verifier.
+     */
+    public static final WiseConsumer<ValueHelper<?, String>> Number = ui -> {
+        String value = ui.value();
+
+        if (value != null) {
+            value = value.strip();
+            if (value.length() != 0) {
+                new BigDecimal(value); // validate as number
+                return;
+            }
+        }
+        throw error("Please input a number.");
+    };
+
+    /**
+     * Builtin verifier.
+     */
+    public static final WiseConsumer<ValueHelper<?, String>> PositiveNumber = ui -> {
+        String value = ui.value();
+
+        if (value != null) {
+            value = value.strip();
+            if (value.length() != 0) {
+                BigDecimal num = new BigDecimal(value); // validate as number
+                if (num.signum() == 1) {
+                    return;
+                }
+            }
+        }
+        throw error("Please input a positive number.");
+    };
+
+    private static Throwable error(String message) {
+        return new IllegalArgumentException(Transcript.en(message).get());
     }
 }
