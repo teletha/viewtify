@@ -25,7 +25,7 @@ import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.ValueHelper;
 
-abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInterface<UITextBase<Self, V>, TextField>
+abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInterface<Self, TextField>
         implements ValueHelper<Self, V>, ContextMenuHelper<Self>, EditableHelper<Self> {
 
     private final SimpleObjectProperty<V> value = new SimpleObjectProperty();
@@ -87,7 +87,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * 
      * @return
      */
-    public final UITextBase acceptAlphabeticInput() {
+    public final Self acceptAlphabeticInput() {
         return acceptInput("[a-zA-Z]+");
     }
 
@@ -96,7 +96,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * 
      * @return
      */
-    public final UITextBase acceptAlphaNumericInput() {
+    public final Self acceptAlphaNumericInput() {
         return acceptInput("[a-zA-Z0-9]+");
     }
 
@@ -105,8 +105,17 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * 
      * @return
      */
-    public final UITextBase acceptNumberInput() {
-        return acceptInput("[+\\-0-9.]+");
+    public final Self acceptPositiveNumberInput() {
+        return acceptInput("[0-9.]+");
+    }
+
+    /**
+     * You will be able to enter only integral numbers.
+     * 
+     * @return
+     */
+    public final Self acceptIntegralInput() {
+        return acceptInput("[\\-0-9]+");
     }
 
     /**
@@ -114,8 +123,8 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * 
      * @return
      */
-    public final UITextBase acceptPositiveNumberInput() {
-        return acceptInput("[0-9.]+");
+    public final Self acceptDecimalInput() {
+        return acceptInput("[+\\-0-9.]+");
     }
 
     /**
@@ -124,9 +133,9 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @param regex
      * @return
      */
-    public final UITextBase acceptInput(String regex) {
+    public final Self acceptInput(String regex) {
         ((VerifiableTextField) ui).acceptInput(regex);
-        return this;
+        return (Self) this;
     }
 
     /**
@@ -135,9 +144,9 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @param form
      * @return
      */
-    public final UITextBase normalizeInput(Normalizer.Form form) {
+    public final Self normalizeInput(Normalizer.Form form) {
         ((VerifiableTextField) ui).form = form;
-        return this;
+        return (Self) this;
     }
 
     /**
@@ -147,9 +156,9 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @param size
      * @return
      */
-    public final UITextBase maximumInput(int size) {
+    public final Self maximumInput(int size) {
         ((VerifiableTextField) ui).max = size - 1;
-        return this;
+        return (Self) this;
     }
 
     /**
@@ -158,16 +167,16 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @param enable If it is true, mask it, and if it is false, unmask it.
      * @return Chainable API.
      */
-    public UITextBase masking(boolean enable) {
+    public final Self masking(boolean enable) {
         ((VerifiableTextField) ui).masking = enable;
         ui.setText(ui.getText()); // apply immediately
-        return this;
+        return (Self) this;
     }
 
     /**
      * 
      */
-    protected static class VerifiableTextField extends TextField {
+    static class VerifiableTextField extends TextField {
 
         private boolean masking;
 
@@ -180,7 +189,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
         /**
          * 
          */
-        public VerifiableTextField() {
+        VerifiableTextField() {
             setSkin(new VerifiableTextFieldSkin(this));
         }
 

@@ -9,17 +9,7 @@
  */
 package viewtify.ui;
 
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.control.TextField;
-import kiss.I;
-import viewtify.Viewtify;
-import viewtify.ui.helper.ValueHelper;
-
-public class UITextValue<E> extends UserInterface<UITextValue<E>, TextField> implements ValueHelper<UITextValue<E>, E> {
-
-    /** The property holder. */
-    private final SimpleObjectProperty<E> property = new SimpleObjectProperty();
+public class UITextValue<V> extends UITextBase<UITextValue<V>, V> {
 
     /**
      * Enchanced view.
@@ -27,23 +17,6 @@ public class UITextValue<E> extends UserInterface<UITextValue<E>, TextField> imp
      * @param view A {@link View} to which the widget belongs.
      */
     public UITextValue(View view) {
-        super(new TextField(), view);
-
-        Viewtify.observe(property).to(v -> {
-            ui.setText(I.transform(v, String.class));
-        });
-
-        Viewtify.observe(ui.textProperty()).to(v -> {
-            property.set((E) I.transform(v, property.get().getClass()));
-        });
+        super(view);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Property<E> valueProperty() {
-        return property;
-    }
-
 }
