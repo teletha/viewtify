@@ -658,8 +658,32 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return Chainable API.
      */
     default Self observe(WiseConsumer<V> listener, Disposable disposer) {
+        return observe(Function.identity(), listener, disposer);
+    }
+
+    /**
+     * Observe the value modification.
+     * 
+     * @param timing A event timing coordinator.
+     * @param listener A modification listener.
+     * @return Chainable API.
+     */
+    default <R> Self observe(Function<Signal<V>, Signal<R>> timing, WiseConsumer<R> listener) {
+        return observe(timing, listener, null);
+    }
+
+    /**
+     * Observe the value modification.
+     * 
+     * @param timing A event timing coordinator.
+     * @param listener A modification listener.
+     * @param disposer The modification listening is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default <R> Self observe(Function<Signal<V>, Signal<R>> timing, WiseConsumer<R> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observe().to(listener);
+            Disposable stop = timing.apply(observe()).to(listener);
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
@@ -745,8 +769,32 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return Chainable API.
      */
     default Self observing(WiseConsumer<V> listener, Disposable disposer) {
+        return observing(Function.identity(), listener, disposer);
+    }
+
+    /**
+     * Observe the value modification starting with the current value.
+     * 
+     * @param timing A event timing coordinator.
+     * @param listener A modification listener.
+     * @return Chainable API.
+     */
+    default <R> Self observing(Function<Signal<V>, Signal<R>> timing, WiseConsumer<R> listener) {
+        return observing(timing, listener, null);
+    }
+
+    /**
+     * Observe the value modification starting with the current value.
+     * 
+     * @param timing A event timing coordinator.
+     * @param listener A modification listener.
+     * @param disposer The modification listening is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default <R> Self observing(Function<Signal<V>, Signal<R>> timing, WiseConsumer<R> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observing().to(listener);
+            Disposable stop = timing.apply(observing()).to(listener);
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
