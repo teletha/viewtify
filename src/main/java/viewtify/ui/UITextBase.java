@@ -28,7 +28,8 @@ import viewtify.ui.helper.ValueHelper;
 abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInterface<Self, TextField>
         implements ValueHelper<Self, V>, ContextMenuHelper<Self>, EditableHelper<Self> {
 
-    private final SimpleObjectProperty<V> value = new SimpleObjectProperty();
+    /** The internal model value. */
+    private final SimpleObjectProperty<V> model = new SimpleObjectProperty();
 
     /**
      * Enchanced view.
@@ -38,12 +39,22 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
     UITextBase(View view) {
         super(new VerifiableTextField(), view);
 
-        Viewtify.observe(value).to(v -> {
-            ui.setText(I.transform(v, String.class));
+        // propagate value from model to ui
+        Viewtify.observe(model).to(value -> {
+            try {
+                ui.setText(I.transform(value, String.class));
+            } catch (Throwable e) {
+                // ignore
+            }
         });
 
-        Viewtify.observe(ui.textProperty()).to(v -> {
-            value.set((V) I.transform(v, value.get().getClass()));
+        // propagate value from ui to model
+        Viewtify.observe(ui.textProperty()).to(uiText -> {
+            try {
+                model.set((V) I.transform(uiText, model.get().getClass()));
+            } catch (Throwable e) {
+                // ignore
+            }
         });
     }
 
@@ -52,7 +63,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      */
     @Override
     public final Property<V> valueProperty() {
-        return value;
+        return model;
     }
 
     /**
@@ -212,8 +223,6 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
                 super.replaceText(start, end, text);
                 return;
             }
-
-            String next = new StringBuilder(getText()).replace(start, end, text).toString();
 
             if (0 < max && max < getLength()) {
                 return;
