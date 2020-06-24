@@ -61,7 +61,7 @@ public class Verifier {
     public Verifier verifyBy(WiseRunnable verifier) {
         if (verifier != null) {
             forSelf.add(verifier);
-            verify(); // immediately
+            verifyNow(); // immediately
         }
         return this;
     }
@@ -74,7 +74,7 @@ public class Verifier {
      */
     public Verifier verifyWhen(Signal<?> timing) {
         if (timing != null) {
-            timing.to(this::verify);
+            timing.to(this::verifyNow);
         }
         return this;
     }
@@ -82,13 +82,14 @@ public class Verifier {
     /**
      * Verify now!
      */
-    private void verify() {
+    boolean verifyNow() {
         try {
             for (Runnable verifier : forSelf) {
                 verifier.run();
             }
 
             this.message.set((String) null);
+            return true;
         } catch (Throwable e) {
             String message = e.getLocalizedMessage();
 
@@ -96,6 +97,7 @@ public class Verifier {
                 message = Transcript.en("This is invalid value, please correct.").get();
             }
             this.message.set(message);
+            return false;
         }
     }
 }
