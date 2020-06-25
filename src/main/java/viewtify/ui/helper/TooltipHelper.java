@@ -52,6 +52,10 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
         tooltip.setShowDuration(Duration.INDEFINITE);
         tooltip.setFont(Font.font(12));
         tooltip.setAutoHide(true);
+        tooltip.setWrapText(true);
+        // When moving the focus to a control with a tooltip visible, an event is consumed to erase
+        // the tooltip and prevents the focus from being moved incorrectly.
+        tooltip.setConsumeAutoHidingEvents(false);
 
         Tooltip.install(ui(), tooltip);
         return (Self) this;
