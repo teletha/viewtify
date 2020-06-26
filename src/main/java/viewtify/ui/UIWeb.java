@@ -111,9 +111,6 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
      */
     private void initialize() {
         JSObject global = (JSObject) engine.executeScript("window");
-
-        // Maintain a strong reference to prevent garbage collection:
-        // https://bugs.openjdk.java.net/browse/JDK-8154127
         global.setMember("bridge", bridge = new Bridge());
     }
 
