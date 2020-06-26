@@ -30,12 +30,13 @@ public class Browser extends View {
     @Override
     protected void initialize() {
         web.load("https://www.google.co.jp/")
-                .flatMap(w -> w.input(".gLFyf", "test"))
-                .flatMap(w -> w.click(".gNO89b"))
-                .flatMap(UIWeb::awaitContentLoading)
-                .flatMap(w -> w.input(".gLFyf", "reset"))
+                .flatMap(w -> web.input(".gLFyf", "test"))
+                .flatMap(w -> web.click(".gNO89b"))
+                .flatMap(w -> web.awaitContentLoading())
+                .flatMap(w -> web.input(".gLFyf", "reset"))
+                .flatMap(w -> web.text(".LC20lb"))
                 .to(e -> {
-                    System.out.println("OK");
+                    System.out.println("OK :" + e);
                 }, e -> {
                     e.printStackTrace();
                 }, () -> {
