@@ -59,14 +59,13 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
 import kiss.I;
-import kiss.Managed;
 import kiss.Signal;
-import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseBiFunction;
@@ -79,7 +78,9 @@ import psychopath.Locator;
 import transcript.Lang;
 import viewtify.bind.Calculated;
 import viewtify.bind.CalculatedList;
+import viewtify.ui.UIWeb;
 import viewtify.ui.View;
+import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.util.DelegatingObservableList;
@@ -88,6 +89,9 @@ import viewtify.util.DelegatingObservableList;
  * @version 2018/09/16 16:21:29
  */
 public final class Viewtify {
+
+    /** The singleton. */
+    private static final WindowLocator locator = new WindowLocator();
 
     /** Command Repository */
     static final Map<Command, Deque<Runnable>> commands = new ConcurrentHashMap();
@@ -133,14 +137,14 @@ public final class Viewtify {
         CSS.enhance();
     }
 
-    /** The estimated application class. */
-    private static Class applicatonEntryClass;
-
-    /** The latest application. */
-    private static Viewtify latest;
+    /** The application configurator. */
+    private static final Viewtify viewtify = new Viewtify();
 
     /** All managed views. */
-    private static List<View> views = new ArrayList();
+    private static final List<View> views = new ArrayList();
+
+    /** The estimated application class. */
+    private static volatile Class entryApplicationClass;
 
     /** The configurable setting. */
     private ActivationPolicy policy = ActivationPolicy.Latest;
@@ -164,7 +168,7 @@ public final class Viewtify {
     private double height;
 
     /**
-     * Hide constructor.
+     * Hide.
      */
     private Viewtify() {
     }
@@ -281,15 +285,38 @@ public final class Viewtify {
 
     /**
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
+     * 
+     * @param application The application {@link View} to activate.
      */
     public void activate(Class<? extends View> application) {
-        activate(I.make(application));
+        activate(application, null);
     }
 
     /**
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
+     * 
+     * @param application The application {@link View} to activate.
+     */
+    public <V extends View> void activate(Class<? extends V> application, Consumer<V> view) {
+        activate(I.make(application), view);
+    }
+
+    /**
+     * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
+     * 
+     * @param application The application {@link View} to activate.
      */
     public void activate(View application) {
+        activate(application, null);
+    }
+
+    /**
+     * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
+     * 
+     * @param application The application {@link View} to activate.
+     * @param view
+     */
+    public <V extends View> void activate(V application, Consumer<V> view) {
         String prefs = ".preferences for " + application.getClass().getSimpleName().toLowerCase();
 
         // How to handle simultaneous application startup
@@ -317,14 +344,10 @@ public final class Viewtify {
             stage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
             stage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
 
-            // trace window size and position
-            trackLocation(application.getClass().getName(), stage);
-
             views.add(application);
 
             Scene scene = new Scene((Parent) application.ui());
-            applyStyles(scene, stage);
-            applyEvents(scene);
+            manage(application.getClass().getName(), scene, stage);
 
             // observe stylesheets
             observeStylesheet(scene.getStylesheets());
@@ -338,6 +361,10 @@ public final class Viewtify {
 
             stage.setScene(scene);
             stage.show();
+
+            if (view != null) {
+                view.accept(application);
+            }
         });
     }
 
@@ -479,15 +506,17 @@ public final class Viewtify {
      * 
      * @return
      */
-    public static final Viewtify application() {
-        applicatonEntryClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).getCallerClass();
-        return latest = new Viewtify();
+    public static synchronized Viewtify application() {
+        if (entryApplicationClass == null) {
+            entryApplicationClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).getCallerClass();
+        }
+        return viewtify;
     }
 
     /**
      * Deactivate the current application.
      */
-    public static final void deactivate() {
+    public static void deactivate() {
         Platform.exit();
 
         Terminator.dispose();
@@ -496,7 +525,7 @@ public final class Viewtify {
     /**
      * Reactivate the current application.
      */
-    public static final void reactivate() {
+    public static void reactivate() {
         if (restartWithExewrap() || restartWithJava()) {
             deactivate();
         }
@@ -519,7 +548,7 @@ public final class Viewtify {
         commands.add(ManagementFactory.getRuntimeMXBean().getClassPath());
 
         // Class to be executed
-        commands.add(applicatonEntryClass.getName());
+        commands.add(entryApplicationClass.getName());
 
         try {
             new ProcessBuilder(commands).start();
@@ -551,14 +580,28 @@ public final class Viewtify {
     }
 
     /**
-     * Apply the application styles (design, icon etc) to the specified {@link Scene}.
-     * 
-     * @param scene
+     * Generates a separate window with only {@link UIWeb}. If the application is not running, it
+     * will automatically launch an anonymous application.
      */
-    public static void applyApplicationStyle(Scene scene) {
-        if (scene != null && latest != null) {
-            latest.applyStyles(scene, (Stage) scene.getWindow());
-            latest.applyEvents(scene);
+    public static synchronized void browser(Consumer<UIWeb> browser) {
+        application().activate(AnonyBrowser.class, view -> browser.accept(view.web));
+    }
+
+    /**
+     * 
+     */
+    private static class AnonyBrowser extends View {
+
+        UIWeb web;
+
+        class view extends ViewDSL {
+            {
+                $(web);
+            }
+        }
+
+        @Override
+        protected void initialize() {
         }
     }
 
@@ -920,6 +963,49 @@ public final class Viewtify {
     }
 
     /**
+     * Manage as viewtify application window. Apply window size and location setting and track the
+     * upcoming modification. Apply the application styles (design, icon etc) to the specified
+     * window.
+     * 
+     * @param id An identical name of the window.
+     * @param scene A target window to manage.
+     */
+    public static void manage(String id, Scene scene) {
+        if (scene != null) {
+            manage(id, scene, (Stage) scene.getWindow());
+        }
+    }
+
+    /**
+     * Manage as viewtify application window. Apply window size and location setting and track the
+     * upcoming modification. Apply the application styles (design, icon etc) to the specified
+     * window.
+     * 
+     * @param id An identical name of the window.
+     * @param scene A target window to manage.
+     */
+    public static void manage(String id, Scene scene, Stage stage) {
+        if (scene == null || stage == null) {
+            return;
+        }
+
+        if (id == null || id.isEmpty()) {
+            throw new IllegalArgumentException("Require window identifier.");
+        }
+
+        viewtify.applyStyles(scene, stage);
+        viewtify.applyEvents(scene);
+
+        // tracking window size and location forever
+        locator.locate(id, stage);
+        stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, e -> {
+            if (locator.remove(id) != null) {
+                locator.store();
+            }
+        });
+    }
+
+    /**
      * Signal value changing.
      * 
      * @param values
@@ -1187,32 +1273,6 @@ public final class Viewtify {
     }
 
     /**
-     * Apply window size and location setting and track the upcoming modification.
-     * 
-     * @param id An identical name of the stage.
-     * @param stage A target to apply.
-     */
-    public static void trackLocation(String id, Stage stage) {
-        if (id != null && stage != null) {
-            I.make(WindowLocator.class).locate(id, stage);
-        }
-    }
-
-    /**
-     * Stop window size and location tracking.
-     * 
-     * @param id
-     */
-    public static void untrackLocation(String id) {
-        if (id != null) {
-            WindowLocator locator = I.make(WindowLocator.class);
-            if (locator.remove(id) != null) {
-                locator.store();
-            }
-        }
-    }
-
-    /**
      * Thin {@link Property} wrapper for {@link Variable}.
      */
     private static class PropertyVariable<V> implements Property<V> {
@@ -1364,7 +1424,6 @@ public final class Viewtify {
      * 
      */
     @SuppressWarnings("serial")
-    @Managed(value = Singleton.class)
     private static class WindowLocator extends HashMap<String, Location> implements Storable<WindowLocator> {
 
         /** Magic Number for window state. */

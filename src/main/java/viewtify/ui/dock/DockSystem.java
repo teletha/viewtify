@@ -196,11 +196,10 @@ public final class DockSystem {
         stage.setOnShown(shown);
         stage.setOnCloseRequest(e -> {
             layout().roots.remove(area);
-            Viewtify.untrackLocation(area.name);
         });
 
-        Viewtify.applyApplicationStyle(scene);
-        Viewtify.trackLocation(area.name, stage);
+        Viewtify.manage(area.name, scene);
+
         stage.show();
     }
 
@@ -658,7 +657,6 @@ public final class DockSystem {
 
             layout().roots.remove(area);
             requestSavingLayout();
-            Viewtify.untrackLocation(area.name);
         });
     }
 

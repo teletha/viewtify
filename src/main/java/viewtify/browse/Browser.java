@@ -9,42 +9,40 @@
  */
 package viewtify.browse;
 
+import static viewtify.ui.UIWeb.Operation.*;
+
+import javafx.scene.control.TextInputDialog;
+
+import kiss.Signal;
 import viewtify.Viewtify;
 import viewtify.ui.UIWeb;
-import viewtify.ui.View;
-import viewtify.ui.ViewDSL;
 
-public class Browser extends View {
-
-    UIWeb web;
-
-    class view extends ViewDSL {
-        {
-            $(web);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void initialize() {
-        web.load("https://www.google.co.jp/")
-                .flatMap(w -> web.input(".gLFyf", "test"))
-                .flatMap(w -> web.click(".gNO89b"))
-                .flatMap(w -> web.awaitContentLoading())
-                .flatMap(w -> web.input(".gLFyf", "reset"))
-                .flatMap(w -> web.text(".LC20lb"))
-                .to(e -> {
-                    System.out.println("OK :" + e);
-                }, e -> {
-                    e.printStackTrace();
-                }, () -> {
-                    System.out.println("Complete");
-                });
-    }
+public class Browser {
 
     public static void main(String[] args) {
-        Viewtify.application().activate(Browser.class);
+        Viewtify.browser(web -> {
+            web.load("https://lightning.bitflyer.jp")
+                    .$(inputByHuman("#LoginId"))
+                    .$(inputByHuman("#Password"))
+                    .$(click("#login_btn"))
+                    .$(awaitContentLoading())
+                    .$(detour("https://lightning.bitflyer.jp/Home/TwoFactorAuth", Browser::retrieveAuthCode))
+                    .to(() -> {
+                        web.stage().get().close();
+                        System.out.println("OK " + web.cookie("api_session_v2"));
+                    });
+        });
+    }
+
+    private static Signal<UIWeb> retrieveAuthCode(UIWeb web) {
+        String code = new TextInputDialog() // need two-factor authentication code
+                .showAndWait()
+                .orElseThrow(() -> new IllegalArgumentException("二段階認証の確認コードが間違っています"))
+                .trim();
+
+        return web.click("form > label") //
+                .$(input("#ConfirmationCode", code))
+                .$(click("form > button"))
+                .$(awaitContentLoading());
     }
 }

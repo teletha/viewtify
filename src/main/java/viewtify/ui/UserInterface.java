@@ -9,7 +9,7 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.util.Objects;
 import java.util.Optional;
