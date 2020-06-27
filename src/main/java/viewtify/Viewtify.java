@@ -65,7 +65,9 @@ import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
 import kiss.I;
+import kiss.Managed;
 import kiss.Signal;
+import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseBiFunction;
@@ -89,9 +91,6 @@ import viewtify.util.DelegatingObservableList;
  * @version 2018/09/16 16:21:29
  */
 public final class Viewtify {
-
-    /** The singleton. */
-    private static final WindowLocator locator = new WindowLocator();
 
     /** Command Repository */
     static final Map<Command, Deque<Runnable>> commands = new ConcurrentHashMap();
@@ -286,38 +285,19 @@ public final class Viewtify {
     /**
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      * 
-     * @param application The application {@link View} to activate.
+     * @param applicationClass The application {@link View} to activate.
      */
-    public void activate(Class<? extends View> application) {
-        activate(application, null);
+    public void activate(Class<? extends View> applicationClass) {
+        activate(applicationClass, null);
     }
 
     /**
      * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
      * 
-     * @param application The application {@link View} to activate.
+     * @param applicationClass The application {@link View} to activate.
      */
-    public <V extends View> void activate(Class<? extends V> application, Consumer<V> view) {
-        activate(I.make(application), view);
-    }
-
-    /**
-     * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
-     * 
-     * @param application The application {@link View} to activate.
-     */
-    public void activate(View application) {
-        activate(application, null);
-    }
-
-    /**
-     * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
-     * 
-     * @param application The application {@link View} to activate.
-     * @param view
-     */
-    public <V extends View> void activate(V application, Consumer<V> view) {
-        String prefs = ".preferences for " + application.getClass().getSimpleName().toLowerCase();
+    public <V extends View> void activate(Class<? extends V> applicationClass, Consumer<V> view) {
+        String prefs = ".preferences for " + applicationClass.getSimpleName().toLowerCase();
 
         // How to handle simultaneous application startup
         checkPolicy(prefs);
@@ -329,7 +309,7 @@ public final class Viewtify {
         I.load(Location.class);
 
         // load extensions in application package
-        I.load(application.getClass());
+        I.load(applicationClass);
 
         // build application stylesheet
         try {
@@ -340,6 +320,7 @@ public final class Viewtify {
 
         // launch JavaFX UI
         Platform.startup(() -> {
+            V application = I.make(applicationClass);
             Stage stage = new Stage(stageStyle);
             stage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
             stage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
@@ -984,7 +965,7 @@ public final class Viewtify {
      * @param id An identical name of the window.
      * @param scene A target window to manage.
      */
-    public static void manage(String id, Scene scene, Stage stage) {
+    private static void manage(String id, Scene scene, Stage stage) {
         if (scene == null || stage == null) {
             return;
         }
@@ -997,8 +978,9 @@ public final class Viewtify {
         viewtify.applyEvents(scene);
 
         // tracking window size and location forever
-        locator.locate(id, stage);
+        I.make(WindowLocator.class).locate(id, stage);
         stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, e -> {
+            WindowLocator locator = I.make(WindowLocator.class);
             if (locator.remove(id) != null) {
                 locator.store();
             }
@@ -1424,6 +1406,7 @@ public final class Viewtify {
      * 
      */
     @SuppressWarnings("serial")
+    @Managed(value = Singleton.class)
     private static class WindowLocator extends HashMap<String, Location> implements Storable<WindowLocator> {
 
         /** Magic Number for window state. */
