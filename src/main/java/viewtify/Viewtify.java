@@ -77,7 +77,7 @@ import kiss.WiseTriFunction;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
-import transcript.Lang;
+import transcript.Transcript;
 import viewtify.bind.Calculated;
 import viewtify.bind.CalculatedList;
 import viewtify.ui.UIWeb;
@@ -254,9 +254,9 @@ public final class Viewtify {
      * @param language A default language you want.
      * @return Chainable API.
      */
-    public Viewtify language(Lang language) {
+    public Viewtify language(String language) {
         if (language != null) {
-            language.setDefault();
+            Transcript.current.set(language);
         }
         return this;
     }

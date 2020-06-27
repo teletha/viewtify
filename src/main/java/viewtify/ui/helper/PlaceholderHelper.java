@@ -20,7 +20,6 @@ import javafx.scene.control.Label;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
-import transcript.Lang;
 import transcript.Transcript;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
@@ -63,8 +62,8 @@ public interface PlaceholderHelper<Self extends PlaceholderHelper> extends Prope
      * @param text A text {@link Supplier} to set.
      * @return Chainable API.
      */
-    private Self placeholder(Function<Lang, Signal<String>> text) {
-        Lang.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
+    private Self placeholder(Function<String, Signal<String>> text) {
+        Transcript.current.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
             placeholder(translated);
         });
         return (Self) this;

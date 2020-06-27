@@ -26,14 +26,13 @@ import kiss.Extensible;
 import kiss.I;
 import kiss.Variable;
 import kiss.model.Model;
-import transcript.Lang;
 import transcript.Transcript;
 import viewtify.Viewtify;
 
 public abstract class View implements Extensible, UserInterfaceProvider<Node> {
 
-    protected static Lang lang() {
-        return Lang.current();
+    protected static String lang() {
+        return Transcript.current.v;
     }
 
     /** The human-readable ID separator. */
@@ -312,7 +311,7 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      * @return Localized text.
      */
     protected final Transcript en(String text) {
-        return Transcript.en(text, getClass().getPackageName().replace(".", "_"));
+        return new Transcript("en", text, getClass().getPackageName().replace(".", "_"));
     }
 
     /**
@@ -322,6 +321,6 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      * @return Localized text.
      */
     protected final Transcript ja(String text) {
-        return Transcript.ja(text, getClass().getPackageName().replace(".", "_"));
+        return new Transcript("ja", text, getClass().getPackageName().replace(".", "_"));
     }
 }

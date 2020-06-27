@@ -23,7 +23,6 @@ import org.controlsfx.control.PopOver;
 
 import kiss.I;
 import kiss.Signal;
-import transcript.Lang;
 import transcript.Transcript;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
@@ -87,8 +86,8 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param text Tooltip text.
      * @return Chainable API.
      */
-    private Self tooltip(Function<Lang, Signal<String>> text) {
-        Lang.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
+    private Self tooltip(Function<String, Signal<String>> text) {
+        Transcript.current.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
             tooltip(translated);
         });
         return (Self) this;

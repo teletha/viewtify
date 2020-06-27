@@ -22,7 +22,6 @@ import javafx.scene.text.TextFlow;
 
 import kiss.I;
 import kiss.Signal;
-import transcript.Lang;
 import transcript.Transcript;
 import viewtify.Viewtify;
 
@@ -67,11 +66,11 @@ public class TextNotation {
      * @param message A wiki-like notation text.
      * @return
      */
-    private static TextFlow parse(Function<Lang, Signal<String>> message) {
+    private static TextFlow parse(Function<String, Signal<String>> message) {
         TextFlow flow = new TextFlow();
         ObservableList<Node> children = flow.getChildren();
 
-        Lang.observing().switchMap(I.wiseF(message)).on(Viewtify.UIThread).to(text -> {
+        Transcript.current.observing().switchMap(I.wiseF(message)).on(Viewtify.UIThread).to(text -> {
             children.clear();
             parse(children, text);
         });

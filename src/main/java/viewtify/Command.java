@@ -15,7 +15,6 @@ import java.util.LinkedList;
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
-import transcript.Lang;
 import transcript.Transcript;
 
 public interface Command<E extends Enum<E>> extends Extensible {
@@ -56,8 +55,8 @@ public interface Command<E extends Enum<E>> extends Extensible {
      * @param lang
      * @return
      */
-    default String localizedDescrition(Lang lang) {
-        return Transcript.en(description()).get(lang).v;
+    default String localizedDescrition(String lang) {
+        return new Transcript(lang, description()).get(lang).v;
     }
 
     /**

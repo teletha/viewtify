@@ -26,7 +26,6 @@ import org.controlsfx.glyphfont.INamedCharacter;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
-import transcript.Lang;
 import transcript.Transcript;
 import viewtify.Viewtify;
 import viewtify.ui.UILabel;
@@ -81,8 +80,8 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @param text A text {@link Supplier} to set.
      * @return Chainable API.
      */
-    private Self text(Function<Lang, Signal<String>> text) {
-        Lang.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
+    private Self text(Function<String, Signal<String>> text) {
+        Transcript.current.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
             text(translated);
         });
         return (Self) this;
