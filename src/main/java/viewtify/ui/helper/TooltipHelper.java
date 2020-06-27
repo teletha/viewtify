@@ -87,7 +87,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @return Chainable API.
      */
     private Self tooltip(Function<String, Signal<String>> text) {
-        Transcript.current.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
+        Transcript.lang.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
             tooltip(translated);
         });
         return (Self) this;

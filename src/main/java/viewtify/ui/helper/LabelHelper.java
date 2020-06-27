@@ -81,7 +81,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     private Self text(Function<String, Signal<String>> text) {
-        Transcript.current.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
+        Transcript.lang.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
             text(translated);
         });
         return (Self) this;

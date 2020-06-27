@@ -63,7 +63,7 @@ public interface PlaceholderHelper<Self extends PlaceholderHelper> extends Prope
      * @return Chainable API.
      */
     private Self placeholder(Function<String, Signal<String>> text) {
-        Transcript.current.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
+        Transcript.lang.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
             placeholder(translated);
         });
         return (Self) this;

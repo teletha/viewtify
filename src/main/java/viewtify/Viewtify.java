@@ -256,7 +256,7 @@ public final class Viewtify {
      */
     public Viewtify language(String language) {
         if (language != null) {
-            Transcript.current.set(language);
+            Transcript.lang.set(language);
         }
         return this;
     }

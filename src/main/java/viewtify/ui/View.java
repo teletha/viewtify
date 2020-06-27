@@ -32,7 +32,7 @@ import viewtify.Viewtify;
 public abstract class View implements Extensible, UserInterfaceProvider<Node> {
 
     protected static String lang() {
-        return Transcript.current.v;
+        return Transcript.lang.v;
     }
 
     /** The human-readable ID separator. */
@@ -311,7 +311,7 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      * @return Localized text.
      */
     protected final Transcript en(String text) {
-        return new Transcript("en", text, getClass().getPackageName().replace(".", "_"));
+        return new Transcript("en", text);
     }
 
     /**
@@ -321,6 +321,6 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      * @return Localized text.
      */
     protected final Transcript ja(String text) {
-        return new Transcript("ja", text, getClass().getPackageName().replace(".", "_"));
+        return new Transcript("ja", text);
     }
 }

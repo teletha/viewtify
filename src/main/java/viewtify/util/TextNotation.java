@@ -70,7 +70,7 @@ public class TextNotation {
         TextFlow flow = new TextFlow();
         ObservableList<Node> children = flow.getChildren();
 
-        Transcript.current.observing().switchMap(I.wiseF(message)).on(Viewtify.UIThread).to(text -> {
+        Transcript.lang.observing().switchMap(I.wiseF(message)).on(Viewtify.UIThread).to(text -> {
             children.clear();
             parse(children, text);
         });
