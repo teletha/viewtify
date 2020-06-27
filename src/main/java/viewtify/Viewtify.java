@@ -173,6 +173,18 @@ public final class Viewtify {
     }
 
     /**
+     * Gain application builder.
+     * 
+     * @return
+     */
+    public static synchronized Viewtify application() {
+        if (entryApplicationClass == null) {
+            entryApplicationClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).getCallerClass();
+        }
+        return viewtify;
+    }
+
+    /**
      * Add termination action.
      * 
      * @param termination
@@ -483,21 +495,9 @@ public final class Viewtify {
     }
 
     /**
-     * Gain application builder.
-     * 
-     * @return
-     */
-    public static synchronized Viewtify application() {
-        if (entryApplicationClass == null) {
-            entryApplicationClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).getCallerClass();
-        }
-        return viewtify;
-    }
-
-    /**
      * Deactivate the current application.
      */
-    public static void deactivate() {
+    public void deactivate() {
         Platform.exit();
 
         Terminator.dispose();
@@ -506,7 +506,7 @@ public final class Viewtify {
     /**
      * Reactivate the current application.
      */
-    public static void reactivate() {
+    public void reactivate() {
         if (restartWithExewrap() || restartWithJava()) {
             deactivate();
         }
@@ -517,7 +517,7 @@ public final class Viewtify {
      * 
      * @return
      */
-    private static boolean restartWithJava() {
+    private boolean restartWithJava() {
         ArrayList<String> commands = new ArrayList();
 
         // Java
@@ -544,7 +544,7 @@ public final class Viewtify {
      * 
      * @return
      */
-    private static boolean restartWithExewrap() {
+    private boolean restartWithExewrap() {
         String directory = System.getProperty("java.application.path");
         String name = System.getProperty("java.application.name");
         if (directory == null || name == null) {
