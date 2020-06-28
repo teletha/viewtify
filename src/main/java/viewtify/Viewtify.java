@@ -317,7 +317,7 @@ public final class Viewtify {
             stage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
 
             Scene scene = new Scene((Parent) application.ui());
-            manage(application.getClass().getName(), scene, stage);
+            manage(application.getClass().getName(), scene, stage, false);
 
             // root stage management
             views.add(application);
@@ -621,7 +621,7 @@ public final class Viewtify {
      */
     public static void manage(String id, Scene scene) {
         if (scene != null) {
-            manage(id, scene, (Stage) scene.getWindow());
+            manage(id, scene, (Stage) scene.getWindow(), true);
         }
     }
 
@@ -632,8 +632,9 @@ public final class Viewtify {
      * 
      * @param id An identical name of the window. (required)
      * @param scene A target window to manage. (required)
+     * @param untrackable
      */
-    private static void manage(String id, Scene scene, Stage stage) {
+    private static void manage(String id, Scene scene, Stage stage, boolean untrackable) {
         if (scene == null || stage == null) {
             return;
         }
@@ -671,12 +672,14 @@ public final class Viewtify {
         // It constantly monitors the status and saves any changes.
         // ================================================================
         I.make(WindowLocator.class).locate(id, stage);
-        stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, e -> {
-            WindowLocator locator = I.make(WindowLocator.class);
-            if (locator.remove(id) != null) {
-                locator.store();
-            }
-        });
+        if (untrackable) {
+            stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, e -> {
+                WindowLocator locator = I.make(WindowLocator.class);
+                if (locator.remove(id) != null) {
+                    locator.store();
+                }
+            });
+        }
     }
 
     /**
