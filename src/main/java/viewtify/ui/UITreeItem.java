@@ -18,7 +18,6 @@ import javafx.scene.control.TreeTableView;
 
 import kiss.Signal;
 import viewtify.Viewtify;
-import viewtify.bind.CalculatedList;
 
 /**
  * @version 2017/12/04 14:50:11
@@ -57,15 +56,6 @@ public class UITreeItem<T> {
      */
     public T value() {
         return ui.getValue();
-    }
-
-    /**
-     * Get the list of child values.
-     * 
-     * @return
-     */
-    public CalculatedList<T> values() {
-        return Viewtify.calculate(ui.getChildren()).map(i -> i.getValue());
     }
 
     /**
@@ -121,18 +111,20 @@ public class UITreeItem<T> {
      * @return
      */
     public UITreeItem<T> removeWhen(Signal timing) {
-        timing.take(1).on(Viewtify.UIThread).to(() -> {
-            // if this item is selected, clear selection too
-            for (int index : table.getSelectionModel().getSelectedIndices()) {
-                if (table.getTreeItem(index) == ui) {
-                    table.getSelectionModel().clearSelection(index);
-                    break;
-                }
-            }
+        timing.take(1)
+                .on(Viewtify.UIThread)
+                .to(() -> {
+                    // if this item is selected, clear selection too
+                    for (int index : table.getSelectionModel().getSelectedIndices()) {
+                        if (table.getTreeItem(index) == ui) {
+                            table.getSelectionModel().clearSelection(index);
+                            break;
+                        }
+                    }
 
-            // remove from tree item model
-            ui.getParent().getChildren().remove(ui);
-        });
+                    // remove from tree item model
+                    ui.getParent().getChildren().remove(ui);
+                });
 
         return this;
     }

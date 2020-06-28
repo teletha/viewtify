@@ -78,7 +78,6 @@ import psychopath.File;
 import psychopath.Locator;
 import transcript.Transcript;
 import viewtify.bind.Calculated;
-import viewtify.bind.CalculatedList;
 import viewtify.ui.UIWeb;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
@@ -545,16 +544,6 @@ public final class Viewtify {
         @Override
         protected void initialize() {
         }
-    }
-
-    /**
-     * Binding utility for {@link CalculatedList}.
-     * 
-     * @param list A {@link ObservableList} source to bind.
-     * @return A binding builder.
-     */
-    public final static <E> CalculatedList<E> calculate(ObservableList<E> list) {
-        return list instanceof CalculatedList ? (CalculatedList) list : new CalculatedList(list);
     }
 
     /**
