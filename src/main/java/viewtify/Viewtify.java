@@ -330,7 +330,6 @@ public final class Viewtify {
         I.signal(stylesheets)
                 .take(uri -> uri.startsWith("file:/"))
                 .map(uri -> Locator.file(uri.substring(6).replace("%20", " ")))
-                .take(File::isPresent)
                 .scan(groupingBy(File::parent, mapping(File::name, toList())))
                 .last()
                 .flatIterable(m -> m.entrySet())
@@ -924,8 +923,8 @@ public final class Viewtify {
      * upcoming modification. Apply the application styles (design, icon etc) to the specified
      * window.
      * 
-     * @param id An identical name of the window.
-     * @param scene A target window to manage.
+     * @param id An identical name of the window. (required)
+     * @param scene A target window to manage. (required)
      */
     private static void manage(String id, Scene scene, Stage stage) {
         if (scene == null || stage == null) {
@@ -937,10 +936,10 @@ public final class Viewtify {
         }
 
         // ================================================================
-        // CSS Styling System
+        // Application Styling System
         //
-        // Monitors the shortcut keys and invokes the corresponding commands.
-        // Bug Fix: Prevent the KeyPress event from occurring continuously if you hold down a key.
+        // Applies all stylesheets collected at startup. Any changes made after startup
+        // are automatically detected and reapplied at any time.
         // ================================================================
         scene.getStylesheets().addAll(stylesheets);
 
