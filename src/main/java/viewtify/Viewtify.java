@@ -22,9 +22,9 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -59,6 +59,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -77,7 +79,6 @@ import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
-import viewtify.util.DelegatingObservableList;
 
 /**
  * @version 2018/09/16 16:21:29
@@ -135,7 +136,7 @@ public final class Viewtify {
     private static final List<View> views = new ArrayList();
 
     /** The managed application stylesheets. */
-    private static final List<String> stylesheets = new ArrayList();
+    private static final CopyOnWriteArrayList<String> stylesheets = new CopyOnWriteArrayList();
 
     /** The estimated application class. */
     private static volatile Class applicationLaunchingClass;
@@ -301,51 +302,28 @@ public final class Viewtify {
      * @param applicationClass The application {@link View} to activate.
      */
     public <V extends View> void activate(Class<? extends V> applicationClass, Consumer<V> view) {
-        String prefs = ".preferences for " + applicationClass.getSimpleName().toLowerCase();
+        // Execute a configuration for an application that should be processed only once throughout
+        // the entire life cycle of the application. If you run it more than once, nothing happens.
+        initializeOnlyOnce(applicationClass);
 
-        // How to handle simultaneous application startup
-        checkPolicy(prefs);
-
-        // Separate settings for each application
-        I.envy("PreferenceDirectory", prefs);
-
-        // load extensions in viewtify package
-        I.load(Location.class);
-
-        // load extensions in application package
-        I.load(applicationClass);
-
-        // collect stylesheets for application
-        stylesheets.add(Theme.locate("viewtify/ui.css"));
-        stylesheets.add(viewtify.theme.location);
-        stylesheets.add(Locator.file(CSSProcessor.pretty().formatTo(prefs + "/application.css")).externalForm());
-        // observe stylesheet's modification
-        I.signal(stylesheets)
-                .take(uri -> uri.startsWith("file:/"))
-                .map(uri -> Locator.file(uri.substring(6).replace("%20", " ")))
-                .scan(groupingBy(File::parent, mapping(File::name, toList())))
-                .last()
-                .flatIterable(m -> m.entrySet())
-                .flatMap(e -> e.getKey().observe(e.getValue()))
-                .debounce(1, SECONDS)
-                .map(change -> change.context().externalForm())
-                .to(this::reloadStylesheet);
-
-        // launch JavaFX UI
-        Platform.startup(() -> {
+        // launch application
+        PlatformImpl.startup(() -> {
             V application = I.make(applicationClass);
             Stage stage = new Stage(stageStyle);
             stage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
             stage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
 
-            views.add(application);
-
             Scene scene = new Scene((Parent) application.ui());
             manage(application.getClass().getName(), scene, stage);
 
+            // root stage management
+            views.add(application);
             stage.showingProperty().addListener((observable, oldValue, newValue) -> {
                 if (oldValue == true && newValue == false) {
-                    deactivate();
+                    views.remove(application);
+
+                    // If the last window has been closed, deactivate this application.
+                    if (views.isEmpty()) deactivate();
                 }
             });
 
@@ -355,7 +333,48 @@ public final class Viewtify {
             if (view != null) {
                 view.accept(application);
             }
-        });
+        }, false);
+    }
+
+    /**
+     * Execute a configuration for an application that should be processed only once throughout the
+     * entire life cycle of the application. If you run it more than once, nothing happens.
+     * 
+     * @param applicationClass An application class.
+     */
+    private synchronized void initializeOnlyOnce(Class applicationClass) {
+        if (stylesheets.size() == 0) {
+            String prefs = ".preferences for " + applicationClass.getSimpleName().toLowerCase();
+
+            // How to handle simultaneous application startup
+            checkActivationPolicy(prefs);
+
+            // Separate settings for each application
+            I.envy("PreferenceDirectory", prefs);
+
+            // load extensions in viewtify package
+            I.load(Location.class);
+
+            // load extensions in application package
+            I.load(applicationClass);
+
+            // collect stylesheets for application
+            stylesheets.add(Theme.locate("viewtify/ui.css"));
+            stylesheets.add(viewtify.theme.location);
+            stylesheets.add(Locator.file(CSSProcessor.pretty().formatTo(prefs + "/application.css")).externalForm());
+
+            // observe stylesheet's modification
+            I.signal(stylesheets)
+                    .take(uri -> uri.startsWith("file:/"))
+                    .map(uri -> Locator.file(uri.substring(6).replace("%20", " ")))
+                    .scan(groupingBy(File::parent, mapping(File::name, toList())))
+                    .last()
+                    .flatIterable(m -> m.entrySet())
+                    .flatMap(e -> e.getKey().observe(e.getValue()))
+                    .debounce(1, SECONDS)
+                    .map(change -> change.context().externalForm())
+                    .to(this::reloadStylesheet);
+        }
     }
 
     /**
@@ -363,7 +382,7 @@ public final class Viewtify {
      * 
      * @param prefs An application preference root directory.
      */
-    private void checkPolicy(String prefs) {
+    private void checkActivationPolicy(String prefs) {
         if (policy != ActivationPolicy.Multiple) {
             // create application specified directory for lock
             Directory root = Locator.directory(prefs + "/lock").touch();
@@ -525,6 +544,7 @@ public final class Viewtify {
     /**
      * 
      */
+    @SuppressWarnings("unused")
     private static class AnonyBrowser extends View {
 
         UIWeb web;

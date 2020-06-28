@@ -32,6 +32,11 @@ public class Browser {
                         System.out.println("OK " + web.cookie("api_session_v2"));
                     });
         });
+
+        Viewtify.browser(web -> {
+            web.load("https://www.deepl.com/").to(() -> {
+            });
+        });
     }
 
     private static Signal<UIWeb> retrieveAuthCode(UIWeb web) {
