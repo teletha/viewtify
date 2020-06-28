@@ -311,16 +311,6 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      * @return Localized text.
      */
     protected final Transcript en(String text) {
-        return new Transcript("en", text);
-    }
-
-    /**
-     * Create the localized text. (base lang is japanese)
-     * 
-     * @param text Your japanese text.
-     * @return Localized text.
-     */
-    protected final Transcript ja(String text) {
-        return new Transcript("ja", text);
+        return new Transcript(text);
     }
 }

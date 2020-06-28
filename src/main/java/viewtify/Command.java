@@ -55,8 +55,8 @@ public interface Command<E extends Enum<E>> extends Extensible {
      * @param lang
      * @return
      */
-    default String localizedDescrition(String lang) {
-        return new Transcript(lang, description()).get(lang).v;
+    default String localizedDescrition() {
+        return new Transcript(description()).get();
     }
 
     /**
