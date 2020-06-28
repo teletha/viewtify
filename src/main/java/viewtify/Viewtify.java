@@ -288,7 +288,7 @@ public final class Viewtify {
     }
 
     /**
-     * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
+     * Activate the specified application. You can call this method as many times as you like.
      * 
      * @param applicationClass The application {@link View} to activate.
      */
@@ -297,9 +297,10 @@ public final class Viewtify {
     }
 
     /**
-     * Activate the specified {@link Viewtify} application with {@link ActivationPolicy#Latest}.
+     * Activate the specified application. You can call this method as many times as you like.
      * 
      * @param applicationClass The application {@link View} to activate.
+     * @param view Callback to be called after the application is activated.
      */
     public <V extends View> void activate(Class<? extends V> applicationClass, Consumer<V> view) {
         // Execute a configuration for an application that should be processed only once throughout
