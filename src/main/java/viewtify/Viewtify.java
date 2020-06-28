@@ -10,12 +10,12 @@
 package viewtify;
 
 import static java.util.concurrent.TimeUnit.*;
+import static java.util.stream.Collectors.*;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.StackWalker.Option;
 import java.lang.management.ManagementFactory;
-import java.net.MalformedURLException;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -29,7 +29,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -142,8 +141,11 @@ public final class Viewtify {
     /** All managed views. */
     private static final List<View> views = new ArrayList();
 
+    /** The managed application stylesheets. */
+    private static final List<String> stylesheets = new ArrayList();
+
     /** The estimated application class. */
-    private static volatile Class entryApplicationClass;
+    private static volatile Class applicationLaunchingClass;
 
     /** The configurable setting. */
     private ActivationPolicy policy = ActivationPolicy.Latest;
@@ -156,9 +158,6 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private String icon = "";
-
-    /** The configurable setting. */
-    private String applicationStyle = "";
 
     /** The configurable setting. */
     private double width;
@@ -178,8 +177,8 @@ public final class Viewtify {
      * @return
      */
     public static synchronized Viewtify application() {
-        if (entryApplicationClass == null) {
-            entryApplicationClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).getCallerClass();
+        if (applicationLaunchingClass == null) {
+            applicationLaunchingClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).getCallerClass();
         }
         return viewtify;
     }
@@ -323,12 +322,22 @@ public final class Viewtify {
         // load extensions in application package
         I.load(applicationClass);
 
-        // build application stylesheet
-        try {
-            applicationStyle = CSSProcessor.pretty().formatTo(prefs + "/application.css").toUri().toURL().toExternalForm();
-        } catch (MalformedURLException e) {
-            throw I.quiet(e);
-        }
+        // collect stylesheets for application
+        stylesheets.add(Theme.locate("viewtify/ui.css"));
+        stylesheets.add(viewtify.theme.location);
+        stylesheets.add(Locator.file(CSSProcessor.pretty().formatTo(prefs + "/application.css")).externalForm());
+        // observe stylesheet's modification
+        I.signal(stylesheets)
+                .take(uri -> uri.startsWith("file:/"))
+                .map(uri -> Locator.file(uri.substring(6).replace("%20", " ")))
+                .take(File::isPresent)
+                .scan(groupingBy(File::parent, mapping(File::name, toList())))
+                .last()
+                .flatIterable(m -> m.entrySet())
+                .flatMap(e -> e.getKey().observe(e.getValue()))
+                .debounce(1, SECONDS)
+                .map(change -> change.context().externalForm())
+                .to(this::reloadStylesheet);
 
         // launch JavaFX UI
         Platform.startup(() -> {
@@ -341,10 +350,6 @@ public final class Viewtify {
 
             Scene scene = new Scene((Parent) application.ui());
             manage(application.getClass().getName(), scene, stage);
-
-            // observe stylesheets
-            observeStylesheet(scene.getStylesheets());
-            observeStylesheet(scene.getRoot().getStylesheets());
 
             stage.showingProperty().addListener((observable, oldValue, newValue) -> {
                 if (oldValue == true && newValue == false) {
@@ -359,60 +364,6 @@ public final class Viewtify {
                 view.accept(application);
             }
         });
-    }
-
-    /**
-     * Apply various styles to {@link Scene}.
-     * 
-     * @param scene
-     */
-    private void applyStyles(Scene scene, Stage stage) {
-        // apply styles from stylesheet
-        scene.getStylesheets().add(theme.url);
-        scene.getStylesheets().add(Theme.locateCSS("viewtify/ui.css"));
-        scene.getStylesheets().add(applicationStyle);
-
-        // apply icon
-        if (stage != null && icon.length() != 0) {
-            stage.getIcons().add(loadImage(icon));
-        }
-    }
-
-    /**
-     * Apply root event handler.
-     * 
-     * @param scene
-     */
-    private void applyEvents(Scene scene) {
-        // Prevent the KeyPress event from occurring continuously if you hold down a key.
-        UserActionHelper<?> helper = () -> scene;
-        helper.when(User.KeyPress).first().repeatWhen(e -> helper.when(User.KeyRelease)).to(shortcut::activate);
-    }
-
-    /**
-     * Load the image resource which is located by the path.
-     * 
-     * @param path
-     * @return
-     */
-    private Image loadImage(String path) {
-        return new Image(loadResource(path));
-    }
-
-    /**
-     * Load the resource which is located by the path.
-     * 
-     * @param path
-     * @return
-     */
-    private InputStream loadResource(String path) {
-        File file = Locator.file(path);
-
-        if (file.isPresent()) {
-            return file.newInputStream();
-        } else {
-            return ClassLoader.getSystemResourceAsStream(path);
-        }
     }
 
     /**
@@ -458,39 +409,24 @@ public final class Viewtify {
     }
 
     /**
-     * Observe stylesheet.
+     * Reload the specified stylesheet.
      * 
-     * @param stylesheets
+     * @param changed A target shtylesheet's location.
      */
-    private void observeStylesheet(ObservableList<String> stylesheets) {
-        for (String stylesheet : stylesheets) {
-            if (stylesheet.startsWith("file:/")) {
-                File file = Locator.file(stylesheet.substring(6).replace("%20", " "));
+    private void reloadStylesheet(String changed) {
+        for (View view : views) {
+            ObservableList<String> stylesheets = view.ui().getScene().getStylesheets();
+            int[] index = {-1};
 
-                if (file.isPresent()) {
-                    file.observe().debounce(1, SECONDS).to(e -> {
-                        AtomicInteger index = new AtomicInteger();
-
-                        // remove
-                        Viewtify.inUI(() -> {
-                            index.set(stylesheets.indexOf(stylesheet));
-
-                            if (index.get() != -1) {
-                                stylesheets.remove(index.get());
-                            }
-                        });
-
-                        // reload
-                        Viewtify.inUI(() -> {
-                            if (index.get() == -1) {
-                                stylesheets.add(stylesheet);
-                            } else {
-                                stylesheets.add(index.get(), stylesheet);
-                            }
-                        });
-                    });
-                }
-            }
+            // Note that reapplying the style will only take effect if you delete the stylesheet
+            // once and then add it again after a period of time.
+            Viewtify.inUI(() -> {
+                index[0] = stylesheets.indexOf(changed);
+                if (index[0] != -1) stylesheets.remove(index[0]);
+            });
+            Viewtify.inUI(() -> {
+                stylesheets.add(index[0], changed);
+            });
         }
     }
 
@@ -529,7 +465,7 @@ public final class Viewtify {
         commands.add(ManagementFactory.getRuntimeMXBean().getClassPath());
 
         // Class to be executed
-        commands.add(entryApplicationClass.getName());
+        commands.add(applicationLaunchingClass.getName());
 
         try {
             new ProcessBuilder(commands).start();
@@ -557,6 +493,32 @@ public final class Viewtify {
         } catch (Throwable e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    /**
+     * Load the image resource which is located by the path.
+     * 
+     * @param path
+     * @return
+     */
+    private static Image loadImage(String path) {
+        return new Image(loadResource(path));
+    }
+
+    /**
+     * Load the resource which is located by the path.
+     * 
+     * @param path
+     * @return
+     */
+    private static InputStream loadResource(String path) {
+        File file = Locator.file(path);
+
+        if (file.isPresent()) {
+            return file.newInputStream();
+        } else {
+            return ClassLoader.getSystemResourceAsStream(path);
         }
     }
 
@@ -974,10 +936,34 @@ public final class Viewtify {
             throw new IllegalArgumentException("Require window identifier.");
         }
 
-        viewtify.applyStyles(scene, stage);
-        viewtify.applyEvents(scene);
+        // ================================================================
+        // CSS Styling System
+        //
+        // Monitors the shortcut keys and invokes the corresponding commands.
+        // Bug Fix: Prevent the KeyPress event from occurring continuously if you hold down a key.
+        // ================================================================
+        scene.getStylesheets().addAll(stylesheets);
 
-        // tracking window size and location forever
+        // apply icon
+        if (viewtify.icon.length() != 0) {
+            stage.getIcons().add(loadImage(viewtify.icon));
+        }
+
+        // ================================================================
+        // Keyboard Binding System
+        //
+        // Monitors the shortcut keys and invokes the corresponding commands.
+        // Bug Fix: Prevent the KeyPress event from occurring continuously if you hold down a key.
+        // ================================================================
+        UserActionHelper<?> helper = () -> scene;
+        helper.when(User.KeyPress).first().repeatWhen(e -> helper.when(User.KeyRelease)).to(shortcut::activate);
+
+        // ================================================================
+        // Window Tracking System
+        //
+        // Restores the position and size of the window from its previous state.
+        // It constantly monitors the status and saves any changes.
+        // ================================================================
         I.make(WindowLocator.class).locate(id, stage);
         stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, e -> {
             WindowLocator locator = I.make(WindowLocator.class);

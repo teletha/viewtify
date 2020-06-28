@@ -14,13 +14,13 @@ public enum Theme {
     Light(""), Dark("viewtify/dark.css");
 
     /** The location. */
-    public final String url;
+    public final String location;
 
     /**
      * @param path
      */
     private Theme(String path) {
-        this.url = locateCSS(path);
+        this.location = locate(path);
     }
 
     /**
@@ -29,7 +29,7 @@ public enum Theme {
      * @param path
      * @return
      */
-    static String locateCSS(String path) {
+    static String locate(String path) {
         return ClassLoader.getSystemResource(path).toExternalForm();
     }
 }

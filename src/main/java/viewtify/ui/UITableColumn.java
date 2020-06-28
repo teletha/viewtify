@@ -51,7 +51,7 @@ public class UITableColumn<RowValue, ColumnValue>
 
     public UITableColumn<RowValue, ColumnValue> modelBySignal(WiseFunction<RowValue, Signal<ColumnValue>> mapper) {
         if (mapper != null) {
-            modelByProperty(v -> mapper.apply(v).to(SimpleObjectProperty.class, SimpleObjectProperty::set));
+            modelByProperty(v -> mapper.apply(v).to(new SimpleObjectProperty(), SimpleObjectProperty::set));
         }
         return this;
     }
