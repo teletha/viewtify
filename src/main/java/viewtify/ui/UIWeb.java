@@ -17,6 +17,7 @@ import java.net.HttpCookie;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +26,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import javafx.concurrent.Worker.State;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -40,6 +42,7 @@ import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseFunction;
 import netscape.javascript.JSObject;
+import transcript.Transcript;
 import viewtify.Viewtify;
 
 public class UIWeb extends UserInterface<UIWeb, WebView> {
@@ -203,16 +206,62 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
     }
 
     /**
-     * Enter text on the first element specified by the CSS selector.
+     * Enter text on the first element specified by the CSS selector. Prompts you to enter text on
+     * the page.
      * 
      * @param cssSelector A css selector to select input form.
-     * @param inputText A text to input.
      * @return Chainable API.
      */
     public Signal<UIWeb> inputByHuman(String cssSelector) {
         return new Signal<UIWeb>((observer, disposer) -> {
             return bridge.await(observer, disposer, "document.querySelector('{0}').focus()", cssSelector);
         }).flatMap(Operation.awaitNextEvent(cssSelector, "blur"));
+    }
+
+    /**
+     * Enter text on the first element specified by the CSS selector. The input dialog will appear.
+     * 
+     * @param cssSelector A css selector to select input form.
+     * @param description Description of the input.
+     * @return Chainable API.
+     */
+    public Signal<UIWeb> inputByHuman(String cssSelector, String description) {
+        return new Signal<String>((observer, disposer) -> {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setHeaderText(description);
+            dialog.setTitle(description);
+            dialog.showAndWait().ifPresentOrElse(value -> {
+                observer.accept(value);
+                observer.complete();
+            }, () -> {
+                observer.error(new InputMismatchException("Nothing was entered. [" + description + "]"));
+            });
+            return disposer;
+        }).flatMap(value -> input(cssSelector, value));
+    }
+
+    /**
+     * Enter text on the first element specified by the CSS selector. The input dialog will appear.
+     * 
+     * @param cssSelector A css selector to select input form.
+     * @param description Description of the input.
+     * @return Chainable API.
+     */
+    public Signal<UIWeb> inputByHuman(String cssSelector, Transcript description) {
+        return new Signal<String>((observer, disposer) -> {
+            TextInputDialog dialog = new TextInputDialog();
+            Viewtify.observing(description).to(text -> {
+                dialog.setTitle(text);
+                dialog.setHeaderText(text);
+            });
+            dialog.showAndWait().ifPresentOrElse(value -> {
+                observer.accept(value);
+                observer.complete();
+            }, () -> {
+                observer.error(new InputMismatchException("Nothing was entered. [" + description + "]"));
+            });
+            return disposer;
+        }).flatMap(value -> input(cssSelector, value));
     }
 
     /**
@@ -457,13 +506,38 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
         }
 
         /**
-         * Enter text on the first element specified by the CSS selector.
+         * Enter text on the first element specified by the CSS selector. Prompts you to enter text
+         * on the page.
          * 
          * @param cssSelector A css selector to select input form.
          * @return Chainable API.
          */
         public static WiseFunction<UIWeb, Signal<UIWeb>> inputByHuman(String cssSelector) {
             return web -> web.inputByHuman(cssSelector);
+        }
+
+        /**
+         * Enter text on the first element specified by the CSS selector. The input dialog will
+         * appear.
+         * 
+         * @param cssSelector A css selector to select input form.
+         * @param description Description of the input.
+         * @return Chainable API.
+         */
+        public static WiseFunction<UIWeb, Signal<UIWeb>> inputByHuman(String cssSelector, String description) {
+            return web -> web.inputByHuman(cssSelector, description);
+        }
+
+        /**
+         * Enter text on the first element specified by the CSS selector. The input dialog will
+         * appear.
+         * 
+         * @param cssSelector A css selector to select input form.
+         * @param description Description of the input.
+         * @return Chainable API.
+         */
+        public static WiseFunction<UIWeb, Signal<UIWeb>> inputByHuman(String cssSelector, Transcript description) {
+            return web -> web.inputByHuman(cssSelector, description);
         }
 
         /**

@@ -41,6 +41,8 @@ import javafx.beans.binding.IntegerExpression;
 import javafx.beans.binding.LongExpression;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -797,6 +799,16 @@ public final class Viewtify {
     }
 
     /**
+     * Observe text translation evnet.
+     * 
+     * @param text A translatable text.
+     * @return A modification stream.
+     */
+    public static Signal<String> observing(Transcript text) {
+        return Transcript.lang.observing().switchMap(text::as).on(Viewtify.UIThread);
+    }
+
+    /**
      * Observe set change evnet.
      * 
      * @param set A set to observe its modification.
@@ -937,6 +949,18 @@ public final class Viewtify {
     /**
      * Create the wrapped property of the specified {@link Variable}.
      * 
+     * @param text A translatable text.
+     * @return Automatically translated text.
+     */
+    public static StringProperty property(Transcript text) {
+        StringProperty property = new SimpleStringProperty();
+        observing(text).to(property::set);
+        return property;
+    }
+
+    /**
+     * Create the wrapped property of the specified {@link Variable}.
+     * 
      * @param variable
      * @return
      */
@@ -953,7 +977,10 @@ public final class Viewtify {
         private final Variable<V> variable;
 
         /** The listener cache. */
-        private WeakHashMap<ChangeListener, Disposable> listeners;
+        private WeakHashMap<ChangeListener, Disposable> changes;
+
+        /** The listener cache. */
+        private WeakHashMap<InvalidationListener, Disposable> invalids;
 
         /**
          * @param variable
@@ -985,10 +1012,10 @@ public final class Viewtify {
         public synchronized void addListener(ChangeListener<? super V> listener) {
             Disposable disposer = variable.observe().to(v -> listener.changed(this, null, v));
 
-            if (listeners == null) {
-                listeners = new WeakHashMap();
+            if (changes == null) {
+                changes = new WeakHashMap();
             }
-            listeners.put(listener, disposer);
+            changes.put(listener, disposer);
         }
 
         /**
@@ -996,11 +1023,11 @@ public final class Viewtify {
          */
         @Override
         public synchronized void removeListener(ChangeListener<? super V> listener) {
-            if (listeners != null) {
-                listeners.remove(listener);
+            if (changes != null) {
+                changes.remove(listener);
 
-                if (listeners.isEmpty()) {
-                    listeners = null;
+                if (changes.isEmpty()) {
+                    changes = null;
                 }
             }
         }
@@ -1018,9 +1045,12 @@ public final class Viewtify {
          */
         @Override
         public void addListener(InvalidationListener listener) {
-            // If this exception will be thrown, it is bug of this program. So we must rethrow the
-            // wrapped error in here.
-            throw new Error();
+            Disposable disposer = variable.observe().to(v -> listener.invalidated(this));
+
+            if (invalids == null) {
+                invalids = new WeakHashMap();
+            }
+            invalids.put(listener, disposer);
         }
 
         /**
@@ -1028,9 +1058,13 @@ public final class Viewtify {
          */
         @Override
         public void removeListener(InvalidationListener listener) {
-            // If this exception will be thrown, it is bug of this program. So we must rethrow the
-            // wrapped error in here.
-            throw new Error();
+            if (invalids != null) {
+                invalids.remove(listener);
+
+                if (invalids.isEmpty()) {
+                    invalids = null;
+                }
+            }
         }
 
         /**
