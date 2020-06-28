@@ -1192,14 +1192,4 @@ public final class Viewtify {
             return locator;
         }
     }
-
-    /**
-     * Register shortcut key.
-     * 
-     * @param key
-     * @param action
-     */
-    public static void shortcut(Key key, Runnable action) {
-
-    }
 }
