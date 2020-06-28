@@ -35,7 +35,6 @@ import java.util.function.Supplier;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.binding.DoubleExpression;
 import javafx.beans.binding.FloatExpression;
 import javafx.beans.binding.IntegerExpression;
@@ -69,15 +68,10 @@ import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
-import kiss.WiseBiFunction;
-import kiss.WiseFunction;
-import kiss.WiseSupplier;
-import kiss.WiseTriFunction;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
 import transcript.Transcript;
-import viewtify.bind.Calculated;
 import viewtify.ui.UIWeb;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
@@ -544,176 +538,6 @@ public final class Viewtify {
         @Override
         protected void initialize() {
         }
-    }
-
-    /**
-     * Create {@link Calculated} from {@link Variable}.
-     *
-     * @param variable A {@link Variable}.
-     * @return A new created {@link Calculated}.
-     */
-    public final static <E> Calculated<E> calculate(Variable<E> variable) {
-        return calculate(variable, new InvalidationListener[0]);
-    }
-
-    /**
-     * Create {@link Calculated} from {@link Variable}.
-     * 
-     * @param variable A {@link Variable}.
-     * @return A new created {@link Calculated}.
-     */
-    public final static <E> Calculated<E> calculate(Variable<E> variable, InvalidationListener... listeners) {
-        return new Calculated<E>(variable::get, null) {
-
-            /** The binding disposer. */
-            private final Disposable disposer = variable.observing().to(v -> {
-                invalidate();
-                for (InvalidationListener listener : listeners) {
-                    listener.invalidated(this);
-                }
-            });
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void dispose() {
-                super.dispose();
-
-                disposer.dispose();
-            }
-        };
-    }
-
-    /**
-     * Create {@link Calculated} from {@link Variable}.
-     *
-     * @param variables A list of {@link Variable}.
-     * @return A new created {@link Calculated} list.
-     */
-    public final static <E> Calculated<E>[] calculate(Variable<E>... variables) {
-        Calculated<E>[] calculations = new Calculated[variables.length];
-
-        for (int i = 0; i < calculations.length; i++) {
-            calculations[i] = calculate(variables[i]);
-        }
-        return calculations;
-    }
-
-    /**
-     * Create {@link Calculated}.
-     * 
-     * @param o1 A {@link Observable} target.
-     * @param calculation A calculation.
-     * @return A lazy evaluated calculation.
-     */
-    public static final <E> Calculated<E> calculate(Observable o1, WiseSupplier<E> calculation) {
-        return calculate(o1, null, calculation);
-    }
-
-    /**
-     * Create {@link Calculated}.
-     * 
-     * @param o1 A {@link Observable} target.
-     * @param o2 A {@link Observable} target.
-     * @param calculation A calculation.
-     * @return A lazy evaluated calculation.
-     */
-    public static final <E> Calculated<E> calculate(Observable o1, Observable o2, WiseSupplier<E> calculation) {
-        return calculate(o1, o2, null, calculation);
-    }
-
-    /**
-     * Create {@link Calculated}.
-     * 
-     * @param o1 A {@link Observable} target.
-     * @param o2 A {@link Observable} target.
-     * @param o3 A {@link Observable} target.
-     * @param calculation A calculation.
-     * @return A lazy evaluated calculation.
-     */
-    public static final <E> Calculated<E> calculate(Observable o1, Observable o2, Observable o3, WiseSupplier<E> calculation) {
-        return calculate(o1, o2, o3, null, calculation);
-    }
-
-    /**
-     * Create {@link Calculated}.
-     * 
-     * @param o1 A {@link Observable} target.
-     * @param o2 A {@link Observable} target.
-     * @param o3 A {@link Observable} target.
-     * @param o4 A {@link Observable} target.
-     * @param calculation A calculation.
-     * @return A lazy evaluated calculation.
-     */
-    public static final <E> Calculated<E> calculate(Observable o1, Observable o2, Observable o3, Observable o4, WiseSupplier<E> calculation) {
-        return new Calculated<E>(calculation, null, o1, o2, o3, o4);
-    }
-
-    /**
-     * Create {@link Calculated}.
-     * 
-     * @param o1 A {@link Observable} target.
-     * @return A lazy evaluated calculation.
-     */
-    public static final <A> Calculated<A> calculate(A o1) {
-        if (o1 instanceof ObservableValue) {
-            return calculate((ObservableValue) o1);
-        } else if (o1 instanceof Variable) {
-            return calculate((Variable) o1);
-        } else {
-            return new Calculated(() -> o1, null);
-        }
-    }
-
-    /**
-     * Create {@link Calculated}.
-     * 
-     * @param o1 A {@link Observable} target.
-     * @return A lazy evaluated calculation.
-     */
-    public static final <A> Calculated<A> calculate(ObservableValue<A> o1) {
-        if (o1 instanceof Calculated) {
-            return (Calculated<A>) o1;
-        } else {
-            return calculate(o1, () -> o1.getValue());
-        }
-    }
-
-    /**
-     * Create {@link Calculated}.
-     * 
-     * @param o1 A {@link Observable} target.
-     * @param calculation A calculation.
-     * @return A lazy evaluated calculation.
-     */
-    public static final <A, R> Calculated<R> calculate(ObservableValue<A> o1, WiseFunction<A, R> calculator) {
-        return calculate(o1, () -> calculator.apply(o1.getValue()));
-    }
-
-    /**
-     * Create {@link Calculated}.
-     * 
-     * @param o1 A {@link Observable} target.
-     * @param o2 A {@link Observable} target.
-     * @param calculation A calculation.
-     * @return A lazy evaluated calculation.
-     */
-    public static final <A, B, R> Calculated<R> calculate(ObservableValue<A> o1, ObservableValue<B> o2, WiseBiFunction<A, B, R> calculator) {
-        return calculate(o1, o2, () -> calculator.apply(o1.getValue(), o2.getValue()));
-    }
-
-    /**
-     * Create {@link Calculated}.
-     * 
-     * @param o1 A {@link Observable} target.
-     * @param o2 A {@link Observable} target.
-     * @param o3 A {@link Observable} target.
-     * @param calculation A calculation.
-     * @return A lazy evaluated calculation.
-     */
-    public static final <A, B, C, R> Calculated<R> calculate(ObservableValue<A> o1, ObservableValue<B> o2, ObservableValue<C> o3, WiseTriFunction<A, B, C, R> calculator) {
-        return calculate(o1, o2, o3, () -> calculator.apply(o1.getValue(), o2.getValue(), o3.getValue()));
     }
 
     /**

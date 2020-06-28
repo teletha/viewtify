@@ -20,6 +20,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
+
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
@@ -108,7 +109,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * @return
      */
     public UITreeTableColumn<RowValue, ColumnValue> modelByVar(WiseFunction<RowValue, Variable<ColumnValue>> provider) {
-        return modelByProperty(row -> Viewtify.calculate(provider.apply(row)));
+        return modelByProperty(row -> Viewtify.property(provider.apply(row)));
     }
 
     /**
@@ -118,7 +119,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * @return
      */
     public <T extends RowValue> UITreeTableColumn<RowValue, ColumnValue> modelByVar(Class<T> type, WiseFunction<T, Variable<ColumnValue>> provider) {
-        return modelByProperty(type, row -> Viewtify.calculate(provider.apply(row)));
+        return modelByProperty(type, row -> Viewtify.property(provider.apply(row)));
     }
 
     /**

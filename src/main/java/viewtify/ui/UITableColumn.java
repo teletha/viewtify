@@ -129,7 +129,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @return
      */
     public UITableColumn<RowValue, ColumnValue> modelByVar(WiseFunction<RowValue, Variable<ColumnValue>> provider) {
-        return modelByProperty(row -> Viewtify.calculate(provider.apply(row)));
+        return modelByProperty(row -> Viewtify.property(provider.apply(row)));
     }
 
     /**
@@ -139,7 +139,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @return
      */
     public <T extends RowValue> UITableColumn<RowValue, ColumnValue> modelByVar(Class<T> type, WiseFunction<T, Variable<ColumnValue>> provider) {
-        return modelByProperty(type, row -> Viewtify.calculate(provider.apply(row)));
+        return modelByProperty(type, row -> Viewtify.property(provider.apply(row)));
     }
 
     /**
