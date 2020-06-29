@@ -55,13 +55,12 @@ public interface Command<E extends Enum<E>> extends Extensible {
      * @param lang
      * @return
      */
-    default String localizedDescrition() {
-        return new Transcript(description()).get();
+    default CharSequence localizedDescrition() {
+        return new Transcript(description());
     }
 
     /**
      * Activate this command.
-     * 
      */
     default void activate() {
         Deque<Runnable> stack = Viewtify.commands.get(this);

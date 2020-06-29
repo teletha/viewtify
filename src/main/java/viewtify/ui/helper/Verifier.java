@@ -95,7 +95,7 @@ public class Verifier {
             String message = e.getLocalizedMessage();
 
             if (message == null || message.isEmpty()) {
-                message = new Transcript("This is invalid value, please correct.").get();
+                message = new Transcript("This is invalid value, please correct.").toString();
             }
             this.message.set(message);
         }
@@ -136,6 +136,6 @@ public class Verifier {
     };
 
     private static Throwable error(String message) {
-        return new IllegalArgumentException(new Transcript(message).get());
+        return new IllegalArgumentException(new Transcript(message).toString());
     }
 }
