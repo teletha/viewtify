@@ -19,7 +19,8 @@ import javafx.util.Duration;
 
 import org.controlsfx.control.PopOver;
 
-import transcript.Transcript;
+import kiss.Variable;
+import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 
 public interface TooltipHelper<Self extends TooltipHelper, W extends Node> extends StyleHelper<Self, W> {
@@ -58,11 +59,11 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
     /**
      * Set the text to be displayed as a tooltip.
      * 
-     * @param text Tooltip text.
+     * @param text A text {@link Variable} to set.
      * @return Chainable API.
      */
-    default Self tooltip(Transcript text) {
-        text.translate().to(this::tooltip);
+    default Self tooltip(Variable text) {
+        text.observing().on(Viewtify.UIThread).to(this::tooltip);
         return (Self) this;
     }
 

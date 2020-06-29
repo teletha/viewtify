@@ -11,7 +11,6 @@ package viewtify.util;
 
 import java.awt.Desktop;
 import java.net.URI;
-import java.util.function.Supplier;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -20,7 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.text.TextFlow;
 
 import kiss.I;
-import transcript.Transcript;
+import kiss.Variable;
 import viewtify.Viewtify;
 
 /**
@@ -46,21 +45,11 @@ public class TextNotation {
      * @param message A wiki-like notation text.
      * @return
      */
-    public static TextFlow parse(Supplier<String> message) {
-        return parse(message.get());
-    }
-
-    /**
-     * Parse as {@link TextFlow}.
-     * 
-     * @param message A wiki-like notation text.
-     * @return
-     */
-    public static TextFlow parse(Transcript message) {
+    public static TextFlow parse(Variable<String> message) {
         TextFlow flow = new TextFlow();
         ObservableList<Node> children = flow.getChildren();
 
-        message.translate().on(Viewtify.UIThread).to(text -> {
+        message.observing().on(Viewtify.UIThread).to(text -> {
             children.clear();
             parse(children, text);
         });

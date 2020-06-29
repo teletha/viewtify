@@ -10,14 +10,12 @@
 package viewtify.ui.helper;
 
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
 import kiss.Variable;
-import transcript.Transcript;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 
@@ -31,17 +29,6 @@ public interface PlaceholderHelper<Self extends PlaceholderHelper> extends Prope
      */
     default Self placeholder(Object text) {
         return placeholder(new Label(String.valueOf(text)));
-    }
-
-    /**
-     * Set placeholder text..
-     * 
-     * @param text A text {@link Supplier} to set.
-     * @return Chainable API.
-     */
-    default Self placeholder(Transcript text) {
-        text.translate().to(this::placeholder);
-        return (Self) this;
     }
 
     /**

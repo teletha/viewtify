@@ -11,7 +11,6 @@ package viewtify.ui.helper;
 
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
 import javafx.geometry.Pos;
@@ -23,7 +22,6 @@ import org.controlsfx.glyphfont.Glyph;
 import org.controlsfx.glyphfont.INamedCharacter;
 
 import kiss.Variable;
-import transcript.Transcript;
 import viewtify.Viewtify;
 import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
@@ -48,17 +46,6 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      */
     default Self text(Object text) {
         property(Type.Text).setValue(Objects.toString(text));
-        return (Self) this;
-    }
-
-    /**
-     * Set text.
-     * 
-     * @param text A text {@link Supplier} to set.
-     * @return Chainable API.
-     */
-    default Self text(Transcript text) {
-        text.translate().on(Viewtify.UIThread).to((Consumer) this::text);
         return (Self) this;
     }
 
