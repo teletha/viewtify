@@ -10,8 +10,6 @@
 package viewtify.ui.helper;
 
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
@@ -21,10 +19,7 @@ import javafx.util.Duration;
 
 import org.controlsfx.control.PopOver;
 
-import kiss.I;
-import kiss.Signal;
 import transcript.Transcript;
-import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 
 public interface TooltipHelper<Self extends TooltipHelper, W extends Node> extends StyleHelper<Self, W> {
@@ -66,30 +61,8 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param text Tooltip text.
      * @return Chainable API.
      */
-    default Self tooltip(Supplier text) {
-        return tooltip(lang -> I.signal(text).map(String::valueOf));
-    }
-
-    /**
-     * Set the text to be displayed as a tooltip.
-     * 
-     * @param text Tooltip text.
-     * @return Chainable API.
-     */
     default Self tooltip(Transcript text) {
-        return tooltip(text::as);
-    }
-
-    /**
-     * Set the text to be displayed as a tooltip.
-     * 
-     * @param text Tooltip text.
-     * @return Chainable API.
-     */
-    private Self tooltip(Function<String, Signal<String>> text) {
-        Transcript.lang.observing().switchMap(I.wiseF(text)).on(Viewtify.UIThread).to(translated -> {
-            tooltip(translated);
-        });
+        text.translate().to(this::tooltip);
         return (Self) this;
     }
 

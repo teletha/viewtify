@@ -41,8 +41,6 @@ import javafx.beans.binding.IntegerExpression;
 import javafx.beans.binding.LongExpression;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -802,16 +800,6 @@ public final class Viewtify {
     }
 
     /**
-     * Observe text translation evnet.
-     * 
-     * @param text A translatable text.
-     * @return A modification stream.
-     */
-    public static Signal<String> observing(Transcript text) {
-        return Transcript.lang.observing().switchMap(text::as).on(Viewtify.UIThread);
-    }
-
-    /**
      * Observe set change evnet.
      * 
      * @param set A set to observe its modification.
@@ -947,18 +935,6 @@ public final class Viewtify {
                 map.removeListener(listener);
             });
         });
-    }
-
-    /**
-     * Create the wrapped property of the specified {@link Variable}.
-     * 
-     * @param text A translatable text.
-     * @return Automatically translated text.
-     */
-    public static StringProperty property(Transcript text) {
-        StringProperty property = new SimpleStringProperty();
-        observing(text).to(property::set);
-        return property;
     }
 
     /**

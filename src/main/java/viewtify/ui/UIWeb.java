@@ -250,7 +250,7 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
     public Signal<UIWeb> inputByHuman(String cssSelector, Transcript description) {
         return new Signal<String>((observer, disposer) -> {
             TextInputDialog dialog = new TextInputDialog();
-            Viewtify.observing(description).to(text -> {
+            description.translate().on(Viewtify.UIThread).to(text -> {
                 dialog.setTitle(text);
                 dialog.setHeaderText(text);
             });
