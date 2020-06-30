@@ -31,10 +31,6 @@ import viewtify.Viewtify;
 
 public abstract class View implements Extensible, UserInterfaceProvider<Node> {
 
-    protected static String lang() {
-        return Transcript.lang.v;
-    }
-
     /** The human-readable ID separator. */
     public static final String IDSeparator = " ➝ ";
 

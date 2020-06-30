@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -249,7 +250,7 @@ public final class Viewtify {
      */
     public Viewtify language(String language) {
         if (language != null) {
-            Transcript.lang.set(language);
+            Transcript.Lang.set(Locale.forLanguageTag(language));
         }
         return this;
     }
