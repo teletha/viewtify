@@ -39,10 +39,10 @@ import kiss.Observer;
 import kiss.Signal;
 import kiss.Signaling;
 import kiss.Storable;
+import kiss.Transcript;
 import kiss.Variable;
 import kiss.WiseFunction;
 import netscape.javascript.JSObject;
-import transcript.Transcript;
 import viewtify.Viewtify;
 
 public class UIWeb extends UserInterface<UIWeb, WebView> {

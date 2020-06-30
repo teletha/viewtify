@@ -24,9 +24,9 @@ import javafx.stage.Window;
 
 import kiss.Extensible;
 import kiss.I;
+import kiss.Transcript;
 import kiss.Variable;
 import kiss.model.Model;
-import transcript.Transcript;
 import viewtify.Viewtify;
 
 public abstract class View implements Extensible, UserInterfaceProvider<Node> {

@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
-import transcript.Transcript;
+import kiss.Transcript;
 
 public interface Command<E extends Enum<E>> extends Extensible {
 

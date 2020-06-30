@@ -14,10 +14,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import kiss.Signal;
+import kiss.Transcript;
 import kiss.Variable;
 import kiss.WiseConsumer;
 import kiss.WiseRunnable;
-import transcript.Transcript;
 
 public class Verifier {
 
