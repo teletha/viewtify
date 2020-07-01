@@ -87,8 +87,6 @@ public final class Viewtify {
     /** Command Repository */
     static final Map<Command, Deque<Runnable>> commands = new ConcurrentHashMap();
 
-    private static final ShortcutManager shortcut = I.make(ShortcutManager.class);
-
     /** The runtime info. */
     private static final boolean inTest;
 
@@ -346,11 +344,11 @@ public final class Viewtify {
         if (stylesheets.size() == 0) {
             String prefs = ".preferences for " + applicationClass.getSimpleName().toLowerCase();
 
+            // Separate settings for each application
+            String env = I.env("PreferenceDirectory", prefs);
+
             // How to handle simultaneous application startup
             checkActivationPolicy(prefs);
-
-            // Separate settings for each application
-            I.envy("PreferenceDirectory", prefs);
 
             // load extensions in viewtify package
             I.load(Location.class);
@@ -660,7 +658,7 @@ public final class Viewtify {
         // Bug Fix: Prevent the KeyPress event from occurring continuously if you hold down a key.
         // ================================================================
         UserActionHelper<?> helper = () -> scene;
-        helper.when(User.KeyPress).first().repeatWhen(e -> helper.when(User.KeyRelease)).to(shortcut::activate);
+        helper.when(User.KeyPress).first().repeatWhen(e -> helper.when(User.KeyRelease)).to(I.make(ShortcutManager.class)::activate);
 
         // ================================================================
         // Window Tracking System
