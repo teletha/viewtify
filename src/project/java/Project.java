@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 viewtify Development Team
+ * Copyright (C) 2020 viewtify Development Team
  *
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
@@ -10,7 +10,7 @@
 public class Project extends bee.api.Project {
 
     {
-        product("com.github.teletha", "viewtify", "1.0");
+        product("com.github.teletha", "viewtify", "2.0.0");
 
         require("com.github.teletha", "altfx");
         require("com.github.teletha", "sinobu");
