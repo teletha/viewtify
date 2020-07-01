@@ -9,6 +9,7 @@
  */
 package viewtify.ui.helper;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import kiss.I;
@@ -38,7 +39,7 @@ public interface VerifyHelper<Self extends VerifyHelper<Self>> {
      * 
      * @return
      */
-    default Self invalid(CharSequence message) {
+    default Self invalid(Object message) {
         verifier().message.set(String.valueOf(message));
         return (Self) this;
     }
@@ -64,15 +65,15 @@ public interface VerifyHelper<Self extends VerifyHelper<Self>> {
      * specified timing ({@link #verifyWhen(Signal...)}). The verification results can be obtained
      * by using {@link #isValid()} or {@link #isInvalid()}.
      * 
-     * @param prerequisite Description of Requirements. This will be displayed as an error message
-     *            if the condition is not met.
+     * @param prerequisiteDescription Description of Requirements. This will be displayed as an
+     *            error message if the condition is not met.
      * @param verifier Definition of Requirements.
      * @return Chainable API.
      */
-    default Self verify(CharSequence prerequisite, Predicate<? super Self> verifier) {
+    default Self verify(Object prerequisiteDescription, Predicate<? super Self> verifier) {
         return verifyBy(() -> {
             if (verifier.test((Self) this) == false) {
-                throw new AssertionError(prerequisite.toString());
+                throw new AssertionError(Objects.toString(prerequisiteDescription));
             }
         });
     }

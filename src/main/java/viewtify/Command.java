@@ -15,7 +15,6 @@ import java.util.LinkedList;
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
-import kiss.Transcript;
 
 public interface Command<E extends Enum<E>> extends Extensible {
 
@@ -47,16 +46,6 @@ public interface Command<E extends Enum<E>> extends Extensible {
             }
         }
         return builder.toString();
-    }
-
-    /**
-     * Localized command description.
-     * 
-     * @param lang
-     * @return
-     */
-    default CharSequence localizedDescrition() {
-        return new Transcript(description());
     }
 
     /**
