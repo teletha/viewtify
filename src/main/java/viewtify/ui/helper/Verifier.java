@@ -13,8 +13,8 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import kiss.I;
 import kiss.Signal;
-import kiss.Transcript;
 import kiss.Variable;
 import kiss.WiseConsumer;
 import kiss.WiseRunnable;
@@ -95,7 +95,7 @@ public class Verifier {
             String message = e.getLocalizedMessage();
 
             if (message == null || message.isEmpty()) {
-                message = new Transcript("This is invalid value, please correct.").toString();
+                message = I.translate("This is invalid value, please correct.").toString();
             }
             this.message.set(message);
         }
@@ -136,6 +136,6 @@ public class Verifier {
     };
 
     private static Throwable error(String message) {
-        return new IllegalArgumentException(new Transcript(message).toString());
+        return new IllegalArgumentException(I.translate(message).toString());
     }
 }

@@ -39,7 +39,6 @@ import kiss.Observer;
 import kiss.Signal;
 import kiss.Signaling;
 import kiss.Storable;
-import kiss.Transcript;
 import kiss.Variable;
 import kiss.WiseFunction;
 import netscape.javascript.JSObject;
@@ -247,7 +246,7 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
      * @param description Description of the input.
      * @return Chainable API.
      */
-    public Signal<UIWeb> inputByHuman(String cssSelector, Transcript description) {
+    public Signal<UIWeb> inputByHuman(String cssSelector, Variable<String> description) {
         return new Signal<String>((observer, disposer) -> {
             TextInputDialog dialog = new TextInputDialog();
             description.observing().on(Viewtify.UIThread).to(text -> {
@@ -536,7 +535,7 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
          * @param description Description of the input.
          * @return Chainable API.
          */
-        public static WiseFunction<UIWeb, Signal<UIWeb>> inputByHuman(String cssSelector, Transcript description) {
+        public static WiseFunction<UIWeb, Signal<UIWeb>> inputByHuman(String cssSelector, Variable<String> description) {
             return web -> web.inputByHuman(cssSelector, description);
         }
 

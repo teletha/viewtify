@@ -24,7 +24,6 @@ import javafx.stage.Window;
 
 import kiss.Extensible;
 import kiss.I;
-import kiss.Transcript;
 import kiss.Variable;
 import kiss.model.Model;
 import viewtify.Viewtify;
@@ -306,7 +305,7 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      * @param text Your english text.
      * @return Localized text.
      */
-    protected final Transcript en(String text) {
-        return new Transcript(text);
+    protected final Variable<String> en(String text, Object... context) {
+        return I.translate(text, context);
     }
 }
