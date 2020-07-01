@@ -69,7 +69,6 @@ import kiss.Managed;
 import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
-import kiss.Transcript;
 import kiss.Variable;
 import psychopath.Directory;
 import psychopath.File;
@@ -249,7 +248,7 @@ public final class Viewtify {
      */
     public Viewtify language(String language) {
         if (language != null) {
-            Transcript.Lang.set(language);
+            I.Lang.set(language);
         }
         return this;
     }
