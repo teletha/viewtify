@@ -10,7 +10,6 @@
 package viewtify.ui.helper;
 
 import java.time.LocalDate;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
@@ -43,7 +42,7 @@ class ValueHelperTest {
         assert v.valueAs(double.class) == 123d;
 
         Assertions.assertThrows(ClassNotFoundException.class, () -> v.valueAs(Class.class));
-        Assertions.assertThrows(NullPointerException.class, () -> v.valueAs(ValueHelper.class));
+        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> v.valueAs(ValueHelper.class));
     }
 
     @Test
@@ -58,8 +57,6 @@ class ValueHelperTest {
         // unconvertable value
         LocalDate date = LocalDate.now();
         assert v.valueOr(date) == date;
-        AtomicInteger atomic = new AtomicInteger(987);
-        assert v.valueOr(atomic) == atomic;
     }
 
     @Test
@@ -74,8 +71,6 @@ class ValueHelperTest {
         // unconvertable value
         LocalDate date = LocalDate.now();
         assert v.valueOr(Variable.of(date)) == date;
-        AtomicInteger atomic = new AtomicInteger(987);
-        assert v.valueOr(Variable.of(atomic)) == atomic;
     }
 
     @Test
