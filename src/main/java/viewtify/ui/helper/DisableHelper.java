@@ -107,7 +107,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     default Self disableDuring(long time, TimeUnit unit) {
         if (0 < time && unit != null) {
             disable(true);
-            I.schedule(time, unit, () -> disable(false));
+            I.schedule(time, unit).to(() -> disable(false));
         }
         return (Self) this;
     }
@@ -218,7 +218,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     default Self enableDuring(long time, TimeUnit unit) {
         if (0 < time && unit != null) {
             enable(true);
-            I.schedule(time, unit, () -> enable(false));
+            I.schedule(time, unit).to(() -> enable(false));
         }
         return (Self) this;
     }
