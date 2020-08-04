@@ -165,6 +165,20 @@ public interface ValueHelper<Self extends ValueHelper, V> {
     }
 
     /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initializeLazy(Signal<V> initialValue) {
+        if (initialValue != null) {
+            initialValue.first().to(this::initialize);
+        }
+        return (Self) this;
+    }
+
+    /**
      * Checks if this value is the same as the specified value.
      * 
      * @param value A value to test.
