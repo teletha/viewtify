@@ -9,11 +9,11 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.*;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.function.Consumer;
 
 import javafx.beans.property.Property;
@@ -227,6 +227,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
                     value = (T) I.transform(stored, defaultValue.getClass());
                 } catch (Throwable e) {
                     // ignore
+                    e.printStackTrace();
                 }
             }
         }
@@ -245,7 +246,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
      */
     @SuppressWarnings("serial")
     @Managed(value = Singleton.class)
-    private static class Preference extends TreeMap<String, String> implements Storable<Preference> {
+    private static class Preference extends ConcurrentSkipListMap<String, String> implements Storable<Preference> {
     }
 
     /**
