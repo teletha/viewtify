@@ -23,9 +23,10 @@ import javafx.scene.text.Font;
 import kiss.Signal;
 import viewtify.Viewtify;
 import viewtify.ui.helper.StyleHelper;
+import viewtify.ui.helper.VisibleHelper;
 import viewtify.util.FXUtils;
 
-public class EnhancedCanvas extends Canvas implements StyleHelper<EnhancedCanvas, EnhancedCanvas> {
+public class EnhancedCanvas extends Canvas implements StyleHelper<EnhancedCanvas, EnhancedCanvas>, VisibleHelper<EnhancedCanvas> {
 
     /**
      * {@inheritDoc}

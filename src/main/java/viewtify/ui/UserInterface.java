@@ -47,11 +47,12 @@ import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.Verifier;
 import viewtify.ui.helper.VerifyHelper;
+import viewtify.ui.helper.VisibleHelper;
 import viewtify.util.Icon;
 
 public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> extends ReferenceHolder
         implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, TooltipHelper<Self, W>, UserInterfaceProvider<W>,
-        PropertyAccessHelper, VerifyHelper<Self> {
+        PropertyAccessHelper, VerifyHelper<Self>, VisibleHelper<Self> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
@@ -120,6 +121,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
      *
      * @defaultValue true
      */
+    @Override
     public Self visible(boolean visible) {
         ui.setVisible(visible);
         return (Self) this;
