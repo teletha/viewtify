@@ -88,7 +88,7 @@ class TabArea extends ViewArea<UITabPane> {
         header.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onHeaderDragExited(e, this));
         header.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onHeaderDragDropped(e, this));
         header.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onHeaderDragOver(e, this));
-        node.when(User.input(Key.Alt)).take(() -> node.items().size() == 1).to(e -> setHeader(!header.isVisible()));
+        node.when(User.input(Key.Alt)).take(v -> node.items().size() == 1).to(e -> setHeader(!header.isVisible()));
     }
 
     /**
@@ -214,22 +214,22 @@ class TabArea extends ViewArea<UITabPane> {
         }
 
         switch (position) {
-        case DockSystem.PositionTop:
-        case DockSystem.PositionBottom:
-        case DockSystem.PositionLeft:
-        case DockSystem.PositionRight:
-            return super.add(tab, position);
+            case DockSystem.PositionTop:
+            case DockSystem.PositionBottom:
+            case DockSystem.PositionLeft:
+            case DockSystem.PositionRight:
+                return super.add(tab, position);
 
-        case DockSystem.PositionCenter:
-            position = node.ui.getTabs().size();
-            // fall-through
+            case DockSystem.PositionCenter:
+                position = node.ui.getTabs().size();
+                // fall-through
 
-        default:
-            node.ui.getTabs().add(position, tab);
-            tab.setOnCloseRequest(e -> remove(tab, true));
+            default:
+                node.ui.getTabs().add(position, tab);
+                tab.setOnCloseRequest(e -> remove(tab, true));
 
-            selectInitialTabOnlyOnce(tab);
-            return this;
+                selectInitialTabOnlyOnce(tab);
+                return this;
         }
     }
 
