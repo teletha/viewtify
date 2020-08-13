@@ -24,8 +24,11 @@ public final class LayoutAssistant implements InvalidationListener {
     /** The parent manager. maybe null */
     private final LayoutAssistant parent;
 
-    /** Flag whether axis shoud layout on the next rendering phase or not. */
+    /** Flag whether the node shoud layout on the next rendering phase or not. */
     private boolean shouldLayout;
+
+    /** Flag whether the node is layoutable or not. */
+    private boolean canLayout = true;
 
     /** The previous layout for relayout. */
     private Runnable previousLayout;
@@ -76,7 +79,7 @@ public final class LayoutAssistant implements InvalidationListener {
      * @param layout
      */
     public void layout(Runnable layout) {
-        if (shouldLayout == true || parent.shouldLayout == true) {
+        if (canLayout && (shouldLayout || parent.shouldLayout)) {
             layout.run();
             shouldLayout = false;
             previousLayout = layout;
@@ -126,7 +129,7 @@ public final class LayoutAssistant implements InvalidationListener {
      */
     public LayoutAssistant layoutWhile(Signal<Boolean> timing, Signal<Boolean>... timings) {
         timing.combineLatest(timings, (one, other) -> one && other).to(v -> {
-            shouldLayout = v;
+            canLayout = v;
         });
         return this;
     }
