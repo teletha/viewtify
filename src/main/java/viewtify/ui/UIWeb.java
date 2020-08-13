@@ -356,7 +356,7 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
          * @param observer A result consumer.
          */
         private Disposable await(Observer observer, Disposable disposer, String script, Object... items) {
-            if (disposer.isNotDisposed()) {
+            if (!disposer.isDisposed()) {
                 try {
                     int id = counter.getAndIncrement();
                     observers.put(id, observer);
