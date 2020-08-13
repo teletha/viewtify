@@ -11,6 +11,7 @@ package viewtify.ui.helper;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 
 import kiss.Signal;
@@ -29,6 +30,15 @@ public final class LayoutAssistant implements InvalidationListener {
 
     /** Flag whether the node is layoutable or not. */
     private boolean canLayout = true;
+
+    /** The hideable nodes. */
+    private Node[] invisible = new Node[0];
+
+    /** The disable nodes. */
+    private Node[] disable = new Node[0];
+
+    /** The unmanageable nodes. */
+    private Node[] unmanageable = new Node[0];
 
     /** The previous layout for relayout. */
     private Runnable previousLayout;
@@ -130,7 +140,47 @@ public final class LayoutAssistant implements InvalidationListener {
     public LayoutAssistant layoutWhile(Signal<Boolean> timing, Signal<Boolean>... timings) {
         timing.combineLatest(timings, (one, other) -> one && other).to(v -> {
             canLayout = v;
+
+            for (Node node : invisible) {
+                node.setVisible(canLayout);
+            }
+            for (Node node : disable) {
+                node.setDisable(!canLayout);
+            }
+            for (Node node : unmanageable) {
+                node.setManaged(!canLayout);
+            }
         });
+        return this;
+    }
+
+    /**
+     * Specify the nodes to be hidden when cannot doing layout.
+     */
+    public LayoutAssistant invisible(Node... nodes) {
+        if (nodes != null) {
+            invisible = nodes;
+        }
+        return this;
+    }
+
+    /**
+     * Specify the nodes to be disable when cannot doing layout.
+     */
+    public LayoutAssistant disable(Node... nodes) {
+        if (nodes != null) {
+            disable = nodes;
+        }
+        return this;
+    }
+
+    /**
+     * Specify the nodes to be disable when cannot doing layout.
+     */
+    public LayoutAssistant unmanageable(Node... nodes) {
+        if (nodes != null) {
+            unmanageable = nodes;
+        }
         return this;
     }
 
