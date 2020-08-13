@@ -11,10 +11,10 @@ package viewtify.ui.helper;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 
 import kiss.Signal;
+import kiss.Variable;
 import viewtify.Viewtify;
 
 public final class LayoutAssistant implements InvalidationListener {
@@ -29,16 +29,7 @@ public final class LayoutAssistant implements InvalidationListener {
     private boolean shouldLayout;
 
     /** Flag whether the node is layoutable or not. */
-    private boolean canLayout = true;
-
-    /** The hideable nodes. */
-    private Node[] invisible = new Node[0];
-
-    /** The disable nodes. */
-    private Node[] disable = new Node[0];
-
-    /** The unmanageable nodes. */
-    private Node[] unmanageable = new Node[0];
+    public final Variable<Boolean> canLayout = Variable.of(true);
 
     /** The previous layout for relayout. */
     private Runnable previousLayout;
@@ -89,7 +80,7 @@ public final class LayoutAssistant implements InvalidationListener {
      * @param layout
      */
     public void layout(Runnable layout) {
-        if (canLayout && (shouldLayout || parent.shouldLayout)) {
+        if (canLayout.v && (shouldLayout || parent.shouldLayout)) {
             layout.run();
             shouldLayout = false;
             previousLayout = layout;
@@ -138,49 +129,7 @@ public final class LayoutAssistant implements InvalidationListener {
      * @return Chainable API.
      */
     public LayoutAssistant layoutWhile(Signal<Boolean> timing, Signal<Boolean>... timings) {
-        timing.combineLatest(timings, (one, other) -> one && other).to(v -> {
-            canLayout = v;
-
-            for (Node node : invisible) {
-                node.setVisible(canLayout);
-            }
-            for (Node node : disable) {
-                node.setDisable(!canLayout);
-            }
-            for (Node node : unmanageable) {
-                node.setManaged(!canLayout);
-            }
-        });
-        return this;
-    }
-
-    /**
-     * Specify the nodes to be hidden when cannot doing layout.
-     */
-    public LayoutAssistant invisible(Node... nodes) {
-        if (nodes != null) {
-            invisible = nodes;
-        }
-        return this;
-    }
-
-    /**
-     * Specify the nodes to be disable when cannot doing layout.
-     */
-    public LayoutAssistant disable(Node... nodes) {
-        if (nodes != null) {
-            disable = nodes;
-        }
-        return this;
-    }
-
-    /**
-     * Specify the nodes to be disable when cannot doing layout.
-     */
-    public LayoutAssistant unmanageable(Node... nodes) {
-        if (nodes != null) {
-            unmanageable = nodes;
-        }
+        timing.combineLatest(timings, (one, other) -> one && other).to(canLayout::set);
         return this;
     }
 
