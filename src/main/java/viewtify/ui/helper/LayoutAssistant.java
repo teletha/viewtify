@@ -124,8 +124,8 @@ public final class LayoutAssistant implements InvalidationListener {
      * @param timing A condition signal.
      * @return Chainable API.
      */
-    public LayoutAssistant layoutWhile(Signal<Boolean> timing) {
-        timing.to(v -> {
+    public LayoutAssistant layoutWhile(Signal<Boolean> timing, Signal<Boolean>... timings) {
+        timing.combineLatest(timings, (one, other) -> one && other).to(v -> {
             shouldLayout = v;
         });
         return this;
