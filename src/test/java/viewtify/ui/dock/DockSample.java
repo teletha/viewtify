@@ -33,6 +33,10 @@ public class DockSample extends View {
         DockSystem.register("Fourth", o -> o.bottom().ratio(0.7)).contents(tab -> new ViewPane("Fourth"));
         DockSystem.register("Fifth", o -> o.bottom()).contents(tab -> new ViewPane("Fifth"));
         DockSystem.register("Third", o -> o.left().ratio(0.3)).contents(tab -> new ViewPane("Third"));
+        DockSystem.register("Tab1").contents(tab -> new ViewPane("Tab1"));
+        DockSystem.register("Tab2").contents(tab -> new ViewPane("Tab2"));
+        DockSystem.register("Tab3").contents(tab -> new ViewPane("Tab3"));
+        DockSystem.register("Tab4").contents(tab -> new ViewPane("Tab4"));
     }
 
     private class ViewPane extends View {
