@@ -564,6 +564,7 @@ public final class DockSystem {
             int actualIndex = values[0];
             int pointerIndex = values[1];
             int width = values[2];
+            int leftward = values[3];
 
             ObservableList<Tab> tabs = area.node.ui.getTabs();
             for (int i = 0; i < tabs.size(); i++) {
@@ -572,7 +573,7 @@ public final class DockSystem {
                 if (i == actualIndex) {
                     double lowerBound = -actualIndex * width;
                     double upperBound = (tabs.size() - actualIndex - 1) * width;
-                    node.setTranslateX(Math.max(lowerBound, Math.min(event.getX() - width * (i + 0.5), upperBound)));
+                    node.setTranslateX(Math.max(lowerBound, Math.min(leftward + event.getX() - width * (i + 0.5), upperBound)));
                     node.setViewOrder(-100);
                 } else if (i < actualIndex) {
                     if (i < pointerIndex) {
@@ -625,11 +626,14 @@ public final class DockSystem {
      */
     private static int[] calculate(TabArea area, DragEvent event) {
         ObservableList<Tab> tabs = area.node.ui.getTabs();
+        int leftward = Math.max(0, (int) -tabs.get(0).getStyleableNode().localToParent(0, 0).getX());
         int tabWidth = (int) tabs.get(0).getStyleableNode().prefWidth(-1);
         int actualIndex = tabs.indexOf(area == dragedTabArea ? dragedTab : dragedDoppelganger);
-        int expectedIndex = Math.min((int) ((event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
+        int expectedIndex = Math
+                .min((int) ((leftward + event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
+        System.out.println(leftward);
 
-        return new int[] {actualIndex, expectedIndex, tabWidth};
+        return new int[] {actualIndex, expectedIndex, tabWidth, leftward};
     }
 
     /**
