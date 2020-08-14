@@ -27,6 +27,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.skin.TabAbuse;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
@@ -563,6 +565,13 @@ public final class DockSystem {
             int pointerIndex = values[1];
             int width = values[2];
             int leftward = values[3];
+
+            TabPane pane = area.node.ui;
+            if (event.getX() <= width / 5) {
+                TabAbuse.updateTabHeaderScrollOffset(pane, +20);
+            } else if (pane.lookup(".headers-region").getBoundsInLocal().getWidth() - width / 5 <= event.getX()) {
+                TabAbuse.updateTabHeaderScrollOffset(pane, -20);
+            }
 
             ObservableList<Tab> tabs = area.node.ui.getTabs();
             for (int i = 0; i < tabs.size(); i++) {

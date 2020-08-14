@@ -214,22 +214,22 @@ class TabArea extends ViewArea<UITabPane> {
         }
 
         switch (position) {
-            case DockSystem.PositionTop:
-            case DockSystem.PositionBottom:
-            case DockSystem.PositionLeft:
-            case DockSystem.PositionRight:
-                return super.add(tab, position);
+        case DockSystem.PositionTop:
+        case DockSystem.PositionBottom:
+        case DockSystem.PositionLeft:
+        case DockSystem.PositionRight:
+            return super.add(tab, position);
 
-            case DockSystem.PositionCenter:
-                position = node.ui.getTabs().size();
-                // fall-through
+        case DockSystem.PositionCenter:
+            position = node.ui.getTabs().size();
+            // fall-through
 
-            default:
-                node.ui.getTabs().add(position, tab);
-                tab.setOnCloseRequest(e -> remove(tab, true));
+        default:
+            node.ui.getTabs().add(position, tab);
+            tab.setOnCloseRequest(e -> remove(tab, true));
 
-                selectInitialTabOnlyOnce(tab);
-                return this;
+            selectInitialTabOnlyOnce(tab);
+            return this;
         }
     }
 
