@@ -20,7 +20,9 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.StackPane;
 
 import kiss.I;
+import kiss.Signal;
 import kiss.WiseFunction;
+import viewtify.Viewtify;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
@@ -135,6 +137,15 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
             view.initializeLazy(parent);
             setContent(view.ui());
         }
+    }
+
+    /**
+     * Event stream of the tab selection state.
+     * 
+     * @return
+     */
+    public final Signal<Boolean> isSelecting() {
+        return Viewtify.observing(selectedProperty());
     }
 
     /**
