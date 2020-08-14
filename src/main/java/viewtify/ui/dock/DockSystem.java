@@ -10,7 +10,6 @@
 package viewtify.ui.dock;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -560,7 +559,6 @@ public final class DockSystem {
             event.acceptTransferModes(TransferMode.MOVE);
 
             int[] values = calculate(area, event);
-            System.out.println(Arrays.toString(values));
             int actualIndex = values[0];
             int pointerIndex = values[1];
             int width = values[2];
@@ -631,7 +629,6 @@ public final class DockSystem {
         int actualIndex = tabs.indexOf(area == dragedTabArea ? dragedTab : dragedDoppelganger);
         int expectedIndex = Math
                 .min((int) ((leftward + event.getX() + tabWidth / 8) / tabWidth), tabs.size() + (actualIndex == -1 ? 0 : -1));
-        System.out.println(leftward);
 
         return new int[] {actualIndex, expectedIndex, tabWidth, leftward};
     }
