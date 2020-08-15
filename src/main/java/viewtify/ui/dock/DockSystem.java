@@ -417,15 +417,15 @@ public final class DockSystem {
      */
     private static boolean canDrop(int position, TabArea area) {
         switch (position) {
-        case PositionCenter:
-            // exclude if the source and destination are the same
-            if (area == dragedTabArea) {
-                return false;
-            }
-            break;
+            case PositionCenter:
+                // exclude if the source and destination are the same
+                if (area == dragedTabArea) {
+                    return false;
+                }
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
         return true;
     }
@@ -481,35 +481,35 @@ public final class DockSystem {
             bounds = dragedTab.getStyleableNode().getBoundsInLocal();
         }
         switch (position) {
-        case PositionCenter:
-            dropOverlay.setX(0);
-            dropOverlay.setY(0);
-            dropOverlay.setWidth(bounds.getWidth());
-            dropOverlay.setHeight(bounds.getHeight());
-            break;
-        case PositionLeft:
-            dropOverlay.setX(0);
-            dropOverlay.setY(0);
-            dropOverlay.setWidth(bounds.getWidth() * 0.5);
-            dropOverlay.setHeight(bounds.getHeight());
-            break;
-        case PositionRight:
-            dropOverlay.setX(bounds.getWidth() * 0.5);
-            dropOverlay.setY(0);
-            dropOverlay.setWidth(bounds.getWidth() * 0.5);
-            dropOverlay.setHeight(bounds.getHeight());
-            break;
-        case PositionTop:
-            dropOverlay.setX(0);
-            dropOverlay.setY(0);
-            dropOverlay.setWidth(bounds.getWidth());
-            dropOverlay.setHeight(bounds.getHeight() * 0.5);
-            break;
-        case PositionBottom:
-            dropOverlay.setX(0);
-            dropOverlay.setY(bounds.getHeight() * 0.5);
-            dropOverlay.setWidth(bounds.getWidth());
-            dropOverlay.setHeight(bounds.getHeight() * 0.5);
+            case PositionCenter:
+                dropOverlay.setX(0);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(bounds.getWidth());
+                dropOverlay.setHeight(bounds.getHeight());
+                break;
+            case PositionLeft:
+                dropOverlay.setX(0);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(bounds.getWidth() * 0.5);
+                dropOverlay.setHeight(bounds.getHeight());
+                break;
+            case PositionRight:
+                dropOverlay.setX(bounds.getWidth() * 0.5);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(bounds.getWidth() * 0.5);
+                dropOverlay.setHeight(bounds.getHeight());
+                break;
+            case PositionTop:
+                dropOverlay.setX(0);
+                dropOverlay.setY(0);
+                dropOverlay.setWidth(bounds.getWidth());
+                dropOverlay.setHeight(bounds.getHeight() * 0.5);
+                break;
+            case PositionBottom:
+                dropOverlay.setX(0);
+                dropOverlay.setY(bounds.getHeight() * 0.5);
+                dropOverlay.setWidth(bounds.getWidth());
+                dropOverlay.setHeight(bounds.getHeight() * 0.5);
         }
     }
 
@@ -633,7 +633,7 @@ public final class DockSystem {
      */
     private static int[] calculate(TabArea area, DragEvent event) {
         ObservableList<Tab> tabs = area.node.ui.getTabs();
-        int leftward = Math.max(0, (int) -tabs.get(0).getStyleableNode().localToParent(0, 0).getX());
+        int leftward = Math.max(0, (int) -TabAbuse.getTabHeaderScrollOffset(area.node.ui));
         int tabWidth = (int) tabs.get(0).getStyleableNode().prefWidth(-1);
         int actualIndex = tabs.indexOf(area == dragedTabArea ? dragedTab : dragedDoppelganger);
         int expectedIndex = Math

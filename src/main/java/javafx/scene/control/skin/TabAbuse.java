@@ -33,7 +33,6 @@ public class TabAbuse {
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {
-            e.printStackTrace();
             throw I.quiet(e);
         }
     }
@@ -43,9 +42,23 @@ public class TabAbuse {
     private static final MethodHandle scrollOffsetSetter = invoker("javafx.scene.control.skin.TabPaneSkin$TabHeaderArea", "setScrollOffset", double.class);
 
     /**
-     * Adjust the scroll rate of the tab display part of the specified TabPane.
+     * Get the current scroll offset of the specified {@link TabPane}.
      * 
-     * @param pane
+     * @param pane A target.
+     * @return A scroll offset (may be negative).
+     */
+    public static double getTabHeaderScrollOffset(TabPane pane) {
+        try {
+            return (double) scrollOffsetGetter.invoke(pane.lookup(".tab-header-area"));
+        } catch (Throwable e) {
+            throw I.quiet(e);
+        }
+    }
+
+    /**
+     * Adjust the scroll rate of the tab display part of the specified {@link TabPane}.
+     * 
+     * @param pane A target.
      * @param diff
      */
     public static void updateTabHeaderScrollOffset(TabPane pane, double diff) {
@@ -54,7 +67,6 @@ public class TabAbuse {
             double current = (double) scrollOffsetGetter.invoke(header);
             scrollOffsetSetter.invoke(header, current + diff);
         } catch (Throwable e) {
-            e.printStackTrace();
             throw I.quiet(e);
         }
     }
