@@ -27,8 +27,8 @@
 }
 
 .tab-pane {
-  	-fx-tab-min-width: 8.0em;
-  	-fx-tab-max-width: 8.0em;
+  	-fx-tab-min-width: 8.68em;
+  	-fx-tab-max-width: 8.68em;
 }
 
 .tab-pane.stop-anime {
