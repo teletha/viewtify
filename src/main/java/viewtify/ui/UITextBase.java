@@ -11,12 +11,15 @@ package viewtify.ui;
 
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.control.skin.TextFieldSkin;
 
 import kiss.I;
@@ -31,13 +34,22 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
     /** The internal model value. */
     private final SimpleObjectProperty<V> model = new SimpleObjectProperty();
 
+    private boolean masking;
+
+    private int max;
+
+    private Pattern acceptable;
+
+    private Form form;
+
     /**
      * Enchanced view.
      * 
      * @param ui
      */
     UITextBase(View view) {
-        super(new VerifiableTextField(), view);
+        super(new TextField(), view);
+        ui.setSkin(new CustomSkin(ui));
 
         // propagate value from model to ui
         Viewtify.observe(model).to(value -> {
@@ -99,7 +111,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptAlphabeticInput() {
-        return acceptInput("[a-zA-Z]+");
+        return acceptInput("[a-zA-Z]*");
     }
 
     /**
@@ -108,7 +120,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptAlphaNumericInput() {
-        return acceptInput("[a-zA-Z0-9]+");
+        return acceptInput("[a-zA-Z0-9]*");
     }
 
     /**
@@ -117,7 +129,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptPositiveNumberInput() {
-        return acceptInput("[0-9.]+");
+        return acceptInput("[0-9.]*");
     }
 
     /**
@@ -126,7 +138,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptIntegralInput() {
-        return acceptInput("[\\-0-9]+");
+        return acceptInput("-?[0-9]*");
     }
 
     /**
@@ -135,7 +147,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptDecimalInput() {
-        return acceptInput("[+\\-0-9.]+");
+        return acceptInput("-?[0-9.]*");
     }
 
     /**
@@ -145,7 +157,8 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptInput(String regex) {
-        ((VerifiableTextField) ui).acceptInput(regex);
+        acceptable = regex == null || regex.isBlank() ? null : Pattern.compile(regex);
+        useFormatter();
         return (Self) this;
     }
 
@@ -156,7 +169,8 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self normalizeInput(Normalizer.Form form) {
-        ((VerifiableTextField) ui).form = form;
+        this.form = form;
+        useFormatter();
         return (Self) this;
     }
 
@@ -168,8 +182,19 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self maximumInput(int size) {
-        ((VerifiableTextField) ui).max = size - 1;
+        this.max = size - 1;
+        useFormatter();
         return (Self) this;
+    }
+
+    /**
+     * Use custom formatter.
+     */
+    private void useFormatter() {
+        TextFormatter<?> formatter = ui.getTextFormatter();
+        if (formatter == null) {
+            ui.setTextFormatter(new TextFormatter(new Format()));
+        }
     }
 
     /**
@@ -179,77 +204,53 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return Chainable API.
      */
     public final Self masking(boolean enable) {
-        ((VerifiableTextField) ui).masking = enable;
+        masking = enable;
         ui.setText(ui.getText()); // apply immediately
         return (Self) this;
     }
 
     /**
-     * 
+     *
      */
-    static class VerifiableTextField extends TextField {
-
-        private boolean masking;
-
-        private int max;
-
-        private Pattern acceptable;
-
-        private Form form;
-
-        /**
-         * 
-         */
-        VerifiableTextField() {
-            setSkin(new VerifiableTextFieldSkin(this));
-        }
-
-        /**
-         * Specify the character types that can be entered as regular expressions.
-         * 
-         * @param regex
-         * @return
-         */
-        private void acceptInput(String regex) {
-            acceptable = regex == null || regex.isBlank() ? null : Pattern.compile(regex);
-        }
+    private class Format implements UnaryOperator<Change> {
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public void replaceText(int start, int end, String text) {
-            if (text.length() == 0) {
-                super.replaceText(start, end, text);
-                return;
+        public Change apply(Change c) {
+            System.out.println(c);
+            // restrict maximum length
+            if (max < c.getControlNewText().length()) {
+                return null;
             }
 
-            if (0 < max && max < getLength()) {
-                return;
-            }
-
+            // normalize character kind
             if (form != null) {
-                text = Normalizer.normalize(text, form);
+                c.setText(Normalizer.normalize(c.getText(), form));
             }
 
-            if (acceptable == null || acceptable.matcher(text).matches()) {
-                super.replaceText(start, end, text);
+            // restrict character
+            if (acceptable != null && !acceptable.matcher(c.getControlNewText()).matches()) {
+                return null;
             }
+
+            return c;
+        }
+    }
+
+    /**
+     * 
+     */
+    private class CustomSkin extends TextFieldSkin {
+
+        private CustomSkin(TextField control) {
+            super(control);
         }
 
-        /**
-         * 
-         */
-        private class VerifiableTextFieldSkin extends TextFieldSkin {
-
-            private VerifiableTextFieldSkin(TextField control) {
-                super(control);
-            }
-
-            @Override
-            protected String maskText(String text) {
-                return masking ? "\u25cf".repeat(text.length()) : text;
-            }
+        @Override
+        protected String maskText(String text) {
+            return masking ? "\u25cf".repeat(text.length()) : text;
         }
     }
 }
