@@ -11,15 +11,12 @@ package viewtify.ui;
 
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.control.skin.TextFieldSkin;
 
 import kiss.I;
@@ -34,13 +31,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
     /** The internal model value. */
     private final SimpleObjectProperty<V> model = new SimpleObjectProperty();
 
-    private boolean masking;
-
-    private int max;
-
-    private Pattern acceptable;
-
-    private Form form;
+    private boolean updating;
 
     /**
      * Enchanced view.
@@ -48,24 +39,33 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @param ui
      */
     UITextBase(View view) {
-        super(new TextField(), view);
-        ui.setSkin(new CustomSkin(ui));
+        super(new VerifiableTextField(), view);
 
         // propagate value from model to ui
         Viewtify.observe(model).to(value -> {
-            try {
-                ui.setText(I.transform(value, String.class));
-            } catch (Throwable e) {
-                // ignore
+            if (!updating) {
+                updating = true;
+                try {
+                    ui.setText(I.transform(value, String.class));
+                } catch (Throwable e) {
+                    // ignore
+                } finally {
+                    updating = false;
+                }
             }
         });
 
         // propagate value from ui to model
         Viewtify.observe(ui.textProperty()).to(uiText -> {
-            try {
-                model.set((V) I.transform(uiText, model.get().getClass()));
-            } catch (Throwable e) {
-                // ignore
+            if (!updating) {
+                updating = true;
+                try {
+                    model.set((V) I.transform(uiText, model.get().getClass()));
+                } catch (Throwable e) {
+                    // ignore
+                } finally {
+                    updating = false;
+                }
             }
         });
     }
@@ -111,7 +111,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptAlphabeticInput() {
-        return acceptInput("[a-zA-Z]*");
+        return acceptInput("[a-zA-Z]+");
     }
 
     /**
@@ -120,7 +120,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptAlphaNumericInput() {
-        return acceptInput("[a-zA-Z0-9]*");
+        return acceptInput("[a-zA-Z0-9]+");
     }
 
     /**
@@ -129,7 +129,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptPositiveNumberInput() {
-        return acceptInput("[0-9.]*");
+        return acceptInput("[0-9.]+");
     }
 
     /**
@@ -138,7 +138,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptIntegralInput() {
-        return acceptInput("-?[0-9]*");
+        return acceptInput("[\\-0-9]+");
     }
 
     /**
@@ -147,7 +147,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptDecimalInput() {
-        return acceptInput("-?[0-9.]*");
+        return acceptInput("[+\\-0-9.]+");
     }
 
     /**
@@ -157,8 +157,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self acceptInput(String regex) {
-        acceptable = regex == null || regex.isBlank() ? null : Pattern.compile(regex);
-        useFormatter();
+        ((VerifiableTextField) ui).acceptInput(regex);
         return (Self) this;
     }
 
@@ -169,8 +168,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self normalizeInput(Normalizer.Form form) {
-        this.form = form;
-        useFormatter();
+        ((VerifiableTextField) ui).form = form;
         return (Self) this;
     }
 
@@ -182,19 +180,8 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return
      */
     public final Self maximumInput(int size) {
-        this.max = size - 1;
-        useFormatter();
+        ((VerifiableTextField) ui).max = size - 1;
         return (Self) this;
-    }
-
-    /**
-     * Use custom formatter.
-     */
-    private void useFormatter() {
-        TextFormatter<?> formatter = ui.getTextFormatter();
-        if (formatter == null) {
-            ui.setTextFormatter(new TextFormatter(new Format()));
-        }
     }
 
     /**
@@ -204,53 +191,77 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * @return Chainable API.
      */
     public final Self masking(boolean enable) {
-        masking = enable;
+        ((VerifiableTextField) ui).masking = enable;
         ui.setText(ui.getText()); // apply immediately
         return (Self) this;
     }
 
     /**
-     *
+     * 
      */
-    private class Format implements UnaryOperator<Change> {
+    static class VerifiableTextField extends TextField {
+
+        private boolean masking;
+
+        private int max;
+
+        private Pattern acceptable;
+
+        private Form form;
+
+        /**
+         * 
+         */
+        VerifiableTextField() {
+            setSkin(new VerifiableTextFieldSkin(this));
+        }
+
+        /**
+         * Specify the character types that can be entered as regular expressions.
+         * 
+         * @param regex
+         * @return
+         */
+        private void acceptInput(String regex) {
+            acceptable = regex == null || regex.isBlank() ? null : Pattern.compile(regex);
+        }
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public Change apply(Change c) {
-            System.out.println(c);
-            // restrict maximum length
-            if (max < c.getControlNewText().length()) {
-                return null;
+        public void replaceText(int start, int end, String text) {
+            if (text.length() == 0) {
+                super.replaceText(start, end, text);
+                return;
             }
 
-            // normalize character kind
+            if (0 < max && max < getLength()) {
+                return;
+            }
+
             if (form != null) {
-                c.setText(Normalizer.normalize(c.getText(), form));
+                text = Normalizer.normalize(text, form);
             }
 
-            // restrict character
-            if (acceptable != null && !acceptable.matcher(c.getControlNewText()).matches()) {
-                return null;
+            if (acceptable == null || acceptable.matcher(text).matches()) {
+                super.replaceText(start, end, text);
+            }
+        }
+
+        /**
+         * 
+         */
+        private class VerifiableTextFieldSkin extends TextFieldSkin {
+
+            private VerifiableTextFieldSkin(TextField control) {
+                super(control);
             }
 
-            return c;
-        }
-    }
-
-    /**
-     * 
-     */
-    private class CustomSkin extends TextFieldSkin {
-
-        private CustomSkin(TextField control) {
-            super(control);
-        }
-
-        @Override
-        protected String maskText(String text) {
-            return masking ? "\u25cf".repeat(text.length()) : text;
+            @Override
+            protected String maskText(String text) {
+                return masking ? "\u25cf".repeat(text.length()) : text;
+            }
         }
     }
 }
