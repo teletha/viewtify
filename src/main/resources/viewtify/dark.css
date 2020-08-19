@@ -49,19 +49,3 @@
 .text-field {
   -fx-text-box-border: -fx-color;
 }
-
-/* Fix scroll bar buttons arrows colors */
-.scroll-bar > .increment-button > .increment-arrow,
-.scroll-bar > .decrement-button > .decrement-arrow {
-    -fx-background-color: -fx-mark-highlight-color, rgb(220, 220, 220);
-}
-
-.scroll-bar > .increment-button:hover > .increment-arrow,
-.scroll-bar > .decrement-button:hover > .decrement-arrow {
-    -fx-background-color: -fx-mark-highlight-color, rgb(240, 240, 240);
-}
-
-.scroll-bar > .increment-button:pressed > .increment-arrow,
-.scroll-bar > .decrement-button:pressed > .decrement-arrow {
-    -fx-background-color: -fx-mark-highlight-color, rgb(255, 255, 255);
-}

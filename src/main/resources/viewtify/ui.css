@@ -108,3 +108,29 @@
 		-fx-opacity: 0.94;
     -fx-fill: -fx-background !important;
 }
+
+/* ==========================================================================
+  ScrollBar
+===========================================================================*/
+.scroll-bar:vertical {
+    -fx-pref-width: 9;
+}
+
+.scroll-bar:horizontal {
+    -fx-pref-height: 9;
+}
+
+.scroll-bar .thumb {
+    -fx-background-insets: 1 1 1 1; /* flat style */
+}
+
+.scroll-bar > .thumb:pressed {
+    -fx-color: -fx-hover-base; /* same as hover color */
+}
+
+.scroll-bar .decrement-button,
+.scroll-bar .increment-button,
+.scroll-bar .decrement-arrow,
+.scroll-bar .increment-arrow {
+    -fx-padding: 0; /* hide */
+}
