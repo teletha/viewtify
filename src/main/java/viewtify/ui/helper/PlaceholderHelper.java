@@ -22,7 +22,7 @@ import viewtify.ui.UserInterfaceProvider;
 public interface PlaceholderHelper<Self extends PlaceholderHelper> extends PropertyAccessHelper {
 
     /**
-     * Set placeholder text..
+     * Set placeholder text.
      * 
      * @param text A text to set.
      * @return Chainable API.
@@ -32,7 +32,7 @@ public interface PlaceholderHelper<Self extends PlaceholderHelper> extends Prope
     }
 
     /**
-     * Set placeholder text..
+     * Set placeholder text.
      * 
      * @param text A text {@link Variable} to set.
      * @return Chainable API.
@@ -43,7 +43,7 @@ public interface PlaceholderHelper<Self extends PlaceholderHelper> extends Prope
     }
 
     /**
-     * Set placeholder text..
+     * Set placeholder text.
      * 
      * @param text A text {@link Variable} to set.
      * @return Chainable API.
