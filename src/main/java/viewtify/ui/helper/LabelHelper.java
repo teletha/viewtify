@@ -31,7 +31,6 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     /**
      * Get text.
      * 
-     * @param text
      * @return A current text.
      */
     default String text() {
