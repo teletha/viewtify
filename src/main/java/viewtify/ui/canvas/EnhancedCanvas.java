@@ -19,6 +19,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import kiss.Signal;
 import viewtify.Viewtify;
@@ -250,8 +251,18 @@ public class EnhancedCanvas extends Canvas implements StyleHelper<EnhancedCanvas
      * @param size A font size to set.
      * @return Chainable API.
      */
-    public EnhancedCanvas fontSize(int size) {
-        getGraphicsContext2D().setFont(Font.font(size));
+    public EnhancedCanvas font(double size) {
+        return font(size, null);
+    }
+
+    /**
+     * Configure font size..
+     * 
+     * @param size A font size to set.
+     * @return Chainable API.
+     */
+    public EnhancedCanvas font(double size, FontWeight weight) {
+        getGraphicsContext2D().setFont(Font.font(null, weight, size));
         return this;
     }
 
