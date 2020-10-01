@@ -246,6 +246,15 @@ public class EnhancedCanvas extends Canvas implements StyleHelper<EnhancedCanvas
     }
 
     /**
+     * Get the current font size.
+     * 
+     * @return
+     */
+    public double fontSize() {
+        return getGraphicsContext2D().getFont().getSize();
+    }
+
+    /**
      * Configure font size..
      * 
      * @param size A font size to set.
