@@ -34,6 +34,7 @@ import kiss.I;
 import kiss.Managed;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.model.Model;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
@@ -225,12 +226,15 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
             String stored = preference.get(id);
 
             if (stored != null) {
-                try {
-                    value = (T) I.transform(stored, defaultValue.getClass());
-                } catch (Throwable e) {
-                    // ignore
-                    e.printStackTrace();
+                for (Class type : Model.collectTypes(defaultValue.getClass())) {
+                    try {
+                        value = (T) I.transform(stored, type);
+                        break;
+                    } catch (Throwable e) {
+                        // ignore
+                    }
                 }
+
             }
         }
         setter.accept(value);

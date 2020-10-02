@@ -136,7 +136,6 @@ public interface ValueHelper<Self extends ValueHelper, V> {
             method.setAccessible(true);
             method.invoke(ui, valueProperty(), initialValue);
         } catch (Throwable e) {
-            e.printStackTrace();
             throw I.quiet(e);
         }
         return (Self) this;
