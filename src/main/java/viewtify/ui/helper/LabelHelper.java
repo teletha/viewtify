@@ -18,6 +18,8 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import org.controlsfx.glyphfont.Glyph;
 import org.controlsfx.glyphfont.INamedCharacter;
@@ -156,5 +158,78 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     default Self color(Paint color) {
         property(Type.TextFill).setValue(color);
         return (Self) this;
+    }
+
+    /**
+     * Get font.
+     * 
+     * @return A current font.
+     */
+    default Font font() {
+        return property(Type.Font).getValue();
+    }
+
+    /**
+     * Set font.
+     * 
+     * @param font A font to set.
+     * @return Chainable API.
+     */
+    default Self font(Font font) {
+        property(Type.Font).setValue(font);
+        return (Self) this;
+    }
+
+    /**
+     * Set font by name.
+     * 
+     * @param name A font name to set.
+     * @return Chainable API.
+     */
+    default Self font(String name) {
+        return font(Font.font(name));
+    }
+
+    /**
+     * Set font by size.
+     * 
+     * @param size A font size to set.
+     * @return Chainable API.
+     */
+    default Self font(double size) {
+        return font(Font.font(size));
+    }
+
+    /**
+     * Set font by weight.
+     * 
+     * @param weight A font weight to set.
+     * @return Chainable API.
+     */
+    default Self font(FontWeight weight) {
+        return font(Font.font(null, weight, -1));
+    }
+
+    /**
+     * Set font by size and weight.
+     * 
+     * @param size A font size to set.
+     * @param weight A font weight to set.
+     * @return Chainable API.
+     */
+    default Self font(double size, FontWeight weight) {
+        return font(Font.font(null, weight, size));
+    }
+
+    /**
+     * Set font by name, size and weight.
+     * 
+     * @param name A font name to set.
+     * @param size A font size to set.
+     * @param weight A font weight to set.
+     * @return Chainable API.
+     */
+    default Self font(String name, double size, FontWeight weight) {
+        return font(Font.font(name, weight, size));
     }
 }
