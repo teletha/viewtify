@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 
 import org.controlsfx.glyphfont.Glyph;
 import org.controlsfx.glyphfont.INamedCharacter;
@@ -134,6 +135,26 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     default Self text(Node text) {
         property(Type.Text).setValue(null);
         property(Type.Graphic).setValue(text);
+        return (Self) this;
+    }
+
+    /**
+     * Get font color.
+     * 
+     * @return A current font color.
+     */
+    default Paint color() {
+        return property(Type.TextFill).getValue();
+    }
+
+    /**
+     * Set font color.
+     * 
+     * @param color A color to set.
+     * @return Chainable API.
+     */
+    default Self color(Paint color) {
+        property(Type.TextFill).setValue(color);
         return (Self) this;
     }
 }
