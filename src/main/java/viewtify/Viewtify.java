@@ -345,7 +345,10 @@ public final class Viewtify {
             String prefs = ".preferences for " + applicationClass.getSimpleName().toLowerCase();
 
             // Separate settings for each application
-            String env = I.env("PreferenceDirectory", prefs);
+            I.env("PreferenceDirectory", prefs);
+
+            // Specify JavaFX cache directory
+            System.setProperty("javafx.cachedir", prefs + "/native");
 
             // How to handle simultaneous application startup
             checkActivationPolicy(prefs);
