@@ -11,6 +11,7 @@ package viewtify.ui.helper;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventTarget;
 import javafx.event.EventType;
 
 import kiss.I;
@@ -223,5 +224,15 @@ public interface UserActionHelper<Self extends UserActionHelper> {
      */
     private <E extends Event> Self when(Signal<User<E>> actionTypes, WiseBiConsumer<E, Self> listener) {
         return when(actionTypes, e -> listener.accept(e, (Self) this));
+    }
+
+    /**
+     * Create temporary {@link UserActionHelper}.
+     * 
+     * @param eventTarget
+     * @return
+     */
+    static UserActionHelper of(EventTarget eventTarget) {
+        return () -> eventTarget;
     }
 }

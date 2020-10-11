@@ -9,6 +9,9 @@
  */
 package viewtify.ui.toast;
 
+import java.util.Random;
+
+import net.bytebuddy.utility.RandomString;
 import viewtify.Theme;
 import viewtify.Viewtify;
 import viewtify.ui.UIButton;
@@ -37,8 +40,10 @@ public class ToastSample {
          */
         @Override
         protected void initialize() {
+            Random random = new Random();
+
             button.text("Show").when(User.LeftClick).to(() -> {
-                Toast.show("OK");
+                Toast.show(RandomString.make(Math.max(15, random.nextInt(100))));
             });
         }
     }

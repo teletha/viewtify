@@ -9,21 +9,35 @@
  */
 package viewtify.ui.toast;
 
-import javafx.collections.ObservableList;
+import java.util.LinkedList;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.value.WritableDoubleValue;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
+import javafx.stage.Screen;
 import javafx.stage.Window;
+import javafx.util.Duration;
 
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.ui.helper.StyleHelper;
+import viewtify.ui.helper.User;
+import viewtify.ui.helper.UserActionHelper;
 
 public class Toast {
 
     /** The base transparent window. */
-    private static final Popup base = new Popup();
+    private static final LinkedList<Notify> notifications = new LinkedList();
+
+    /** The maximum size of notifications. */
+    private static final int max = 5;
+
+    private static Duration duration = Duration.millis(400);
 
     /**
      * Show the specified node.
@@ -31,7 +45,10 @@ public class Toast {
      * @param node
      */
     public static synchronized void show(String message) {
-        show(new Label(message));
+        Label label = new Label(message);
+        label.setWrapText(true);
+
+        show(label);
     }
 
     /**
@@ -40,26 +57,109 @@ public class Toast {
      * @param node
      */
     public static synchronized void show(Node node) {
-        base.setX(0);
-        base.setY(200);
+        notifications.add(new Notify(node));
 
-        VBox box = new VBox(node);
-        StyleHelper.of(box).style(Styles.pop);
+        if (max < notifications.size()) {
+            notifications.peekFirst().disappear();
+        }
 
-        ObservableList<Node> content = base.getContent();
-        content.clear();
-        content.add(box);
+        layout();
+    }
 
+    private static void layout() {
         Window window = Window.getWindows().get(0);
-        base.show(window);
+        Screen screen = Screen.getScreensForRectangle(window.getX(), window.getY(), window.getWidth(), window.getHeight()).get(0);
+        double x = screen.getBounds().getMinX();;
+        double y = 30;
+        double margin = 9;
+
+        for (Notify notify : notifications) {
+            if (notify.popup.isShowing()) {
+                notify.moveTo(x, y);
+            } else {
+                notify.popup.show(window);
+                notify.appear(x, y);
+            }
+
+            y += notify.popup.getHeight() + margin;
+        }
+    }
+
+    /**
+     * 
+     */
+    private static class Notify {
+
+        /** The base transparent window. */
+        private final Popup popup = new Popup();
+
+        private final WritableDoubleValue y = new WritableDoubleValue() {
+
+            @Override
+            public Number getValue() {
+                return get();
+            }
+
+            @Override
+            public double get() {
+                return popup.getY();
+            }
+
+            @Override
+            public void setValue(Number value) {
+                set(value.doubleValue());
+            }
+
+            @Override
+            public void set(double value) {
+                popup.setY(value);
+            }
+        };
+
+        private Notify(Node node) {
+            VBox box = new VBox(node);
+            StyleHelper.of(box).style(Styles.pop);
+
+            popup.setX(0);
+            popup.getContent().add(box);
+            UserActionHelper.of(popup).when(User.MouseClick).to(this::disappear);
+        }
+
+        private void appear(double x, double y) {
+            popup.setOpacity(0);
+            popup.setX(x);
+            popup.setY(y);
+
+            Timeline appear = new Timeline(new KeyFrame(duration, new KeyValue(popup.opacityProperty(), 1)));
+            appear.play();
+        }
+
+        private void moveTo(double x, double y) {
+            popup.setX(x);
+            Timeline move = new Timeline(new KeyFrame(duration, new KeyValue(this.y, y)));
+            move.play();
+        }
+
+        private void disappear() {
+            Timeline disappear = new Timeline();
+            disappear.getKeyFrames().add(new KeyFrame(duration, new KeyValue(popup.opacityProperty(), 0)));
+            disappear.setOnFinished(e -> {
+                popup.hide();
+                popup.getContent().clear();
+                layout();
+            });
+            disappear.play();
+
+            notifications.remove(this);
+        }
     }
 
     private static interface Styles extends StyleDSL {
         Style pop = () -> {
-            display.width(250, px).opacity(0.75);
-            padding.vertical(7, px).horizontal(9, px);
+            display.width(250, px).opacity(0.8);
+            padding.vertical(9, px).horizontal(9, px);
             background.color("-fx-background");
-            border.radius(5, px);
+            border.radius(7, px);
         };
     }
 }
