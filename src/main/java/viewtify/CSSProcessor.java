@@ -48,6 +48,7 @@ class CSSProcessor implements Consumer<Properties> {
         properties.revalue("cursor", cursorProperties);
 
         alignment(properties);
+        borderRadius(properties);
         height(properties);
         textIndent(properties);
         userSelect(properties);
@@ -95,6 +96,19 @@ class CSSProcessor implements Consumer<Properties> {
             }
             properties.set("alignment", CSSValue.of(value));
             if (!value.contains("-")) properties.set("text-alignment", CSSValue.of(value));
+        }
+    }
+
+    /**
+     * Configure border-radius.
+     * 
+     * @param properties
+     */
+    private void borderRadius(Properties properties) {
+        Variable<CSSValue> value = properties.get("border-radius");
+
+        if (value.isPresent()) {
+            properties.set("background-radius", value.v);
         }
     }
 
