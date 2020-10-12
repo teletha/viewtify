@@ -12,6 +12,7 @@ package viewtify.ui.toast;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import javafx.beans.value.WritableDoubleValue;
 import javafx.geometry.Rectangle2D;
@@ -23,6 +24,7 @@ import javafx.stage.Screen;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
+import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.ui.helper.StyleHelper;
@@ -45,6 +47,9 @@ public class Toast {
     /** The animation time. */
     private static Duration duration = Duration.millis(333);
 
+    /** The automatic hiding time. */
+    private static int autoHide = 180;
+
     /** The notification area. */
     private static Corner corner = Corner.TopRight;
 
@@ -61,6 +66,15 @@ public class Toast {
      */
     public static void setArea(Corner area) {
         corner = Objects.requireNonNullElse(area, Corner.TopRight);
+    }
+
+    /**
+     * Configure the auto hide time. (default : 180)
+     * 
+     * @param duration A positive number (sec), 0 or negative number disable auto-hiding.
+     */
+    public static void setAutoHide(int seconds) {
+        autoHide = Math.max(0, seconds);
     }
 
     /**
@@ -140,17 +154,17 @@ public class Toast {
      * @param notification
      */
     private static void remove(Notification notification) {
-        // UI effect
-        FXUtils.animate(duration, notification.popup.opacityProperty(), 0, () -> {
-            notification.popup.hide();
-            notification.popup.getContent().clear();
-        });
-
         // model management
-        notifications.remove(notification);
+        if (notifications.remove(notification)) {
+            // UI effect
+            FXUtils.animate(duration, notification.popup.opacityProperty(), 0, () -> {
+                notification.popup.hide();
+                notification.popup.getContent().clear();
+            });
 
-        // draw UI
-        layoutNotifications();
+            // draw UI
+            layoutNotifications();
+        }
     }
 
     /**
@@ -232,6 +246,7 @@ public class Toast {
             popup.setX(0);
             popup.getContent().add(box);
             UserActionHelper.of(popup).when(User.MouseClick).to(() -> remove(this));
+            if (0 < autoHide) I.schedule(autoHide, TimeUnit.SECONDS).first().to(() -> remove(this));
         }
 
     }
