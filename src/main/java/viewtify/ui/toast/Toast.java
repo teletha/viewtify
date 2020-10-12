@@ -48,16 +48,16 @@ public class Toast {
     private static Duration duration = Duration.millis(333);
 
     /** The automatic hiding time. */
-    private static int autoHide = 180;
+    private static int autoHide = 10;
 
     /** The notification area. */
     private static Corner corner = Corner.TopRight;
 
     /** The opacity of notification area. */
-    private static final double opacity = 0.85;
+    private static double opacity = 0.85;
 
     /** The width of notification area. */
-    private static final int width = 250;
+    private static int width = 250;
 
     /**
      * Configure the notification area. (default : TopRight)
@@ -89,10 +89,10 @@ public class Toast {
     /**
      * Configure the width of notification area. (default : 0.85)
      * 
-     * @param duration A positive number.
+     * @param value A positive number.
      */
-    public static void setOpacity(double opacity) {
-        opacity = Math.min(1, Math.max(0.1, opacity));
+    public static void setOpacity(double value) {
+        opacity = Math.min(1, Math.max(0.1, value));
     }
 
     /**
@@ -107,10 +107,10 @@ public class Toast {
     /**
      * Configure the width of notification area. (default : 250)
      * 
-     * @param duration A positive number.
+     * @param value A positive number.
      */
-    public static void setWidth(int width) {
-        width = Math.max(10, width);
+    public static void setWidth(int value) {
+        width = Math.max(10, value);
     }
 
     /**
