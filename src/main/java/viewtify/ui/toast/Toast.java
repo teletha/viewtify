@@ -9,12 +9,12 @@
  */
 package viewtify.ui.toast;
 
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Objects;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.beans.value.WritableDoubleValue;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -28,23 +28,83 @@ import stylist.StyleDSL;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
+import viewtify.util.Corner;
+import viewtify.util.FXUtils;
 
 public class Toast {
 
+    /** The margin for each notifications. */
+    private static final int MARGIN = 12;
+
     /** The base transparent window. */
-    private static final LinkedList<Notify> notifications = new LinkedList();
+    private static final LinkedList<Notification> notifications = new LinkedList();
 
     /** The maximum size of notifications. */
-    private static final int max = 5;
+    private static int max = 7;
 
-    private static Duration duration = Duration.millis(400);
+    /** The animation time. */
+    private static Duration duration = Duration.millis(333);
+
+    /** The notification area. */
+    private static Corner corner = Corner.TopRight;
+
+    /** The opacity of notification area. */
+    private static final double opacity = 0.85;
+
+    /** The width of notification area. */
+    private static final int width = 250;
+
+    /**
+     * Configure the notification area. (default : TopRight)
+     * 
+     * @param area A notification area.
+     */
+    public static void setArea(Corner area) {
+        corner = Objects.requireNonNullElse(area, Corner.TopRight);
+    }
+
+    /**
+     * Configure the maximum viewable size of notifications. (default : 7)
+     * 
+     * @param size A positive number.
+     */
+    public static void setMax(int size) {
+        max = Math.max(1, size);
+    }
+
+    /**
+     * Configure the width of notification area. (default : 0.85)
+     * 
+     * @param duration A positive number.
+     */
+    public static void setOpacity(double opacity) {
+        opacity = Math.min(1, Math.max(0.1, opacity));
+    }
+
+    /**
+     * Configure the animation time. (default : 333)
+     * 
+     * @param duration A positive number (mills).
+     */
+    public static void setTime(int durationMills) {
+        duration = Duration.millis(Math.max(1, durationMills));
+    }
+
+    /**
+     * Configure the width of notification area. (default : 250)
+     * 
+     * @param duration A positive number.
+     */
+    public static void setWidth(int width) {
+        width = Math.max(10, width);
+    }
 
     /**
      * Show the specified node.
      * 
      * @param node
      */
-    public static synchronized void show(String message) {
+    public static void show(String message) {
         Label label = new Label(message);
         label.setWrapText(true);
 
@@ -56,43 +116,86 @@ public class Toast {
      * 
      * @param node
      */
-    public static synchronized void show(Node node) {
-        notifications.add(new Notify(node));
-
-        if (max < notifications.size()) {
-            notifications.peekFirst().disappear();
-        }
-
-        layout();
+    public static void show(Node node) {
+        add(new Notification(node));
     }
 
-    private static void layout() {
-        Window window = Window.getWindows().get(0);
-        Screen screen = Screen.getScreensForRectangle(window.getX(), window.getY(), window.getWidth(), window.getHeight()).get(0);
-        double x = screen.getBounds().getMinX();;
-        double y = 30;
-        double margin = 9;
+    /**
+     * Add notification.
+     * 
+     * @param notification
+     */
+    private static void add(Notification notification) {
+        notifications.add(notification);
+        if (max < notifications.size()) {
+            remove(notifications.peekFirst());
+        } else {
+            layoutNotifications();
+        }
+    }
 
-        for (Notify notify : notifications) {
+    /**
+     * Remove notification.
+     * 
+     * @param notification
+     */
+    private static void remove(Notification notification) {
+        // UI effect
+        FXUtils.animate(duration, notification.popup.opacityProperty(), 0, () -> {
+            notification.popup.hide();
+            notification.popup.getContent().clear();
+        });
+
+        // model management
+        notifications.remove(notification);
+
+        // draw UI
+        layoutNotifications();
+    }
+
+    /**
+     * Layout all notifications.
+     */
+    private static void layoutNotifications() {
+        Window w = Window.getWindows().get(0);
+        // correct 10 pixel for maximized window
+        Screen screen = Screen.getScreensForRectangle(w.getX() + 10, w.getY(), w.getWidth(), w.getHeight()).get(0);
+        Rectangle2D rect = screen.getBounds();
+        boolean isTopSide = corner.isTopSide();
+        double x = corner.isLeftSide() ? rect.getMinX() + MARGIN : rect.getMaxX() - width - MARGIN;
+        double y = isTopSide ? 30 : rect.getMaxY() - 30;
+
+        Iterator<Notification> iterator = isTopSide ? notifications.descendingIterator() : notifications.iterator();
+        while (iterator.hasNext()) {
+            Toast.Notification notify = iterator.next();
+
             if (notify.popup.isShowing()) {
-                notify.moveTo(x, y);
+                if (!isTopSide) y -= notify.popup.getHeight() + MARGIN;
+                notify.popup.setX(x);
+                FXUtils.animate(duration, notify.y, y);
             } else {
-                notify.popup.show(window);
-                notify.appear(x, y);
+                notify.popup.setOpacity(0);
+                notify.popup.show(w);
+                if (!isTopSide) y -= notify.popup.getHeight() + MARGIN;
+                notify.popup.setX(x);
+                notify.popup.setY(y);
+
+                FXUtils.animate(duration, notify.popup.opacityProperty(), 1);
             }
 
-            y += notify.popup.getHeight() + margin;
+            if (isTopSide) y += notify.popup.getHeight() + MARGIN;
         }
     }
 
     /**
      * 
      */
-    private static class Notify {
+    private static class Notification {
 
         /** The base transparent window. */
         private final Popup popup = new Popup();
 
+        /** Expose location y property. */
         private final WritableDoubleValue y = new WritableDoubleValue() {
 
             @Override
@@ -116,48 +219,30 @@ public class Toast {
             }
         };
 
-        private Notify(Node node) {
+        /**
+         * @param node
+         */
+        private Notification(Node node) {
             VBox box = new VBox(node);
-            StyleHelper.of(box).style(Styles.pop);
+            StyleHelper.of(box).style(Styles.popup);
+            box.setMaxWidth(width);
+            box.setMinWidth(width);
+            box.setOpacity(opacity);
 
             popup.setX(0);
             popup.getContent().add(box);
-            UserActionHelper.of(popup).when(User.MouseClick).to(this::disappear);
+            UserActionHelper.of(popup).when(User.MouseClick).to(() -> remove(this));
         }
 
-        private void appear(double x, double y) {
-            popup.setOpacity(0);
-            popup.setX(x);
-            popup.setY(y);
-
-            Timeline appear = new Timeline(new KeyFrame(duration, new KeyValue(popup.opacityProperty(), 1)));
-            appear.play();
-        }
-
-        private void moveTo(double x, double y) {
-            popup.setX(x);
-            Timeline move = new Timeline(new KeyFrame(duration, new KeyValue(this.y, y)));
-            move.play();
-        }
-
-        private void disappear() {
-            Timeline disappear = new Timeline();
-            disappear.getKeyFrames().add(new KeyFrame(duration, new KeyValue(popup.opacityProperty(), 0)));
-            disappear.setOnFinished(e -> {
-                popup.hide();
-                popup.getContent().clear();
-                layout();
-            });
-            disappear.play();
-
-            notifications.remove(this);
-        }
     }
 
+    /**
+     * Notification style.
+     */
     private static interface Styles extends StyleDSL {
-        Style pop = () -> {
-            display.width(250, px).opacity(0.8);
-            padding.vertical(9, px).horizontal(9, px);
+
+        Style popup = () -> {
+            padding.vertical(MARGIN, px).horizontal(MARGIN, px);
             background.color("-fx-background");
             border.radius(7, px);
         };
