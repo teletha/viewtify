@@ -23,13 +23,6 @@ import kiss.Variable;
 public abstract class Model<Self extends Model> implements Storable<Self> {
 
     /**
-     * Restore data.
-     */
-    protected Model() {
-        restore().auto();
-    }
-
-    /**
      * Create {@link Preference} with the default value.
      * 
      * @param <V>

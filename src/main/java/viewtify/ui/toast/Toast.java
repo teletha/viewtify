@@ -161,6 +161,13 @@ public class Toast {
 
         /** The width of notification area. */
         public final Preference<Integer> width = initialize(250).requireMin(10);
+
+        /**
+         * Hide constructor.
+         */
+        private Setting() {
+            restore().auto();
+        }
     }
 
     /**

@@ -271,4 +271,27 @@ public class FXUtils {
             return value.getX() + " " + value.getY() + " " + value.getWidth() + " " + value.getHeight();
         }
     }
+
+    /**
+     * Codec for {@link Duration}.
+     */
+    @SuppressWarnings("unused")
+    private static class DurationCodec implements Encoder<Duration>, Decoder<Duration> {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Duration decode(String value) {
+            return Duration.valueOf(value);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String encode(Duration value) {
+            return value.toString();
+        }
+    }
 }

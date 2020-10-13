@@ -43,6 +43,8 @@ public class ToastSample {
             Random random = new Random();
 
             button.text("Show").when(User.LeftClick).to(() -> {
+                Toast.setting.max.set(random.nextInt(10));
+
                 Toast.show(RandomString.make(Math.max(15, random.nextInt(100))));
             });
         }
