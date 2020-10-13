@@ -41,17 +41,50 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
     }
 
     /**
-     * Preference Value.
+     * Create {@link IntPreference} with the default value.
+     * 
+     * @param <V>
+     * @param defaultValue The default value.
+     * @return A created new {@link IntPreference}.
+     */
+    protected final IntPreference initialize(int defaultValue) {
+        return new IntPreference(defaultValue);
+    }
+
+    /**
+     * Create {@link LongPreference} with the default value.
+     * 
+     * @param <V>
+     * @param defaultValue The default value.
+     * @return A created new {@link LongPreference}.
+     */
+    protected final LongPreference initialize(long defaultValue) {
+        return new LongPreference(defaultValue);
+    }
+
+    /**
+     * Create {@link DoublePreference} with the default value.
+     * 
+     * @param <V>
+     * @param defaultValue The default value.
+     * @return A created new {@link DoublePreference}.
+     */
+    protected final DoublePreference initialize(double defaultValue) {
+        return new DoublePreference(defaultValue);
+    }
+
+    /**
+     * Preference value.
      */
     public class Preference<V> extends Variable<V> {
 
         /** Requirements. */
-        private final List<Function<V, V>> requirements = new ArrayList();
+        protected final List<Function<V, V>> requirements = new ArrayList();
 
         /**
          * Hide constructor.
          */
-        private Preference(V defaultValue) {
+        protected Preference(V defaultValue) {
             super(Objects.requireNonNull(defaultValue, "Be sure to specify a non-null default value."));
 
             intercept((o, n) -> {
@@ -86,6 +119,210 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
         public Self with(V value) {
             set(value);
             return (Self) Model.this;
+        }
+    }
+
+    /**
+     * Preference value for primitive int.
+     */
+    public class IntPreference extends Preference<Integer> {
+
+        /**
+         * 
+         */
+        public IntPreference(int defaultValue) {
+            super(defaultValue);
+        }
+
+        /**
+         * Add requirement on this preference.
+         * 
+         * @param requirement
+         * @return Chainable API.
+         */
+        @Override
+        public IntPreference require(Function<Integer, Integer> requirement) {
+            if (requirement != null) {
+                requirements.add(requirement);
+            }
+            return this;
+        }
+
+        /**
+         * This is the maximum value that can be set. If it is greater than this value, this maximum
+         * value will be set instead.
+         * 
+         * @param max A maximum value.
+         * @return Chainable API.
+         */
+        public IntPreference requireMax(int max) {
+            requirements.add(v -> Math.min(v, max));
+            return this;
+        }
+
+        /**
+         * This is the minimum value that can be set. If it is less than this value, this minimum
+         * value will be set instead.
+         * 
+         * @param min A minimum value.
+         * @return Chainable API.
+         */
+        public IntPreference requireMin(int min) {
+            requirements.add(v -> Math.max(v, min));
+            return this;
+        }
+
+        /**
+         * The range of possible values. If a value outside this range is set, the closest value to
+         * this range will be set instead.
+         * 
+         * @param min A minimum value.
+         * @param max A maximum value.
+         * @return Chainable API.
+         */
+        public IntPreference requireBetween(int min, int max) {
+            if (max < min) {
+                throw new IllegalArgumentException("The minimum value must be less than the maximum value.");
+            }
+
+            requirements.add(v -> Math.max(Math.min(v, max), min));
+            return this;
+        }
+    }
+
+    /**
+     * Preference value for primitive long.
+     */
+    public class LongPreference extends Preference<Long> {
+
+        /**
+         * 
+         */
+        public LongPreference(long defaultValue) {
+            super(defaultValue);
+        }
+
+        /**
+         * Add requirement on this preference.
+         * 
+         * @param requirement
+         * @return Chainable API.
+         */
+        @Override
+        public LongPreference require(Function<Long, Long> requirement) {
+            if (requirement != null) {
+                requirements.add(requirement);
+            }
+            return this;
+        }
+
+        /**
+         * This is the maximum value that can be set. If it is greater than this value, this maximum
+         * value will be set instead.
+         * 
+         * @param max A maximum value.
+         * @return Chainable API.
+         */
+        public LongPreference requireMax(long max) {
+            requirements.add(v -> Math.min(v, max));
+            return this;
+        }
+
+        /**
+         * This is the minimum value that can be set. If it is less than this value, this minimum
+         * value will be set instead.
+         * 
+         * @param min A minimum value.
+         * @return Chainable API.
+         */
+        public LongPreference requireMin(long min) {
+            requirements.add(v -> Math.max(v, min));
+            return this;
+        }
+
+        /**
+         * The range of possible values. If a value outside this range is set, the closest value to
+         * this range will be set instead.
+         * 
+         * @param min A minimum value.
+         * @param max A maximum value.
+         * @return Chainable API.
+         */
+        public LongPreference requireBetween(long min, long max) {
+            if (max < min) {
+                throw new IllegalArgumentException("The minimum value must be less than the maximum value.");
+            }
+
+            requirements.add(v -> Math.max(Math.min(v, max), min));
+            return this;
+        }
+    }
+
+    /**
+     * Preference value for primitive double.
+     */
+    public class DoublePreference extends Preference<Double> {
+
+        /**
+         * 
+         */
+        public DoublePreference(double defaultValue) {
+            super(defaultValue);
+        }
+
+        /**
+         * Add requirement on this preference.
+         * 
+         * @param requirement
+         * @return Chainable API.
+         */
+        @Override
+        public DoublePreference require(Function<Double, Double> requirement) {
+            if (requirement != null) {
+                requirements.add(requirement);
+            }
+            return this;
+        }
+
+        /**
+         * This is the maximum value that can be set. If it is greater than this value, this maximum
+         * value will be set instead.
+         * 
+         * @param max A maximum value.
+         * @return Chainable API.
+         */
+        public DoublePreference requireMax(double max) {
+            requirements.add(v -> Math.min(v, max));
+            return this;
+        }
+
+        /**
+         * This is the minimum value that can be set. If it is less than this value, this minimum
+         * value will be set instead.
+         * 
+         * @param min A minimum value.
+         * @return Chainable API.
+         */
+        public DoublePreference requireMin(double min) {
+            requirements.add(v -> Math.max(v, min));
+            return this;
+        }
+
+        /**
+         * The range of possible values. If a value outside this range is set, the closest value to
+         * this range will be set instead.
+         * 
+         * @param min A minimum value.
+         * @param max A maximum value.
+         * @return Chainable API.
+         */
+        public DoublePreference requireBetween(double min, double max) {
+            if (max < min) {
+                throw new IllegalArgumentException("The minimum value must be less than the maximum value.");
+            }
+
+            requirements.add(v -> Math.max(Math.min(v, max), min));
+            return this;
         }
     }
 }

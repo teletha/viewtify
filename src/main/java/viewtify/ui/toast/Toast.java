@@ -145,7 +145,7 @@ public class Toast {
     public static class Setting extends Model<Setting> {
 
         /** The maximum size of notifications. */
-        public final Preference<Integer> max = initialize(7).require(n -> Math.max(1, n));
+        public final IntPreference max = initialize(7).requireMin(1);
 
         /** The animation time. */
         public final Preference<Duration> animation = initialize(Duration.millis(333))
@@ -159,10 +159,10 @@ public class Toast {
         public final Preference<Corner> area = initialize(Corner.TopRight);
 
         /** The opacity of notification area. */
-        public final Preference<Double> opacity = initialize(0.85).require(n -> Math.max(0, Math.min(1, n)));
+        public final DoublePreference opacity = initialize(0.85).requireBetween(0, 1);
 
         /** The width of notification area. */
-        public final Preference<Integer> width = initialize(250).require(n -> Math.max(10, n));
+        public final IntPreference width = initialize(250).requireMin(10);
 
         /**
          * Configure the animation time. (default : 333)
