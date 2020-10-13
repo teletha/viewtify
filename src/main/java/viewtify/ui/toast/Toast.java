@@ -11,9 +11,7 @@ package viewtify.ui.toast;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 import javafx.beans.value.WritableDoubleValue;
 import javafx.geometry.Rectangle2D;
@@ -25,13 +23,11 @@ import javafx.stage.Screen;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
+import kiss.Disposable;
 import kiss.I;
-import kiss.Managed;
-import kiss.Singleton;
-import kiss.Storable;
-import kiss.Variable;
 import stylist.Style;
 import stylist.StyleDSL;
+import viewtify.model.Model;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
@@ -94,6 +90,10 @@ public class Toast {
     private static void remove(Notification notification) {
         // model management
         if (notifications.remove(notification)) {
+            if (notification.disposer != null) {
+                notification.disposer.dispose();
+            }
+
             // UI effect
             FXUtils.animate(setting.animation.v, notification.popup.opacityProperty(), 0, () -> {
                 notification.popup.hide();
@@ -142,67 +142,27 @@ public class Toast {
     /**
      * 
      */
-    public static class Preference<V, O> extends Variable<V> {
-
-        private final O base;
-
-        /**
-         * @param value
-         */
-        private Preference(V value, O base) {
-            super(value);
-
-            this.base = base;
-        }
-
-        public Preference<V, O> normalize(Function<V, V> normalizer) {
-            intercept((o, n) -> normalizer.apply(n));
-            return this;
-        }
-
-        public O with(V value) {
-            set(value);
-            return base;
-        }
-
-        public static <V, O> Preference<V, O> of(V initial, O base) {
-            return new Preference(initial, base);
-        }
-    }
-
-    /**
-     * 
-     */
-    @Managed(Singleton.class)
-    public static class Setting implements Storable<Setting> {
+    public static class Setting extends Model<Setting> {
 
         /** The maximum size of notifications. */
-        public final Preference<Integer, Setting> max = Preference.of(7, this).normalize(n -> Math.max(1, n));
+        public final Preference<Integer> max = initialize(7).require(n -> Math.max(1, n));
 
         /** The animation time. */
-        public final Preference<Duration, Setting> animation = Preference.of(Duration.millis(333), this)
-                .normalize(n -> n != null && Duration.ONE.lessThanOrEqualTo(n) ? n : Duration.ONE);
+        public final Preference<Duration> animation = initialize(Duration.millis(333))
+                .require(n -> Duration.ONE.lessThanOrEqualTo(n) ? n : Duration.ONE);
 
         /** The automatic hiding time. */
-        public final Variable<Duration> autoHide = Variable.of(Duration.seconds(60))
-                .intercept((o, n) -> n != null && Duration.ONE.lessThanOrEqualTo(n) ? n : Duration.ZERO);
+        public final Preference<Duration> autoHide = initialize(Duration.seconds(60))
+                .require(n -> Duration.ONE.lessThanOrEqualTo(n) ? n : Duration.ZERO);
 
         /** The notification area. */
-        public final Variable<Corner> area = Variable.of(Corner.TopRight)
-                .intercept((o, n) -> Objects.requireNonNullElse(n, Corner.TopRight));
+        public final Preference<Corner> area = initialize(Corner.TopRight);
 
         /** The opacity of notification area. */
-        public final Variable<Double> opacity = Variable.of(0.85).intercept((o, n) -> Math.max(0, Math.min(1, n)));
+        public final Preference<Double> opacity = initialize(0.85).require(n -> Math.max(0, Math.min(1, n)));
 
         /** The width of notification area. */
-        public final Variable<Integer> width = Variable.of(250).intercept((o, n) -> Math.max(10, n));
-
-        /**
-         * New Setting.
-         */
-        private Setting() {
-            restore().auto();
-        }
+        public final Preference<Integer> width = initialize(250).require(n -> Math.max(10, n));
 
         /**
          * Configure the animation time. (default : 333)
@@ -323,6 +283,8 @@ public class Toast {
             }
         };
 
+        private Disposable disposer;
+
         /**
          * @param node
          */
@@ -337,7 +299,7 @@ public class Toast {
             popup.getContent().add(box);
             UserActionHelper.of(popup).when(User.MouseClick).to(() -> remove(this));
             if (0 < setting.autoHide.v.toMillis()) {
-                I.schedule((long) setting.autoHide.v.toMillis(), TimeUnit.MILLISECONDS).first().to(() -> remove(this));
+                disposer = I.schedule((long) setting.autoHide.v.toMillis(), TimeUnit.MILLISECONDS).first().to(() -> remove(this));
             }
         }
 
