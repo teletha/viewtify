@@ -145,110 +145,22 @@ public class Toast {
     public static class Setting extends Model<Setting> {
 
         /** The maximum size of notifications. */
-        public final IntPreference max = initialize(7).requireMin(1);
+        public final Preference<Integer> max = initialize(7).requireMin(1);
 
         /** The animation time. */
-        public final Preference<Duration> animation = initialize(Duration.millis(333))
-                .require(n -> Duration.ONE.lessThanOrEqualTo(n) ? n : Duration.ONE);
+        public final Preference<Duration> animation = initialize(Duration.millis(333)).requireMin(Duration.ONE);
 
         /** The automatic hiding time. */
-        public final Preference<Duration> autoHide = initialize(Duration.seconds(60))
-                .require(n -> Duration.ONE.lessThanOrEqualTo(n) ? n : Duration.ZERO);
+        public final Preference<Duration> autoHide = initialize(Duration.seconds(60)).requireMin(Duration.ZERO);
 
         /** The notification area. */
         public final Preference<Corner> area = initialize(Corner.TopRight);
 
         /** The opacity of notification area. */
-        public final DoublePreference opacity = initialize(0.85).requireBetween(0, 1);
+        public final Preference<Double> opacity = initialize(0.85).requireBetween(0, 1);
 
         /** The width of notification area. */
-        public final IntPreference width = initialize(250).requireMin(10);
-
-        /**
-         * Configure the animation time. (default : 333)
-         * 
-         * @param duration A positive number (mills).
-         * @return Chainable API.
-         */
-        public Setting animation(int duration) {
-            return animation(Duration.millis(duration));
-        }
-
-        /**
-         * Configure the animation time. (default : 333)
-         * 
-         * @param duration A positive number.
-         * @return Chainable API.
-         */
-        public Setting animation(Duration duration) {
-            animation.set(duration);
-            return this;
-        }
-
-        /**
-         * Configure the notification area. (default : TopRight)
-         * 
-         * @param corner A notification area.
-         * @return Chainable API.
-         */
-        public Setting area(Corner corner) {
-            area.set(corner);
-            return this;
-        }
-
-        /**
-         * Configure the auto hide time. (default : 60)
-         * 
-         * @param duration A positive number (sec), 0 or negative number disable auto-hiding.
-         * @return Chainable API.
-         */
-        public Setting autoHide(int duration) {
-            return autoHide(Duration.seconds(duration));
-        }
-
-        /**
-         * Configure the auto hide time. (default : 60)
-         * 
-         * @param duration A positive number (sec), 0 or negative number disable auto-hiding.
-         * @return Chainable API.
-         */
-        public Setting autoHide(Duration duration) {
-            autoHide.set(duration);
-            return this;
-        }
-
-        /**
-         * Configure the maximum viewable size of notifications. (default : 7)
-         * 
-         * @param size A positive number.
-         * @return Chainable API.
-         */
-        public Setting max(int size) {
-            max.set(size);
-            return this;
-        }
-
-        /**
-         * Configure the opacity of notification area. (default : 0.85)
-         * 
-         * @param value A positive number.
-         * @return Chainable API.
-         */
-        public Setting opacity(double value) {
-            opacity.set(value);
-            return this;
-        }
-
-        /**
-         * Configure the width of notification area. (default : 250)
-         * 
-         * @param value A positive number.
-         * @return Chainable API.
-         */
-        public Setting width(int value) {
-            width.set(value);
-            return this;
-        }
+        public final Preference<Integer> width = initialize(250).requireMin(10);
     }
 
     /**
@@ -292,7 +204,7 @@ public class Toast {
             VBox box = new VBox(node);
             StyleHelper.of(box).style(Styles.popup);
             box.setMaxWidth(setting.width.v);
-            // box.setMinWidth(setting.width.v);
+            box.setMinWidth(setting.width.v);
             box.setOpacity(setting.opacity.v);
 
             popup.setX(0);

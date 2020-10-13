@@ -41,33 +41,40 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
     }
 
     /**
-     * Create {@link IntPreference} with the default value.
+     * Create {@link Preference} with the default value.
      * 
-     * @param <V>
      * @param defaultValue The default value.
-     * @return A created new {@link IntPreference}.
+     * @return A created new {@link Preference}.
+     */
+    protected final <C extends Comparable<? super C>> ComparablePreference<C> initialize(C defaultValue) {
+        return new ComparablePreference(defaultValue);
+    }
+
+    /**
+     * Create {@link Preference} with the default value.
+     * 
+     * @param defaultValue The default value.
+     * @return A created new {@link Preference}.
      */
     protected final IntPreference initialize(int defaultValue) {
         return new IntPreference(defaultValue);
     }
 
     /**
-     * Create {@link LongPreference} with the default value.
+     * Create {@link Preference} with the default value.
      * 
-     * @param <V>
      * @param defaultValue The default value.
-     * @return A created new {@link LongPreference}.
+     * @return A created new {@link Preference}.
      */
     protected final LongPreference initialize(long defaultValue) {
         return new LongPreference(defaultValue);
     }
 
     /**
-     * Create {@link DoublePreference} with the default value.
+     * Create {@link Preference} with the default value.
      * 
-     * @param <V>
      * @param defaultValue The default value.
-     * @return A created new {@link DoublePreference}.
+     * @return A created new {@link Preference}.
      */
     protected final DoublePreference initialize(double defaultValue) {
         return new DoublePreference(defaultValue);
@@ -128,9 +135,9 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
     public class IntPreference extends Preference<Integer> {
 
         /**
-         * 
+         * Hide constructor.
          */
-        public IntPreference(int defaultValue) {
+        private IntPreference(int defaultValue) {
             super(defaultValue);
         }
 
@@ -196,9 +203,9 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
     public class LongPreference extends Preference<Long> {
 
         /**
-         * 
+         * Hide constructor.
          */
-        public LongPreference(long defaultValue) {
+        private LongPreference(long defaultValue) {
             super(defaultValue);
         }
 
@@ -264,9 +271,9 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
     public class DoublePreference extends Preference<Double> {
 
         /**
-         * 
+         * Hide constructor.
          */
-        public DoublePreference(double defaultValue) {
+        private DoublePreference(double defaultValue) {
             super(defaultValue);
         }
 
@@ -322,6 +329,78 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
             }
 
             requirements.add(v -> Math.max(Math.min(v, max), min));
+            return this;
+        }
+    }
+
+    /**
+     * Preference value for {@link Comparable}.
+     */
+    public class ComparablePreference<V extends Comparable<? super V>> extends Preference<V> {
+
+        /**
+         * Hide constructor.
+         */
+        protected ComparablePreference(V defaultValue) {
+            super(defaultValue);
+        }
+
+        /**
+         * Add requirement on this preference.
+         * 
+         * @param requirement
+         * @return Chainable API.
+         */
+        @Override
+        public ComparablePreference<V> require(Function<V, V> requirement) {
+            if (requirement != null) {
+                requirements.add(requirement);
+            }
+            return this;
+        }
+
+        /**
+         * This is the maximum value that can be set. If it is greater than this value, this maximum
+         * value will be set instead.
+         * 
+         * @param max A maximum value.
+         * @return Chainable API.
+         */
+        public ComparablePreference<V> requireMax(V max) {
+            Objects.requireNonNull(max);
+            requirements.add(v -> v.compareTo(max) < 0 ? v : max);
+            return this;
+        }
+
+        /**
+         * This is the minimum value that can be set. If it is less than this value, this minimum
+         * value will be set instead.
+         * 
+         * @param min A minimum value.
+         * @return Chainable API.
+         */
+        public ComparablePreference<V> requireMin(V min) {
+            Objects.requireNonNull(min);
+            requirements.add(v -> min.compareTo(v) < 0 ? min : v);
+            return this;
+        }
+
+        /**
+         * The range of possible values. If a value outside this range is set, the closest value to
+         * this range will be set instead.
+         * 
+         * @param min A minimum value.
+         * @param max A maximum value.
+         * @return Chainable API.
+         */
+        public ComparablePreference<V> requireBetween(V min, V max) {
+            Objects.requireNonNull(min);
+            Objects.requireNonNull(max);
+            if (min.compareTo(max) > 0) {
+                throw new IllegalArgumentException("The minimum value must be less than the maximum value.");
+            }
+
+            requirements.add(v -> min.compareTo(v) > 0 ? min : max.compareTo(v) < 0 ? max : v);
             return this;
         }
     }
