@@ -87,6 +87,20 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     /**
      * Disables itself when the specified condition is True, and enables it when False.
      * 
+     * @param target A target value to test.
+     * @param condition A condition.
+     * @return Chainable API.
+     */
+    default <V> Self disableWhen(Variable<V> target, Predicate<V> condition) {
+        if (target != null && condition != null) {
+            disableWhen(target.observing().is(condition));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Disables itself when the specified condition is True, and enables it when False.
+     * 
      * @param condition A timing condition.
      * @return Chainable API.
      */
