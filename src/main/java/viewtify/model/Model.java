@@ -374,7 +374,7 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
          */
         public ComparablePreference<V> requireMin(V min) {
             Objects.requireNonNull(min);
-            requirements.add(v -> min.compareTo(v) < 0 ? min : v);
+            requirements.add(v -> min.compareTo(v) < 0 ? v : min);
             return this;
         }
 

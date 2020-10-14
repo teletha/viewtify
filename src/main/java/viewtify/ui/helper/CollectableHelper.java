@@ -15,8 +15,11 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
+import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.stream.BaseStream;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
@@ -111,6 +114,18 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
             modifyItemUISafely(list -> refer().items.setValue(items));
         }
         return (Self) this;
+    }
+
+    /**
+     * Specify all values from the start value to the end value.
+     *
+     * @param start The inclusive initial value.
+     * @param end The inclusive upper bound.
+     * @param mapper A value builder.
+     * @return Chainable API.
+     */
+    default Self items(int start, int end, IntFunction<E> mapper) {
+        return items(IntStream.range(start, end + 1).mapToObj(mapper).collect(Collectors.toList()));
     }
 
     /**
