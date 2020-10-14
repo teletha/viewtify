@@ -13,6 +13,8 @@ import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -26,6 +28,7 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
         super(new SmoothScrollPane(), view);
 
         ui.setFitToWidth(true);
+        HBox.setHgrow(ui, Priority.ALWAYS);
     }
 
     /**
