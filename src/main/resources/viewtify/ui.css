@@ -141,8 +141,3 @@
 .scroll-pane {
     -fx-background-color: transparent;
 }
-
-.scroll-pane .scroll-bar {
-    -fx-unit-increment: 5 ;
-    -fx-block-increment: 5 ;
-}

@@ -9,17 +9,11 @@
  */
 package viewtify.ui;
 
-import javafx.animation.Animation.Status;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
-import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
@@ -29,7 +23,9 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
      * @param view
      */
     public UIScrollPane(View view) {
-        super(new SmoothishScrollPane(), view);
+        super(new SmoothScrollPane(), view);
+
+        ui.setFitToWidth(true);
     }
 
     /**
@@ -52,89 +48,59 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
     /**
      * {@link ScrollPane} with kinda smooth transition scrolling.
      */
-    private static class SmoothishScrollPane extends ScrollPane {
+    private static class SmoothScrollPane extends ScrollPane {
 
-        private SmoothishScrollPane() {
-            // set content in a wrapper
-            VBox wrapper = new VBox();
-            wrapper.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+        private SmoothTransition transition;
 
-            // add scroll handling to wrapper
-            wrapper.setOnScroll(new EventHandler<ScrollEvent>() {
-                private SmoothishTransition transition;
-
-                @Override
-                public void handle(ScrollEvent event) {
-                    double deltaY = 2 * event.getDeltaY();
-                    double width = getContent().getBoundsInLocal().getWidth();
-                    double vvalue = getVvalue();
-                    Interpolator interp = Interpolator.LINEAR;
-                    transition = new SmoothishTransition(transition, deltaY) {
-                        @Override
-                        protected void interpolate(double frac) {
-                            double x = interp.interpolate(vvalue, vvalue + -deltaY * getMod() / width, frac);
-                            setVvalue(x);
-                        }
-                    };
-                    transition.play();
-                }
+        private SmoothScrollPane() {
+            VBox inner = new VBox();
+            inner.setOnScroll(e -> {
+                transition = new SmoothTransition(transition, 2 * e.getDeltaY(), getContent().getBoundsInLocal().getWidth(), getVvalue());
+                transition.play();
             });
 
-            contentProperty().addListener((b, o, n) -> {
-                if (n != wrapper) {
-                    wrapper.getChildren().clear();
-                    wrapper.getChildren().add(n);
+            contentProperty().addListener((bean, oldValue, newValue) -> {
+                if (newValue != inner) {
+                    inner.getChildren().clear();
+                    inner.getChildren().add(newValue);
 
-                    setContent(wrapper);
+                    setContent(inner);
                 }
             });
-        }
-
-        /**
-         * @param t Transition to check.
-         * @return {@code true} if transition is playing.
-         */
-        private static boolean playing(Transition t) {
-            return t.getStatus() == Status.RUNNING;
-        }
-
-        /**
-         * @param d1 Value 1
-         * @param d2 Value 2.
-         * @return {@code true} if values signes are matching.
-         */
-        private static boolean sameSign(double d1, double d2) {
-            return (d1 > 0 && d2 > 0) || (d1 < 0 && d2 < 0);
         }
 
         /**
          * Transition with varying speed based on previously existing transitions.
-         * 
-         * @author Matt
          */
-        abstract class SmoothishTransition extends Transition {
-            private final double mod;
+        private class SmoothTransition extends Transition {
 
-            private final double delta;
+            private final double modifier;
 
-            public SmoothishTransition(SmoothishTransition old, double delta) {
+            private final double deltaY;
+
+            private final double width;
+
+            private final double vvalue;
+
+            private SmoothTransition(SmoothTransition old, double deltaY, double width, double vvalue) {
                 setCycleDuration(Duration.millis(200));
                 setCycleCount(0);
-                // if the last transition was moving inthe same direction, and is still playing
+                // if the last transition was moving in the same direction, and is still playing
                 // then increment the modifer. This will boost the distance, thus looking faster
                 // and seemingly consecutive.
-                if (old != null && sameSign(delta, old.delta) && playing(old)) {
-                    mod = old.getMod() + 1;
+                if (old != null && old.getStatus() == Status.RUNNING && 0 < deltaY * old.deltaY) {
+                    modifier = old.modifier + 1;
                 } else {
-                    mod = 1;
+                    modifier = 1;
                 }
-                this.delta = delta;
+                this.deltaY = deltaY;
+                this.width = width;
+                this.vvalue = vvalue;
             }
 
-            public double getMod() {
-                return mod;
-            }
-
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void play() {
                 super.play();
@@ -142,9 +108,17 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
                 // So skip a small bit of the animation to keep up with the speed of prior
                 // animation. The value of 10 works and isn't noticeable unless you really pay
                 // close attention. This works best on linear but also is decent for others.
-                if (getMod() > 1) {
+                if (modifier > 1) {
                     jumpTo(getCycleDuration().divide(10));
                 }
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            protected void interpolate(double frac) {
+                setVvalue(Interpolator.LINEAR.interpolate(vvalue, vvalue + -deltaY * modifier / width, frac));
             }
         }
     }
