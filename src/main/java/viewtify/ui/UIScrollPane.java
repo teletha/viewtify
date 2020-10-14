@@ -58,7 +58,7 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
         private SmoothScrollPane() {
             VBox inner = new VBox();
             inner.setOnScroll(e -> {
-                transition = new SmoothTransition(transition, 2 * e.getDeltaY(), getContent().getBoundsInLocal().getWidth(), getVvalue());
+                transition = new SmoothTransition(transition, 3 * e.getDeltaY(), getContent().getBoundsInLocal().getWidth(), getVvalue());
                 transition.play();
             });
 
@@ -92,7 +92,7 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
                 // then increment the modifer. This will boost the distance, thus looking faster
                 // and seemingly consecutive.
                 if (old != null && old.getStatus() == Status.RUNNING && 0 < deltaY * old.deltaY) {
-                    modifier = old.modifier + 1;
+                    modifier = old.modifier + 2;
                 } else {
                     modifier = 1;
                 }
