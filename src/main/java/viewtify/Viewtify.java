@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -73,16 +74,17 @@ import kiss.Variable;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
+import viewtify.model.Model;
 import viewtify.ui.UIWeb;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 
-/**
- * @version 2018/09/16 16:21:29
- */
 public final class Viewtify {
+
+    /** The global setting for {@link Viewtify}. */
+    public static final Setting Setting = I.make(Setting.class);
 
     /** Command Repository */
     static final Map<Command, Deque<Runnable>> commands = new ConcurrentHashMap();
@@ -234,19 +236,6 @@ public final class Viewtify {
     public Viewtify icon(String pathToIcon) {
         if (pathToIcon != null) {
             this.icon = pathToIcon;
-        }
-        return this;
-    }
-
-    /**
-     * Configure application default language.
-     * 
-     * @param language A default language you want.
-     * @return Chainable API.
-     */
-    public Viewtify language(String language) {
-        if (language != null) {
-            I.Lang.set(language);
         }
         return this;
     }
@@ -1224,6 +1213,24 @@ public final class Viewtify {
             locator.state = Integer.parseInt(values[4]);
 
             return locator;
+        }
+    }
+
+    /**
+     * General setting holder for {@link Viewtify}.
+     */
+    public static class Setting extends Model<Setting> {
+
+        /** The user language. */
+        public final Preference<Locale> language = initialize(Locale.forLanguageTag(I.env("language", Locale.getDefault().getLanguage())));
+
+        /**
+         * Hide constructor.
+         */
+        private Setting() {
+            restore().auto();
+
+            language.observing().map(Locale::getLanguage).to(I.Lang::set);
         }
     }
 }
