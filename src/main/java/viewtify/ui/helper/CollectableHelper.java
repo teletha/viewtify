@@ -180,10 +180,26 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self initialize(List<E> initialItems) {
+        return initialize(initialItems.isEmpty() ? null : initialItems.get(0), initialItems);
+    }
+
+    /**
+     * Initialize with the specified value. This value is automatically saved whenever it is
+     * changed, and is restored the next time it is initialized.
+     * 
+     * @param defaultValue A default value.
+     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @return Chainable API.
+     */
+    default Self initialize(E defaultValue, List<E> initialItems) {
+        if (defaultValue != null && !initialItems.contains(defaultValue)) {
+            initialItems.add(defaultValue);
+        }
+
         items(initialItems);
 
-        if (this instanceof ValueHelper && initialItems != null && !initialItems.isEmpty()) {
-            ((ValueHelper) this).initialize(initialItems.get(0));
+        if (this instanceof ValueHelper && !initialItems.isEmpty()) {
+            ((ValueHelper) this).initialize(defaultValue);
         }
         return (Self) this;
     }
