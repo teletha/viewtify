@@ -74,6 +74,19 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
     }
 
     /**
+     * Create {@link Preference} with the default value.
+     * 
+     * @param <V>
+     * @param defaultValue The default value. (non-null)
+     * @return A created new {@link Preference}.
+     */
+    protected final <V> Preference<V> initialize(Variable<V> defaultValue) {
+        Preference<V> preference = new Preference(defaultValue.v);
+
+        return preference;
+    }
+
+    /**
      * Preference value.
      */
     public class Preference<V> extends Variable<V> {

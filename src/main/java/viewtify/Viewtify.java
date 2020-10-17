@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -82,9 +81,6 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 
 public final class Viewtify {
-
-    /** The global setting for {@link Viewtify}. */
-    public static final Setting Setting = I.make(Setting.class);
 
     /** Command Repository */
     static final Map<Command, Deque<Runnable>> commands = new ConcurrentHashMap();
@@ -338,6 +334,9 @@ public final class Viewtify {
 
             // Specify JavaFX cache directory
             System.setProperty("javafx.cachedir", prefs + "/native");
+
+            // Restore Viewtify's setting
+            I.make(Setting.class);
 
             // How to handle simultaneous application startup
             checkActivationPolicy(prefs);
@@ -1219,18 +1218,17 @@ public final class Viewtify {
     /**
      * General setting holder for {@link Viewtify}.
      */
-    public static class Setting extends Model<Setting> {
+    @SuppressWarnings("unused")
+    private static class Setting extends Model<Setting> {
 
         /** The user language. */
-        public final Preference<Locale> language = initialize(Locale.forLanguageTag(I.env("language", Locale.getDefault().getLanguage())));
+        public final Variable<String> language = I.Lang;
 
         /**
          * Hide constructor.
          */
         private Setting() {
             restore().auto();
-
-            language.observing().map(Locale::getLanguage).to(I.Lang::set);
         }
     }
 }
