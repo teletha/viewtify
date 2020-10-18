@@ -49,13 +49,6 @@ public class UITableColumn<RowValue, ColumnValue>
         ui.setCellValueFactory(v -> new SimpleObjectProperty(v.getValue()));
     }
 
-    public UITableColumn<RowValue, ColumnValue> modelBySignal(WiseFunction<RowValue, Signal<ColumnValue>> mapper) {
-        if (mapper != null) {
-            modelByProperty(v -> mapper.apply(v).to(new SimpleObjectProperty(), SimpleObjectProperty::set));
-        }
-        return this;
-    }
-
     /**
      * Add value provider.
      * 
@@ -119,6 +112,19 @@ public class UITableColumn<RowValue, ColumnValue>
         }
         mappingProvider.mapper.put(type, provider);
 
+        return this;
+    }
+
+    /**
+     * Add value provider.
+     * 
+     * @param provider
+     * @return
+     */
+    public UITableColumn<RowValue, ColumnValue> modelBySignal(WiseFunction<RowValue, Signal<ColumnValue>> mapper) {
+        if (mapper != null) {
+            modelByProperty(v -> mapper.apply(v).to(new SimpleObjectProperty(), SimpleObjectProperty::set));
+        }
         return this;
     }
 
