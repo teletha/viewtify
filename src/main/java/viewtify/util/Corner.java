@@ -16,7 +16,7 @@ import javafx.geometry.VPos;
 import kiss.I;
 import kiss.Variable;
 
-public enum Corner {
+public enum Corner implements Translatable {
     TopLeft(Pos.TOP_LEFT, I.translate("TopLeft")),
 
     TopRight(Pos.TOP_RIGHT, I.translate("TopRight")),
@@ -81,5 +81,13 @@ public enum Corner {
     @Override
     public String toString() {
         return text.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Variable<String> toTraslated() {
+        return text;
     }
 }

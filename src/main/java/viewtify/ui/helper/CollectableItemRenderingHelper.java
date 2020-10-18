@@ -59,6 +59,16 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
+    default <C> Self renderByVariable(Function<E, Variable<String>> renderer) {
+        return renderByProperty(() -> new UILabel(null), (c, e) -> Viewtify.property(renderer.apply(e)));
+    }
+
+    /**
+     * Render the human-readable item expression.
+     * 
+     * @param renderer A renderer.
+     * @return
+     */
     default <C> Self renderByVariable(Supplier<C> context, BiFunction<C, E, Variable<String>> renderer) {
         Objects.requireNonNull(renderer);
         return renderByProperty(context, (c, e) -> Viewtify.property(renderer.apply(c, e)));

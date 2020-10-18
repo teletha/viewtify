@@ -17,7 +17,6 @@ import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 
 import kiss.Disposable;
@@ -87,15 +86,12 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
      */
     private static class DynamicLabel<T> extends ListCell<T> {
 
-        private final Label label = new Label();
-
         private final Signaling<T> signal = new Signaling();
 
         private final Disposable disposer;
 
         private DynamicLabel(Function<Signal<T>, Signal<String>> text) {
-            setGraphic(label);
-            disposer = text.apply(signal.expose).on(Viewtify.UIThread).to(label::setText);
+            disposer = text.apply(signal.expose).on(Viewtify.UIThread).to(this::setText);
         }
 
         /**
@@ -103,8 +99,9 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
          */
         @Override
         protected void updateItem(T item, boolean empty) {
+            System.out.println(empty + "  " + item);
             if (empty) {
-                label.setText("");
+                setText("");
             } else {
                 signal.accept(item);
             }
