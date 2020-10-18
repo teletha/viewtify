@@ -19,6 +19,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.SpinnerValueFactory.ListSpinnerValueFactory;
 import javafx.util.StringConverter;
 
+import kiss.I;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.User;
@@ -43,6 +44,8 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
             }
             e.consume();
         });
+
+        I.Lang.observe().to(this::updateDisplay);
     }
 
     /**
@@ -103,9 +106,16 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
      */
     public UISpinner<T> format(Function<T, String> formatter) {
         ui.getValueFactory().setConverter(new GenericFormatter(formatter));
-        ui.getEditor().setText(formatter.apply(ui.getValue()));
+        updateDisplay();
 
         return this;
+    }
+
+    /**
+     * Update the current display.
+     */
+    private void updateDisplay() {
+        ui.getEditor().setText(ui.getValueFactory().getConverter().toString(ui.getValue()));
     }
 
     /**

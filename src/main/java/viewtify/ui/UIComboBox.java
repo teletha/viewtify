@@ -99,7 +99,6 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
          */
         @Override
         protected void updateItem(T item, boolean empty) {
-            System.out.println(empty + "  " + item);
             if (empty) {
                 setText("");
             } else {
