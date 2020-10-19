@@ -21,7 +21,7 @@ import kiss.WiseConsumer;
 import kiss.WiseFunction;
 import kiss.WiseRunnable;
 
-public interface UserActionHelper<Self extends UserActionHelper> {
+public interface UserActionHelper<Self extends UserActionHelper<Self>> {
 
     /**
      * Return the JavaFX's UI component.

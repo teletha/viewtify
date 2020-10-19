@@ -648,7 +648,7 @@ public final class Viewtify {
         // Monitors the shortcut keys and invokes the corresponding commands.
         // Bug Fix: Prevent the KeyPress event from occurring continuously if you hold down a key.
         // ================================================================
-        UserActionHelper<?> helper = () -> scene;
+        UserActionHelper<?> helper = UserActionHelper.of(scene);
         helper.when(User.KeyPress).first().repeatWhen(e -> helper.when(User.KeyRelease)).to(I.make(ShortcutManager.class)::activate);
 
         // ================================================================
