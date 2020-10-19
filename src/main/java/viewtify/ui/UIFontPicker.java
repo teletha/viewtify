@@ -9,9 +9,9 @@
  */
 package viewtify.ui;
 
-import javafx.beans.property.BooleanProperty;
+import java.util.concurrent.TimeUnit;
+
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,35 +19,31 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
-import viewtify.Viewtify;
 import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.ValueHelper;
 
 public class UIFontPicker extends UserInterface<UIFontPicker, HBox>
-        implements ValueHelper<UIFontPicker, Font>, EditableHelper<UIFontPicker>, ContextMenuHelper<UIFontPicker> {
+        implements ValueHelper<UIFontPicker, Font>, ContextMenuHelper<UIFontPicker> {
 
     /** The shared font-name list. */
-    private static final ObservableList<String> fonts = FXCollections.observableArrayList();
+    private static final ObservableList<String> names = FXCollections.observableArrayList();
 
+    /** The shared font-size list. */
     private static final ObservableList<Double> sizes = FXCollections.observableArrayList();
 
     static {
-        fonts.addAll(Font.getFamilies());
-        sizes.addAll(7.0, 8.0, 9.0, 10.0, 10.5, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 22.0, 24.0, 26.0, 28.0, 30.0);
+        names.addAll(Font.getFamilies());
+        sizes.addAll(8.0, 9.0, 10.0, 10.5, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 22.0, 24.0);
     }
 
     /** The color data holder. */
     private final Property<Font> font = new SimpleObjectProperty<>(Font.getDefault());
 
-    /** The editing mode. */
-    private final BooleanProperty edit = new SimpleBooleanProperty(false);
-
     /** The name selection. */
-    private final ComboBox<String> names = new ComboBox();
+    private final UIComboBox<String> nameSelector;
 
     /** The size selection. */
-    private final ComboBox<Double> size = new ComboBox();
+    private final UIComboBox<Double> sizeSelector;
 
     /**
      * Builde {@link ComboBox}.
@@ -57,26 +53,23 @@ public class UIFontPicker extends UserInterface<UIFontPicker, HBox>
     public UIFontPicker(View view) {
         super(new HBox(), view);
 
-        names.setMinWidth(160);
-        names.setItems(fonts);
-        names.getSelectionModel().select(font.getValue().getFamily());
+        nameSelector = new UIComboBox(view);
+        nameSelector.ui.setMinWidth(160);
+        nameSelector.items(names);
+        nameSelector.select(font.getValue().getFamily());
 
-        size.setMinWidth(70);
-        size.setItems(sizes);
+        sizeSelector = new UIComboBox(view);
+        sizeSelector.ui.setMinWidth(80);
+        sizeSelector.items(sizes);
+        sizeSelector.select(font.getValue().getSize());
 
-        ui.getChildren().addAll(names, size);
+        ui.getChildren().addAll(nameSelector.ui, sizeSelector.ui);
 
-        Viewtify.observing(font).to(now -> {
-
-        });
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BooleanProperty edit() {
-        return edit;
+        nameSelector.observing()
+                .combineLatest(sizeSelector.observing())
+                .map(v -> v.map(Font::font))
+                .debounce(400, TimeUnit.MILLISECONDS)
+                .to(this.font::setValue);
     }
 
     /**
