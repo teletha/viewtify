@@ -11,6 +11,7 @@ package viewtify.ui.helper;
 
 import java.util.Objects;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
@@ -23,7 +24,7 @@ import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 
-public interface TooltipHelper<Self extends TooltipHelper, W extends Node> extends StyleHelper<Self, W> {
+public interface TooltipHelper<Self extends TooltipHelper, W extends Node> extends StyleHelper<Self, W>, UserInterfaceProvider<W> {
 
     /**
      * Remove the tooltip from this user interface.
@@ -43,7 +44,10 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      */
     default Self tooltip(Object text) {
         Tooltip tooltip = new Tooltip(Objects.toString(text));
-        tooltip.setShowDelay(Duration.millis(100));
+        // WORKAROUND : When the anchor is no longer specified, the pop-up location shifts every
+        // time, probably a bug.
+        tooltip.setAnchorLocation(AnchorLocation.WINDOW_TOP_LEFT);
+        tooltip.setShowDelay(Duration.millis(333));
         tooltip.setShowDuration(Duration.INDEFINITE);
         tooltip.setFont(Font.font(12));
         tooltip.setAutoHide(true);
@@ -51,6 +55,12 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
         // When moving the focus to a control with a tooltip visible, an event is consumed to erase
         // the tooltip and prevents the focus from being moved incorrectly.
         tooltip.setConsumeAutoHidingEvents(false);
+        tooltip.setOnShowing(e -> {
+            Node node = ui();
+            Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+            tooltip.setX(bounds.getMinX() - 8);
+            tooltip.setY(bounds.getMaxY() - 2);
+        });
 
         Tooltip.install(ui(), tooltip);
         return (Self) this;

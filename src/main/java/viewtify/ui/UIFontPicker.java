@@ -19,6 +19,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
+import kiss.I;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.ValueHelper;
 
@@ -57,11 +58,13 @@ public class UIFontPicker extends UserInterface<UIFontPicker, HBox>
         nameSelector.ui.setMinWidth(160);
         nameSelector.items(names);
         nameSelector.select(font.getValue().getFamily());
+        nameSelector.tooltip(I.translate("Specify the font name."));
 
         sizeSelector = new UIComboBox(view);
         sizeSelector.ui.setMinWidth(80);
         sizeSelector.items(sizes);
         sizeSelector.select(font.getValue().getSize());
+        sizeSelector.tooltip(I.translate("Specify the font size."));
 
         ui.getChildren().addAll(nameSelector.ui, sizeSelector.ui);
 
