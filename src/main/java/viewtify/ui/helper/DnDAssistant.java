@@ -33,8 +33,8 @@ public class DnDAssistant<T> {
      * @param <Source>
      * @param source
      */
-    public <Source extends ValueHelper<?, T> & UserInterfaceProvider<? extends Node> & UserActionHelper<?>> void source(Source source) {
-        source(source, Source::value);
+    public <Source extends ValueHelper<?, T> & UserInterfaceProvider<? extends Node> & UserActionHelper<?>> DnDAssistant<T> source(Source source) {
+        return source(source, Source::value);
     }
 
     /**
@@ -43,7 +43,7 @@ public class DnDAssistant<T> {
      * @param <Source>
      * @param source
      */
-    public <Source extends UserInterfaceProvider<? extends Node> & UserActionHelper<?>> void source(Source source, Function<Source, T> dataSupplier) {
+    public <Source extends UserInterfaceProvider<? extends Node> & UserActionHelper<?>> DnDAssistant<T> source(Source source, Function<Source, T> dataSupplier) {
         source.when(User.DragStart, e -> {
             data = dataSupplier.apply(source);
 
@@ -55,6 +55,7 @@ public class DnDAssistant<T> {
 
             e.consume();
         });
+        return this;
     }
 
     /**
@@ -63,8 +64,8 @@ public class DnDAssistant<T> {
      * @param <Target>
      * @param target
      */
-    public <Target extends ValueHelper<?, T> & UserInterfaceProvider<? extends Node> & UserActionHelper<?>> void target(Target target) {
-        target(target, Target::value);
+    public <Target extends ValueHelper<?, T> & UserInterfaceProvider<? extends Node> & UserActionHelper<?>> DnDAssistant<T> target(Target target) {
+        return target(target, Target::value);
     }
 
     /**
@@ -74,7 +75,7 @@ public class DnDAssistant<T> {
      * @param target
      * @param dataTransfer
      */
-    public <Target extends UserInterfaceProvider<? extends Node> & UserActionHelper<?>> void target(Target target, BiConsumer<Target, T> dataTransfer) {
+    public <Target extends UserInterfaceProvider<? extends Node> & UserActionHelper<?>> DnDAssistant<T> target(Target target, BiConsumer<Target, T> dataTransfer) {
         target.when(User.DragOver, e -> {
             if (data != null && e.getGestureSource() != target.ui()) {
                 e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
@@ -89,5 +90,6 @@ public class DnDAssistant<T> {
                 data = null;
             }
         });
+        return this;
     }
 }

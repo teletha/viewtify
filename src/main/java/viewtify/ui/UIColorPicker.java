@@ -39,8 +39,7 @@ public class UIColorPicker extends UserInterface<UIColorPicker, ColorPicker>
     public UIColorPicker(View view) {
         super(new ColorPicker(), view);
 
-        ColorDnD.source(this);
-        ColorDnD.target(this);
+        ColorDnD.source(this).target(this);
     }
 
     /**

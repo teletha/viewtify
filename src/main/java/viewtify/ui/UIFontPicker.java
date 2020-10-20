@@ -21,10 +21,14 @@ import javafx.scene.text.Font;
 
 import kiss.I;
 import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.DnDAssistant;
 import viewtify.ui.helper.ValueHelper;
 
 public class UIFontPicker extends UserInterface<UIFontPicker, HBox>
         implements ValueHelper<UIFontPicker, Font>, ContextMenuHelper<UIFontPicker> {
+
+    /** The drag and drop copy. */
+    private static final DnDAssistant<String> FontDnD = new DnDAssistant();
 
     /** The shared font-name list. */
     private static final ObservableList<String> names = FXCollections.observableArrayList();
@@ -73,6 +77,8 @@ public class UIFontPicker extends UserInterface<UIFontPicker, HBox>
                 .map(v -> v.map(Font::font))
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .to(this.font::setValue);
+
+        FontDnD.source(nameSelector).target(nameSelector);
     }
 
     /**

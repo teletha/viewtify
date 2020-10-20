@@ -19,7 +19,9 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+
 import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.DnDAssistant;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.ValueHelper;
@@ -27,6 +29,9 @@ import viewtify.ui.helper.ValueHelper;
 public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
         implements ValueHelper<UIDatePicker, LocalDate>, EditableHelper<UIDatePicker>, Comparable<UIDatePicker>,
         ContextMenuHelper<UIDatePicker> {
+
+    /** The drag and drop copy. */
+    private static final DnDAssistant<LocalDate> DateTimeDnD = new DnDAssistant();
 
     /**
      * Builde {@link ComboBox}.
@@ -48,7 +53,7 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
                 value(v -> v.plusMonths(1));
             }
         });
-
+        DateTimeDnD.source(this).target(this);
     }
 
     /**
