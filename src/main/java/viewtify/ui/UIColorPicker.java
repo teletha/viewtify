@@ -13,23 +13,18 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.paint.Color;
 
-import stylist.value.Color;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.DnDAssistant;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.ValueHelper;
-import viewtify.util.DelegatingProperty;
-import viewtify.util.FXUtils;
 
 public class UIColorPicker extends UserInterface<UIColorPicker, ColorPicker>
         implements ValueHelper<UIColorPicker, Color>, EditableHelper<UIColorPicker>, ContextMenuHelper<UIColorPicker> {
 
     /** The color data transfer. */
     private static final DnDAssistant<Color> ColorDnD = new DnDAssistant();
-
-    private final DelegatingProperty<javafx.scene.paint.Color, Color> color = new DelegatingProperty<>(ui
-            .valueProperty(), FXUtils::color, FXUtils::color);
 
     /**
      * Builde {@link ComboBox}.
@@ -55,6 +50,6 @@ public class UIColorPicker extends UserInterface<UIColorPicker, ColorPicker>
      */
     @Override
     public Property<Color> valueProperty() {
-        return color;
+        return ui.valueProperty();
     }
 }

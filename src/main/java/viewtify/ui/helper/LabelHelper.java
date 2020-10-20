@@ -25,9 +25,11 @@ import org.controlsfx.glyphfont.Glyph;
 import org.controlsfx.glyphfont.INamedCharacter;
 
 import kiss.Variable;
+import stylist.value.Color;
 import viewtify.Viewtify;
 import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
+import viewtify.util.FXUtils;
 
 public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHelper {
 
@@ -155,9 +157,29 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @param color A color to set.
      * @return Chainable API.
      */
-    default Self color(Paint color) {
+    default <P extends Paint> Self color(P color) {
         property(Type.TextFill).setValue(color);
         return (Self) this;
+    }
+
+    /**
+     * Set font color.
+     * 
+     * @param color A color to set.
+     * @return Chainable API.
+     */
+    default Self color(Color color) {
+        return color(FXUtils.color(color));
+    }
+
+    /**
+     * Set font color.
+     * 
+     * @param color A color to set.
+     * @return Chainable API.
+     */
+    default Self color(Variable<? extends Paint> color) {
+        return color(color.v);
     }
 
     /**
