@@ -34,6 +34,8 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
      */
     public UITableView(View view) {
         super(new TableView(), view);
+
+        placeholder("");
     }
 
     /**
@@ -71,11 +73,15 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
         return this;
     }
 
+    /**
+     * Remove all table decoration styles and behaviors.
+     * 
+     * @return
+     */
     public UITableView<T> simplify() {
         ui.getStyleClass().add("simple");
         ui.setSelectionModel(null);
         ui.setFocusTraversable(false);
-
-        return this;
+        return operatable(false);
     }
 }

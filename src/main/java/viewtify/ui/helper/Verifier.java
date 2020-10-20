@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -33,8 +34,23 @@ public class Verifier {
     /** The self verifier. */
     private final Set<Runnable> forSelf = new HashSet();
 
-    /** The value supplier. */
-    Object supplier;
+    /** Discards the currently associated translatable text. */
+    private Disposable translatableText;
+
+    /**
+     * Associate an error message that can be translated at any time.
+     * 
+     * @param message
+     */
+    final void translatableMessage(Variable<String> message) {
+        if (message != null) {
+            // discard the previous text
+            if (translatableText != null) translatableText.dispose();
+
+            // bind the new text
+            translatableText = message.observing().to(this.message::set);
+        }
+    }
 
     /**
      * The current state of validation.

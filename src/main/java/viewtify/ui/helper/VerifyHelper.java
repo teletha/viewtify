@@ -14,6 +14,7 @@ import java.util.function.Predicate;
 
 import kiss.I;
 import kiss.Signal;
+import kiss.Variable;
 import kiss.WiseConsumer;
 import kiss.WiseRunnable;
 
@@ -25,9 +26,9 @@ public interface VerifyHelper<Self extends VerifyHelper<Self>> {
     Verifier verifier();
 
     /**
-     * Mark as valid interface.
+     * Mark as valid.
      * 
-     * @return
+     * @return Chainable API.
      */
     default Self valid() {
         verifier().message.set((String) null);
@@ -35,12 +36,24 @@ public interface VerifyHelper<Self extends VerifyHelper<Self>> {
     }
 
     /**
-     * Mark as invalid interface.
+     * Mark as invalid.
      * 
-     * @return
+     * @param message Details of the problem.
+     * @return Chainable API.
      */
     default Self invalid(Object message) {
         verifier().message.set(String.valueOf(message));
+        return (Self) this;
+    }
+
+    /**
+     * Mark as invalid.
+     * 
+     * @param message Details of the problem.
+     * @return Chainable API.
+     */
+    default Self invalid(Variable<String> message) {
+        verifier().translatableMessage(message);
         return (Self) this;
     }
 
