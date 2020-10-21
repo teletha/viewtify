@@ -10,7 +10,6 @@
 package viewtify.ui.helper;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 import javafx.beans.property.Property;
 import javafx.geometry.Pos;
@@ -60,7 +59,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Variable text) {
-        text.observing().on(Viewtify.UIThread).to((Consumer) this::text);
+        property(Type.Text).bind(Viewtify.property(text));
         return (Self) this;
     }
 
@@ -179,7 +178,8 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self color(Variable<? extends Paint> color) {
-        return color(color.v);
+        property(Type.TextFill).bind(Viewtify.property(color));
+        return (Self) this;
     }
 
     /**

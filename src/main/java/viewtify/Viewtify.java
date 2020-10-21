@@ -991,7 +991,11 @@ public final class Viewtify {
         @Override
         public synchronized void removeListener(ChangeListener<? super V> listener) {
             if (changes != null) {
-                changes.remove(listener);
+                Disposable removed = changes.remove(listener);
+
+                if (removed != null) {
+                    removed.dispose();
+                }
 
                 if (changes.isEmpty()) {
                     changes = null;
@@ -1026,7 +1030,11 @@ public final class Viewtify {
         @Override
         public void removeListener(InvalidationListener listener) {
             if (invalids != null) {
-                invalids.remove(listener);
+                Disposable removed = invalids.remove(listener);
+
+                if (removed != null) {
+                    removed.dispose();
+                }
 
                 if (invalids.isEmpty()) {
                     invalids = null;

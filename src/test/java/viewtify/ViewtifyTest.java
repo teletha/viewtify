@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -80,5 +81,43 @@ class ViewtifyTest {
 
         proeprty.setValue(3);
         assert variable.v == 3;
+    }
+
+    @Test
+    void propertyBind() {
+        Variable<String> variable = Variable.of("var");
+        Property<String> property = Viewtify.property(variable);
+
+        SimpleStringProperty target = new SimpleStringProperty();
+        assert target.get() == null;
+
+        target.bind(property);
+        assert target.get().equals("var");
+
+        variable.set("from variable");
+        assert target.get().equals("from variable");
+    }
+
+    @Test
+    void propertyBindMultiple() {
+        Variable<String> variable1 = Variable.of("var1");
+        Property<String> property1 = Viewtify.property(variable1);
+
+        Variable<String> variable2 = Variable.of("var2");
+        Property<String> property2 = Viewtify.property(variable2);
+
+        SimpleStringProperty target = new SimpleStringProperty();
+
+        target.bind(property1);
+        assert target.get().equals("var1");
+
+        target.bind(property2);
+        assert target.get().equals("var2");
+
+        variable1.set("change from old binding");
+        assert target.get().equals("var2");
+
+        variable2.set("change from new binding");
+        assert target.get().equals("change from new binding");
     }
 }
