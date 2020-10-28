@@ -18,6 +18,7 @@ import viewtify.ui.UIButton;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
+import viewtify.util.ScreenSelector;
 
 public class ToastSample {
 
@@ -44,6 +45,7 @@ public class ToastSample {
 
             button.text("Show").when(User.LeftClick).to(() -> {
                 Toast.setting.max.set(random.nextInt(10));
+                Toast.setting.screen.set(ScreenSelector.Mouse);
 
                 Toast.show(RandomString.make(Math.max(15, random.nextInt(100))));
             });

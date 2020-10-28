@@ -19,7 +19,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
-import javafx.stage.Screen;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
@@ -33,6 +32,7 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.util.Corner;
 import viewtify.util.FXUtils;
+import viewtify.util.ScreenSelector;
 
 public class Toast {
 
@@ -109,10 +109,7 @@ public class Toast {
      * Layout all notifications.
      */
     private static void layoutNotifications() {
-        Window w = Window.getWindows().get(0);
-        // correct 10 pixel for maximized window
-        Screen screen = Screen.getScreensForRectangle(w.getX() + 10, w.getY(), w.getWidth(), w.getHeight()).get(0);
-        Rectangle2D rect = screen.getBounds();
+        Rectangle2D rect = setting.screen.v.select().getBounds();
         boolean isTopSide = setting.area.v.isTopSide();
         double x = setting.area.v.isLeftSide() ? rect.getMinX() + MARGIN : rect.getMaxX() - setting.width.v - MARGIN;
         double y = isTopSide ? 30 : rect.getMaxY() - 30;
@@ -127,7 +124,7 @@ public class Toast {
                 FXUtils.animate(setting.animation.v, notify.y, y);
             } else {
                 notify.popup.setOpacity(0);
-                notify.popup.show(w);
+                notify.popup.show(Window.getWindows().get(0));
                 if (!isTopSide) y -= notify.popup.getHeight() + MARGIN;
                 notify.popup.setX(x);
                 notify.popup.setY(y);
@@ -155,6 +152,9 @@ public class Toast {
 
         /** The notification area. */
         public final Preference<Corner> area = initialize(Corner.TopRight);
+
+        /** The notification screen. */
+        public final Preference<ScreenSelector> screen = initialize(ScreenSelector.Application);
 
         /** The opacity of notification area. */
         public final Preference<Double> opacity = initialize(0.85).requireBetween(0, 1);
