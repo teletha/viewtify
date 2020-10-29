@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.IntFunction;
@@ -30,6 +31,7 @@ import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.util.Translatable;
 
 public interface CollectableHelper<Self extends ReferenceHolder & CollectableHelper<Self, E>, E> {
 
@@ -96,6 +98,12 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self items(List<E> items) {
+        Objects.requireNonNull(items);
+
+        if (this instanceof CollectableItemRenderingHelper && !items.isEmpty() && items.get(0) instanceof Translatable) {
+            ((CollectableItemRenderingHelper<?, Translatable>) this).renderByVariable(Translatable::toTraslated);
+        }
+
         modifyItemUISafely(list -> {
             list.clear();
             list.setAll(items);
@@ -110,6 +118,12 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self items(ObservableList<E> items) {
+        Objects.requireNonNull(items);
+
+        if (this instanceof CollectableItemRenderingHelper && !items.isEmpty() && items.get(0) instanceof Translatable) {
+            ((CollectableItemRenderingHelper<?, Translatable>) this).renderByVariable(Translatable::toTraslated);
+        }
+
         if (items != null) {
             modifyItemUISafely(list -> refer().items.setValue(items));
         }

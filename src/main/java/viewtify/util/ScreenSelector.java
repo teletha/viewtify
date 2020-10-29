@@ -13,9 +13,21 @@ import javafx.scene.robot.Robot;
 import javafx.stage.Screen;
 import javafx.stage.Window;
 
-public enum ScreenSelector {
+import kiss.I;
+import kiss.Variable;
 
-    Application, Mouse, Primary;
+public enum ScreenSelector implements Translatable {
+
+    Application(I.translate("Application")), Mouse(I.translate("Mouse")), Primary(I.translate("Primary"));
+
+    private final Variable<String> text;
+
+    /**
+     * @param text
+     */
+    private ScreenSelector(Variable<String> text) {
+        this.text = text;
+    }
 
     /**
      * Select {@link Screen}.
@@ -36,5 +48,13 @@ public enum ScreenSelector {
         default:
             return Screen.getPrimary();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Variable<String> toTraslated() {
+        return text;
     }
 }

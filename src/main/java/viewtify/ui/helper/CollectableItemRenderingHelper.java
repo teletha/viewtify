@@ -36,6 +36,9 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      */
     default Self render(Function<E, String> renderer) {
         Objects.requireNonNull(renderer);
+        if (this instanceof CollectableValuedItemRenderingHelper) {
+            ((CollectableValuedItemRenderingHelper) this).renderSelected(renderer);
+        }
         return render((label, e) -> label.text(renderer.apply(e)));
     }
 
@@ -60,6 +63,9 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @return
      */
     default <C> Self renderByVariable(Function<E, Variable<String>> renderer) {
+        if (this instanceof CollectableValuedItemRenderingHelper) {
+            ((CollectableValuedItemRenderingHelper) this).renderSelectedByVariable(renderer);
+        }
         return renderByProperty(() -> new UILabel(null), (c, e) -> Viewtify.property(renderer.apply(e)));
     }
 

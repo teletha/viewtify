@@ -91,7 +91,7 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
         private final Disposable disposer;
 
         private DynamicLabel(Function<Signal<T>, Signal<String>> text) {
-            disposer = text.apply(signal.expose).on(Viewtify.UIThread).to(this::setText);
+            disposer = signal.expose.plug(text).on(Viewtify.UIThread).to(this::setText);
         }
 
         /**

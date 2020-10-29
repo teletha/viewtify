@@ -9,6 +9,7 @@
  */
 package viewtify.ui.helper;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 import kiss.Signal;
@@ -24,6 +25,8 @@ public interface CollectableValuedItemRenderingHelper<Self extends CollectableVa
      * @return Chainable API.
      */
     default Self renderSelected(Function<V, String> text) {
+        Objects.requireNonNull(text);
+
         return renderSelectedWhen(s -> s.map(text::apply));
     }
 
@@ -34,6 +37,8 @@ public interface CollectableValuedItemRenderingHelper<Self extends CollectableVa
      * @return Chainable API.
      */
     default Self renderSelectedByVariable(Function<V, Variable<String>> text) {
+        Objects.requireNonNull(text);
+
         return renderSelectedWhen(s -> s.flatVariable(text::apply));
     }
 
