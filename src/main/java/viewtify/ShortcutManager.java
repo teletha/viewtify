@@ -80,13 +80,13 @@ public final class ShortcutManager implements Storable<ShortcutManager> {
 
         Command command = overridden.get(key);
         if (command != null) {
-            command.activate();
+            command.run();
             return;
         }
 
         command = defaults.get(key);
         if (command != null) {
-            command.activate();
+            command.run();
             return;
         }
     }

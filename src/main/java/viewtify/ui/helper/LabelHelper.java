@@ -59,7 +59,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Variable text) {
-        property(Type.Text).bind(Viewtify.property(text));
+        property(Type.Text).bind(Viewtify.propertyForUI(text));
         return (Self) this;
     }
 

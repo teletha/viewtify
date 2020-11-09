@@ -15,8 +15,9 @@ import java.util.LinkedList;
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
+import kiss.WiseRunnable;
 
-public interface Command<E extends Enum<E>> extends Extensible {
+public interface Command<E extends Enum<E>> extends Extensible, WiseRunnable {
 
     /**
      * Command identical name.
@@ -51,7 +52,8 @@ public interface Command<E extends Enum<E>> extends Extensible {
     /**
      * Activate this command.
      */
-    default void activate() {
+    @Override
+    default void RUN() throws Throwable {
         Deque<Runnable> stack = Viewtify.commands.get(this);
 
         if (stack != null && !stack.isEmpty()) {
@@ -90,7 +92,7 @@ public interface Command<E extends Enum<E>> extends Extensible {
      */
     default E shortcut(Key key) {
         if (key != null) {
-            I.make(ShortcutManager.class).bindAsDefault(key, this);;
+            I.make(ShortcutManager.class).bindAsDefault(key, this);
         }
         return (E) this;
     }

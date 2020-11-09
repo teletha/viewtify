@@ -19,6 +19,7 @@ import java.lang.management.ManagementFactory;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -648,8 +650,10 @@ public final class Viewtify {
         // Monitors the shortcut keys and invokes the corresponding commands.
         // Bug Fix: Prevent the KeyPress event from occurring continuously if you hold down a key.
         // ================================================================
+        EnumSet<KeyCode> pressed = EnumSet.noneOf(KeyCode.class);
         UserActionHelper<?> helper = UserActionHelper.of(scene);
-        helper.when(User.KeyPress).first().repeatWhen(e -> helper.when(User.KeyRelease)).to(I.make(ShortcutManager.class)::activate);
+        helper.when(User.KeyPress).take(e -> pressed.add(e.getCode())).to(I.make(ShortcutManager.class)::activate);
+        helper.when(User.KeyRelease).to(e -> pressed.remove(e.getCode()));
 
         // ================================================================
         // Window Tracking System
@@ -932,7 +936,17 @@ public final class Viewtify {
      * @return
      */
     public static <T> Property<T> property(Variable<T> variable) {
-        return new PropertyVariable(variable);
+        return new PropertyVariable(variable, false);
+    }
+
+    /**
+     * Create the wrapped UI property of the specified {@link Variable}.
+     * 
+     * @param variable
+     * @return
+     */
+    public static <T> Property<T> propertyForUI(Variable<T> variable) {
+        return new PropertyVariable(variable, true);
     }
 
     /**
@@ -949,11 +963,15 @@ public final class Viewtify {
         /** The listener cache. */
         private WeakHashMap<InvalidationListener, Disposable> invalids;
 
+        /** The user is ui or not. */
+        private final boolean ui;
+
         /**
          * @param variable
          */
-        private PropertyVariable(Variable<V> variable) {
+        private PropertyVariable(Variable<V> variable, boolean ui) {
             this.variable = variable;
+            this.ui = ui;
         }
 
         /**
@@ -977,7 +995,7 @@ public final class Viewtify {
          */
         @Override
         public synchronized void addListener(ChangeListener<? super V> listener) {
-            Disposable disposer = variable.observe().to(v -> listener.changed(this, null, v));
+            Disposable disposer = variable.observe().on(ui ? UIThread : null).to(v -> listener.changed(this, null, v));
 
             if (changes == null) {
                 changes = new WeakHashMap();
@@ -1016,7 +1034,7 @@ public final class Viewtify {
          */
         @Override
         public void addListener(InvalidationListener listener) {
-            Disposable disposer = variable.observe().to(v -> listener.invalidated(this));
+            Disposable disposer = variable.observe().on(ui ? UIThread : null).to(v -> listener.invalidated(this));
 
             if (invalids == null) {
                 invalids = new WeakHashMap();
