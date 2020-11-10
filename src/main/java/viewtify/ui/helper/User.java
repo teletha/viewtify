@@ -115,6 +115,9 @@ public final class User<E extends Event> {
     /** User Action */
     public static final User<MouseEvent> MiddleClick = click(MouseButton.MIDDLE);
 
+    /** User Action */
+    public static final User<MouseEvent> DoubleClick = click(MouseButton.PRIMARY, 2);
+
     /**
      * Helper method to create {@link User} action for key input.
      * 
@@ -123,6 +126,18 @@ public final class User<E extends Event> {
      */
     public static final User<MouseEvent> click(MouseButton button) {
         return new User<>(MouseEvent.MOUSE_CLICKED, (helper, signal) -> signal.take(e -> e.getButton() == button));
+    }
+
+    /**
+     * Helper method to create {@link User} action for key input.
+     * 
+     * @param button A target mouse button.
+     * @param count A count of clicks.
+     * @return A user action.
+     */
+    public static final User<MouseEvent> click(MouseButton button, int count) {
+        return new User<>(MouseEvent.MOUSE_CLICKED, (helper, signal) -> signal
+                .take(e -> e.getButton() == button && e.getClickCount() == count));
     }
 
     /** User Action */
