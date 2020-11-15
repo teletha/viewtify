@@ -140,7 +140,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param text A label text.
      * @param followers
      */
-    protected final void label(Variable<String> text, Consumer<UINode>... followers) {
+    protected final void label(Variable text, Consumer<UINode>... followers) {
         $(() -> TextNotation.parse(text), followers);
     }
 
@@ -171,7 +171,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param label A form label.
      * @param userInterfaces A list of form controls.
      */
-    protected final void form(Variable<String> label, UserInterface... userInterfaces) {
+    protected final void form(Variable label, UserInterface... userInterfaces) {
         form(label, null, userInterfaces);
     }
 
@@ -182,7 +182,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param style Additional style for controls.
      * @param userInterfaces A list of form controls.
      */
-    protected final void form(Variable<String> label, Style style, UserInterface... userInterfaces) {
+    protected final void form(Variable label, Style style, UserInterface... userInterfaces) {
         form(() -> TextNotation.parse(label), style, userInterfaces);
     }
 

@@ -45,13 +45,13 @@ public class TextNotation {
      * @param message A wiki-like notation text.
      * @return
      */
-    public static TextFlow parse(Variable<String> message) {
+    public static TextFlow parse(Variable message) {
         TextFlow flow = new TextFlow();
         ObservableList<Node> children = flow.getChildren();
 
         message.observing().on(Viewtify.UIThread).to(text -> {
             children.clear();
-            parse(children, text);
+            parse(children, I.transform(text, String.class));
         });
         return flow;
     }
