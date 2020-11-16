@@ -11,6 +11,7 @@ package viewtify.ui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.WeakHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -28,6 +29,8 @@ import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import kiss.WiseFunction;
+import kiss.WiseTriConsumer;
+import kiss.WiseTriFunction;
 import viewtify.Viewtify;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 
@@ -92,8 +95,8 @@ public class UITableColumn<RowValue, ColumnValue>
                 private final WeakHashMap<RowValue, ObservableValue<ColumnValue>> properties = new WeakHashMap();
 
                 @Override
-                public ObservableValue<ColumnValue> call(CellDataFeatures<RowValue, ColumnValue> param) {
-                    return properties.computeIfAbsent(param.getValue(), provider::apply);
+                public synchronized ObservableValue<ColumnValue> call(CellDataFeatures<RowValue, ColumnValue> cellData) {
+                    return properties.computeIfAbsent(cellData.getValue(), provider::apply);
                 }
             });
         }
@@ -177,10 +180,46 @@ public class UITableColumn<RowValue, ColumnValue>
     }
 
     /**
+     * Render the human-readable item expression.
+     * 
+     * @param renderer A renderer.
+     * @return
+     */
+    public UITableColumn<RowValue, ColumnValue> render(WiseTriConsumer<UILabel, RowValue, ColumnValue> renderer) {
+        Objects.requireNonNull(renderer);
+        return renderByUI(() -> new UILabel(null), (label, row, column) -> {
+            renderer.accept(label, row, column);
+            return label;
+        });
+    }
+
+    /**
+     * Render the human-readable item expression.
+     * 
+     * @param renderer A renderer.
+     * @return
+     */
+    public <C> UITableColumn<RowValue, ColumnValue> renderByUI(Supplier<C> context, WiseTriFunction<C, RowValue, ColumnValue, ? extends UserInterfaceProvider<? extends Node>> renderer) {
+        Objects.requireNonNull(renderer);
+        return renderByNode(context, (ui, row, column) -> renderer.apply(ui, row, column).ui());
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public <C> UITableColumn<RowValue, ColumnValue> renderByNode(Supplier<C> context, BiFunction<C, ColumnValue, ? extends Node> renderer) {
+        Objects.requireNonNull(renderer);
+        return renderByNode(context, (ui, row, column) -> renderer.apply(ui, column));
+    }
+
+    /**
+     * Render the human-readable item expression.
+     * 
+     * @param renderer A renderer.
+     * @return
+     */
+    public <C> UITableColumn<RowValue, ColumnValue> renderByNode(Supplier<C> context, WiseTriFunction<C, RowValue, ColumnValue, ? extends Node> renderer) {
         ui.setCellFactory(table -> new GenericCell(context, renderer));
         return this;
     }
@@ -194,12 +233,12 @@ public class UITableColumn<RowValue, ColumnValue>
         private final C context;
 
         /** The user defined cell renderer. */
-        private final BiFunction<C, ColumnValue, Node> renderer;
+        private final WiseTriFunction<C, RowValue, ColumnValue, Node> renderer;
 
         /**
          * @param renderer
          */
-        private GenericCell(Supplier<C> context, BiFunction<C, ColumnValue, Node> renderer) {
+        private GenericCell(Supplier<C> context, WiseTriFunction<C, RowValue, ColumnValue, Node> renderer) {
             this.context = context.get();
             this.renderer = renderer;
         }
@@ -211,10 +250,12 @@ public class UITableColumn<RowValue, ColumnValue>
         protected void updateItem(ColumnValue item, boolean empty) {
             super.updateItem(item, empty);
 
-            if (item == null || empty) {
+            RowValue row = getTableRow().getItem();
+
+            if (item == null || row == null || empty) {
                 setGraphic(null);
             } else {
-                setGraphic(renderer.apply(context, item));
+                setGraphic(renderer.apply(context, row, item));
             }
         }
     }

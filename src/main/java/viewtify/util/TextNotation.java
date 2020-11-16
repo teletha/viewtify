@@ -12,6 +12,7 @@ package viewtify.util;
 import java.awt.Desktop;
 import java.net.URI;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
@@ -19,13 +20,54 @@ import javafx.scene.control.Label;
 import javafx.scene.text.TextFlow;
 
 import kiss.I;
+import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 
-/**
- * @version 2018/08/30 2:09:47
- */
 public class TextNotation {
+
+    /**
+     * Concat all messages.
+     * 
+     * @param messages
+     * @return
+     */
+    public static Signal<String> concat(Object... messages) {
+        if (messages.length == 0) {
+            return I.signal();
+        }
+
+        Signal<String> first = literalize(messages[0]);
+        Signal<String>[] remainings = new Signal[messages.length - 1];
+        for (int i = 0; i < remainings.length; i++) {
+            remainings[i] = literalize(messages[i + 1]);
+        }
+        return first.combineLatest(remainings, String::concat);
+    }
+
+    /**
+     * Literalize the message.
+     * 
+     * @param message
+     * @return
+     */
+    private static Signal<String> literalize(Object message) {
+        if (message == null) {
+            return I.signal("");
+        }
+
+        Signal<Object> signal;
+        if (message instanceof Signal) {
+            signal = (Signal) message;
+        } else if (message instanceof Variable) {
+            signal = ((Variable) message).observing();
+        } else if (message instanceof ObservableValue) {
+            signal = Viewtify.observing((ObservableValue) message);
+        } else {
+            signal = I.signal(message);
+        }
+        return signal.map(value -> I.transform(value, String.class));
+    }
 
     /**
      * Parse as {@link TextFlow}.
