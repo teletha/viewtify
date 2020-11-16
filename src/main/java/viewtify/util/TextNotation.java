@@ -57,6 +57,10 @@ public class TextNotation {
     }
 
     private static void parse(ObservableList<Node> children, String message) {
+        if (message == null) {
+            return;
+        }
+
         boolean inLink = false;
         boolean inURL = false;
         StringBuilder builder = new StringBuilder();
