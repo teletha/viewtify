@@ -260,11 +260,21 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     /**
      * Return the index of the specified item or -1 if it is not found.
      * 
-     * @param item
-     * @return
+     * @param item A target to search.
+     * @return An item index.
      */
     default int indexOf(E item) {
         return refer().items.getValue().indexOf(item);
+    }
+
+    /**
+     * Check whether this collection has the specified item or not.
+     * 
+     * @param item A target to search.
+     * @return A result.
+     */
+    default boolean has(E item) {
+        return indexOf(item) != -1;
     }
 
     /**
@@ -277,6 +287,20 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     default Self addItemAt(int index, E item) {
         if (item != null && 0 <= index) {
             modifyItemUISafely(list -> list.add(Math.min(index, list.size()), item));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Add the specified item.
+     * 
+     * @param index An index to add.
+     * @param item An item to add.
+     * @return Chainable API.
+     */
+    default Self addItemAtIfAbsent(int index, E item) {
+        if (!has(item)) {
+            addItemAt(index, item);
         }
         return (Self) this;
     }
@@ -295,6 +319,19 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     }
 
     /**
+     * Add the specified item at the first.
+     * 
+     * @param item An item to add.
+     * @return Chainable API.
+     */
+    default Self addItemAtFirstIfAbsent(E item) {
+        if (!has(item)) {
+            addItemAtFirst(item);
+        }
+        return (Self) this;
+    }
+
+    /**
      * Add the specified item at the last.
      * 
      * @param item An item to add.
@@ -303,6 +340,19 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     default Self addItemAtLast(E item) {
         if (item != null) {
             modifyItemUISafely(list -> list.add(item));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Add the specified item at the last.
+     * 
+     * @param item An item to add.
+     * @return Chainable API.
+     */
+    default Self addItemAtLastIfAbsent(E item) {
+        if (!has(item)) {
+            addItemAtLast(item);
         }
         return (Self) this;
     }
