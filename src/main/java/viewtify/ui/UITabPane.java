@@ -12,13 +12,13 @@ package viewtify.ui;
 import java.util.function.Consumer;
 
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TabPane.TabDragPolicy;
 
 import kiss.Disposable;
+import viewtify.property.SmartProperty;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
@@ -48,7 +48,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
      */
     @Override
     public Property<ObservableList<UITab>> itemsProperty() {
-        return new SimpleObjectProperty(ui.getTabs());
+        return new SmartProperty(ui.getTabs());
     }
 
     /**

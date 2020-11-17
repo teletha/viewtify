@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 
@@ -31,6 +30,7 @@ import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.property.SmartProperty;
 import viewtify.util.Translatable;
 
 public interface CollectableHelper<Self extends ReferenceHolder & CollectableHelper<Self, E>, E> {
@@ -533,7 +533,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     final class Ð<E> {
 
         /** The item holder. */
-        private final Property<ObservableList<E>> items = new SimpleObjectProperty();
+        private final Property<ObservableList<E>> items = new SmartProperty();
 
         /** The item taking filter. */
         private final Variable<Predicate<E>> filter = Variable.empty();

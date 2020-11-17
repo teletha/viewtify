@@ -15,7 +15,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TreeTableCell;
@@ -25,6 +24,7 @@ import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
 import viewtify.Viewtify;
+import viewtify.property.SmartProperty;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 
 /**
@@ -63,7 +63,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * @return
      */
     public <T extends RowValue> UITreeTableColumn<RowValue, ColumnValue> model(Class<T> type, WiseFunction<T, ColumnValue> provider) {
-        return modelByProperty(type, row -> new SimpleObjectProperty(provider.apply(row)));
+        return modelByProperty(type, row -> new SmartProperty(provider.apply(row)));
     }
 
     /**
@@ -73,7 +73,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
      * @return
      */
     public UITreeTableColumn<RowValue, ColumnValue> model(WiseFunction<RowValue, ColumnValue> provider) {
-        return modelByProperty(row -> new SimpleObjectProperty(provider.apply(row)));
+        return modelByProperty(row -> new SmartProperty(provider.apply(row)));
     }
 
     /**
@@ -143,7 +143,7 @@ public class UITreeTableColumn<RowValue, ColumnValue>
             }
 
             if (map == null) {
-                return new SimpleObjectProperty();
+                return new SmartProperty();
             } else {
                 return map.apply(value);
             }

@@ -17,7 +17,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TableCell;
@@ -32,6 +31,7 @@ import kiss.WiseFunction;
 import kiss.WiseTriConsumer;
 import kiss.WiseTriFunction;
 import viewtify.Viewtify;
+import viewtify.property.SmartProperty;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 
 public class UITableColumn<RowValue, ColumnValue>
@@ -49,7 +49,7 @@ public class UITableColumn<RowValue, ColumnValue>
     public UITableColumn(View view) {
         super(new TableColumn());
 
-        ui.setCellValueFactory(v -> new SimpleObjectProperty(v.getValue()));
+        ui.setCellValueFactory(v -> new SmartProperty(v.getValue()));
     }
 
     /**
@@ -69,7 +69,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @return
      */
     public <T extends RowValue> UITableColumn<RowValue, ColumnValue> model(Class<T> type, WiseFunction<T, ColumnValue> provider) {
-        return modelByProperty(type, row -> new SimpleObjectProperty(provider.apply(row)));
+        return modelByProperty(type, row -> new SmartProperty(provider.apply(row)));
     }
 
     /**
@@ -79,7 +79,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @return
      */
     public UITableColumn<RowValue, ColumnValue> model(WiseFunction<RowValue, ColumnValue> provider) {
-        return modelByProperty(row -> new SimpleObjectProperty(provider.apply(row)));
+        return modelByProperty(row -> new SmartProperty(provider.apply(row)));
     }
 
     /**
@@ -126,7 +126,7 @@ public class UITableColumn<RowValue, ColumnValue>
      */
     public UITableColumn<RowValue, ColumnValue> modelBySignal(WiseFunction<RowValue, Signal<ColumnValue>> mapper) {
         if (mapper != null) {
-            modelByProperty(v -> mapper.apply(v).to(new SimpleObjectProperty(), SimpleObjectProperty::set));
+            modelByProperty(v -> mapper.apply(v).to(new SmartProperty(), SmartProperty::set));
         }
         return this;
     }
@@ -172,7 +172,7 @@ public class UITableColumn<RowValue, ColumnValue>
             }
 
             if (map == null) {
-                return new SimpleObjectProperty();
+                return new SmartProperty();
             } else {
                 return map.apply(value);
             }

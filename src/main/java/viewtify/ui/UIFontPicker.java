@@ -12,7 +12,6 @@ package viewtify.ui;
 import java.util.concurrent.TimeUnit;
 
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -20,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
 import kiss.I;
+import viewtify.property.SmartProperty;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.DnDAssistant;
 import viewtify.ui.helper.ValueHelper;
@@ -42,7 +42,7 @@ public class UIFontPicker extends UserInterface<UIFontPicker, HBox>
     }
 
     /** The color data holder. */
-    private final Property<Font> font = new SimpleObjectProperty<>(Font.getDefault());
+    private final Property<Font> font = new SmartProperty<>(Font.getDefault());
 
     /** The name selection. */
     private final UIComboBox<String> nameSelector;

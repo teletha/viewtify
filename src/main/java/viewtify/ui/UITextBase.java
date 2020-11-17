@@ -15,12 +15,12 @@ import java.util.regex.Pattern;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.TextField;
 import javafx.scene.control.skin.TextFieldSkin;
 
 import kiss.I;
 import viewtify.Viewtify;
+import viewtify.property.SmartProperty;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.ValueHelper;
@@ -29,7 +29,7 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
         implements ValueHelper<Self, V>, ContextMenuHelper<Self>, EditableHelper<Self> {
 
     /** The internal model value. */
-    private final SimpleObjectProperty<V> model = new SimpleObjectProperty();
+    private final SmartProperty<V> model = new SmartProperty();
 
     private boolean updating;
 
