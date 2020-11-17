@@ -9,6 +9,7 @@
  */
 package viewtify.property;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.Consumer;
@@ -67,7 +68,7 @@ public class SmartProperty<E> implements Property<E>, WritableObjectValue<E> {
      */
     public SmartProperty(Object owner, String name) {
         this.owner = owner;
-        this.name = name;
+        this.name = Objects.requireNonNullElse(name, "");
     }
 
     /**
