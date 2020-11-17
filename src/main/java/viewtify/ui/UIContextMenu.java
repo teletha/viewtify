@@ -15,6 +15,8 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.MenuItem;
 
+import kiss.Variable;
+
 public class UIContextMenu {
 
     /** The actual ui. */
@@ -55,7 +57,7 @@ public class UIContextMenu {
     /**
      * Declare simple menu.
      * 
-     * @return
+     * @return Chainable API.
      */
     public UIMenuItem menu() {
         MenuItem menu = assignID(new MenuItem());
@@ -66,9 +68,29 @@ public class UIContextMenu {
     }
 
     /**
+     * Declare simple menu with text.
+     * 
+     * @param text A label text.
+     * @return Chainable API.
+     */
+    public UIMenuItem menu(Object text) {
+        return menu().text(text);
+    }
+
+    /**
+     * Declare simple menu with text.
+     * 
+     * @param text A label text.
+     * @return Chainable API.
+     */
+    public UIMenuItem menu(Variable text) {
+        return menu().text(text);
+    }
+
+    /**
      * Declare checkbox menu.
      * 
-     * @return
+     * @return Chainable API.
      */
     public UIMenuItem checkMenu() {
         CheckMenuItem menu = assignID(new CheckMenuItem());
