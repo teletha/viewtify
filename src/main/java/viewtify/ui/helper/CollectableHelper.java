@@ -14,8 +14,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
+import java.util.WeakHashMap;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.stream.BaseStream;
@@ -24,8 +26,10 @@ import java.util.stream.IntStream;
 
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
+import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -510,6 +514,23 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     }
 
     /**
+     * Observe each items's state to update view.
+     * 
+     * @param stateExtractor
+     * @return Chainable API.
+     */
+    default Self observeItemState(Function<E, Variable> stateExtractor) {
+        Ð<E> refer = refer();
+        if (refer.disposers != null) {
+            refer.disposers.values().forEach(Disposable::dispose);
+            refer.disposers.clear();
+        }
+        refer.disposers = new WeakHashMap();
+        refer.notifier = stateExtractor;
+        return (Self) this;
+    }
+
+    /**
      * Retrieve the special reference holder.
      * 
      * @return
@@ -530,7 +551,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     /**
      * 
      */
-    final class Ð<E> {
+    final class Ð<E> implements ListChangeListener<E> {
 
         /** The item holder. */
         private final Property<ObservableList<E>> items = new SmartProperty();
@@ -541,13 +562,21 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
         /** The item sorter. */
         private final Variable<Comparator<E>> sorter = Variable.empty();
 
+        /** The item state observers. */
+        private Function<E, Variable> notifier;
+
+        /** The disposer for observers. */
+        private WeakHashMap<E, Disposable> disposers;
+
         /**
          * Initialize date reference.
          * 
          * @param helper
          */
         private Ð(CollectableHelper<?, E> helper) {
-            items.setValue(helper.itemsProperty().getValue());
+            ObservableList<E> list = helper.itemsProperty().getValue();
+            items.setValue(list);
+            list.addListener(this);
 
             Viewtify.observing(items).combineLatest(filter.observing(), sorter.observing()).to(v -> {
                 ObservableList items = v.ⅰ;
@@ -561,6 +590,30 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 }
                 helper.itemsProperty().setValue(items);
             });
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void onChanged(Change<? extends E> c) {
+            if (notifier != null) {
+                while (c.next()) {
+                    for (E item : c.getRemoved()) {
+                        Disposable disposable = disposers.remove(item);
+                        if (disposable != null) {
+                            disposable.dispose();
+                        }
+                    }
+                    for (E item : c.getAddedSubList()) {
+                        disposers.put(item, notifier.apply(item).observe().to(() -> {
+                            // Dirty Hack : notify item change event to the source observable list
+                            ObservableList<E> list = items.getValue();
+                            list.set(list.indexOf(item), item);
+                        }));
+                    }
+                }
+            }
         }
     }
 }
