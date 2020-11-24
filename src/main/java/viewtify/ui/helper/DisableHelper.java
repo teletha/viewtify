@@ -37,7 +37,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * 
      * @return Chainable API.
      */
-    default Self disable() {
+    default Self disableNow() {
         return disable(true);
     }
 
@@ -172,7 +172,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * 
      * @return Chainable API.
      */
-    default Self enable() {
+    default Self enableNow() {
         return enable(true);
     }
 
@@ -209,7 +209,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      */
     default Self enableWhen(Signal<Boolean> condition, Signal<Boolean>... conditions) {
         if (condition != null) {
-            condition.combineLatest(conditions, (one, other) -> one || other).to(use -> enable(use));
+            condition.combineLatest(conditions, (one, other) -> one || other).to(this::enable);
         }
         return (Self) this;
     }
