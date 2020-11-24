@@ -35,6 +35,15 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     /**
      * Disables itself.
      * 
+     * @return Chainable API.
+     */
+    default Self disable() {
+        return disable(true);
+    }
+
+    /**
+     * Disables itself.
+     * 
      * @param state A disable state.
      * @return Chainable API.
      */
@@ -159,7 +168,16 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Disables itself.
+     * Enables itself.
+     * 
+     * @return Chainable API.
+     */
+    default Self enable() {
+        return enable(true);
+    }
+
+    /**
+     * Enables itself.
      * 
      * @param state A disable state.
      * @return Chainable API.
@@ -169,7 +187,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Disables itself when the specified condition is True, and enables it when False.
+     * Enables itself when the specified condition is True, and enables it when False.
      * 
      * @param condition A timing condition.
      * @param conditions Additional timing conditions.
@@ -183,7 +201,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Disables itself when the specified condition is True, and enables it when False.
+     * Enables itself when the specified condition is True, and enables it when False.
      * 
      * @param condition A timing condition.
      * @param conditions Additional timing conditions.
@@ -191,13 +209,13 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      */
     default Self enableWhen(Signal<Boolean> condition, Signal<Boolean>... conditions) {
         if (condition != null) {
-            condition.combineLatest(conditions, (one, other) -> one || other).to(DisableHelper.this::enable);
+            condition.combineLatest(conditions, (one, other) -> one || other).to(use -> enable(use));
         }
         return (Self) this;
     }
 
     /**
-     * Disables itself when the specified condition is True, and enables it when False.
+     * Enables itself when the specified condition is True, and enables it when False.
      * 
      * @param condition A timing condition.
      * @return Chainable API.
@@ -210,7 +228,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Disables itself when the specified condition is True, and enables it when False.
+     * Enables itself when the specified condition is True, and enables it when False.
      * 
      * @param condition A timing condition.
      * @return Chainable API.
@@ -223,7 +241,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Disable itself for a specified time.
+     * Enables itself for a specified time.
      * 
      * @param time A time value.
      * @param unit A time unit.
@@ -238,7 +256,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Disable itself for a specified time.
+     * Enables itself for a specified time.
      * 
      * @param time A time value.
      * @param unit A time unit.
@@ -252,7 +270,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Disable itself for a bit.
+     * Enables itself for a bit.
      * 
      * @return Chainable API.
      */
