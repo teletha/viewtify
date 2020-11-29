@@ -1,7 +1,10 @@
 {
 	"messages": {
+		"Application": "アプリケーション",
 		"BottomLeft": "左下",
 		"BottomRight": "右下",
+		"Mouse": "マウス",
+		"Primary": "プライマリー",
 		"TopLeft": "左左",
 		"TopRight": "トップライト"
 	}

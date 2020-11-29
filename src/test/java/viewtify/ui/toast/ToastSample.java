@@ -11,6 +11,8 @@ package viewtify.ui.toast;
 
 import java.util.Random;
 
+import javafx.util.Duration;
+
 import net.bytebuddy.utility.RandomString;
 import viewtify.Theme;
 import viewtify.Viewtify;
@@ -18,6 +20,7 @@ import viewtify.ui.UIButton;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
+import viewtify.util.Corner;
 import viewtify.util.ScreenSelector;
 
 public class ToastSample {
@@ -44,8 +47,10 @@ public class ToastSample {
             Random random = new Random();
 
             button.text("Show").when(User.LeftClick).to(() -> {
-                Toast.setting.max.set(random.nextInt(10));
+                Toast.setting.max.set(10);
                 Toast.setting.screen.set(ScreenSelector.Mouse);
+                Toast.setting.area.set(Corner.BottomLeft);
+                Toast.setting.autoHide.set(Duration.seconds(4));
 
                 Toast.show(RandomString.make(Math.max(15, random.nextInt(100))));
             });

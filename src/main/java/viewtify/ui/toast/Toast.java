@@ -26,6 +26,7 @@ import kiss.Disposable;
 import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
+import viewtify.Viewtify;
 import viewtify.model.Model;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
@@ -112,7 +113,7 @@ public class Toast {
         Rectangle2D rect = setting.screen.v.select().getBounds();
         boolean isTopSide = setting.area.v.isTopSide();
         double x = setting.area.v.isLeftSide() ? rect.getMinX() + MARGIN : rect.getMaxX() - setting.width.v - MARGIN;
-        double y = isTopSide ? 30 : rect.getMaxY() - 30;
+        double y = isTopSide ? MARGIN : rect.getMaxY() - MARGIN;
 
         Iterator<Notification> iterator = isTopSide ? notifications.descendingIterator() : notifications.iterator();
         while (iterator.hasNext()) {
@@ -218,7 +219,10 @@ public class Toast {
             popup.getContent().add(box);
             UserActionHelper.of(popup).when(User.MouseClick).to(() -> remove(this));
             if (0 < setting.autoHide.v.toMillis()) {
-                disposer = I.schedule((long) setting.autoHide.v.toMillis(), TimeUnit.MILLISECONDS).first().to(() -> remove(this));
+                disposer = I.schedule((long) setting.autoHide.v.toMillis(), TimeUnit.MILLISECONDS)
+                        .first()
+                        .on(Viewtify.UIThread)
+                        .to(() -> remove(this));
             }
         }
 
