@@ -12,6 +12,7 @@ package viewtify.ui;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.util.function.Predicate;
 
 import javafx.application.Platform;
@@ -21,7 +22,6 @@ import javafx.scene.control.TableColumnBase;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
 import kiss.Extensible;
 import kiss.I;
 import kiss.Variable;
@@ -271,7 +271,17 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
                         Constructor constructor = Model.collectConstructors(type)[0];
                         constructor.setAccessible(true);
 
-                        UserInterfaceProvider provider = (UserInterfaceProvider) constructor.newInstance(this);
+                        Parameter[] params = constructor.getParameters();
+                        UserInterfaceProvider provider = null;
+
+                        if (params.length == 1) {
+                            provider = (UserInterfaceProvider) constructor.newInstance(this);
+                        } else if (params.length == 2 && params[1].getType() == Class.class) {
+                            provider = (UserInterfaceProvider) constructor
+                                    .newInstance(this, Model.collectParameters(field.getGenericType(), field.getType())[0]);
+                        } else {
+                            throw new UnsupportedOperationException("Unknown constructor type. [" + constructor + "]");
+                        }
 
                         assignId(provider.ui(), field.getName());
                         field.set(this, provider);

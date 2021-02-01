@@ -40,16 +40,18 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
      * 
      * @param ui
      */
-    UITextBase(View view) {
+    UITextBase(View view, Class type) {
         super(new VerifiableTextField(), view);
 
         // propagate value from model to ui
         Viewtify.observe(model).to(value -> {
+            System.out.println("Update from model to ui" + value);
             if (!updating) {
                 updating = true;
                 try {
                     ui.setText(I.transform(value, String.class));
                 } catch (Throwable e) {
+                    e.printStackTrace();
                     // ignore
                 } finally {
                     updating = false;
@@ -59,11 +61,13 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
 
         // propagate value from ui to model
         Viewtify.observe(ui.textProperty()).to(uiText -> {
+            System.out.println("update from ui to model " + uiText);
             if (!updating) {
                 updating = true;
                 try {
-                    model.set((V) I.transform(uiText, model.get().getClass()));
+                    model.set((V) I.transform(uiText, type));
                 } catch (Throwable e) {
+                    e.printStackTrace();
                     // ignore
                 } finally {
                     updating = false;

@@ -16,7 +16,7 @@ public class UITextValue<V> extends UITextBase<UITextValue<V>, V> {
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    public UITextValue(View view) {
-        super(view);
+    public UITextValue(View view, Class type) {
+        super(view, type);
     }
 }

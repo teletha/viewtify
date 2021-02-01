@@ -17,6 +17,6 @@ public class UIText extends UITextBase<UIText, String> {
      * @param ui
      */
     public UIText(View view) {
-        super(view);
+        super(view, String.class);
     }
 }
