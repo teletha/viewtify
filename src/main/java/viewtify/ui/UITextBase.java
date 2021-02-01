@@ -19,6 +19,7 @@ import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.control.skin.TextFieldSkin;
+
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -45,7 +46,6 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
 
         // propagate value from model to ui
         Viewtify.observe(model).to(value -> {
-            System.out.println("Update from model to ui" + value);
             if (!updating) {
                 updating = true;
                 try {
@@ -61,7 +61,6 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
 
         // propagate value from ui to model
         Viewtify.observe(ui.textProperty()).to(uiText -> {
-            System.out.println("update from ui to model " + uiText);
             if (!updating) {
                 updating = true;
                 try {
