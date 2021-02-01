@@ -18,7 +18,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
-
 import kiss.Disposable;
 import kiss.Signal;
 import kiss.Signaling;
@@ -27,12 +26,13 @@ import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.CollectableValuedItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.PlaceholderHelper;
 import viewtify.ui.helper.SelectableHelper;
 import viewtify.ui.helper.User;
 
 public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
         implements CollectableHelper<UIComboBox<T>, T>, CollectableValuedItemRenderingHelper<UIComboBox<T>, T>,
-        ContextMenuHelper<UIComboBox<T>>, SelectableHelper<UIComboBox<T>, T> {
+        ContextMenuHelper<UIComboBox<T>>, SelectableHelper<UIComboBox<T>, T>, PlaceholderHelper<UIComboBox<T>> {
 
     /**
      * Builde {@link ComboBox}.

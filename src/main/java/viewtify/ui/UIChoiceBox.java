@@ -15,11 +15,13 @@ import javafx.scene.control.ChoiceBox;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.PlaceholderHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.ValueHelper;
 
 public class UIChoiceBox<T> extends UserInterface<UIChoiceBox<T>, ChoiceBox<T>>
-        implements CollectableHelper<UIChoiceBox<T>, T>, ValueHelper<UIChoiceBox<T>, T>, ContextMenuHelper<UIChoiceBox<T>> {
+        implements CollectableHelper<UIChoiceBox<T>, T>, ValueHelper<UIChoiceBox<T>, T>, ContextMenuHelper<UIChoiceBox<T>>,
+        PlaceholderHelper<UIChoiceBox<T>> {
 
     /**
      * Builde {@link ChoiceBox}.
