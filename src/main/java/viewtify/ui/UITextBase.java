@@ -11,22 +11,24 @@ package viewtify.ui;
 
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.control.skin.TextFieldSkin;
-
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
+import viewtify.ui.helper.PlaceholderHelper;
 import viewtify.ui.helper.ValueHelper;
 
 abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInterface<Self, TextField>
-        implements ValueHelper<Self, V>, ContextMenuHelper<Self>, EditableHelper<Self> {
+        implements ValueHelper<Self, V>, ContextMenuHelper<Self>, EditableHelper<Self>, PlaceholderHelper<Self> {
 
     /** The internal model value. */
     private final SmartProperty<V> model = new SmartProperty();
@@ -194,6 +196,40 @@ abstract class UITextBase<Self extends UITextBase<Self, V>, V> extends UserInter
         ((VerifiableTextField) ui).masking = enable;
         ui.setText(ui.getText()); // apply immediately
         return (Self) this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Self placeholder(Object text) {
+        ui.setPromptText(Objects.toString(text));
+        return (Self) this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Self placeholder(Property text) {
+        ui.promptTextProperty().bind(text);
+        return (Self) this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Self placeholder(UserInterfaceProvider text) {
+        throw new UnsupportedOperationException("Text field doesn't support the placeholder by node.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Self placeholder(Node node) {
+        throw new UnsupportedOperationException("Text field doesn't support the placeholder by node.");
     }
 
     /**
