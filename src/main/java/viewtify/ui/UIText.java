@@ -63,7 +63,9 @@ public class UIText<V> extends UserInterface<UIText<V>, TextField>
             if (!updating) {
                 updating = true;
                 try {
-                    if (uiText.isEmpty()) {
+                    if (type == String.class) {
+                        model.set((V) uiText);
+                    } else if (uiText.isEmpty()) {
                         model.set(null);
                     } else {
                         model.set((V) I.transform(uiText, type));
