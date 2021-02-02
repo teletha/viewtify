@@ -28,13 +28,13 @@ import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
+import viewtify.util.GuardedOperation;
 import viewtify.util.Translatable;
 
 public interface CollectableHelper<Self extends ReferenceHolder & CollectableHelper<Self, E>, E> {
@@ -568,6 +568,9 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
         /** The disposer for observers. */
         private WeakHashMap<E, Disposable> disposers;
 
+        /** The sync state. */
+        private final GuardedOperation updating = new GuardedOperation();
+
         /**
          * Initialize date reference.
          * 
@@ -579,16 +582,18 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
             list.addListener(this);
 
             Viewtify.observing(items).combineLatest(filter.observing(), sorter.observing()).to(v -> {
-                ObservableList items = v.ⅰ;
+                updating.guard(() -> {
+                    ObservableList items = v.ⅰ;
 
-                if (v.ⅱ != null) {
-                    items = items.filtered(v.ⅱ);
-                }
+                    if (v.ⅱ != null) {
+                        items = items.filtered(v.ⅱ);
+                    }
 
-                if (v.ⅲ != null) {
-                    items = items.sorted(v.ⅲ);
-                }
-                helper.itemsProperty().setValue(items);
+                    if (v.ⅲ != null) {
+                        items = items.sorted(v.ⅲ);
+                    }
+                    helper.itemsProperty().setValue(items);
+                });
             });
         }
 

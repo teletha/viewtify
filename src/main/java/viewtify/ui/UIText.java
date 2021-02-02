@@ -26,6 +26,7 @@ import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.PlaceholderHelper;
 import viewtify.ui.helper.ValueHelper;
+import viewtify.util.GuardedOperation;
 
 public class UIText<V> extends UserInterface<UIText<V>, TextField>
         implements ValueHelper<UIText<V>, V>, ContextMenuHelper<UIText<V>>, EditableHelper<UIText<V>>, PlaceholderHelper<UIText<V>> {
@@ -34,7 +35,7 @@ public class UIText<V> extends UserInterface<UIText<V>, TextField>
     private final SmartProperty<V> model = new SmartProperty();
 
     /** The value sync state. */
-    private boolean updating;
+    private final GuardedOperation updating = new GuardedOperation().ignoreError();
 
     /**
      * Enchanced view.
@@ -46,36 +47,22 @@ public class UIText<V> extends UserInterface<UIText<V>, TextField>
 
         // propagate value from model to ui
         Viewtify.observe(model).to(value -> {
-            if (!updating) {
-                updating = true;
-                try {
-                    ui.setText(I.transform(value, String.class));
-                } catch (Throwable e) {
-                    // ignore
-                } finally {
-                    updating = false;
-                }
-            }
+            updating.guard(() -> {
+                ui.setText(I.transform(value, String.class));
+            });
         });
 
         // propagate value from ui to model
         Viewtify.observe(ui.textProperty()).to(uiText -> {
-            if (!updating) {
-                updating = true;
-                try {
-                    if (type == String.class) {
-                        model.set((V) uiText);
-                    } else if (uiText.isEmpty()) {
-                        model.set(null);
-                    } else {
-                        model.set((V) I.transform(uiText, type));
-                    }
-                } catch (Throwable e) {
-                    // ignore
-                } finally {
-                    updating = false;
+            updating.guard(() -> {
+                if (type == String.class) {
+                    model.set((V) uiText);
+                } else if (uiText.isEmpty()) {
+                    model.set(null);
+                } else {
+                    model.set((V) I.transform(uiText, type));
                 }
-            }
+            });
         });
     }
 

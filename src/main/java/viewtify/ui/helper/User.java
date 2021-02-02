@@ -15,13 +15,13 @@ import java.util.function.Predicate;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventType;
+import javafx.scene.control.SortEvent;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-
 import kiss.I;
 import kiss.Signal;
 import viewtify.Key;
@@ -187,6 +187,9 @@ public final class User<E extends Event> {
 
     /** User Action */
     public static final User<ScrollEvent> ScrollFinish = new User(ScrollEvent.SCROLL_FINISHED);
+
+    /** User Action */
+    public static final User<SortEvent> Sort = new User(SortEvent.ANY);
 
     /** The actual event type. */
     final EventType type;

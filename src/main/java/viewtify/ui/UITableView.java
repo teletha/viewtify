@@ -17,11 +17,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PlaceholderHelper;
 import viewtify.ui.helper.SelectableHelper;
+import viewtify.ui.helper.User;
 
 public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
         implements SelectableHelper<UITableView<T>, T>, CollectableHelper<UITableView<T>, T>, PlaceholderHelper<UITableView<T>>,
@@ -36,6 +36,7 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
         super(new TableView(), view);
 
         placeholder("");
+        when(User.Sort, () -> sort(ui.getComparator()));
     }
 
     /**
