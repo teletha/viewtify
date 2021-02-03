@@ -9,18 +9,18 @@
  */
 package viewtify.ui;
 
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.stage.PopupWindow.AnchorLocation;
-import viewtify.Viewtify;
+
+import org.controlsfx.control.PopOver.ArrowLocation;
+
+import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
@@ -46,47 +46,36 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
         return ui;
     }
 
-    private UITableView<RowValue> table() {
-        if (ui instanceof TableColumn) {
-            return (UITableView) ((TableColumn) ui).getTableView().getUserData();
-        } else if (ui instanceof TreeTableColumn) {
-            return (UITableView) ((TreeTableColumn) ui).getTreeTableView().getUserData();
-        } else {
-            throw new Error("Bug!");
-        }
-    }
-
     /**
      * Enable the enhanced filtering user-interface.
      * 
      * @param enable
      * @return
      */
-    public final Self filterable() {
+    public final Self filterable(boolean enable) {
         Node graphic = ui.getGraphic();
 
-        if (graphic == null) {
-            Button button = new Button();
-            button.setFocusTraversable(false);
-            button.setOnAction(e -> {
-                TooltipHelper.popover(ui.getStyleableNode(), p -> {
-                    TextField field = new TextField();
-
-                    p.setDetachable(false);
-                    p.setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);
-                    p.setArrowLocation(ArrowLocation.BOTTOM_CENTER);
-                    p.setContentNode(field);
-
-                    Viewtify.observe(field.textProperty()).to(text -> {
-                        table().take(value -> {
-                            return true;
-                        });
+        if (enable) {
+            if (graphic == null) {
+                Button button = new Button();
+                button.setFocusTraversable(false);
+                button.setOnAction(e -> {
+                    TooltipHelper.popover(ui.getStyleableNode(), p -> {
+                        p.setDetachable(false);
+                        p.setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);
+                        p.setArrowLocation(ArrowLocation.BOTTOM_CENTER);
+                        p.setContentNode(new FilterView().ui());
                     });
                 });
-            });
 
-            ui.setGraphic(button);
+                ui.setGraphic(button);
+            }
+        } else {
+            if (graphic != null) {
+                ui.setGraphic(null);
+            }
         }
+
         return (Self) this;
     }
 
@@ -141,9 +130,61 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
      * @return
      */
     public final Self operatable(boolean enable) {
+        filterable(enable);
         sortable(enable);
         resizable(enable);
         reorderable(enable);
         return (Self) this;
     }
+
+    /**
+     * 
+     */
+    private class FilterView extends View {
+
+        UILabel desc;
+
+        UIText<String> input;
+
+        @SuppressWarnings("unused")
+        class View extends ViewDSL {
+            {
+                $(vbox, () -> {
+                    $(desc);
+                    $(input);
+                });
+            }
+        }
+
+        private final CollectableHelper<?, RowValue> items;
+
+        private final Class type = String.class;
+
+        /**
+         * 
+         */
+        private FilterView() {
+            if (ui instanceof TableColumn) {
+                items = (CollectableHelper) ((TableColumn) ui).getTableView().getUserData();
+            } else if (ui instanceof TreeTableColumn) {
+                items = (CollectableHelper) ((TreeTableColumn) ui).getTreeTableView().getUserData();
+            } else {
+                throw new Error("Unkwno table type");
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void initialize() {
+            desc.text("Filter by " + text());
+            input.placeholder("Filter by text").observe().to(value -> {
+                items.take(v -> {
+                    return true;
+                });
+            });
+        }
+    }
+
 }

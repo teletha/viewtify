@@ -22,6 +22,7 @@ import javafx.scene.control.TableColumnBase;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import kiss.Extensible;
 import kiss.I;
 import kiss.Variable;
