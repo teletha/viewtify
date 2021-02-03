@@ -10,6 +10,10 @@
 package viewtify.ui.helper;
 
 import java.util.Objects;
+import java.util.function.Consumer;
+
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
 
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -17,9 +21,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
-
-import org.controlsfx.control.PopOver;
-
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
@@ -84,34 +85,82 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @return Chainable API.
      */
     default Self popup(UserInterfaceProvider<Node> contents) {
-        return popup(AnchorLocation.WINDOW_TOP_LEFT, contents);
+        return popup(null, null, contents);
     }
 
     /**
      * Set the content to be displayed as a popup.
      * 
-     * @param location Sets the position of the anchor used when popping up.
+     * @param anchor Sets the position of the anchor used when popping up.
      * @param contents Popup contents
      * @return Chainable API.
      */
-    default Self popup(AnchorLocation location, UserInterfaceProvider<Node> contents) {
-        if (contents != null) {
-            ui().setOnMouseClicked(e -> {
-                PopOver pop = (PopOver) ui().getProperties().computeIfAbsent("viewtify-popover", k -> {
-                    PopOver p = new PopOver();
-                    p.setDetachable(false);
-                    p.setAnchorLocation(location);
-                    p.setContentNode(contents.ui());
-                    return p;
-                });
+    default Self popup(AnchorLocation anchor, UserInterfaceProvider<Node> contents) {
+        return popup(anchor, null, contents);
+    }
 
-                if (pop.isShowing()) {
-                    pop.hide();
-                } else {
-                    pop.show(ui());
-                }
-            });
+    /**
+     * Set the content to be displayed as a popup.
+     * 
+     * @param arrow Sets the position of the arrow used when popping up.
+     * @param contents Popup contents
+     * @return Chainable API.
+     */
+    default Self popup(ArrowLocation arrow, UserInterfaceProvider<Node> contents) {
+        return popup(null, arrow, contents);
+    }
+
+    /**
+     * Set the content to be displayed as a popup.
+     * 
+     * @param anchor Sets the position of the anchor used when popping up.
+     * @param arrow Sets the position of the arrow used when popping up.
+     * @param contents Popup contents
+     * @return Chainable API.
+     */
+    default Self popup(AnchorLocation anchor, ArrowLocation arrow, UserInterfaceProvider<Node> contents) {
+        return popup(p -> {
+            p.setDetachable(false);
+            p.setAnchorLocation(anchor == null ? AnchorLocation.WINDOW_TOP_LEFT : anchor);
+            p.setArrowLocation(arrow == null ? ArrowLocation.LEFT_TOP : arrow);
+            p.setContentNode(contents.ui());
+        });
+    }
+
+    /**
+     * Set the content to be displayed as a popup.
+     * 
+     * @param configuration Configure {@link PopOver}. This callbak will be invoked only once
+     *            lazily.
+     * @return Chainable API.
+     */
+    default Self popup(Consumer<PopOver> configuration) {
+        if (configuration != null) {
+            ui().setOnMouseClicked(e -> popover(ui(), configuration));
         }
         return (Self) this;
+    }
+
+    /**
+     * Popup your dialog actually.
+     * 
+     * @param target A target node as starting point.
+     * @param configuration Configure {@link PopOver}. This callbak will be invoked only once
+     *            lazily.
+     */
+    static void popover(Node target, Consumer<PopOver> configuration) {
+        if (configuration != null) {
+            PopOver pop = (PopOver) target.getProperties().computeIfAbsent("viewtify-popover", k -> {
+                PopOver p = new PopOver();
+                configuration.accept(p);
+                return p;
+            });
+
+            if (pop.isShowing()) {
+                pop.hide();
+            } else {
+                pop.show(target);
+            }
+        }
     }
 }

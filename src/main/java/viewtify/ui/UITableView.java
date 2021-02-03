@@ -27,6 +27,8 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
         implements SelectableHelper<UITableView<T>, T>, CollectableHelper<UITableView<T>, T>, PlaceholderHelper<UITableView<T>>,
         ContextMenuHelper<UITableView<T>> {
 
+    static final String ColumnFilter = "column-filter";
+
     /**
      * Enchanced view.
      * 
@@ -37,6 +39,8 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
 
         placeholder("");
         when(User.Sort, () -> sort(ui.getComparator()));
+        
+        ui.setUserData(this);
     }
 
     /**
