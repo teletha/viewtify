@@ -9,6 +9,8 @@
  */
 package viewtify.ui;
 
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -17,9 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.stage.PopupWindow.AnchorLocation;
-
-import org.controlsfx.control.PopOver.ArrowLocation;
-
+import viewtify.ui.filter.GenricFilterView;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
@@ -61,10 +61,13 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
                 button.setFocusTraversable(false);
                 button.setOnAction(e -> {
                     TooltipHelper.popover(ui.getStyleableNode(), p -> {
+                        GenricFilterView<RowValue> view = new GenricFilterView();
+                        view.register("Market Name", String.class, String::valueOf);
+
                         p.setDetachable(false);
                         p.setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);
                         p.setArrowLocation(ArrowLocation.BOTTOM_CENTER);
-                        p.setContentNode(new FilterView().ui());
+                        p.setContentNode(view.ui());
                     });
                 });
 
