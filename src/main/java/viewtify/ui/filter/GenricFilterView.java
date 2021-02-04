@@ -9,23 +9,22 @@
  */
 package viewtify.ui.filter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UIText;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.ui.filter.FilterSet.Pointer;
+import viewtify.ui.filter.FilterSet.Query;
 
 public class GenricFilterView<M> extends View {
 
     /** Property editing UIs */
     private final ObservableList<Editor> editors = FXCollections.observableArrayList();
 
-    private final List<FilterModel> filters = new ArrayList();
+    public final FilterSet<M> set = new FilterSet();
 
     class view extends ViewDSL {
         {
@@ -38,45 +37,31 @@ public class GenricFilterView<M> extends View {
      */
     @Override
     protected void initialize() {
-        editors.add(new Editor());
-    }
-
-    public <T> void register(String name, Class<T> type, Function<M, T> extractor) {
-        filters.add(new FilterModel(name, type, extractor));
-    }
-
-    private static class FilterModel<X, T> {
-        String name;
-
-        Function<X, T> extractor;
-
-        /**
-         * @param name
-         * @param type
-         * @param extractor
-         */
-        FilterModel(String name, Class<T> type, Function<X, T> extractor) {
-            this.name = name;
-            this.extractor = extractor;
-        }
+        editors.add(new Editor(set.addEmptyQuery()));
     }
 
     private class Editor extends View {
 
-        UIComboBox<FilterModel> name;
+        UIComboBox<Pointer> name;
 
         UIText<String> tester;
 
         UIComboBox<Filter> filter;
 
+        final Query query;
+
         class view extends ViewDSL {
             {
                 $(hbox, () -> {
                     $(name);
-                    $(tester);
                     $(filter);
+                    $(tester);
                 });
             }
+        }
+
+        private Editor(Query query) {
+            this.query = query;
         }
 
         /**
@@ -84,8 +69,9 @@ public class GenricFilterView<M> extends View {
          */
         @Override
         protected void initialize() {
-            name.items(filters).render(m -> m.name);
-            filter.items(Filter.by(String.class)).render(m -> m.getClass().getSimpleName());
+            name.items(set.pointers).selectFirst().renderByProperty(p -> p.name).renderSelected(p -> p.name.get()).syncTo(query.pointer);
+            tester.syncTo(query.tester);
+            filter.items(Filter.by(String.class)).selectFirst().renderByVariable(m -> m.description).syncTo(query.filter);
         }
     }
 }

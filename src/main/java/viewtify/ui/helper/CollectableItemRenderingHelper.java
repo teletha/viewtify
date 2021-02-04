@@ -86,6 +86,16 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
+    default <C> Self renderByProperty(Function<E, Property<String>> renderer) {
+        return renderByProperty(() -> new UILabel(null), (c, e) -> renderer.apply(e));
+    }
+
+    /**
+     * Render the human-readable item expression.
+     * 
+     * @param renderer A renderer.
+     * @return
+     */
     default <C> Self renderByProperty(Supplier<C> context, BiFunction<C, E, Property<String>> renderer) {
         Objects.requireNonNull(renderer);
         return renderByNode(context, (c, e) -> {

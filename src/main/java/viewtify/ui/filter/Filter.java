@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Nameless Production Committee
+ * Copyright (C) 2019 Nameless Production Committee
  *
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,33 +9,96 @@
  */
 package viewtify.ui.filter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.BiPredicate;
 
-import kiss.Extensible;
 import kiss.I;
-import kiss.model.Model;
+import kiss.Variable;
 
-public interface Filter<V> extends Extensible, BiPredicate<V, V> {
+enum Filter implements BiPredicate {
+
+    /** The builtin filter for {@link Comparable} value. */
+    Equal("is equal to", Comparable.class, (value, tester) -> value.compareTo(tester) == 0),
+
+    /** The builtin filter for {@link Comparable} value. */
+    NotEqual("is not equal to", Comparable.class, (value, tester) -> value.compareTo(tester) != 0),
+
+    /** The builtin filter for {@link Comparable} value. */
+    GreaterThan("is greater than", Comparable.class, (value, tester) -> value.compareTo(tester) > 0),
+
+    /** The builtin filter for {@link Comparable} value. */
+    GreaterThanOrEqual("is greater than or equal to", Comparable.class, (value, tester) -> value.compareTo(tester) >= 0),
+
+    /** The builtin filter for {@link Comparable} value. */
+    LessThan("is less than", Comparable.class, (value, tester) -> value.compareTo(tester) < 0),
+
+    /** The builtin filter for {@link Comparable} value. */
+    LessThanOrEqual("is less than or equal to", Comparable.class, (value, tester) -> value.compareTo(tester) <= 0),
+
+    /** The builtin filter for {@link String} value. */
+    Contain("contains", String.class, (value, tester) -> value.contains(tester)),
+
+    /** The builtin filter for {@link String} value. */
+    NotContain("don't contain", String.class, (value, tester) -> !value.contains(tester)),
+
+    /** The builtin filter for {@link String} value. */
+    StartWith("starts with", String.class, (value, tester) -> value.startsWith(tester)),
+
+    /** The builtin filter for {@link String} value. */
+    EndWith("ends with", String.class, (value, tester) -> value.endsWith(tester)),
+
+    /** The builtin filter for {@link String} value. */
+    RegEx("matches", String.class, (value, tester) -> value.matches(tester));
+
+    /** The builtin set. */
+    private final static Filter[] STRINGS = {Contain, NotContain, StartWith, EndWith, RegEx};
+
+    /** The builtin set. */
+    private final static Filter[] COMPARABLES = {Equal, NotEqual, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual};
+
+    /** The description of this filter. */
+    public final Variable<String> description;
+
+    /** The value type. */
+    public final Class type;
+
+    /** The actual filter. */
+    private final BiPredicate condition;
+
+    /**
+     * Builtin filters.
+     * 
+     * @param <T>
+     * @param description
+     * @param type
+     * @param condition
+     */
+    private <T> Filter(String description, Class<T> type, BiPredicate<T, T> condition) {
+        this.description = I.translate(description);
+        this.type = type;
+        this.condition = condition;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    boolean test(V value, V tester);
+    public boolean test(Object model, Object tester) {
+        return condition.test(model, tester);
+    }
 
-    static <T> List<Filter> by(Class<T> type) {
-        List<Filter> filters = new ArrayList();
-        List<Class<Filter>> list = I.findAs(Filter.class);
-        for (Class<Filter> item : list) {
-            if (item.isInterface()) {
-                continue;
-            }
-            if (((Class) Model.collectParameters(item, Filter.class)[0]).isAssignableFrom(type)) {
-                filters.add(I.make(item));
-            }
+    /**
+     * Collect type specific filters.
+     * 
+     * @param type
+     * @return
+     */
+    static Filter[] by(Class type) {
+        if (type == String.class) {
+            return STRINGS;
+        } else if (Comparable.class.isAssignableFrom(type)) {
+            return COMPARABLES;
+        } else {
+            return STRINGS;
         }
-        return filters;
     }
 }
