@@ -49,3 +49,14 @@
 .text-field {
   -fx-text-box-border: -fx-color;
 }
+
+/* ==========================================================================
+  ToggleButton
+===========================================================================*/
+.toggle-button {
+    -fx-text-fill: derive(-fx-text-base-color, -40%);
+}
+
+.toggle-button:selected {
+    -fx-text-fill: derive(-fx-light-text-color, 10%);
+}

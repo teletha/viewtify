@@ -23,7 +23,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;

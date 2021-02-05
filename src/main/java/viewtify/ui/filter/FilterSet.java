@@ -100,7 +100,7 @@ public class FilterSet<M> implements Predicate<M> {
 
         StringProperty tester;
 
-        final Property<Filter> filter = new SimpleObjectProperty();
+        final Property<BuiltinMatchers> filter = new SimpleObjectProperty();
 
         /**
          * {@inheritDoc}

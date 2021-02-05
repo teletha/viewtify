@@ -13,8 +13,9 @@ import java.util.function.BiPredicate;
 
 import kiss.I;
 import kiss.Variable;
+import viewtify.ui.filter.CompoundQuery.Matcher;
 
-enum Filter implements BiPredicate {
+enum BuiltinMatchers implements Matcher {
 
     /** The builtin filter for {@link Comparable} value. */
     Equal("is equal to", Comparable.class, (value, tester) -> value.compareTo(tester) == 0),
@@ -50,16 +51,16 @@ enum Filter implements BiPredicate {
     RegEx("matches", String.class, (value, tester) -> value.matches(tester));
 
     /** The builtin set. */
-    private final static Filter[] STRINGS = {Contain, NotContain, StartWith, EndWith, RegEx};
+    private final static BuiltinMatchers[] STRINGS = {Contain, NotContain, StartWith, EndWith, RegEx};
 
     /** The builtin set. */
-    private final static Filter[] COMPARABLES = {Equal, NotEqual, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual};
+    private final static BuiltinMatchers[] COMPARABLES = {Equal, NotEqual, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual};
 
     /** The description of this filter. */
-    public final Variable<String> description;
+    private final Variable<String> description;
 
     /** The value type. */
-    public final Class type;
+    private final Class type;
 
     /** The actual filter. */
     private final BiPredicate condition;
@@ -72,10 +73,26 @@ enum Filter implements BiPredicate {
      * @param type
      * @param condition
      */
-    private <T> Filter(String description, Class<T> type, BiPredicate<T, T> condition) {
+    private <T> BuiltinMatchers(String description, Class<T> type, BiPredicate<T, T> condition) {
         this.description = I.translate(description);
         this.type = type;
         this.condition = condition;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Variable description() {
+        return description;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class type() {
+        return type;
     }
 
     /**
@@ -92,7 +109,7 @@ enum Filter implements BiPredicate {
      * @param type
      * @return
      */
-    static Filter[] by(Class type) {
+    static <T> Matcher<T>[] by(Class<T> type) {
         if (type == String.class) {
             return STRINGS;
         } else if (Comparable.class.isAssignableFrom(type)) {

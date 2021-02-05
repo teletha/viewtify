@@ -9,7 +9,12 @@
  */
 package viewtify.style;
 
-import static stylist.StyleDSL.*;
+import static stylist.StyleDSL.$;
+import static stylist.StyleDSL.display;
+import static stylist.StyleDSL.margin;
+import static stylist.StyleDSL.padding;
+import static stylist.StyleDSL.px;
+import static stylist.StyleDSL.text;
 
 import stylist.Style;
 import stylist.StyleDeclarable;

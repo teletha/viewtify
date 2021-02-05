@@ -100,7 +100,7 @@
 /* ==========================================================================
   Table Column
 ===========================================================================*/
-.column-header .button {
+.column-header .filterable {
     -fx-background-image: url('icon/funnel.png');
     -fx-background-repeat: no-repeat;   
     -fx-background-position: center center;
@@ -109,20 +109,20 @@
     -fx-padding: 4 12 4 12 !important;
 }
 
-.column-header .button:hover {
+.column-header .filterable:hover {
 	  -fx-background-color: transparent, -fx-outer-border, -fx-inner-border, -fx-body-color !important;
     -fx-background-image: url('icon/funnel-pencil.png');
 }
 
-.column-header .button.active {
+.column-header .filterable.active {
     -fx-background-image: url('icon/funnel-selected.png');
 }
 
-.column-header .button.active:hover {
+.column-header .filterable.active:hover {
     -fx-background-image: url('icon/funnel-pencil-selected.png');
 }
 
-.column-header .button:focused {
+.column-header .filterable:focused {
 	  -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color !important;
     -fx-background-insets: 0, 0, 1, 1;
 }

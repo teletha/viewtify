@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import viewtify.ui.filter.CompoundQuery;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PlaceholderHelper;
@@ -39,7 +40,7 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
 
         placeholder("");
         when(User.Sort, () -> sort(ui.getComparator()));
-        
+
         ui.setUserData(this);
     }
 

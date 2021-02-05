@@ -9,6 +9,8 @@
  */
 package viewtify.ui;
 
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -17,9 +19,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.stage.PopupWindow.AnchorLocation;
-
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import viewtify.ui.filter.GenricFilterView;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.LabelHelper;
@@ -59,11 +58,12 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
         if (enable) {
             if (graphic == null) {
                 Button button = new Button();
+                button.getStyleClass().add("filterable");
                 button.setFocusTraversable(false);
                 button.setOnAction(e -> {
                     TooltipHelper.popover(ui.getStyleableNode(), p -> {
                         GenricFilterView<RowValue> view = new GenricFilterView();
-                        view.set.register(ui.textProperty(), String.class, String::valueOf);
+                        view.compound.addExtractor(ui.getText());
 
                         p.setDetachable(false);
                         p.setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);
@@ -173,7 +173,7 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
             } else if (ui instanceof TreeTableColumn) {
                 items = (CollectableHelper) ((TreeTableColumn) ui).getTreeTableView().getUserData();
             } else {
-                throw new Error("Unkwno table type");
+                throw new Error("Unknown table type");
             }
         }
 
