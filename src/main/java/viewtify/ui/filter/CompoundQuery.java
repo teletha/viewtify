@@ -18,11 +18,17 @@ import java.util.function.Predicate;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.Node;
 
+import kiss.Disposable;
+import kiss.Signal;
+import kiss.Signaling;
 import kiss.Variable;
 
-public class CompoundQuery<M> implements Predicate<M> {
+public class CompoundQuery<M> implements Predicate<M>, Disposable {
+
+    private final Signaling<CompoundQuery<M>> signaling = new Signaling();
+
+    public final Signal<CompoundQuery<M>> updated = signaling.expose;
 
     public final Variable<Integer> size = Variable.of(0);
 
@@ -48,8 +54,8 @@ public class CompoundQuery<M> implements Predicate<M> {
      * @param <V>
      * @param description The human-readable description.
      */
-    public void addExtractor(String description) {
-        addExtractor(new SimpleStringProperty(description));
+    public CompoundQuery<M> addExtractor(String description) {
+        return addExtractor(new SimpleStringProperty(description));
     }
 
     /**
@@ -58,8 +64,8 @@ public class CompoundQuery<M> implements Predicate<M> {
      * @param <V>
      * @param description The human-readable description.
      */
-    public void addExtractor(Property<String> description) {
-        addExtractor(description, String.class, String::valueOf);
+    public CompoundQuery<M> addExtractor(Property<String> description) {
+        return addExtractor(description, String.class, String::valueOf);
     }
 
     /**
@@ -70,8 +76,8 @@ public class CompoundQuery<M> implements Predicate<M> {
      * @param type A value type.
      * @param extractor An actual value {@link Extractor}.
      */
-    public <V> void addExtractor(String description, Class<V> type, Function<M, V> extractor) {
-        addExtractor(new SimpleStringProperty(description), type, extractor);
+    public <V> CompoundQuery<M> addExtractor(String description, Class<V> type, Function<M, V> extractor) {
+        return addExtractor(new SimpleStringProperty(description), type, extractor);
     }
 
     /**
@@ -82,12 +88,12 @@ public class CompoundQuery<M> implements Predicate<M> {
      * @param type A value type.
      * @param extractor An actual value {@link Extractor}.
      */
-    public <V> void addExtractor(Property<String> description, Class<V> type, Function<M, V> extractor) {
+    public <V> CompoundQuery<M> addExtractor(Property<String> description, Class<V> type, Function<M, V> extractor) {
         Objects.requireNonNull(description);
         Objects.requireNonNull(type);
         Objects.requireNonNull(extractor);
 
-        addExtractor(new Extractor<M, V>() {
+        return addExtractor(new Extractor<M, V>() {
 
             /**
              * {@inheritDoc}
@@ -129,21 +135,21 @@ public class CompoundQuery<M> implements Predicate<M> {
      * @param <V>
      * @param extractor
      */
-    public <V> void addExtractor(Extractor<M, V> extractor) {
+    public <V> CompoundQuery<M> addExtractor(Extractor<M, V> extractor) {
         if (extractor != null) {
-            queries.add(new Query(extractor));
+            Query<M, V> query = new Query(extractor);
+            query.disposer = query.input.observe().as(Object.class).merge(query.matcher.observe()).to(() -> signaling.accept(this));
+
+            queries.add(query);
         }
+        return this;
     }
 
     /**
-     * Get the associated {@link CompoundQuery} with the specified {@link Node}.
-     * 
-     * @param <M>
-     * @param node
-     * @return
+     * {@inheritDoc}
      */
-    public static <M> CompoundQuery<M> of(Node node) {
-        return (CompoundQuery<M>) node.getProperties().computeIfAbsent(CompoundQuery.class, key -> new CompoundQuery());
+    @Override
+    public void vandalize() {
     }
 
     /**
@@ -175,7 +181,7 @@ public class CompoundQuery<M> implements Predicate<M> {
     /**
      * 
      */
-    public static interface Matcher<V> extends BiPredicate<V, V> {
+    public static interface Matcher<V> extends BiPredicate<V, V>, Function<V, V> {
 
         /**
          * Human-readable description.
@@ -206,11 +212,30 @@ public class CompoundQuery<M> implements Predicate<M> {
         /** The associated {@link Extractor}. */
         public final Extractor<M, V> extractor;
 
-        /** The associated {@link Matcher}. */
-        public final Variable<Matcher<V>> matcher = Variable.empty();
-
         /** The current input value. */
         public final Variable<V> input = Variable.empty();
+
+        /** The associated {@link Matcher}. */
+        public final Variable<Matcher<V>> matcher = Variable.<Matcher<V>> empty().intercept((oldMatcher, newMatcher) -> {
+            // normalize the current input
+            if (input.v != null) {
+                normalized = newMatcher.apply(input.v);
+            }
+
+            // normalize the input in future
+            input.intercept((oldInput, newInput) -> {
+                normalized = newMatcher.apply(newInput);
+                return newInput;
+            });
+
+            return newMatcher;
+        });
+
+        /** The normalized input. */
+        private V normalized;
+
+        /** The deconstruction. */
+        private Disposable disposer;
 
         /**
          * @param type
@@ -227,7 +252,8 @@ public class CompoundQuery<M> implements Predicate<M> {
             if (input.v == null || matcher.v == null) {
                 return true;
             } else {
-                return matcher.v.test(extractor.apply(model), input.v);
+                System.out.println(input.v + "@");
+                return matcher.v.test(extractor.apply(model), normalized);
             }
         }
     }

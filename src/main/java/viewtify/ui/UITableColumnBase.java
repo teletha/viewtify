@@ -21,6 +21,7 @@ import javafx.stage.PopupWindow.AnchorLocation;
 
 import org.controlsfx.control.PopOver.ArrowLocation;
 
+import viewtify.ui.filter.CompoundQuery;
 import viewtify.ui.filter.GenricFilterView;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.LabelHelper;
@@ -71,9 +72,10 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
                 button.setFocusTraversable(false);
                 button.setOnAction(e -> {
                     TooltipHelper.popover(ui.getStyleableNode(), p -> {
-                        Table table = table();
-                        GenricFilterView<RowV> view = new GenricFilterView();
-                        view.compound.addExtractor(ui.getText());
+                        CompoundQuery<RowV> query = table().query().addExtractor(ui.getText());
+                        query.updated.to(table()::take);
+
+                        GenricFilterView<RowV> view = new GenricFilterView(query);
 
                         p.setDetachable(false);
                         p.setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);

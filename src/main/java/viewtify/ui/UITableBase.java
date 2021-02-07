@@ -11,6 +11,7 @@ package viewtify.ui;
 
 import javafx.scene.control.Control;
 
+import viewtify.ui.filter.CompoundQuery;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PlaceholderHelper;
@@ -19,6 +20,9 @@ import viewtify.ui.helper.SelectableHelper;
 public abstract class UITableBase<RowV, FXTable extends Control, Self extends UITableBase<RowV, FXTable, Self>>
         extends UserInterface<Self, FXTable>
         implements SelectableHelper<Self, RowV>, CollectableHelper<Self, RowV>, PlaceholderHelper<Self>, ContextMenuHelper<Self> {
+
+    /** The associated query. */
+    protected CompoundQuery<RowV> compound;
 
     /**
      * Build table UI.

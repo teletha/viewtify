@@ -28,12 +28,14 @@ import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
+import viewtify.ui.filter.CompoundQuery;
 import viewtify.util.GuardedOperation;
 import viewtify.util.Translatable;
 
@@ -514,6 +516,15 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     }
 
     /**
+     * Get the associated {@link CompoundQuery}.
+     * 
+     * @return
+     */
+    default CompoundQuery<E> query() {
+        return refer().query();
+    }
+
+    /**
      * Observe each items's state to update view.
      * 
      * @param stateExtractor
@@ -571,6 +582,9 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
         /** The sync state. */
         private final GuardedOperation updating = new GuardedOperation();
 
+        /** Lazy initialization. */
+        private volatile CompoundQuery<E> query;
+
         /**
          * Initialize date reference.
          * 
@@ -619,6 +633,22 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                     }
                 }
             }
+        }
+
+        /**
+         * Get the associated {@link CompoundQuery} lazily.
+         * 
+         * @return
+         */
+        private CompoundQuery<E> query() {
+            if (query == null) {
+                synchronized (this) {
+                    if (query == null) {
+                        query = new CompoundQuery();
+                    }
+                }
+            }
+            return query;
         }
     }
 }

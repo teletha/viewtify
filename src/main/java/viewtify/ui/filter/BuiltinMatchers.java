@@ -10,6 +10,8 @@
 package viewtify.ui.filter;
 
 import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.regex.Pattern;
 
 import kiss.I;
 import kiss.Variable;
@@ -36,19 +38,19 @@ enum BuiltinMatchers implements Matcher {
     LessThanOrEqual("is less than or equal to", Comparable.class, (value, tester) -> value.compareTo(tester) <= 0),
 
     /** The builtin filter for {@link String} value. */
-    Contain("contains", String.class, (value, tester) -> value.contains(tester)),
+    Contain("contains", String.class, String.class, String::toLowerCase, (value, tester) -> value.toLowerCase().contains(tester)),
 
     /** The builtin filter for {@link String} value. */
-    NotContain("don't contain", String.class, (value, tester) -> !value.contains(tester)),
+    NotContain("don't contain", String.class, String.class, String::toLowerCase, (value, tester) -> !value.toLowerCase().contains(tester)),
 
     /** The builtin filter for {@link String} value. */
-    StartWith("starts with", String.class, (value, tester) -> value.startsWith(tester)),
+    StartWith("starts with", String.class, String.class, String::toLowerCase, (value, tester) -> value.toLowerCase().startsWith(tester)),
 
     /** The builtin filter for {@link String} value. */
-    EndWith("ends with", String.class, (value, tester) -> value.endsWith(tester)),
+    EndWith("ends with", String.class, String.class, String::toLowerCase, (value, tester) -> value.toLowerCase().endsWith(tester)),
 
     /** The builtin filter for {@link String} value. */
-    RegEx("matches", String.class, (value, tester) -> value.matches(tester));
+    RegEx("matches", String.class, Pattern.class, Pattern::compile, (value, tester) -> tester.matcher(value).matches());
 
     /** The builtin set. */
     private final static BuiltinMatchers[] STRINGS = {Contain, NotContain, StartWith, EndWith, RegEx};
@@ -65,6 +67,8 @@ enum BuiltinMatchers implements Matcher {
     /** The actual filter. */
     private final BiPredicate condition;
 
+    private final Function normalizer;
+
     /**
      * Builtin filters.
      * 
@@ -74,8 +78,21 @@ enum BuiltinMatchers implements Matcher {
      * @param condition
      */
     private <T> BuiltinMatchers(String description, Class<T> type, BiPredicate<T, T> condition) {
+        this(description, type, type, Function.identity(), condition);
+    }
+
+    /**
+     * Builtin filters.
+     * 
+     * @param <T>
+     * @param description
+     * @param type
+     * @param condition
+     */
+    private <T, N> BuiltinMatchers(String description, Class<T> type, Class<N> normalizedType, Function<T, N> normalizer, BiPredicate<T, N> condition) {
         this.description = I.translate(description);
         this.type = type;
+        this.normalizer = normalizer;
         this.condition = condition;
     }
 
@@ -101,6 +118,14 @@ enum BuiltinMatchers implements Matcher {
     @Override
     public boolean test(Object model, Object tester) {
         return condition.test(model, tester);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object apply(Object model) {
+        return normalizer.apply(model);
     }
 
     /**
