@@ -18,17 +18,16 @@ import java.util.function.Predicate;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.Node;
+
 import kiss.Variable;
 
 public class CompoundQuery<M> implements Predicate<M> {
 
     public final Variable<Integer> size = Variable.of(0);
 
-    /** The managed extractors. */
-    private final List<Extractor<M, ?>> extractors = new ArrayList();
-
     /** The managed queries. */
-    private final List<Query> queries = new ArrayList();
+    final List<Query> queries = new ArrayList();
 
     /**
      * {@inheritDoc}
@@ -41,16 +40,6 @@ public class CompoundQuery<M> implements Predicate<M> {
             }
         }
         return true;
-    }
-
-    /**
-     * List up all {@link Extractor}s.
-     * 
-     * @param <V>
-     * @return
-     */
-    public <V> List<Extractor<M, V>> extractors() {
-        return (List<Extractor<M, V>>) (Object) extractors;
     }
 
     /**
@@ -142,35 +131,19 @@ public class CompoundQuery<M> implements Predicate<M> {
      */
     public <V> void addExtractor(Extractor<M, V> extractor) {
         if (extractor != null) {
-            extractors.add(extractor);
+            queries.add(new Query(extractor));
         }
     }
 
     /**
-     * Add new {@link Query}.
+     * Get the associated {@link CompoundQuery} with the specified {@link Node}.
      * 
-     * @param <V>
-     * @return A created {@link Query}.
+     * @param <M>
+     * @param node
+     * @return
      */
-    public <V> Query<M, V> addNewQuery(Class<V> type) {
-        Query<M, V> query = new Query(type);
-        query.matcher.set(BuiltinMatchers.by(type)[0]);
-        size.set(i -> i + 1);
-
-        return query;
-    }
-
-    /**
-     * Remove the given {@link Query}.
-     * 
-     * @param <V>
-     * @param query
-     */
-    public <V> void remove(Query<M, V> query) {
-        if (query != null) {
-            queries.remove(query);
-            size.set(i -> i - 1);
-        }
+    public static <M> CompoundQuery<M> of(Node node) {
+        return (CompoundQuery<M>) node.getProperties().computeIfAbsent(CompoundQuery.class, key -> new CompoundQuery());
     }
 
     /**
@@ -228,13 +201,10 @@ public class CompoundQuery<M> implements Predicate<M> {
     /**
      * 
      */
-    public static class Query<M, V> implements Predicate<M> {
-
-        /** The value type. */
-        public final Class<V> type;
+    static class Query<M, V> implements Predicate<M> {
 
         /** The associated {@link Extractor}. */
-        public final Variable<Extractor<M, V>> extractor = Variable.empty();
+        public final Extractor<M, V> extractor;
 
         /** The associated {@link Matcher}. */
         public final Variable<Matcher<V>> matcher = Variable.empty();
@@ -245,8 +215,8 @@ public class CompoundQuery<M> implements Predicate<M> {
         /**
          * @param type
          */
-        private Query(Class<V> type) {
-            this.type = type;
+        private Query(Extractor<M, V> extractor) {
+            this.extractor = extractor;
         }
 
         /**
@@ -254,10 +224,10 @@ public class CompoundQuery<M> implements Predicate<M> {
          */
         @Override
         public boolean test(M model) {
-            if (input.v == null || extractor.v == null || matcher.v == null) {
+            if (input.v == null || matcher.v == null) {
                 return true;
             } else {
-                return matcher.v.test(extractor.v.apply(model), input.v);
+                return matcher.v.test(extractor.apply(model), input.v);
             }
         }
     }

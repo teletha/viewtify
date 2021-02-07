@@ -17,18 +17,14 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+
 import viewtify.ui.filter.CompoundQuery;
-import viewtify.ui.helper.CollectableHelper;
-import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.PlaceholderHelper;
-import viewtify.ui.helper.SelectableHelper;
 import viewtify.ui.helper.User;
 
-public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
-        implements SelectableHelper<UITableView<T>, T>, CollectableHelper<UITableView<T>, T>, PlaceholderHelper<UITableView<T>>,
-        ContextMenuHelper<UITableView<T>> {
+public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITableView<RowV>> {
 
-    static final String ColumnFilter = "column-filter";
+    /** The associated query. */
+    private CompoundQuery<RowV> compound;
 
     /**
      * Enchanced view.
@@ -41,33 +37,34 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
         placeholder("");
         when(User.Sort, () -> sort(ui.getComparator()));
 
-        ui.setUserData(this);
+        // Use user data properties to pass UI instances to TableColumn.
+        ui.getProperties().put(UITableView.class, this);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<T>> itemsProperty() {
+    public Property<ObservableList<RowV>> itemsProperty() {
         return ui.itemsProperty();
     }
 
     /**
      * Configure item renderer.
      */
-    public UITableView<T> render(Function<UITableView<T>, TableRow<T>> renderer) {
+    public UITableView<RowV> render(Function<UITableView<RowV>, TableRow<RowV>> renderer) {
         ui.setRowFactory(table -> renderer.apply(this));
         return this;
     }
 
-    public UITableView<T> operatable(boolean enable) {
+    public UITableView<RowV> operatable(boolean enable) {
         for (TableColumn column : ui.getColumns()) {
             column.setSortable(enable);
             column.setResizable(enable);
             column.setReorderable(enable);
         }
 
-        ui.getColumns().addListener((ListChangeListener<TableColumn<T, ?>>) change -> {
+        ui.getColumns().addListener((ListChangeListener<TableColumn<RowV, ?>>) change -> {
             while (change.next()) {
                 for (TableColumn column : change.getAddedSubList()) {
                     column.setSortable(enable);
@@ -84,7 +81,7 @@ public class UITableView<T> extends UserInterface<UITableView<T>, TableView<T>>
      * 
      * @return
      */
-    public UITableView<T> simplify() {
+    public UITableView<RowV> simplify() {
         ui.getStyleClass().add("simple");
         ui.setSelectionModel(null);
         ui.setFocusTraversable(false);

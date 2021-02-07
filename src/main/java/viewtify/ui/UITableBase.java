@@ -1,0 +1,32 @@
+/*
+ * Copyright (C) 2019 Nameless Production Committee
+ *
+ * Licensed under the MIT License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *          http://opensource.org/licenses/mit-license.php
+ */
+package viewtify.ui;
+
+import javafx.scene.control.Control;
+
+import viewtify.ui.helper.CollectableHelper;
+import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.PlaceholderHelper;
+import viewtify.ui.helper.SelectableHelper;
+
+public abstract class UITableBase<RowV, FXTable extends Control, Self extends UITableBase<RowV, FXTable, Self>>
+        extends UserInterface<Self, FXTable>
+        implements SelectableHelper<Self, RowV>, CollectableHelper<Self, RowV>, PlaceholderHelper<Self>, ContextMenuHelper<Self> {
+
+    /**
+     * Build table UI.
+     * 
+     * @param ui
+     * @param view
+     */
+    protected UITableBase(FXTable ui, View view) {
+        super(ui, view);
+    }
+}

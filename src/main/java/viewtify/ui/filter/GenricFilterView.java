@@ -9,47 +9,29 @@
  */
 package viewtify.ui.filter;
 
-import org.controlsfx.glyphfont.FontAwesome.Glyph;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.style.FormStyles;
-import viewtify.ui.UIButton;
 import viewtify.ui.UIComboBox;
+import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
-import viewtify.ui.UIToggleButton;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.filter.CompoundQuery.Extractor;
 import viewtify.ui.filter.CompoundQuery.Matcher;
 import viewtify.ui.filter.CompoundQuery.Query;
-import viewtify.ui.helper.User;
 
 public class GenricFilterView<M> extends View {
 
-    /** {@link Query} builder UI. */
-    private final ObservableList<Builder> builders = FXCollections.observableArrayList();
-
-    private UIToggleButton optionAll;
-
-    private UIToggleButton optionCaseSensitive;
-
-    private UIButton add;
-
-    public final CompoundQuery<M> compound = new CompoundQuery();
+    UILabel title = new UILabel(this).text(en("Search Condition"));
 
     class view extends ViewDSL {
         {
             $(vbox, () -> {
-                $(vbox, builders);
-                $(hbox, FormStyles.FormRow, () -> {
-                    $(optionAll);
-                    $(optionCaseSensitive);
-                    $(add, style.addition);
-                });
+                $(title, FormStyles.FormLabelMin);
+                for (Query query : compound.queries) {
+                    $(new Builder(query));
+                }
             });
         }
     }
@@ -58,6 +40,23 @@ public class GenricFilterView<M> extends View {
         Style addition = () -> {
             text.align.right();
         };
+
+        Style block = () -> {
+            margin.right(2, px);
+        };
+
+        Style blockEnd = () -> {
+            margin.right(2, px);
+        };
+    }
+
+    private final CompoundQuery<M> compound;
+
+    /**
+     * @param compound
+     */
+    public GenricFilterView(CompoundQuery<M> compound) {
+        this.compound = compound;
     }
 
     /**
@@ -65,15 +64,6 @@ public class GenricFilterView<M> extends View {
      */
     @Override
     protected void initialize() {
-        addNewQuery(String.class);
-
-        optionAll.text("Match All");
-        optionCaseSensitive.text("Match Case");
-        add.text(Glyph.PLUS).when(User.Action, () -> addNewQuery(compound.extractors().get(0).type()));
-    }
-
-    private <V> void addNewQuery(Class<V> type) {
-        builders.add(new Builder(type));
     }
 
     /**
@@ -82,7 +72,7 @@ public class GenricFilterView<M> extends View {
     class Builder<V> extends View {
 
         /** Extractor selector. */
-        UIComboBox<Extractor<M, V>> extractor;
+        UILabel label;
 
         /** The user input. */
         UIText<String> input;
@@ -90,19 +80,15 @@ public class GenricFilterView<M> extends View {
         /** The {@link Matcher} selector. */
         UIComboBox<Matcher<V>> matcher;
 
-        /** The deleter. */
-        UIButton delete;
-
         /**
          * Declare view.
          */
         class view extends ViewDSL {
             {
-                $(hbox, () -> {
-                    $(extractor);
+                $(hbox, FormStyles.FormRow, () -> {
+                    $(label, FormStyles.FormLabelMin);
+                    $(input, FormStyles.FormInput);
                     $(matcher);
-                    $(input);
-                    $(delete);
                 });
             }
         }
@@ -115,8 +101,8 @@ public class GenricFilterView<M> extends View {
          * 
          * @param type
          */
-        private Builder(Class<V> type) {
-            query = compound.addNewQuery(type);
+        private Builder(Query<M, V> query) {
+            this.query = query;
         }
 
         /**
@@ -124,13 +110,12 @@ public class GenricFilterView<M> extends View {
          */
         @Override
         protected void initialize() {
-            extractor.items(compound.extractors()).selectFirst().renderByProperty(Extractor::description).syncTo(query.extractor);
-            input.observing().to(v -> query.input.set(I.transform(v, query.type)));
-            matcher.items(BuiltinMatchers.by(query.type)).selectFirst().renderByVariable(Matcher::description).syncTo(query.matcher);
-            delete.text(Glyph.MINUS).disableWhen(compound.size.observing().map(i -> i <= 1)).when(User.Action, () -> {
-                builders.remove(this);
-                compound.remove(query);
-            });
+            label.text(query.extractor.description());
+            input.observing().to(v -> query.input.set(I.transform(v, query.extractor.type())));
+            matcher.items(BuiltinMatchers.by(query.extractor.type()))
+                    .selectFirst()
+                    .renderByVariable(Matcher::description)
+                    .syncTo(query.matcher);
 
             input.ui.requestFocus();
         }

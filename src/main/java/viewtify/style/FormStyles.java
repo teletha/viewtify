@@ -9,12 +9,7 @@
  */
 package viewtify.style;
 
-import static stylist.StyleDSL.$;
-import static stylist.StyleDSL.display;
-import static stylist.StyleDSL.margin;
-import static stylist.StyleDSL.padding;
-import static stylist.StyleDSL.px;
-import static stylist.StyleDSL.text;
+import static stylist.StyleDSL.*;
 
 import stylist.Style;
 import stylist.StyleDeclarable;
@@ -25,20 +20,18 @@ import stylist.StyleDeclarable;
 public interface FormStyles extends StyleDeclarable {
 
     Style FormRow = () -> {
-        display.minHeight(30, px);
-        padding.vertical(3, px);
+        margin.vertical(4, px);
         text.verticalAlign.middle();
     };
 
     Style FormLabel = () -> {
         display.width(120, px);
-        padding.top(4, px);
+        padding.top(3, px);
     };
 
     Style FormLabelMin = () -> {
-        $.child().select(FormLabel, () -> {
-            display.width(70, px).minWidth(70, px);
-        });
+        display.width(80, px);
+        padding.top(3, px);
     };
 
     Style FormInput = () -> {

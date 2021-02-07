@@ -16,17 +16,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
-import viewtify.ui.helper.CollectableHelper;
-import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.PlaceholderHelper;
-import viewtify.ui.helper.SelectableHelper;
 
-public class UITreeTableView<T> extends UserInterface<UITreeTableView<T>, TreeTableView<T>>
-        implements SelectableHelper<UITreeTableView<T>, T>, CollectableHelper<UITreeTableView<T>, T>, PlaceholderHelper<UITreeTableView<T>>,
-        ContextMenuHelper<UITreeTableView<T>> {
+public class UITreeTableView<RowV> extends UITableBase<RowV, TreeTableView<RowV>, UITreeTableView<RowV>> {
 
     /** The root item. */
-    public final UITreeItem<T> root;
+    public final UITreeItem<RowV> root;
 
     /**
      * Enchanced view.
@@ -41,13 +35,16 @@ public class UITreeTableView<T> extends UserInterface<UITreeTableView<T>, TreeTa
         ui.setShowRoot(false);
 
         root = new UITreeItem(ui, item);
+
+        // Use user data properties to pass UI instances to TableColumn.
+        ui.getProperties().put(UITreeTableView.class, this);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Property<ObservableList<T>> itemsProperty() {
+    public Property<ObservableList<RowV>> itemsProperty() {
         // If this exception will be thrown, it is bug of this program. So we must rethrow the
         // wrapped error in here.
         throw new Error();
@@ -56,7 +53,7 @@ public class UITreeTableView<T> extends UserInterface<UITreeTableView<T>, TreeTa
     /**
      * Specifies ROW renderer.
      */
-    public UITreeTableView<T> render(Function<UITreeTableView<T>, TreeTableRow<T>> renderer) {
+    public UITreeTableView<RowV> render(Function<UITreeTableView<RowV>, TreeTableRow<RowV>> renderer) {
         ui.setRowFactory(table -> renderer.apply(this));
 
         return this;

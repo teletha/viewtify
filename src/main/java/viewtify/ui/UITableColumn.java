@@ -23,6 +23,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -33,9 +34,9 @@ import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 
-public class UITableColumn<RowValue, ColumnValue>
-        extends UITableColumnBase<TableColumn<RowValue, ColumnValue>, UITableColumn<RowValue, ColumnValue>, RowValue, ColumnValue>
-        implements CollectableItemRenderingHelper<UITableColumn<RowValue, ColumnValue>, ColumnValue> {
+public class UITableColumn<RowV, ColumnV>
+        extends UITableColumnBase<TableColumn<RowV, ColumnV>, UITableColumn<RowV, ColumnV>, RowV, ColumnV, UITableView<RowV>>
+        implements CollectableItemRenderingHelper<UITableColumn<RowV, ColumnV>, ColumnV> {
 
     /** The value provider utility. */
     private TypeMappingProvider mappingProvider;
@@ -52,12 +53,20 @@ public class UITableColumn<RowValue, ColumnValue>
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final UITableView table() {
+        return (UITableView) ui.getTableView().getProperties().get(UITableView.class);
+    }
+
+    /**
      * Add value provider.
      * 
      * @param provider
      * @return
      */
-    public <P extends Function<RowValue, ObservableValue<ColumnValue>>> UITableColumn<RowValue, ColumnValue> model(Class<P> provider) {
+    public <P extends Function<RowV, ObservableValue<ColumnV>>> UITableColumn<RowV, ColumnV> model(Class<P> provider) {
         return modelByProperty(I.make(provider));
     }
 
@@ -67,7 +76,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public <T extends RowValue> UITableColumn<RowValue, ColumnValue> model(Class<T> type, WiseFunction<T, ColumnValue> provider) {
+    public <T extends RowV> UITableColumn<RowV, ColumnV> model(Class<T> type, WiseFunction<T, ColumnV> provider) {
         return modelByProperty(type, row -> new SmartProperty(provider.apply(row)));
     }
 
@@ -77,7 +86,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public UITableColumn<RowValue, ColumnValue> model(WiseFunction<RowValue, ColumnValue> provider) {
+    public UITableColumn<RowV, ColumnV> model(WiseFunction<RowV, ColumnV> provider) {
         return modelByProperty(row -> new SmartProperty(provider.apply(row)));
     }
 
@@ -87,14 +96,14 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public UITableColumn<RowValue, ColumnValue> modelByProperty(Function<RowValue, ObservableValue<ColumnValue>> provider) {
+    public UITableColumn<RowV, ColumnV> modelByProperty(Function<RowV, ObservableValue<ColumnV>> provider) {
         if (provider != null) {
             ui.setCellValueFactory(new Callback<>() {
 
-                private final WeakHashMap<RowValue, ObservableValue<ColumnValue>> properties = new WeakHashMap();
+                private final WeakHashMap<RowV, ObservableValue<ColumnV>> properties = new WeakHashMap();
 
                 @Override
-                public synchronized ObservableValue<ColumnValue> call(CellDataFeatures<RowValue, ColumnValue> cellData) {
+                public synchronized ObservableValue<ColumnV> call(CellDataFeatures<RowV, ColumnV> cellData) {
                     return properties.computeIfAbsent(cellData.getValue(), provider::apply);
                 }
             });
@@ -108,7 +117,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public <T extends RowValue> UITableColumn<RowValue, ColumnValue> modelByProperty(Class<T> type, Function<T, ObservableValue<ColumnValue>> provider) {
+    public <T extends RowV> UITableColumn<RowV, ColumnV> modelByProperty(Class<T> type, Function<T, ObservableValue<ColumnV>> provider) {
         if (mappingProvider == null) {
             modelByProperty(mappingProvider = new TypeMappingProvider());
         }
@@ -123,7 +132,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public UITableColumn<RowValue, ColumnValue> modelBySignal(WiseFunction<RowValue, Signal<ColumnValue>> mapper) {
+    public UITableColumn<RowV, ColumnV> modelBySignal(WiseFunction<RowV, Signal<ColumnV>> mapper) {
         if (mapper != null) {
             modelByProperty(v -> mapper.apply(v).to(new SmartProperty(), SmartProperty::set));
         }
@@ -136,7 +145,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public UITableColumn<RowValue, ColumnValue> modelByVar(WiseFunction<RowValue, Variable<ColumnValue>> provider) {
+    public UITableColumn<RowV, ColumnV> modelByVar(WiseFunction<RowV, Variable<ColumnV>> provider) {
         return modelByProperty(row -> Viewtify.property(provider.apply(row)));
     }
 
@@ -146,24 +155,24 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param provider
      * @return
      */
-    public <T extends RowValue> UITableColumn<RowValue, ColumnValue> modelByVar(Class<T> type, WiseFunction<T, Variable<ColumnValue>> provider) {
+    public <T extends RowV> UITableColumn<RowV, ColumnV> modelByVar(Class<T> type, WiseFunction<T, Variable<ColumnV>> provider) {
         return modelByProperty(type, row -> Viewtify.property(provider.apply(row)));
     }
 
     /**
      * @version 2017/12/02 16:23:03
      */
-    private class TypeMappingProvider<T> implements Function<T, ObservableValue<ColumnValue>> {
+    private class TypeMappingProvider<T> implements Function<T, ObservableValue<ColumnV>> {
 
-        private final Map<Class<T>, Function<T, ObservableValue<ColumnValue>>> mapper = new HashMap();
+        private final Map<Class<T>, Function<T, ObservableValue<ColumnV>>> mapper = new HashMap();
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public ObservableValue<ColumnValue> apply(T value) {
+        public ObservableValue<ColumnV> apply(T value) {
             Class type = value.getClass();
-            Function<T, ObservableValue<ColumnValue>> map = mapper.get(type);
+            Function<T, ObservableValue<ColumnV>> map = mapper.get(type);
 
             while (map == null && type != Object.class) {
                 type = type.getSuperclass();
@@ -184,7 +193,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param renderer A renderer.
      * @return
      */
-    public UITableColumn<RowValue, ColumnValue> render(WiseTriConsumer<UILabel, RowValue, ColumnValue> renderer) {
+    public UITableColumn<RowV, ColumnV> render(WiseTriConsumer<UILabel, RowV, ColumnV> renderer) {
         Objects.requireNonNull(renderer);
         return renderByUI(() -> new UILabel(null), (label, row, column) -> {
             renderer.accept(label, row, column);
@@ -198,7 +207,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param renderer A renderer.
      * @return
      */
-    public <C> UITableColumn<RowValue, ColumnValue> renderByUI(Supplier<C> context, WiseTriFunction<C, RowValue, ColumnValue, ? extends UserInterfaceProvider<? extends Node>> renderer) {
+    public <C> UITableColumn<RowV, ColumnV> renderByUI(Supplier<C> context, WiseTriFunction<C, RowV, ColumnV, ? extends UserInterfaceProvider<? extends Node>> renderer) {
         Objects.requireNonNull(renderer);
         return renderByNode(context, (ui, row, column) -> renderer.apply(ui, row, column).ui());
     }
@@ -207,7 +216,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * {@inheritDoc}
      */
     @Override
-    public <C> UITableColumn<RowValue, ColumnValue> renderByNode(Supplier<C> context, BiFunction<C, ColumnValue, ? extends Node> renderer) {
+    public <C> UITableColumn<RowV, ColumnV> renderByNode(Supplier<C> context, BiFunction<C, ColumnV, ? extends Node> renderer) {
         Objects.requireNonNull(renderer);
         return renderByNode(context, (ui, row, column) -> renderer.apply(ui, column));
     }
@@ -218,7 +227,7 @@ public class UITableColumn<RowValue, ColumnValue>
      * @param renderer A renderer.
      * @return
      */
-    public <C> UITableColumn<RowValue, ColumnValue> renderByNode(Supplier<C> context, WiseTriFunction<C, RowValue, ColumnValue, ? extends Node> renderer) {
+    public <C> UITableColumn<RowV, ColumnV> renderByNode(Supplier<C> context, WiseTriFunction<C, RowV, ColumnV, ? extends Node> renderer) {
         ui.setCellFactory(table -> new GenericCell(context, renderer));
         return this;
     }

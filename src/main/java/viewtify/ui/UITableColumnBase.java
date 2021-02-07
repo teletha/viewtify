@@ -9,23 +9,25 @@
  */
 package viewtify.ui;
 
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.stage.PopupWindow.AnchorLocation;
+
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import viewtify.ui.filter.GenricFilterView;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
 
-public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowValue, ColumnValue>
+public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowV, ColumnV, Table extends UITableBase<RowV, ? extends Control, Table>>
         implements UserInterfaceProvider<Column>, LabelHelper<Self>, StyleHelper<Self, Column> {
 
     /** The actual widget. */
@@ -47,6 +49,13 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
     }
 
     /**
+     * Get the associated table's view.
+     * 
+     * @return
+     */
+    public abstract Table table();
+
+    /**
      * Enable the enhanced filtering user-interface.
      * 
      * @param enable
@@ -62,7 +71,8 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
                 button.setFocusTraversable(false);
                 button.setOnAction(e -> {
                     TooltipHelper.popover(ui.getStyleableNode(), p -> {
-                        GenricFilterView<RowValue> view = new GenricFilterView();
+                        Table table = table();
+                        GenricFilterView<RowV> view = new GenricFilterView();
                         view.compound.addExtractor(ui.getText());
 
                         p.setDetachable(false);
@@ -79,7 +89,6 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
                 ui.setGraphic(null);
             }
         }
-
         return (Self) this;
     }
 
@@ -160,7 +169,7 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
             }
         }
 
-        private final CollectableHelper<?, RowValue> items;
+        private final CollectableHelper<?, RowV> items;
 
         private final Class type = String.class;
 
