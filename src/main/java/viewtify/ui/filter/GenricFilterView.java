@@ -29,7 +29,7 @@ public class GenricFilterView<M> extends View {
         {
             $(vbox, () -> {
                 $(title, FormStyles.FormLabelMin);
-                for (Query query : compound.queries) {
+                for (Query query : compound.queries()) {
                     $(new Builder(query));
                 }
             });
@@ -110,12 +110,9 @@ public class GenricFilterView<M> extends View {
          */
         @Override
         protected void initialize() {
-            label.text(query.extractor.description());
-            input.observing().to(v -> query.input.set(I.transform(v, query.extractor.type())));
-            matcher.items(BuiltinMatchers.by(query.extractor.type()))
-                    .selectFirst()
-                    .renderByVariable(Matcher::description)
-                    .syncTo(query.matcher);
+            label.text(query.description);
+            input.observing().to(v -> query.input.set(I.transform(v, query.type)));
+            matcher.items(BuiltinMatchers.by(query.type)).selectFirst().renderByVariable(Matcher::description).syncTo(query.matcher);
 
             input.ui.requestFocus();
         }

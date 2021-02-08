@@ -9,6 +9,8 @@
  */
 package viewtify.ui;
 
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
@@ -18,9 +20,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.stage.PopupWindow.AnchorLocation;
-
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import viewtify.ui.filter.CompoundQuery;
 import viewtify.ui.filter.GenricFilterView;
 import viewtify.ui.helper.CollectableHelper;
@@ -72,7 +71,8 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
                 button.setFocusTraversable(false);
                 button.setOnAction(e -> {
                     TooltipHelper.popover(ui.getStyleableNode(), p -> {
-                        CompoundQuery<RowV> query = table().query().addExtractor(ui.getText());
+                        CompoundQuery<RowV> query = table().query();
+                        query.addQuery(ui.getText());
                         query.updated.to(table()::take);
 
                         GenricFilterView<RowV> view = new GenricFilterView(query);

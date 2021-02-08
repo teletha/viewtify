@@ -10,16 +10,17 @@
 package viewtify.ui.filter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
-
+import javafx.beans.property.StringProperty;
 import kiss.Disposable;
+import kiss.Managed;
 import kiss.Signal;
 import kiss.Signaling;
 import kiss.Variable;
@@ -30,10 +31,9 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
 
     public final Signal<CompoundQuery<M>> updated = signaling.expose;
 
-    public final Variable<Integer> size = Variable.of(0);
-
     /** The managed queries. */
-    final List<Query> queries = new ArrayList();
+    @Managed
+    private List<Query<M, ?>> queries = new ArrayList();
 
     /**
      * {@inheritDoc}
@@ -49,13 +49,12 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     }
 
     /**
-     * Add String based {@link Extractor}.
+     * List up all sub queries.
      * 
-     * @param <V>
-     * @param description The human-readable description.
+     * @return
      */
-    public CompoundQuery<M> addExtractor(String description) {
-        return addExtractor(new SimpleStringProperty(description));
+    public final List<Query<M, ?>> queries() {
+        return Collections.unmodifiableList(queries);
     }
 
     /**
@@ -64,8 +63,18 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * @param <V>
      * @param description The human-readable description.
      */
-    public CompoundQuery<M> addExtractor(Property<String> description) {
-        return addExtractor(description, String.class, String::valueOf);
+    public Query<M, String> addQuery(String description) {
+        return addQuery(new SimpleStringProperty(description));
+    }
+
+    /**
+     * Add String based {@link Extractor}.
+     * 
+     * @param <V>
+     * @param description The human-readable description.
+     */
+    public Query<M, String> addQuery(StringProperty description) {
+        return addQuery(description, String.class, String::valueOf);
     }
 
     /**
@@ -76,8 +85,8 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * @param type A value type.
      * @param extractor An actual value {@link Extractor}.
      */
-    public <V> CompoundQuery<M> addExtractor(String description, Class<V> type, Function<M, V> extractor) {
-        return addExtractor(new SimpleStringProperty(description), type, extractor);
+    public <V> Query<M, V> addQuery(String description, Class<V> type, Function<M, V> extractor) {
+        return addQuery(new SimpleStringProperty(description), type, extractor);
     }
 
     /**
@@ -88,61 +97,12 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * @param type A value type.
      * @param extractor An actual value {@link Extractor}.
      */
-    public <V> CompoundQuery<M> addExtractor(Property<String> description, Class<V> type, Function<M, V> extractor) {
-        Objects.requireNonNull(description);
-        Objects.requireNonNull(type);
-        Objects.requireNonNull(extractor);
+    public <V> Query<M, V> addQuery(StringProperty description, Class<V> type, Function<M, V> extractor) {
+        Query<M, V> query = new Query(description, type, extractor);
+        query.disposer = query.input.observe().as(Object.class).merge(query.matcher.observe()).to(() -> signaling.accept(this));
+        queries.add(query);
 
-        return addExtractor(new Extractor<M, V>() {
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public Property<String> description() {
-                return description;
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public Class<V> type() {
-                return type;
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public V apply(M model) {
-                return extractor.apply(model);
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public String toString() {
-                return description.getValue();
-            }
-        });
-    }
-
-    /**
-     * Add {@link Extractor}.
-     * 
-     * @param <V>
-     * @param extractor
-     */
-    public <V> CompoundQuery<M> addExtractor(Extractor<M, V> extractor) {
-        if (extractor != null) {
-            Query<M, V> query = new Query(extractor);
-            query.disposer = query.input.observe().as(Object.class).merge(query.matcher.observe()).to(() -> signaling.accept(this));
-
-            queries.add(query);
-        }
-        return this;
+        return query;
     }
 
     /**
@@ -150,32 +110,6 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      */
     @Override
     public void vandalize() {
-    }
-
-    /**
-     * 
-     */
-    public static interface Extractor<M, V> extends Function<M, V> {
-
-        /**
-         * Human-readable description.
-         * 
-         * @return
-         */
-        Property<String> description();
-
-        /**
-         * The acceptable value type.
-         * 
-         * @return
-         */
-        Class<V> type();
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        V apply(M model);
     }
 
     /**
@@ -207,10 +141,16 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     /**
      * 
      */
-    static class Query<M, V> implements Predicate<M> {
+    public static class Query<M, V> implements Predicate<M> {
+
+        /** The query name. */
+        public final StringProperty description;
+
+        /** The value type. */
+        public final Class<V> type;
 
         /** The associated {@link Extractor}. */
-        public final Extractor<M, V> extractor;
+        public final Function<M, V> extractor;
 
         /** The current input value. */
         public final Variable<V> input = Variable.empty();
@@ -235,13 +175,15 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         private V normalized;
 
         /** The deconstruction. */
-        private Disposable disposer;
+        Disposable disposer;
 
         /**
          * @param type
          */
-        private Query(Extractor<M, V> extractor) {
-            this.extractor = extractor;
+        Query(StringProperty description, Class<V> type, Function<M, V> extractor) {
+            this.description = Objects.requireNonNull(description);
+            this.type = Objects.requireNonNull(type);
+            this.extractor = Objects.requireNonNull(extractor);
         }
 
         /**
@@ -249,10 +191,9 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          */
         @Override
         public boolean test(M model) {
-            if (input.v == null || matcher.v == null) {
+            if (model == null || input.v == null || matcher.v == null) {
                 return true;
             } else {
-                System.out.println(input.v + "@");
                 return matcher.v.test(extractor.apply(model), normalized);
             }
         }

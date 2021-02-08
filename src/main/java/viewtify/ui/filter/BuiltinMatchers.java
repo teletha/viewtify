@@ -50,7 +50,11 @@ enum BuiltinMatchers implements Matcher {
     EndWith("ends with", String.class, String.class, String::toLowerCase, (value, tester) -> value.toLowerCase().endsWith(tester)),
 
     /** The builtin filter for {@link String} value. */
-    RegEx("matches", String.class, Pattern.class, Pattern::compile, (value, tester) -> tester.matcher(value).matches());
+    Match("matches", String.class, String.class, String::toLowerCase, (value, tester) -> value.equalsIgnoreCase(tester)),
+
+    /** The builtin filter for {@link String} value. */
+    RegEx("regular expression", String.class, Pattern.class, v -> Pattern.compile(v, Pattern.CASE_INSENSITIVE),
+            (value, tester) -> tester.matcher(value).find());
 
     /** The builtin set. */
     private final static BuiltinMatchers[] STRINGS = {Contain, NotContain, StartWith, EndWith, RegEx};
