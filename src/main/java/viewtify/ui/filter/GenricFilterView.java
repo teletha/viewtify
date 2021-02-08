@@ -9,6 +9,8 @@
  */
 package viewtify.ui.filter;
 
+import java.util.regex.Matcher;
+
 import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -18,7 +20,6 @@ import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.filter.CompoundQuery.Matcher;
 import viewtify.ui.filter.CompoundQuery.Query;
 
 public class GenricFilterView<M> extends View {
@@ -78,7 +79,7 @@ public class GenricFilterView<M> extends View {
         UIText<String> input;
 
         /** The {@link Matcher} selector. */
-        UIComboBox<Matcher<V>> matcher;
+        UIComboBox<Tester<V>> matcher;
 
         /**
          * Declare view.
@@ -112,7 +113,7 @@ public class GenricFilterView<M> extends View {
         protected void initialize() {
             label.text(query.description);
             input.observing().to(v -> query.input.set(I.transform(v, query.type)));
-            matcher.items(BuiltinMatchers.by(query.type)).selectFirst().renderByVariable(Matcher::description).syncTo(query.matcher);
+            matcher.items(Tester.by(query.type)).selectFirst().renderByVariable(m -> m.description).syncTo(query.tester);
 
             input.ui.requestFocus();
         }

@@ -16,10 +16,13 @@ import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import kiss.Disposable;
+import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
 import kiss.Signaling;
@@ -99,7 +102,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      */
     public <V> Query<M, V> addQuery(StringProperty description, Class<V> type, Function<M, V> extractor) {
         Query<M, V> query = new Query(description, type, extractor);
-        query.disposer = query.input.observe().as(Object.class).merge(query.matcher.observe()).to(() -> signaling.accept(this));
+        query.disposer = query.input.observe().as(Object.class).merge(query.tester.observe()).to(() -> signaling.accept(this));
         queries.add(query);
 
         return query;
@@ -115,27 +118,132 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     /**
      * 
      */
-    public static interface Matcher<V> extends BiPredicate<V, V>, Function<V, V> {
+    static class Tester<V> implements Function<V, V>, BiPredicate<V, V> {
+
+        /** The builtin filter for {@link Comparable} value. */
+        static final Tester<Comparable> Equal = new Tester<>("is equal to", Comparable.class, (value, tester) -> value
+                .compareTo(tester) == 0);
+
+        /** The builtin filter for {@link Comparable} value. */
+        static final Tester<Comparable> NotEqual = new Tester<>("is not equal to", Comparable.class, (value, tester) -> value
+                .compareTo(tester) != 0);
+
+        /** The builtin filter for {@link Comparable} value. */
+        static final Tester<Comparable> GreaterThan = new Tester<>("is greater than", Comparable.class, (value, tester) -> value
+                .compareTo(tester) > 0);
+
+        /** The builtin filter for {@link Comparable} value. */
+        static final Tester<Comparable> GreaterThanOrEqual = new Tester<>("is greater than or equal to", Comparable.class, (value, tester) -> value
+                .compareTo(tester) >= 0);
+
+        /** The builtin filter for {@link Comparable} value. */
+        static final Tester<Comparable> LessThan = new Tester<>("is less than", Comparable.class, (value, tester) -> value
+                .compareTo(tester) < 0);
+
+        /** The builtin filter for {@link Comparable} value. */
+        static final Tester<Comparable> LessThanOrEqual = new Tester<>("is less than or equal to", Comparable.class, (value, tester) -> value
+                .compareTo(tester) <= 0);
+
+        /** The builtin filter for {@link String} value. */
+        static final Tester<String> Contain = new Tester<>("contains", String.class, String.class, String::toLowerCase, (value, tester) -> value
+                .toLowerCase()
+                .contains(tester));
+
+        /** The builtin filter for {@link String} value. */
+        static final Tester<String> NotContain = new Tester<>("don't contain", String.class, String.class, String::toLowerCase, (value, tester) -> !value
+                .toLowerCase()
+                .contains(tester));
+
+        /** The builtin filter for {@link String} value. */
+        static final Tester<String> StartWith = new Tester<>("starts with", String.class, String.class, String::toLowerCase, (value, tester) -> value
+                .toLowerCase()
+                .startsWith(tester));
+
+        /** The builtin filter for {@link String} value. */
+        static final Tester<String> EndWith = new Tester<>("ends with", String.class, String.class, String::toLowerCase, (value, tester) -> value
+                .toLowerCase()
+                .endsWith(tester));
+
+        /** The builtin filter for {@link String} value. */
+        static final Tester<String> Match = new Tester<>("matches", String.class, String.class, String::toLowerCase, (value, tester) -> value
+                .equalsIgnoreCase(tester));
+
+        /** The builtin filter for {@link String} value. */
+        static final Tester<String> RegEx = new Tester<>("regular expression", String.class, Pattern.class, v -> Pattern
+                .compile(v, Pattern.CASE_INSENSITIVE), (value, tester) -> tester.matcher(value).find());
+
+        /** The builtin set. */
+        private final static Tester[] STRINGS = {Contain, NotContain, StartWith, EndWith, RegEx};
+
+        /** The builtin set. */
+        private final static Tester[] COMPARABLES = {Equal, NotEqual, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual};
+
+        /** The description of this filter. */
+        public final Variable<String> description;
+
+        /** The value normalizer. */
+        private final Function<V, V> normalizer;
+
+        /** The actual filter. */
+        private final BiPredicate<V, V> condition;
 
         /**
-         * Human-readable description.
+         * Builtin filters.
          * 
-         * @return
+         * @param <V>
+         * @param description
+         * @param type
+         * @param condition
          */
-        Variable<String> description();
+        private Tester(String description, Class<V> type, BiPredicate<V, V> condition) {
+            this(description, type, type, Function.identity(), condition);
+        }
 
         /**
-         * The acceptable value type.
+         * Builtin filters.
          * 
-         * @return
+         * @param <V>
+         * @param description
+         * @param type
+         * @param condition
          */
-        Class<V> type();
+        private <N> Tester(String description, Class<V> type, Class<N> normalizedType, Function<V, N> normalizer, BiPredicate<V, N> condition) {
+            this.description = I.translate(description);
+            this.normalizer = (Function<V, V>) normalizer;
+            this.condition = (BiPredicate<V, V>) condition;
+        }
 
         /**
          * {@inheritDoc}
          */
         @Override
-        boolean test(V extracted, V inputed);
+        public boolean test(V model, V tester) {
+            return condition.test(model, tester);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public V apply(V model) {
+            return normalizer.apply(model);
+        }
+
+        /**
+         * Collect type specific filters.
+         * 
+         * @param type
+         * @return
+         */
+        static <T> Tester<T>[] by(Class<T> type) {
+            if (type == String.class) {
+                return STRINGS;
+            } else if (Comparable.class.isAssignableFrom(type)) {
+                return COMPARABLES;
+            } else {
+                return STRINGS;
+            }
+        }
     }
 
     /**
@@ -156,19 +264,19 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         public final Variable<V> input = Variable.empty();
 
         /** The associated {@link Matcher}. */
-        public final Variable<Matcher<V>> matcher = Variable.<Matcher<V>> empty().intercept((oldMatcher, newMatcher) -> {
+        public final Variable<Tester<V>> tester = Variable.<Tester<V>> empty().intercept((oldTester, newTester) -> {
             // normalize the current input
             if (input.v != null) {
-                normalized = newMatcher.apply(input.v);
+                normalized = newTester.apply(input.v);
             }
 
             // normalize the input in future
             input.intercept((oldInput, newInput) -> {
-                normalized = newMatcher.apply(newInput);
+                normalized = newTester.apply(newInput);
                 return newInput;
             });
 
-            return newMatcher;
+            return newTester;
         });
 
         /** The normalized input. */
@@ -191,10 +299,10 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          */
         @Override
         public boolean test(M model) {
-            if (model == null || input.v == null || matcher.v == null) {
+            if (model == null || input.v == null || tester.v == null) {
                 return true;
             } else {
-                return matcher.v.test(extractor.apply(model), normalized);
+                return tester.v.test(extractor.apply(model), normalized);
             }
         }
     }

@@ -23,13 +23,13 @@ class QueryTest {
         assert query.description.get().equals("test");
         assert query.type == String.class;
         assert query.input.isAbsent();
-        assert query.matcher.isAbsent();
+        assert query.tester.isAbsent();
     }
 
     @Test
     void emptyInputAcceptsAnything() {
         Query<String, String> query = compound.addQuery("empty");
-        query.matcher.set(BuiltinMatchers.Contain);
+        query.tester.set(Tester.Contain);
 
         assert query.test("accept");
         assert query.test("anything");
@@ -52,7 +52,7 @@ class QueryTest {
     void stringContain() {
         Query<String, String> query = compound.addQuery("test");
         query.input.set("ok");
-        query.matcher.set(BuiltinMatchers.Contain);
+        query.tester.set(Tester.Contain);
 
         assert query.test("ok");
         assert query.test("OK");
@@ -67,7 +67,7 @@ class QueryTest {
     void stringNotContain() {
         Query<String, String> query = compound.addQuery("test");
         query.input.set("ok");
-        query.matcher.set(BuiltinMatchers.NotContain);
+        query.tester.set(Tester.NotContain);
 
         assert query.test("ok") == false;
         assert query.test("OK") == false;
@@ -82,7 +82,7 @@ class QueryTest {
     void stringStartWith() {
         Query<String, String> query = compound.addQuery("test");
         query.input.set("ok");
-        query.matcher.set(BuiltinMatchers.StartWith);
+        query.tester.set(Tester.StartWith);
 
         assert query.test("ok");
         assert query.test("xxokxx") == false;
@@ -97,7 +97,7 @@ class QueryTest {
     void stringEndWith() {
         Query<String, String> query = compound.addQuery("test");
         query.input.set("ok");
-        query.matcher.set(BuiltinMatchers.EndWith);
+        query.tester.set(Tester.EndWith);
 
         assert query.test("ok");
         assert query.test("xxokxx") == false;
@@ -112,7 +112,7 @@ class QueryTest {
     void stringRegEx() {
         Query<String, String> query = compound.addQuery("test");
         query.input.set(".+ok.+");
-        query.matcher.set(BuiltinMatchers.RegEx);
+        query.tester.set(Tester.RegEx);
 
         assert query.test("ok") == false;
         assert query.test("xxokxx");
