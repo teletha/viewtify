@@ -64,25 +64,24 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
 
         if (enable) {
             if (graphic == null) {
+                Table table = table();
+
+                CompoundQuery<RowV> query = table.query();
+                query.addQuery(ui.getText());
+
                 UIButton button = new UIButton(null);
                 button.style("filterable");
                 button.focusable(false);
                 button.when(User.Action, e -> {
-                    TooltipHelper.popover(ui.getStyleableNode(), p -> {
-                        Table table = table();
-
-                        CompoundQuery<RowV> query = table.query();
-                        query.addQuery(ui.getText());
-                        query.updated.to(table::take);
-
-                        button.styleWhile(table.isFiltering(), "filtering");
-
+                    TooltipHelper.popover(ui.getStyleableNode(), table.ui, p -> {
+                        p.setContentNode(new QueryView(table).ui());
                         p.setDetachable(false);
                         p.setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);
                         p.setArrowLocation(ArrowLocation.BOTTOM_CENTER);
-                        p.setContentNode(new QueryView(query).ui());
                     });
                 });
+
+                button.styleWhile(table.isFiltering(), "filtering");
 
                 ui.setGraphic(button.ui());
             }

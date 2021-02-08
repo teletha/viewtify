@@ -20,6 +20,7 @@ import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.query.CompoundQuery.Query;
 import viewtify.ui.query.CompoundQuery.Tester;
 
@@ -60,6 +61,13 @@ public class QueryView<M> extends View {
         Style blockEnd = () -> {
             margin.right(2, px);
         };
+    }
+
+    /**
+     * Build new UI for {@link CompoundQuery}.
+     */
+    public QueryView(CollectableHelper<?, M> collectable) {
+        this(collectable.query());
     }
 
     /**

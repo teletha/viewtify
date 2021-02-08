@@ -661,6 +661,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 synchronized (this) {
                     if (query == null) {
                         query = new CompoundQuery();
+                        query.updated.to(filter::set);
                     }
                 }
             }

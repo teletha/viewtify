@@ -12,15 +12,16 @@ package viewtify.ui.helper;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import org.controlsfx.control.PopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
+
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
@@ -149,8 +150,30 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      *            lazily.
      */
     static void popover(Node target, Consumer<PopOver> configuration) {
+        popover(target, target, configuration);
+    }
+
+    /**
+     * Popup your dialog actually.
+     * 
+     * @param target A target node as starting point.
+     * @param configuration Configure {@link PopOver}. This callbak will be invoked only once
+     *            lazily.
+     */
+    static void popover(UserInterfaceProvider<? extends Node> target, UserInterfaceProvider<? extends Node> owner, Consumer<PopOver> configuration) {
+        popover(target.ui(), owner.ui(), configuration);
+    }
+
+    /**
+     * Popup your dialog actually.
+     * 
+     * @param target A target node as starting point.
+     * @param configuration Configure {@link PopOver}. This callbak will be invoked only once
+     *            lazily.
+     */
+    static void popover(Node target, Node owner, Consumer<PopOver> configuration) {
         if (configuration != null) {
-            PopOver pop = (PopOver) target.getProperties().computeIfAbsent("viewtify-popover", k -> {
+            PopOver pop = (PopOver) owner.getProperties().computeIfAbsent("viewtify-popover", k -> {
                 PopOver p = new PopOver();
                 configuration.accept(p);
                 return p;
