@@ -35,7 +35,7 @@ import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
-import viewtify.ui.filter.CompoundQuery;
+import viewtify.ui.query.CompoundQuery;
 import viewtify.util.GuardedOperation;
 import viewtify.util.Translatable;
 

@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.ui.filter;
+package viewtify.ui.query;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,9 +30,11 @@ import kiss.Variable;
 
 public class CompoundQuery<M> implements Predicate<M>, Disposable {
 
-    private final Signaling<CompoundQuery<M>> signaling = new Signaling();
+    /** The internal query modification event stream. */
+    private final Signaling<CompoundQuery<M>> update = new Signaling();
 
-    public final Signal<CompoundQuery<M>> updated = signaling.expose;
+    /** The query modification event stream. */
+    public final Signal<CompoundQuery<M>> updated = update.expose;
 
     /** The managed queries. */
     @Managed
@@ -61,7 +63,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     }
 
     /**
-     * Add String based {@link Extractor}.
+     * Add String based {@link Query}.
      * 
      * @param <V>
      * @param description The human-readable description.
@@ -71,7 +73,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     }
 
     /**
-     * Add String based {@link Extractor}.
+     * Add String based {@link Query}.
      * 
      * @param <V>
      * @param description The human-readable description.
@@ -81,7 +83,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     }
 
     /**
-     * Add {@link Extractor}.
+     * Add {@link Query}.
      * 
      * @param <V>
      * @param description The human-readable description.
@@ -93,7 +95,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     }
 
     /**
-     * Add {@link Extractor}.
+     * Add {@link Query}.
      * 
      * @param <V>
      * @param description The human-readable description.
@@ -102,10 +104,33 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      */
     public <V> Query<M, V> addQuery(StringProperty description, Class<V> type, Function<M, V> extractor) {
         Query<M, V> query = new Query(description, type, extractor);
-        query.disposer = query.input.observe().as(Object.class).merge(query.tester.observe()).to(() -> signaling.accept(this));
+        query.disposer = query.input.observe().as(Object.class).merge(query.tester.observe()).to(() -> update.accept(this));
         queries.add(query);
 
         return query;
+    }
+
+    /**
+     * Remove the specified {@link Query}.
+     * 
+     * @param query
+     */
+    public void removeQuery(Query query) {
+        if (query != null && queries.remove(query)) {
+            query.disposer.dispose();
+            update.accept(this);
+        }
+    }
+
+    /**
+     * Remove all managed {@link Query}.
+     */
+    public void removeAllQueries() {
+        for (Query<M, ?> query : queries) {
+            query.disposer.dispose();
+        }
+        queries.clear();
+        update.accept(this);
     }
 
     /**
@@ -113,63 +138,64 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      */
     @Override
     public void vandalize() {
+        removeAllQueries();
     }
 
     /**
      * 
      */
-    static class Tester<V> implements Function<V, V>, BiPredicate<V, V> {
+    public static final class Tester<V> implements Function<V, V>, BiPredicate<V, V> {
 
         /** The builtin filter for {@link Comparable} value. */
-        static final Tester<Comparable> Equal = new Tester<>("is equal to", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> Equal = new Tester<>("is equal to", Comparable.class, (value, tester) -> value
                 .compareTo(tester) == 0);
 
         /** The builtin filter for {@link Comparable} value. */
-        static final Tester<Comparable> NotEqual = new Tester<>("is not equal to", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> NotEqual = new Tester<>("is not equal to", Comparable.class, (value, tester) -> value
                 .compareTo(tester) != 0);
 
         /** The builtin filter for {@link Comparable} value. */
-        static final Tester<Comparable> GreaterThan = new Tester<>("is greater than", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> GreaterThan = new Tester<>("is greater than", Comparable.class, (value, tester) -> value
                 .compareTo(tester) > 0);
 
         /** The builtin filter for {@link Comparable} value. */
-        static final Tester<Comparable> GreaterThanOrEqual = new Tester<>("is greater than or equal to", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> GreaterThanOrEqual = new Tester<>("is greater than or equal to", Comparable.class, (value, tester) -> value
                 .compareTo(tester) >= 0);
 
         /** The builtin filter for {@link Comparable} value. */
-        static final Tester<Comparable> LessThan = new Tester<>("is less than", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> LessThan = new Tester<>("is less than", Comparable.class, (value, tester) -> value
                 .compareTo(tester) < 0);
 
         /** The builtin filter for {@link Comparable} value. */
-        static final Tester<Comparable> LessThanOrEqual = new Tester<>("is less than or equal to", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> LessThanOrEqual = new Tester<>("is less than or equal to", Comparable.class, (value, tester) -> value
                 .compareTo(tester) <= 0);
 
         /** The builtin filter for {@link String} value. */
-        static final Tester<String> Contain = new Tester<>("contains", String.class, String.class, String::toLowerCase, (value, tester) -> value
+        public static final Tester<String> Contain = new Tester<>("contains", String.class, String.class, String::toLowerCase, (value, tester) -> value
                 .toLowerCase()
                 .contains(tester));
 
         /** The builtin filter for {@link String} value. */
-        static final Tester<String> NotContain = new Tester<>("don't contain", String.class, String.class, String::toLowerCase, (value, tester) -> !value
+        public static final Tester<String> NotContain = new Tester<>("don't contain", String.class, String.class, String::toLowerCase, (value, tester) -> !value
                 .toLowerCase()
                 .contains(tester));
 
         /** The builtin filter for {@link String} value. */
-        static final Tester<String> StartWith = new Tester<>("starts with", String.class, String.class, String::toLowerCase, (value, tester) -> value
+        public static final Tester<String> StartWith = new Tester<>("starts with", String.class, String.class, String::toLowerCase, (value, tester) -> value
                 .toLowerCase()
                 .startsWith(tester));
 
         /** The builtin filter for {@link String} value. */
-        static final Tester<String> EndWith = new Tester<>("ends with", String.class, String.class, String::toLowerCase, (value, tester) -> value
+        public static final Tester<String> EndWith = new Tester<>("ends with", String.class, String.class, String::toLowerCase, (value, tester) -> value
                 .toLowerCase()
                 .endsWith(tester));
 
         /** The builtin filter for {@link String} value. */
-        static final Tester<String> Match = new Tester<>("matches", String.class, String.class, String::toLowerCase, (value, tester) -> value
+        public static final Tester<String> Match = new Tester<>("matches", String.class, String.class, String::toLowerCase, (value, tester) -> value
                 .equalsIgnoreCase(tester));
 
         /** The builtin filter for {@link String} value. */
-        static final Tester<String> RegEx = new Tester<>("regular expression", String.class, Pattern.class, v -> Pattern
+        public static final Tester<String> RegEx = new Tester<>("regular expression", String.class, Pattern.class, v -> Pattern
                 .compile(v, Pattern.CASE_INSENSITIVE), (value, tester) -> tester.matcher(value).find());
 
         /** The builtin set. */
@@ -195,7 +221,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          * @param type
          * @param condition
          */
-        private Tester(String description, Class<V> type, BiPredicate<V, V> condition) {
+        public Tester(String description, Class<V> type, BiPredicate<V, V> condition) {
             this(description, type, type, Function.identity(), condition);
         }
 
@@ -207,7 +233,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          * @param type
          * @param condition
          */
-        private <N> Tester(String description, Class<V> type, Class<N> normalizedType, Function<V, N> normalizer, BiPredicate<V, N> condition) {
+        public <N> Tester(String description, Class<V> type, Class<N> normalizedType, Function<V, N> normalizer, BiPredicate<V, N> condition) {
             this.description = I.translate(description);
             this.normalizer = (Function<V, V>) normalizer;
             this.condition = (BiPredicate<V, V>) condition;
@@ -230,12 +256,20 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         }
 
         /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            return description.v;
+        }
+
+        /**
          * Collect type specific filters.
          * 
          * @param type
          * @return
          */
-        static <T> Tester<T>[] by(Class<T> type) {
+        public static <T> Tester<T>[] by(Class<T> type) {
             if (type == String.class) {
                 return STRINGS;
             } else if (Comparable.class.isAssignableFrom(type)) {
@@ -283,12 +317,12 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         private V normalized;
 
         /** The deconstruction. */
-        Disposable disposer;
+        private Disposable disposer;
 
         /**
          * @param type
          */
-        Query(StringProperty description, Class<V> type, Function<M, V> extractor) {
+        private Query(StringProperty description, Class<V> type, Function<M, V> extractor) {
             this.description = Objects.requireNonNull(description);
             this.type = Objects.requireNonNull(type);
             this.extractor = Objects.requireNonNull(extractor);

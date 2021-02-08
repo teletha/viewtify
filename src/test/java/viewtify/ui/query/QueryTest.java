@@ -7,11 +7,13 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.ui.filter;
+package viewtify.ui.query;
 
 import org.junit.jupiter.api.Test;
 
-import viewtify.ui.filter.CompoundQuery.Query;
+import viewtify.ui.query.CompoundQuery;
+import viewtify.ui.query.CompoundQuery.Query;
+import viewtify.ui.query.CompoundQuery.Tester;
 
 class QueryTest {
 

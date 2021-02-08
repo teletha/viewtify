@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.ui.filter;
+package viewtify.ui.query;
 
 import java.util.regex.Pattern;
 

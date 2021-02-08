@@ -14,18 +14,15 @@ import org.controlsfx.control.PopOver.ArrowLocation;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.stage.PopupWindow.AnchorLocation;
-import viewtify.ui.filter.CompoundQuery;
-import viewtify.ui.filter.GenricFilterView;
-import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
+import viewtify.ui.query.CompoundQuery;
+import viewtify.ui.query.GenricFilterView;
 
 public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowV, ColumnV, Table extends UITableBase<RowV, ? extends Control, Table>>
         implements UserInterfaceProvider<Column>, LabelHelper<Self>, StyleHelper<Self, Column> {
@@ -150,56 +147,6 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
         resizable(enable);
         reorderable(enable);
         return (Self) this;
-    }
-
-    /**
-     * 
-     */
-    private class FilterView extends View {
-
-        UILabel desc;
-
-        UIText<String> input;
-
-        @SuppressWarnings("unused")
-        class View extends ViewDSL {
-            {
-                $(vbox, () -> {
-                    $(desc);
-                    $(input);
-                });
-            }
-        }
-
-        private final CollectableHelper<?, RowV> items;
-
-        private final Class type = String.class;
-
-        /**
-         * 
-         */
-        private FilterView() {
-            if (ui instanceof TableColumn) {
-                items = (CollectableHelper) ((TableColumn) ui).getTableView().getUserData();
-            } else if (ui instanceof TreeTableColumn) {
-                items = (CollectableHelper) ((TreeTableColumn) ui).getTreeTableView().getUserData();
-            } else {
-                throw new Error("Unknown table type");
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected void initialize() {
-            desc.text("Filter by " + text());
-            input.placeholder("Filter by text").observe().to(value -> {
-                items.take(v -> {
-                    return true;
-                });
-            });
-        }
     }
 
 }

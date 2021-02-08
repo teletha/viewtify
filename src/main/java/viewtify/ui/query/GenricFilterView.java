@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.ui.filter;
+package viewtify.ui.query;
 
 import java.util.regex.Matcher;
 
@@ -20,7 +20,8 @@ import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.filter.CompoundQuery.Query;
+import viewtify.ui.query.CompoundQuery.Query;
+import viewtify.ui.query.CompoundQuery.Tester;
 
 public class GenricFilterView<M> extends View {
 
