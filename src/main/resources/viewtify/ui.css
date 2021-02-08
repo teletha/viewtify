@@ -111,35 +111,15 @@
 
 .column-header .filterable:hover {
 	  -fx-background-color: transparent, -fx-outer-border, -fx-inner-border, -fx-body-color !important;
+}
+
+.column-header .filterable.filtering {
     -fx-background-image: url('icon/funnel-pencil.png');
-}
-
-.column-header .filterable.active {
-    -fx-background-image: url('icon/funnel-selected.png');
-}
-
-.column-header .filterable.active:hover {
-    -fx-background-image: url('icon/funnel-pencil-selected.png');
-}
-
-.column-header .filterable:focused {
-	  -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color !important;
-    -fx-background-insets: 0, 0, 1, 1;
 }
 
 .column-header .label {
     -fx-content-display: right;
     -fx-graphic-text-gap: 8px;
-}
-
-.column-header .test {
-		-fx-text-fill: derive(-fx-mid-text-color, 40%);
-    -fx-background-color: -fx-body-color;
-    -fx-padding: 0;
-}
-
-.column-header .test:focused {
-		-fx-underline: true;
 }
 
 /* ==========================================================================

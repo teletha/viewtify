@@ -28,10 +28,12 @@ import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
+import kiss.Signaling;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -450,6 +452,15 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     }
 
     /**
+     * Get the filetering state.
+     * 
+     * @return
+     */
+    default Signal<Boolean> isFiltering() {
+        return refer().filtering.expose.diff();
+    }
+
+    /**
      * Filter items by the specified condition.
      * 
      * @param filter A conditional filter.
@@ -567,6 +578,9 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
         /** The item holder. */
         private final Property<ObservableList<E>> items = new SmartProperty();
 
+        /** The filtered state. */
+        private final Signaling<Boolean> filtering = new Signaling();
+
         /** The item taking filter. */
         private final Variable<Predicate<E>> filter = Variable.empty();
 
@@ -600,7 +614,9 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                     ObservableList items = v.ⅰ;
 
                     if (v.ⅱ != null) {
-                        items = items.filtered(v.ⅱ);
+                        FilteredList<E> filtered = items.filtered(v.ⅱ);
+                        filtering.accept(items.size() != filtered.size());
+                        items = filtered;
                     }
 
                     if (v.ⅲ != null) {

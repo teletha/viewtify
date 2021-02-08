@@ -9,18 +9,19 @@
  */
 package viewtify.ui;
 
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
 import javafx.stage.PopupWindow.AnchorLocation;
+
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
+import viewtify.ui.helper.User;
 import viewtify.ui.query.CompoundQuery;
 import viewtify.ui.query.QueryView;
 
@@ -63,25 +64,27 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
 
         if (enable) {
             if (graphic == null) {
-                Button button = new Button();
-                button.getStyleClass().add("filterable");
-                button.setFocusTraversable(false);
-                button.setOnAction(e -> {
+                UIButton button = new UIButton(null);
+                button.style("filterable");
+                button.focusable(false);
+                button.when(User.Action, e -> {
                     TooltipHelper.popover(ui.getStyleableNode(), p -> {
-                        CompoundQuery<RowV> query = table().query();
-                        query.addQuery(ui.getText());
-                        query.updated.to(table()::take);
+                        Table table = table();
 
-                        QueryView<RowV> view = new QueryView(query);
+                        CompoundQuery<RowV> query = table.query();
+                        query.addQuery(ui.getText());
+                        query.updated.to(table::take);
+
+                        button.styleWhile(table.isFiltering(), "filtering");
 
                         p.setDetachable(false);
                         p.setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);
                         p.setArrowLocation(ArrowLocation.BOTTOM_CENTER);
-                        p.setContentNode(view.ui());
+                        p.setContentNode(new QueryView(query).ui());
                     });
                 });
 
-                ui.setGraphic(button);
+                ui.setGraphic(button.ui());
             }
         } else {
             if (graphic != null) {

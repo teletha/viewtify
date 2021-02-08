@@ -21,9 +21,6 @@ import kiss.Variable;
 import stylist.Style;
 import viewtify.Viewtify;
 
-/**
- * @version 2018/09/08 19:41:41
- */
 public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
 
     /**
@@ -142,6 +139,24 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
      */
     default Self styleOnly(Signal<Style> style) {
         style.to(this::styleOnly);
+        return (Self) this;
+    }
+
+    /**
+     * Assign style class name to user interface.
+     * 
+     * @param timing Assignment timing.
+     * @param className A list of class names to assign.
+     * @return Chainable API.
+     */
+    default Self styleWhile(Signal<Boolean> timing, String... className) {
+        timing.to(v -> {
+            if (v) {
+                style(className);
+            } else {
+                unstyle(className);
+            }
+        });
         return (Self) this;
     }
 

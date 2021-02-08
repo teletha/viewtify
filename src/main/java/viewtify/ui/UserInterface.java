@@ -9,7 +9,7 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -125,6 +125,24 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     @Override
     public Self visible(boolean visible) {
         ui.setVisible(visible);
+        return (Self) this;
+    }
+
+    /**
+     * Specifies whether this {@code Node} should be a part of focus traversal cycle. When this
+     * property is {@code true} focus can be moved to this {@code Node} and from this {@code Node}
+     * using regular focus traversal keys. On a desktop such keys are usually {@code TAB} for moving
+     * focus forward and {@code SHIFT+TAB} for moving focus backward. When a {@code Scene} is
+     * created, the system gives focus to a {@code Node} whose {@code focusTraversable} variable is
+     * true and that is eligible to receive the focus, unless the focus had been set explicitly via
+     * a call to {@link #requestFocus()}.
+     *
+     * @defaultValue false
+     * @param enable
+     * @return
+     */
+    public final Self focusable(boolean enable) {
+        ui.setFocusTraversable(enable);
         return (Self) this;
     }
 
