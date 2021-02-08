@@ -41,9 +41,9 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     }
 
     /**
-     * Apply style class name to user interface.
+     * Assign style class name to user interface.
      * 
-     * @param className A list of class names to apply.
+     * @param className A list of class names to assign.
      * @return Chainable API.
      */
     default Self style(String... classNames) {
@@ -155,6 +155,25 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
                 style(className);
             } else {
                 unstyle(className);
+            }
+        });
+        return (Self) this;
+    }
+
+    /**
+     * Apply {@link Style} to user interface;
+     * 
+     * 
+     * @param timing Apply timing.
+     * @param styles A list of {@link Style}s to apply.
+     * @return Chainable API.
+     */
+    default Self styleWhile(Signal<Boolean> timing, Style... styles) {
+        timing.to(v -> {
+            if (v) {
+                style(styles);
+            } else {
+                unstyle(styles);
             }
         });
         return (Self) this;
