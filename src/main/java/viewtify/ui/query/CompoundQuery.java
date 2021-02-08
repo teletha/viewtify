@@ -199,7 +199,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
                 .compile(v, Pattern.CASE_INSENSITIVE), (value, tester) -> tester.matcher(value).find());
 
         /** The builtin set. */
-        private final static Tester[] STRINGS = {Contain, NotContain, StartWith, EndWith, RegEx};
+        private final static Tester[] STRINGS = {Contain, NotContain, StartWith, EndWith, Match, RegEx};
 
         /** The builtin set. */
         private final static Tester[] COMPARABLES = {Equal, NotEqual, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual};

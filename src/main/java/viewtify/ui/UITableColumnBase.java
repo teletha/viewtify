@@ -22,7 +22,7 @@ import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.TooltipHelper;
 import viewtify.ui.query.CompoundQuery;
-import viewtify.ui.query.GenricFilterView;
+import viewtify.ui.query.QueryView;
 
 public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowV, ColumnV, Table extends UITableBase<RowV, ? extends Control, Table>>
         implements UserInterfaceProvider<Column>, LabelHelper<Self>, StyleHelper<Self, Column> {
@@ -72,7 +72,7 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
                         query.addQuery(ui.getText());
                         query.updated.to(table()::take);
 
-                        GenricFilterView<RowV> view = new GenricFilterView(query);
+                        QueryView<RowV> view = new QueryView(query);
 
                         p.setDetachable(false);
                         p.setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);

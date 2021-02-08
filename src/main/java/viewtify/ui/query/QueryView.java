@@ -9,7 +9,7 @@
  */
 package viewtify.ui.query;
 
-import java.util.regex.Matcher;
+import java.util.Objects;
 
 import kiss.I;
 import stylist.Style;
@@ -23,10 +23,17 @@ import viewtify.ui.ViewDSL;
 import viewtify.ui.query.CompoundQuery.Query;
 import viewtify.ui.query.CompoundQuery.Tester;
 
-public class GenricFilterView<M> extends View {
+public class QueryView<M> extends View {
 
-    UILabel title = new UILabel(this).text(en("Search Condition"));
+    /** The title pane. */
+    private UILabel title = new UILabel(this).text(en("Search Condition"));
 
+    /** The query model. */
+    private CompoundQuery<M> compound;
+
+    /**
+     * Declare UI.
+     */
     class view extends ViewDSL {
         {
             $(vbox, () -> {
@@ -38,6 +45,9 @@ public class GenricFilterView<M> extends View {
         }
     }
 
+    /**
+     * Declare styles.
+     */
     interface style extends StyleDSL {
         Style addition = () -> {
             text.align.right();
@@ -52,13 +62,11 @@ public class GenricFilterView<M> extends View {
         };
     }
 
-    private final CompoundQuery<M> compound;
-
     /**
-     * @param compound
+     * Build new UI for {@link CompoundQuery}.
      */
-    public GenricFilterView(CompoundQuery<M> compound) {
-        this.compound = compound;
+    public QueryView(CompoundQuery<M> compound) {
+        this.compound = Objects.requireNonNull(compound);
     }
 
     /**
@@ -73,14 +81,14 @@ public class GenricFilterView<M> extends View {
      */
     class Builder<V> extends View {
 
-        /** Extractor selector. */
-        UILabel label;
+        /** Extractor. */
+        UILabel extractor;
 
         /** The user input. */
         UIText<String> input;
 
-        /** The {@link Matcher} selector. */
-        UIComboBox<Tester<V>> matcher;
+        /** The {@link Tester}. */
+        UIComboBox<Tester<V>> tester;
 
         /**
          * Declare view.
@@ -88,9 +96,9 @@ public class GenricFilterView<M> extends View {
         class view extends ViewDSL {
             {
                 $(hbox, FormStyles.FormRow, () -> {
-                    $(label, FormStyles.FormLabelMin);
+                    $(extractor, FormStyles.FormLabelMin);
                     $(input, FormStyles.FormInput);
-                    $(matcher);
+                    $(tester);
                 });
             }
         }
@@ -104,7 +112,7 @@ public class GenricFilterView<M> extends View {
          * @param type
          */
         private Builder(Query<M, V> query) {
-            this.query = query;
+            this.query = Objects.requireNonNull(query);
         }
 
         /**
@@ -112,9 +120,9 @@ public class GenricFilterView<M> extends View {
          */
         @Override
         protected void initialize() {
-            label.text(query.description);
+            extractor.text(query.description);
             input.observing().to(v -> query.input.set(I.transform(v, query.type)));
-            matcher.items(Tester.by(query.type)).selectFirst().renderByVariable(m -> m.description).syncTo(query.tester);
+            tester.items(Tester.by(query.type)).selectFirst().renderByVariable(m -> m.description).syncTo(query.tester);
 
             input.ui.requestFocus();
         }

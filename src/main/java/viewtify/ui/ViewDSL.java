@@ -189,7 +189,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
     /**
      * Declare Form UI simply.
      * 
-     * @param label A form label.
+     * @param extractor A form label.
      * @param style Additional style for controls.
      * @param userInterfaces A list of form controls.
      */
