@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;

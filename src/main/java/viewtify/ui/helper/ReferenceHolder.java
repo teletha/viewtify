@@ -9,7 +9,16 @@
  */
 package viewtify.ui.helper;
 
+import org.controlsfx.control.PopOver;
+
 public abstract class ReferenceHolder {
+
+    /** The reusable managed popup base. (SINGLETON) */
+    static final PopOver popover = new PopOver();
+    static {
+        popover.setDetachable(false);
+        popover.setOnHidden(e -> popover.setContentNode(null));
+    }
 
     /** The reference holder. */
     volatile CollectableHelper.Ð collectable;

@@ -10,11 +10,9 @@
 package viewtify.ui.helper;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.controlsfx.control.PopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
 
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -80,123 +78,37 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
     }
 
     /**
-     * Set the content to be displayed as a popup.
+     * Set the content to be displayed on popup.
      * 
-     * @param contents Popup contents
+     * @param contents The contents to display in popup.
      * @return Chainable API.
      */
     default Self popup(UserInterfaceProvider<Node> contents) {
-        return popup(null, null, contents);
-    }
-
-    /**
-     * Set the content to be displayed as a popup.
-     * 
-     * @param anchor Sets the position of the anchor used when popping up.
-     * @param contents Popup contents
-     * @return Chainable API.
-     */
-    default Self popup(AnchorLocation anchor, UserInterfaceProvider<Node> contents) {
-        return popup(anchor, null, contents);
-    }
-
-    /**
-     * Set the content to be displayed as a popup.
-     * 
-     * @param arrow Sets the position of the arrow used when popping up.
-     * @param contents Popup contents
-     * @return Chainable API.
-     */
-    default Self popup(ArrowLocation arrow, UserInterfaceProvider<Node> contents) {
-        return popup(null, arrow, contents);
-    }
-
-    /**
-     * Set the content to be displayed as a popup.
-     * 
-     * @param anchor Sets the position of the anchor used when popping up.
-     * @param arrow Sets the position of the arrow used when popping up.
-     * @param contents Popup contents
-     * @return Chainable API.
-     */
-    default Self popup(AnchorLocation anchor, ArrowLocation arrow, UserInterfaceProvider<Node> contents) {
-        return popup(p -> {
-            p.setDetachable(false);
-            p.setAnchorLocation(anchor == null ? AnchorLocation.WINDOW_TOP_LEFT : anchor);
-            p.setArrowLocation(arrow == null ? ArrowLocation.LEFT_TOP : arrow);
-            p.setContentNode(contents.ui());
-        });
-    }
-
-    /**
-     * Set the content to be displayed as a popup.
-     * 
-     * @param configuration Configure {@link PopOver}. This callbak will be invoked only once
-     *            lazily.
-     * @return Chainable API.
-     */
-    default Self popup(Consumer<PopOver> configuration) {
-        if (configuration != null) {
-            // ui().setOnMouseClicked(e -> popover(ui(), configuration));
+        if (contents != null) {
+            popup(() -> contents);
         }
         return (Self) this;
     }
 
+    /**
+     * Set the content to be displayed on popup.
+     * 
+     * @param builder Create the contents. This callback will be invoked every showing the popup.
+     * @return Chainable API.
+     */
     default Self popup(Supplier<UserInterfaceProvider<Node>> builder) {
         if (builder != null) {
-            ui().setOnMouseClicked(e -> TooltipPopover.SINGLETON.toggleOn(ui(), builder));
+            UserActionHelper.of(ui()).when(User.LeftClick, () -> {
+                PopOver p = ReferenceHolder.popover;
+
+                if (p.isShowing()) {
+                    p.hide();
+                } else {
+                    p.setContentNode(builder.get().ui());
+                    p.show(ui());
+                }
+            });
         }
         return (Self) this;
-    }
-
-    /**
-     * Popup your dialog actually.
-     * 
-     * @param target A target node as starting point.
-     * @param configuration Configure {@link PopOver}. This callbak will be invoked only once
-     *            lazily.
-     */
-    static <U extends UserInterfaceProvider<? extends Node>> void popover(Node target, Supplier<U> builder) {
-        popover(target, target, builder);
-    }
-
-    /**
-     * Popup your dialog actually.
-     * 
-     * @param target A target node as starting point.
-     * @param configuration Configure {@link PopOver}. This callbak will be invoked only once
-     *            lazily.
-     */
-    static <U extends UserInterfaceProvider<? extends Node>> void popover(UserInterfaceProvider<? extends Node> target, UserInterfaceProvider<? extends Node> owner, Supplier<U> builder) {
-        popover(target.ui(), owner.ui(), builder);
-    }
-
-    /**
-     * Popup your dialog actually.
-     * 
-     * @param target A target node as starting point.
-     * @param configuration Configure {@link PopOver}. This callbak will be invoked only once
-     *            lazily.
-     */
-    static <U extends UserInterfaceProvider<? extends Node>> void popover(Node target, Node owner, Supplier<U> builder) {
-        Objects.requireNonNull(target);
-        Objects.requireNonNull(owner);
-        Objects.requireNonNull(builder);
-
-        PopOver pop = (PopOver) owner.getProperties().computeIfAbsent("viewtify-popover", k -> {
-            PopOver p = new PopOver();
-            p.setDetachable(false);
-            return p;
-        });
-
-        if (pop.isShowing()) {
-            pop.hide();
-        } else {
-            pop.setContentNode(builder.get().ui());
-            pop.setOnHidden(e -> {
-                pop.setContentNode(null);
-            });
-            pop.show(target);
-        }
     }
 }
