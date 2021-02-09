@@ -14,15 +14,8 @@ import javafx.scene.control.Control;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
-import javafx.stage.PopupWindow.AnchorLocation;
-
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
-import viewtify.ui.helper.TooltipHelper;
-import viewtify.ui.helper.User;
-import viewtify.ui.query.CompoundQuery;
 import viewtify.ui.query.QueryView;
 
 public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowV, ColumnV, Table extends UITableBase<RowV, ? extends Control, Table>>
@@ -65,23 +58,12 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
         if (enable) {
             if (graphic == null) {
                 Table table = table();
-
-                CompoundQuery<RowV> query = table.query();
-                query.addQuery(ui.getText());
+                table.query().addQuery(ui.textProperty());
 
                 UIButton button = new UIButton(null);
-                button.style("filterable");
+                button.style("filterable").styleWhile(table.isFiltering(), "filtering");
                 button.focusable(false);
-                button.when(User.Action, e -> {
-                    TooltipHelper.popover(ui.getStyleableNode(), table.ui, p -> {
-                        p.setContentNode(new QueryView(table).ui());
-                        p.setDetachable(false);
-                        p.setAnchorLocation(AnchorLocation.CONTENT_TOP_LEFT);
-                        p.setArrowLocation(ArrowLocation.BOTTOM_CENTER);
-                    });
-                });
-
-                button.styleWhile(table.isFiltering(), "filtering");
+                button.popup(() -> new QueryView(table).focusOn(ui.textProperty()));
 
                 ui.setGraphic(button.ui());
             }

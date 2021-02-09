@@ -11,6 +11,9 @@ package viewtify.ui.query;
 
 import java.util.Objects;
 
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -32,6 +35,8 @@ public class QueryView<M> extends View {
     /** The query model. */
     private CompoundQuery<M> compound;
 
+    private final ObservableList<Builder> builders = FXCollections.observableArrayList();
+
     /**
      * Declare UI.
      */
@@ -39,9 +44,7 @@ public class QueryView<M> extends View {
         {
             $(vbox, () -> {
                 $(title, FormStyles.FormLabelMin);
-                for (Query query : compound.queries()) {
-                    $(new Builder(query));
-                }
+                $(vbox, builders);
             });
         }
     }
@@ -82,6 +85,25 @@ public class QueryView<M> extends View {
      */
     @Override
     protected void initialize() {
+        for (Query query : compound.queries()) {
+            builders.add(new Builder(query));
+        }
+    }
+
+    /**
+     * @param textProperty
+     * @return
+     */
+    public QueryView<M> focusOn(StringProperty queryName) {
+        System.out.println(builders);
+        for (Builder builder : builders) {
+            System.out.println(builder.extractor.text() + "  " + queryName.get());
+            if (builder.extractor.text().equals(queryName.get())) {
+                builder.input.focus();
+                break;
+            }
+        }
+        return this;
     }
 
     /**
@@ -129,10 +151,11 @@ public class QueryView<M> extends View {
         @Override
         protected void initialize() {
             extractor.text(query.description);
-            input.observing().to(v -> query.input.set(I.transform(v, query.type)));
-            tester.items(Tester.by(query.type)).selectFirst().renderByVariable(m -> m.description).syncTo(query.tester);
-
-            input.ui.requestFocus();
+            input.value(I.transform(query.input.v, String.class)).observing().to(v -> query.input.set(I.transform(v, query.type)));
+            tester.items(Tester.by(query.type))
+                    .select(query.tester.or(tester.first()))
+                    .renderByVariable(m -> m.description)
+                    .syncTo(query.tester);
         }
     }
 }

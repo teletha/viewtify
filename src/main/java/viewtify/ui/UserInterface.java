@@ -16,6 +16,9 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.function.Consumer;
 
+import org.controlsfx.control.decoration.Decorator;
+import org.controlsfx.control.decoration.GraphicDecoration;
+
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.geometry.Pos;
@@ -26,10 +29,6 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import org.controlsfx.control.decoration.Decorator;
-import org.controlsfx.control.decoration.GraphicDecoration;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Singleton;
@@ -125,6 +124,22 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     @Override
     public Self visible(boolean visible) {
         ui.setVisible(visible);
+        return (Self) this;
+    }
+
+    /**
+     * Requests that this {@code Node} get the input focus, and that this {@code Node}'s top-level
+     * ancestor become the focused window. To be eligible to receive the focus, the node must be
+     * part of a scene, it and all of its ancestors must be visible, and it must not be disabled. If
+     * this node is eligible, this function will cause it to become this {@code Scene}'s "focus
+     * owner". Each scene has at most one focus owner node. The focus owner will not actually have
+     * the input focus, however, unless the scene belongs to a {@code Stage} that is both visible
+     * and active.
+     * 
+     * @return
+     */
+    public final Self focus() {
+        ui.requestFocus();
         return (Self) this;
     }
 

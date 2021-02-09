@@ -11,6 +11,10 @@ package viewtify.ui.helper;
 
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
 
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -18,10 +22,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
-
-import org.controlsfx.control.PopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
@@ -137,7 +137,14 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      */
     default Self popup(Consumer<PopOver> configuration) {
         if (configuration != null) {
-            ui().setOnMouseClicked(e -> popover(ui(), configuration));
+            // ui().setOnMouseClicked(e -> popover(ui(), configuration));
+        }
+        return (Self) this;
+    }
+
+    default Self popup(Supplier<UserInterfaceProvider<Node>> builder) {
+        if (builder != null) {
+            ui().setOnMouseClicked(e -> TooltipPopover.SINGLETON.toggleOn(ui(), builder));
         }
         return (Self) this;
     }
@@ -149,8 +156,8 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param configuration Configure {@link PopOver}. This callbak will be invoked only once
      *            lazily.
      */
-    static void popover(Node target, Consumer<PopOver> configuration) {
-        popover(target, target, configuration);
+    static <U extends UserInterfaceProvider<? extends Node>> void popover(Node target, Supplier<U> builder) {
+        popover(target, target, builder);
     }
 
     /**
@@ -160,8 +167,8 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param configuration Configure {@link PopOver}. This callbak will be invoked only once
      *            lazily.
      */
-    static void popover(UserInterfaceProvider<? extends Node> target, UserInterfaceProvider<? extends Node> owner, Consumer<PopOver> configuration) {
-        popover(target.ui(), owner.ui(), configuration);
+    static <U extends UserInterfaceProvider<? extends Node>> void popover(UserInterfaceProvider<? extends Node> target, UserInterfaceProvider<? extends Node> owner, Supplier<U> builder) {
+        popover(target.ui(), owner.ui(), builder);
     }
 
     /**
@@ -171,19 +178,25 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param configuration Configure {@link PopOver}. This callbak will be invoked only once
      *            lazily.
      */
-    static void popover(Node target, Node owner, Consumer<PopOver> configuration) {
-        if (configuration != null) {
-            PopOver pop = (PopOver) owner.getProperties().computeIfAbsent("viewtify-popover", k -> {
-                PopOver p = new PopOver();
-                configuration.accept(p);
-                return p;
+    static <U extends UserInterfaceProvider<? extends Node>> void popover(Node target, Node owner, Supplier<U> builder) {
+        Objects.requireNonNull(target);
+        Objects.requireNonNull(owner);
+        Objects.requireNonNull(builder);
+
+        PopOver pop = (PopOver) owner.getProperties().computeIfAbsent("viewtify-popover", k -> {
+            PopOver p = new PopOver();
+            p.setDetachable(false);
+            return p;
+        });
+
+        if (pop.isShowing()) {
+            pop.hide();
+        } else {
+            pop.setContentNode(builder.get().ui());
+            pop.setOnHidden(e -> {
+                pop.setContentNode(null);
             });
-
-            if (pop.isShowing()) {
-                pop.hide();
-            } else {
-                pop.show(target);
-            }
+            pop.show(target);
         }
     }
 }
