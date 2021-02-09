@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -333,7 +334,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          */
         @Override
         public boolean test(M model) {
-            if (model == null || input.v == null || tester.v == null) {
+            if (model == null || tester.v == null || input.v == null || (input.v instanceof String && ((String) input.v).isBlank())) {
                 return true;
             } else {
                 return tester.v.test(extractor.apply(model), normalized);

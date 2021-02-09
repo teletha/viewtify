@@ -14,8 +14,10 @@ import javafx.scene.control.Control;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
+
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
+import viewtify.ui.query.CompoundQuery.Query;
 import viewtify.ui.query.QueryView;
 
 public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowV, ColumnV, Table extends UITableBase<RowV, ? extends Control, Table>>
@@ -23,6 +25,9 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
 
     /** The actual widget. */
     public final Column ui;
+
+    /** The associated {@link Query}. */
+    private Query query;
 
     /**
      * @param ui
@@ -58,18 +63,19 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
         if (enable) {
             if (graphic == null) {
                 Table table = table();
-                table.query().addQuery(ui.textProperty());
+                query = table.query().addQuery(ui.textProperty());
 
                 UIButton button = new UIButton(null);
                 button.style("filterable").styleWhile(table.isFiltering(), "filtering");
                 button.focusable(false);
-                button.popup(() -> new QueryView(table).focusOn(ui.textProperty()));
+                button.popup(() -> new QueryView(table, query));
 
                 ui.setGraphic(button.ui());
             }
         } else {
             if (graphic != null) {
                 ui.setGraphic(null);
+                table().query().removeQuery(query);
             }
         }
         return (Self) this;

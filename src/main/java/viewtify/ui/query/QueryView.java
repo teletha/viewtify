@@ -11,9 +11,6 @@ package viewtify.ui.query;
 
 import java.util.Objects;
 
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -33,9 +30,10 @@ public class QueryView<M> extends View {
     private UILabel title = new UILabel(this).text(en("Search Condition"));
 
     /** The query model. */
-    private CompoundQuery<M> compound;
+    private final CompoundQuery<M> compound;
 
-    private final ObservableList<Builder> builders = FXCollections.observableArrayList();
+    /** The initial focused query. (may be null) */
+    private final Query initialFocus;
 
     /**
      * Declare UI.
@@ -44,7 +42,9 @@ public class QueryView<M> extends View {
         {
             $(vbox, () -> {
                 $(title, FormStyles.FormLabelMin);
-                $(vbox, builders);
+                for (Query q : compound.queries()) {
+                    $(new Builder(q));
+                }
             });
         }
     }
@@ -69,15 +69,16 @@ public class QueryView<M> extends View {
     /**
      * Build new UI for {@link CompoundQuery}.
      */
-    public QueryView(CollectableHelper<?, M> collectable) {
-        this(collectable.query());
+    public QueryView(CollectableHelper<?, M> collectable, Query... initialFocus) {
+        this(collectable.query(), initialFocus);
     }
 
     /**
      * Build new UI for {@link CompoundQuery}.
      */
-    public QueryView(CompoundQuery<M> compound) {
+    public QueryView(CompoundQuery<M> compound, Query... initialFocus) {
         this.compound = Objects.requireNonNull(compound);
+        this.initialFocus = initialFocus == null || initialFocus.length == 0 ? null : initialFocus[0];
     }
 
     /**
@@ -85,25 +86,6 @@ public class QueryView<M> extends View {
      */
     @Override
     protected void initialize() {
-        for (Query query : compound.queries()) {
-            builders.add(new Builder(query));
-        }
-    }
-
-    /**
-     * @param textProperty
-     * @return
-     */
-    public QueryView<M> focusOn(StringProperty queryName) {
-        System.out.println(builders);
-        for (Builder builder : builders) {
-            System.out.println(builder.extractor.text() + "  " + queryName.get());
-            if (builder.extractor.text().equals(queryName.get())) {
-                builder.input.focus();
-                break;
-            }
-        }
-        return this;
     }
 
     /**
@@ -156,6 +138,13 @@ public class QueryView<M> extends View {
                     .select(query.tester.or(tester.first()))
                     .renderByVariable(m -> m.description)
                     .syncTo(query.tester);
+
+            if (query == initialFocus) {
+                input.focus();
+                if (!input.isEmpty()) {
+                    input.ui.selectAll();
+                }
+            }
         }
     }
 }
