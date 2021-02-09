@@ -25,14 +25,22 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
     /** The actual widget. */
     public final Column ui;
 
+    /** The column's value type. */
+    private final Class<ColumnV> columnType;
+
     /** The associated {@link Query}. */
     private Query query;
 
     /**
+     * Create table column's UI.
+     * 
      * @param ui
+     * @param rowType
+     * @param columnType
      */
-    protected UITableColumnBase(Column ui) {
+    protected UITableColumnBase(Column ui, Class<RowV> rowType, Class<ColumnV> columnType) {
         this.ui = ui;
+        this.columnType = columnType;
     }
 
     /**
@@ -62,7 +70,7 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
         if (enable) {
             if (graphic == null) {
                 Table table = table();
-                query = table.query().addQuery(ui.textProperty());
+                query = table.query().addObservableQuery(ui.textProperty(), columnType, ui::getCellObservableValue);
 
                 UIButton button = new UIButton(null);
                 button.style("filterable").styleWhile(table.isFiltering(), "filtering");

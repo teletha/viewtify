@@ -23,7 +23,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -46,8 +45,8 @@ public class UITableColumn<RowV, ColumnV>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    public UITableColumn(View view) {
-        super(new TableColumn());
+    public UITableColumn(View view, Class<RowV> rowType, Class<ColumnV> columnType) {
+        super(new TableColumn(), rowType, columnType);
 
         ui.setCellValueFactory(v -> new SmartProperty(v.getValue()));
     }

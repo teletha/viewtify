@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -103,7 +104,23 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * @param extractor An actual value {@link Extractor}.
      */
     public <V> Query<M, V> addQuery(StringProperty description, Class<V> type, Function<M, V> extractor) {
-        Query<M, V> query = new Query(description, type, extractor);
+        Query<M, V> query = new Query<>(description, type, extractor);
+        query.disposer = query.input.observe().as(Object.class).merge(query.tester.observe()).to(() -> update.accept(this));
+        queries.add(query);
+
+        return query;
+    }
+
+    /**
+     * Add {@link Query}.
+     * 
+     * @param <V>
+     * @param description The human-readable description.
+     * @param type A value type.
+     * @param extractor An actual value {@link Extractor}.
+     */
+    public <V> Query<M, V> addObservableQuery(StringProperty description, Class<V> type, Function<M, ObservableValue<V>> extractor) {
+        Query<M, V> query = new Query<>(description, type, m -> extractor.apply(m).getValue());
         query.disposer = query.input.observe().as(Object.class).merge(query.tester.observe()).to(() -> update.accept(this));
         queries.add(query);
 
@@ -336,7 +353,11 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
             if (model == null || tester.v == null || input.v == null || (input.v instanceof String && ((String) input.v).isBlank())) {
                 return true;
             } else {
-                return tester.v.test(extractor.apply(model), normalized);
+                V extracted = extractor.apply(model);
+                if (extracted == null) {
+                    return true;
+                }
+                return tester.v.test(extracted, normalized);
             }
         }
     }

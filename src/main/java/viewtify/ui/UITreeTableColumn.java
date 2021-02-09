@@ -19,7 +19,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
-
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
@@ -27,9 +26,6 @@ import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 
-/**
- * @version 2018/09/09 18:05:42
- */
 public class UITreeTableColumn<RowV, ColumnV>
         extends UITableColumnBase<TreeTableColumn<RowV, ColumnV>, UITreeTableColumn<RowV, ColumnV>, RowV, ColumnV, UITreeTableView<RowV>>
         implements CollectableItemRenderingHelper<UITreeTableColumn<RowV, ColumnV>, ColumnV> {
@@ -42,8 +38,8 @@ public class UITreeTableColumn<RowV, ColumnV>
      * 
      * @param view A {@link View} to which the widget belongs.
      */
-    public UITreeTableColumn(View view) {
-        super(new TreeTableColumn());
+    public UITreeTableColumn(View view, Class<RowV> rowType, Class<ColumnV> columnType) {
+        super(new TreeTableColumn(), rowType, columnType);
     }
 
     /**

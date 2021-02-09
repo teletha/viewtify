@@ -133,7 +133,13 @@ public class QueryView<M> extends View {
         @Override
         protected void initialize() {
             extractor.text(query.description);
-            input.value(I.transform(query.input.v, String.class)).observing().to(v -> query.input.set(I.transform(v, query.type)));
+            input.value(I.transform(query.input.v, String.class)).observing().to(v -> {
+                if (v == null || v.isBlank()) {
+                    query.input.set((V) null);
+                } else {
+                    query.input.set(I.transform(v, query.type));
+                }
+            });
             tester.items(Tester.by(query.type))
                     .select(query.tester.or(tester.first()))
                     .renderByVariable(m -> m.description)

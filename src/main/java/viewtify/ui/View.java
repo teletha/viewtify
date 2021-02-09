@@ -13,6 +13,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.Type;
 import java.util.function.Predicate;
 
 import javafx.application.Platform;
@@ -22,7 +23,6 @@ import javafx.scene.control.TableColumnBase;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
 import kiss.Extensible;
 import kiss.I;
 import kiss.Variable;
@@ -280,6 +280,9 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
                         } else if (params.length == 2 && params[1].getType() == Class.class) {
                             provider = (UserInterfaceProvider) constructor
                                     .newInstance(this, Model.collectParameters(field.getGenericType(), field.getType())[0]);
+                        } else if (params.length == 3 && params[1].getType() == Class.class && params[2].getType() == Class.class) {
+                            Type[] types = Model.collectParameters(field.getGenericType(), field.getType());
+                            provider = (UserInterfaceProvider) constructor.newInstance(this, types[0], types[1]);
                         } else {
                             throw new UnsupportedOperationException("Unknown constructor type. [" + constructor + "]");
                         }

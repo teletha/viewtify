@@ -17,7 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-
 import viewtify.ui.helper.User;
 
 public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITableView<RowV>> {
