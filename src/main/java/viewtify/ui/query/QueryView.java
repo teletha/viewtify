@@ -15,19 +15,24 @@ import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.style.FormStyles;
+import viewtify.ui.UIButton;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.CollectableHelper;
+import viewtify.ui.helper.User;
 import viewtify.ui.query.CompoundQuery.Query;
 import viewtify.ui.query.CompoundQuery.Tester;
 
 public class QueryView<M> extends View {
 
     /** The title pane. */
-    private UILabel title = new UILabel(this).text(en("Search Condition"));
+    private UILabel title;
+
+    /** The query clear button. */
+    private UIButton clear;
 
     /** The query model. */
     private final CompoundQuery<M> compound;
@@ -41,7 +46,10 @@ public class QueryView<M> extends View {
     class view extends ViewDSL {
         {
             $(vbox, () -> {
-                $(title, FormStyles.FormLabelMin);
+                $(hbox, () -> {
+                    $(title, FormStyles.FormLabelMin);
+                    $(clear);
+                });
                 for (Query q : compound.queries()) {
                     $(new Builder(q));
                 }
@@ -86,6 +94,12 @@ public class QueryView<M> extends View {
      */
     @Override
     protected void initialize() {
+        title.text(en("Search Condition"));
+        clear.text(en("Reset")).when(User.Action, () -> {
+            for (Query q : compound.queries()) {
+                q.reset();
+            }
+        });
     }
 
     /**

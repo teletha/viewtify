@@ -361,5 +361,10 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
                 return tester.v.test(extractor.apply(model), normalized);
             }
         }
+
+        public void reset() {
+            input.set((V) null);
+            tester.set(Tester.by(type)[0]);
+        }
     }
 }
