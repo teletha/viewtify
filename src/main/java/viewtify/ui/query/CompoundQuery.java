@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -105,7 +106,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      */
     public <V> Query<M, V> addQuery(StringProperty description, Class<V> type, Function<M, V> extractor) {
         Query<M, V> query = new Query<>(description, type, extractor);
-        query.disposer = query.input.observe().as(Object.class).merge(query.tester.observe()).to(() -> update.accept(this));
+        query.disposer = query.input.observe().mapTo(null).merge(query.tester.observe()).to(() -> update.accept(this));
         queries.add(query);
 
         return query;
@@ -121,7 +122,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      */
     public <V> Query<M, V> addObservableQuery(StringProperty description, Class<V> type, Function<M, ObservableValue<V>> extractor) {
         Query<M, V> query = new Query<>(description, type, m -> extractor.apply(m).getValue());
-        query.disposer = query.input.observe().as(Object.class).merge(query.tester.observe()).to(() -> update.accept(this));
+        query.disposer = query.input.observe().mapTo(null).merge(query.tester.observe()).to(() -> update.accept(this));
         queries.add(query);
 
         return query;
@@ -323,7 +324,11 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
 
             // normalize the input in future
             input.intercept((oldInput, newInput) -> {
-                normalized = newTester.apply(newInput);
+                if (newInput == null) {
+                    normalized = null;
+                } else {
+                    normalized = newTester.apply(newInput);
+                }
                 return newInput;
             });
 
@@ -350,14 +355,10 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          */
         @Override
         public boolean test(M model) {
-            if (model == null || tester.v == null || input.v == null || (input.v instanceof String && ((String) input.v).isBlank())) {
+            if (model == null || tester.v == null || input.v == null) {
                 return true;
             } else {
-                V extracted = extractor.apply(model);
-                if (extracted == null) {
-                    return true;
-                }
-                return tester.v.test(extracted, normalized);
+                return tester.v.test(extractor.apply(model), normalized);
             }
         }
     }

@@ -119,7 +119,7 @@
 
 .column-header .label {
     -fx-content-display: right;
-    -fx-graphic-text-gap: 8px;
+    -fx-graphic-text-gap: 3px;
 }
 
 /* ==========================================================================

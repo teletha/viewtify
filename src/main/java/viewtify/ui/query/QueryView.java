@@ -134,10 +134,10 @@ public class QueryView<M> extends View {
         protected void initialize() {
             extractor.text(query.description);
             input.value(I.transform(query.input.v, String.class)).observing().to(v -> {
-                if (v == null || v.isBlank()) {
-                    query.input.set((V) null);
-                } else {
-                    query.input.set(I.transform(v, query.type));
+                try {
+                    query.input.set(v == null || v.isBlank() ? null : I.transform(v, query.type));
+                } catch (Throwable e) {
+                    // ignore
                 }
             });
             tester.items(Tester.by(query.type))
