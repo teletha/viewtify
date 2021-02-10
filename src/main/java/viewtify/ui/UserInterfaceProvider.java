@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import javafx.css.Styleable;
 import javafx.scene.Node;
+
 import kiss.Variable;
 import viewtify.ui.helper.ValueHelper;
 
@@ -25,6 +26,15 @@ public interface UserInterfaceProvider<UI extends Styleable> {
      */
     UI ui();
 
+    /**
+     * Create the new user input UI for the specified type.
+     * 
+     * @param <V> Value type
+     * @param <UI> UI type
+     * @param type A value type.
+     * @param property A value model.
+     * @return A created UI.
+     */
     static <V, UI extends UserInterface<UI, ? extends Node> & ValueHelper<UI, V>> UI inputFor(Class<V> type, Variable<V> property) {
         Objects.requireNonNull(type);
         Objects.requireNonNull(property);

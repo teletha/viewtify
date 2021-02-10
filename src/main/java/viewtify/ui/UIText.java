@@ -15,15 +15,16 @@ import java.text.Normalizer.Form;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
-
-import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
+
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
+
+import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -60,10 +61,10 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
         // propagate value from ui to model
         Viewtify.observe(ui.textProperty()).to(uiText -> {
             updating.guard(() -> {
-                if (type == String.class) {
-                    model.set((V) uiText);
-                } else if (uiText.isEmpty()) {
+                if (uiText.isBlank()) {
                     model.set(null);
+                } else if (type == String.class) {
+                    model.set((V) uiText);
                 } else {
                     model.set((V) I.transform(uiText, type));
                 }

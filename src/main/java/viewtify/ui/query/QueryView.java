@@ -16,12 +16,12 @@ import stylist.StyleDSL;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UILabel;
-import viewtify.ui.UIText;
 import viewtify.ui.UserInterface;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.CollectableHelper;
+import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.query.CompoundQuery.Query;
 import viewtify.ui.query.CompoundQuery.Tester;
 
@@ -139,45 +139,11 @@ public class QueryView<M> extends View {
                     .renderByVariable(m -> m.description)
                     .syncTo(query.tester);
 
+            ((ValueHelper<?, V>) input).observing(v -> tester.disable(v == null));
+
             if (query == initialFocus) {
                 input.focus();
-                // if (!input.isEmpty()) {
-                // input.ui.selectAll();
-                // }
             }
-        }
-
-        private UserInterfaceProvider input() {
-            Class type = query.type;
-
-            if (Enum.class.isAssignableFrom(type)) {
-                return enums(type);
-            } else {
-                return string(type);
-            }
-        }
-
-        private UIText<V> string(Class<V> type) {
-            UIText<V> ui = new UIText(null, type);
-            ui.clearable();
-            ui.sync(query.input);
-            // ui.observing(v -> {
-            // try {
-            // query.input.set(v == null || v.isBlank() ? null : I.transform(v, query.type));
-            // } catch (Throwable e) {
-            // // ignore
-            // }
-            // });
-            return ui;
-        }
-
-        private UIComboBox enums(Class<V> type) {
-            UIComboBox<V> ui = new UIComboBox(null);
-            ui.items(type.getEnumConstants());
-            ui.nullable();
-            ui.sync(query.input);
-
-            return ui;
         }
     }
 }
