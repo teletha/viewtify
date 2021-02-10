@@ -9,7 +9,12 @@
  */
 package viewtify.ui;
 
+import java.util.Objects;
+
 import javafx.css.Styleable;
+import javafx.scene.Node;
+import kiss.Variable;
+import viewtify.ui.helper.ValueHelper;
 
 public interface UserInterfaceProvider<UI extends Styleable> {
 
@@ -19,4 +24,21 @@ public interface UserInterfaceProvider<UI extends Styleable> {
      * @return A user interface.
      */
     UI ui();
+
+    static <V, UI extends UserInterface<UI, ? extends Node> & ValueHelper<UI, V>> UI inputFor(Class<V> type, Variable<V> property) {
+        Objects.requireNonNull(type);
+        Objects.requireNonNull(property);
+
+        if (type == String.class) {
+            return (UI) new UIText<V>(null, String.class).clearable().sync(property);
+        } else if (Enum.class.isAssignableFrom(type)) {
+            return (UI) new UIComboBox<V>(null).items(type.getEnumConstants()).nullable().sync(property);
+        } else if (Number.class.isAssignableFrom(type)) {
+            return (UI) new UIText<V>(null, type).clearable().acceptDecimalInput().sync(property);
+        } else if (Comparable.class.isAssignableFrom(type)) {
+            throw new IllegalArgumentException("Unsupported type [" + type + "]");
+        } else {
+            throw new IllegalArgumentException("Unsupported type [" + type + "]");
+        }
+    }
 }

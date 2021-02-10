@@ -11,13 +11,13 @@ package viewtify.ui.query;
 
 import java.util.Objects;
 
-import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
+import viewtify.ui.UserInterface;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
@@ -44,10 +44,7 @@ public class QueryView<M> extends View {
             $(vbox, () -> {
                 $(title, FormStyles.FormLabelMin);
                 for (Query q : compound.queries()) {
-                    Editor editor = new Editor();
-                    editor.query = q;
-
-                    $(editor);
+                    $(new Editor(q));
                 }
             });
         }
@@ -101,11 +98,11 @@ public class QueryView<M> extends View {
         /** Extractor. */
         UILabel extractor;
 
-        /** The user input. */
-        UIText<String> input;
-
         /** The {@link Tester}. */
         UIComboBox<Tester<V>> tester;
+
+        /** The input UI. */
+        final UserInterface input;
 
         /**
          * Declare view.
@@ -114,14 +111,22 @@ public class QueryView<M> extends View {
             {
                 $(hbox, FormStyles.FormRow, () -> {
                     $(extractor, FormStyles.FormLabelMin);
-                    $(input(), FormStyles.FormInput);
+                    $(input, FormStyles.FormInput);
                     $(tester);
                 });
             }
         }
 
         /** The associated {@link Query}. */
-        private Query<M, V> query;
+        private final Query<M, V> query;
+
+        /**
+         * @param query
+         */
+        private Editor(Query<M, V> query) {
+            this.query = query;
+            this.input = UserInterfaceProvider.inputFor(query.type, query.input);
+        }
 
         /**
          * {@inheritDoc}
@@ -129,13 +134,6 @@ public class QueryView<M> extends View {
         @Override
         protected void initialize() {
             extractor.text(query.name);
-            input.clearable().value(I.transform(query.input.v, String.class)).observing().to(v -> {
-                try {
-                    query.input.set(v == null || v.isBlank() ? null : I.transform(v, query.type));
-                } catch (Throwable e) {
-                    // ignore
-                }
-            });
             tester.items(Tester.by(query.type))
                     .select(query.tester.or(tester.first()))
                     .renderByVariable(m -> m.description)
@@ -143,9 +141,9 @@ public class QueryView<M> extends View {
 
             if (query == initialFocus) {
                 input.focus();
-                if (!input.isEmpty()) {
-                    input.ui.selectAll();
-                }
+                // if (!input.isEmpty()) {
+                // input.ui.selectAll();
+                // }
             }
         }
 
@@ -155,21 +153,21 @@ public class QueryView<M> extends View {
             if (Enum.class.isAssignableFrom(type)) {
                 return enums(type);
             } else {
-                return string();
+                return string(type);
             }
         }
 
-        private UIText<String> string() {
-            UIText<String> ui = new UIText(null, String.class);
+        private UIText<V> string(Class<V> type) {
+            UIText<V> ui = new UIText(null, type);
             ui.clearable();
-            ui.value(I.transform(query.input.v, String.class));
-            ui.observing(v -> {
-                try {
-                    query.input.set(v == null || v.isBlank() ? null : I.transform(v, query.type));
-                } catch (Throwable e) {
-                    // ignore
-                }
-            });
+            ui.sync(query.input);
+            // ui.observing(v -> {
+            // try {
+            // query.input.set(v == null || v.isBlank() ? null : I.transform(v, query.type));
+            // } catch (Throwable e) {
+            // // ignore
+            // }
+            // });
             return ui;
         }
 
@@ -177,17 +175,9 @@ public class QueryView<M> extends View {
             UIComboBox<V> ui = new UIComboBox(null);
             ui.items(type.getEnumConstants());
             ui.nullable();
-            ui.value(I.transform(query.input.v, type));
-            ui.observing(v -> {
-                tester.disable(v == null);
-                query.input.set(v);
-            });
+            ui.sync(query.input);
 
             return ui;
         }
-    }
-
-    class StringEditor extends Editor<String> {
-
     }
 }
