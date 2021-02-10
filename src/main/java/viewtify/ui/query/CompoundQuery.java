@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -231,28 +232,24 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
                 .compareTo(tester) <= 0);
 
         /** The builtin filter for {@link String} value. */
-        public static final Tester<String> Contain = new Tester<>("contains", String.class, String.class, String::toLowerCase, (value, tester) -> value
-                .toLowerCase()
-                .contains(tester));
+        public static final Tester<String> Contain = new Tester<>("contains", String.class, Tokens.class, Tokens::new, (value, tester) -> tester
+                .contains(value));
 
         /** The builtin filter for {@link String} value. */
-        public static final Tester<String> NotContain = new Tester<>("don't contain", String.class, String.class, String::toLowerCase, (value, tester) -> !value
-                .toLowerCase()
-                .contains(tester));
+        public static final Tester<String> NotContain = new Tester<>("don't contain", String.class, Tokens.class, Tokens::new, (value, tester) -> !tester
+                .contains(value));
 
         /** The builtin filter for {@link String} value. */
-        public static final Tester<String> StartWith = new Tester<>("starts with", String.class, String.class, String::toLowerCase, (value, tester) -> value
-                .toLowerCase()
-                .startsWith(tester));
+        public static final Tester<String> StartWith = new Tester<>("starts with", String.class, Tokens.class, Tokens::new, (value, tester) -> tester
+                .startsWith(value));
 
         /** The builtin filter for {@link String} value. */
-        public static final Tester<String> EndWith = new Tester<>("ends with", String.class, String.class, String::toLowerCase, (value, tester) -> value
-                .toLowerCase()
-                .endsWith(tester));
+        public static final Tester<String> EndWith = new Tester<>("ends with", String.class, Tokens.class, Tokens::new, (value, tester) -> tester
+                .endsWith(value));
 
         /** The builtin filter for {@link String} value. */
-        public static final Tester<String> Match = new Tester<>("matches", String.class, String.class, String::toLowerCase, (value, tester) -> value
-                .equalsIgnoreCase(tester));
+        public static final Tester<String> Match = new Tester<>("matches", String.class, Tokens.class, Tokens::new, (value, tester) -> tester
+                .match(value));
 
         /** The builtin filter for {@link String} value. */
         public static final Tester<String> RegEx = new Tester<>("regular expression", String.class, Pattern.class, v -> Pattern
@@ -342,6 +339,88 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
             } else {
                 return STRINGS;
             }
+        }
+    }
+
+    /**
+     * 
+     */
+    private static class Tokens {
+
+        /** The token set. */
+        private final String[] tokens;
+
+        /**
+         * Tokenize the inputed text.
+         * 
+         * @param input
+         */
+        private Tokens(String input) {
+            this.tokens = input.toLowerCase().split("\\s+");
+        }
+
+        /**
+         * Test whether the model contains the inputed values.
+         * 
+         * @param value
+         * @return
+         */
+        private boolean contains(String value) {
+            String lower = value.toLowerCase();
+            for (String token : tokens) {
+                if (lower.contains(token)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Test whether the model matches the inputed values.
+         * 
+         * @param value
+         * @return
+         */
+        private boolean match(String value) {
+            String lower = value.toLowerCase();
+            for (String token : tokens) {
+                if (lower.equals(token)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Test whether the model starts with the inputed values.
+         * 
+         * @param value
+         * @return
+         */
+        private boolean startsWith(String value) {
+            String lower = value.toLowerCase();
+            for (String token : tokens) {
+                if (lower.startsWith(token)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Test whether the model starts with the inputed values.
+         * 
+         * @param value
+         * @return
+         */
+        private boolean endsWith(String value) {
+            String lower = value.toLowerCase();
+            for (String token : tokens) {
+                if (lower.endsWith(token)) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
