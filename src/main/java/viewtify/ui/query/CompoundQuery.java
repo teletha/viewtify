@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -121,11 +120,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * @param extractor An actual value {@link Extractor}.
      */
     public <V> Query<M, V> addObservableQuery(StringProperty description, Class<V> type, Function<M, ObservableValue<V>> extractor) {
-        Query<M, V> query = new Query<>(description, type, m -> extractor.apply(m).getValue());
-        query.disposer = query.input.observe().mapTo(null).merge(query.tester.observe()).to(() -> update.accept(this));
-        queries.add(query);
-
-        return query;
+        return addQuery(description, type, m -> extractor.apply(m).getValue());
     }
 
     /**
@@ -270,7 +265,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          */
         @Override
         public V apply(V model) {
-            return normalizer.apply(model);
+            return model == null ? null : normalizer.apply(model);
         }
 
         /**
@@ -304,7 +299,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     public static class Query<M, V> implements Predicate<M> {
 
         /** The query name. */
-        public final StringProperty description;
+        public final StringProperty name;
 
         /** The value type. */
         public final Class<V> type;
@@ -318,17 +313,11 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         /** The associated {@link Matcher}. */
         public final Variable<Tester<V>> tester = Variable.<Tester<V>> empty().intercept((oldTester, newTester) -> {
             // normalize the current input
-            if (input.v != null) {
-                normalized = newTester.apply(input.v);
-            }
+            normalized = newTester.apply(input.v);
 
             // normalize the input in future
             input.intercept((oldInput, newInput) -> {
-                if (newInput == null) {
-                    normalized = null;
-                } else {
-                    normalized = newTester.apply(newInput);
-                }
+                normalized = newTester.apply(newInput);
                 return newInput;
             });
 
@@ -342,10 +331,14 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         private Disposable disposer;
 
         /**
+         * Build new query.
+         * 
+         * @param name
          * @param type
+         * @param extractor
          */
-        private Query(StringProperty description, Class<V> type, Function<M, V> extractor) {
-            this.description = Objects.requireNonNull(description);
+        private Query(StringProperty name, Class<V> type, Function<M, V> extractor) {
+            this.name = Objects.requireNonNull(name);
             this.type = Objects.requireNonNull(type);
             this.extractor = Objects.requireNonNull(extractor);
         }
@@ -360,11 +353,6 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
             } else {
                 return tester.v.test(extractor.apply(model), normalized);
             }
-        }
-
-        public void reset() {
-            input.set((V) null);
-            tester.set(Tester.by(type)[0]);
         }
     }
 }

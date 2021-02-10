@@ -22,7 +22,7 @@ class QueryTest {
     @Test
     void initialize() {
         Query<String, String> query = compound.addQuery("test");
-        assert query.description.get().equals("test");
+        assert query.name.get().equals("test");
         assert query.type == String.class;
         assert query.input.isAbsent();
         assert query.tester.isAbsent();

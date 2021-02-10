@@ -9,16 +9,21 @@
  */
 package viewtify.ui;
 
+import java.lang.reflect.Method;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
+
+import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import javafx.scene.control.skin.TextFieldSkin;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -28,7 +33,7 @@ import viewtify.ui.helper.PlaceholderHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.util.GuardedOperation;
 
-public class UIText<V> extends UserInterface<UIText<V>, TextField>
+public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
         implements ValueHelper<UIText<V>, V>, ContextMenuHelper<UIText<V>>, EditableHelper<UIText<V>>, PlaceholderHelper<UIText<V>> {
 
     /** The internal model value. */
@@ -193,6 +198,21 @@ public class UIText<V> extends UserInterface<UIText<V>, TextField>
     }
 
     /**
+     * Show a clear button inside the {@link TextField} (on the right hand side of it) when text is
+     * entered by the user.
+     */
+    public final UIText<V> clearable() {
+        try {
+            Method method = TextFields.class.getDeclaredMethod("setupClearButtonField", TextField.class, ObjectProperty.class);
+            method.setAccessible(true);
+            method.invoke(null, ui, ui.rightProperty());
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
+        return this;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -227,9 +247,9 @@ public class UIText<V> extends UserInterface<UIText<V>, TextField>
     }
 
     /**
-    * 
-    */
-    static class VerifiableTextField extends TextField {
+     * 
+     */
+    static class VerifiableTextField extends CustomTextField {
 
         private boolean masking;
 
@@ -282,15 +302,34 @@ public class UIText<V> extends UserInterface<UIText<V>, TextField>
         /**
          * 
          */
-        private class VerifiableTextFieldSkin extends TextFieldSkin {
+        private class VerifiableTextFieldSkin extends CustomTextFieldSkin {
 
             private VerifiableTextFieldSkin(TextField control) {
                 super(control);
             }
 
+            /**
+             * {@inheritDoc}
+             */
             @Override
             protected String maskText(String text) {
                 return masking ? "\u25cf".repeat(text.length()) : text;
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public ObjectProperty<Node> leftProperty() {
+                return VerifiableTextField.this.leftProperty();
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public ObjectProperty<Node> rightProperty() {
+                return VerifiableTextField.this.rightProperty();
             }
         }
     }
