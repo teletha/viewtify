@@ -11,7 +11,6 @@ package viewtify.ui.query;
 
 import org.junit.jupiter.api.Test;
 
-import viewtify.ui.query.CompoundQuery;
 import viewtify.ui.query.CompoundQuery.Query;
 import viewtify.ui.query.CompoundQuery.Tester;
 
@@ -22,7 +21,7 @@ class QueryTest {
     @Test
     void initialize() {
         Query<String, String> query = compound.addQuery("test");
-        assert query.name.get().equals("test");
+        assert query.name.getValue().equals("test");
         assert query.type == String.class;
         assert query.input.isAbsent();
         assert query.tester.isAbsent();

@@ -19,8 +19,8 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import kiss.Disposable;
 import kiss.I;
@@ -28,6 +28,7 @@ import kiss.Managed;
 import kiss.Signal;
 import kiss.Signaling;
 import kiss.Variable;
+import viewtify.Viewtify;
 
 public class CompoundQuery<M> implements Predicate<M>, Disposable {
 
@@ -59,7 +60,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * 
      * @return
      */
-    public final List<Query<M, ?>> queries() {
+    public List<Query<M, ?>> queries() {
         return Collections.unmodifiableList(queries);
     }
 
@@ -67,44 +68,66 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * Add String based {@link Query}.
      * 
      * @param <V>
-     * @param description The human-readable description.
+     * @param name The human-readable description.
      */
-    public Query<M, String> addQuery(String description) {
-        return addQuery(new SimpleStringProperty(description));
+    public Query<M, String> addQuery(String name) {
+        return addQuery(new SimpleStringProperty(name));
     }
 
     /**
      * Add String based {@link Query}.
      * 
      * @param <V>
-     * @param description The human-readable description.
+     * @param name The human-readable description.
      */
-    public Query<M, String> addQuery(StringProperty description) {
-        return addQuery(description, String.class, String::valueOf);
+    public Query<M, String> addQuery(Variable<String> name) {
+        return addQuery(Viewtify.property(name));
+    }
+
+    /**
+     * Add String based {@link Query}.
+     * 
+     * @param <V>
+     * @param name The human-readable description.
+     */
+    public Query<M, String> addQuery(Property<String> name) {
+        return addQuery(name, String.class, String::valueOf);
     }
 
     /**
      * Add {@link Query}.
      * 
      * @param <V>
-     * @param description The human-readable description.
+     * @param name The human-readable description.
      * @param type A value type.
      * @param extractor An actual value {@link Extractor}.
      */
-    public <V> Query<M, V> addQuery(String description, Class<V> type, Function<M, V> extractor) {
-        return addQuery(new SimpleStringProperty(description), type, extractor);
+    public <V> Query<M, V> addQuery(String name, Class<V> type, Function<M, V> extractor) {
+        return addQuery(new SimpleStringProperty(name), type, extractor);
     }
 
     /**
      * Add {@link Query}.
      * 
      * @param <V>
-     * @param description The human-readable description.
+     * @param name The human-readable description.
      * @param type A value type.
      * @param extractor An actual value {@link Extractor}.
      */
-    public <V> Query<M, V> addQuery(StringProperty description, Class<V> type, Function<M, V> extractor) {
-        Query<M, V> query = new Query<>(description, type, extractor);
+    public <V> Query<M, V> addQuery(Variable<String> name, Class<V> type, Function<M, V> extractor) {
+        return addQuery(Viewtify.property(name), type, extractor);
+    }
+
+    /**
+     * Add {@link Query}.
+     * 
+     * @param <V>
+     * @param name The human-readable description.
+     * @param type A value type.
+     * @param extractor An actual value {@link Extractor}.
+     */
+    public <V> Query<M, V> addQuery(Property<String> name, Class<V> type, Function<M, V> extractor) {
+        Query<M, V> query = new Query<>(name, type, extractor);
         query.disposer = query.input.observe().mapTo(null).merge(query.tester.observe()).to(() -> update.accept(this));
         queries.add(query);
 
@@ -115,12 +138,36 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * Add {@link Query}.
      * 
      * @param <V>
-     * @param description The human-readable description.
+     * @param name The human-readable description.
      * @param type A value type.
      * @param extractor An actual value {@link Extractor}.
      */
-    public <V> Query<M, V> addObservableQuery(StringProperty description, Class<V> type, Function<M, ObservableValue<V>> extractor) {
-        return addQuery(description, type, m -> extractor.apply(m).getValue());
+    public <V> Query<M, V> addObservableQuery(String name, Class<V> type, Function<M, ObservableValue<V>> extractor) {
+        return addObservableQuery(new SimpleStringProperty(name), type, extractor);
+    }
+
+    /**
+     * Add {@link Query}.
+     * 
+     * @param <V>
+     * @param name The human-readable description.
+     * @param type A value type.
+     * @param extractor An actual value {@link Extractor}.
+     */
+    public <V> Query<M, V> addObservableQuery(Variable<String> name, Class<V> type, Function<M, ObservableValue<V>> extractor) {
+        return addObservableQuery(Viewtify.property(name), type, extractor);
+    }
+
+    /**
+     * Add {@link Query}.
+     * 
+     * @param <V>
+     * @param name The human-readable description.
+     * @param type A value type.
+     * @param extractor An actual value {@link Extractor}.
+     */
+    public <V> Query<M, V> addObservableQuery(Property<String> name, Class<V> type, Function<M, ObservableValue<V>> extractor) {
+        return addQuery(name, type, m -> extractor.apply(m).getValue());
     }
 
     /**
@@ -304,7 +351,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     public static class Query<M, V> implements Predicate<M> {
 
         /** The query name. */
-        public final StringProperty name;
+        public final Property<String> name;
 
         /** The value type. */
         public final Class<V> type;
@@ -342,7 +389,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          * @param type
          * @param extractor
          */
-        private Query(StringProperty name, Class<V> type, Function<M, V> extractor) {
+        private Query(Property<String> name, Class<V> type, Function<M, V> extractor) {
             this.name = Objects.requireNonNull(name);
             this.type = Objects.requireNonNull(type);
             this.extractor = Objects.requireNonNull(extractor);
