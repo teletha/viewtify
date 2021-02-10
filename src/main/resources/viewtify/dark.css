@@ -60,3 +60,11 @@
 .toggle-button:selected {
     -fx-text-fill: derive(-fx-light-text-color, 10%);
 }
+
+/* ==========================================================================
+  DatePicker
+===========================================================================*/
+.date-picker-popup > * > .spinner > .button > .left-arrow,
+.date-picker-popup > * > .spinner > .button > .right-arrow {
+		-fx-background-color: -fx-light-text-color;
+}

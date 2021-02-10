@@ -9,6 +9,7 @@
  */
 package viewtify.ui;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javafx.css.Styleable;
@@ -45,6 +46,8 @@ public interface UserInterfaceProvider<UI extends Styleable> {
             return (UI) new UIComboBox<V>(null).items(type.getEnumConstants()).nullable().sync(property);
         } else if (Number.class.isAssignableFrom(type)) {
             return (UI) new UIText<V>(null, type).clearable().acceptDecimalInput().sync(property);
+        } else if (type == LocalDate.class) {
+            return (UI) new UIDatePicker(null).sync((Variable<LocalDate>) property);
         } else if (Comparable.class.isAssignableFrom(type)) {
             throw new IllegalArgumentException("Unsupported type [" + type + "]");
         } else {
