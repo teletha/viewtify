@@ -29,7 +29,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -320,9 +319,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self addItemAtFirst(E item) {
-        if (item != null) {
-            modifyItemUISafely(list -> list.add(0, item));
-        }
+        modifyItemUISafely(list -> list.add(0, item));
         return (Self) this;
     }
 

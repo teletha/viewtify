@@ -18,7 +18,6 @@ import java.util.function.Predicate;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -623,7 +622,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return A {@link Signal} that notify the change of this value.
      */
     default Signal<V> observe() {
-        return Viewtify.observe(valueProperty()).skipNull();
+        return Viewtify.observe(valueProperty());
     }
 
     /**
@@ -734,7 +733,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return A {@link Signal} that notify the change of this value.
      */
     default Signal<V> observing() {
-        return observe().startWith(value()).skipNull();
+        return observe().startWith(value());
     }
 
     /**

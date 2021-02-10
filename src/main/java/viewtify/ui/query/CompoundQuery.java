@@ -217,6 +217,9 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         /** The builtin set. */
         private final static Tester[] COMPARABLES = {Equal, NotEqual, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual};
 
+        /** The builtin set. */
+        private final static Tester[] ENUMS = {Equal, NotEqual};
+
         /** The description of this filter. */
         public final Variable<String> description;
 
@@ -285,6 +288,8 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         public static <T> Tester<T>[] by(Class<T> type) {
             if (type == String.class) {
                 return STRINGS;
+            } else if (Enum.class.isAssignableFrom(type)) {
+                return ENUMS;
             } else if (Comparable.class.isAssignableFrom(type)) {
                 return COMPARABLES;
             } else {

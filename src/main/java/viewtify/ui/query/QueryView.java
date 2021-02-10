@@ -18,6 +18,7 @@ import viewtify.style.FormStyles;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
+import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.CollectableHelper;
@@ -113,7 +114,7 @@ public class QueryView<M> extends View {
             {
                 $(hbox, FormStyles.FormRow, () -> {
                     $(extractor, FormStyles.FormLabelMin);
-                    $(input, FormStyles.FormInput);
+                    $(input(), FormStyles.FormInput);
                     $(tester);
                 });
             }
@@ -128,7 +129,7 @@ public class QueryView<M> extends View {
         @Override
         protected void initialize() {
             extractor.text(query.name);
-            input.value(I.transform(query.input.v, String.class)).clearable().observing().to(v -> {
+            input.clearable().value(I.transform(query.input.v, String.class)).observing().to(v -> {
                 try {
                     query.input.set(v == null || v.isBlank() ? null : I.transform(v, query.type));
                 } catch (Throwable e) {
@@ -146,6 +147,43 @@ public class QueryView<M> extends View {
                     input.ui.selectAll();
                 }
             }
+        }
+
+        private UserInterfaceProvider input() {
+            Class type = query.type;
+
+            if (Enum.class.isAssignableFrom(type)) {
+                return enums(type);
+            } else {
+                return string();
+            }
+        }
+
+        private UIText<String> string() {
+            UIText<String> ui = new UIText(null, String.class);
+            ui.clearable();
+            ui.value(I.transform(query.input.v, String.class));
+            ui.observing(v -> {
+                try {
+                    query.input.set(v == null || v.isBlank() ? null : I.transform(v, query.type));
+                } catch (Throwable e) {
+                    // ignore
+                }
+            });
+            return ui;
+        }
+
+        private UIComboBox enums(Class<V> type) {
+            UIComboBox<V> ui = new UIComboBox(null);
+            ui.items(type.getEnumConstants());
+            ui.nullable();
+            ui.value(I.transform(query.input.v, type));
+            ui.observing(v -> {
+                tester.disable(v == null);
+                query.input.set(v);
+            });
+
+            return ui;
         }
     }
 

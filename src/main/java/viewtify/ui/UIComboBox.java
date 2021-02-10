@@ -9,6 +9,7 @@
  */
 package viewtify.ui;
 
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -19,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import kiss.Disposable;
+import kiss.I;
 import kiss.Signal;
 import kiss.Signaling;
 import viewtify.Viewtify;
@@ -79,6 +81,53 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
 
         // API definition
         return this;
+    }
+
+    /**
+     * Append the empty value which represents no selection.
+     * 
+     * @return
+     */
+    public final UIComboBox<T> nullable() {
+        addItemAtFirst(null);
+        if (ui.getPlaceholder() == null) {
+            placeholder(I.translate("Any"));
+        }
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UIComboBox<T> placeholder(Object text) {
+        ui.setPromptText(Objects.toString(text));
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UIComboBox<T> placeholder(Property text) {
+        ui.promptTextProperty().bind(text);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UIComboBox<T> placeholder(UserInterfaceProvider text) {
+        throw new UnsupportedOperationException("Text field doesn't support the placeholder by node.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UIComboBox<T> placeholder(Node node) {
+        throw new UnsupportedOperationException("Text field doesn't support the placeholder by node.");
     }
 
     /**
