@@ -27,8 +27,7 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.ValueHelper;
 
 public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
-        implements ValueHelper<UIDatePicker, LocalDate>, EditableHelper<UIDatePicker>, Comparable<UIDatePicker>,
-        ContextMenuHelper<UIDatePicker> {
+        implements ValueHelper<UIDatePicker, LocalDate>, EditableHelper<UIDatePicker>, ContextMenuHelper<UIDatePicker> {
 
     /** The drag and drop copy. */
     private static final DnDAssistant<LocalDate> DateTimeDnD = new DnDAssistant();
@@ -74,16 +73,13 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
         return ui.valueProperty();
     }
 
-    public final ZonedDateTime zoned() {
-        return value().atStartOfDay(ZoneId.of("UTC"));
-    }
-
     /**
-     * {@inheritDoc}
+     * Convert to UTC {@link ZonedDateTime}.
+     * 
+     * @return
      */
-    @Override
-    public int compareTo(UIDatePicker o) {
-        return 0;
+    public final ZonedDateTime zoned() {
+        return value() == null ? null : value().atStartOfDay(ZoneId.of("UTC"));
     }
 
     /**

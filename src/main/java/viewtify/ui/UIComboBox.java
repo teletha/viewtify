@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -91,7 +92,7 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
     public final UIComboBox<T> nullable() {
         addItemAtFirst(null);
         if (ui.getPlaceholder() == null) {
-            placeholder(I.translate("Any"));
+            placeholder(I.translate("No Selection"));
         }
         return this;
     }
