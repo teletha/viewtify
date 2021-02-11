@@ -208,61 +208,48 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     public static final class Tester<V> implements Function<V, V>, BiPredicate<V, V> {
 
         /** The builtin filter for {@link Comparable} value. */
-        public static final Tester<Comparable> Equal = new Tester<>("is equal to", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> Equal = new Tester<>("is equal to", Comparable.class, (tester, value) -> value
                 .compareTo(tester) == 0);
 
         /** The builtin filter for {@link Comparable} value. */
-        public static final Tester<Comparable> NotEqual = new Tester<>("is not equal to", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> NotEqual = new Tester<>("is not equal to", Comparable.class, (tester, value) -> value
                 .compareTo(tester) != 0);
 
         /** The builtin filter for {@link Comparable} value. */
-        public static final Tester<Comparable> GreaterThan = new Tester<>("is greater than", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> GreaterThan = new Tester<>("is greater than", Comparable.class, (tester, value) -> value
                 .compareTo(tester) > 0);
 
         /** The builtin filter for {@link Comparable} value. */
-        public static final Tester<Comparable> GreaterThanOrEqual = new Tester<>("is greater than or equal to", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> GreaterThanOrEqual = new Tester<>("is greater than or equal to", Comparable.class, (tester, value) -> value
                 .compareTo(tester) >= 0);
 
         /** The builtin filter for {@link Comparable} value. */
-        public static final Tester<Comparable> LessThan = new Tester<>("is less than", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> LessThan = new Tester<>("is less than", Comparable.class, (tester, value) -> value
                 .compareTo(tester) < 0);
 
         /** The builtin filter for {@link Comparable} value. */
-        public static final Tester<Comparable> LessThanOrEqual = new Tester<>("is less than or equal to", Comparable.class, (value, tester) -> value
+        public static final Tester<Comparable> LessThanOrEqual = new Tester<>("is less than or equal to", Comparable.class, (tester, value) -> value
                 .compareTo(tester) <= 0);
 
         /** The builtin filter for {@link String} value. */
-        public static final Tester<String> Contain = new Tester<>("contains", String.class, Tokens.class, Tokens::new, (value, tester) -> tester
+        public static final Tester<String> Contain = new Tester<>("contains", String.class, Tokens.class, Tokens::new, Tokens::contains);
+
+        /** The builtin filter for {@link String} value. */
+        public static final Tester<String> NotContain = new Tester<>("don't contain", String.class, Tokens.class, Tokens::new, (tester, value) -> !tester
                 .contains(value));
 
         /** The builtin filter for {@link String} value. */
-        public static final Tester<String> NotContain = new Tester<>("don't contain", String.class, Tokens.class, Tokens::new, (value, tester) -> !tester
-                .contains(value));
+        public static final Tester<String> StartWith = new Tester<>("starts with", String.class, Tokens.class, Tokens::new, Tokens::startsWith);
 
         /** The builtin filter for {@link String} value. */
-        public static final Tester<String> StartWith = new Tester<>("starts with", String.class, Tokens.class, Tokens::new, (value, tester) -> tester
-                .startsWith(value));
+        public static final Tester<String> EndWith = new Tester<>("ends with", String.class, Tokens.class, Tokens::new, Tokens::endsWith);
 
         /** The builtin filter for {@link String} value. */
-        public static final Tester<String> EndWith = new Tester<>("ends with", String.class, Tokens.class, Tokens::new, (value, tester) -> tester
-                .endsWith(value));
-
-        /** The builtin filter for {@link String} value. */
-        public static final Tester<String> Match = new Tester<>("matches", String.class, Tokens.class, Tokens::new, (value, tester) -> tester
-                .match(value));
+        public static final Tester<String> Match = new Tester<>("matches", String.class, Tokens.class, Tokens::new, Tokens::match);
 
         /** The builtin filter for {@link String} value. */
         public static final Tester<String> RegEx = new Tester<>("regular expression", String.class, Pattern.class, v -> Pattern
-                .compile(v, Pattern.CASE_INSENSITIVE), (value, tester) -> tester.matcher(value).find());
-
-        /** The builtin set. */
-        private final static Tester[] STRINGS = {Contain, NotContain, StartWith, EndWith, Match, RegEx};
-
-        /** The builtin set. */
-        private final static Tester[] COMPARABLES = {Equal, NotEqual, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual};
-
-        /** The builtin set. */
-        private final static Tester[] ENUMS = {Equal, NotEqual};
+                .compile(v, Pattern.CASE_INSENSITIVE), (tester, value) -> tester.matcher(value).find());
 
         /** The description of this filter. */
         public final Variable<String> description;
@@ -293,7 +280,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          * @param type
          * @param condition
          */
-        public <N> Tester(String description, Class<V> type, Class<N> normalizedType, Function<V, N> normalizer, BiPredicate<V, N> condition) {
+        public <T> Tester(String description, Class<V> type, Class<T> normalizedType, Function<V, T> normalizer, BiPredicate<T, V> condition) {
             this.description = I.translate(description);
             this.normalizer = (Function<V, V>) normalizer;
             this.condition = (BiPredicate<V, V>) condition;
@@ -303,8 +290,8 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          * {@inheritDoc}
          */
         @Override
-        public boolean test(V model, V tester) {
-            return condition.test(model, tester);
+        public boolean test(V tester, V value) {
+            return condition.test(tester, value);
         }
 
         /**
@@ -323,6 +310,15 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
             return description.v;
         }
 
+        /** The builtin set. */
+        private final static Tester[] STRINGS = {Contain, NotContain, StartWith, EndWith, Match, RegEx};
+
+        /** The builtin set. */
+        private final static Tester[] COMPARABLES = {Equal, NotEqual, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual};
+
+        /** The builtin set. */
+        private final static Tester[] ENUMS = {Equal, NotEqual};
+
         /**
          * Collect type specific filters.
          * 
@@ -340,87 +336,87 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
                 return STRINGS;
             }
         }
-    }
-
-    /**
-     * 
-     */
-    private static class Tokens {
-
-        /** The token set. */
-        private final String[] tokens;
 
         /**
-         * Tokenize the inputed text.
          * 
-         * @param input
          */
-        private Tokens(String input) {
-            this.tokens = input.toLowerCase().split("\\s+");
-        }
+        private static class Tokens {
 
-        /**
-         * Test whether the model contains the inputed values.
-         * 
-         * @param value
-         * @return
-         */
-        private boolean contains(String value) {
-            String lower = value.toLowerCase();
-            for (String token : tokens) {
-                if (lower.contains(token)) {
-                    return true;
-                }
+            /** The token set. */
+            private final String[] tokens;
+
+            /**
+             * Tokenize the inputed text.
+             * 
+             * @param input
+             */
+            private Tokens(String input) {
+                this.tokens = input.toLowerCase().split("\\s+");
             }
-            return false;
-        }
 
-        /**
-         * Test whether the model matches the inputed values.
-         * 
-         * @param value
-         * @return
-         */
-        private boolean match(String value) {
-            String lower = value.toLowerCase();
-            for (String token : tokens) {
-                if (lower.equals(token)) {
-                    return true;
+            /**
+             * Test whether the model contains the inputed values.
+             * 
+             * @param value
+             * @return
+             */
+            private boolean contains(String value) {
+                String lower = value.toLowerCase();
+                for (String token : tokens) {
+                    if (lower.contains(token)) {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
-        }
 
-        /**
-         * Test whether the model starts with the inputed values.
-         * 
-         * @param value
-         * @return
-         */
-        private boolean startsWith(String value) {
-            String lower = value.toLowerCase();
-            for (String token : tokens) {
-                if (lower.startsWith(token)) {
-                    return true;
+            /**
+             * Test whether the model matches the inputed values.
+             * 
+             * @param value
+             * @return
+             */
+            private boolean match(String value) {
+                String lower = value.toLowerCase();
+                for (String token : tokens) {
+                    if (lower.equals(token)) {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
-        }
 
-        /**
-         * Test whether the model starts with the inputed values.
-         * 
-         * @param value
-         * @return
-         */
-        private boolean endsWith(String value) {
-            String lower = value.toLowerCase();
-            for (String token : tokens) {
-                if (lower.endsWith(token)) {
-                    return true;
+            /**
+             * Test whether the model starts with the inputed values.
+             * 
+             * @param value
+             * @return
+             */
+            private boolean startsWith(String value) {
+                String lower = value.toLowerCase();
+                for (String token : tokens) {
+                    if (lower.startsWith(token)) {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
+
+            /**
+             * Test whether the model starts with the inputed values.
+             * 
+             * @param value
+             * @return
+             */
+            private boolean endsWith(String value) {
+                String lower = value.toLowerCase();
+                for (String token : tokens) {
+                    if (lower.endsWith(token)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
     }
 
@@ -482,7 +478,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
             if (model == null || tester.v == null || input.v == null) {
                 return true;
             } else {
-                return tester.v.test(extractor.apply(model), normalized);
+                return tester.v.test(normalized, extractor.apply(model));
             }
         }
     }
