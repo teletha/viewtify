@@ -14,7 +14,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import kiss.I;
 import kiss.WiseRunnable;
 
-public final class GuardedOperation {
+public class GuardedOperation {
+
+    /** The reusable no-operation. */
+    public static final GuardedOperation NoOP = new NoOP();
 
     /** The sync state. */
     private final AtomicBoolean processing = new AtomicBoolean();
@@ -30,7 +33,7 @@ public final class GuardedOperation {
      * @param process An atomic process.
      */
     public void guard(WiseRunnable process) {
-        if (process != null && processing.compareAndSet(false, true)) {
+        if (processing.compareAndSet(false, true)) {
             try {
                 process.run();
             } catch (Throwable e) {
@@ -51,5 +54,19 @@ public final class GuardedOperation {
     public GuardedOperation ignoreError() {
         ignoreError = true;
         return this;
+    }
+
+    /**
+     * 
+     */
+    private static class NoOP extends GuardedOperation {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void guard(WiseRunnable process) {
+            process.run();
+        }
     }
 }

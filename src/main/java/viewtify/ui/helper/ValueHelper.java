@@ -18,6 +18,7 @@ import java.util.function.Predicate;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -28,6 +29,7 @@ import kiss.WiseFunction;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
+import viewtify.util.GuardedOperation;
 
 public interface ValueHelper<Self extends ValueHelper, V> {
 
@@ -232,7 +234,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return Chainable API.
      */
     default Self sync(ValueHelper<?, V> value) {
-        return sync(value, null, null);
+        return sync(value, (Function<Signal<V>, Signal<V>>) null, null);
     }
 
     /**
@@ -275,10 +277,36 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * Synchronizes with the specified value.
      * 
      * @param value The value that is synchronized with each other.
+     * @param from Value synchronizer from external value to internal model.
+     * @param to Value synchronizer from intenral model to external value.
+     * @return Chainable API.
+     */
+    default <X> Self sync(ValueHelper<?, X> value, WiseFunction<X, V> from, WiseFunction<V, X> to) {
+        return sync(value, from, to, null);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @param from Value synchronizer from external value to internal model.
+     * @param to Value synchronizer from intenral model to external value.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default <X> Self sync(ValueHelper<?, X> value, WiseFunction<X, V> from, WiseFunction<V, X> to, Disposable unsynchronizer) {
+        return sync(value.valueProperty(), from, to, unsynchronizer);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
      * @return Chainable API.
      */
     default <P extends WritableValue<V> & ObservableValue<V>> Self sync(P value) {
-        return sync(value, null, null);
+        return sync(value, (Function<Signal<V>, Signal<V>>) null, null);
     }
 
     /**
@@ -316,6 +344,35 @@ public interface ValueHelper<Self extends ValueHelper, V> {
     default <P extends WritableValue<V> & ObservableValue<V>> Self sync(P value, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (value != null) {
             sync(Viewtify.observing(value), value::setValue, synchronizer, unsynchronizer);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @param from Value synchronizer from external value to internal model.
+     * @param to Value synchronizer from intenral model to external value.
+     * @return Chainable API.
+     */
+    default <P extends WritableValue<X> & ObservableValue<X>, X> Self sync(P value, WiseFunction<X, V> from, WiseFunction<V, X> to) {
+        return sync(value, from, to, null);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @param from Value synchronizer from external value to internal model.
+     * @param to Value synchronizer from intenral model to external value.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default <P extends WritableValue<X> & ObservableValue<X>, X> Self sync(P value, WiseFunction<X, V> from, WiseFunction<V, X> to, Disposable unsynchronizer) {
+        if (value != null) {
+            sync(Viewtify.observing(value), value::setValue, x -> x.map(nullable(from)), v -> v.map(nullable(to)), unsynchronizer);
         }
         return (Self) this;
     }
@@ -425,7 +482,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return Chainable API.
      */
     default Self sync(Variable<V> value) {
-        return sync(value, null, null);
+        return sync(value, (Function<Signal<V>, Signal<V>>) null, (Disposable) null);
     }
 
     /**
@@ -465,6 +522,47 @@ public interface ValueHelper<Self extends ValueHelper, V> {
             sync(value.observing(), value::set, synchronizer, unsynchronizer);
         }
         return (Self) this;
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @param from Value synchronizer from external value to internal model.
+     * @param to Value synchronizer from intenral model to external value.
+     * @return Chainable API.
+     */
+    default <X> Self sync(Variable<X> value, WiseFunction<X, V> from, WiseFunction<V, X> to) {
+        return sync(value, from, to, null);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param value The value that is synchronized with each other.
+     * @param from Value synchronizer from external value to internal model.
+     * @param to Value synchronizer from intenral model to external value.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     * @return Chainable API.
+     */
+    default <X> Self sync(Variable<X> value, WiseFunction<X, V> from, WiseFunction<V, X> to, Disposable unsynchronizer) {
+        if (value != null) {
+            sync(value.observing(), value::set, x -> x.map(nullable(from)), v -> v.map(nullable(to)), unsynchronizer);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Compose the function which accepts null safety.
+     * 
+     * @param <S>
+     * @param <T>
+     * @param fun
+     * @return
+     */
+    private <S, T> WiseFunction<S, T> nullable(WiseFunction<S, T> fun) {
+        return v -> v == null ? null : fun.apply(v);
     }
 
     /**
@@ -598,20 +696,42 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @param synchronizer Synchronize at the specified timing.
      * @param unsynchronizer The synchronization is canceled by calling
      *            {@link Disposable#dispose()}.
-     * @return Chainable API.
      */
     private void sync(Signal<V> publisher, Consumer<V> receiver, Function<Signal<V>, Signal<V>> synchronizer, Disposable unsynchronizer) {
         if (synchronizer == null) {
             synchronizer = Function.identity();
         }
+        sync(publisher, receiver, synchronizer, synchronizer, unsynchronizer);
+    }
+
+    /**
+     * Synchronizes with the specified value.
+     * 
+     * @param publisher An external change event notifier.
+     * @param receiver An external change event receiver.
+     * @param fromSynchronizer Value synchronizer from external value to internal model.
+     * @param toSynchronizer Value synchronizer from intenral model to external value.
+     * @param unsynchronizer The synchronization is canceled by calling
+     *            {@link Disposable#dispose()}.
+     */
+    private <X> void sync(Signal<X> publisher, Consumer<X> receiver, Function<Signal<X>, Signal<V>> fromSynchronizer, Function<Signal<V>, Signal<X>> toSynchronizer, Disposable unsynchronizer) {
+        GuardedOperation updating = publisher == null || receiver == null ? GuardedOperation.NoOP : new GuardedOperation();
 
         if (publisher != null) {
-            Disposable from = publisher.plug(synchronizer).to((Consumer<V>) this::value);
+            Disposable from = publisher.plug(fromSynchronizer).to(v -> {
+                updating.guard(() -> {
+                    value(v);
+                });
+            });
             if (unsynchronizer != null) unsynchronizer.add(from);
         }
 
         if (receiver != null) {
-            Disposable to = (publisher == null ? observing() : observe()).plug(synchronizer).to(receiver);
+            Disposable to = (publisher == null ? observing() : observe()).plug(toSynchronizer).to(v -> {
+                updating.guard(() -> {
+                    receiver.accept(v);
+                });
+            });
             if (unsynchronizer != null) unsynchronizer.add(to);
         }
     }
