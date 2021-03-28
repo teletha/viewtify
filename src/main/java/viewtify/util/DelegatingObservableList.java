@@ -33,7 +33,7 @@ public abstract class DelegatingObservableList<E> extends ObservableListBase<E> 
      */
     public DelegatingObservableList(ObservableList<E> delegate) {
         this.delegate = Objects.requireNonNull(delegate);
-        this.delegate.addListener(new WeakListChangeListener<>(this::sourceChanged));
+        this.delegate.addListener(new WeakListChangeListener<E>(this::sourceChanged));
     }
 
     /**

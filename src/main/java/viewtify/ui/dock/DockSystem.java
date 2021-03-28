@@ -45,7 +45,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Signaling;
@@ -150,7 +149,7 @@ public final class DockSystem {
         // add the view there.
         ViewArea area = I.signal(layout.roots)
                 .as(ViewArea.class)
-                .recurseMap(s -> s.flatIterable(v -> v.children))
+                .recurseMap(s -> s.flatIterable(v -> (List<ViewArea>) v.children))
                 .take(v -> v.hasView(id))
                 .first()
                 .to().v;
@@ -164,7 +163,7 @@ public final class DockSystem {
         // add the view there.
         area = I.signal(layout.roots)
                 .as(ViewArea.class)
-                .recurseMap(s -> s.flatIterable(v -> v.children))
+                .recurseMap(s -> s.flatIterable(v -> (List<ViewArea>) v.children))
                 .take(v -> v.location == o.recommendedArea)
                 .first()
                 .to().v;
@@ -417,15 +416,15 @@ public final class DockSystem {
      */
     private static boolean canDrop(int position, TabArea area) {
         switch (position) {
-            case PositionCenter:
-                // exclude if the source and destination are the same
-                if (area == dragedTabArea) {
-                    return false;
-                }
-                break;
+        case PositionCenter:
+            // exclude if the source and destination are the same
+            if (area == dragedTabArea) {
+                return false;
+            }
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
         return true;
     }
@@ -481,35 +480,35 @@ public final class DockSystem {
             bounds = dragedTab.getStyleableNode().getBoundsInLocal();
         }
         switch (position) {
-            case PositionCenter:
-                dropOverlay.setX(0);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(bounds.getWidth());
-                dropOverlay.setHeight(bounds.getHeight());
-                break;
-            case PositionLeft:
-                dropOverlay.setX(0);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(bounds.getWidth() * 0.5);
-                dropOverlay.setHeight(bounds.getHeight());
-                break;
-            case PositionRight:
-                dropOverlay.setX(bounds.getWidth() * 0.5);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(bounds.getWidth() * 0.5);
-                dropOverlay.setHeight(bounds.getHeight());
-                break;
-            case PositionTop:
-                dropOverlay.setX(0);
-                dropOverlay.setY(0);
-                dropOverlay.setWidth(bounds.getWidth());
-                dropOverlay.setHeight(bounds.getHeight() * 0.5);
-                break;
-            case PositionBottom:
-                dropOverlay.setX(0);
-                dropOverlay.setY(bounds.getHeight() * 0.5);
-                dropOverlay.setWidth(bounds.getWidth());
-                dropOverlay.setHeight(bounds.getHeight() * 0.5);
+        case PositionCenter:
+            dropOverlay.setX(0);
+            dropOverlay.setY(0);
+            dropOverlay.setWidth(bounds.getWidth());
+            dropOverlay.setHeight(bounds.getHeight());
+            break;
+        case PositionLeft:
+            dropOverlay.setX(0);
+            dropOverlay.setY(0);
+            dropOverlay.setWidth(bounds.getWidth() * 0.5);
+            dropOverlay.setHeight(bounds.getHeight());
+            break;
+        case PositionRight:
+            dropOverlay.setX(bounds.getWidth() * 0.5);
+            dropOverlay.setY(0);
+            dropOverlay.setWidth(bounds.getWidth() * 0.5);
+            dropOverlay.setHeight(bounds.getHeight());
+            break;
+        case PositionTop:
+            dropOverlay.setX(0);
+            dropOverlay.setY(0);
+            dropOverlay.setWidth(bounds.getWidth());
+            dropOverlay.setHeight(bounds.getHeight() * 0.5);
+            break;
+        case PositionBottom:
+            dropOverlay.setX(0);
+            dropOverlay.setY(bounds.getHeight() * 0.5);
+            dropOverlay.setWidth(bounds.getWidth());
+            dropOverlay.setHeight(bounds.getHeight() * 0.5);
         }
     }
 

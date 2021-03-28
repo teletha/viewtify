@@ -20,7 +20,6 @@ import javafx.scene.Node;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.input.GestureEvent;
 import javafx.scene.input.ScrollEvent;
-
 import kiss.WiseBiConsumer;
 import kiss.WiseConsumer;
 import kiss.WiseTriFunction;
