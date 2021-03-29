@@ -14,10 +14,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
-/**
- * @version 2018/08/29 11:41:15
- */
+@DisabledOnOs(OS.LINUX)
 public abstract class JavaFXTester {
 
     private static boolean started = false;
