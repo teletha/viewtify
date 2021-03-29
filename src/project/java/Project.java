@@ -10,7 +10,7 @@
 public class Project extends bee.api.Project {
 
     {
-        product("com.github.teletha", "viewtify", "2.0.0");
+        product("com.github.teletha", "viewtify", ref("version.txt"));
 
         require("com.github.teletha", "altfx");
         require("com.github.teletha", "sinobu");
