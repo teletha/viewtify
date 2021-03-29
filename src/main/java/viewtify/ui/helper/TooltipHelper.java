@@ -12,14 +12,15 @@ package viewtify.ui.helper;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import org.controlsfx.control.PopOver;
-
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
+
+import org.controlsfx.control.PopOver;
+
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
@@ -99,7 +100,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
     default Self popup(Supplier<UserInterfaceProvider<Node>> builder) {
         if (builder != null) {
             UserActionHelper.of(ui()).when(User.LeftClick, () -> {
-                PopOver p = ReferenceHolder.popover;
+                PopOver p = ReferenceHolder.popover();
 
                 if (p.isShowing()) {
                     p.hide();
