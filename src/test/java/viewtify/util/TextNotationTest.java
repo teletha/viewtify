@@ -16,12 +16,12 @@ import javafx.scene.control.Label;
 import javafx.scene.text.TextFlow;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import viewtify.JavaFXTester;
 
-/**
- * @version 2018/08/30 2:12:43
- */
+@DisabledOnOs(OS.LINUX)
 class TextNotationTest extends JavaFXTester {
 
     @Test

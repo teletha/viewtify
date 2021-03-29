@@ -9,16 +9,17 @@
  */
 package viewtify.ui;
 
-import org.junit.jupiter.api.Test;
-
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
+
 import viewtify.JavaFXTester;
 
-/**
- * @version 2018/08/29 11:25:48
- */
+@DisabledOnOs(OS.LINUX)
 class UIDeclarationTest extends JavaFXTester {
 
     private UILabel label = new UILabel(null);
