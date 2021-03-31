@@ -80,7 +80,7 @@ public final class User<E extends Event> {
     /**
      * Helper method to create {@link User} action for key input.
      * 
-     * @param button A target mouse button.
+     * @param key A target mouse button.
      * @return A user action.
      */
     public static final User<KeyEvent> input(Key key) {

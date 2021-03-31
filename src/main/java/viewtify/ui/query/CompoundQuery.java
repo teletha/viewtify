@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -68,7 +67,6 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     /**
      * Add String based {@link Query}.
      * 
-     * @param <V>
      * @param name The human-readable description.
      */
     public Query<M, String> addQuery(String name) {
@@ -78,7 +76,6 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     /**
      * Add String based {@link Query}.
      * 
-     * @param <V>
      * @param name The human-readable description.
      */
     public Query<M, String> addQuery(Variable<String> name) {
@@ -88,7 +85,6 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
     /**
      * Add String based {@link Query}.
      * 
-     * @param <V>
      * @param name The human-readable description.
      */
     public Query<M, String> addQuery(Property<String> name) {
@@ -101,7 +97,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * @param <V>
      * @param name The human-readable description.
      * @param type A value type.
-     * @param extractor An actual value {@link Extractor}.
+     * @param extractor An actual value extractor.
      */
     public <V> Query<M, V> addQuery(String name, Class<V> type, Function<M, V> extractor) {
         return addQuery(new SimpleStringProperty(name), type, extractor);
@@ -113,7 +109,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * @param <V>
      * @param name The human-readable description.
      * @param type A value type.
-     * @param extractor An actual value {@link Extractor}.
+     * @param extractor An actual value extractor.
      */
     public <V> Query<M, V> addQuery(Variable<String> name, Class<V> type, Function<M, V> extractor) {
         return addQuery(Viewtify.property(name), type, extractor);
@@ -125,7 +121,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * @param <V>
      * @param name The human-readable description.
      * @param type A value type.
-     * @param extractor An actual value {@link Extractor}.
+     * @param extractor An actual value extractor.
      */
     public <V> Query<M, V> addQuery(Property<String> name, Class<V> type, Function<M, V> extractor) {
         Query<M, V> query = new Query<>(name, type, extractor);
@@ -141,7 +137,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * @param <V>
      * @param name The human-readable description.
      * @param type A value type.
-     * @param extractor An actual value {@link Extractor}.
+     * @param extractor An actual value extractor.
      */
     public <V> Query<M, V> addObservableQuery(String name, Class<V> type, Function<M, ObservableValue<V>> extractor) {
         return addObservableQuery(new SimpleStringProperty(name), type, extractor);
@@ -153,7 +149,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * @param <V>
      * @param name The human-readable description.
      * @param type A value type.
-     * @param extractor An actual value {@link Extractor}.
+     * @param extractor An actual value extractor.
      */
     public <V> Query<M, V> addObservableQuery(Variable<String> name, Class<V> type, Function<M, ObservableValue<V>> extractor) {
         return addObservableQuery(Viewtify.property(name), type, extractor);
@@ -165,7 +161,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
      * @param <V>
      * @param name The human-readable description.
      * @param type A value type.
-     * @param extractor An actual value {@link Extractor}.
+     * @param extractor An actual value extractor.
      */
     public <V> Query<M, V> addObservableQuery(Property<String> name, Class<V> type, Function<M, ObservableValue<V>> extractor) {
         return addQuery(name, type, m -> extractor.apply(m).getValue());
@@ -263,7 +259,6 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         /**
          * Builtin filters.
          * 
-         * @param <V>
          * @param description
          * @param type
          * @param condition
@@ -275,7 +270,6 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         /**
          * Builtin filters.
          * 
-         * @param <V>
          * @param description
          * @param type
          * @param condition
@@ -431,7 +425,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         /** The value type. */
         public final Class<V> type;
 
-        /** The associated {@link Extractor}. */
+        /** The associated extractor. */
         public final Function<M, V> extractor;
 
         /** The current input value. */

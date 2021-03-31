@@ -15,7 +15,6 @@ import java.util.function.Predicate;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ObservableValue;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -47,7 +46,6 @@ public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAcces
      * Show itself when the specified condition is True, and hide it when False.
      * 
      * @param condition A timing condition.
-     * @param conditions Additional timing conditions.
      * @return Chainable API.
      */
     default <V> Self visibleWhen(ValueHelper<?, V> context, Predicate<V> condition) {
@@ -158,7 +156,6 @@ public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAcces
      * Hide itself when the specified condition is True, and show it when False.
      * 
      * @param condition A timing condition.
-     * @param conditions Additional timing conditions.
      * @return Chainable API.
      */
     default <V> Self invisibleWhen(ValueHelper<?, V> context, Predicate<V> condition) {

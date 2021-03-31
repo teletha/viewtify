@@ -128,7 +128,7 @@ public class UITableColumn<RowV, ColumnV>
     /**
      * Add value provider.
      * 
-     * @param provider
+     * @param mapper
      * @return
      */
     public UITableColumn<RowV, ColumnV> modelBySignal(WiseFunction<RowV, Signal<ColumnV>> mapper) {

@@ -15,7 +15,6 @@ import java.util.Objects;
 
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
-
 import kiss.Managed;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterface;
@@ -147,16 +146,13 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
     }
 
     /**
-     * Split this area by {@param orientation}.
-     * <p/>
-     * Either the parameter {@param first} or {@param second} must be this area. Otherwise a
+     * Split this area by orientation. Either the parameter must be this area. Otherwise a
      * {@link IllegalArgumentException} is thrown.
      *
      * @param first The first element.
      * @param second The second element.
      * @param orientation The split orientation.
-     * @throws IllegalArgumentException In case of both params {@param first} and {@param second}
-     *             are this or none of them.
+     * @throws IllegalArgumentException In case of both params are this or none of them.
      */
     private void split(ViewArea first, ViewArea second, Orientation orientation) {
         SplitArea area = new SplitArea();
@@ -167,7 +163,7 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
     }
 
     /**
-     * Replace the {@param oldArea} with the {@param newArea}.
+     * Replace the oldArea with the newArea.
      *
      * @param oldArea The old area.
      * @param newArea The new area.

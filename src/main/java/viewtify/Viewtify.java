@@ -34,6 +34,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -60,9 +62,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -378,20 +377,18 @@ public final class Viewtify {
             // create application specified directory for lock
             Directory root = Locator.directory(prefs + "/lock").touch();
 
-            root.lock()
-                    .retryWhen(NullPointerException.class, e -> e.effect(() -> {
-                        // another application is activated
-                        if (policy == ActivationPolicy.Earliest) {
-                            // make the window active
-                            root.file("active").touch();
+            root.lock().retryWhen(NullPointerException.class, e -> e.effect(() -> {
+                // another application is activated
+                if (policy == ActivationPolicy.Earliest) {
+                    // make the window active
+                    root.file("active").touch();
 
-                            throw new Error("Application is running already.");
-                        } else {
-                            // close the window
-                            root.file("close").touch();
-                        }
-                    }).wait(500, TimeUnit.MILLISECONDS).take(50))
-                    .to();
+                    throw new Error("Application is running already.");
+                } else {
+                    // close the window
+                    root.file("close").touch();
+                }
+            }).wait(500, TimeUnit.MILLISECONDS).take(50)).to();
 
             // observe lock directory for next application
             root.observe().map(WatchEvent::context).to(path -> {
@@ -675,7 +672,7 @@ public final class Viewtify {
     /**
      * Signal value changing.
      * 
-     * @param values
+     * @param value
      * @return
      */
     public static Signal<Integer> observe(IntegerExpression value) {
@@ -685,7 +682,7 @@ public final class Viewtify {
     /**
      * Signal value changing.
      * 
-     * @param values
+     * @param value
      * @return
      */
     public static Signal<Long> observe(LongExpression value) {
@@ -695,7 +692,7 @@ public final class Viewtify {
     /**
      * Signal value changing.
      * 
-     * @param values
+     * @param value
      * @return
      */
     public static Signal<Float> observe(FloatExpression value) {
@@ -705,7 +702,7 @@ public final class Viewtify {
     /**
      * Signal value changing.
      * 
-     * @param values
+     * @param value
      * @return
      */
     public static Signal<Double> observe(DoubleExpression value) {
@@ -715,7 +712,7 @@ public final class Viewtify {
     /**
      * Signal value changing.
      * 
-     * @param values
+     * @param value
      * @return
      */
     public static <T> Signal<T> observe(ObservableValue<T> value) {
@@ -824,7 +821,7 @@ public final class Viewtify {
     /**
      * Signal value changing.
      * 
-     * @param values
+     * @param value
      * @return
      */
     public static Signal<Integer> observing(IntegerExpression value) {
@@ -834,7 +831,7 @@ public final class Viewtify {
     /**
      * Signal value changing.
      * 
-     * @param values
+     * @param value
      * @return
      */
     public static Signal<Long> observing(LongExpression value) {
@@ -844,7 +841,7 @@ public final class Viewtify {
     /**
      * Signal value changing.
      * 
-     * @param values
+     * @param value
      * @return
      */
     public static Signal<Float> observing(FloatExpression value) {
@@ -854,7 +851,7 @@ public final class Viewtify {
     /**
      * Signal value changing.
      * 
-     * @param values
+     * @param value
      * @return
      */
     public static Signal<Double> observing(DoubleExpression value) {
@@ -864,7 +861,7 @@ public final class Viewtify {
     /**
      * Signal value changing.
      * 
-     * @param values
+     * @param value
      * @return
      */
     public static <T> Signal<T> observing(ObservableValue<T> value) {
@@ -874,7 +871,7 @@ public final class Viewtify {
     /**
      * Observe set change evnet.
      * 
-     * @param map A set to observe its modification.
+     * @param set A set to observe its modification.
      * @return A modification event stream.
      */
     public static <E> Signal<SetChangeListener.Change<? extends E>> observeChange(ObservableSet<E> set) {

@@ -15,7 +15,6 @@ import java.util.function.Predicate;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ObservableValue;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -56,7 +55,6 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * Disables itself when the specified condition is True, and enables it when False.
      * 
      * @param condition A timing condition.
-     * @param conditions Additional timing conditions.
      * @return Chainable API.
      */
     default <V> Self disableWhen(ValueHelper<?, V> context, Predicate<V> condition) {
@@ -190,7 +188,6 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * Enables itself when the specified condition is True, and enables it when False.
      * 
      * @param condition A timing condition.
-     * @param conditions Additional timing conditions.
      * @return Chainable API.
      */
     default <V> Self enableWhen(ValueHelper<?, V> context, Predicate<V> condition) {

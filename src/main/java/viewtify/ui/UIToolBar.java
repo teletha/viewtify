@@ -11,13 +11,11 @@ package viewtify.ui;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.ToolBar;
-
 import viewtify.ui.helper.ContextMenuHelper;
 
 public class UIToolBar extends UserInterface<UIToolBar, ToolBar> implements ContextMenuHelper<UIToolBar> {
 
     /**
-     * @param ui
      * @param view
      */
     public UIToolBar(View view) {

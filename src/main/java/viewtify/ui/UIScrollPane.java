@@ -21,7 +21,6 @@ import javafx.util.Duration;
 public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
 
     /**
-     * @param ui
      * @param view
      */
     public UIScrollPane(View view) {

@@ -110,7 +110,7 @@ public class Actions {
     /**
      * Creates an action that changes the value when a scroll event occurs.
      * 
-     * @return step Difference value when increasing or decreasing the value.
+     * @param step Difference value when increasing or decreasing the value.
      * @return New action.
      */
     public static <X extends ValueHelper<X, Integer>> WiseBiConsumer<ScrollEvent, X> traverseInt(int step) {
@@ -120,7 +120,7 @@ public class Actions {
     /**
      * Creates an action that changes the value when a scroll event occurs.
      * 
-     * @return step Difference value when increasing or decreasing the value.
+     * @param step Difference value when increasing or decreasing the value.
      * @return New action.
      */
     public static <X extends ValueHelper<X, Integer>> WiseBiConsumer<ScrollEvent, X> traverseInt(Supplier<Integer> step) {
@@ -139,7 +139,7 @@ public class Actions {
     /**
      * Creates an action that changes the value when a scroll event occurs.
      * 
-     * @return step Difference value when increasing or decreasing the value.
+     * @param step Difference value when increasing or decreasing the value.
      * @return New action.
      */
     public static <X extends ValueHelper<X, Double>> WiseBiConsumer<ScrollEvent, X> traverseDouble(double step) {
@@ -149,7 +149,7 @@ public class Actions {
     /**
      * Creates an action that changes the value when a scroll event occurs.
      * 
-     * @return step Difference value when increasing or decreasing the value.
+     * @param step Difference value when increasing or decreasing the value.
      * @return New action.
      */
     public static <X extends ValueHelper<X, Double>> WiseBiConsumer<ScrollEvent, X> traverseDouble(Supplier<Double> step) {

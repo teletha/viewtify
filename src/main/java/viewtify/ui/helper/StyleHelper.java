@@ -14,7 +14,6 @@ import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -43,7 +42,7 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     /**
      * Assign style class name to user interface.
      * 
-     * @param className A list of class names to assign.
+     * @param classNames A list of class names to assign.
      * @return Chainable API.
      */
     default Self style(String... classNames) {
@@ -84,7 +83,7 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     /**
      * Apply {@link Style} to user interface;
      * 
-     * @param styles A list of {@link Style}s to apply.
+     * @param style A list of {@link Style}s to apply.
      * @return Chainable API.
      */
     default Self styleOnly(Style style) {
@@ -113,7 +112,7 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     /**
      * Apply {@link Style} to user interface;
      * 
-     * @param styles A list of {@link Style}s to apply.
+     * @param style A {@link Style} to apply.
      * @return Chainable API.
      */
     default Self styleOnly(ObservableValue<Style> style) {
@@ -124,7 +123,7 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     /**
      * Apply {@link Style} to user interface;
      * 
-     * @param styles A list of {@link Style}s to apply.
+     * @param style A {@link Style} to apply.
      * @return Chainable API.
      */
     default Self styleOnly(Variable<Style> style) {
@@ -134,7 +133,7 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     /**
      * Apply {@link Style} to user interface;
      * 
-     * @param styles A list of {@link Style}s to apply.
+     * @param style A {@link Style} to apply.
      * @return Chainable API.
      */
     default Self styleOnly(Signal<Style> style) {
@@ -162,7 +161,6 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
 
     /**
      * Apply {@link Style} to user interface;
-     * 
      * 
      * @param timing Apply timing.
      * @param styles A list of {@link Style}s to apply.

@@ -120,7 +120,7 @@ public final class DockSystem {
      * <p/>
      * The Position will give an advice where this view should be placed.
      *
-     * @param view The view to register.
+     * @param id The view to register.
      */
     public static UITab register(String id) {
         return register(id, o -> o);
@@ -131,7 +131,7 @@ public final class DockSystem {
      * <p/>
      * The Position will give an advice where this view should be placed.
      *
-     * @param view The view to register.
+     * @param id The view to register.
      */
     public static UITab register(String id, UnaryOperator<DockRecommendedLocation> option) {
         if (id == null || id.isEmpty()) {

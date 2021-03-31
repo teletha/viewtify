@@ -11,17 +11,15 @@ package viewtify.ui;
 
 import java.time.Duration;
 
-import javafx.geometry.Side;
-import javafx.scene.Node;
-
 import org.controlsfx.control.HiddenSidesPane;
 
+import javafx.geometry.Side;
+import javafx.scene.Node;
 import viewtify.ui.helper.ContextMenuHelper;
 
 public class UISlidePane extends UserInterface<UISlidePane, HiddenSidesPane> implements ContextMenuHelper<UISlidePane> {
 
     /**
-     * @param ui
      * @param view
      */
     public UISlidePane(View view) {
@@ -72,7 +70,7 @@ public class UISlidePane extends UserInterface<UISlidePane, HiddenSidesPane> imp
     /**
      * Set the value of the trigger distance property. <br>
      * Setting the property to zero or a negative value will disable this functionality, so a hidden
-     * side can only be made visible with {@link #setPinnedSide(Side)}.
+     * side can only be made visible with {@link HiddenSidesPane#setPinnedSide(Side)}.
      * 
      * @param distance the new value for the trigger distance property
      */

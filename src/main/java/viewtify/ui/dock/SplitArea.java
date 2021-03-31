@@ -19,7 +19,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane.Divider;
-
 import viewtify.ui.UISplitPane;
 
 class SplitArea extends ViewArea<UISplitPane> {
@@ -75,7 +74,7 @@ class SplitArea extends ViewArea<UISplitPane> {
     }
 
     /**
-     * {@inheritDoc}
+     * @param orientation
      */
     void setOrientation(Orientation orientation) {
         node.ui.setOrientation(orientation);

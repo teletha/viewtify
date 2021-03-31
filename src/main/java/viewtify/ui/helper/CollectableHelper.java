@@ -153,7 +153,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * Initialize with the specified value. This value is automatically saved whenever it is
      * changed, and is restored the next time it is initialized.
      * 
-     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @param initialItems The initial value is mandatory, null values are not accepted.
      * @return Chainable API.
      */
     default Self initialize(E... initialItems) {
@@ -164,7 +164,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * Initialize with the specified value. This value is automatically saved whenever it is
      * changed, and is restored the next time it is initialized.
      * 
-     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @param initialItems The initial value is mandatory, null values are not accepted.
      * @return Chainable API.
      */
     default Self initialize(Signal<E> initialItems) {
@@ -175,7 +175,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * Initialize with the specified value. This value is automatically saved whenever it is
      * changed, and is restored the next time it is initialized.
      * 
-     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @param initialItems The initial value is mandatory, null values are not accepted.
      * @return Chainable API.
      */
     default Self initialize(BaseStream<E, ?> initialItems) {
@@ -186,7 +186,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * Initialize with the specified value. This value is automatically saved whenever it is
      * changed, and is restored the next time it is initialized.
      * 
-     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @param initialItems The initial value is mandatory, null values are not accepted.
      * @return Chainable API.
      */
     default Self initialize(Iterable<E> initialItems) {
@@ -197,7 +197,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * Initialize with the specified value. This value is automatically saved whenever it is
      * changed, and is restored the next time it is initialized.
      * 
-     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @param initialItems The initial value is mandatory, null values are not accepted.
      * @return Chainable API.
      */
     default Self initialize(List<E> initialItems) {
@@ -209,7 +209,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * changed, and is restored the next time it is initialized.
      * 
      * @param defaultValue A default value.
-     * @param initialValue The initial value is mandatory, null values are not accepted.
+     * @param initialItems The initial value is mandatory, null values are not accepted.
      * @return Chainable API.
      */
     default Self initialize(E defaultValue, List<E> initialItems) {

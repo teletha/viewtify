@@ -10,13 +10,11 @@
 package viewtify.ui;
 
 import javafx.scene.layout.HBox;
-
 import viewtify.ui.helper.ContextMenuHelper;
 
 public class UIHBox extends UserInterface<UIHBox, HBox> implements ContextMenuHelper<UIHBox> {
 
     /**
-     * @param ui
      * @param view
      */
     public UIHBox(View view) {

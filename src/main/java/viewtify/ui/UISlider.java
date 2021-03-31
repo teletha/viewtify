@@ -11,13 +11,11 @@ package viewtify.ui;
 
 import javafx.beans.property.Property;
 import javafx.scene.control.Slider;
-
 import viewtify.ui.helper.ValueHelper;
 
 public class UISlider extends UserInterface<UISlider, Slider> implements ValueHelper<UISlider, Double> {
 
     /**
-     * @param ui
      * @param view
      */
     public UISlider(View view) {

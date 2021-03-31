@@ -9,7 +9,7 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.*;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -150,7 +150,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
      * focus forward and {@code SHIFT+TAB} for moving focus backward. When a {@code Scene} is
      * created, the system gives focus to a {@code Node} whose {@code focusTraversable} variable is
      * true and that is eligible to receive the focus, unless the focus had been set explicitly via
-     * a call to {@link #requestFocus()}.
+     * a call to {@link Node#requestFocus()}.
      *
      * @defaultValue false
      * @param enable

@@ -19,7 +19,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.DnDAssistant;
 import viewtify.ui.helper.EditableHelper;
@@ -83,7 +82,8 @@ public class UIDatePicker extends UserInterface<UIDatePicker, DatePicker>
     }
 
     /**
-     * See {@link #initial(LocalDate)}.
+     * @param initialValue
+     * @return
      */
     public final UIDatePicker initial(ZonedDateTime initialValue) {
         return initialize(initialValue.toLocalDate());

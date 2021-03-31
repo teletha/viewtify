@@ -121,7 +121,7 @@ public interface VerifyHelper<Self extends VerifyHelper<Self>> {
      * Register with the timing of the verification. The verification results can be obtained by
      * using {@link #isValid()} or {@link #isInvalid()}.
      * 
-     * @param timing Timing of verification.
+     * @param timings Timing of verification.
      * @return Chainable API.
      */
     default Self verifyWhen(Signal<?>... timings) {
@@ -134,7 +134,7 @@ public interface VerifyHelper<Self extends VerifyHelper<Self>> {
      * Register with the timing of the verification. The verification results can be obtained by
      * using {@link #isValid()} or {@link #isInvalid()}.
      * 
-     * @param timing Timing of verification.
+     * @param timings Timing of verification.
      * @return Chainable API.
      */
     default Self verifyWhenChanging(ValueHelper... timings) {

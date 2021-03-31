@@ -21,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.util.Duration;
-
 import kiss.Disposable;
 import kiss.I;
 import stylist.Style;
@@ -48,8 +47,6 @@ public class Toast {
 
     /**
      * Show the specified node.
-     * 
-     * @param node
      */
     public static void show(String message) {
         Label label = new Label(message);

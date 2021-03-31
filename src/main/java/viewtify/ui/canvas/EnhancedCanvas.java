@@ -20,7 +20,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
 import kiss.Signal;
 import viewtify.Viewtify;
 import viewtify.ui.helper.StyleHelper;
@@ -100,7 +99,6 @@ public class EnhancedCanvas extends Canvas implements StyleHelper<EnhancedCanvas
      * Set the width and height of this canvas.
      * 
      * @param width A width to set.
-     * @param height A height to set.
      * @return Chainable API.
      */
     public EnhancedCanvas width(double width) {
@@ -111,7 +109,6 @@ public class EnhancedCanvas extends Canvas implements StyleHelper<EnhancedCanvas
     /**
      * Set the width and height of this canvas.
      * 
-     * @param width A width to set.
      * @param height A height to set.
      * @return Chainable API.
      */

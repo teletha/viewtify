@@ -15,16 +15,15 @@ import java.text.Normalizer.Form;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
+
+import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
-
-import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -45,8 +44,6 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
 
     /**
      * Enchanced view.
-     * 
-     * @param ui
      */
     public UIText(View view, Class type) {
         super(new VerifiableTextField(), view);
@@ -271,7 +268,6 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
          * Specify the character types that can be entered as regular expressions.
          * 
          * @param regex
-         * @return
          */
         private void acceptInput(String regex) {
             acceptable = regex == null || regex.isBlank() ? null : Pattern.compile(regex);
