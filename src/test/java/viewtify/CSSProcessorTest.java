@@ -15,7 +15,6 @@ import stylist.Style;
 import stylist.StyleDSL;
 import stylist.StyleRule;
 import stylist.value.Color;
-import viewtify.CSSProcessor;
 
 /**
  * @version 2018/09/24 7:46:41
@@ -173,7 +172,7 @@ class CSSProcessorTest implements StyleDSL {
     @Test
     void visibility() {
         StyleRule style = writeStyle(() -> {
-            visibility.hidden();
+            display.visibility.hidden();
         });
         assert style.properties.is("visibility", "hidden");
     }
