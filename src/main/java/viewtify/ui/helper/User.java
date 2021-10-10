@@ -22,6 +22,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+
 import kiss.I;
 import kiss.Signal;
 import viewtify.Key;
@@ -74,7 +75,7 @@ public final class User<E extends Event> {
      * @return
      */
     private static Predicate<MouseEvent> valid(MouseButton button) {
-        return button == null || button == MouseButton.NONE ? I.accept() : e -> e.getButton() == button;
+        return button == null || button == MouseButton.NONE ? I::accept : e -> e.getButton() == button;
     }
 
     /**
@@ -94,7 +95,7 @@ public final class User<E extends Event> {
      * @return
      */
     private static Predicate<KeyEvent> valid(Key key) {
-        return key == null ? I.accept() : key::match;
+        return key == null ? I::accept : key::match;
     }
 
     /** User Action */
