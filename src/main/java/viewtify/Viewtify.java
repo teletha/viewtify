@@ -379,7 +379,7 @@ public final class Viewtify {
             // create application specified directory for lock
             Directory root = Locator.directory(prefs + "/lock").touch();
 
-            root.lock().retryWhen(e -> e.as(NullPointerException.class).effect(() -> {
+            root.lock().retry(e -> e.as(NullPointerException.class).effect(() -> {
                 // another application is activated
                 if (policy == ActivationPolicy.Earliest) {
                     // make the window active
