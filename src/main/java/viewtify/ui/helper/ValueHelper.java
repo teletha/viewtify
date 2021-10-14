@@ -18,7 +18,6 @@ import java.util.function.Predicate;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -841,7 +840,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self observe(WiseBiConsumer<V, V> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observe().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
+            Disposable stop = observe().pair(value()).to(v -> listener.accept(v.get(0), v.get(1)));
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
@@ -952,7 +951,7 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      */
     default Self observing(WiseBiConsumer<V, V> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observe().maps(value(), (p, v) -> I.pair(p, v)).to(v -> listener.accept(v.ⅰ, v.ⅱ));
+            Disposable stop = observe().pair(value()).to(v -> listener.accept(v.get(0), v.get(1)));
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
