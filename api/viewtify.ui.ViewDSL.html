@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<script async="true" src="highlight.js"></script>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="R">
+		<header class="Y">
+			<h1 class="i" date="2021-12-08" ver="2.0.0"><code>Viewtify</code></h1>
+			<nav class="T"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="g" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="P">
+			<nav class="k">
+				<div></div>
+			</nav>
+			<article class="J" id="Article">
+				<section class="N"><code class="L">viewtify.ui</code>
+					<h2 class="Class a"><code class="h">ViewDSL</code></h2>
+					<ul class="C E">
+						<li><code>kiss.Tree<code class="parameters"><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code>, <code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code></li>
+					</ul>
+					<ul class="C F">
+						<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
+					</ul><span class="B">Domain specific language for user interface declaration.</span></section>
+				<section class="N" id="hbox">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED STATIC"></i></i><code class="h">hbox</code><i class="W"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></i></h2><span class="B">The horizontal box.</span></section>
+				<section class="N" id="vbox">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED STATIC"></i></i><code class="h">vbox</code><i class="W"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></i></h2><span class="B">The vertical box.</span></section>
+				<section class="N" id="sbox">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED STATIC"></i></i><code class="h">sbox</code><i class="W"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></i></h2><span class="B">The stack box.</span></section>
+				<section class="N" id="ViewDSL()">
+					<h2 class="j"><i class="PROTECTED"></i><code class="h">ViewDSL</code><code class="Z">()</code></h2>
+				</section>
+				<section class="N" id="ui()">
+					<h2 class="j"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code class="h">ui</code><code class="Z">()</code><i class="W"><code><a href="api/javafx.scene.Node.html">Node</a></code></i></h2>
+					<table class="K">
+						<tr class="b">
+							<td><code><a href="api/javafx.scene.Node.html">Node</a></code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="N" id="ui(javafx.scene.Node)">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">ui</code><code class="Z">(<code><a href="api/javafx.scene.Node.html">Node</a></code> <code class="parameterName">node</code>)</code><i class="W"><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="api/javafx.scene.Node.html">Node</a></code> <code>node</code></td>
+							<td><span>A node to convert.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Convert <code><a href="api/javafx.scene.Node.html">Node</a></code> to <code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code>.</span></section>
+				<section class="N" id="$(kiss.Variable,java.util.function.Consumer...)">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">$</code><code class="Z">(<code>kiss.Variable<code class="parameters"><code>?</code><code class="extends"><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></code></code></code> <code class="parameterName">provider</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code class="parameterName">containerAttributes</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>kiss.Variable<code class="parameters"><code>?</code><code class="extends"><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></code></code></code> <code>provider</code></td>
+							<td><span>A child UI provider.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code>containerAttributes</code></td>
+							<td><span>Attributes for container UI.</span></td>
+						</tr>
+					</table><span class="B">Declare the dynamic child <code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code>.</span></section>
+				<section class="N" id="$(viewtify.ui.UserInterfaceProvider,javafx.collections.ObservableList,java.util.function.Consumer...)">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">$</code><code class="Z">(<code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>javafx.scene.layout.Pane</code></code></code> <code class="parameterName">container</code>, <code>javafx.collections.ObservableList<code class="parameters"><code>?</code><code class="extends"><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></code></code></code></code> <code class="parameterName">providers</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code class="parameterName">containerAttributes</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>javafx.scene.layout.Pane</code></code></code> <code>container</code></td>
+							<td><span>A container UI provider.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>javafx.collections.ObservableList<code class="parameters"><code>?</code><code class="extends"><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></code></code></code></code> <code>providers</code></td>
+							<td><span>A children UI provider.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code>containerAttributes</code></td>
+							<td><span>Attributes for container UI.</span></td>
+						</tr>
+					</table><span class="B">Declare the dynamic children <code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code>s.</span></section>
+				<section class="N" id="label(java.lang.Object,java.util.function.Consumer...)">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">label</code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">text</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code class="parameterName">followers</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code>text</code></td>
+							<td><span>A label text.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code>followers</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Declare the <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/Label.html">Label</a></code>.</span></section>
+				<section class="N" id="label(kiss.Variable,java.util.function.Consumer...)">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">label</code><code class="Z">(<code>kiss.Variable</code> <code class="parameterName">text</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code class="parameterName">followers</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>kiss.Variable</code> <code>text</code></td>
+							<td><span>A label text.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code>followers</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Declare the <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/Label.html">Label</a></code>.</span></section>
+				<section class="N" id="form(java.lang.String,viewtify.ui.UserInterface...)">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">form</code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">label</code>, <code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code class="parameterName">userInterfaces</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code>label</code></td>
+							<td><span>A form label.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code>userInterfaces</code></td>
+							<td><span>A list of form controls.</span></td>
+						</tr>
+					</table><span class="B">Declare Form UI simply.</span></section>
+				<section class="N" id="form(java.lang.String,stylist.Style,viewtify.ui.UserInterface...)">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">form</code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">label</code>, <code>stylist.Style</code> <code class="parameterName">style</code>, <code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code class="parameterName">userInterfaces</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code>label</code></td>
+							<td><span>A form label.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>stylist.Style</code> <code>style</code></td>
+							<td><span>Additional style for controls.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code>userInterfaces</code></td>
+							<td><span>A list of form controls.</span></td>
+						</tr>
+					</table><span class="B">Declare Form UI simply.</span></section>
+				<section class="N" id="form(kiss.Variable,viewtify.ui.UserInterface...)">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">form</code><code class="Z">(<code>kiss.Variable</code> <code class="parameterName">label</code>, <code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code class="parameterName">userInterfaces</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>kiss.Variable</code> <code>label</code></td>
+							<td><span>A form label.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code>userInterfaces</code></td>
+							<td><span>A list of form controls.</span></td>
+						</tr>
+					</table><span class="B">Declare Form UI simply.</span></section>
+				<section class="N" id="form(kiss.Variable,stylist.Style,viewtify.ui.UserInterface...)">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">form</code><code class="Z">(<code>kiss.Variable</code> <code class="parameterName">label</code>, <code>stylist.Style</code> <code class="parameterName">style</code>, <code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code class="parameterName">userInterfaces</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>kiss.Variable</code> <code>label</code></td>
+							<td><span>A form label.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>stylist.Style</code> <code>style</code></td>
+							<td><span>Additional style for controls.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code>userInterfaces</code></td>
+							<td><span>A list of form controls.</span></td>
+						</tr>
+					</table><span class="B">Declare Form UI simply.</span></section>
+				<section class="N" id="form(stylist.Style,viewtify.ui.UserInterface...)">
+					<h2 class="j"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">form</code><code class="Z">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code class="parameterName">userInterfaces</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>stylist.Style</code> <code>style</code></td>
+							<td><span>Additional style for controls.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code>userInterfaces</code></td>
+							<td><span>A list of form controls.</span></td>
+						</tr>
+					</table><span class="B">Declare Form UI simply.</span></section>
+			</article>
+			<aside class="V" id="SubNavi">
+				<div class="f">
+					<h5 class="Q">Constructors</h5>
+					<ul>
+						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.ViewDSL.html#ViewDSL()">ViewDSL</a></code><code class="Z">()</code></li>
+					</ul>
+					<h5 class="Q">Static Fields</h5>
+					<ul>
+						<li><i class="FINAL"><i class="PROTECTED STATIC"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#hbox">hbox</a></code><i class="U"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED STATIC"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#vbox">vbox</a></code><i class="U"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED STATIC"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#sbox">sbox</a></code><i class="U"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></i></li>
+					</ul>
+					<h5 class="Q">Methods</h5>
+					<ul>
+						<li><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#ui()">ui</a></code><code class="Z">()</code><i class="U"><code><a href="api/javafx.scene.Node.html">Node</a></code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#ui(javafx.scene.Node)">ui</a></code><code class="Z">(<code><a href="api/javafx.scene.Node.html">Node</a></code> <code class="parameterName">node</code>)</code><i class="U"><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#$(kiss.Variable,java.util.function.Consumer...)">$</a></code><code class="Z">(<code>kiss.Variable<code class="parameters"><code>?</code><code class="extends"><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></code></code></code> <code class="parameterName">provider</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code class="parameterName">containerAttributes</code>)</code><i class="U"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#$(viewtify.ui.UserInterfaceProvider,javafx.collections.ObservableList,java.util.function.Consumer...)">$</a></code><code class="Z">(<code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>javafx.scene.layout.Pane</code></code></code> <code class="parameterName">container</code>, <code>javafx.collections.ObservableList<code class="parameters"><code>?</code><code class="extends"><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></code></code></code></code> <code class="parameterName">providers</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code class="parameterName">containerAttributes</code>)</code><i class="U"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#label(java.lang.Object,java.util.function.Consumer...)">label</a></code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">text</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code class="parameterName">followers</code>)</code><i class="U"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#label(kiss.Variable,java.util.function.Consumer...)">label</a></code><code class="Z">(<code>kiss.Variable</code> <code class="parameterName">text</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.ViewDSL.UINode.html">UINode</a></code></code></code> <code class="parameterName">followers</code>)</code><i class="U"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#form(java.lang.String,viewtify.ui.UserInterface...)">form</a></code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">label</code>, <code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code class="parameterName">userInterfaces</code>)</code><i class="U"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#form(java.lang.String,stylist.Style,viewtify.ui.UserInterface...)">form</a></code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">label</code>, <code>stylist.Style</code> <code class="parameterName">style</code>, <code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code class="parameterName">userInterfaces</code>)</code><i class="U"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#form(kiss.Variable,viewtify.ui.UserInterface...)">form</a></code><code class="Z">(<code>kiss.Variable</code> <code class="parameterName">label</code>, <code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code class="parameterName">userInterfaces</code>)</code><i class="U"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#form(kiss.Variable,stylist.Style,viewtify.ui.UserInterface...)">form</a></code><code class="Z">(<code>kiss.Variable</code> <code class="parameterName">label</code>, <code>stylist.Style</code> <code class="parameterName">style</code>, <code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code class="parameterName">userInterfaces</code>)</code><i class="U"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewDSL.html#form(stylist.Style,viewtify.ui.UserInterface...)">form</a></code><code class="Z">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code array="var"><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code> <code class="parameterName">userInterfaces</code>)</code><i class="U"><code>void</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<script async="true" src="highlight.js"></script>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="R">
+		<header class="Y">
+			<h1 class="i" date="2021-12-08" ver="2.0.0"><code>Viewtify</code></h1>
+			<nav class="T"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="g" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="P">
+			<nav class="k">
+				<div></div>
+			</nav>
+			<article class="J" id="Article">
+				<section class="N"><code class="L">viewtify.ui</code>
+					<h2 class="AbstractClass a"><code class="h">UITableColumnBase</code><code class="Z">&#60;<code>Column</code>, <code>Self</code>, <code>RowV</code>, <code>ColumnV</code>, <code>Table</code>&#62;</code></h2>
+					<ul class="C D">
+						<li><code>Column</code><code class="extends"><code><a href="api/javafx.scene.control.TableColumnBase.html">TableColumnBase</a></code></code></li>
+						<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.UITableColumnBase.html">UITableColumnBase</a></code></code></li>
+						<li><code>RowV</code></li>
+						<li><code>ColumnV</code></li>
+						<li><code>Table</code><code class="extends"><code><a href="api/viewtify.ui.UITableBase.html">UITableBase</a><code class="parameters"><code>RowV</code>, <code>?</code><code class="extends"><code><a href="api/javafx.scene.control.Control.html">Control</a></code></code>, <code>Table</code></code></code></code></li>
+					</ul>
+					<ul class="C F">
+						<li><code><a href="api/viewtify.ui.helper.LabelHelper.html">LabelHelper</a><code class="parameters"><code>Self</code></code></code></li>
+						<li><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.html">PropertyAccessHelper</a></code></li>
+						<li><code><a href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a><code class="parameters"><code>Self</code>, <code>Column</code></code></code></li>
+						<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>Column</code></code></code></li>
+					</ul>
+					<ul class="C G">
+						<li><code><a href="api/viewtify.ui.UITableColumn.html">UITableColumn</a><code class="parameters"><code>RowV</code>, <code>ColumnV</code></code></code></li>
+						<li><code><a href="api/viewtify.ui.UITreeTableColumn.html">UITreeTableColumn</a><code class="parameters"><code>RowV</code>, <code>ColumnV</code></code></code></li>
+					</ul>
+				</section>
+				<section class="N" id="ui">
+					<h2 class="j"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">ui</code><i class="W"><code class="return">Column</code></i></h2><span class="B">The actual widget.</span></section>
+				<section class="N" id="UITableColumnBase(java.lang.Object,java.lang.Class,java.lang.Class)">
+					<h2 class="j"><i class="PROTECTED"></i><code class="h">UITableColumnBase</code><code class="Z">(<code>Column</code> <code class="parameterName">ui</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>RowV</code></code></code> <code class="parameterName">rowType</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>ColumnV</code></code></code> <code class="parameterName">columnType</code>)</code></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>Column</code> <code>ui</code></td>
+							<td></td>
+						</tr>
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>RowV</code></code></code> <code>rowType</code></td>
+							<td></td>
+						</tr>
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>ColumnV</code></code></code> <code>columnType</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Create table column&#39;s UI.</span></section>
+				<section class="N" id="ui()">
+					<h2 class="j"><i class="OVERRIDE PUBLIC"></i><code class="h">ui</code><code class="Z">()</code><i class="W"><code>Column</code></i></h2>
+					<table class="K">
+						<tr class="b">
+							<td><code>Column</code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="N" id="table()">
+					<h2 class="j"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="h">table</code><code class="Z">()</code><i class="W"><code>Table</code></i></h2>
+					<table class="K">
+						<tr class="b">
+							<td><code>Table</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Get the associated table&#39;s view.</span></section>
+				<section class="N" id="filterable(boolean)">
+					<h2 class="j"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">filterable</code><code class="Z">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="W"><code>Self</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>boolean</code> <code>enable</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Enable the enhanced filtering user-interface.</span></section>
+				<section class="N" id="sortable(boolean)">
+					<h2 class="j"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">sortable</code><code class="Z">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="W"><code>Self</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>boolean</code> <code>enable</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">A boolean property to toggle on and off the &#39;sortability&#39; of this column. When this property
+ is true, this column can be included in sort operations. If this property is false, it will
+ not be included in sort operations, even if it is contained within the sort order list of the
+ underlying UI control (e.g. <code><a href="api/javafx.scene.control.TableView.html#getSortOrder()">TableView#getSortOrder()</a></code> or
+ <code><a href="api/javafx.scene.control.TreeTableView.html#getSortOrder()">TreeTableView#getSortOrder()</a></code>).
+ <p>
+ For example, iIf a TableColumn instance is contained within the TableView sortOrder
+ ObservableList, and its sortable property toggles state, it will force the TableView to
+ perform a sort, as it is likely the view will need updating.</p>
+					</span></section>
+				<section class="N" id="resizable(boolean)">
+					<h2 class="j"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">resizable</code><code class="Z">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="W"><code>Self</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>boolean</code> <code>enable</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Used to indicate whether the width of this column can change. It is up to the resizing policy
+ to enforce this however.</span></section>
+				<section class="N" id="reorderable(boolean)">
+					<h2 class="j"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">reorderable</code><code class="Z">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="W"><code>Self</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>boolean</code> <code>enable</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">A boolean property to toggle on and off the &#39;reorderability&#39; of this column (with drag and
+ drop - reordering by modifying the appropriate <code>columns</code> list is always allowed).
+ When this property is true, this column can be reordered by users simply by dragging and
+ dropping the columns into their desired positions. When this property is false, this ability
+ to drag and drop columns is not available.</span></section>
+				<section class="N" id="operatable(boolean)">
+					<h2 class="j"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">operatable</code><code class="Z">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="W"><code>Self</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>boolean</code> <code>enable</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+			</article>
+			<aside class="V" id="SubNavi">
+				<div class="f">
+					<h5 class="Q">Constructors</h5>
+					<ul>
+						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.UITableColumnBase.html#UITableColumnBase(java.lang.Object,java.lang.Class,java.lang.Class)">UITableColumnBase</a></code><code class="Z">(<code>Column</code> <code class="parameterName">ui</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>RowV</code></code></code> <code class="parameterName">rowType</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>ColumnV</code></code></code> <code class="parameterName">columnType</code>)</code></li>
+					</ul>
+					<h5 class="Q">Fields</h5>
+					<ul>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UITableColumnBase.html#ui">ui</a></code><i class="U"><code class="return">Column</code></i></li>
+					</ul>
+					<h5 class="Q">Methods</h5>
+					<ul>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.UITableColumnBase.html#ui()">ui</a></code><code class="Z">()</code><i class="U"><code>Column</code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UITableColumnBase.html#table()">table</a></code><code class="Z">()</code><i class="U"><code>Table</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UITableColumnBase.html#filterable(boolean)">filterable</a></code><code class="Z">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="U"><code>Self</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UITableColumnBase.html#sortable(boolean)">sortable</a></code><code class="Z">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="U"><code>Self</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UITableColumnBase.html#resizable(boolean)">resizable</a></code><code class="Z">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="U"><code>Self</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UITableColumnBase.html#reorderable(boolean)">reorderable</a></code><code class="Z">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="U"><code>Self</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UITableColumnBase.html#operatable(boolean)">operatable</a></code><code class="Z">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="U"><code>Self</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>

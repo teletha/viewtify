@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<script async="true" src="highlight.js"></script>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="R">
+		<header class="Y">
+			<h1 class="i" date="2021-12-08" ver="2.0.0"><code>Viewtify</code></h1>
+			<nav class="T"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="g" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="P">
+			<nav class="k">
+				<div></div>
+			</nav>
+			<article class="J" id="Article">
+				<section class="N"><code class="L">viewtify</code>
+					<h2 class="Functional a"><code class="h">Command</code><code class="Z">&#60;<code>E</code>&#62;</code></h2>
+					<ul class="C D">
+						<li><code>E</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html">Enum</a><code class="parameters"><code>E</code></code></code></code></li>
+					</ul>
+					<ul class="C F">
+						<li><code>kiss.Extensible</code></li>
+						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code></li>
+						<li><code>kiss.Wise</code></li>
+						<li><code>kiss.WiseRunnable</code></li>
+					</ul>
+				</section>
+				<section class="N" id="name()">
+					<h2 class="j"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="h">name</code><code class="Z">()</code><i class="W"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="K">
+						<tr class="b">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Command identical name.</span></section>
+				<section class="N" id="description()">
+					<h2 class="j"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="h">description</code><code class="Z">()</code><i class="W"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="K">
+						<tr class="b">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Command description.</span></section>
+				<section class="N" id="RUN()">
+					<h2 class="j"><i class="DEFAULT"><i class="OVERRIDE PUBLIC"></i></i><code class="h">RUN</code><code class="Z">()</code><i class="W"><code>void</code></i></h2>
+					<table class="K">
+						<tr class="I">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Activate this command.</span></section>
+				<section class="N" id="contribute(java.lang.Runnable)">
+					<h2 class="j"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="h">contribute</code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">command</code>)</code><i class="W"><code>kiss.Disposable</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code>command</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code>kiss.Disposable</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Contribute the actual command.</span></section>
+				<section class="N" id="shortcut(viewtify.Key)">
+					<h2 class="j"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="h">shortcut</code><code class="Z">(<code><a href="api/viewtify.Key.html">Key</a></code> <code class="parameterName">key</code>)</code><i class="W"><code>E</code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="api/viewtify.Key.html">Key</a></code> <code>key</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code>E</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Asign the default shortcut key.</span></section>
+			</article>
+			<aside class="V" id="SubNavi">
+				<div class="f">
+					<h5 class="Q">Methods</h5>
+					<ul>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.Command.html#name()">name</a></code><code class="Z">()</code><i class="U"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.Command.html#description()">description</a></code><code class="Z">()</code><i class="U"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="DEFAULT"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/viewtify.Command.html#RUN()">RUN</a></code><code class="Z">()</code><i class="U"><code>void</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.Command.html#contribute(java.lang.Runnable)">contribute</a></code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">command</code>)</code><i class="U"><code>kiss.Disposable</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.Command.html#shortcut(viewtify.Key)">shortcut</a></code><code class="Z">(<code><a href="api/viewtify.Key.html">Key</a></code> <code class="parameterName">key</code>)</code><i class="U"><code>E</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>

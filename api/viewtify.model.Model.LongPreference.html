@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<script async="true" src="highlight.js"></script>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="R">
+		<header class="Y">
+			<h1 class="i" date="2021-12-08" ver="2.0.0"><code>Viewtify</code></h1>
+			<nav class="T"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="g" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="P">
+			<nav class="k">
+				<div></div>
+			</nav>
+			<article class="J" id="Article">
+				<section class="N"><code class="L">viewtify.model</code>
+					<h2 class="Class a"><code class="h">Model.LongPreference</code></h2>
+					<ul class="C E">
+						<li><code><a href="api/viewtify.model.Model.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></li>
+						<li><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></li>
+					</ul>
+					<ul class="C F">
+						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></li>
+						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></li>
+					</ul><span class="B">Preference value for primitive long.</span></section>
+				<section class="N" id="require(java.util.function.Function)">
+					<h2 class="j"><i class="OVERRIDE PUBLIC"></i><code class="h">require</code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html">Long</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code> <code class="parameterName">requirement</code>)</code><i class="W"><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html">Long</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code> <code>requirement</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Add requirement on this preference.</span></section>
+				<section class="N" id="requireMax(long)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">requireMax</code><code class="Z">(<code>long</code> <code class="parameterName">max</code>)</code><i class="W"><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>long</code> <code>max</code></td>
+							<td><span>A maximum value.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">This is the maximum value that can be set. If it is greater than this value, this maximum
+ value will be set instead.</span></section>
+				<section class="N" id="requireMin(long)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">requireMin</code><code class="Z">(<code>long</code> <code class="parameterName">min</code>)</code><i class="W"><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>long</code> <code>min</code></td>
+							<td><span>A minimum value.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">This is the minimum value that can be set. If it is less than this value, this minimum
+ value will be set instead.</span></section>
+				<section class="N" id="requireBetween(long,long)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">requireBetween</code><code class="Z">(<code>long</code> <code class="parameterName">min</code>, <code>long</code> <code class="parameterName">max</code>)</code><i class="W"><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>long</code> <code>min</code></td>
+							<td><span>A minimum value.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>long</code> <code>max</code></td>
+							<td><span>A maximum value.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">The range of possible values. If a value outside this range is set, the closest value to
+ this range will be set instead.</span></section>
+			</article>
+			<aside class="V" id="SubNavi">
+				<div class="f">
+					<h5 class="Q">Methods</h5>
+					<ul>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.model.Model.LongPreference.html#require(java.util.function.Function)">require</a></code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html">Long</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code> <code class="parameterName">requirement</code>)</code><i class="U"><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.model.Model.LongPreference.html#requireMax(long)">requireMax</a></code><code class="Z">(<code>long</code> <code class="parameterName">max</code>)</code><i class="U"><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.model.Model.LongPreference.html#requireMin(long)">requireMin</a></code><code class="Z">(<code>long</code> <code class="parameterName">min</code>)</code><i class="U"><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.model.Model.LongPreference.html#requireBetween(long,long)">requireBetween</a></code><code class="Z">(<code>long</code> <code class="parameterName">min</code>, <code>long</code> <code class="parameterName">max</code>)</code><i class="U"><code><a href="api/viewtify.model.Model.LongPreference.html">LongPreference</a></code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>

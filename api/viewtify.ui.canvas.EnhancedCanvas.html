@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<script async="true" src="highlight.js"></script>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="R">
+		<header class="Y">
+			<h1 class="i" date="2021-12-08" ver="2.0.0"><code>Viewtify</code></h1>
+			<nav class="T"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="g" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="P">
+			<nav class="k">
+				<div></div>
+			</nav>
+			<article class="J" id="Article">
+				<section class="N"><code class="L">viewtify.ui.canvas</code>
+					<h2 class="Class a"><code class="h">EnhancedCanvas</code></h2>
+					<ul class="C E">
+						<li><code>javafx.scene.canvas.Canvas</code></li>
+						<li><code><a href="api/javafx.scene.Node.html">Node</a></code></li>
+					</ul>
+					<ul class="C F">
+						<li><code>javafx.event.EventTarget</code></li>
+						<li><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.html">PropertyAccessHelper</a></code></li>
+						<li><code><a href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a><code class="parameters"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code>, <code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></code></code></li>
+						<li><code>javafx.css.Styleable</code></li>
+						<li><code><a href="api/viewtify.ui.helper.VisibleHelper.html">VisibleHelper</a><code class="parameters"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></code></code></li>
+					</ul>
+				</section>
+				<section class="N" id="EnhancedCanvas()">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">EnhancedCanvas</code><code class="Z">()</code></h2>
+				</section>
+				<section class="N" id="ui()">
+					<h2 class="j"><i class="OVERRIDE PUBLIC"></i><code class="h">ui</code><code class="Z">()</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="N" id="bindSizeTo(javafx.scene.layout.Region)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">bindSizeTo</code><code class="Z">(<code>javafx.scene.layout.Region</code> <code class="parameterName">parent</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>javafx.scene.layout.Region</code> <code>parent</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Bind the canvas size to the parent region.</span></section>
+				<section class="N" id="bindSizeTo(double,javafx.scene.layout.Region)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">bindSizeTo</code><code class="Z">(<code>double</code> <code class="parameterName">width</code>, <code>javafx.scene.layout.Region</code> <code class="parameterName">height</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>double</code> <code>width</code></td>
+							<td></td>
+						</tr>
+						<tr class="O">
+							<td><code>javafx.scene.layout.Region</code> <code>height</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Bind the canvas size to the parent region.</span></section>
+				<section class="N" id="bindSizeTo(javafx.scene.layout.Region,double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">bindSizeTo</code><code class="Z">(<code>javafx.scene.layout.Region</code> <code class="parameterName">width</code>, <code>double</code> <code class="parameterName">height</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>javafx.scene.layout.Region</code> <code>width</code></td>
+							<td></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>height</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Bind the canvas size to the parent region.</span></section>
+				<section class="N" id="context(java.util.function.Consumer)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">context</code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>javafx.scene.canvas.GraphicsContext</code></code></code> <code class="parameterName">context</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>javafx.scene.canvas.GraphicsContext</code></code></code> <code>context</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Configure graphic context.</span></section>
+				<section class="N" id="clear()">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">clear</code><code class="Z">()</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Clear all drawing figure on this canvas.</span></section>
+				<section class="N" id="width(double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">width</code><code class="Z">(<code>double</code> <code class="parameterName">width</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>double</code> <code>width</code></td>
+							<td><span>A width to set.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Set the width and height of this canvas.</span></section>
+				<section class="N" id="height(double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">height</code><code class="Z">(<code>double</code> <code class="parameterName">height</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>double</code> <code>height</code></td>
+							<td><span>A height to set.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Set the width and height of this canvas.</span></section>
+				<section class="N" id="size(double,double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">size</code><code class="Z">(<code>double</code> <code class="parameterName">width</code>, <code>double</code> <code class="parameterName">height</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>double</code> <code>width</code></td>
+							<td><span>A width to set.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>height</code></td>
+							<td><span>A height to set.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Set the width and height of this canvas.</span></section>
+				<section class="N" id="lineWidth(double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">lineWidth</code><code class="Z">(<code>double</code> <code class="parameterName">width</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>double</code> <code>width</code></td>
+							<td><span>A width to set.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Set the width and height of this canvas.</span></section>
+				<section class="N" id="textBaseLine(javafx.geometry.VPos)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">textBaseLine</code><code class="Z">(<code>javafx.geometry.VPos</code> <code class="parameterName">baseLine</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>javafx.geometry.VPos</code> <code>baseLine</code></td>
+							<td><span>A baseLine to set.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Set the text base line of this canvas.</span></section>
+				<section class="N" id="fillColor(stylist.value.Color)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">fillColor</code><code class="Z">(<code>stylist.value.Color</code> <code class="parameterName">color</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>stylist.value.Color</code> <code>color</code></td>
+							<td><span>A color to set.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Configure fill color.</span></section>
+				<section class="N" id="fillColor(int,int,int)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">fillColor</code><code class="Z">(<code>int</code> <code class="parameterName">red</code>, <code>int</code> <code class="parameterName">green</code>, <code>int</code> <code class="parameterName">blue</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>int</code> <code>red</code></td>
+							<td><span>A red element.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>int</code> <code>green</code></td>
+							<td><span>A green element.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>int</code> <code>blue</code></td>
+							<td><span>A blue element.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Configure fill color.</span></section>
+				<section class="N" id="fillColor(int,int,int,double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">fillColor</code><code class="Z">(<code>int</code> <code class="parameterName">red</code>, <code>int</code> <code class="parameterName">green</code>, <code>int</code> <code class="parameterName">blue</code>, <code>double</code> <code class="parameterName">alpha</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>int</code> <code>red</code></td>
+							<td><span>A red element.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>int</code> <code>green</code></td>
+							<td><span>A green element.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>int</code> <code>blue</code></td>
+							<td><span>A blue element.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>alpha</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Configure fill color.</span></section>
+				<section class="N" id="fillColor(javafx.scene.paint.Color)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">fillColor</code><code class="Z">(<code>javafx.scene.paint.Color</code> <code class="parameterName">color</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>javafx.scene.paint.Color</code> <code>color</code></td>
+							<td><span>A color to set.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Configure fill color.</span></section>
+				<section class="N" id="strokeColor(stylist.value.Color)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">strokeColor</code><code class="Z">(<code>stylist.value.Color</code> <code class="parameterName">color</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>stylist.value.Color</code> <code>color</code></td>
+							<td><span>A color to set.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Configure stroke color.</span></section>
+				<section class="N" id="strokeColor(int,int,int)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">strokeColor</code><code class="Z">(<code>int</code> <code class="parameterName">red</code>, <code>int</code> <code class="parameterName">green</code>, <code>int</code> <code class="parameterName">blue</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>int</code> <code>red</code></td>
+							<td><span>A red element.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>int</code> <code>green</code></td>
+							<td><span>A green element.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>int</code> <code>blue</code></td>
+							<td><span>A blue element.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Configure stroke color.</span></section>
+				<section class="N" id="strokeColor(int,int,int,double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">strokeColor</code><code class="Z">(<code>int</code> <code class="parameterName">red</code>, <code>int</code> <code class="parameterName">green</code>, <code>int</code> <code class="parameterName">blue</code>, <code>double</code> <code class="parameterName">alpha</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>int</code> <code>red</code></td>
+							<td><span>A red element.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>int</code> <code>green</code></td>
+							<td><span>A green element.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>int</code> <code>blue</code></td>
+							<td><span>A blue element.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>alpha</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Configure stroke color.</span></section>
+				<section class="N" id="strokeColor(javafx.scene.paint.Color)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">strokeColor</code><code class="Z">(<code>javafx.scene.paint.Color</code> <code class="parameterName">color</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>javafx.scene.paint.Color</code> <code>color</code></td>
+							<td><span>A color to set.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Configure stroke color.</span></section>
+				<section class="N" id="fontSize()">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">fontSize</code><code class="Z">()</code><i class="W"><code>double</code></i></h2>
+					<table class="K">
+						<tr class="b">
+							<td><code>double</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B">Get the current font size.</span></section>
+				<section class="N" id="font(double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">font</code><code class="Z">(<code>double</code> <code class="parameterName">size</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>double</code> <code>size</code></td>
+							<td><span>A font size to set.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Configure font size..</span></section>
+				<section class="N" id="font(double,javafx.scene.text.FontWeight)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">font</code><code class="Z">(<code>double</code> <code class="parameterName">size</code>, <code>javafx.scene.text.FontWeight</code> <code class="parameterName">weight</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>double</code> <code>size</code></td>
+							<td><span>A font size to set.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>javafx.scene.text.FontWeight</code> <code>weight</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Configure font size..</span></section>
+				<section class="N" id="strokeText(java.lang.Object,double,double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">strokeText</code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">text</code>, <code>double</code> <code class="parameterName">x</code>, <code>double</code> <code class="parameterName">y</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code>text</code></td>
+							<td><span>A text to draw.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>x</code></td>
+							<td><span>X position.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>y</code></td>
+							<td><span>Y position.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Stroke text on the specified position.</span></section>
+				<section class="N" id="strokeText(java.lang.Object,double,double,double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">strokeText</code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">text</code>, <code>double</code> <code class="parameterName">x</code>, <code>double</code> <code class="parameterName">y</code>, <code>double</code> <code class="parameterName">width</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code>text</code></td>
+							<td><span>A text to draw.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>x</code></td>
+							<td><span>X position.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>y</code></td>
+							<td><span>Y position.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>width</code></td>
+							<td><span>A text width.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Stroke text on the specified position.</span></section>
+				<section class="N" id="fillText(java.lang.Object,double,double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">fillText</code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">text</code>, <code>double</code> <code class="parameterName">x</code>, <code>double</code> <code class="parameterName">y</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code>text</code></td>
+							<td><span>A text to draw.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>x</code></td>
+							<td><span>X position.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>y</code></td>
+							<td><span>Y position.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Fill text on the specified position.</span></section>
+				<section class="N" id="fillText(java.lang.Object,double,double,double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">fillText</code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">text</code>, <code>double</code> <code class="parameterName">x</code>, <code>double</code> <code class="parameterName">y</code>, <code>double</code> <code class="parameterName">width</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code>text</code></td>
+							<td><span>A text to draw.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>x</code></td>
+							<td><span>X position.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>y</code></td>
+							<td><span>Y position.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>width</code></td>
+							<td><span>A text width.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Fill text on the specified position.</span></section>
+				<section class="N" id="fillRect(double,double,double,double)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">fillRect</code><code class="Z">(<code>double</code> <code class="parameterName">x</code>, <code>double</code> <code class="parameterName">y</code>, <code>double</code> <code class="parameterName">width</code>, <code>double</code> <code class="parameterName">height</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="O">
+							<td><code>double</code> <code>x</code></td>
+							<td><span>X position.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>y</code></td>
+							<td><span>Y position.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>width</code></td>
+							<td><span>A width.</span></td>
+						</tr>
+						<tr class="O">
+							<td><code>double</code> <code>height</code></td>
+							<td><span>A height.</span></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Fill text on the specified position.</span></section>
+				<section class="N" id="drawWhen(kiss.Signal,java.util.function.BiConsumer)">
+					<h2 class="j"><i class="PUBLIC"></i><code class="h">drawWhen</code><code class="Z">(<code>kiss.Signal<code class="parameters"><code>T</code></code></code> <code class="parameterName">timing</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code>T</code>, <code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></code></code> <code class="parameterName">drawing</code>)</code><i class="W"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></h2>
+					<table class="K">
+						<tr class="H">
+							<td><code>T</code></td>
+							<td></td>
+						</tr>
+						<tr class="O">
+							<td><code>kiss.Signal<code class="parameters"><code>T</code></code></code> <code>timing</code></td>
+							<td></td>
+						</tr>
+						<tr class="O">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code>T</code>, <code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></code></code> <code>drawing</code></td>
+							<td></td>
+						</tr>
+						<tr class="b">
+							<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+							<td><span>Chainable API.</span></td>
+						</tr>
+					</table><span class="B">Draw your art when the specified timing.</span></section>
+			</article>
+			<aside class="V" id="SubNavi">
+				<div class="f">
+					<h5 class="Q">Constructors</h5>
+					<ul>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#EnhancedCanvas()">EnhancedCanvas</a></code><code class="Z">()</code></li>
+					</ul>
+					<h5 class="Q">Methods</h5>
+					<ul>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#ui()">ui</a></code><code class="Z">()</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#bindSizeTo(javafx.scene.layout.Region)">bindSizeTo</a></code><code class="Z">(<code>javafx.scene.layout.Region</code> <code class="parameterName">parent</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#bindSizeTo(double,javafx.scene.layout.Region)">bindSizeTo</a></code><code class="Z">(<code>double</code> <code class="parameterName">width</code>, <code>javafx.scene.layout.Region</code> <code class="parameterName">height</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#bindSizeTo(javafx.scene.layout.Region,double)">bindSizeTo</a></code><code class="Z">(<code>javafx.scene.layout.Region</code> <code class="parameterName">width</code>, <code>double</code> <code class="parameterName">height</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#context(java.util.function.Consumer)">context</a></code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>javafx.scene.canvas.GraphicsContext</code></code></code> <code class="parameterName">context</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#clear()">clear</a></code><code class="Z">()</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#width(double)">width</a></code><code class="Z">(<code>double</code> <code class="parameterName">width</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#height(double)">height</a></code><code class="Z">(<code>double</code> <code class="parameterName">height</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#size(double,double)">size</a></code><code class="Z">(<code>double</code> <code class="parameterName">width</code>, <code>double</code> <code class="parameterName">height</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#lineWidth(double)">lineWidth</a></code><code class="Z">(<code>double</code> <code class="parameterName">width</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#textBaseLine(javafx.geometry.VPos)">textBaseLine</a></code><code class="Z">(<code>javafx.geometry.VPos</code> <code class="parameterName">baseLine</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#fillColor(stylist.value.Color)">fillColor</a></code><code class="Z">(<code>stylist.value.Color</code> <code class="parameterName">color</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#fillColor(int,int,int)">fillColor</a></code><code class="Z">(<code>int</code> <code class="parameterName">red</code>, <code>int</code> <code class="parameterName">green</code>, <code>int</code> <code class="parameterName">blue</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#fillColor(int,int,int,double)">fillColor</a></code><code class="Z">(<code>int</code> <code class="parameterName">red</code>, <code>int</code> <code class="parameterName">green</code>, <code>int</code> <code class="parameterName">blue</code>, <code>double</code> <code class="parameterName">alpha</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#fillColor(javafx.scene.paint.Color)">fillColor</a></code><code class="Z">(<code>javafx.scene.paint.Color</code> <code class="parameterName">color</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#strokeColor(stylist.value.Color)">strokeColor</a></code><code class="Z">(<code>stylist.value.Color</code> <code class="parameterName">color</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#strokeColor(int,int,int)">strokeColor</a></code><code class="Z">(<code>int</code> <code class="parameterName">red</code>, <code>int</code> <code class="parameterName">green</code>, <code>int</code> <code class="parameterName">blue</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#strokeColor(int,int,int,double)">strokeColor</a></code><code class="Z">(<code>int</code> <code class="parameterName">red</code>, <code>int</code> <code class="parameterName">green</code>, <code>int</code> <code class="parameterName">blue</code>, <code>double</code> <code class="parameterName">alpha</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#strokeColor(javafx.scene.paint.Color)">strokeColor</a></code><code class="Z">(<code>javafx.scene.paint.Color</code> <code class="parameterName">color</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#fontSize()">fontSize</a></code><code class="Z">()</code><i class="U"><code>double</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#font(double)">font</a></code><code class="Z">(<code>double</code> <code class="parameterName">size</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#font(double,javafx.scene.text.FontWeight)">font</a></code><code class="Z">(<code>double</code> <code class="parameterName">size</code>, <code>javafx.scene.text.FontWeight</code> <code class="parameterName">weight</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#strokeText(java.lang.Object,double,double)">strokeText</a></code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">text</code>, <code>double</code> <code class="parameterName">x</code>, <code>double</code> <code class="parameterName">y</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#strokeText(java.lang.Object,double,double,double)">strokeText</a></code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">text</code>, <code>double</code> <code class="parameterName">x</code>, <code>double</code> <code class="parameterName">y</code>, <code>double</code> <code class="parameterName">width</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#fillText(java.lang.Object,double,double)">fillText</a></code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">text</code>, <code>double</code> <code class="parameterName">x</code>, <code>double</code> <code class="parameterName">y</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#fillText(java.lang.Object,double,double,double)">fillText</a></code><code class="Z">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">text</code>, <code>double</code> <code class="parameterName">x</code>, <code>double</code> <code class="parameterName">y</code>, <code>double</code> <code class="parameterName">width</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#fillRect(double,double,double,double)">fillRect</a></code><code class="Z">(<code>double</code> <code class="parameterName">x</code>, <code>double</code> <code class="parameterName">y</code>, <code>double</code> <code class="parameterName">width</code>, <code>double</code> <code class="parameterName">height</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html#drawWhen(kiss.Signal,java.util.function.BiConsumer)">drawWhen</a></code><code class="Z">(<code>kiss.Signal<code class="parameters"><code>T</code></code></code> <code class="parameterName">timing</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code>T</code>, <code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></code></code> <code class="parameterName">drawing</code>)</code><i class="U"><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>
