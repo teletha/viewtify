@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.StackWalker.Option;
 import java.lang.management.ManagementFactory;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -33,8 +35,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -62,6 +62,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -161,6 +164,16 @@ public final class Viewtify {
      * Hide.
      */
     private Viewtify() {
+    }
+
+    /**
+     * Configures the GUI to start in headless mode. This setting cannot be reversed. It has no
+     * effect if the GUI has already been started. It is recommended to call this method at a
+     * location right after the program is started. It is also possible to set the environment
+     * variable "javafx.headless" to true.
+     */
+    public static void inHeadless() {
+        I.env("javafx.headless", true);
     }
 
     /**
@@ -341,6 +354,9 @@ public final class Viewtify {
             // Restore Viewtify's setting
             I.make(Setting.class);
 
+            // setting for headless mode
+            checkHeadlessMode();
+
             // How to handle simultaneous application startup
             checkActivationPolicy(prefs);
 
@@ -366,6 +382,36 @@ public final class Viewtify {
                     .debounce(1, SECONDS)
                     .map(change -> change.context().externalForm())
                     .to(this::reloadStylesheet);
+        }
+    }
+
+    /**
+     * Check headless mode.
+     */
+    private void checkHeadlessMode() {
+        if (I.env("javafx.headless", false)) {
+            forceSetting("com.sun.glass.ui.PlatformFactory", "instance", "com.sun.glass.ui.monocle.MonoclePlatformFactory");
+            forceSetting("com.sun.glass.ui.monocle.NativePlatformFactory", "platform", "com.sun.glass.ui.monocle.HeadlessPlatform");
+        }
+    }
+
+    /**
+     * Helper to assign value to private static field.
+     * 
+     * @param baseClass
+     * @param fieldName
+     * @param valueClass
+     */
+    private static void forceSetting(String baseClass, String fieldName, String valueClass) {
+        try {
+            Constructor<?> value = Class.forName(valueClass).getDeclaredConstructor();
+            value.setAccessible(true);
+
+            Field field = Class.forName(baseClass).getDeclaredField(fieldName);
+            field.setAccessible(true);
+            field.set(null, value.newInstance());
+        } catch (Exception e) {
+            throw I.quiet(e);
         }
     }
 
