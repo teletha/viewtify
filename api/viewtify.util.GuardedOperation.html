@@ -9,10 +9,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="Q">
-		<header class="H">
-			<h1 class="c" date="2021-12-30" ver="2.0.0"><code>Viewtify</code></h1>
-			<nav class="J"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="N">
+		<header class="S">
+			<h1 class="H" date="2021-12-30" ver="2.1.0"><code>Viewtify</code></h1>
+			<nav class="d"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -21,7 +21,7 @@
 					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="K" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="J" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -29,52 +29,52 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="d">
-			<nav class="Y">
+		<main class="X">
+			<nav class="e">
 				<div></div>
 			</nav>
-			<article class="R" id="Article">
-				<section class="f"><code class="W">viewtify.util</code>
-					<h2 class="Class I"><code class="U">GuardedOperation</code></h2>
+			<article class="a" id="Article">
+				<section class="c"><code class="L">viewtify.util</code>
+					<h2 class="Class Z"><code class="k">GuardedOperation</code></h2>
 				</section>
-				<section class="f" id="NoOP">
-					<h2 class="k"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="U">NoOP</code><i class="M"><code class="return"><a href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></h2><span class="B">The reusable no-operation.</span></section>
-				<section class="f" id="GuardedOperation()">
-					<h2 class="k"><i class="PUBLIC"></i><code class="U">GuardedOperation</code><code class="P">()</code></h2>
+				<section class="c" id="NoOP">
+					<h2 class="I"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="k">NoOP</code><i class="W"><code class="return"><a href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></h2><span class="B">The reusable no-operation.</span></section>
+				<section class="c" id="GuardedOperation()">
+					<h2 class="I"><i class="PUBLIC"></i><code class="k">GuardedOperation</code><code class="g">()</code></h2>
 				</section>
-				<section class="f" id="guard(kiss.WiseRunnable)">
-					<h2 class="k"><i class="PUBLIC"></i><code class="U">guard</code><code class="P">(<code>kiss.WiseRunnable</code> <code class="parameterName">process</code>)</code><i class="M"><code>void</code></i></h2>
-					<table class="L">
-						<tr class="j">
+				<section class="c" id="guard(kiss.WiseRunnable)">
+					<h2 class="I"><i class="PUBLIC"></i><code class="k">guard</code><code class="g">(<code>kiss.WiseRunnable</code> <code class="parameterName">process</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="P">
+						<tr class="b">
 							<td><code>kiss.WiseRunnable</code> <code>process</code></td>
 							<td><span>An atomic process.</span></td>
 						</tr>
 					</table><span class="B">Guaranteed to be executed only once at a time. The difference with the synchronized block is
  that it does not allow recursive execution by the same thread and if the process is rejected,
  this operator will skip it instead of waiting.</span></section>
-				<section class="f" id="ignoreError()">
-					<h2 class="k"><i class="PUBLIC"></i><code class="U">ignoreError</code><code class="P">()</code><i class="M"><code><a href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></h2>
-					<table class="L">
-						<tr class="N">
+				<section class="c" id="ignoreError()">
+					<h2 class="I"><i class="PUBLIC"></i><code class="k">ignoreError</code><code class="g">()</code><i class="W"><code><a href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></h2>
+					<table class="P">
+						<tr class="j">
 							<td><code><a href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B">Ignore error while processing.</span></section>
 			</article>
-			<aside class="i" id="SubNavi">
-				<div class="g">
-					<h5 class="T">Constructors</h5>
+			<aside class="T" id="SubNavi">
+				<div class="i">
+					<h5 class="U">Constructors</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#GuardedOperation()">GuardedOperation</a></code><code class="P">()</code></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#GuardedOperation()">GuardedOperation</a></code><code class="g">()</code></li>
 					</ul>
-					<h5 class="T">Static Fields</h5>
+					<h5 class="U">Static Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.util.GuardedOperation.html#NoOP">NoOP</a></code><i class="X"><code class="return"><a href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></li>
+						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.util.GuardedOperation.html#NoOP">NoOP</a></code><i class="V"><code class="return"><a href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></li>
 					</ul>
-					<h5 class="T">Methods</h5>
+					<h5 class="U">Methods</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#guard(kiss.WiseRunnable)">guard</a></code><code class="P">(<code>kiss.WiseRunnable</code> <code class="parameterName">process</code>)</code><i class="X"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#ignoreError()">ignoreError</a></code><code class="P">()</code><i class="X"><code><a href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#guard(kiss.WiseRunnable)">guard</a></code><code class="g">(<code>kiss.WiseRunnable</code> <code class="parameterName">process</code>)</code><i class="V"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#ignoreError()">ignoreError</a></code><code class="g">()</code><i class="V"><code><a href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></li>
 					</ul>
 				</div>
 			</aside>
