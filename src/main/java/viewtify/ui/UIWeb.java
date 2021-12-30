@@ -299,6 +299,32 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
     }
 
     /**
+     * Returns the execution result of the specified script.
+     * 
+     * @param script A script to execute.
+     * @return Chainable API.
+     */
+    public Signal<Object> script(String script) {
+        return new Signal<>((observer, disposer) -> {
+            return bridge.await(observer, disposer, script);
+        });
+    }
+
+    /**
+     * Returns the execution result of the specified script.
+     * 
+     * @param script A script to execute.
+     * @param result A execution result.
+     * @return Chainable API.
+     */
+    public Signal<UIWeb> script(String script, Consumer result) {
+        return script(script).map(v -> {
+            result.accept(v);
+            return this;
+        });
+    }
+
+    /**
      * Initialize page.
      */
     private void initialize() {
@@ -363,7 +389,7 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
 
                     // Converts to an immediate execution function that executes asynchronously.
                     StringBuilder code = new StringBuilder("(async()=>{");
-                    code.append(items.length == 0 ? script : I.express(script, I.list(items)));
+                    code.append(I.express(script, I.list(items)));
                     code.append("})().then(v=>{bridge.resume(" + id + ",v===undefined?null:v)})");
 
                     // The function is executed asynchronously in a Javascript context, and the
@@ -558,6 +584,27 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
          */
         public static WiseFunction<UIWeb, Signal<UIWeb>> text(String cssSelector, Consumer<String> text) {
             return web -> web.text(cssSelector, text);
+        }
+
+        /**
+         * Returns the execution result of the specified script.
+         * 
+         * @param script A script to execute.
+         * @return Chainable API.
+         */
+        public static WiseFunction<UIWeb, Signal<Object>> script(String script) {
+            return web -> web.script(script);
+        }
+
+        /**
+         * Returns the execution result of the specified script.
+         * 
+         * @param script A script to execute.
+         * @param result A execution result.
+         * @return Chainable API.
+         */
+        public static WiseFunction<UIWeb, Signal<UIWeb>> script(String script, Consumer result) {
+            return web -> web.script(script, result);
         }
     }
 
