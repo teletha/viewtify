@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.1.0](https://www.github.com/teletha/viewtify/compare/v2.0.0...v2.1.0) (2021-12-30)
+
+
+### Features
+
+* Add UIWeb#script to execute an arbitrary code. ([1177f72](https://www.github.com/teletha/viewtify/commit/1177f72c802d4c96340fa154d47c0bf60f29db05))
+* Enable automatic GC. ([998cce3](https://www.github.com/teletha/viewtify/commit/998cce367ab34d532706501e8887959c05c7f034))
+* Support headless mode to use Viewtify#inHeadless. ([51b40c7](https://www.github.com/teletha/viewtify/commit/51b40c770cad56e7d653b9f040e65eba6fbc7bec))
+* update javafx. ([805350f](https://www.github.com/teletha/viewtify/commit/805350f6fe61662d3c08500c99adca95498b355b))
+
 ## 2.0.0 (2021-03-29)
 
 
