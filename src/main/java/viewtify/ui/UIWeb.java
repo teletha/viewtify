@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -30,7 +31,6 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -372,7 +372,7 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
         private final AtomicInteger counter = new AtomicInteger();
 
         /** The observer holder. */
-        private final Map<Integer, Observer> observers = new HashMap();
+        private final Map<Integer, Observer> observers = new ConcurrentHashMap();
 
         /**
          * Hide.
