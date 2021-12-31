@@ -574,7 +574,9 @@ public final class Viewtify {
      * will automatically launch an anonymous application.
      */
     public static synchronized void browser(Consumer<UIWeb> browser) {
-        application().activate(AnonyBrowser.class, view -> browser.accept(view.web));
+        Viewtify.inUI(() -> {
+            application().activate(AnonyBrowser.class, view -> browser.accept(view.web));
+        });
     }
 
     /**
