@@ -71,12 +71,17 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
     /**
      * Load the specified page.
      * 
-     * @param uri A page URI to load.
+     * @param linkOrText A page URI to load or HTML text.
      * @return Chainable API.
      */
-    public Signal<UIWeb> load(String uri) {
+    public Signal<UIWeb> load(String linkOrText) {
         return new Signal<UIWeb>((observer, disposer) -> {
-            engine.load(uri);
+            if (linkOrText.trim().startsWith("http")) {
+                engine.load(linkOrText);
+            } else {
+                engine.loadContent(linkOrText);
+            }
+
             observer.accept(this);
             observer.complete();
 
