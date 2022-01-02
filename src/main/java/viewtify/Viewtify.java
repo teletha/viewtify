@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.StackWalker.Option;
 import java.lang.management.ManagementFactory;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -390,31 +388,24 @@ public final class Viewtify {
      */
     private void checkHeadlessMode() {
         if (I.env("javafx.headless", false)) {
+            // ====================================
+            // Support for JavaFX
+            // ====================================
+            // Disables hardware accelerated rendering and switches to software rendering.
             System.setProperty("prism.order", "sw");
+
+            // See com.sun.glass.ui.PlatformFactory#getPlatformFactory()
+            // Set com.sun.glass.ui.monocle.MonoclePlatformFactory as platform factory.
+            System.setProperty("glass.platform", "Monocle");
+
+            // See com.sun.glass.ui.Platform#determinePlatform()
+            // Set Headless as monocle internal platform.
+            System.setProperty("monocle.platform", "Headless");
+
+            // ====================================
+            // Support for AWT
+            // ====================================
             System.setProperty("java.awt.headless", "true");
-            forceSetting("com.sun.glass.ui.PlatformFactory", "instance", "com.sun.glass.ui.monocle.MonoclePlatformFactory");
-            // forceSetting("com.sun.glass.ui.monocle.NativePlatformFactory", "platform",
-            // "com.sun.glass.ui.monocle.HeadlessPlatform");
-        }
-    }
-
-    /**
-     * Helper to assign value to private static field.
-     * 
-     * @param baseClass
-     * @param fieldName
-     * @param valueClass
-     */
-    private static void forceSetting(String baseClass, String fieldName, String valueClass) {
-        try {
-            Constructor<?> value = Class.forName(valueClass).getDeclaredConstructor();
-            value.setAccessible(true);
-
-            Field field = Class.forName(baseClass).getDeclaredField(fieldName);
-            field.setAccessible(true);
-            field.set(null, value.newInstance());
-        } catch (Exception e) {
-            throw I.quiet(e);
         }
     }
 
