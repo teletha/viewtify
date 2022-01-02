@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.2.1](https://www.github.com/teletha/viewtify/compare/v2.2.0...v2.2.1) (2022-01-02)
+
+
+### Bug Fixes
+
+* Stabilize headless mode. ([fd5c781](https://www.github.com/teletha/viewtify/commit/fd5c781c2964d87412258b5bf782cb329087bccb))
+
 ## [2.2.0](https://www.github.com/teletha/viewtify/compare/v2.1.0...v2.2.0) (2022-01-02)
 
 
