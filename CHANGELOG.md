@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.2.0](https://www.github.com/teletha/viewtify/compare/v2.1.0...v2.2.0) (2022-01-02)
+
+
+### Features
+
+* UIWeb#load can load HTML contents directly. ([d467852](https://www.github.com/teletha/viewtify/commit/d4678529833fc675001bf18896add40ba13280ec))
+
+
+### Bug Fixes
+
+* headless mode ([b03cd70](https://www.github.com/teletha/viewtify/commit/b03cd705dfa31896c7e9fabf9990094a5ff8b110))
+* Invoke Viewtify#browser on FX thread. ([ba96bbe](https://www.github.com/teletha/viewtify/commit/ba96bbedc22fef41dcb5a8c970720ca6f69516d3))
+
 ## [2.1.0](https://www.github.com/teletha/viewtify/compare/v2.0.0...v2.1.0) (2021-12-30)
 
 
