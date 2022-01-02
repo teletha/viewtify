@@ -390,8 +390,11 @@ public final class Viewtify {
      */
     private void checkHeadlessMode() {
         if (I.env("javafx.headless", false)) {
+            System.setProperty("prism.order", "sw");
+            System.setProperty("java.awt.headless", "true");
             forceSetting("com.sun.glass.ui.PlatformFactory", "instance", "com.sun.glass.ui.monocle.MonoclePlatformFactory");
-            forceSetting("com.sun.glass.ui.monocle.NativePlatformFactory", "platform", "com.sun.glass.ui.monocle.HeadlessPlatform");
+            // forceSetting("com.sun.glass.ui.monocle.NativePlatformFactory", "platform",
+            // "com.sun.glass.ui.monocle.HeadlessPlatform");
         }
     }
 
