@@ -4,15 +4,14 @@
 		<meta charset="UTF-8"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
-		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<script async="true" src="highlight.js"></script>
+		<script async="true" src="highlight.js" type="module"></script>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="k">
-		<header class="Q">
-			<h1 class="f" date="2022-01-02" ver="2.2.1"><code>Viewtify</code></h1>
-			<nav class="H"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="M">
+		<header class="H">
+			<h1 class="j" date="2022-02-12" ver="2.2.1"><code>Viewtify</code></h1>
+			<nav class="K"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -21,7 +20,7 @@
 					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="W" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="Y" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -29,192 +28,221 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="M">
-			<nav class="N">
+		<main class="k">
+			<nav class="P">
 				<div></div>
 			</nav>
-			<article class="S" id="Article">
-				<section class="i"><code class="R">viewtify.ui.helper</code>
-					<h2 class="Functional a"><code class="b">VerifyHelper</code><code class="U">&#60;<code>Self</code>&#62;</code></h2>
-					<ul class="C D">
-						<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>Self</code></code></code></code></li>
-					</ul>
-					<ul class="C G">
-						<li><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></li>
-						<li><code><a href="api/viewtify.ui.UICheckBox.html">UICheckBox</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIChoiceBox.html">UIChoiceBox</a><code class="parameters"><code>T</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIColorPicker.html">UIColorPicker</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIComboBox.html">UIComboBox</a><code class="parameters"><code>T</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIComboCheckBox.html">UIComboCheckBox</a><code class="parameters"><code>T</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIDatePicker.html">UIDatePicker</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIFontPicker.html">UIFontPicker</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIHBox.html">UIHBox</a></code></li>
-						<li><code><a href="api/viewtify.ui.UILabel.html">UILabel</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIListView.html">UIListView</a><code class="parameters"><code>E</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIPane.html">UIPane</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIScrollPane.html">UIScrollPane</a></code></li>
-						<li><code><a href="api/viewtify.ui.UISlidePane.html">UISlidePane</a></code></li>
-						<li><code><a href="api/viewtify.ui.UISlider.html">UISlider</a></code></li>
-						<li><code><a href="api/viewtify.ui.UISpinner.html">UISpinner</a><code class="parameters"><code>T</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UISplitPane.html">UISplitPane</a></code></li>
-						<li><code><a href="api/viewtify.ui.UITabPane.html">UITabPane</a></code></li>
-						<li><code><a href="api/viewtify.ui.UITableView.html">UITableView</a><code class="parameters"><code>RowV</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIText.html">UIText</a><code class="parameters"><code>V</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIToggleButton.html">UIToggleButton</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIToolBar.html">UIToolBar</a></code></li>
-						<li><code><a href="api/viewtify.ui.UITreeTableView.html">UITreeTableView</a><code class="parameters"><code>RowV</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIVBox.html">UIVBox</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></li>
-						<li><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></li>
-					</ul>
+			<article class="T" id="Article">
+				<section class="Z"><code class="N">viewtify.ui.helper</code>
+					<h2 class="Functional c"><code class="e">VerifyHelper</code><code class="h">&#60;<code>Self</code>&#62;</code></h2>
+					<div class="W">
+						<ul class="C D">
+							<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>Self</code></code></code></code></li>
+						</ul>
+						<ul class="C G">
+							<li><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></li>
+							<li><code><a href="api/viewtify.ui.UICheckBox.html">UICheckBox</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIChoiceBox.html">UIChoiceBox</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIColorPicker.html">UIColorPicker</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIComboBox.html">UIComboBox</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIComboCheckBox.html">UIComboCheckBox</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIDatePicker.html">UIDatePicker</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIFontPicker.html">UIFontPicker</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIHBox.html">UIHBox</a></code></li>
+							<li><code><a href="api/viewtify.ui.UILabel.html">UILabel</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIListView.html">UIListView</a><code class="parameters"><code>E</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIPane.html">UIPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIScrollPane.html">UIScrollPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UISlidePane.html">UISlidePane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UISlider.html">UISlider</a></code></li>
+							<li><code><a href="api/viewtify.ui.UISpinner.html">UISpinner</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UISplitPane.html">UISplitPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UITabPane.html">UITabPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UITableView.html">UITableView</a><code class="parameters"><code>RowV</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIText.html">UIText</a><code class="parameters"><code>V</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIToggleButton.html">UIToggleButton</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIToolBar.html">UIToolBar</a></code></li>
+							<li><code><a href="api/viewtify.ui.UITreeTableView.html">UITreeTableView</a><code class="parameters"><code>RowV</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIVBox.html">UIVBox</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></li>
+							<li><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></li>
+						</ul>
+					</div>
 				</section>
-				<section class="i" id="verifier()">
-					<h2 class="X"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="b">verifier</code><code class="U">()</code><i class="Z"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
-					<table class="T">
-						<tr class="K">
+				<section class="Z" id="verifier()">
+					<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="e">verifier</code><code class="h">()</code><i class="i"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Retrieve the associated <code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code>.</span></section>
-				<section class="i" id="valid()">
-					<h2 class="X"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="b">valid</code><code class="U">()</code><i class="Z"><code>Self</code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Retrieve the associated <code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code>.</p>
+					</span></section>
+				<section class="Z" id="valid()">
+					<h2 class="R"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="e">valid</code><code class="h">()</code><i class="i"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code>Self</code></td>
-							<td><span>Chainable API.</span></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Mark as valid.</span></section>
-				<section class="i" id="invalid(java.lang.Object)">
-					<h2 class="X"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="b">invalid</code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">message</code>)</code><i class="Z"><code>Self</code></i></h2>
-					<table class="T">
-						<tr class="Y">
+					</table><span class="B"><p>Mark as valid.</p>
+					</span></section>
+				<section class="Z" id="invalid(java.lang.Object)">
+					<h2 class="R"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="e">invalid</code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">message</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code>message</code></td>
-							<td><span>Details of the problem.</span></td>
+							<td><span><p>Details of the problem.</p>
+								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>Self</code></td>
-							<td><span>Chainable API.</span></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Mark as invalid.</span></section>
-				<section class="i" id="invalid(kiss.Variable)">
-					<h2 class="X"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="b">invalid</code><code class="U">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">message</code>)</code><i class="Z"><code>Self</code></i></h2>
-					<table class="T">
-						<tr class="Y">
+					</table><span class="B"><p>Mark as invalid.</p>
+					</span></section>
+				<section class="Z" id="invalid(kiss.Variable)">
+					<h2 class="R"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="e">invalid</code><code class="h">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">message</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code>message</code></td>
-							<td><span>Details of the problem.</span></td>
+							<td><span><p>Details of the problem.</p>
+								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>Self</code></td>
-							<td><span>Chainable API.</span></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Mark as invalid.</span></section>
-				<section class="i" id="isValid()">
-					<h2 class="X"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="b">isValid</code><code class="U">()</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Mark as invalid.</p>
+					</span></section>
+				<section class="Z" id="isValid()">
+					<h2 class="R"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="e">isValid</code><code class="h">()</code><i class="i"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Get the current validity. true if all conditions registered in this verifier are met,
- otherwise returns false.</span></section>
-				<section class="i" id="isInvalid()">
-					<h2 class="X"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="b">isInvalid</code><code class="U">()</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Get the current validity. true if all conditions registered in this verifier are met,
+ otherwise returns false.</p>
+					</span></section>
+				<section class="Z" id="isInvalid()">
+					<h2 class="R"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="e">isInvalid</code><code class="h">()</code><i class="i"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Get the current validity. false if all conditions registered in this verifier are met,
- otherwise returns true.</span></section>
-				<section class="i" id="verify(java.lang.Object,java.util.function.Predicate)">
-					<h2 class="X"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="b">verify</code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">prerequisiteDescription</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>?</code><code class="super"><code>Self</code></code></code></code> <code class="parameterName">verifier</code>)</code><i class="Z"><code>Self</code></i></h2>
-					<table class="T">
-						<tr class="Y">
+					</table><span class="B"><p>Get the current validity. false if all conditions registered in this verifier are met,
+ otherwise returns true.</p>
+					</span></section>
+				<section class="Z" id="verify(java.lang.Object,java.util.function.Predicate)">
+					<h2 class="R"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="e">verify</code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">prerequisiteDescription</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>?</code><code class="super"><code>Self</code></code></code></code> <code class="parameterName">verifier</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code>prerequisiteDescription</code></td>
-							<td><span>Description of Requirements. This will be displayed as an
-            error message if the condition is not met.</span></td>
+							<td><span><p>Description of Requirements. This will be displayed as an
+            error message if the condition is not met.</p>
+								</span></td>
 						</tr>
-						<tr class="Y">
+						<tr class="O">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>?</code><code class="super"><code>Self</code></code></code></code> <code>verifier</code></td>
-							<td><span>Definition of Requirements.</span></td>
+							<td><span><p>Definition of Requirements.</p>
+								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>Self</code></td>
-							<td><span>Chainable API.</span></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Register the specified verifier. Thereafter, this verification will be performed at every
+					</table><span class="B"><p>Register the specified verifier. Thereafter, this verification will be performed at every
  specified timing (<code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifyWhen(kiss.Signal...)">#verifyWhen(Signal...)</a></code>). The verification results can be obtained
- by using <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">#isValid()</a></code> or <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">#isInvalid()</a></code>.</span></section>
-				<section class="i" id="verifyBy(kiss.WiseRunnable)">
-					<h2 class="X"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="b">verifyBy</code><code class="U">(<code>kiss.WiseRunnable</code> <code class="parameterName">verifier</code>)</code><i class="Z"><code>Self</code></i></h2>
-					<table class="T">
-						<tr class="Y">
+ by using <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">#isValid()</a></code> or <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">#isInvalid()</a></code>.</p>
+					</span></section>
+				<section class="Z" id="verifyBy(kiss.WiseRunnable)">
+					<h2 class="R"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="e">verifyBy</code><code class="h">(<code>kiss.WiseRunnable</code> <code class="parameterName">verifier</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code>kiss.WiseRunnable</code> <code>verifier</code></td>
-							<td><span>Definition of Requirements.</span></td>
+							<td><span><p>Definition of Requirements.</p>
+								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>Self</code></td>
-							<td><span>Chainable API.</span></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Register the specified verifier. Thereafter, this verification will be performed at every
+					</table><span class="B"><p>Register the specified verifier. Thereafter, this verification will be performed at every
  specified timing (<code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifyWhen(kiss.Signal...)">#verifyWhen(Signal...)</a></code>). The verification results can be obtained
- by using <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">#isValid()</a></code> or <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">#isInvalid()</a></code>.</span></section>
-				<section class="i" id="verifyBy(kiss.WiseConsumer)">
-					<h2 class="X"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="b">verifyBy</code><code class="U">(<code>kiss.WiseConsumer<code class="parameters"><code>?</code><code class="super"><code>Self</code></code></code></code> <code class="parameterName">verifier</code>)</code><i class="Z"><code>Self</code></i></h2>
-					<table class="T">
-						<tr class="Y">
+ by using <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">#isValid()</a></code> or <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">#isInvalid()</a></code>.</p>
+					</span></section>
+				<section class="Z" id="verifyBy(kiss.WiseConsumer)">
+					<h2 class="R"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="e">verifyBy</code><code class="h">(<code>kiss.WiseConsumer<code class="parameters"><code>?</code><code class="super"><code>Self</code></code></code></code> <code class="parameterName">verifier</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code>kiss.WiseConsumer<code class="parameters"><code>?</code><code class="super"><code>Self</code></code></code></code> <code>verifier</code></td>
-							<td><span>Definition of Requirements.</span></td>
+							<td><span><p>Definition of Requirements.</p>
+								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>Self</code></td>
-							<td><span>Chainable API.</span></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Register the specified verifier. Thereafter, this verification will be performed at every
+					</table><span class="B"><p>Register the specified verifier. Thereafter, this verification will be performed at every
  specified timing (<code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifyWhen(kiss.Signal...)">#verifyWhen(Signal...)</a></code>). The verification results can be obtained
- by using <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">#isValid()</a></code> or <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">#isInvalid()</a></code>.</span></section>
-				<section class="i" id="verifyWhen(kiss.Signal...)">
-					<h2 class="X"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="b">verifyWhen</code><code class="U">(<code array="var">kiss.Signal<code class="parameters"><code>?</code></code></code> <code class="parameterName">timings</code>)</code><i class="Z"><code>Self</code></i></h2>
-					<table class="T">
-						<tr class="Y">
+ by using <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">#isValid()</a></code> or <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">#isInvalid()</a></code>.</p>
+					</span></section>
+				<section class="Z" id="verifyWhen(kiss.Signal...)">
+					<h2 class="R"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="e">verifyWhen</code><code class="h">(<code array="var">kiss.Signal<code class="parameters"><code>?</code></code></code> <code class="parameterName">timings</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code array="var">kiss.Signal<code class="parameters"><code>?</code></code></code> <code>timings</code></td>
-							<td><span>Timing of verification.</span></td>
+							<td><span><p>Timing of verification.</p>
+								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>Self</code></td>
-							<td><span>Chainable API.</span></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Register with the timing of the verification. The verification results can be obtained by
- using <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">#isValid()</a></code> or <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">#isInvalid()</a></code>.</span></section>
-				<section class="i" id="verifyWhenChanging(viewtify.ui.helper.ValueHelper...)">
-					<h2 class="X"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="b">verifyWhenChanging</code><code class="U">(<code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">timings</code>)</code><i class="Z"><code>Self</code></i></h2>
-					<table class="T">
-						<tr class="Y">
+					</table><span class="B"><p>Register with the timing of the verification. The verification results can be obtained by
+ using <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">#isValid()</a></code> or <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">#isInvalid()</a></code>.</p>
+					</span></section>
+				<section class="Z" id="verifyWhenChanging(viewtify.ui.helper.ValueHelper...)">
+					<h2 class="R"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="e">verifyWhenChanging</code><code class="h">(<code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">timings</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code>timings</code></td>
-							<td><span>Timing of verification.</span></td>
+							<td><span><p>Timing of verification.</p>
+								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>Self</code></td>
-							<td><span>Chainable API.</span></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Register with the timing of the verification. The verification results can be obtained by
- using <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">#isValid()</a></code> or <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">#isInvalid()</a></code>.</span></section>
+					</table><span class="B"><p>Register with the timing of the verification. The verification results can be obtained by
+ using <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">#isValid()</a></code> or <code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">#isInvalid()</a></code>.</p>
+					</span></section>
 			</article>
-			<aside class="I" id="SubNavi">
+			<aside class="g" id="SubNavi">
 				<div class="d">
-					<h5 class="V">Methods</h5>
+					<h5 class="S">Methods</h5>
 					<ul>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifier()">verifier</a></code><code class="U">()</code><i class="O"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#valid()">valid</a></code><code class="U">()</code><i class="O"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#invalid(java.lang.Object)">invalid</a></code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">message</code>)</code><i class="O"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#invalid(kiss.Variable)">invalid</a></code><code class="U">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">message</code>)</code><i class="O"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">isValid</a></code><code class="U">()</code><i class="O"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">isInvalid</a></code><code class="U">()</code><i class="O"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verify(java.lang.Object,java.util.function.Predicate)">verify</a></code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">prerequisiteDescription</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>?</code><code class="super"><code>Self</code></code></code></code> <code class="parameterName">verifier</code>)</code><i class="O"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifyBy(kiss.WiseRunnable)">verifyBy</a></code><code class="U">(<code>kiss.WiseRunnable</code> <code class="parameterName">verifier</code>)</code><i class="O"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifyBy(kiss.WiseConsumer)">verifyBy</a></code><code class="U">(<code>kiss.WiseConsumer<code class="parameters"><code>?</code><code class="super"><code>Self</code></code></code></code> <code class="parameterName">verifier</code>)</code><i class="O"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifyWhen(kiss.Signal...)">verifyWhen</a></code><code class="U">(<code array="var">kiss.Signal<code class="parameters"><code>?</code></code></code> <code class="parameterName">timings</code>)</code><i class="O"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifyWhenChanging(viewtify.ui.helper.ValueHelper...)">verifyWhenChanging</a></code><code class="U">(<code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">timings</code>)</code><i class="O"><code>Self</code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifier()">verifier</a></code><code class="h">()</code><i class="b"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#valid()">valid</a></code><code class="h">()</code><i class="b"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#invalid(java.lang.Object)">invalid</a></code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">message</code>)</code><i class="b"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#invalid(kiss.Variable)">invalid</a></code><code class="h">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">message</code>)</code><i class="b"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#isValid()">isValid</a></code><code class="h">()</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#isInvalid()">isInvalid</a></code><code class="h">()</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verify(java.lang.Object,java.util.function.Predicate)">verify</a></code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">prerequisiteDescription</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>?</code><code class="super"><code>Self</code></code></code></code> <code class="parameterName">verifier</code>)</code><i class="b"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifyBy(kiss.WiseRunnable)">verifyBy</a></code><code class="h">(<code>kiss.WiseRunnable</code> <code class="parameterName">verifier</code>)</code><i class="b"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifyBy(kiss.WiseConsumer)">verifyBy</a></code><code class="h">(<code>kiss.WiseConsumer<code class="parameters"><code>?</code><code class="super"><code>Self</code></code></code></code> <code class="parameterName">verifier</code>)</code><i class="b"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifyWhen(kiss.Signal...)">verifyWhen</a></code><code class="h">(<code array="var">kiss.Signal<code class="parameters"><code>?</code></code></code> <code class="parameterName">timings</code>)</code><i class="b"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VerifyHelper.html#verifyWhenChanging(viewtify.ui.helper.ValueHelper...)">verifyWhenChanging</a></code><code class="h">(<code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">timings</code>)</code><i class="b"><code>Self</code></i></li>
 					</ul>
 				</div>
 			</aside>

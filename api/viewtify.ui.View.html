@@ -4,15 +4,14 @@
 		<meta charset="UTF-8"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
-		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<script async="true" src="highlight.js"></script>
+		<script async="true" src="highlight.js" type="module"></script>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="k">
-		<header class="Q">
-			<h1 class="f" date="2022-01-02" ver="2.2.1"><code>Viewtify</code></h1>
-			<nav class="H"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="M">
+		<header class="H">
+			<h1 class="j" date="2022-02-12" ver="2.2.1"><code>Viewtify</code></h1>
+			<nav class="K"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -21,7 +20,7 @@
 					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="W" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="Y" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -29,167 +28,191 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="M">
-			<nav class="N">
+		<main class="k">
+			<nav class="P">
 				<div></div>
 			</nav>
-			<article class="S" id="Article">
-				<section class="i"><code class="R">viewtify.ui</code>
-					<h2 class="AbstractClass a"><code class="b">View</code></h2>
-					<ul class="C F">
-						<li><code>kiss.Extensible</code></li>
-						<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
-					</ul>
-					<ul class="C G">
-						<li><code><a href="api/viewtify.ui.query.QueryView.html">QueryView</a><code class="parameters"><code>M</code></code></code></li>
-					</ul>
+			<article class="T" id="Article">
+				<section class="Z"><code class="N">viewtify.ui</code>
+					<h2 class="AbstractClass c"><code class="e">View</code></h2>
+					<div class="W">
+						<ul class="C F">
+							<li><code>kiss.Extensible</code></li>
+							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
+						</ul>
+						<ul class="C G">
+							<li><code><a href="api/viewtify.ui.query.QueryView.html">QueryView</a><code class="parameters"><code>M</code></code></code></li>
+						</ul>
+					</div>
 				</section>
-				<section class="i" id="IDSeparator">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="b">IDSeparator</code><i class="Z"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B">The human-readable ID separator.</span></section>
-				<section class="i" id="View()">
-					<h2 class="X"><i class="PROTECTED"></i><code class="b">View</code><code class="U">()</code></h2><span class="B">Use class name as view name.</span></section>
-				<section class="i" id="declareUI()">
-					<h2 class="X"><i class="PROTECTED"></i><code class="b">declareUI</code><code class="U">()</code><i class="Z"><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></h2>
-					<table class="T">
-						<tr class="K">
+				<section class="Z" id="IDSeparator">
+					<h2 class="R"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="e">IDSeparator</code><i class="i"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The human-readable ID separator.</p>
+					</span></section>
+				<section class="Z" id="View()">
+					<h2 class="R"><i class="PROTECTED"></i><code class="e">View</code><code class="h">()</code></h2><span class="B"><p>Use class name as view name.</p>
+					</span></section>
+				<section class="Z" id="declareUI()">
+					<h2 class="R"><i class="PROTECTED"></i><code class="e">declareUI</code><code class="h">()</code><i class="i"><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Declare user interface.</span></section>
-				<section class="i" id="initialize()">
-					<h2 class="X"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="b">initialize</code><code class="U">()</code><i class="Z"><code>void</code></i></h2><span class="B">Initialize <code><a href="api/viewtify.ui.View.html">View</a></code>.</span></section>
-				<section class="i" id="name()">
-					<h2 class="X"><i class="PROTECTED"></i><code class="b">name</code><code class="U">()</code><i class="Z"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Declare user interface.</p>
+					</span></section>
+				<section class="Z" id="initialize()">
+					<h2 class="R"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="e">initialize</code><code class="h">()</code><i class="i"><code>void</code></i></h2><span class="B"><p>Initialize <code><a href="api/viewtify.ui.View.html">View</a></code>.</p>
+					</span></section>
+				<section class="Z" id="name()">
+					<h2 class="R"><i class="PROTECTED"></i><code class="e">name</code><code class="h">()</code><i class="i"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Compute human-readable name for this view. Default is simple class name.</span></section>
-				<section class="i" id="id()">
-					<h2 class="X"><i class="PUBLIC"></i><code class="b">id</code><code class="U">()</code><i class="Z"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Compute human-readable name for this view. Default is simple class name.</p>
+					</span></section>
+				<section class="Z" id="id()">
+					<h2 class="R"><i class="PUBLIC"></i><code class="e">id</code><code class="h">()</code><i class="i"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Compute computer-awarable identifier for this view.</span></section>
-				<section class="i" id="ui()">
-					<h2 class="X"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code class="b">ui</code><code class="U">()</code><i class="Z"><code><a href="api/javafx.scene.Node.html">Node</a></code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Compute computer-awarable identifier for this view.</p>
+					</span></section>
+				<section class="Z" id="ui()">
+					<h2 class="R"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code class="e">ui</code><code class="h">()</code><i class="i"><code><a href="api/javafx.scene.Node.html">Node</a></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code><a href="api/javafx.scene.Node.html">Node</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="i" id="findRootView()">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">findRootView</code><code class="U">()</code><i class="Z"><code><a href="api/viewtify.ui.View.html">View</a></code></i></h2>
-					<table class="T">
-						<tr class="K">
+				<section class="Z" id="findRootView()">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">findRootView</code><code class="h">()</code><i class="i"><code><a href="api/viewtify.ui.View.html">View</a></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code><a href="api/viewtify.ui.View.html">View</a></code></td>
-							<td><span>The root view.</span></td>
+							<td><span><p>The root view.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Returns the root <code><a href="api/viewtify.ui.View.html">View</a></code>.</span></section>
-				<section class="i" id="findAncestorView(java.lang.Class)">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">findAncestorView</code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">viewType</code>)</code><i class="Z"><code>kiss.Variable<code class="parameters"><code>V</code></code></code></i></h2>
-					<table class="T">
+					</table><span class="B"><p>Returns the root <code><a href="api/viewtify.ui.View.html">View</a></code>.</p>
+					</span></section>
+				<section class="Z" id="findAncestorView(java.lang.Class)">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">findAncestorView</code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">viewType</code>)</code><i class="i"><code>kiss.Variable<code class="parameters"><code>V</code></code></code></i></h2>
+					<table class="V">
 						<tr class="L">
 							<td><code>V</code><code class="extends"><code><a href="api/viewtify.ui.View.html">View</a></code></code></td>
 							<td></td>
 						</tr>
-						<tr class="Y">
+						<tr class="O">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code> <code>viewType</code></td>
 							<td></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>kiss.Variable<code class="parameters"><code>V</code></code></code></td>
-							<td><span>The typed <code><a href="api/viewtify.ui.View.html">View</a></code>.</span></td>
+							<td><span><p>The typed <code><a href="api/viewtify.ui.View.html">View</a></code>.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Returns the nearest ancestor typed <code><a href="api/viewtify.ui.View.html">View</a></code>.</span></section>
-				<section class="i" id="findAncestorView(java.util.function.Predicate)">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">findAncestorView</code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="Z"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code></i></h2>
-					<table class="T">
-						<tr class="Y">
+					</table><span class="B"><p>Returns the nearest ancestor typed <code><a href="api/viewtify.ui.View.html">View</a></code>.</p>
+					</span></section>
+				<section class="Z" id="findAncestorView(java.util.function.Predicate)">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">findAncestorView</code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="i"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code> <code>condition</code></td>
-							<td><span>A condition to match.</span></td>
+							<td><span><p>A condition to match.</p>
+								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code></td>
-							<td><span>A found <code><a href="api/viewtify.ui.View.html">View</a></code>.</span></td>
+							<td><span><p>A found <code><a href="api/viewtify.ui.View.html">View</a></code>.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Finds the nearest ancestor view that meets the specified criteria.</span></section>
-				<section class="i" id="screen()">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">screen</code><code class="U">()</code><i class="Z"><code>javafx.stage.Screen</code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Finds the nearest ancestor view that meets the specified criteria.</p>
+					</span></section>
+				<section class="Z" id="screen()">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">screen</code><code class="h">()</code><i class="i"><code>javafx.stage.Screen</code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code>javafx.stage.Screen</code></td>
-							<td><span>The Screen which this <code><a href="api/viewtify.ui.View.html">View</a></code> is displayed.</span></td>
+							<td><span><p>The Screen which this <code><a href="api/viewtify.ui.View.html">View</a></code> is displayed.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Returns the Screen which this <code><a href="api/viewtify.ui.View.html">View</a></code> is displayed.</span></section>
-				<section class="i" id="stage()">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">stage</code><code class="U">()</code><i class="Z"><code>kiss.Variable<code class="parameters"><code>javafx.stage.Stage</code></code></code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Returns the Screen which this <code><a href="api/viewtify.ui.View.html">View</a></code> is displayed.</p>
+					</span></section>
+				<section class="Z" id="stage()">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">stage</code><code class="h">()</code><i class="i"><code>kiss.Variable<code class="parameters"><code>javafx.stage.Stage</code></code></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code>kiss.Variable<code class="parameters"><code>javafx.stage.Stage</code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Find Stage of this <code><a href="api/viewtify.ui.View.html">View</a></code>.</span></section>
-				<section class="i" id="show()">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">show</code><code class="U">()</code><i class="Z"><code>void</code></i></h2><span class="B">Force to show the current application window which this <code><a href="api/viewtify.ui.View.html">View</a></code> is displayed.</span></section>
-				<section class="i" id="blink()">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">blink</code><code class="U">()</code><i class="Z"><code>void</code></i></h2><span class="B">Force to blink the current application window which this <code><a href="api/viewtify.ui.View.html">View</a></code> is displayed.</span></section>
-				<section class="i" id="visible(boolean)">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">visible</code><code class="U">(<code>boolean</code> <code class="parameterName">visibility</code>)</code><i class="Z"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="Y">
+					</table><span class="B"><p>Find Stage of this <code><a href="api/viewtify.ui.View.html">View</a></code>.</p>
+					</span></section>
+				<section class="Z" id="show()">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">show</code><code class="h">()</code><i class="i"><code>void</code></i></h2><span class="B"><p>Force to show the current application window which this <code><a href="api/viewtify.ui.View.html">View</a></code> is displayed.</p>
+					</span></section>
+				<section class="Z" id="blink()">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">blink</code><code class="h">()</code><i class="i"><code>void</code></i></h2><span class="B"><p>Force to blink the current application window which this <code><a href="api/viewtify.ui.View.html">View</a></code> is displayed.</p>
+					</span></section>
+				<section class="Z" id="visible(boolean)">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">visible</code><code class="h">(<code>boolean</code> <code class="parameterName">visibility</code>)</code><i class="i"><code>void</code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code>boolean</code> <code>visibility</code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Config view visibility.</span></section>
-				<section class="i" id="en(java.lang.String,java.lang.Object...)">
-					<h2 class="X"><i class="FINAL"><i class="PROTECTED"></i></i><code class="b">en</code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">text</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">context</code>)</code><i class="Z"><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-					<table class="T">
-						<tr class="Y">
+					</table><span class="B"><p>Config view visibility.</p>
+					</span></section>
+				<section class="Z" id="en(java.lang.String,java.lang.Object...)">
+					<h2 class="R"><i class="FINAL"><i class="PROTECTED"></i></i><code class="e">en</code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">text</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">context</code>)</code><i class="i"><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code>text</code></td>
-							<td><span>Your english text.</span></td>
+							<td><span><p>Your english text.</p>
+								</span></td>
 						</tr>
-						<tr class="Y">
+						<tr class="O">
 							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code>context</code></td>
 							<td></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
-							<td><span>Localized text.</span></td>
+							<td><span><p>Localized text.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Create the localized text. (base lang is english)</span></section>
+					</table><span class="B"><p>Create the localized text. (base lang is english)</p>
+					</span></section>
 			</article>
-			<aside class="I" id="SubNavi">
+			<aside class="g" id="SubNavi">
 				<div class="d">
-					<h5 class="V">Constructors</h5>
+					<h5 class="S">Constructors</h5>
 					<ul>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.View.html#View()">View</a></code><code class="U">()</code></li>
+						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.View.html#View()">View</a></code><code class="h">()</code></li>
 					</ul>
-					<h5 class="V">Static Fields</h5>
+					<h5 class="S">Static Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ui.View.html#IDSeparator">IDSeparator</a></code><i class="O"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#IDSeparator">IDSeparator</a></code><i class="b"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 					</ul>
-					<h5 class="V">Methods</h5>
+					<h5 class="S">Methods</h5>
 					<ul>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.View.html#declareUI()">declareUI</a></code><code class="U">()</code><i class="O"><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></li>
-						<li><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.View.html#initialize()">initialize</a></code><code class="U">()</code><i class="O"><code>void</code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.View.html#name()">name</a></code><code class="U">()</code><i class="O"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.View.html#id()">id</a></code><code class="U">()</code><i class="O"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#ui()">ui</a></code><code class="U">()</code><i class="O"><code><a href="api/javafx.scene.Node.html">Node</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#findRootView()">findRootView</a></code><code class="U">()</code><i class="O"><code><a href="api/viewtify.ui.View.html">View</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#findAncestorView(java.lang.Class)">findAncestorView</a></code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">viewType</code>)</code><i class="O"><code>kiss.Variable<code class="parameters"><code>V</code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#findAncestorView(java.util.function.Predicate)">findAncestorView</a></code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="O"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#screen()">screen</a></code><code class="U">()</code><i class="O"><code>javafx.stage.Screen</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#stage()">stage</a></code><code class="U">()</code><i class="O"><code>kiss.Variable<code class="parameters"><code>javafx.stage.Stage</code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#show()">show</a></code><code class="U">()</code><i class="O"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#blink()">blink</a></code><code class="U">()</code><i class="O"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#visible(boolean)">visible</a></code><code class="U">(<code>boolean</code> <code class="parameterName">visibility</code>)</code><i class="O"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.View.html#en(java.lang.String,java.lang.Object...)">en</a></code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">text</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">context</code>)</code><i class="O"><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.View.html#declareUI()">declareUI</a></code><code class="h">()</code><i class="b"><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></li>
+						<li><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.View.html#initialize()">initialize</a></code><code class="h">()</code><i class="b"><code>void</code></i></li>
+						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.View.html#name()">name</a></code><code class="h">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.View.html#id()">id</a></code><code class="h">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#ui()">ui</a></code><code class="h">()</code><i class="b"><code><a href="api/javafx.scene.Node.html">Node</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#findRootView()">findRootView</a></code><code class="h">()</code><i class="b"><code><a href="api/viewtify.ui.View.html">View</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#findAncestorView(java.lang.Class)">findAncestorView</a></code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">viewType</code>)</code><i class="b"><code>kiss.Variable<code class="parameters"><code>V</code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#findAncestorView(java.util.function.Predicate)">findAncestorView</a></code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="b"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#screen()">screen</a></code><code class="h">()</code><i class="b"><code>javafx.stage.Screen</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#stage()">stage</a></code><code class="h">()</code><i class="b"><code>kiss.Variable<code class="parameters"><code>javafx.stage.Stage</code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#show()">show</a></code><code class="h">()</code><i class="b"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#blink()">blink</a></code><code class="h">()</code><i class="b"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.View.html#visible(boolean)">visible</a></code><code class="h">(<code>boolean</code> <code class="parameterName">visibility</code>)</code><i class="b"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.View.html#en(java.lang.String,java.lang.Object...)">en</a></code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">text</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">context</code>)</code><i class="b"><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
 					</ul>
 				</div>
 			</aside>

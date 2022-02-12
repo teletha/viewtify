@@ -4,15 +4,14 @@
 		<meta charset="UTF-8"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
-		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<script async="true" src="highlight.js"></script>
+		<script async="true" src="highlight.js" type="module"></script>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="k">
-		<header class="Q">
-			<h1 class="f" date="2022-01-02" ver="2.2.1"><code>Viewtify</code></h1>
-			<nav class="H"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="M">
+		<header class="H">
+			<h1 class="j" date="2022-02-12" ver="2.2.1"><code>Viewtify</code></h1>
+			<nav class="K"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -21,7 +20,7 @@
 					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="W" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="Y" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -29,58 +28,65 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="M">
-			<nav class="N">
+		<main class="k">
+			<nav class="P">
 				<div></div>
 			</nav>
-			<article class="S" id="Article">
-				<section class="i"><code class="R">viewtify.ui.query</code>
-					<h2 class="Class a"><code class="b">CompoundQuery.Query</code><code class="U">&#60;<code>M</code>, <code>V</code>&#62;</code></h2>
-					<ul class="C D">
-						<li><code>M</code></li>
-						<li><code>V</code></li>
-					</ul>
-					<ul class="C F">
-						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>M</code></code></code></li>
-					</ul>
+			<article class="T" id="Article">
+				<section class="Z"><code class="N">viewtify.ui.query</code>
+					<h2 class="Class c"><code class="e">CompoundQuery.Query</code><code class="h">&#60;<code>M</code>, <code>V</code>&#62;</code></h2>
+					<div class="W">
+						<ul class="C D">
+							<li><code>M</code></li>
+							<li><code>V</code></li>
+						</ul>
+						<ul class="C F">
+							<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>M</code></code></code></li>
+						</ul>
+					</div>
 				</section>
-				<section class="i" id="name">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">name</code><i class="Z"><code class="return">javafx.beans.property.Property<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2><span class="B">The query name.</span></section>
-				<section class="i" id="type">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">type</code><i class="Z"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code></i></h2><span class="B">The value type.</span></section>
-				<section class="i" id="extractor">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">extractor</code><i class="Z"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>M</code>, <code>V</code></code></code></i></h2><span class="B">The associated extractor.</span></section>
-				<section class="i" id="input">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">input</code><i class="Z"><code class="return">kiss.Variable<code class="parameters"><code>V</code></code></code></i></h2><span class="B">The current input value.</span></section>
-				<section class="i" id="tester">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">tester</code><i class="Z"><code class="return">kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.query.CompoundQuery.Tester.html">Tester</a><code class="parameters"><code>V</code></code></code></code></code></i></h2><span class="B">The associated <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Matcher.html">Matcher</a></code>.</span></section>
-				<section class="i" id="test(java.lang.Object)">
-					<h2 class="X"><i class="OVERRIDE PUBLIC"></i><code class="b">test</code><code class="U">(<code>M</code> <code class="parameterName">model</code>)</code><i class="Z"><code>boolean</code></i></h2>
-					<table class="T">
-						<tr class="Y">
+				<section class="Z" id="name">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">name</code><i class="i"><code class="return">javafx.beans.property.Property<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2><span class="B"><p>The query name.</p>
+					</span></section>
+				<section class="Z" id="type">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">type</code><i class="i"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code></i></h2><span class="B"><p>The value type.</p>
+					</span></section>
+				<section class="Z" id="extractor">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">extractor</code><i class="i"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>M</code>, <code>V</code></code></code></i></h2><span class="B"><p>The associated extractor.</p>
+					</span></section>
+				<section class="Z" id="input">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">input</code><i class="i"><code class="return">kiss.Variable<code class="parameters"><code>V</code></code></code></i></h2><span class="B"><p>The current input value.</p>
+					</span></section>
+				<section class="Z" id="tester">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">tester</code><i class="i"><code class="return">kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.query.CompoundQuery.Tester.html">Tester</a><code class="parameters"><code>V</code></code></code></code></code></i></h2><span class="B"><p>The associated <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Matcher.html">Matcher</a></code>.</p>
+					</span></section>
+				<section class="Z" id="test(java.lang.Object)">
+					<h2 class="R"><i class="OVERRIDE PUBLIC"></i><code class="e">test</code><code class="h">(<code>M</code> <code class="parameterName">model</code>)</code><i class="i"><code>boolean</code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code>M</code> <code>model</code></td>
 							<td></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>boolean</code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
 			</article>
-			<aside class="I" id="SubNavi">
+			<aside class="g" id="SubNavi">
 				<div class="d">
-					<h5 class="V">Fields</h5>
+					<h5 class="S">Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#name">name</a></code><i class="O"><code class="return">javafx.beans.property.Property<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#type">type</a></code><i class="O"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#extractor">extractor</a></code><i class="O"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>M</code>, <code>V</code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#input">input</a></code><i class="O"><code class="return">kiss.Variable<code class="parameters"><code>V</code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#tester">tester</a></code><i class="O"><code class="return">kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.query.CompoundQuery.Tester.html">Tester</a><code class="parameters"><code>V</code></code></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#name">name</a></code><i class="b"><code class="return">javafx.beans.property.Property<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#type">type</a></code><i class="b"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#extractor">extractor</a></code><i class="b"><code class="return"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>M</code>, <code>V</code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#input">input</a></code><i class="b"><code class="return">kiss.Variable<code class="parameters"><code>V</code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#tester">tester</a></code><i class="b"><code class="return">kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.query.CompoundQuery.Tester.html">Tester</a><code class="parameters"><code>V</code></code></code></code></code></i></li>
 					</ul>
-					<h5 class="V">Methods</h5>
+					<h5 class="S">Methods</h5>
 					<ul>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#test(java.lang.Object)">test</a></code><code class="U">(<code>M</code> <code class="parameterName">model</code>)</code><i class="O"><code>boolean</code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html#test(java.lang.Object)">test</a></code><code class="h">(<code>M</code> <code class="parameterName">model</code>)</code><i class="b"><code>boolean</code></i></li>
 					</ul>
 				</div>
 			</aside>

@@ -4,15 +4,14 @@
 		<meta charset="UTF-8"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
-		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<script async="true" src="highlight.js"></script>
+		<script async="true" src="highlight.js" type="module"></script>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="k">
-		<header class="Q">
-			<h1 class="f" date="2022-01-02" ver="2.2.1"><code>Viewtify</code></h1>
-			<nav class="H"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="M">
+		<header class="H">
+			<h1 class="j" date="2022-02-12" ver="2.2.1"><code>Viewtify</code></h1>
+			<nav class="K"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -21,7 +20,7 @@
 					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="W" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="Y" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -29,73 +28,85 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="M">
-			<nav class="N">
+		<main class="k">
+			<nav class="P">
 				<div></div>
 			</nav>
-			<article class="S" id="Article">
-				<section class="i"><code class="R">viewtify.ui.helper</code>
-					<h2 class="Class a"><code class="b">User.GestureEvent</code></h2>
-					<ul class="C E">
-						<li><code>javafx.event.Event</code></li>
-						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/EventObject.html">EventObject</a></code></li>
-					</ul>
-					<ul class="C F">
-						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Cloneable.html">Cloneable</a></code></li>
-						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></li>
-					</ul><span class="B">Drag event at detail.</span></section>
-				<section class="i" id="getX()">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">getX</code><code class="U">()</code><i class="Z"><code>double</code></i></h2>
-					<table class="T">
-						<tr class="K">
+			<article class="T" id="Article">
+				<section class="Z"><code class="N">viewtify.ui.helper</code>
+					<h2 class="Class c"><code class="e">User.GestureEvent</code></h2>
+					<div class="W">
+						<ul class="C E">
+							<li><code>javafx.event.Event</code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/EventObject.html">EventObject</a></code></li>
+						</ul>
+						<ul class="C F">
+							<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Cloneable.html">Cloneable</a></code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></li>
+						</ul>
+					</div><span class="B"><p>Drag event at detail.</p>
+					</span></section>
+				<section class="Z" id="getX()">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">getX</code><code class="h">()</code><i class="i"><code>double</code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code>double</code></td>
-							<td><span>horizontal position of the event relative to the origin of the MouseEvent&#39;s
-         source.</span></td>
+							<td><span><p>horizontal position of the event relative to the origin of the MouseEvent&#39;s
+         source.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Horizontal position of the event relative to the origin of the MouseEvent&#39;s source.</span></section>
-				<section class="i" id="getY()">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">getY</code><code class="U">()</code><i class="Z"><code>double</code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Horizontal position of the event relative to the origin of the MouseEvent&#39;s source.</p>
+					</span></section>
+				<section class="Z" id="getY()">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">getY</code><code class="h">()</code><i class="i"><code>double</code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code>double</code></td>
-							<td><span>vertical position of the event relative to the origin of the MouseEvent&#39;s source.</span></td>
+							<td><span><p>vertical position of the event relative to the origin of the MouseEvent&#39;s source.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Vertical position of the event relative to the origin of the MouseEvent&#39;s source.</span></section>
-				<section class="i" id="getFullX()">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">getFullX</code><code class="U">()</code><i class="Z"><code>double</code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Vertical position of the event relative to the origin of the MouseEvent&#39;s source.</p>
+					</span></section>
+				<section class="Z" id="getFullX()">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">getFullX</code><code class="h">()</code><i class="i"><code>double</code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code>double</code></td>
-							<td><span>horizontal position of the event relative to the origin of the MouseEvent&#39;s
-         source.</span></td>
+							<td><span><p>horizontal position of the event relative to the origin of the MouseEvent&#39;s
+         source.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Horizontal position of the event relative to the origin of the MouseEvent&#39;s source.</span></section>
-				<section class="i" id="getFullY()">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">getFullY</code><code class="U">()</code><i class="Z"><code>double</code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Horizontal position of the event relative to the origin of the MouseEvent&#39;s source.</p>
+					</span></section>
+				<section class="Z" id="getFullY()">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">getFullY</code><code class="h">()</code><i class="i"><code>double</code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code>double</code></td>
-							<td><span>vertical position of the event relative to the origin of the MouseEvent&#39;s source.</span></td>
+							<td><span><p>vertical position of the event relative to the origin of the MouseEvent&#39;s source.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Vertical position of the event relative to the origin of the MouseEvent&#39;s source.</span></section>
-				<section class="i" id="directions()">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC"></i></i><code class="b">directions</code><code class="U">()</code><i class="Z"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="T">
-						<tr class="K">
+					</table><span class="B"><p>Vertical position of the event relative to the origin of the MouseEvent&#39;s source.</p>
+					</span></section>
+				<section class="Z" id="directions()">
+					<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">directions</code><code class="h">()</code><i class="i"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">The accumulated directional expression.</span></section>
+					</table><span class="B"><p>The accumulated directional expression.</p>
+					</span></section>
 			</article>
-			<aside class="I" id="SubNavi">
+			<aside class="g" id="SubNavi">
 				<div class="d">
-					<h5 class="V">Methods</h5>
+					<h5 class="S">Methods</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.User.GestureEvent.html#getX()">getX</a></code><code class="U">()</code><i class="O"><code>double</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.User.GestureEvent.html#getY()">getY</a></code><code class="U">()</code><i class="O"><code>double</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.User.GestureEvent.html#getFullX()">getFullX</a></code><code class="U">()</code><i class="O"><code>double</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.User.GestureEvent.html#getFullY()">getFullY</a></code><code class="U">()</code><i class="O"><code>double</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.User.GestureEvent.html#directions()">directions</a></code><code class="U">()</code><i class="O"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.User.GestureEvent.html#getX()">getX</a></code><code class="h">()</code><i class="b"><code>double</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.User.GestureEvent.html#getY()">getY</a></code><code class="h">()</code><i class="b"><code>double</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.User.GestureEvent.html#getFullX()">getFullX</a></code><code class="h">()</code><i class="b"><code>double</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.User.GestureEvent.html#getFullY()">getFullY</a></code><code class="h">()</code><i class="b"><code>double</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.User.GestureEvent.html#directions()">directions</a></code><code class="h">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 					</ul>
 				</div>
 			</aside>

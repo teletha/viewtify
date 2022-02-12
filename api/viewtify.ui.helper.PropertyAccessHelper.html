@@ -4,15 +4,14 @@
 		<meta charset="UTF-8"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
-		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<script async="true" src="highlight.js"></script>
+		<script async="true" src="highlight.js" type="module"></script>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="k">
-		<header class="Q">
-			<h1 class="f" date="2022-01-02" ver="2.2.1"><code>Viewtify</code></h1>
-			<nav class="H"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="M">
+		<header class="H">
+			<h1 class="j" date="2022-02-12" ver="2.2.1"><code>Viewtify</code></h1>
+			<nav class="K"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -21,7 +20,7 @@
 					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="W" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="Y" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -29,85 +28,92 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="M">
-			<nav class="N">
+		<main class="k">
+			<nav class="P">
 				<div></div>
 			</nav>
-			<article class="S" id="Article">
-				<section class="i"><code class="R">viewtify.ui.helper</code>
-					<h2 class="Functional a"><code class="b">PropertyAccessHelper</code></h2>
-					<ul class="C G">
-						<li><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html">ContextMenuHelper</a><code class="parameters"><code>Self</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.helper.DisableHelper.html">DisableHelper</a><code class="parameters"><code>Self</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></li>
-						<li><code><a href="api/viewtify.ui.helper.LabelHelper.html">LabelHelper</a><code class="parameters"><code>Self</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.helper.PlaceholderHelper.html">PlaceholderHelper</a><code class="parameters"><code>Self</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.helper.SelectableHelper.html">SelectableHelper</a><code class="parameters"><code>Self</code>, <code>E</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></li>
-						<li><code><a href="api/viewtify.ui.UICheckBox.html">UICheckBox</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIChoiceBox.html">UIChoiceBox</a><code class="parameters"><code>T</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIColorPicker.html">UIColorPicker</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIComboBox.html">UIComboBox</a><code class="parameters"><code>T</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIComboCheckBox.html">UIComboCheckBox</a><code class="parameters"><code>T</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIDatePicker.html">UIDatePicker</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIFontPicker.html">UIFontPicker</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIHBox.html">UIHBox</a></code></li>
-						<li><code><a href="api/viewtify.ui.UILabel.html">UILabel</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIListView.html">UIListView</a><code class="parameters"><code>E</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIMenuItem.html">UIMenuItem</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIPane.html">UIPane</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIScrollPane.html">UIScrollPane</a></code></li>
-						<li><code><a href="api/viewtify.ui.UISlidePane.html">UISlidePane</a></code></li>
-						<li><code><a href="api/viewtify.ui.UISlider.html">UISlider</a></code></li>
-						<li><code><a href="api/viewtify.ui.UISpinner.html">UISpinner</a><code class="parameters"><code>T</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UISplitPane.html">UISplitPane</a></code></li>
-						<li><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></li>
-						<li><code><a href="api/viewtify.ui.UITabPane.html">UITabPane</a></code></li>
-						<li><code><a href="api/viewtify.ui.UITableColumnBase.html">UITableColumnBase</a><code class="parameters"><code>Column</code>, <code>Self</code>, <code>RowV</code>, <code>ColumnV</code>, <code>Table</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UITableColumn.html">UITableColumn</a><code class="parameters"><code>RowV</code>, <code>ColumnV</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UITableView.html">UITableView</a><code class="parameters"><code>RowV</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIText.html">UIText</a><code class="parameters"><code>V</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIToggleButton.html">UIToggleButton</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIToolBar.html">UIToolBar</a></code></li>
-						<li><code><a href="api/viewtify.ui.UITreeTableColumn.html">UITreeTableColumn</a><code class="parameters"><code>RowV</code>, <code>ColumnV</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UITreeTableView.html">UITreeTableView</a><code class="parameters"><code>RowV</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.UIVBox.html">UIVBox</a></code></li>
-						<li><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></li>
-						<li><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></li>
-						<li><code><a href="api/viewtify.ui.helper.VisibleHelper.html">VisibleHelper</a><code class="parameters"><code>Self</code></code></code></li>
-					</ul>
+			<article class="T" id="Article">
+				<section class="Z"><code class="N">viewtify.ui.helper</code>
+					<h2 class="Functional c"><code class="e">PropertyAccessHelper</code></h2>
+					<div class="W">
+						<ul class="C G">
+							<li><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html">ContextMenuHelper</a><code class="parameters"><code>Self</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.DisableHelper.html">DisableHelper</a><code class="parameters"><code>Self</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></li>
+							<li><code><a href="api/viewtify.ui.helper.LabelHelper.html">LabelHelper</a><code class="parameters"><code>Self</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.PlaceholderHelper.html">PlaceholderHelper</a><code class="parameters"><code>Self</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.SelectableHelper.html">SelectableHelper</a><code class="parameters"><code>Self</code>, <code>E</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></li>
+							<li><code><a href="api/viewtify.ui.UICheckBox.html">UICheckBox</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIChoiceBox.html">UIChoiceBox</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIColorPicker.html">UIColorPicker</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIComboBox.html">UIComboBox</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIComboCheckBox.html">UIComboCheckBox</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIDatePicker.html">UIDatePicker</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIFontPicker.html">UIFontPicker</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIHBox.html">UIHBox</a></code></li>
+							<li><code><a href="api/viewtify.ui.UILabel.html">UILabel</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIListView.html">UIListView</a><code class="parameters"><code>E</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIMenuItem.html">UIMenuItem</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIPane.html">UIPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIScrollPane.html">UIScrollPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UISlidePane.html">UISlidePane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UISlider.html">UISlider</a></code></li>
+							<li><code><a href="api/viewtify.ui.UISpinner.html">UISpinner</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UISplitPane.html">UISplitPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></li>
+							<li><code><a href="api/viewtify.ui.UITabPane.html">UITabPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UITableColumnBase.html">UITableColumnBase</a><code class="parameters"><code>Column</code>, <code>Self</code>, <code>RowV</code>, <code>ColumnV</code>, <code>Table</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UITableColumn.html">UITableColumn</a><code class="parameters"><code>RowV</code>, <code>ColumnV</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UITableView.html">UITableView</a><code class="parameters"><code>RowV</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIText.html">UIText</a><code class="parameters"><code>V</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIToggleButton.html">UIToggleButton</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIToolBar.html">UIToolBar</a></code></li>
+							<li><code><a href="api/viewtify.ui.UITreeTableColumn.html">UITreeTableColumn</a><code class="parameters"><code>RowV</code>, <code>ColumnV</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UITreeTableView.html">UITreeTableView</a><code class="parameters"><code>RowV</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIVBox.html">UIVBox</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></li>
+							<li><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.VisibleHelper.html">VisibleHelper</a><code class="parameters"><code>Self</code></code></code></li>
+						</ul>
+					</div>
 				</section>
-				<section class="i" id="ui()">
-					<h2 class="X"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="b">ui</code><code class="U">()</code><i class="Z"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code></i></h2>
-					<table class="T">
-						<tr class="K">
+				<section class="Z" id="ui()">
+					<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="e">ui</code><code class="h">()</code><i class="i"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code></td>
-							<td><span>A UI component</span></td>
+							<td><span><p>A UI component</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Return the JavaFX&#39;s UI component.</span></section>
-				<section class="i" id="property(viewtify.ui.helper.PropertyAccessHelper.Type)">
-					<h2 class="X"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="b">property</code><code class="U">(<code><a href="api/viewtify.ui.helper.PropertyAccessHelper.Type.html">Type</a><code class="parameters"><code>T</code></code></code> <code class="parameterName">type</code>)</code><i class="Z"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="T">
+					</table><span class="B"><p>Return the JavaFX&#39;s UI component.</p>
+					</span></section>
+				<section class="Z" id="property(viewtify.ui.helper.PropertyAccessHelper.Type)">
+					<h2 class="R"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="e">property</code><code class="h">(<code><a href="api/viewtify.ui.helper.PropertyAccessHelper.Type.html">Type</a><code class="parameters"><code>T</code></code></code> <code class="parameterName">type</code>)</code><i class="i"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="V">
 						<tr class="L">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="Y">
+						<tr class="O">
 							<td><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.Type.html">Type</a><code class="parameters"><code>T</code></code></code> <code>type</code></td>
-							<td><span>A property type.</span></td>
+							<td><span><p>A property type.</p>
+								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></td>
-							<td><span>A property.</span></td>
+							<td><span><p>A property.</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Retrieve the property by <code><a href="api/viewtify.ui.helper.PropertyAccessHelper.Type.html">Type</a></code>.</span></section>
+					</table><span class="B"><p>Retrieve the property by <code><a href="api/viewtify.ui.helper.PropertyAccessHelper.Type.html">Type</a></code>.</p>
+					</span></section>
 			</article>
-			<aside class="I" id="SubNavi">
+			<aside class="g" id="SubNavi">
 				<div class="d">
-					<h5 class="V">Methods</h5>
+					<h5 class="S">Methods</h5>
 					<ul>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.html#ui()">ui</a></code><code class="U">()</code><i class="O"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.html#property(viewtify.ui.helper.PropertyAccessHelper.Type)">property</a></code><code class="U">(<code><a href="api/viewtify.ui.helper.PropertyAccessHelper.Type.html">Type</a><code class="parameters"><code>T</code></code></code> <code class="parameterName">type</code>)</code><i class="O"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.html#ui()">ui</a></code><code class="h">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.html#property(viewtify.ui.helper.PropertyAccessHelper.Type)">property</a></code><code class="h">(<code><a href="api/viewtify.ui.helper.PropertyAccessHelper.Type.html">Type</a><code class="parameters"><code>T</code></code></code> <code class="parameterName">type</code>)</code><i class="b"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></li>
 					</ul>
 				</div>
 			</aside>

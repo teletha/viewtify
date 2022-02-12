@@ -4,15 +4,14 @@
 		<meta charset="UTF-8"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
-		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<script async="true" src="highlight.js"></script>
+		<script async="true" src="highlight.js" type="module"></script>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="k">
-		<header class="Q">
-			<h1 class="f" date="2022-01-02" ver="2.2.1"><code>Viewtify</code></h1>
-			<nav class="H"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="M">
+		<header class="H">
+			<h1 class="j" date="2022-02-12" ver="2.2.1"><code>Viewtify</code></h1>
+			<nav class="K"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -21,7 +20,7 @@
 					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="W" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="Y" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -29,65 +28,71 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="M">
-			<nav class="N">
+		<main class="k">
+			<nav class="P">
 				<div></div>
 			</nav>
-			<article class="S" id="Article">
-				<section class="i"><code class="R">viewtify.util</code>
-					<h2 class="Class a"><code class="b">TextNotation</code></h2>
+			<article class="T" id="Article">
+				<section class="Z"><code class="N">viewtify.util</code>
+					<h2 class="Class c"><code class="e">TextNotation</code></h2>
+					<div class="W"></div>
 				</section>
-				<section class="i" id="TextNotation()">
-					<h2 class="X"><i class="PUBLIC"></i><code class="b">TextNotation</code><code class="U">()</code></h2>
+				<section class="Z" id="TextNotation()">
+					<h2 class="R"><i class="PUBLIC"></i><code class="e">TextNotation</code><code class="h">()</code></h2>
 				</section>
-				<section class="i" id="concat(java.lang.Object...)">
-					<h2 class="X"><i class="PUBLIC STATIC"></i><code class="b">concat</code><code class="U">(<code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">messages</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-					<table class="T">
-						<tr class="Y">
+				<section class="Z" id="concat(java.lang.Object...)">
+					<h2 class="R"><i class="STATIC PUBLIC"></i><code class="e">concat</code><code class="h">(<code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">messages</code>)</code><i class="i"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code>messages</code></td>
 							<td></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Concat all messages.</span></section>
-				<section class="i" id="parse(java.lang.String)">
-					<h2 class="X"><i class="PUBLIC STATIC"></i><code class="b">parse</code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="Z"><code>javafx.scene.text.TextFlow</code></i></h2>
-					<table class="T">
-						<tr class="Y">
+					</table><span class="B"><p>Concat all messages.</p>
+					</span></section>
+				<section class="Z" id="parse(java.lang.String)">
+					<h2 class="R"><i class="STATIC PUBLIC"></i><code class="e">parse</code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="i"><code>javafx.scene.text.TextFlow</code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
-							<td><span>A wiki-like notation text.</span></td>
+							<td><span><p>A wiki-like notation text.</p>
+								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>javafx.scene.text.TextFlow</code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Parse as TextFlow.</span></section>
-				<section class="i" id="parse(kiss.Variable)">
-					<h2 class="X"><i class="PUBLIC STATIC"></i><code class="b">parse</code><code class="U">(<code>kiss.Variable</code> <code class="parameterName">message</code>)</code><i class="Z"><code>javafx.scene.text.TextFlow</code></i></h2>
-					<table class="T">
-						<tr class="Y">
+					</table><span class="B"><p>Parse as TextFlow.</p>
+					</span></section>
+				<section class="Z" id="parse(kiss.Variable)">
+					<h2 class="R"><i class="STATIC PUBLIC"></i><code class="e">parse</code><code class="h">(<code>kiss.Variable</code> <code class="parameterName">message</code>)</code><i class="i"><code>javafx.scene.text.TextFlow</code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code>kiss.Variable</code> <code>message</code></td>
-							<td><span>A wiki-like notation text.</span></td>
+							<td><span><p>A wiki-like notation text.</p>
+								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code>javafx.scene.text.TextFlow</code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Parse as TextFlow.</span></section>
+					</table><span class="B"><p>Parse as TextFlow.</p>
+					</span></section>
 			</article>
-			<aside class="I" id="SubNavi">
+			<aside class="g" id="SubNavi">
 				<div class="d">
-					<h5 class="V">Constructors</h5>
+					<h5 class="S">Constructors</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.util.TextNotation.html#TextNotation()">TextNotation</a></code><code class="U">()</code></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.util.TextNotation.html#TextNotation()">TextNotation</a></code><code class="h">()</code></li>
 					</ul>
-					<h5 class="V">Static Methods</h5>
+					<h5 class="S">Static Methods</h5>
 					<ul>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.util.TextNotation.html#concat(java.lang.Object...)">concat</a></code><code class="U">(<code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">messages</code>)</code><i class="O"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.util.TextNotation.html#parse(java.lang.String)">parse</a></code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="O"><code>javafx.scene.text.TextFlow</code></i></li>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.util.TextNotation.html#parse(kiss.Variable)">parse</a></code><code class="U">(<code>kiss.Variable</code> <code class="parameterName">message</code>)</code><i class="O"><code>javafx.scene.text.TextFlow</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.TextNotation.html#concat(java.lang.Object...)">concat</a></code><code class="h">(<code array="var"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">messages</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.TextNotation.html#parse(java.lang.String)">parse</a></code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="b"><code>javafx.scene.text.TextFlow</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.TextNotation.html#parse(kiss.Variable)">parse</a></code><code class="h">(<code>kiss.Variable</code> <code class="parameterName">message</code>)</code><i class="b"><code>javafx.scene.text.TextFlow</code></i></li>
 					</ul>
 				</div>
 			</aside>

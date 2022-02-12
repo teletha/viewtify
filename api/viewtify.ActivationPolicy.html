@@ -4,15 +4,14 @@
 		<meta charset="UTF-8"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
-		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<script async="true" src="highlight.js"></script>
+		<script async="true" src="highlight.js" type="module"></script>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="k">
-		<header class="Q">
-			<h1 class="f" date="2022-01-02" ver="2.2.1"><code>Viewtify</code></h1>
-			<nav class="H"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="M">
+		<header class="H">
+			<h1 class="j" date="2022-02-12" ver="2.2.1"><code>Viewtify</code></h1>
+			<nav class="K"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -21,7 +20,7 @@
 					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="W" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="Y" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -29,62 +28,68 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="M">
-			<nav class="N">
+		<main class="k">
+			<nav class="P">
 				<div></div>
 			</nav>
-			<article class="S" id="Article">
-				<section class="i"><code class="R">viewtify</code>
-					<h2 class="Enum a"><code class="b">ActivationPolicy</code></h2>
-					<ul class="C E">
-						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html">Enum</a><code class="parameters"><code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></code></code></li>
-					</ul>
-					<ul class="C F">
-						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html">Comparable</a><code class="parameters"><code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></code></code></li>
-						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/constant/Constable.html">Constable</a></code></li>
-						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></li>
-					</ul><span class="B">Application activation policy.</span></section>
-				<section class="i" id="Earliest">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="b">Earliest</code><i class="Z"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></h2><span class="B">Continue to process the earliest application. The subsequent applications will not start up.</span></section>
-				<section class="i" id="Multiple">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="b">Multiple</code><i class="Z"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></h2><span class="B">Application has multiple processes.</span></section>
-				<section class="i" id="Latest">
-					<h2 class="X"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="b">Latest</code><i class="Z"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></h2><span class="B">Terminate the prior applications immediately, then the latest application will start up.</span></section>
-				<section class="i" id="values()">
-					<h2 class="X"><i class="PUBLIC STATIC"></i><code class="b">values</code><code class="U">()</code><i class="Z"><code array="fix"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></h2>
-					<table class="T">
-						<tr class="K">
+			<article class="T" id="Article">
+				<section class="Z"><code class="N">viewtify</code>
+					<h2 class="Enum c"><code class="e">ActivationPolicy</code></h2>
+					<div class="W">
+						<ul class="C E">
+							<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html">Enum</a><code class="parameters"><code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></code></code></li>
+						</ul>
+						<ul class="C F">
+							<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html">Comparable</a><code class="parameters"><code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></code></code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/constant/Constable.html">Constable</a></code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></li>
+						</ul>
+					</div><span class="B"><p>Application activation policy.</p>
+					</span></section>
+				<section class="Z" id="Earliest">
+					<h2 class="R"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="e">Earliest</code><i class="i"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></h2><span class="B"><p>Continue to process the earliest application. The subsequent applications will not start up.</p>
+					</span></section>
+				<section class="Z" id="Multiple">
+					<h2 class="R"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="e">Multiple</code><i class="i"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></h2><span class="B"><p>Application has multiple processes.</p>
+					</span></section>
+				<section class="Z" id="Latest">
+					<h2 class="R"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="e">Latest</code><i class="i"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></h2><span class="B"><p>Terminate the prior applications immediately, then the latest application will start up.</p>
+					</span></section>
+				<section class="Z" id="values()">
+					<h2 class="R"><i class="STATIC PUBLIC"></i><code class="e">values</code><code class="h">()</code><i class="i"><code array="fix"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></h2>
+					<table class="V">
+						<tr class="I">
 							<td><code array="fix"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="i" id="valueOf(java.lang.String)">
-					<h2 class="X"><i class="PUBLIC STATIC"></i><code class="b">valueOf</code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">name</code>)</code><i class="Z"><code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></h2>
-					<table class="T">
-						<tr class="Y">
+				<section class="Z" id="valueOf(java.lang.String)">
+					<h2 class="R"><i class="STATIC PUBLIC"></i><code class="e">valueOf</code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">name</code>)</code><i class="i"><code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></h2>
+					<table class="V">
+						<tr class="O">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code>name</code></td>
 							<td></td>
 						</tr>
-						<tr class="K">
+						<tr class="I">
 							<td><code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
 			</article>
-			<aside class="I" id="SubNavi">
+			<aside class="g" id="SubNavi">
 				<div class="d">
-					<h5 class="V">Static Fields</h5>
+					<h5 class="S">Static Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ActivationPolicy.html#Earliest">Earliest</a></code><i class="O"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ActivationPolicy.html#Multiple">Multiple</a></code><i class="O"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ActivationPolicy.html#Latest">Latest</a></code><i class="O"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></li>
+						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ActivationPolicy.html#Earliest">Earliest</a></code><i class="b"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></li>
+						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ActivationPolicy.html#Multiple">Multiple</a></code><i class="b"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></li>
+						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ActivationPolicy.html#Latest">Latest</a></code><i class="b"><code class="return"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></li>
 					</ul>
-					<h5 class="V">Static Methods</h5>
+					<h5 class="S">Static Methods</h5>
 					<ul>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ActivationPolicy.html#values()">values</a></code><code class="U">()</code><i class="O"><code array="fix"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></li>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ActivationPolicy.html#valueOf(java.lang.String)">valueOf</a></code><code class="U">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">name</code>)</code><i class="O"><code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ActivationPolicy.html#values()">values</a></code><code class="h">()</code><i class="b"><code array="fix"><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ActivationPolicy.html#valueOf(java.lang.String)">valueOf</a></code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">name</code>)</code><i class="b"><code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></i></li>
 					</ul>
 				</div>
 			</aside>
