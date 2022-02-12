@@ -125,7 +125,7 @@ public final class Viewtify {
 
         CSS.enhance();
 
-        I.schedule(2, 2, TimeUnit.HOURS, true).to(System::gc);
+        I.schedule(5, 30, TimeUnit.MINUTES, true).to(System::gc);
     }
 
     /** The application configurator. */
