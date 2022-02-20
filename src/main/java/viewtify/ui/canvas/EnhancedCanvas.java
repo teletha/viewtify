@@ -20,6 +20,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
 import kiss.Signal;
 import viewtify.Viewtify;
 import viewtify.ui.helper.StyleHelper;
@@ -102,6 +103,9 @@ public class EnhancedCanvas extends Canvas implements StyleHelper<EnhancedCanvas
      * @return Chainable API.
      */
     public EnhancedCanvas width(double width) {
+        if (widthProperty().isBound()) {
+            widthProperty().unbind();
+        }
         setWidth(width);
         return this;
     }
@@ -113,6 +117,9 @@ public class EnhancedCanvas extends Canvas implements StyleHelper<EnhancedCanvas
      * @return Chainable API.
      */
     public EnhancedCanvas height(double height) {
+        if (heightProperty().isBound()) {
+            heightProperty().unbind();
+        }
         setHeight(height);
         return this;
     }
