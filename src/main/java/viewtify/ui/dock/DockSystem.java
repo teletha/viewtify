@@ -45,6 +45,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Signaling;
@@ -199,7 +200,7 @@ public final class DockSystem {
             layout().roots.remove(area);
         });
 
-        Viewtify.manage(area.name, scene);
+        Viewtify.manage(area.name, scene, false);
 
         stage.show();
     }

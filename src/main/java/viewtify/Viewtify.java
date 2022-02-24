@@ -647,10 +647,11 @@ public final class Viewtify {
      * 
      * @param id An identical name of the window.
      * @param scene A target window to manage.
+     * @param untrackable Window tracking state.
      */
-    public static void manage(String id, Scene scene) {
+    public static void manage(String id, Scene scene, boolean untrackable) {
         if (scene != null) {
-            manage(id, scene, (Stage) scene.getWindow(), true);
+            manage(id, scene, (Stage) scene.getWindow(), untrackable);
         }
     }
 
