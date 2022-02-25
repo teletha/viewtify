@@ -1,5 +1,15 @@
 # Changelog
 
+### [2.2.2](https://www.github.com/teletha/viewtify/compare/v2.2.1...v2.2.2) (2022-02-25)
+
+
+### Bug Fixes
+
+* Activate automatic gc more. ([fa8f921](https://www.github.com/teletha/viewtify/commit/fa8f921662fc32f67ef1400a5b3babd2fc029738))
+* Canvas enable to override bounded size. ([8dc35aa](https://www.github.com/teletha/viewtify/commit/8dc35aa924a220a02ccb34f05e3868e1dee0f6e9))
+* Dragging dock item is broken. ([886ccb9](https://www.github.com/teletha/viewtify/commit/886ccb9011f6d124b977e219717444f0a0c7b93c))
+* Restore the location of separated window. ([c16dc7d](https://www.github.com/teletha/viewtify/commit/c16dc7d014bf493621e5841abf96daaecbd70ff8))
+
 ### [2.2.1](https://www.github.com/teletha/viewtify/compare/v2.2.0...v2.2.1) (2022-01-02)
 
 
