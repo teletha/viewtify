@@ -21,6 +21,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
+
 import kiss.I;
 import viewtify.Key;
 import viewtify.Viewtify;
@@ -89,10 +90,15 @@ class TabArea extends ViewArea<UITabPane> {
         header.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onHeaderDragOver(e, this));
         node.when(User.input(Key.Alt)).take(v -> node.items().size() == 1).to(e -> setHeader(!header.isVisible()));
 
+        // If the user has not set a title, the title of the selected tab will be used as the title
+        // of the window.
         node.ui.getSelectionModel().selectedItemProperty().addListener((p, o, n) -> {
             if (n != null) {
                 node.stage().ifPresent(stage -> {
-                    stage.setTitle(n.getText());
+                    String title = stage.getTitle();
+                    if (title == null || title.isEmpty() || title.endsWith("\r")) {
+                        stage.setTitle(n.getText().concat("\r"));
+                    }
                 });
             }
         });

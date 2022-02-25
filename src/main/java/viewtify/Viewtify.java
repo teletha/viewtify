@@ -153,6 +153,9 @@ public final class Viewtify {
     private String icon = "";
 
     /** The configurable setting. */
+    private String title;
+
+    /** The configurable setting. */
     private double width;
 
     /** The configurable setting. */
@@ -251,6 +254,18 @@ public final class Viewtify {
     }
 
     /**
+     * Configure application title.
+     * 
+     * @return A title of this application.
+     */
+    public Viewtify title(String title) {
+        if (title != null && title.isBlank()) {
+            this.title = title.concat("\r");
+        }
+        return this;
+    }
+
+    /**
      * Configure application initial size
      * 
      * @param width
@@ -342,6 +357,9 @@ public final class Viewtify {
     private synchronized void initializeOnlyOnce(Class applicationClass) {
         if (stylesheets.size() == 0) {
             String prefs = ".preferences for " + applicationClass.getSimpleName().toLowerCase();
+
+            // Compute application title
+            if (title == null) title(applicationClass.getSimpleName());
 
             // Separate settings for each application
             I.env("PreferenceDirectory", prefs);
@@ -681,7 +699,8 @@ public final class Viewtify {
         // ================================================================
         scene.getStylesheets().addAll(stylesheets);
 
-        // apply icon
+        // apply title and icon
+        stage.setTitle(viewtify.title);
         if (viewtify.icon.length() != 0) {
             stage.getIcons().add(loadImage(viewtify.icon));
         }

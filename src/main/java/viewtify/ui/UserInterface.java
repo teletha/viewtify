@@ -9,15 +9,12 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.function.Consumer;
-
-import org.controlsfx.control.decoration.Decorator;
-import org.controlsfx.control.decoration.GraphicDecoration;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
@@ -29,6 +26,10 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import org.controlsfx.control.decoration.Decorator;
+import org.controlsfx.control.decoration.GraphicDecoration;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Singleton;
@@ -88,7 +89,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
      * @return
      */
     public final Optional<Stage> stage() {
-        return Optional.ofNullable((Stage) ui.getScene().getWindow());
+        return Optional.ofNullable(ui.getScene()).map(e -> (Stage) e.getWindow());
     }
 
     /**

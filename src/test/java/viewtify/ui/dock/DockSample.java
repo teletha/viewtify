@@ -37,6 +37,10 @@ public class DockSample extends View {
         DockSystem.register("Tab2").contents(tab -> new ViewPane("Tab2"));
         DockSystem.register("Tab3").contents(tab -> new ViewPane("Tab3"));
         DockSystem.register("Tab4").contents(tab -> new ViewPane("Tab4"));
+
+        for (int i = 0; i < 40; i++) {
+            DockSystem.register("Auto" + i).contents(tab -> new ViewPane("Auto"));
+        }
     }
 
     private class ViewPane extends View {

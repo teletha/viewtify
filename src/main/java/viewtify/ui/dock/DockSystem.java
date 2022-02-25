@@ -265,6 +265,9 @@ public final class DockSystem {
     /** Temporal storage for the draged tab */
     private static TabArea dragedTabArea;
 
+    /** Temporal storage for the draged tab */
+    private static SplitArea dragoveredSplitArea;
+
     /** The Doppelganger of the tab being dragged. */
     private static final UITab dragedDoppelganger = new UITab(null);
 
@@ -276,6 +279,24 @@ public final class DockSystem {
 
     /** The visible effect. */
     private static final ColorInput dropOverlay = new ColorInput();
+
+    /** Ignore successive events to reduce the drawing. */
+    private static long drawable;
+
+    /**
+     * Ignore massive event sequence to reduce the drawing operation.
+     * 
+     * @return
+     */
+    private static boolean drawable() {
+        long now = System.currentTimeMillis();
+        if (drawable + 33 < now) {
+            drawable = now;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     static {
         dropOverlay.setPaint(Color.LIGHTBLUE.deriveColor(0, 1, 1, 0.5));
@@ -335,6 +356,7 @@ public final class DockSystem {
             event.consume();
 
             ((Stage) area.node.ui.getScene().getWindow()).toFront();
+            onSplitterDragExited();
         }
     }
 
@@ -556,7 +578,7 @@ public final class DockSystem {
      * @param event The drag event.
      */
     static void onHeaderDragOver(DragEvent event, TabArea area) {
-        if (isValidDragboard(event)) {
+        if (drawable() && isValidDragboard(event)) {
             event.consume();
             event.acceptTransferModes(TransferMode.MOVE);
 
@@ -722,6 +744,75 @@ public final class DockSystem {
             } else {
                 return PositionTop;
             }
+        }
+    }
+
+    /**
+     * Handle the drag over event. It draws the drop position for the current cursor position.
+     *
+     * @param event The drag event.
+     */
+    static void onSplitterDragOver(DragEvent event, SplitArea area) {
+        if (isValidDragboard(event)) {
+            event.consume();
+            dragoveredSplitArea = area;
+
+            int position = detectPosition(event, area.node.ui);
+            if (canDrop(position, area)) {
+                applyOverlay(area.node.ui, position);
+                event.acceptTransferModes(TransferMode.MOVE);
+            } else {
+                area.node.ui.setEffect(null);
+            }
+        }
+    }
+
+    /**
+     * Handle the drag over event. It draws the drop position for the current cursor position.
+     *
+     * @param event The drag event.
+     */
+    static void onSplitterDragDropped(DragEvent event, SplitArea area) {
+        if (isValidDragboard(event)) {
+            // The insertion point is determined from the position of the pointer, but at that time
+            // it is necessary to calculate the actual tab size, and if the tab is removed, the size
+            // cannot be calculated.
+            // Therefore, it is necessary to calculate it first.
+            int position = detectPosition(event, area.node.ui);
+            dragedTabArea.remove(dragedTab, false);
+            area.add(dragedTab, position);
+
+            onSplitterDragExited();
+
+            event.setDropCompleted(true);
+            event.consume();
+        }
+    }
+
+    /**
+     * Handle the drag exited event for panes.
+     */
+    private static void onSplitterDragExited() {
+        if (dragoveredSplitArea != null) {
+            dragoveredSplitArea.node.ui.setEffect(null);
+            dragoveredSplitArea = null;
+        }
+    }
+
+    /**
+     * Determine if item can be moved to destination.
+     * 
+     * @param position Drop position.
+     * @param area A destination area.
+     * @return Result
+     */
+    private static boolean canDrop(int position, SplitArea area) {
+        switch (position) {
+        case PositionCenter:
+            return false;
+
+        default:
+            return true;
         }
     }
 

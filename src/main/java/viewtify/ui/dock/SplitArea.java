@@ -19,7 +19,9 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane.Divider;
+
 import viewtify.ui.UISplitPane;
+import viewtify.ui.helper.User;
 
 class SplitArea extends ViewArea<UISplitPane> {
 
@@ -48,6 +50,9 @@ class SplitArea extends ViewArea<UISplitPane> {
             }
             node.ui.setDividerPositions(snapshot);
         });
+
+        node.when(User.DragOver, e -> DockSystem.onSplitterDragOver(e, this));
+        node.when(User.DragDrop, e -> DockSystem.onSplitterDragDropped(e, this));
     }
 
     /**
