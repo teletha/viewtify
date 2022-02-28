@@ -578,47 +578,49 @@ public final class DockSystem {
      * @param event The drag event.
      */
     static void onHeaderDragOver(DragEvent event, TabArea area) {
-        if (drawable() && isValidDragboard(event)) {
+        if (isValidDragboard(event)) {
             event.consume();
             event.acceptTransferModes(TransferMode.MOVE);
 
-            int[] values = calculate(area, event);
-            int actualIndex = values[0];
-            int pointerIndex = values[1];
-            int width = values[2];
-            int leftward = values[3];
+            if (drawable()) {
+                int[] values = calculate(area, event);
+                int actualIndex = values[0];
+                int pointerIndex = values[1];
+                int width = values[2];
+                int leftward = values[3];
 
-            TabPane pane = area.node.ui;
-            if (event.getX() <= width / 5) {
-                TabAbuse.updateTabHeaderScrollOffset(pane, +20);
-            } else if (pane.lookup(".headers-region").getBoundsInLocal().getWidth() - width / 5 <= event.getX()) {
-                TabAbuse.updateTabHeaderScrollOffset(pane, -20);
-            }
+                TabPane pane = area.node.ui;
+                if (event.getX() <= width / 5) {
+                    TabAbuse.updateTabHeaderScrollOffset(pane, +20);
+                } else if (pane.lookup(".headers-region").getBoundsInLocal().getWidth() - width / 5 <= event.getX()) {
+                    TabAbuse.updateTabHeaderScrollOffset(pane, -20);
+                }
 
-            ObservableList<Tab> tabs = area.node.ui.getTabs();
-            for (int i = 0; i < tabs.size(); i++) {
-                Node node = tabs.get(i).getStyleableNode();
+                ObservableList<Tab> tabs = area.node.ui.getTabs();
+                for (int i = 0; i < tabs.size(); i++) {
+                    Node node = tabs.get(i).getStyleableNode();
 
-                if (i == actualIndex) {
-                    double lowerBound = -actualIndex * width;
-                    double upperBound = (tabs.size() - actualIndex - 1) * width;
-                    node.setTranslateX(Math.max(lowerBound, Math.min(leftward + event.getX() - width * (i + 0.5), upperBound)));
-                    node.setViewOrder(-100);
-                } else if (i < actualIndex) {
-                    if (i < pointerIndex) {
-                        node.setTranslateX(0);
-                        node.setViewOrder(0);
+                    if (i == actualIndex) {
+                        double lowerBound = -actualIndex * width;
+                        double upperBound = (tabs.size() - actualIndex - 1) * width;
+                        node.setTranslateX(Math.max(lowerBound, Math.min(leftward + event.getX() - width * (i + 0.5), upperBound)));
+                        node.setViewOrder(-100);
+                    } else if (i < actualIndex) {
+                        if (i < pointerIndex) {
+                            node.setTranslateX(0);
+                            node.setViewOrder(0);
+                        } else {
+                            node.setTranslateX(width);
+                            node.setViewOrder(0);
+                        }
                     } else {
-                        node.setTranslateX(width);
-                        node.setViewOrder(0);
-                    }
-                } else {
-                    if (i <= pointerIndex) {
-                        node.setTranslateX(-width);
-                        node.setViewOrder(0);
-                    } else {
-                        node.setTranslateX(0);
-                        node.setViewOrder(0);
+                        if (i <= pointerIndex) {
+                            node.setTranslateX(-width);
+                            node.setViewOrder(0);
+                        } else {
+                            node.setTranslateX(0);
+                            node.setViewOrder(0);
+                        }
                     }
                 }
             }
