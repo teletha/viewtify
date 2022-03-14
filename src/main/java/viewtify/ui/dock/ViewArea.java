@@ -15,6 +15,7 @@ import java.util.Objects;
 
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
+
 import kiss.Managed;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterface;
@@ -215,5 +216,15 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
      */
     protected void setLocation(int kind) {
 
+    }
+
+    /**
+     * Validate myself.
+     */
+    protected void validate() {
+        // don't use iterator to avoid ConcurrentModificationException
+        for (int i = children.size() - 1; 0 <= i; i--) {
+            children.get(i).validate();
+        }
     }
 }

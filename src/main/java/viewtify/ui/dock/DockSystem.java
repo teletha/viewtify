@@ -117,6 +117,13 @@ public final class DockSystem {
     }
 
     /**
+     * Validate dock system. Clean up the invalidate area.
+     */
+    public static void validate() {
+        layout().roots.forEach(RootArea::validate);
+    }
+
+    /**
      * Register a new view within this dock system.
      * <p/>
      * The Position will give an advice where this view should be placed.

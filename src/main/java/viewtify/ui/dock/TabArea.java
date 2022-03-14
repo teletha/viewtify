@@ -291,4 +291,15 @@ class TabArea extends ViewArea<UITabPane> {
     protected boolean hasView(String id) {
         return viewInitial.contains(id);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void validate() {
+        if (getIds().isEmpty()) {
+            parent.remove(this);
+        }
+    }
+
 }
