@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.3.0](https://www.github.com/teletha/viewtify/compare/v2.2.1...v2.3.0) (2022-03-14)
+
+
+### Features
+
+* Add DockSystem#validate. ([ff2b1f8](https://www.github.com/teletha/viewtify/commit/ff2b1f86f32ab88713f60a880c5b8457f5a01bf4))
+* Support more flexible dock layout. ([ed5abe6](https://www.github.com/teletha/viewtify/commit/ed5abe65e16f87ebaceac9a3143f15fd34c11d0d))
+
+
+### Bug Fixes
+
+* Activate automatic gc more. ([fa8f921](https://www.github.com/teletha/viewtify/commit/fa8f921662fc32f67ef1400a5b3babd2fc029738))
+* Better draggable area. ([c4dacab](https://www.github.com/teletha/viewtify/commit/c4dacabf81126c4a42e9c0721f8272926e56f971))
+* Canvas enable to override bounded size. ([8dc35aa](https://www.github.com/teletha/viewtify/commit/8dc35aa924a220a02ccb34f05e3868e1dee0f6e9))
+* Dragging dock item is broken. ([886ccb9](https://www.github.com/teletha/viewtify/commit/886ccb9011f6d124b977e219717444f0a0c7b93c))
+* Restore the location of separated window. ([c16dc7d](https://www.github.com/teletha/viewtify/commit/c16dc7d014bf493621e5841abf96daaecbd70ff8))
+
 ### [2.2.1](https://www.github.com/teletha/viewtify/compare/v2.2.0...v2.2.1) (2022-01-02)
 
 
