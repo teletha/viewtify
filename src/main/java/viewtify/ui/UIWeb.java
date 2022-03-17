@@ -31,6 +31,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -44,7 +45,7 @@ import kiss.WiseFunction;
 import netscape.javascript.JSObject;
 import viewtify.Viewtify;
 
-public class UIWeb extends UserInterface<UIWeb, WebView> {
+public class UIWeb extends UserInterface<UIWeb, WebView> implements Disposable {
 
     /** The internal cookie manager. */
     private static final Cookies cookies = new Cookies();
@@ -278,6 +279,18 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
     }
 
     /**
+     * Returns the attribute of the first element specified by the CSS selector and attribute name.
+     * 
+     * @param cssSelector CSS selector to find.
+     * @return Chainable API.
+     */
+    public Signal<String> attribute(String cssSelector, String attributeName) {
+        return new Signal<>((observer, disposer) -> {
+            return bridge.await(observer, disposer, "return document.querySelector('{0}').getAttribute('{1}')", cssSelector, attributeName);
+        });
+    }
+
+    /**
      * Returns the text of the first element specified by the CSS selector.
      * 
      * @param cssSelector CSS selector to find.
@@ -327,6 +340,14 @@ public class UIWeb extends UserInterface<UIWeb, WebView> {
             result.accept(v);
             return this;
         });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void vandalize() {
+        engine.load("");
     }
 
     /**
