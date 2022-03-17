@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://www.github.com/teletha/viewtify/compare/v2.3.0...v2.4.0) (2022-03-17)
+
+
+### Features
+
+* Add UIWeb#attribute which accessing to the attribute value. ([a794c08](https://www.github.com/teletha/viewtify/commit/a794c080429b4ff1852fea494f9792d1507276d3))
+
 ## [2.3.0](https://www.github.com/teletha/viewtify/compare/v2.2.1...v2.3.0) (2022-03-14)
 
 
