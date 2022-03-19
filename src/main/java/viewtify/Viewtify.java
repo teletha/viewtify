@@ -9,6 +9,7 @@
  */
 package viewtify;
 
+import static java.nio.file.StandardOpenOption.*;
 import static java.util.concurrent.TimeUnit.*;
 import static java.util.stream.Collectors.*;
 
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.StackWalker.Option;
 import java.lang.management.ManagementFactory;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -436,19 +439,27 @@ public final class Viewtify {
         if (policy != ActivationPolicy.Multiple) {
             // create application specified directory for lock
             Directory root = Locator.directory(prefs + "/lock").touch();
+            FileChannel channel = root.file(".lock").newFileChannel(CREATE, WRITE);
+            FileLock lock = null;
 
-            root.lock().retry(e -> e.as(NullPointerException.class).effect(() -> {
-                // another application is activated
-                if (policy == ActivationPolicy.Earliest) {
-                    // make the window active
-                    root.file("active").touch();
+            try {
+                while ((lock = channel.tryLock()) == null) {
+                    // another application is activated
+                    if (policy == ActivationPolicy.Earliest) {
+                        // make the window active
+                        root.file("active").touch();
 
-                    throw new Error("Application is running already.");
-                } else {
-                    // close the window
-                    root.file("close").touch();
+                        throw new Error("Application is running already.");
+                    } else {
+                        // close another application
+                        root.file("close").touch();
+                    }
+
+                    Thread.sleep(500);
                 }
-            }).wait(500, TimeUnit.MILLISECONDS).take(50)).to();
+            } catch (Throwable e) {
+                throw I.quiet(e);
+            }
 
             // observe lock directory for next application
             root.observe().map(WatchEvent::context).to(path -> {
