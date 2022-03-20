@@ -18,7 +18,6 @@ import java.io.InputStream;
 import java.lang.StackWalker.Option;
 import java.lang.management.ManagementFactory;
 import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -440,10 +439,9 @@ public final class Viewtify {
             // create application specified directory for lock
             Directory root = Locator.directory(prefs + "/lock").touch();
             FileChannel channel = root.file(".lock").newFileChannel(CREATE, WRITE);
-            FileLock lock = null;
 
             try {
-                while ((lock = channel.tryLock()) == null) {
+                while (channel.tryLock() == null) {
                     // another application is activated
                     if (policy == ActivationPolicy.Earliest) {
                         // make the window active
