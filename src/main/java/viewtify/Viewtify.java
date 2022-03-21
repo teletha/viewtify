@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.lang.StackWalker.Option;
 import java.lang.management.ManagementFactory;
 import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -162,6 +163,10 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private double height;
+
+    /** We must continue to hold the lock object to avoid releasing by GC. */
+    @SuppressWarnings("unused")
+    private FileLock lock;
 
     /**
      * Hide.
@@ -441,7 +446,7 @@ public final class Viewtify {
             FileChannel channel = root.file(".lock").newFileChannel(CREATE, WRITE);
 
             try {
-                while (channel.tryLock() == null) {
+                while ((lock = channel.tryLock()) == null) {
                     // another application is activated
                     if (policy == ActivationPolicy.Earliest) {
                         // make the window active
