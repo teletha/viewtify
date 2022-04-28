@@ -11,7 +11,6 @@ package viewtify.ui;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -19,9 +18,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
+
+import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseFunction;
+import kiss.WiseTriFunction;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
@@ -158,7 +160,7 @@ public class UITreeTableColumn<RowV, ColumnV>
      * {@inheritDoc}
      */
     @Override
-    public <C> UITreeTableColumn<RowV, ColumnV> renderByNode(Supplier<C> context, BiFunction<C, ColumnV, ? extends Node> renderer) {
+    public <C> UITreeTableColumn<RowV, ColumnV> renderByNode(Supplier<C> context, WiseTriFunction<C, ColumnV, Disposable, ? extends Node> renderer) {
         ui.setCellFactory(table -> new GenericCell(context, renderer));
         return this;
     }
@@ -172,12 +174,15 @@ public class UITreeTableColumn<RowV, ColumnV>
         private final C context;
 
         /** The user defined cell renderer. */
-        private final BiFunction<C, ColumnValue, Node> renderer;
+        private final WiseTriFunction<C, ColumnValue, Disposable, Node> renderer;
+
+        /** The cell disposer. */
+        private Disposable disposer = Disposable.empty();
 
         /**
          * @param renderer
          */
-        private GenericCell(Supplier<C> context, BiFunction<C, ColumnValue, Node> renderer) {
+        private GenericCell(Supplier<C> context, WiseTriFunction<C, ColumnValue, Disposable, Node> renderer) {
             this.context = context.get();
             this.renderer = renderer;
         }
@@ -191,8 +196,11 @@ public class UITreeTableColumn<RowV, ColumnV>
 
             if (item == null || empty) {
                 setGraphic(null);
+
+                disposer.dispose();
+                disposer = Disposable.empty();
             } else {
-                setGraphic(renderer.apply(context, item));
+                setGraphic(renderer.apply(context, item, disposer));
             }
         }
     }

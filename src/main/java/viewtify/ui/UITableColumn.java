@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -23,19 +22,22 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
+
+import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import kiss.WiseFunction;
 import kiss.WiseTriConsumer;
 import kiss.WiseTriFunction;
+import kiss.Ⅱ;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 
 public class UITableColumn<RowV, ColumnV>
         extends UITableColumnBase<TableColumn<RowV, ColumnV>, UITableColumn<RowV, ColumnV>, RowV, ColumnV, UITableView<RowV>>
-        implements CollectableItemRenderingHelper<UITableColumn<RowV, ColumnV>, ColumnV> {
+        implements CollectableItemRenderingHelper<UITableColumn<RowV, ColumnV>, Ⅱ<RowV, ColumnV>> {
 
     /** The value provider utility. */
     private TypeMappingProvider mappingProvider;
@@ -194,39 +196,18 @@ public class UITableColumn<RowV, ColumnV>
      */
     public UITableColumn<RowV, ColumnV> render(WiseTriConsumer<UILabel, RowV, ColumnV> renderer) {
         Objects.requireNonNull(renderer);
-        return renderByUI(() -> new UILabel(null), (label, row, column) -> {
-            renderer.accept(label, row, column);
+        return renderByUI(() -> new UILabel(null), (label, values, disposer) -> {
+            renderer.accept(label, values.ⅰ, values.ⅱ);
             return label;
         });
-    }
-
-    /**
-     * Render the human-readable item expression.
-     * 
-     * @param renderer A renderer.
-     * @return
-     */
-    public <C> UITableColumn<RowV, ColumnV> renderByUI(Supplier<C> context, WiseTriFunction<C, RowV, ColumnV, ? extends UserInterfaceProvider<? extends Node>> renderer) {
-        Objects.requireNonNull(renderer);
-        return renderByNode(context, (ui, row, column) -> renderer.apply(ui, row, column).ui());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public <C> UITableColumn<RowV, ColumnV> renderByNode(Supplier<C> context, BiFunction<C, ColumnV, ? extends Node> renderer) {
+    public <C> UITableColumn<RowV, ColumnV> renderByNode(Supplier<C> context, WiseTriFunction<C, Ⅱ<RowV, ColumnV>, Disposable, ? extends Node> renderer) {
         Objects.requireNonNull(renderer);
-        return renderByNode(context, (ui, row, column) -> renderer.apply(ui, column));
-    }
-
-    /**
-     * Render the human-readable item expression.
-     * 
-     * @param renderer A renderer.
-     * @return
-     */
-    public <C> UITableColumn<RowV, ColumnV> renderByNode(Supplier<C> context, WiseTriFunction<C, RowV, ColumnV, ? extends Node> renderer) {
         ui.setCellFactory(table -> new GenericCell(context, renderer));
         return this;
     }
@@ -240,12 +221,15 @@ public class UITableColumn<RowV, ColumnV>
         private final C context;
 
         /** The user defined cell renderer. */
-        private final WiseTriFunction<C, RowValue, ColumnValue, Node> renderer;
+        private final WiseTriFunction<C, Ⅱ<RowValue, ColumnValue>, Disposable, Node> renderer;
+
+        /** The cell disposer. */
+        private Disposable disposer = Disposable.empty();
 
         /**
          * @param renderer
          */
-        private GenericCell(Supplier<C> context, WiseTriFunction<C, RowValue, ColumnValue, Node> renderer) {
+        private GenericCell(Supplier<C> context, WiseTriFunction<C, Ⅱ<RowValue, ColumnValue>, Disposable, Node> renderer) {
             this.context = context.get();
             this.renderer = renderer;
         }
@@ -261,9 +245,13 @@ public class UITableColumn<RowV, ColumnV>
 
             if (item == null || row == null || empty) {
                 setGraphic(null);
+
+                disposer.dispose();
+                disposer = Disposable.empty();
             } else {
-                setGraphic(renderer.apply(context, row, item));
+                setGraphic(renderer.apply(context, I.pair(row, item), disposer));
             }
         }
     }
+
 }

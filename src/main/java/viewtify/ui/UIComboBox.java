@@ -10,7 +10,6 @@
 package viewtify.ui;
 
 import java.util.Objects;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -24,6 +23,7 @@ import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Signaling;
+import kiss.WiseTriFunction;
 import viewtify.Viewtify;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
@@ -161,7 +161,7 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
      * {@inheritDoc}
      */
     @Override
-    public <C> UIComboBox<T> renderByNode(Supplier<C> context, BiFunction<C, T, ? extends Node> renderer) {
+    public <C> UIComboBox<T> renderByNode(Supplier<C> context, WiseTriFunction<C, T, Disposable, ? extends Node> renderer) {
         ui.setCellFactory(view -> new UIListView.GenericListCell<C, T>(context, renderer));
         return this;
     }

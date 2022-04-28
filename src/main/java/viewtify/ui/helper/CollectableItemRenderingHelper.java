@@ -18,7 +18,11 @@ import java.util.function.Supplier;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+
+import kiss.Disposable;
 import kiss.Variable;
+import kiss.WiseTriConsumer;
+import kiss.WiseTriFunction;
 import viewtify.Viewtify;
 import viewtify.ui.UICheckBox;
 import viewtify.ui.UIComboBox;
@@ -49,7 +53,7 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      */
     default Self render(BiConsumer<UILabel, E> renderer) {
         Objects.requireNonNull(renderer);
-        return renderByUI(() -> new UILabel(null), (label, e) -> {
+        return renderByUI(() -> new UILabel(null), (label, e, d) -> {
             renderer.accept(label, e);
             return label;
         });
@@ -97,7 +101,7 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      */
     default <C> Self renderByProperty(Supplier<C> context, BiFunction<C, E, Property<String>> renderer) {
         Objects.requireNonNull(renderer);
-        return renderByNode(context, (c, e) -> {
+        return renderByNode(context, (c, e, d) -> {
             Label label = new Label();
             label.textProperty().bind(renderer.apply(c, e));
             return label;
@@ -110,9 +114,9 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    default <C> Self renderByUI(Supplier<C> context, BiFunction<C, E, ? extends UserInterfaceProvider<? extends Node>> renderer) {
+    default <C> Self renderByUI(Supplier<C> context, WiseTriFunction<C, E, Disposable, ? extends UserInterfaceProvider<? extends Node>> renderer) {
         Objects.requireNonNull(renderer);
-        return renderByNode(context, (c, e) -> renderer.apply(c, e).ui());
+        return renderByNode(context, (c, e, d) -> renderer.apply(c, e, d).ui());
     }
 
     /**
@@ -121,18 +125,18 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
      * @param renderer A renderer.
      * @return
      */
-    <C> Self renderByNode(Supplier<C> context, BiFunction<C, E, ? extends Node> renderer);
+    <C> Self renderByNode(Supplier<C> context, WiseTriFunction<C, E, Disposable, ? extends Node> renderer);
 
-    default Self renderAsCheckBox(Function<E, Variable<Boolean>> modeler, BiConsumer<UICheckBox, Variable<Boolean>> renderer) {
-        return renderByUI(() -> new UICheckBox(null), (ui, value) -> {
-            renderer.accept(ui, modeler.apply(value));
+    default Self renderAsCheckBox(Function<E, Variable<Boolean>> modeler, WiseTriConsumer<UICheckBox, Variable<Boolean>, Disposable> renderer) {
+        return renderByUI(() -> new UICheckBox(null), (ui, value, disposer) -> {
+            renderer.accept(ui, modeler.apply(value), disposer);
             return ui;
         });
     }
 
-    default <V> Self renderAsComboBox(Function<E, Variable<V>> modeler, BiConsumer<UIComboBox<V>, Variable<V>> renderer) {
-        return renderByUI(() -> new UIComboBox<V>(null), (ui, value) -> {
-            renderer.accept(ui, modeler.apply(value));
+    default <V> Self renderAsComboBox(Function<E, Variable<V>> modeler, WiseTriConsumer<UIComboBox<V>, Variable<V>, Disposable> renderer) {
+        return renderByUI(() -> new UIComboBox<V>(null), (ui, value, disposer) -> {
+            renderer.accept(ui, modeler.apply(value), disposer);
             return ui;
         });
     }

@@ -9,7 +9,6 @@
  */
 package viewtify.ui;
 
-import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
@@ -18,6 +17,8 @@ import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
+import kiss.Disposable;
+import kiss.WiseTriFunction;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
 import viewtify.ui.helper.ContextMenuHelper;
@@ -48,7 +49,7 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
      * {@inheritDoc}
      */
     @Override
-    public <C> UIListView<E> renderByNode(Supplier<C> context, BiFunction<C, E, ? extends Node> renderer) {
+    public <C> UIListView<E> renderByNode(Supplier<C> context, WiseTriFunction<C, E, Disposable, ? extends Node> renderer) {
         ui.setCellFactory(view -> new GenericListCell<C, E>(context, renderer));
         return this;
     }
@@ -62,12 +63,15 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
         private final C context;
 
         /** The user defined cell renderer. */
-        private final BiFunction<C, E, ? extends Node> renderer;
+        private final WiseTriFunction<C, E, Disposable, ? extends Node> renderer;
+
+        /** The cell disposer. */
+        private Disposable disposer = Disposable.empty();
 
         /**
          * @param renderer
          */
-        GenericListCell(Supplier<C> context, BiFunction<C, E, ? extends Node> renderer) {
+        GenericListCell(Supplier<C> context, WiseTriFunction<C, E, Disposable, ? extends Node> renderer) {
             this.context = context.get();
             this.renderer = renderer;
         }
@@ -82,8 +86,11 @@ public class UIListView<E> extends UserInterface<UIListView<E>, ListView<E>>
             setText(null);
             if (item == null || empty) {
                 setGraphic(null);
+
+                disposer.dispose();
+                disposer = Disposable.empty();
             } else {
-                setGraphic(renderer.apply(context, item));
+                setGraphic(renderer.apply(context, item, disposer));
             }
         }
     }
