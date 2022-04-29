@@ -9,13 +9,12 @@
  */
 package viewtify.ui.helper;
 
+import org.controlsfx.control.IndexedCheckModel;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SingleSelectionModel;
-
-import org.controlsfx.control.IndexedCheckModel;
-
 import viewtify.Viewtify;
 
 class SelectionModelWrappers {
@@ -39,26 +38,33 @@ class SelectionModelWrappers {
          */
         SingleSelectionModelWrapper(SingleSelectionModel<E> model) {
             this.model = model;
-            setSelectedIndex(model.getSelectedIndex());
-            setSelectedItem(model.getSelectedItem());
+
+            indices = FXCollections.observableArrayList();
+            Viewtify.observe(model.selectedIndexProperty()).as(Integer.class).to(index -> {
+                setSelectedIndex(index);
+                if (indices.isEmpty()) {
+                    indices.add(index);
+                } else {
+                    indices.set(0, index);
+                }
+            });
+
+            items = FXCollections.observableArrayList();
+            Viewtify.observe(model.selectedItemProperty()).to(item -> {
+                setSelectedItem(item);
+                if (items.isEmpty()) {
+                    items.add(item);
+                } else {
+                    items.set(0, item);
+                }
+            });
         }
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public synchronized ObservableList<Integer> getSelectedIndices() {
-            if (indices == null) {
-                indices = FXCollections.observableArrayList();
-                Viewtify.observe(model.selectedIndexProperty()).as(Integer.class).to(index -> {
-                    setSelectedIndex(index);
-                    if (indices.isEmpty()) {
-                        indices.add(index);
-                    } else {
-                        indices.set(0, index);
-                    }
-                });
-            }
+        public ObservableList<Integer> getSelectedIndices() {
             return indices;
         }
 
@@ -66,18 +72,7 @@ class SelectionModelWrappers {
          * {@inheritDoc}
          */
         @Override
-        public synchronized ObservableList<E> getSelectedItems() {
-            if (items == null) {
-                items = FXCollections.observableArrayList();
-                Viewtify.observe(model.selectedItemProperty()).to(item -> {
-                    setSelectedItem(item);
-                    if (items.isEmpty()) {
-                        items.add(item);
-                    } else {
-                        items.set(0, item);
-                    }
-                });
-            }
+        public ObservableList<E> getSelectedItems() {
             return items;
         }
 

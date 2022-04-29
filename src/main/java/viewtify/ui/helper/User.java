@@ -18,11 +18,11 @@ import javafx.event.EventType;
 import javafx.scene.control.SortEvent;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-
 import kiss.I;
 import kiss.Signal;
 import viewtify.Key;
@@ -77,6 +77,9 @@ public final class User<E extends Event> {
     private static Predicate<MouseEvent> valid(MouseButton button) {
         return button == null || button == MouseButton.NONE ? I::accept : e -> e.getButton() == button;
     }
+
+    /** User Action */
+    public static final User<InputMethodEvent> Input = new User(InputMethodEvent.INPUT_METHOD_TEXT_CHANGED);
 
     /**
      * Helper method to create {@link User} action for key input.
