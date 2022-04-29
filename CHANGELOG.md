@@ -1,5 +1,14 @@
 # Changelog
 
+### [2.4.1](https://www.github.com/teletha/viewtify/compare/v2.4.0...v2.4.1) (2022-04-29)
+
+
+### Bug Fixes
+
+* Application policy. ([1512789](https://www.github.com/teletha/viewtify/commit/151278993a57a6671cbc7742c3215ab9bf54274b))
+* SelectionHelper#whenSelect is broken on table. ([49e0ecd](https://www.github.com/teletha/viewtify/commit/49e0ecdd3a86315fd3d5f1dfe280b5a389c362d8))
+* Support virtual flow's size estimation. ([6053f65](https://www.github.com/teletha/viewtify/commit/6053f658e8da1ee3a67b1270bc8021ab451c2d9c))
+
 ## [2.4.0](https://www.github.com/teletha/viewtify/compare/v2.3.0...v2.4.0) (2022-03-17)
 
 
