@@ -13,17 +13,21 @@ import java.lang.reflect.Method;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
-
-import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
+
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
+
+import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -41,6 +45,9 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
 
     /** The value sync state. */
     private final GuardedOperation updating = new GuardedOperation().ignoreError();
+
+    /** The inline formatter. */
+    private VerifiableFormatter formatter;
 
     /**
      * Enchanced view.
@@ -196,6 +203,31 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     }
 
     /**
+     * Set the uneditable text suffix.
+     * 
+     * @param suffix
+     * @return Chainable API.
+     */
+    public final UIText<V> suffix(String suffix) {
+        formatter().suffix = Objects.requireNonNull(suffix, "");
+        // ui.setRight(new Label(suffix));
+        return this;
+    }
+
+    /**
+     * Lazy builder.
+     * 
+     * @return
+     */
+    private VerifiableFormatter formatter() {
+        if (formatter == null) {
+            formatter = new VerifiableFormatter();
+            ui.setTextFormatter(formatter.formatter);
+        }
+        return formatter;
+    }
+
+    /**
      * Show a clear button inside the {@link TextField} (on the right hand side of it) when text is
      * entered by the user.
      */
@@ -328,6 +360,69 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
             public ObjectProperty<Node> rightProperty() {
                 return VerifiableTextField.this.rightProperty();
             }
+        }
+    }
+
+    /**
+     * 
+     */
+    private class VerifiableFormatter implements UnaryOperator<Change> {
+
+        private String prefix = "";
+
+        private String suffix = "";
+
+        private TextFormatter<V> formatter = new TextFormatter<>(this);
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Change apply(Change c) {
+            try {
+                String oldText = c.getControlText();
+                String newText = c.getControlNewText();
+                int newLength = newText.length();
+
+                if (c.isContentChange()) {
+                    if (!newText.startsWith(prefix)) {
+                        c.setText(prefix + c.getText());
+                    }
+
+                    if (!newText.endsWith(suffix)) {
+                        c.setText(c.getText() + suffix);
+                    }
+
+                    if (c.isDeleted()) {
+                        if (oldText.length() - suffix.length() < c.getRangeEnd()) {
+                            return null;
+                        }
+                    }
+                } else {
+
+                }
+
+                int caretPrev = c.getControlCaretPosition();
+                int caretNext = c.getCaretPosition();
+                if (caretNext < caretPrev) {
+                    if (prefix != null) {
+                        if (caretNext < prefix.length()) {
+                            c.setCaretPosition(caretPrev);
+                        }
+                    }
+                }
+
+                if (caretPrev < caretNext) {
+                    if (suffix != null) {
+                        if (newLength < caretNext + suffix.length()) {
+                            c.setCaretPosition(caretPrev);
+                        }
+                    }
+                }
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return c;
         }
     }
 }
