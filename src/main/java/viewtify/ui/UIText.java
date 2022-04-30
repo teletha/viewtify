@@ -16,18 +16,18 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.Property;
-import javafx.scene.Node;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
-
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
 
 import impl.org.controlsfx.skin.CustomTextFieldSkin;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -203,14 +203,25 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     }
 
     /**
+     * Set the uneditable text prefix.
+     * 
+     * @param prefix
+     * @return Chainable API.
+     */
+    public final UIText<V> prefix(String prefix) {
+        ui.setLeft(new Label(prefix));
+        return this;
+    }
+
+    /**
      * Set the uneditable text suffix.
      * 
      * @param suffix
      * @return Chainable API.
      */
     public final UIText<V> suffix(String suffix) {
-        formatter().suffix = Objects.requireNonNull(suffix, "");
-        // ui.setRight(new Label(suffix));
+        // formatter().suffix = Objects.requireNonNull(suffix, "");
+        ui.setRight(new Label(suffix));
         return this;
     }
 
