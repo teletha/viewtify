@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TabPane.TabDragPolicy;
+
 import kiss.Disposable;
 import viewtify.property.SmartProperty;
 import viewtify.ui.helper.Actions;

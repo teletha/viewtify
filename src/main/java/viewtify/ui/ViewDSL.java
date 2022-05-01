@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import org.controlsfx.control.HiddenSidesPane;
-
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.scene.Group;
@@ -31,6 +29,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import org.controlsfx.control.HiddenSidesPane;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Tree;
@@ -149,6 +150,27 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param label A form label.
      * @param userInterfaces A list of form controls.
      */
+    protected final void form(String label, UserInterfaceProvider... userInterfaces) {
+        form(() -> TextNotation.parse(label), null, userInterfaces);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     * @param style Additional style for controls.
+     * @param userInterfaces A list of form controls.
+     */
+    protected final void form(String label, Style style, UserInterfaceProvider... userInterfaces) {
+        form(() -> TextNotation.parse(label), style, userInterfaces);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     * @param userInterfaces A list of form controls.
+     */
     protected final void form(String label, UserInterface... userInterfaces) {
         form(() -> TextNotation.parse(label), null, userInterfaces);
     }
@@ -207,6 +229,22 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
             if (label != null) $(label, FormStyles.FormLabel);
             for (UserInterface userInterface : userInterfaces) {
                 $(userInterface, style == null ? new Style[] {FormStyles.FormInput} : new Style[] {FormStyles.FormInput, style});
+            }
+        });
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     * @param style Additional style for controls.
+     * @param userInterfaces A list of form controls.
+     */
+    private void form(UserInterfaceProvider label, Style style, UserInterfaceProvider... userInterfaces) {
+        $(hbox, FormStyles.FormRow, () -> {
+            if (label != null) $(label, FormStyles.FormLabel);
+            for (UserInterfaceProvider userInterface : userInterfaces) {
+                $(userInterface, style == null ? new Style[] {} : new Style[] {style});
             }
         });
     }

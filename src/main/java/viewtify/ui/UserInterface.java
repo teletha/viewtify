@@ -163,6 +163,32 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     }
 
     /**
+     * Define the user action when this UI is focused.
+     * 
+     * @param action
+     * @return
+     */
+    public final Self whenFocus(Runnable action) {
+        ui.focusedProperty().addListener((v, o, n) -> {
+            if (n) action.run();
+        });
+        return (Self) this;
+    }
+
+    /**
+     * Define the user action when this UI is unfocused.
+     * 
+     * @param action
+     * @return
+     */
+    public final Self whenUnfocus(Runnable action) {
+        ui.focusedProperty().addListener((v, o, n) -> {
+            if (!n) action.run();
+        });
+        return (Self) this;
+    }
+
+    /**
      * Mark as valid interface.
      * 
      * @return
