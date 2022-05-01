@@ -10,6 +10,7 @@ const root = {
 		"viewtify.ui",
 		"viewtify.ui.canvas",
 		"viewtify.ui.dock",
+		"viewtify.ui.focus",
 		"viewtify.ui.helper",
 		"viewtify.ui.query",
 		"viewtify.ui.toast",
@@ -379,6 +380,13 @@ const root = {
 			"name": "Translatable",
 			"packageName": "viewtify.util",
 			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Traverser",
+			"packageName": "viewtify.ui.focus",
+			"type": "Class"
 		},
 		{
 			"modifiers": {
