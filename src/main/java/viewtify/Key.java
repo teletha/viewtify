@@ -28,7 +28,7 @@ public class Key {
     /**
      * Constant for the {@code Enter} key.
      */
-    public static final Key Enter = new Key(13, "Enter");
+    public static final Key Enter = new Key(10, "Enter");
 
     /**
      * Constant for the {@code Clear} key.

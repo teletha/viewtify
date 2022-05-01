@@ -16,10 +16,6 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
-
-import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
@@ -28,6 +24,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
+
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
+
+import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -130,15 +131,6 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     }
 
     /**
-     * You will be able to enter only numbers.
-     * 
-     * @return
-     */
-    public final UIText<V> acceptPositiveNumberInput() {
-        return acceptInput("[0-9.]+");
-    }
-
-    /**
      * You will be able to enter only integral numbers.
      * 
      * @return
@@ -148,12 +140,30 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     }
 
     /**
+     * You will be able to enter only positive integral numbers.
+     * 
+     * @return
+     */
+    public final UIText<V> acceptPositiveIntegralInput() {
+        return acceptInput("[0-9]+");
+    }
+
+    /**
      * You will be able to enter only numbers.
      * 
      * @return
      */
     public final UIText<V> acceptDecimalInput() {
         return acceptInput("[+\\-0-9.]+");
+    }
+
+    /**
+     * You will be able to enter only numbers.
+     * 
+     * @return
+     */
+    public final UIText<V> acceptPositiveDecimalInput() {
+        return acceptInput("[0-9.]+");
     }
 
     /**
@@ -326,7 +336,7 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
                 return;
             }
 
-            if (0 < max && max < getLength()) {
+            if (0 < max && max < getLength() && max < getLength() - selectedTextProperty().get().length()) {
                 return;
             }
 
