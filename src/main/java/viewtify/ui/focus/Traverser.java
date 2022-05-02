@@ -15,6 +15,7 @@ import java.util.List;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
 import kiss.I;
@@ -48,6 +49,12 @@ public class Traverser {
      * Key handling.
      */
     private EventHandler<KeyEvent> listener = e -> {
+        Node n = (Node) e.getSource();
+
+        if (n instanceof TextField == false) {
+            return;
+        }
+
         if (next != null && next.match(e)) {
             int[] location = locate((Node) e.getSource());
             moveTo(location[0], location[1] + 1);
@@ -60,18 +67,31 @@ public class Traverser {
             int[] location = locate((Node) e.getSource());
             moveTo(location[0] - 1, 0);
         } else if (up != null && up.match(e)) {
-            Node node = (Node) e.getSource();
-            Bounds base = node.localToScene(node.getBoundsInLocal());
-            moveTo(base.getMinX(), base.getMinY() - base.getHeight());
+            List<Node> row = locateRow((Node) e.getSource());
+            double relative = computeRelativeHorizon(row, (Node) e.getSource());
+            int index = table.indexOf(row);
+            if (index != 0) {
+                List<Node> up = table.get(index - 1);
+                Node near = computeNear(up, relative);
+                near.requestFocus();
+            }
         } else if (down != null && down.match(e)) {
-            int[] location = locate((Node) e.getSource());
-
+            List<Node> row = locateRow((Node) e.getSource());
+            double relative = computeRelativeHorizon(row, (Node) e.getSource());
+            int index = table.indexOf(row);
+            if (index < table.size() - 1) {
+                List<Node> down = table.get(index + 1);
+                Node near = computeNear(down, relative);
+                near.requestFocus();
+            }
         } else if (left != null && left.match(e)) {
-            int[] location = locate((Node) e.getSource());
-            moveTo(location[0] - 1, 0);
+            List<Node> row = locateRow(n);
+            int index = row.indexOf(n);
+            if (0 < index) row.get(index - 1).requestFocus();
         } else if (right != null && right.match(e)) {
-            int[] location = locate((Node) e.getSource());
-            moveTo(location[0] - 1, 0);
+            List<Node> row = locateRow(n);
+            int index = row.indexOf(n);
+            if (index < row.size() - 1) row.get(index + 1).requestFocus();
         }
     };
 
@@ -102,6 +122,19 @@ public class Traverser {
         throw new Error();
     }
 
+    private List<Node> locateRow(Node node) {
+        for (int i = 0; i < table.size(); i++) {
+            List<Node> row = table.get(i);
+            for (int j = 0; j < row.size(); j++) {
+                Node item = row.get(j);
+                if (item == node) {
+                    return row;
+                }
+            }
+        }
+        throw new Error();
+    }
+
     private void moveTo(int rowIndex, int columnIndex) {
         if (rowIndex < 0) {
             rowIndex = canLoop ? table.size() - 1 : 0;
@@ -118,6 +151,46 @@ public class Traverser {
         } else {
             row.get(columnIndex).requestFocus();;
         }
+    }
+
+    /**
+     * @param row
+     * @param source
+     * @return
+     */
+    private double computeRelativeHorizon(List<Node> row, Node source) {
+        double min = 0;
+        for (int i = 0; i < row.size(); i++) {
+            min = Math.min(min, row.get(i).localToScene(row.get(i).getBoundsInLocal()).getMinX());
+        }
+        return source.localToScene(source.getBoundsInLocal()).getCenterX() - min;
+    }
+
+    /**
+     * @param up2
+     * @param relative
+     * @return
+     */
+    private Node computeNear(List<Node> row, double relative) {
+        double min = 0;
+        for (int i = 0; i < row.size(); i++) {
+            min = Math.min(min, row.get(i).localToScene(row.get(i).getBoundsInLocal()).getMinX());
+        }
+
+        relative += min;
+
+        Node mn = null;
+        double m = Double.MAX_VALUE;
+
+        for (int i = 0; i < row.size(); i++) {
+            double x = Math.abs(row.get(i).localToScene(row.get(i).getBoundsInLocal()).getCenterX() - min - relative);
+
+            if (x < m) {
+                m = x;
+                mn = row.get(i);
+            }
+        }
+        return mn;
     }
 
     /**
