@@ -13,19 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyEvent;
 
 import kiss.I;
+import kiss.Ⅱ;
 import viewtify.Key;
 import viewtify.ui.UserInterface;
+import viewtify.ui.helper.User;
 
 public class KeyTraverser {
 
     /** The managed nodes. */
-    private final List<List<Node>> table = new ArrayList();
+    private final List<List<UserInterface>> table = new ArrayList();
 
     private Key next;
 
@@ -67,43 +68,41 @@ public class KeyTraverser {
             moveTo(location[0] - 1, 0);
             e.consume();
         } else if (up != null && up.match(e)) {
-            List<Node> row = locateRow((Node) e.getSource());
-            double relative = computeRelativeHorizon(row, (Node) e.getSource());
-            int index = table.indexOf(row);
+            Ⅱ<List<UserInterface>, Integer> row = locateRow((Node) e.getSource());
+            double relative = computeRelativeHorizon(row.ⅰ, (Node) e.getSource());
+            int index = table.indexOf(row.ⅰ);
             if (index != 0) {
-                List<Node> up = table.get(index - 1);
-                Node near = computeNear(up, relative);
-                near.requestFocus();
+                List<UserInterface> up = table.get(index - 1);
+                UserInterface near = computeNear(up, relative);
+                near.ui().requestFocus();
                 e.consume();
             }
         } else if (down != null && down.match(e)) {
-            List<Node> row = locateRow((Node) e.getSource());
-            double relative = computeRelativeHorizon(row, (Node) e.getSource());
-            int index = table.indexOf(row);
+            Ⅱ<List<UserInterface>, Integer> row = locateRow((Node) e.getSource());
+            double relative = computeRelativeHorizon(row.ⅰ, (Node) e.getSource());
+            int index = table.indexOf(row.ⅰ);
             if (index < table.size() - 1) {
-                List<Node> down = table.get(index + 1);
-                Node near = computeNear(down, relative);
-                near.requestFocus();
+                List<UserInterface> down = table.get(index + 1);
+                UserInterface near = computeNear(down, relative);
+                near.ui().requestFocus();
                 e.consume();
             }
         } else if (left != null && left.match(e)) {
-            List<Node> row = locateRow(n);
-            int index = row.indexOf(n);
-            if (0 < index) row.get(index - 1).requestFocus();
+            Ⅱ<List<UserInterface>, Integer> row = locateRow(n);
+            if (0 < row.ⅱ) row.ⅰ.get(row.ⅱ - 1).ui().requestFocus();
             e.consume();
         } else if (right != null && right.match(e)) {
-            List<Node> row = locateRow(n);
-            int index = row.indexOf(n);
-            if (index < row.size() - 1) row.get(index + 1).requestFocus();
+            Ⅱ<List<UserInterface>, Integer> row = locateRow(n);
+            if (row.ⅱ < row.ⅰ.size() - 1) row.ⅰ.get(row.ⅱ + 1).ui().requestFocus();
             e.consume();
         }
     };
 
     private int[] locate(Node node) {
         for (int i = 0; i < table.size(); i++) {
-            List<Node> row = table.get(i);
+            List<UserInterface> row = table.get(i);
             for (int j = 0; j < row.size(); j++) {
-                Node item = row.get(j);
+                Node item = row.get(j).ui();
                 if (item == node) {
                     return new int[] {i, j};
                 }
@@ -112,13 +111,12 @@ public class KeyTraverser {
         throw new Error();
     }
 
-    private List<Node> locateRow(Node node) {
+    private Ⅱ<List<UserInterface>, Integer> locateRow(Node node) {
         for (int i = 0; i < table.size(); i++) {
-            List<Node> row = table.get(i);
+            List<UserInterface> row = table.get(i);
             for (int j = 0; j < row.size(); j++) {
-                Node item = row.get(j);
-                if (item == node) {
-                    return row;
+                if (node == row.get(j).ui) {
+                    return I.pair(row, j);
                 }
             }
         }
@@ -132,14 +130,14 @@ public class KeyTraverser {
             rowIndex = canLoop ? 0 : table.size() - 1;
         }
 
-        List<Node> row = table.get(rowIndex);
+        List<UserInterface> row = table.get(rowIndex);
 
         if (columnIndex < 0) {
             moveTo(rowIndex - 1, 0);
         } else if (row.size() <= columnIndex) {
             moveTo(rowIndex + 1, 0);
         } else {
-            row.get(columnIndex).requestFocus();;
+            row.get(columnIndex).ui.requestFocus();
         }
     }
 
@@ -148,10 +146,10 @@ public class KeyTraverser {
      * @param source
      * @return
      */
-    private double computeRelativeHorizon(List<Node> row, Node source) {
+    private double computeRelativeHorizon(List<UserInterface> row, Node source) {
         double min = 0;
         for (int i = 0; i < row.size(); i++) {
-            min = Math.min(min, row.get(i).localToScene(row.get(i).getBoundsInLocal()).getMinX());
+            min = Math.min(min, row.get(i).ui().localToScene(row.get(i).ui().getBoundsInLocal()).getMinX());
         }
         return source.localToScene(source.getBoundsInLocal()).getCenterX() - min;
     }
@@ -161,19 +159,19 @@ public class KeyTraverser {
      * @param relative
      * @return
      */
-    private Node computeNear(List<Node> row, double relative) {
+    private UserInterface computeNear(List<UserInterface> row, double relative) {
         double min = 0;
         for (int i = 0; i < row.size(); i++) {
-            min = Math.min(min, row.get(i).localToScene(row.get(i).getBoundsInLocal()).getMinX());
+            min = Math.min(min, row.get(i).ui().localToScene(row.get(i).ui().getBoundsInLocal()).getMinX());
         }
 
         relative += min;
 
-        Node mn = null;
+        UserInterface mn = null;
         double m = Double.MAX_VALUE;
 
         for (int i = 0; i < row.size(); i++) {
-            double x = Math.abs(row.get(i).localToScene(row.get(i).getBoundsInLocal()).getCenterX() - min - relative);
+            double x = Math.abs(row.get(i).ui().localToScene(row.get(i).ui().getBoundsInLocal()).getCenterX() - min - relative);
 
             if (x < m) {
                 m = x;
@@ -190,27 +188,10 @@ public class KeyTraverser {
      * @return
      */
     public KeyTraverser group(UserInterface... ui) {
-        Node[] nodes = new Node[ui.length];
-        for (int i = 0; i < nodes.length; i++) {
-            nodes[i] = ui[i].ui;
-        }
-        return group(nodes);
-    }
+        table.add(I.list(ui));
 
-    /**
-     * Group nodes.
-     * 
-     * @param nodes
-     * @return
-     */
-    public KeyTraverser group(Node... nodes) {
-        table.add(I.list(nodes));
-        for (Node node : nodes) {
-            node.addEventHandler(KeyEvent.KEY_PRESSED, navigator);
-
-            if (node instanceof ComboBox) {
-                register((ComboBox) node);
-            }
+        for (UserInterface<?, Node> userInterface : ui) {
+            userInterface.when(User.KeyPress, e -> navigator.handle(e));
         }
         return this;
     }
