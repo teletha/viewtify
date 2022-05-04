@@ -15,14 +15,14 @@ import java.util.List;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyEvent;
 
 import kiss.I;
 import viewtify.Key;
 import viewtify.ui.UserInterface;
 
-public class Traverser {
+public class KeyTraverser {
 
     /** The managed nodes. */
     private final List<List<Node>> table = new ArrayList();
@@ -48,24 +48,24 @@ public class Traverser {
     /**
      * Key handling.
      */
-    private EventHandler<KeyEvent> listener = e -> {
+    private EventHandler<KeyEvent> navigator = e -> {
         Node n = (Node) e.getSource();
-
-        if (n instanceof TextField == false) {
-            return;
-        }
 
         if (next != null && next.match(e)) {
             int[] location = locate((Node) e.getSource());
             moveTo(location[0], location[1] + 1);
+            e.consume();
         } else if (previous != null && previous.match(e)) {
             int[] location = locate((Node) e.getSource());
             moveTo(location[0], location[1] - 1);
+            e.consume();
         } else if (nextGroup != null && nextGroup.match(e)) {
             focusNextGroup((Node) e.getSource());
+            e.consume();
         } else if (previousGroup != null && previousGroup.match(e)) {
             int[] location = locate((Node) e.getSource());
             moveTo(location[0] - 1, 0);
+            e.consume();
         } else if (up != null && up.match(e)) {
             List<Node> row = locateRow((Node) e.getSource());
             double relative = computeRelativeHorizon(row, (Node) e.getSource());
@@ -74,6 +74,7 @@ public class Traverser {
                 List<Node> up = table.get(index - 1);
                 Node near = computeNear(up, relative);
                 near.requestFocus();
+                e.consume();
             }
         } else if (down != null && down.match(e)) {
             List<Node> row = locateRow((Node) e.getSource());
@@ -83,31 +84,20 @@ public class Traverser {
                 List<Node> down = table.get(index + 1);
                 Node near = computeNear(down, relative);
                 near.requestFocus();
+                e.consume();
             }
         } else if (left != null && left.match(e)) {
             List<Node> row = locateRow(n);
             int index = row.indexOf(n);
             if (0 < index) row.get(index - 1).requestFocus();
+            e.consume();
         } else if (right != null && right.match(e)) {
             List<Node> row = locateRow(n);
             int index = row.indexOf(n);
             if (index < row.size() - 1) row.get(index + 1).requestFocus();
+            e.consume();
         }
     };
-
-    private void moveTo(double x, double y) {
-        for (int i = 0; i < table.size(); i++) {
-            List<Node> row = table.get(i);
-            for (int j = 0; j < row.size(); j++) {
-                Node item = row.get(j);
-                Bounds b = item.localToScene(item.getBoundsInLocal());
-                if (b.contains(x, y)) {
-                    item.requestFocus();
-                    return;
-                }
-            }
-        }
-    }
 
     private int[] locate(Node node) {
         for (int i = 0; i < table.size(); i++) {
@@ -196,24 +186,10 @@ public class Traverser {
     /**
      * Group nodes.
      * 
-     * @param nodes
-     * @return
-     */
-    public Traverser group(Node... nodes) {
-        table.add(I.list(nodes));
-        for (Node node : nodes) {
-            node.addEventHandler(KeyEvent.KEY_PRESSED, listener);
-        }
-        return this;
-    }
-
-    /**
-     * Group nodes.
-     * 
      * @param ui
      * @return
      */
-    public Traverser group(UserInterface... ui) {
+    public KeyTraverser group(UserInterface... ui) {
         Node[] nodes = new Node[ui.length];
         for (int i = 0; i < nodes.length; i++) {
             nodes[i] = ui[i].ui;
@@ -222,9 +198,42 @@ public class Traverser {
     }
 
     /**
+     * Group nodes.
+     * 
+     * @param nodes
+     * @return
+     */
+    public KeyTraverser group(Node... nodes) {
+        table.add(I.list(nodes));
+        for (Node node : nodes) {
+            node.addEventHandler(KeyEvent.KEY_PRESSED, navigator);
+
+            if (node instanceof ComboBox) {
+                register((ComboBox) node);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Specialized for {@link ComboBox}
+     * 
+     * @param node
+     */
+    private void register(ComboBox node) {
+        node.focusedProperty().addListener((v, o, on) -> {
+            if (on) {
+
+            } else {
+
+            }
+        });
+    }
+
+    /**
      * @param key
      */
-    public Traverser traverseNextBy(Key key) {
+    public KeyTraverser traverseNextBy(Key key) {
         this.next = key;
         return this;
     }
@@ -232,7 +241,7 @@ public class Traverser {
     /**
      * @param key
      */
-    public Traverser traversePreviousBy(Key key) {
+    public KeyTraverser traversePreviousBy(Key key) {
         this.previous = key;
         return this;
     }
@@ -240,7 +249,7 @@ public class Traverser {
     /**
      * @param key
      */
-    public Traverser traverseNextGroupBy(Key key) {
+    public KeyTraverser traverseNextGroupBy(Key key) {
         this.nextGroup = key;
         return this;
     }
@@ -248,7 +257,7 @@ public class Traverser {
     /**
      * @param key
      */
-    public Traverser traversePreviousGroupBy(Key key) {
+    public KeyTraverser traversePreviousGroupBy(Key key) {
         this.previousGroup = key;
         return this;
     }
@@ -256,14 +265,14 @@ public class Traverser {
     /**
      * @return
      */
-    public Traverser traversePhysicalLocationByArrowKey() {
+    public KeyTraverser traversePhysicalLocationByArrowKey() {
         return traversePhysicalLocationBy(Key.Up, Key.Down, Key.Left, Key.Right);
     }
 
     /**
      * @return
      */
-    public Traverser traversePhysicalLocationBy(Key up, Key down, Key left, Key right) {
+    public KeyTraverser traversePhysicalLocationBy(Key up, Key down, Key left, Key right) {
         this.up = up;
         this.down = down;
         this.left = left;
@@ -271,7 +280,7 @@ public class Traverser {
         return this;
     }
 
-    public Traverser loopable(boolean enable) {
+    public KeyTraverser loopable(boolean enable) {
         this.canLoop = enable;
         return this;
     }
