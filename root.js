@@ -202,6 +202,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "KeyTraverser",
+			"packageName": "viewtify.ui.focus",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "LabelHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
@@ -380,13 +387,6 @@ const root = {
 			"name": "Translatable",
 			"packageName": "viewtify.util",
 			"type": "Functional"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Traverser",
-			"packageName": "viewtify.ui.focus",
-			"type": "Class"
 		},
 		{
 			"modifiers": {
