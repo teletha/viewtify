@@ -23,6 +23,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+
 import kiss.I;
 import kiss.Signal;
 import viewtify.Key;
@@ -80,6 +81,16 @@ public final class User<E extends Event> {
 
     /** User Action */
     public static final User<InputMethodEvent> Input = new User(InputMethodEvent.INPUT_METHOD_TEXT_CHANGED);
+
+    /**
+     * Helper method to create {@link User} action for key input.
+     * 
+     * @param key A target mouse button.
+     * @return A user action.
+     */
+    public static final User<KeyEvent> press(Key key) {
+        return new User<>(KeyEvent.KEY_PRESSED, (helper, signal) -> signal.take(valid(key)));
+    }
 
     /**
      * Helper method to create {@link User} action for key input.

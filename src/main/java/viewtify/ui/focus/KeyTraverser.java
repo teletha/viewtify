@@ -12,14 +12,22 @@ package viewtify.ui.focus;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import org.controlsfx.control.PopOver;
+
 import kiss.I;
+import kiss.Variable;
 import kiss.Ⅱ;
 import viewtify.Key;
+import viewtify.ui.UIComboBox;
+import viewtify.ui.UIText;
 import viewtify.ui.UserInterface;
 import viewtify.ui.helper.User;
 
@@ -45,6 +53,8 @@ public class KeyTraverser {
     private Key right;
 
     private boolean canLoop = true;
+
+    private PopOver pop = new PopOver();
 
     /**
      * Key handling.
@@ -191,24 +201,107 @@ public class KeyTraverser {
         table.add(I.list(ui));
 
         for (UserInterface<?, Node> userInterface : ui) {
-            userInterface.when(User.KeyPress, e -> navigator.handle(e));
+            // userInterface.when(User.KeyPress, e -> navigator.handle(e));
+
+            if (userInterface instanceof UIText) {
+                register((UIText) userInterface);
+            } else if (userInterface instanceof UIComboBox) {
+                register((UIComboBox) userInterface);
+            }
         }
         return this;
     }
 
+    private static class FocusedTextInput {
+
+        private final Variable<Integer> caret = Variable.empty();
+
+        private final Variable<Integer> selection = Variable.empty();
+
+        private final ChangeListener<ObservableValue<Integer>, Integer, Integer> observeCaretPosition = null;
+
+        private void register(TextField node) {
+            node.focusedProperty().addListener((v, o, n) -> {
+                if (n) {
+                    focused(node);
+                } else {
+                    unfocused(node);
+                }
+            });
+        }
+
+        private void focused(TextField node) {
+            node.caretPositionProperty().addListener(observeCaretPosition);
+        }
+
+        private void unfocused(TextField node) {
+
+        }
+
+        private void observeCaretPosition() {
+
+        }
+
+        private void observeSelectionRange() {
+
+        }
+    }
+
     /**
-     * Specialized for {@link ComboBox}
+     * Specialization.
      * 
      * @param node
      */
-    private void register(ComboBox node) {
-        node.focusedProperty().addListener((v, o, on) -> {
-            if (on) {
+    private void register(UIText<?> ui) {
+        Variable<Integer> position = Variable.of(ui.ui.getCaretPosition());
 
-            } else {
+        ui.when(User.KeyRelease, e -> {
+            int oldPosition = position.v;
+            int newPosition = ui.ui.getCaretPosition();
+            position.set(newPosition);
+
+            switch (e.getCode()) {
+            case BACK_SPACE:
+            case LEFT:
+                if (oldPosition == 0 && newPosition == 0) {
+                    traversePrevious(ui);
+                }
+                break;
+
+            case RIGHT:
+                if (oldPosition == ui.length() && newPosition == ui.length()) {
+                    traverseNext(ui);
+                }
+                break;
+
+            default:
+                break;
+            }
+
+            if (e.getCode() == KeyCode.BACK_SPACE) {
 
             }
+            System.out.println(oldPosition + "  " + newPosition);
         });
+    }
+
+    /**
+     * Specialization.
+     * 
+     * @param node
+     */
+    private void register(UIComboBox<?> ui) {
+
+    }
+
+    public KeyTraverser traverseNext(UserInterface ui) {
+        System.out.println("Next");
+        return this;
+    }
+
+    public KeyTraverser traversePrevious(UserInterface ui) {
+        System.out.println("Previous");
+        return this;
     }
 
     /**

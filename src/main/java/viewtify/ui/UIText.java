@@ -78,6 +78,13 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     }
 
     /**
+     * Return the current length of inputed text.
+     */
+    public final int length() {
+        return ui.getLength();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -186,6 +193,16 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     public final UIText<V> normalizeInput(Normalizer.Form form) {
         ((VerifiableTextField) ui).form = form;
         return this;
+    }
+
+    /**
+     * Get the current limited size of characters. A number less than or equal to 0 disables this
+     * limit.
+     * 
+     * @return
+     */
+    public final int maximumInput() {
+        return ((VerifiableTextField) ui).max;
     }
 
     /**
