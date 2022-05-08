@@ -202,7 +202,7 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
      * @return
      */
     public final int maximumInput() {
-        return ((VerifiableTextField) ui).max;
+        return ((VerifiableTextField) ui).max + 1;
     }
 
     /**

@@ -526,6 +526,11 @@ public class Key {
      */
     public static final Key WINDOWS = new Key(91, "Windows");
 
+    /**
+     * Null object for {@link Key}.
+     */
+    public static final Key None = new Key(999999, "NoExistence");
+
     /** The modifier. */
     private static final int ALT = 1 << 0;
 
