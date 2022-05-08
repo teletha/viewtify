@@ -18,6 +18,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.skin.ComboBoxListViewSkin;
 
 import kiss.Disposable;
 import kiss.I;
@@ -82,6 +84,15 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
 
         // API definition
         return this;
+    }
+
+    /**
+     * Get the popup control.
+     * 
+     * @return
+     */
+    public final ListView listView() {
+        return (ListView) ((ComboBoxListViewSkin) ui.getSkin()).getPopupContent();
     }
 
     /**

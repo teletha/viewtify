@@ -393,6 +393,7 @@ public class KeyboardNavigation {
      */
     private class ComboBoxNavigator extends Navigator<UIComboBox<?>> {
 
+        /** For combo box. */
         private final EventHandler<KeyEvent> operation = e -> {
             if (Key.Space.match(e)) {
                 current.toggle();
@@ -429,6 +430,13 @@ public class KeyboardNavigation {
             }
         };
 
+        /** For popup list view. */
+        private final EventHandler<KeyEvent> popupOperation = e -> {
+            if (Key.Enter.match(e)) {
+                engine.trav(current.ui, Direction.NEXT);
+            }
+        };
+
         /**
          * {@inheritDoc}
          */
@@ -440,10 +448,12 @@ public class KeyboardNavigation {
                     current = node;
                     node.ui.addEventFilter(KeyEvent.KEY_PRESSED, this);
                     node.ui.addEventHandler(KeyEvent.KEY_PRESSED, operation);
+                    node.listView().addEventFilter(KeyEvent.KEY_PRESSED, popupOperation);
                 } else {
                     current = null;
                     node.ui.removeEventFilter(KeyEvent.KEY_PRESSED, this);
                     node.ui.removeEventHandler(KeyEvent.KEY_PRESSED, operation);
+                    node.listView().removeEventFilter(KeyEvent.KEY_PRESSED, popupOperation);
                 }
             });
         }
