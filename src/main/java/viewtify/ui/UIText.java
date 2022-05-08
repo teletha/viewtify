@@ -120,6 +120,24 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     }
 
     /**
+     * Check whether this field's text is selected or not.
+     * 
+     * @return
+     */
+    public final boolean isTextSelected() {
+        return ui.getSelection().getLength() != 0;
+    }
+
+    /**
+     * Check whether this field's text is selected or not.
+     * 
+     * @return
+     */
+    public final boolean isNotTextSelected() {
+        return !isTextSelected();
+    }
+
+    /**
      * You will be able to enter only alphabet.
      * 
      * @return
