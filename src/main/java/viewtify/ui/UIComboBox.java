@@ -85,6 +85,40 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
     }
 
     /**
+     * Show popup.
+     * 
+     * @return
+     */
+    public final UIComboBox<T> show() {
+        ui.show();
+        return this;
+    }
+
+    /**
+     * Hide popup.
+     * 
+     * @return
+     */
+    public final UIComboBox<T> hide() {
+        ui.hide();
+        return this;
+    }
+
+    /**
+     * Toggle popup.
+     * 
+     * @return
+     */
+    public final UIComboBox<T> toggle() {
+        if (ui.isShowing()) {
+            ui.hide();
+        } else {
+            ui.show();
+        }
+        return this;
+    }
+
+    /**
      * Append the empty value which represents no selection.
      * 
      * @return
