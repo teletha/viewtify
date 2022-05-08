@@ -12,13 +12,13 @@ package viewtify.ui.focus;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 import org.controlsfx.control.PopOver;
@@ -33,7 +33,6 @@ import viewtify.ui.UICheckBox;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UIText;
 import viewtify.ui.UserInterface;
-import viewtify.util.Combi;
 
 public class KeyboardNavigation {
 
@@ -228,16 +227,18 @@ public class KeyboardNavigation {
         }
 
         protected void focusNext(KeyEvent event) {
-            Node source = (Node) event.getSource();
-            engine.trav(source, Direction.NEXT);
-
+            Platform.runLater(() -> {
+                Node source = (Node) event.getSource();
+                engine.trav(source, Direction.NEXT);
+            });
             event.consume();
         }
 
         protected void focusPrevious(KeyEvent event) {
-            Node source = (Node) event.getSource();
-            engine.trav(source, Direction.PREVIOUS);
-
+            Platform.runLater(() -> {
+                Node source = (Node) event.getSource();
+                engine.trav(source, Direction.PREVIOUS);
+            });
             event.consume();
         }
 
@@ -245,9 +246,10 @@ public class KeyboardNavigation {
          * Traverse to the next group.
          */
         protected void focusNextGroup(KeyEvent event) {
-            int[] location = locate((Node) event.getSource());
-            moveTo(location[0] + 1, 0);
-
+            Platform.runLater(() -> {
+                int[] location = locate((Node) event.getSource());
+                moveTo(location[0] + 1, 0);
+            });
             event.consume();
         }
 
@@ -255,9 +257,10 @@ public class KeyboardNavigation {
          * Traverse to the next group.
          */
         protected void focusPreviousGroup(KeyEvent event) {
-            int[] location = locate((Node) event.getSource());
-            moveTo(location[0] - 1, 0);
-
+            Platform.runLater(() -> {
+                int[] location = locate((Node) event.getSource());
+                moveTo(location[0] - 1, 0);
+            });
             event.consume();
         }
 
@@ -267,8 +270,10 @@ public class KeyboardNavigation {
          * @param event
          */
         protected void focusRight(KeyEvent event) {
-            Node source = (Node) event.getSource();
-            engine.trav(source, Direction.RIGHT);
+            Platform.runLater(() -> {
+                Node source = (Node) event.getSource();
+                engine.trav(source, Direction.RIGHT);
+            });
             event.consume();
         }
 
@@ -278,8 +283,10 @@ public class KeyboardNavigation {
          * @param event
          */
         protected void focusLeft(KeyEvent event) {
-            Node source = (Node) event.getSource();
-            engine.trav(source, Direction.LEFT);
+            Platform.runLater(() -> {
+                Node source = (Node) event.getSource();
+                engine.trav(source, Direction.LEFT);
+            });
             event.consume();
         }
 
@@ -289,8 +296,10 @@ public class KeyboardNavigation {
          * @param event
          */
         protected void focusUp(KeyEvent event) {
-            Node source = (Node) event.getSource();
-            engine.trav(source, Direction.UP);
+            Platform.runLater(() -> {
+                Node source = (Node) event.getSource();
+                engine.trav(source, Direction.UP);
+            });
             event.consume();
         }
 
@@ -300,8 +309,10 @@ public class KeyboardNavigation {
          * @param event
          */
         protected void focusDown(KeyEvent event) {
-            Node source = (Node) event.getSource();
-            engine.trav(source, Direction.DOWN);
+            Platform.runLater(() -> {
+                Node source = (Node) event.getSource();
+                engine.trav(source, Direction.DOWN);
+            });
             event.consume();
         }
 
@@ -342,12 +353,6 @@ public class KeyboardNavigation {
      */
     private class TextNavigator extends Navigator<UIText<?>> {
 
-        private final Combi<Integer> caret = new Combi(0);
-
-        private final EventHandler<MouseEvent> captureMouse = e -> {
-            caret.set(((TextField) e.getSource()).getCaretPosition());
-        };
-
         /**
          * {@inheritDoc}
          */
@@ -357,12 +362,11 @@ public class KeyboardNavigation {
                 current = node;
 
                 if (n) {
-                    caret.reset(0);
-                    node.ui.addEventHandler(KeyEvent.KEY_PRESSED, this);
-                    node.ui.addEventHandler(MouseEvent.MOUSE_CLICKED, captureMouse);
+                    node.ui.addEventFilter(KeyEvent.KEY_PRESSED, this);
+                    node.ui.addEventHandler(KeyEvent.KEY_RELEASED, autofocus);
                 } else {
-                    node.ui.removeEventHandler(KeyEvent.KEY_PRESSED, this);
-                    node.ui.removeEventHandler(MouseEvent.MOUSE_CLICKED, captureMouse);
+                    node.ui.removeEventFilter(KeyEvent.KEY_PRESSED, this);
+                    node.ui.removeEventHandler(KeyEvent.KEY_RELEASED, autofocus);
                 }
             });
         }
@@ -372,18 +376,34 @@ public class KeyboardNavigation {
          */
         @Override
         protected boolean canNavigate(UIText<?> node, KeyEvent event) {
-            caret.set(node.ui.getCaretPosition());
-
             switch (event.getCode()) {
             case BACK_SPACE:
             case LEFT:
-                return caret.previous == 0 && caret.next == 0;
+                if (node.isTextSelected()) {
+                    return false;
+                } else {
+                    return node.ui.getCaretPosition() == 0;
+                }
 
             case RIGHT:
-                return caret.previous == node.length() && caret.next == node.length();
+                if (node.isTextSelected()) {
+                    return false;
+                } else {
+                    return node.ui.getCaretPosition() == node.length();
+                }
 
             default:
                 return true;
+            }
+        }
+
+        /**
+         * Support to focus the next input automatically.
+         */
+        private final EventHandler<KeyEvent> autofocus = e -> {
+            int max = current.maximumInput();
+            if (0 < max && max <= current.length()) {
+                focusNext(e);
             }
         };
     }

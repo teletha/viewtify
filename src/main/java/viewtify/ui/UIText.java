@@ -220,7 +220,7 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
      * @return
      */
     public final int maximumInput() {
-        return ((VerifiableTextField) ui).max + 1;
+        return ((VerifiableTextField) ui).max;
     }
 
     /**
@@ -231,7 +231,7 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
      * @return
      */
     public final UIText<V> maximumInput(int size) {
-        ((VerifiableTextField) ui).max = size - 1;
+        ((VerifiableTextField) ui).max = size;
         return this;
     }
 
@@ -371,7 +371,7 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
                 return;
             }
 
-            if (0 < max && max < getLength() && max < getLength() - selectedTextProperty().get().length()) {
+            if (0 < max && max < getLength() && max < getLength() - getSelectedText().length()) {
                 return;
             }
 
