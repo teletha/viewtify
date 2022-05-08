@@ -69,6 +69,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Combi",
+			"packageName": "viewtify.util",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Command",
 			"packageName": "viewtify",
 			"type": "Functional"
@@ -202,7 +209,7 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "KeyTraverser",
+			"name": "KeyboardNavigation",
 			"packageName": "viewtify.ui.focus",
 			"type": "Class"
 		},
