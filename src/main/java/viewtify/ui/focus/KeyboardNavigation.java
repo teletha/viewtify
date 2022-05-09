@@ -416,7 +416,7 @@ public class KeyboardNavigation {
          * Support to focus the next input automatically.
          */
         private final ChangeListener<?> autofocus = (v, o, n) -> {
-            if (focusable && !o.equals(n)) {
+            if (focusable && !o.equals(n) && current.verifier().isValid()) {
                 int max = current.maximumInput();
                 if (0 < max && max <= current.length()) {
                     focusNext(current.ui);

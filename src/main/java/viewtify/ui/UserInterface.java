@@ -9,12 +9,15 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.*;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.function.Consumer;
+
+import org.controlsfx.control.decoration.Decorator;
+import org.controlsfx.control.decoration.GraphicDecoration;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
@@ -26,10 +29,6 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import org.controlsfx.control.decoration.Decorator;
-import org.controlsfx.control.decoration.GraphicDecoration;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Singleton;
@@ -226,7 +225,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
                         label.setTooltip(tooltip);
                     }
 
-                    Decorator.addDecoration(ui, new GraphicDecoration(label, Pos.CENTER_LEFT));
+                    Decorator.addDecoration(ui, new GraphicDecoration(label, Pos.TOP_LEFT, 4, 4));
                 });
     }
 
