@@ -16,6 +16,10 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
+
+import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
@@ -24,11 +28,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
-
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
-
-import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -371,7 +370,8 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
                 return;
             }
 
-            if (0 < max && max < getLength() && max < getLength() - getSelectedText().length()) {
+            int additional = text.length() - (end - start);
+            if (0 < max && max < getLength() + additional) {
                 return;
             }
 

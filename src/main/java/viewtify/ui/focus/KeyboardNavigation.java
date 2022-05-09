@@ -12,7 +12,14 @@ package viewtify.ui.focus;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
+
+import com.sun.javafx.scene.traversal.Direction;
+import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
+
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -20,13 +27,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-
-import org.controlsfx.control.PopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
-
-import com.sun.javafx.scene.traversal.Direction;
-import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
-
 import kiss.I;
 import viewtify.Key;
 import viewtify.ui.UICheckBox;
@@ -56,6 +56,8 @@ public class KeyboardNavigation {
     private Key right = Key.None;
 
     private boolean canLoop = true;
+
+    private boolean focusable;
 
     private final PopOver pop = new PopOver();
 
@@ -171,8 +173,25 @@ public class KeyboardNavigation {
         return this;
     }
 
+    /**
+     * Configure loopable UI.
+     * 
+     * @param enable
+     * @return
+     */
     public KeyboardNavigation loopable(boolean enable) {
         this.canLoop = enable;
+        return this;
+    }
+
+    /**
+     * Configure auto focusable UI.
+     * 
+     * @param enable
+     * @return
+     */
+    public KeyboardNavigation focusable(boolean enable) {
+        this.focusable = enable;
         return this;
     }
 
@@ -189,22 +208,32 @@ public class KeyboardNavigation {
         @Override
         public void handle(KeyEvent event) {
             if (canNavigate(current, event)) {
+                Node node = (Node) event.getSource();
+
                 if (next.match(event)) {
-                    focusNext(event);
+                    focusNext(node);
+                    event.consume();
                 } else if (previous.match(event)) {
-                    focusPrevious(event);
+                    focusPrevious(node);
+                    event.consume();
                 } else if (nextGroup.match(event)) {
-                    focusNextGroup(event);
+                    focusNextGroup(node);
+                    event.consume();
                 } else if (previousGroup.match(event)) {
-                    focusPreviousGroup(event);
+                    focusPreviousGroup(node);
+                    event.consume();
                 } else if (right.match(event)) {
-                    focusRight(event);
+                    focusRight(node);
+                    event.consume();
                 } else if (left.match(event)) {
-                    focusLeft(event);
+                    focusLeft(node);
+                    event.consume();
                 } else if (up.match(event)) {
-                    focusUp(event);
+                    focusUp(node);
+                    event.consume();
                 } else if (down.match(event)) {
-                    focusDown(event);
+                    focusDown(node);
+                    event.consume();
                 }
             }
         }
@@ -226,94 +255,80 @@ public class KeyboardNavigation {
             return true;
         }
 
-        protected void focusNext(KeyEvent event) {
+        protected void focusNext(Node source) {
             Platform.runLater(() -> {
-                Node source = (Node) event.getSource();
                 engine.trav(source, Direction.NEXT);
             });
-            event.consume();
         }
 
-        protected void focusPrevious(KeyEvent event) {
+        protected void focusPrevious(Node source) {
             Platform.runLater(() -> {
-                Node source = (Node) event.getSource();
                 engine.trav(source, Direction.PREVIOUS);
             });
-            event.consume();
         }
 
         /**
          * Traverse to the next group.
          */
-        protected void focusNextGroup(KeyEvent event) {
+        protected void focusNextGroup(Node source) {
             Platform.runLater(() -> {
-                int[] location = locate((Node) event.getSource());
+                int[] location = locate(source);
                 moveTo(location[0] + 1, 0);
             });
-            event.consume();
         }
 
         /**
          * Traverse to the next group.
          */
-        protected void focusPreviousGroup(KeyEvent event) {
+        protected void focusPreviousGroup(Node source) {
             Platform.runLater(() -> {
-                int[] location = locate((Node) event.getSource());
+                int[] location = locate(source);
                 moveTo(location[0] - 1, 0);
             });
-            event.consume();
         }
 
         /**
          * Traverse to the next form.
          * 
-         * @param event
+         * @param source
          */
-        protected void focusRight(KeyEvent event) {
+        protected void focusRight(Node source) {
             Platform.runLater(() -> {
-                Node source = (Node) event.getSource();
                 engine.trav(source, Direction.RIGHT);
             });
-            event.consume();
         }
 
         /**
          * Traverse to the previous form.
          * 
-         * @param event
+         * @param source
          */
-        protected void focusLeft(KeyEvent event) {
+        protected void focusLeft(Node source) {
             Platform.runLater(() -> {
-                Node source = (Node) event.getSource();
                 engine.trav(source, Direction.LEFT);
             });
-            event.consume();
         }
 
         /**
          * Traverse to the next form.
          * 
-         * @param event
+         * @param source
          */
-        protected void focusUp(KeyEvent event) {
+        protected void focusUp(Node source) {
             Platform.runLater(() -> {
-                Node source = (Node) event.getSource();
                 engine.trav(source, Direction.UP);
             });
-            event.consume();
         }
 
         /**
          * Traverse to the previous form.
          * 
-         * @param event
+         * @param source
          */
-        protected void focusDown(KeyEvent event) {
+        protected void focusDown(Node source) {
             Platform.runLater(() -> {
-                Node source = (Node) event.getSource();
                 engine.trav(source, Direction.DOWN);
             });
-            event.consume();
         }
 
         private int[] locate(Node node) {
@@ -363,10 +378,10 @@ public class KeyboardNavigation {
 
                 if (n) {
                     node.ui.addEventFilter(KeyEvent.KEY_PRESSED, this);
-                    node.ui.addEventHandler(KeyEvent.KEY_RELEASED, autofocus);
+                    node.valueProperty().addListener(autofocus);
                 } else {
                     node.ui.removeEventFilter(KeyEvent.KEY_PRESSED, this);
-                    node.ui.removeEventHandler(KeyEvent.KEY_RELEASED, autofocus);
+                    node.valueProperty().removeListener(autofocus);
                 }
             });
         }
@@ -400,10 +415,12 @@ public class KeyboardNavigation {
         /**
          * Support to focus the next input automatically.
          */
-        private final EventHandler<KeyEvent> autofocus = e -> {
-            int max = current.maximumInput();
-            if (0 < max && max <= current.length()) {
-                focusNext(e);
+        private final ChangeListener<?> autofocus = (v, o, n) -> {
+            if (focusable && !o.equals(n)) {
+                int max = current.maximumInput();
+                if (0 < max && max <= current.length()) {
+                    focusNext(current.ui);
+                }
             }
         };
     }
@@ -415,38 +432,40 @@ public class KeyboardNavigation {
 
         /** For combo box. */
         private final EventHandler<KeyEvent> operation = e -> {
+            Node node = (Node) e.getSource();
+
             if (Key.Space.match(e)) {
                 current.toggle();
             } else if (Key.Numpad1.match(e) || Key.Digit1.match(e)) {
                 current.selectAt(0);
-                focusNext(e);
+                if (focusable) focusNext(node);
             } else if (Key.Numpad2.match(e) || Key.Digit2.match(e)) {
                 current.selectAt(1);
-                focusNext(e);
+                if (focusable) focusNext(node);
             } else if (Key.Numpad3.match(e) || Key.Digit3.match(e)) {
                 current.selectAt(2);
-                focusNext(e);
+                if (focusable) focusNext(node);
             } else if (Key.Numpad4.match(e) || Key.Digit4.match(e)) {
                 current.selectAt(3);
-                focusNext(e);
+                if (focusable) focusNext(node);
             } else if (Key.Numpad5.match(e) || Key.Digit5.match(e)) {
                 current.selectAt(4);
-                focusNext(e);
+                if (focusable) focusNext(node);
             } else if (Key.Numpad6.match(e) || Key.Digit6.match(e)) {
                 current.selectAt(5);
-                focusNext(e);
+                if (focusable) focusNext(node);
             } else if (Key.Numpad7.match(e) || Key.Digit7.match(e)) {
                 current.selectAt(6);
-                focusNext(e);
+                if (focusable) focusNext(node);
             } else if (Key.Numpad8.match(e) || Key.Digit8.match(e)) {
                 current.selectAt(7);
-                focusNext(e);
+                if (focusable) focusNext(node);
             } else if (Key.Numpad9.match(e) || Key.Digit9.match(e)) {
                 current.selectAt(8);
-                focusNext(e);
+                if (focusable) focusNext(node);
             } else if (Key.Numpad0.match(e) || Key.Digit0.match(e)) {
                 current.selectAt(9);
-                focusNext(e);
+                if (focusable) focusNext(node);
             }
         };
 
