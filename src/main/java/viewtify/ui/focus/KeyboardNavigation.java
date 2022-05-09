@@ -514,10 +514,34 @@ public class KeyboardNavigation {
 
                 if (n) {
                     node.ui.addEventFilter(KeyEvent.KEY_PRESSED, this);
+                    node.ui.addEventHandler(KeyEvent.KEY_PRESSED, operation);
                 } else {
                     node.ui.removeEventFilter(KeyEvent.KEY_PRESSED, this);
+                    node.ui.removeEventHandler(KeyEvent.KEY_PRESSED, operation);
                 }
             });
         }
+
+        /**
+         * Keyboard operation.
+         */
+        private final EventHandler<KeyEvent> operation = e -> {
+            switch (e.getCode()) {
+            case DIGIT0:
+            case NUMPAD0:
+                current.value(false);
+                if (focusable) focusNext(current.ui);
+                break;
+
+            case DIGIT1:
+            case NUMPAD1:
+                current.value(true);
+                if (focusable) focusNext(current.ui);
+                break;
+
+            default:
+                break;
+            }
+        };
     }
 }
