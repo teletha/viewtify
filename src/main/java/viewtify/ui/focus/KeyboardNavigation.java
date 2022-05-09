@@ -9,6 +9,7 @@
  */
 package viewtify.ui.focus;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +32,10 @@ import kiss.I;
 import viewtify.Key;
 import viewtify.ui.UICheckBox;
 import viewtify.ui.UIComboBox;
+import viewtify.ui.UISpinner;
 import viewtify.ui.UIText;
 import viewtify.ui.UserInterface;
+import viewtify.ui.View;
 
 public class KeyboardNavigation {
 
@@ -67,6 +70,8 @@ public class KeyboardNavigation {
 
     private final CheckBoxNavigator checkbox = new CheckBoxNavigator();
 
+    private final SpinnerNavigator spinner = new SpinnerNavigator();
+
     private TopMostTraversalEngine engine;
 
     /**
@@ -79,12 +84,32 @@ public class KeyboardNavigation {
     }
 
     /**
-     * Set root {@link Node}.
+     * Configure root node.
      * 
-     * @param ui
+     * @param root
      * @return
      */
-    public KeyboardNavigation root(UserInterface ui) {
+    public KeyboardNavigation root(UserInterface root) {
+        return root(root.ui());
+    }
+
+    /**
+     * Configure root node.
+     * 
+     * @param root
+     * @return
+     */
+    public KeyboardNavigation root(View root) {
+        return root(root.ui()).group(root);
+    }
+
+    /**
+     * Configure root node.
+     * 
+     * @param root
+     * @return
+     */
+    public KeyboardNavigation root(Node root) {
         engine = new TopMostTraversalEngine() {
 
             /**
@@ -92,10 +117,10 @@ public class KeyboardNavigation {
              */
             @Override
             protected Parent getRoot() {
-                if (ui.ui instanceof Parent) {
-                    return (Parent) ui.ui;
+                if (root instanceof Parent) {
+                    return (Parent) root;
                 } else {
-                    return ui.ui.getParent();
+                    return root.getParent();
                 }
             }
         };
@@ -118,8 +143,33 @@ public class KeyboardNavigation {
                 combo.register((UIComboBox) node);
             } else if (node instanceof UICheckBox) {
                 checkbox.register((UICheckBox) node);
+            } else if (node instanceof UISpinner) {
+                spinner.register((UISpinner) node);
             }
         }
+        return this;
+    }
+
+    /**
+     * Group nodes.
+     * 
+     * @param view
+     * @return
+     */
+    public KeyboardNavigation group(View view) {
+        try {
+            for (Field field : view.getClass().getFields()) {
+                Class<?> type = field.getType();
+                if (View.class.isAssignableFrom(type)) {
+                    group((View) field.get(view));
+                } else if (UserInterface.class.isAssignableFrom(type)) {
+                    group((UserInterface) field.get(view));
+                }
+            }
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
+
         return this;
     }
 
@@ -541,6 +591,67 @@ public class KeyboardNavigation {
 
             default:
                 break;
+            }
+        };
+    }
+
+    /**
+     * Special Navigator for {@link UISpinner}.
+     */
+    private class SpinnerNavigator extends Navigator<UISpinner> {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void register(UISpinner node) {
+            node.ui.focusedProperty().addListener((v, o, n) -> {
+                current = node;
+
+                if (n) {
+                    node.ui.addEventFilter(KeyEvent.KEY_PRESSED, this);
+                    node.ui.addEventHandler(KeyEvent.KEY_PRESSED, operation);
+                } else {
+                    node.ui.removeEventFilter(KeyEvent.KEY_PRESSED, this);
+                    node.ui.removeEventHandler(KeyEvent.KEY_PRESSED, operation);
+                }
+            });
+        }
+
+        /** For combo box. */
+        private final EventHandler<KeyEvent> operation = e -> {
+            Node node = (Node) e.getSource();
+
+            if (Key.Numpad1.match(e) || Key.Digit1.match(e)) {
+                current.value(1);
+                if (focusable) focusNext(node);
+            } else if (Key.Numpad2.match(e) || Key.Digit2.match(e)) {
+                current.value(2);
+                if (focusable) focusNext(node);
+            } else if (Key.Numpad3.match(e) || Key.Digit3.match(e)) {
+                current.value(3);
+                if (focusable) focusNext(node);
+            } else if (Key.Numpad4.match(e) || Key.Digit4.match(e)) {
+                current.value(4);
+                if (focusable) focusNext(node);
+            } else if (Key.Numpad5.match(e) || Key.Digit5.match(e)) {
+                current.value(5);
+                if (focusable) focusNext(node);
+            } else if (Key.Numpad6.match(e) || Key.Digit6.match(e)) {
+                current.value(6);
+                if (focusable) focusNext(node);
+            } else if (Key.Numpad7.match(e) || Key.Digit7.match(e)) {
+                current.value(7);
+                if (focusable) focusNext(node);
+            } else if (Key.Numpad8.match(e) || Key.Digit8.match(e)) {
+                current.value(8);
+                if (focusable) focusNext(node);
+            } else if (Key.Numpad9.match(e) || Key.Digit9.match(e)) {
+                current.value(9);
+                if (focusable) focusNext(node);
+            } else if (Key.Numpad0.match(e) || Key.Digit0.match(e)) {
+                current.value(0);
+                if (focusable) focusNext(node);
             }
         };
     }
