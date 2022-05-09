@@ -750,12 +750,20 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * 
      * @return A {@link Signal} that notify the change of this value.
      */
-    default Signal<V> observe(boolean skipNull) {
-        if (skipNull) {
-            return Viewtify.observe(valueProperty()).skipNull();
-        } else {
-            return Viewtify.observe(valueProperty());
+    default Signal<V> observe(boolean ensureValid) {
+        Signal<V> signal = Viewtify.observe(valueProperty());
+
+        if (!ensureValid) {
+            return signal;
         }
+
+        signal = signal.skipNull();
+
+        if (this instanceof VerifyHelper == false) {
+            return signal;
+        }
+
+        return signal.take(((VerifyHelper) this).isValid());
     }
 
     /**
@@ -874,12 +882,20 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * 
      * @return A {@link Signal} that notify the change of this value.
      */
-    default Signal<V> observing(boolean skipNull) {
-        if (skipNull) {
-            return observe().startWith(value()).skipNull();
-        } else {
-            return observe().startWith(value());
+    default Signal<V> observing(boolean ensureValid) {
+        Signal<V> signal = Viewtify.observe(valueProperty()).startWith(value());
+
+        if (!ensureValid) {
+            return signal;
         }
+
+        signal = signal.skipNull();
+
+        if (this instanceof VerifyHelper == false) {
+            return signal;
+        }
+
+        return signal.take(((VerifyHelper) this).isValid());
     }
 
     /**
