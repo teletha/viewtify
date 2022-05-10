@@ -20,7 +20,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.skin.ComboBoxListViewSkin;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;

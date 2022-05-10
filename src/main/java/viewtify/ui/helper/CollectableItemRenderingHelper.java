@@ -18,7 +18,6 @@ import java.util.function.Supplier;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-
 import kiss.Disposable;
 import kiss.Variable;
 import kiss.WiseTriConsumer;
@@ -130,6 +129,13 @@ public interface CollectableItemRenderingHelper<Self extends CollectableItemRend
     default Self renderAsCheckBox(Function<E, Variable<Boolean>> modeler, WiseTriConsumer<UICheckBox, Variable<Boolean>, Disposable> renderer) {
         return renderByUI(() -> new UICheckBox(null), (ui, value, disposer) -> {
             renderer.accept(ui, modeler.apply(value), disposer);
+            return ui;
+        });
+    }
+
+    default Self renderAsCheckBox(WiseTriConsumer<UICheckBox, E, Disposable> renderer) {
+        return renderByUI(() -> new UICheckBox(null), (ui, value, disposer) -> {
+            renderer.accept(ui, value, disposer);
             return ui;
         });
     }
