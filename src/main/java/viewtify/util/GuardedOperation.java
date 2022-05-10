@@ -47,6 +47,19 @@ public class GuardedOperation {
     }
 
     /**
+     * {@link #guard(WiseRunnable)} for {@link Runnable}.
+     * <p>
+     * Guaranteed to be executed only once at a time. The difference with the synchronized block is
+     * that it does not allow recursive execution by the same thread and if the process is rejected,
+     * this operator will skip it instead of waiting.
+     * 
+     * @param process An atomic process.
+     */
+    public void protect(Runnable process) {
+        guard(I.wiseR(process));
+    }
+
+    /**
      * Ignore error while processing.
      * 
      * @return
