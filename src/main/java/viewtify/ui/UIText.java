@@ -16,10 +16,6 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
-
-import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
@@ -28,6 +24,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
+
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
+
+import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -270,16 +271,16 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     }
 
     /**
-     * Lazy builder.
+     * Set the text formatter.
      * 
-     * @return
+     * @param formatter Your formatter.
+     * @return Chainable API.
      */
-    private VerifiableFormatter formatter() {
-        if (formatter == null) {
-            formatter = new VerifiableFormatter();
-            ui.setTextFormatter(formatter.formatter);
+    public final UIText<V> formatter(TextFormatter<V> formatter) {
+        if (formatter != null) {
+            ui.setTextFormatter(formatter);
         }
-        return formatter;
+        return this;
     }
 
     /**
