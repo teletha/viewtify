@@ -28,7 +28,7 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
         super(view, rowType, rowType);
 
         renderAsCheckBox((ui, value, disposer) -> {
-            ui.observing().to(on -> {
+            ui.focusable(false).observing().to(on -> {
                 if (on) {
                     selected.add(value.ⅰ);
                 } else {
