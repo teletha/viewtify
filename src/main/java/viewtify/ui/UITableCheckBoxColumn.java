@@ -9,15 +9,14 @@
  */
 package viewtify.ui;
 
-import java.util.Collections;
-import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
 
     private final ObservableList<RowV> selected = FXCollections.observableArrayList();
+
+    private final ObservableList<RowV> unmodifiable = FXCollections.unmodifiableObservableList(selected);
 
     /**
      * Enchanced view.
@@ -45,7 +44,7 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
      * 
      * @return
      */
-    public List<RowV> selected() {
-        return Collections.unmodifiableList(selected);
+    public ObservableList<RowV> selected() {
+        return unmodifiable;
     }
 }
