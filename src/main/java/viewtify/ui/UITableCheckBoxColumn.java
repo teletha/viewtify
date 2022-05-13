@@ -35,6 +35,7 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
                 }
             }, disposer.add(() -> {
                 selected.remove(value.ⅰ);
+                ui.value(false); // reset value for redrawing
             }));
         });
     }
