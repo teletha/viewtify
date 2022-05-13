@@ -104,6 +104,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "ContainerHelper",
+			"packageName": "viewtify.ui.helper",
+			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "ContextMenuHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
