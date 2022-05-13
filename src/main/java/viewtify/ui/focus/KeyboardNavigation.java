@@ -607,13 +607,13 @@ public class KeyboardNavigation {
         protected void register(UISpinner node) {
             node.ui.focusedProperty().addListener((v, o, n) -> {
                 current = node;
-
                 if (n) {
                     node.ui.addEventFilter(KeyEvent.KEY_PRESSED, this);
-                    node.ui.addEventHandler(KeyEvent.KEY_PRESSED, operation);
+                    node.ui.addEventFilter(KeyEvent.KEY_PRESSED, operation);
+
                 } else {
                     node.ui.removeEventFilter(KeyEvent.KEY_PRESSED, this);
-                    node.ui.removeEventHandler(KeyEvent.KEY_PRESSED, operation);
+                    node.ui.removeEventFilter(KeyEvent.KEY_PRESSED, operation);
                 }
             });
         }
