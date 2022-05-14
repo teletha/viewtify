@@ -11,6 +11,9 @@ package viewtify.ui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView.TableViewSelectionModel;
+
+import viewtify.Viewtify;
 
 public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
 
@@ -26,8 +29,16 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
     public UITableCheckBoxColumn(View view, Class<RowV> rowType) {
         super(view, rowType, rowType);
 
-        renderAsCheckBox((ui, value, disposer) -> {
-            ui.focusable(false).observing().to(on -> {
+        renderAsCheckBox((checkbox, value, disposer) -> {
+            ObservableList<RowV> items = ui.getTableView().getItems();
+            TableViewSelectionModel<RowV> model = ui.getTableView().getSelectionModel();
+
+            int index = items.indexOf(value.ⅰ);
+            if (model.isSelected(index)) {
+                checkbox.value(true);
+            }
+
+            checkbox.focusable(false).observing().to(on -> {
                 if (on) {
                     selected.add(value.ⅰ);
                 } else {
@@ -35,7 +46,7 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
                 }
             }, disposer.add(() -> {
                 selected.remove(value.ⅰ);
-                ui.value(false); // reset value for redrawing
+                checkbox.value(false); // reset value for redrawing
             }));
         });
     }
@@ -47,5 +58,11 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
      */
     public ObservableList<RowV> selected() {
         return unmodifiable;
+    }
+
+    public void select(RowV value) {
+        Viewtify.inUI(() -> {
+            ui.getTableView().getSelectionModel().select(value);
+        });
     }
 }

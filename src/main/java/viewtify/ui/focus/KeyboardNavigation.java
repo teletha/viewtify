@@ -13,12 +13,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.controlsfx.control.PopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
-
-import com.sun.javafx.scene.traversal.Direction;
-import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
-
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
@@ -28,6 +22,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
+
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
+
+import com.sun.javafx.scene.traversal.Direction;
+import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
+
 import kiss.I;
 import viewtify.Key;
 import viewtify.ui.UICheckBox;
@@ -512,9 +513,6 @@ public class KeyboardNavigation {
                 if (focusable) focusNext(node);
             } else if (Key.Numpad9.match(e) || Key.Digit9.match(e)) {
                 current.selectAt(8);
-                if (focusable) focusNext(node);
-            } else if (Key.Numpad0.match(e) || Key.Digit0.match(e)) {
-                current.selectAt(9);
                 if (focusable) focusNext(node);
             }
         };
