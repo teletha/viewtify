@@ -173,3 +173,11 @@
 .spinner .text-field {
 	-fx-alignment: center;	
 }
+
+/* ==========================================================================
+  Spinner
+===========================================================================*/
+.text-field.noborder {
+	-fx-background-insets: 0;
+	-fx-background-color: transparent;
+}
