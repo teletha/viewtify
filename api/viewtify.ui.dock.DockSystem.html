@@ -8,10 +8,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="N">
+	<body class="h">
 		<header class="J">
-			<h1 class="R" date="2022-05-15" ver="2.4.0"><code>Viewtify</code></h1>
-			<nav class="H"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+			<h1 class="a" date="2022-05-15" ver="2.4.0"><code>Viewtify</code></h1>
+			<nav class="L"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -20,7 +20,7 @@
 					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="S" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="O" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -28,31 +28,31 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="g">
-			<nav class="K">
+		<main class="c">
+			<nav class="f">
 				<div></div>
 			</nav>
-			<article class="P" id="Article">
-				<section class="l"><code class="O">viewtify.ui.dock</code>
-					<h2 class="Class U"><code class="b">DockSystem</code></h2>
-					<div class="I"></div><span class="B"><p>Handles the full window management with fully customizable layout and drag into new not
+			<article class="Z" id="Article">
+				<section class="g"><code class="l">viewtify.ui.dock</code>
+					<h2 class="Class U"><code class="i">DockSystem</code></h2>
+					<div class="K"></div><span class="B"><p>Handles the full window management with fully customizable layout and drag into new not
  existing windows.</p>
 					</span></section>
-				<section class="l" id="UI">
-					<h2 class="e"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="b">UI</code><i class="V"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Parent.html">Parent</a></code></code></code></i></h2><span class="B"><p>The root user interface for the docking system.</p>
+				<section class="g" id="UI">
+					<h2 class="V"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="i">UI</code><i class="X"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Parent.html">Parent</a></code></code></code></i></h2><span class="B"><p>The root user interface for the docking system.</p>
 					</span></section>
-				<section class="l" id="validate()">
-					<h2 class="e"><i class="PUBLIC STATIC"></i><code class="b">validate</code><code class="M">()</code><i class="V"><code>void</code></i></h2><span class="B"><p>Validate dock system. Clean up the invalidate area.</p>
+				<section class="g" id="validate()">
+					<h2 class="V"><i class="STATIC PUBLIC"></i><code class="i">validate</code><code class="b">()</code><i class="X"><code>void</code></i></h2><span class="B"><p>Validate dock system. Clean up the invalidate area.</p>
 					</span></section>
-				<section class="l" id="register(java.lang.String)">
-					<h2 class="e"><i class="PUBLIC STATIC"></i><code class="b">register</code><code class="M">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>)</code><i class="V"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></i></h2>
-					<table class="k">
-						<tr class="c">
+				<section class="g" id="register(java.lang.String)">
+					<h2 class="V"><i class="STATIC PUBLIC"></i><code class="i">register</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>)</code><i class="X"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></i></h2>
+					<table class="H">
+						<tr class="I">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code>id</code></td>
 							<td><span><p>The view to register.</p>
 								</span></td>
 						</tr>
-						<tr class="d">
+						<tr class="M">
 							<td><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></td>
 							<td></td>
 						</tr>
@@ -61,19 +61,19 @@
 							<p/>
  The Position will give an advice where this view should be placed.</p>
 					</span></section>
-				<section class="l" id="register(java.lang.String,java.util.function.UnaryOperator)">
-					<h2 class="e"><i class="PUBLIC STATIC"></i><code class="b">register</code><code class="M">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><code class="parameters"><code><a href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></code></code> <code class="parameterName">option</code>)</code><i class="V"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></i></h2>
-					<table class="k">
-						<tr class="c">
+				<section class="g" id="register(java.lang.String,java.util.function.UnaryOperator)">
+					<h2 class="V"><i class="STATIC PUBLIC"></i><code class="i">register</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><code class="parameters"><code><a href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></code></code> <code class="parameterName">option</code>)</code><i class="X"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></i></h2>
+					<table class="H">
+						<tr class="I">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code>id</code></td>
 							<td><span><p>The view to register.</p>
 								</span></td>
 						</tr>
-						<tr class="c">
+						<tr class="I">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><code class="parameters"><code><a href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></code></code> <code>option</code></td>
 							<td></td>
 						</tr>
-						<tr class="d">
+						<tr class="M">
 							<td><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></td>
 							<td></td>
 						</tr>
@@ -83,17 +83,17 @@
  The Position will give an advice where this view should be placed.</p>
 					</span></section>
 			</article>
-			<aside class="Z" id="SubNavi">
+			<aside class="P" id="SubNavi">
 				<div class="j">
-					<h5 class="a">Static Fields</h5>
+					<h5 class="d">Static Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ui.dock.DockSystem.html#UI">UI</a></code><i class="Y"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Parent.html">Parent</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ui.dock.DockSystem.html#UI">UI</a></code><i class="R"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Parent.html">Parent</a></code></code></code></i></li>
 					</ul>
-					<h5 class="a">Static Methods</h5>
+					<h5 class="d">Static Methods</h5>
 					<ul>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#validate()">validate</a></code><code class="M">()</code><i class="Y"><code>void</code></i></li>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#register(java.lang.String)">register</a></code><code class="M">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>)</code><i class="Y"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></i></li>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#register(java.lang.String,java.util.function.UnaryOperator)">register</a></code><code class="M">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><code class="parameters"><code><a href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></code></code> <code class="parameterName">option</code>)</code><i class="Y"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#validate()">validate</a></code><code class="b">()</code><i class="R"><code>void</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#register(java.lang.String)">register</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>)</code><i class="R"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#register(java.lang.String,java.util.function.UnaryOperator)">register</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><code class="parameters"><code><a href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></code></code> <code class="parameterName">option</code>)</code><i class="R"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></i></li>
 					</ul>
 				</div>
 			</aside>
