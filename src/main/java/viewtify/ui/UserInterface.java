@@ -9,15 +9,12 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.function.Consumer;
-
-import org.controlsfx.control.decoration.Decorator;
-import org.controlsfx.control.decoration.GraphicDecoration;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
@@ -29,10 +26,15 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import org.controlsfx.control.decoration.Decorator;
+import org.controlsfx.control.decoration.GraphicDecoration;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.WiseConsumer;
 import kiss.model.Model;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -171,6 +173,17 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
         ui.focusedProperty().addListener((v, o, n) -> {
             if (n) action.run();
         });
+        return (Self) this;
+    }
+
+    /**
+     * Define the user action when this UI is focused.
+     * 
+     * @param action
+     * @return
+     */
+    public final Self whenFocus(WiseConsumer<Boolean> action) {
+        ui.focusedProperty().addListener((v, o, n) -> action.accept(n));
         return (Self) this;
     }
 
