@@ -247,6 +247,22 @@ public class KeyboardNavigation {
     }
 
     /**
+     * Focust first UI.
+     * 
+     * @return
+     */
+    public KeyboardNavigation focusFirst() {
+        if (!table.isEmpty()) {
+            List<UserInterface> nest = table.get(0);
+            if (!nest.isEmpty()) {
+                nest.get(0).focus();
+                System.out.println("focust " + nest.get(0).ui);
+            }
+        }
+        return this;
+    }
+
+    /**
      * 
      */
     private abstract class Navigator<N> implements EventHandler<KeyEvent> {
