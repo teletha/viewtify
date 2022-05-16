@@ -227,6 +227,15 @@ public interface ValueHelper<Self extends ValueHelper, V> {
     }
 
     /**
+     * Check whether this value is null or not.
+     * 
+     * @return
+     */
+    default Signal<Boolean> isNull() {
+        return observing().is(Objects::isNull);
+    }
+
+    /**
      * Synchronizes with the specified value.
      * 
      * @param value The value that is synchronized with each other.
