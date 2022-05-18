@@ -41,6 +41,9 @@ import viewtify.util.GuardedOperation;
 public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
         implements ValueHelper<UIText<V>, V>, ContextMenuHelper<UIText<V>>, EditableHelper<UIText<V>>, PlaceholderHelper<UIText<V>> {
 
+    /** The input type. */
+    public final Class type;
+
     /** The internal model value. */
     private final SmartProperty<V> model = new SmartProperty();
 
@@ -55,6 +58,7 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
      */
     public UIText(View view, Class type) {
         super(new VerifiableTextField(), view);
+        this.type = type;
 
         // propagate value from model to ui
         Viewtify.observe(model).to(value -> {

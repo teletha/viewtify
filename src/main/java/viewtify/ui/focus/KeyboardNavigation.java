@@ -439,16 +439,16 @@ public class KeyboardNavigation {
          * {@inheritDoc}
          */
         @Override
-        protected void register(UIText node) {
+        protected void register(UIText<?> node) {
             node.ui.focusedProperty().addListener((v, o, n) -> {
                 current = node;
 
                 if (n) {
                     node.ui.addEventFilter(KeyEvent.KEY_PRESSED, this);
-                    node.valueProperty().addListener(autofocus);
+                    node.ui.textProperty().addListener(autofocus);
                 } else {
                     node.ui.removeEventFilter(KeyEvent.KEY_PRESSED, this);
-                    node.valueProperty().removeListener(autofocus);
+                    node.ui.textProperty().removeListener(autofocus);
                 }
             });
         }
@@ -482,9 +482,10 @@ public class KeyboardNavigation {
         /**
          * Support to focus the next input automatically.
          */
-        private final ChangeListener<?> autofocus = (v, o, n) -> {
+        private final ChangeListener<Object> autofocus = (v, o, n) -> {
             if (focusable && !o.equals(n) && current.verifier().isValid()) {
                 int max = current.maximumInput();
+                System.out.println(max + "   " + current.length());
                 if (0 < max && max <= current.length()) {
                     focusNext(current.ui);
                 }
