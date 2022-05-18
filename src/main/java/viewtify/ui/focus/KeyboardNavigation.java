@@ -485,7 +485,6 @@ public class KeyboardNavigation {
         private final ChangeListener<Object> autofocus = (v, o, n) -> {
             if (focusable && !o.equals(n) && current.verifier().isValid()) {
                 int max = current.maximumInput();
-                System.out.println(max + "   " + current.length());
                 if (0 < max && max <= current.length()) {
                     focusNext(current.ui);
                 }
