@@ -30,7 +30,7 @@ import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 import viewtify.util.GuardedOperation;
 
-public interface ValueHelper<Self extends ValueHelper, V> {
+public interface ValueHelper<Self extends ValueHelper, V> extends Consumer<V> {
 
     /**
      * Return the current model.
@@ -38,6 +38,14 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return
      */
     Property<V> valueProperty();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default void accept(V value) {
+        value(value);
+    }
 
     /**
      * Get the current value.
