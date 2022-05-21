@@ -12,6 +12,7 @@ package viewtify.ui;
 import java.lang.reflect.Method;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
@@ -334,6 +335,17 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     @Override
     public UIText<V> placeholder(Node node) {
         throw new UnsupportedOperationException("Text field doesn't support the placeholder by node.");
+    }
+
+    /**
+     * Support auto-completion.
+     * 
+     * @param suggests
+     * @return
+     */
+    public UIText<V> suggest(List<V> suggests) {
+        TextFields.bindAutoCompletion(ui, suggests);
+        return this;
     }
 
     /**
