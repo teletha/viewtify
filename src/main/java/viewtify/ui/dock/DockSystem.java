@@ -124,6 +124,15 @@ public final class DockSystem {
     }
 
     /**
+     * Select the specified tab.
+     * 
+     * @param tab A tab ID to select.
+     */
+    public static void select(String tab) {
+
+    }
+
+    /**
      * Register a new view within this dock system.
      * <p/>
      * The Position will give an advice where this view should be placed.
