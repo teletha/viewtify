@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 import viewtify.ui.UserInterfaceProvider;
+import viewtify.ui.anime.SwapAnime;
 
 public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> extends UserInterfaceProvider<P> {
 
@@ -24,14 +25,24 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
      * @return
      */
     default Self content(UserInterfaceProvider<Node> provider) {
+        return content(provider, null);
+    }
+
+    /**
+     * Set the first child content.
+     * 
+     * @param provider
+     * @return
+     */
+    default Self content(UserInterfaceProvider<Node> provider, SwapAnime anime) {
         if (provider != null) {
             Node node = provider.ui();
             ObservableList<Node> children = ui().getChildren();
 
             if (children.isEmpty()) {
                 children.add(node);
-            } else {
-                children.set(0, node);
+            } else if (children.get(0) != node) {
+                SwapAnime.start(anime, ui(), children.get(0), () -> children.set(0, node), node);
             }
         }
         return (Self) this;

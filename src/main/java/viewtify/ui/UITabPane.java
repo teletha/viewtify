@@ -142,4 +142,11 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
         }
         return this;
     }
+
+    /**
+     * 
+     */
+    public void verticalize() {
+        showHeader(false);
+    }
 }
