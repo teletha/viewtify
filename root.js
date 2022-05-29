@@ -8,6 +8,7 @@ const root = {
 		"viewtify.property",
 		"viewtify.style",
 		"viewtify.ui",
+		"viewtify.ui.anime",
 		"viewtify.ui.canvas",
 		"viewtify.ui.dock",
 		"viewtify.ui.focus",
@@ -356,6 +357,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "SwapAnime",
+			"packageName": "viewtify.ui.anime",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "TabAbuse",
 			"packageName": "javafx.scene.control.skin",
 			"type": "Class"
@@ -504,6 +512,13 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UIScrollPane",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UISideTab",
 			"packageName": "viewtify.ui",
 			"type": "Class"
 		},
