@@ -126,10 +126,26 @@ public final class DockSystem {
     /**
      * Select the specified tab.
      * 
-     * @param tab A tab ID to select.
+     * @param id A tab ID to select.
      */
-    public static void select(String tab) {
+    public static void select(String id) {
+        DockLayout layout = layout();
+        TabArea area = I.signal(layout.roots)
+                .as(ViewArea.class)
+                .recurseMap(s -> s.flatIterable(v -> (List<ViewArea>) v.children))
+                .take(v -> v.hasView(id))
+                .as(TabArea.class)
+                .first()
+                .to().v;
 
+        if (area != null) {
+            for (UITab tab : area.node.items()) {
+                if (tab.getId().equals(id)) {
+                    area.node.select(tab);
+                    return;
+                }
+            }
+        }
     }
 
     /**
