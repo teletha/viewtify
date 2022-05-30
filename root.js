@@ -525,7 +525,7 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "UISideTab",
+			"name": "UISelectPane",
 			"packageName": "viewtify.ui",
 			"type": "Class"
 		},
