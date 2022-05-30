@@ -10,7 +10,6 @@
 package viewtify.ui;
 
 import javafx.scene.layout.VBox;
-
 import viewtify.ui.helper.ContainerHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 

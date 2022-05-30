@@ -76,6 +76,20 @@ public abstract class AnimeDefinition {
      * Shorthand to declare animation effect.
      */
     protected final void effect(WritableValue<Number> value, Number num) {
-        current.getKeyFrames().add(new KeyFrame(BASE_DURATION, new KeyValue(value, num)));
+        effect(value, num, BASE_DURATION);
+    }
+
+    /**
+     * Shorthand to declare animation effect.
+     */
+    protected final void effect(WritableValue<Number> value, Number num, double sec) {
+        effect(value, num, Duration.seconds(sec));
+    }
+
+    /**
+     * Shorthand to declare animation effect.
+     */
+    protected final void effect(WritableValue<Number> value, Number num, Duration duration) {
+        current.getKeyFrames().add(new KeyFrame(duration, new KeyValue(value, num)));
     }
 }

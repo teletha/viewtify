@@ -12,6 +12,7 @@ package viewtify.ui.anime;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import kiss.WiseRunnable;
 
 public interface SwapAnime {
@@ -27,12 +28,12 @@ public interface SwapAnime {
 
             @Override
             public void before() {
-                effect(before.opacityProperty(), 0);
+                effect(before.opacityProperty(), 0, 0.15);
             }
 
             @Override
             public void after() {
-                effect(after.opacityProperty(), 1);
+                effect(after.opacityProperty(), 1, 0.15);
             }
         };
     };
@@ -41,12 +42,14 @@ public interface SwapAnime {
     SwapAnime ZoomIn = (parent, before, after, action) -> {
         double scale = 0.15;
         int index = parent.getChildren().indexOf(before);
+        Node clip = parent.getClip();
 
         new AnimeDefinition(action) {
 
             @Override
             public void initialize() {
                 parent.getChildren().add(index, new StackPane(after, before));
+                parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight()));
 
                 after.setOpacity(0);
                 after.setScaleX(1 + scale);
@@ -67,6 +70,7 @@ public interface SwapAnime {
             @Override
             public void cleanup() {
                 parent.getChildren().set(index, after);
+                parent.setClip(clip);
             }
         };
     };
@@ -75,12 +79,14 @@ public interface SwapAnime {
     SwapAnime ZoomOut = (parent, before, after, action) -> {
         double scale = 0.15;
         int index = parent.getChildren().indexOf(before);
+        Node clip = parent.getClip();
 
         new AnimeDefinition(action) {
 
             @Override
             public void initialize() {
                 parent.getChildren().add(index, new StackPane(after, before));
+                parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight()));
 
                 after.setOpacity(0);
                 after.setScaleX(1 - scale);
@@ -101,6 +107,7 @@ public interface SwapAnime {
             @Override
             public void cleanup() {
                 parent.getChildren().set(index, after);
+                parent.setClip(clip);
             }
         };
     };
