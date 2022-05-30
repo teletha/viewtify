@@ -9,102 +9,115 @@
  */
 package viewtify.ui.anime;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
-
 import kiss.WiseRunnable;
 
-public abstract class SwapAnime {
-
-    private static final Duration BASE_DURATION = Duration.seconds(0.2);
+public interface SwapAnime {
 
     /** Built-in swap animation. */
-    public static final SwapAnime FadeOutIn = new SwapAnime() {
+    SwapAnime FadeOutIn = (parent, before, after, action) -> {
+        new AnimeDefinition(action) {
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void run(Pane parent, Node before, WiseRunnable action, Node after) {
-            int index = parent.getChildren().indexOf(before);
+            @Override
+            public void initialize() {
+                after.setOpacity(0);
+            }
 
-            StackPane pane = new StackPane(after, before);
-            parent.getChildren().add(index, pane);
+            @Override
+            public void before() {
+                effect(before.opacityProperty(), 0);
+            }
 
-            Timeline line = new Timeline();
-            ObservableList<KeyFrame> frames = line.getKeyFrames();
-            frames.add(new KeyFrame(BASE_DURATION, new KeyValue(before.opacityProperty(), 0)));
-            frames.add(new KeyFrame(BASE_DURATION, new KeyValue(after.opacityProperty(), 1)));
-            line.setOnFinished(e -> {
-                parent.getChildren().set(index, after);
-            });
-            line.play();
-
-            // Timeline beforeAnime = new Timeline(new KeyFrame(BASE_DURATION, new
-            // KeyValue(before.opacityProperty(), 0)));
-            // beforeAnime.setOnFinished(finishBefore -> {
-            // before.setCache(false);
-            // after.setOpacity(0);
-            // action.run();
-            //
-            // Timeline afterAnime = new Timeline(new KeyFrame(BASE_DURATION, new
-            // KeyValue(after.opacityProperty(), 1)));
-            // afterAnime.play();
-            // });
-            // beforeAnime.play();
-
-        }
+            @Override
+            public void after() {
+                effect(after.opacityProperty(), 1);
+            }
+        };
     };
 
     /** Built-in swap animation. */
-    public static final SwapAnime ZoomIn = new SwapAnime() {
+    SwapAnime ZoomIn = (parent, before, after, action) -> {
+        double scale = 0.15;
+        int index = parent.getChildren().indexOf(before);
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void run(Pane parent, Node before, WiseRunnable action, Node after) {
-            int index = parent.getChildren().indexOf(before);
+        new AnimeDefinition(action) {
 
-            StackPane pane = new StackPane(after, before);
-            parent.getChildren().add(index, pane);
+            @Override
+            public void initialize() {
+                parent.getChildren().add(index, new StackPane(after, before));
 
-            after.setOpacity(0);
-            after.setScaleX(1);
-            after.setScaleY(1);
+                after.setOpacity(0);
+                after.setScaleX(1 + scale);
+                after.setScaleY(1 + scale);
+            }
 
-            Timeline line = new Timeline();
-            ObservableList<KeyFrame> frames = line.getKeyFrames();
-            frames.add(new KeyFrame(BASE_DURATION, new KeyValue(before.opacityProperty(), 0), new KeyValue(before
-                    .scaleXProperty(), 0.6), new KeyValue(before.scaleYProperty(), 0.6)));
-            frames.add(new KeyFrame(BASE_DURATION, new KeyValue(after.opacityProperty(), 1), new KeyValue(after
-                    .scaleXProperty(), 1), new KeyValue(after.scaleYProperty(), 1)));
-            line.setOnFinished(e -> {
+            @Override
+            public void before() {
+                effect(before.opacityProperty(), 0);
+                effect(before.scaleXProperty(), 1 - scale);
+                effect(before.scaleYProperty(), 1 - scale);
+
+                effect(after.opacityProperty(), 1);
+                effect(after.scaleXProperty(), 1);
+                effect(after.scaleYProperty(), 1);
+            }
+
+            @Override
+            public void cleanup() {
                 parent.getChildren().set(index, after);
-            });
-            line.play();
-        }
+            }
+        };
     };
 
-    public abstract void run(Pane parent, Node before, WiseRunnable action, Node after);
+    /** Built-in swap animation. */
+    SwapAnime ZoomOut = (parent, before, after, action) -> {
+        double scale = 0.15;
+        int index = parent.getChildren().indexOf(before);
+
+        new AnimeDefinition(action) {
+
+            @Override
+            public void initialize() {
+                parent.getChildren().add(index, new StackPane(after, before));
+
+                after.setOpacity(0);
+                after.setScaleX(1 - scale);
+                after.setScaleY(1 - scale);
+            }
+
+            @Override
+            public void before() {
+                effect(before.opacityProperty(), 0);
+                effect(before.scaleXProperty(), 1 + scale);
+                effect(before.scaleYProperty(), 1 + scale);
+
+                effect(after.opacityProperty(), 1);
+                effect(after.scaleXProperty(), 1);
+                effect(after.scaleYProperty(), 1);
+            }
+
+            @Override
+            public void cleanup() {
+                parent.getChildren().set(index, after);
+            }
+        };
+    };
+
+    void run(Pane parent, Node before, Node after, WiseRunnable action);
 
     /**
      * Start animation.
      * 
-     * @param anime
+     * @param animes
      * @param action
      */
-    public static void start(SwapAnime anime, Pane parent, Node before, WiseRunnable action, Node after) {
-        if (anime == null) {
+    public static void play(SwapAnime[] animes, Pane parent, Node before, Node after, WiseRunnable action) {
+        if (animes == null || animes.length == 0 || animes[0] == null) {
             action.run();
         } else {
-            anime.run(parent, before, action, after);
+            animes[0].run(parent, before, after, action);
         }
     }
 }
