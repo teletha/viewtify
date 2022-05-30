@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script async="true" src="highlight.js" type="module"></script>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="R">
+		<header class="N">
+			<h1 class="L" date="2022-05-30" ver="2.4.0"><code>Viewtify</code></h1>
+			<nav class="g"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="Z" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="b">
+			<nav class="P">
+				<div></div>
+			</nav>
+			<article class="k" id="Article">
+				<section class="j"><code class="V">viewtify.ui.anime</code>
+					<h2 class="AbstractClass S"><code class="e">AnimeDefinition</code></h2>
+					<div class="J"></div>
+				</section>
+				<section class="j" id="BASE_DURATION">
+					<h2 class="O"><i class="FINAL"><i class="STATIC PROTECTED"></i></i><code class="e">BASE_DURATION</code><i class="W"><code class="return">javafx.util.Duration</code></i></h2><span class="B"><p>The standard effect time.</p>
+					</span></section>
+				<section class="j" id="AnimeDefinition(kiss.WiseRunnable)">
+					<h2 class="O"><i class="PUBLIC"></i><code class="e">AnimeDefinition</code><code class="i">(<code>kiss.WiseRunnable</code> <code class="parameterName">action</code>)</code></h2>
+					<table class="d">
+						<tr class="K">
+							<td><code>kiss.WiseRunnable</code> <code>action</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Declare animation process.</p>
+					</span></section>
+				<section class="j" id="initialize()">
+					<h2 class="O"><i class="PUBLIC"></i><code class="e">initialize</code><code class="i">()</code><i class="W"><code>void</code></i></h2><span class="B"><p>Initialize effects. You can override to declare your original effect.</p>
+					</span></section>
+				<section class="j" id="before()">
+					<h2 class="O"><i class="PUBLIC"></i><code class="e">before</code><code class="i">()</code><i class="W"><code>void</code></i></h2><span class="B"><p>Declare animation before the action. You can override to declare your original effect.</p>
+					</span></section>
+				<section class="j" id="after()">
+					<h2 class="O"><i class="PUBLIC"></i><code class="e">after</code><code class="i">()</code><i class="W"><code>void</code></i></h2><span class="B"><p>Declare animetion after the action. You can override to declare your original effect.</p>
+					</span></section>
+				<section class="j" id="cleanup()">
+					<h2 class="O"><i class="PUBLIC"></i><code class="e">cleanup</code><code class="i">()</code><i class="W"><code>void</code></i></h2><span class="B"><p>Cleanup effects. You can override to declare your original effect.</p>
+					</span></section>
+				<section class="j" id="effect(javafx.beans.value.WritableValue,java.lang.Number)">
+					<h2 class="O"><i class="FINAL"><i class="PROTECTED"></i></i><code class="e">effect</code><code class="i">(<code>javafx.beans.value.WritableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html">Number</a></code></code></code> <code class="parameterName">value</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html">Number</a></code> <code class="parameterName">num</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="d">
+						<tr class="K">
+							<td><code>javafx.beans.value.WritableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html">Number</a></code></code></code> <code>value</code></td>
+							<td></td>
+						</tr>
+						<tr class="K">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html">Number</a></code> <code>num</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Shorthand to declare animation effect.</p>
+					</span></section>
+			</article>
+			<aside class="M" id="SubNavi">
+				<div class="Y">
+					<h5 class="f">Constructors</h5>
+					<ul>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.anime.AnimeDefinition.html#AnimeDefinition(kiss.WiseRunnable)">AnimeDefinition</a></code><code class="i">(<code>kiss.WiseRunnable</code> <code class="parameterName">action</code>)</code></li>
+					</ul>
+					<h5 class="f">Static Fields</h5>
+					<ul>
+						<li><i class="FINAL"><i class="STATIC PROTECTED"></i></i><code><a href="api/viewtify.ui.anime.AnimeDefinition.html#BASE_DURATION">BASE_DURATION</a></code><i class="U"><code class="return">javafx.util.Duration</code></i></li>
+					</ul>
+					<h5 class="f">Methods</h5>
+					<ul>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.anime.AnimeDefinition.html#initialize()">initialize</a></code><code class="i">()</code><i class="U"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.anime.AnimeDefinition.html#before()">before</a></code><code class="i">()</code><i class="U"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.anime.AnimeDefinition.html#after()">after</a></code><code class="i">()</code><i class="U"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.anime.AnimeDefinition.html#cleanup()">cleanup</a></code><code class="i">()</code><i class="U"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.anime.AnimeDefinition.html#effect(javafx.beans.value.WritableValue,java.lang.Number)">effect</a></code><code class="i">(<code>javafx.beans.value.WritableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html">Number</a></code></code></code> <code class="parameterName">value</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html">Number</a></code> <code class="parameterName">num</code>)</code><i class="U"><code>void</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>

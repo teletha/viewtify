@@ -42,6 +42,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AnimeDefinition",
+			"packageName": "viewtify.ui.anime",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "CollectableHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
@@ -359,7 +366,7 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "SwapAnime",
 			"packageName": "viewtify.ui.anime",
-			"type": "AbstractClass"
+			"type": "Functional"
 		},
 		{
 			"modifiers": {
