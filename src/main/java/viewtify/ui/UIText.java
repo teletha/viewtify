@@ -17,19 +17,22 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.INamedCharacter;
+
+import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
-
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
-
-import impl.org.controlsfx.skin.CustomTextFieldSkin;
+import javafx.scene.paint.Color;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -264,14 +267,41 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     }
 
     /**
+     * Set the icon prefix.
+     * 
+     * @param prefix
+     * @return Chainable API.
+     */
+    public final UIText<V> prefix(INamedCharacter prefix) {
+        Glyph icon = new Glyph("FontAwesome", prefix);
+        icon.setPadding(new Insets(0, 2, 0, 2));
+        icon.setColor(Color.GRAY);
+        ui.setLeft(icon);
+        return this;
+    }
+
+    /**
      * Set the uneditable text suffix.
      * 
      * @param suffix
      * @return Chainable API.
      */
     public final UIText<V> suffix(String suffix) {
-        // formatter().suffix = Objects.requireNonNull(suffix, "");
         ui.setRight(new Label(suffix));
+        return this;
+    }
+
+    /**
+     * Set the icon suffix.
+     * 
+     * @param suffix
+     * @return Chainable API.
+     */
+    public final UIText<V> suffix(INamedCharacter suffix) {
+        Glyph icon = new Glyph("FontAwesome", suffix);
+        icon.setPadding(new Insets(0, 2, 0, 2));
+        icon.setColor(Color.GRAY);
+        ui.setRight(icon);
         return this;
     }
 
