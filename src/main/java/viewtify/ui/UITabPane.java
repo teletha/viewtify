@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
+import javafx.geometry.Side;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TabPane.TabDragPolicy;
@@ -146,7 +147,30 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
     /**
      * 
      */
-    public void verticalize() {
-        showHeader(false);
+    public final UITabPane verticalize(int width, int height) {
+        ui.setSide(Side.LEFT);
+        // ui.setRotateGraphic(true);
+        //
+        // // ui.setTabMinHeight(width);
+        // // ui.setTabMaxHeight(width);
+        // // ui.setTabMinWidth(height);
+        // // ui.setTabMaxWidth(height);
+        // ui.getTabs().addListener((ListChangeListener<Tab>) c -> {
+        // if (c.next()) {
+        // for (Tab tab : c.getAddedSubList()) {
+        // tab.setClosable(false);
+        // tab.setGraphic(new Label(""));
+        //
+        // Parent tabContainer = tab.getGraphic().getParent().getParent();
+        // tabContainer.setRotate(90);
+        // // By default the display will originate from the center.
+        // // Applying a negative Y transformation will move it left.
+        // // Should be the 'TabMinHeight/2'
+        // tabContainer.setTranslateY(-100);
+        // }
+        // }
+        // });
+
+        return this;
     }
 }
