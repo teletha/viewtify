@@ -30,10 +30,14 @@ class CSSProcessor implements Consumer<Properties> {
     }
 
     /** The property name mapping. */
-    private static final Map<String, String> propertyNames = Map.of("color", "text-fill", "stroke-dasharray", "stroke-dash-array");
+    private static final Map<String, String> propertyNames = Map
+            .of("color", "text-fill", "stroke-dasharray", "stroke-dash-array", "text-decoration", "underline");
 
     /** The property value mapping. */
     private static final Map<String, String> cursorProperties = Map.of("pointer", "hand");
+
+    /** The property value mapping. */
+    private static final Map<String, String> underlineProperties = Map.of("underline", "true");
 
     /**
      * {@inheritDoc}
@@ -46,6 +50,7 @@ class CSSProcessor implements Consumer<Properties> {
         properties.compactTo("border-style", "solid", sides("border-*-style"));
         properties.compactTo("border-color", Color.Transparent, sides("border-*-color"));
         properties.revalue("cursor", cursorProperties);
+        properties.revalue("text-decoration", underlineProperties);
 
         alignment(properties);
         borderRadius(properties);
