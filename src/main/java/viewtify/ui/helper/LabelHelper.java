@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.Property;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
@@ -256,5 +257,45 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      */
     default Self font(String name, double size, FontWeight weight) {
         return font(Font.font(name, weight, size));
+    }
+
+    /**
+     * Set icon.
+     * 
+     * @param icon
+     * @return
+     */
+    default Self icon(INamedCharacter icon) {
+        return icon(icon, (javafx.scene.paint.Color) null);
+    }
+
+    /**
+     * Set icon.
+     * 
+     * @param icon
+     * @param color
+     * @return
+     */
+    default Self icon(INamedCharacter icon, Color color) {
+        return icon(icon, FXUtils.color(color));
+    }
+
+    /**
+     * Set icon.
+     * 
+     * @param icon
+     * @param color
+     * @return
+     */
+    default Self icon(INamedCharacter icon, javafx.scene.paint.Color color) {
+        if (color == null) {
+            color = javafx.scene.paint.Color.GRAY;
+        }
+
+        Glyph glyph = new Glyph("FontAwesome", icon);
+        glyph.setPadding(new Insets(0, 2, 0, 2));
+        glyph.setColor(color);
+        property(Type.Graphic).setValue(glyph);
+        return (Self) this;
     }
 }

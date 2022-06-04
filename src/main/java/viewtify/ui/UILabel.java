@@ -10,6 +10,7 @@
 package viewtify.ui;
 
 import javafx.scene.control.Label;
+
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 
