@@ -210,6 +210,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "HideAnime",
+			"packageName": "viewtify.ui.anime",
+			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Icon",
 			"packageName": "viewtify.util",
 			"type": "Enum"
@@ -234,6 +241,13 @@ const root = {
 			"name": "LabelHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "LayoutAnimator",
+			"packageName": "viewtify.ui.anime",
+			"type": "Class"
 		},
 		{
 			"modifiers": {
@@ -346,6 +360,13 @@ const root = {
 			"name": "ShortcutManager",
 			"packageName": "viewtify",
 			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "ShowAnime",
+			"packageName": "viewtify.ui.anime",
+			"type": "Functional"
 		},
 		{
 			"modifiers": {
