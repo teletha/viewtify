@@ -357,6 +357,20 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "StorableList",
+			"packageName": "viewtify.model",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "StorableModel",
+			"packageName": "viewtify.model",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "StyleHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
@@ -603,6 +617,13 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UIText",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UITileView",
 			"packageName": "viewtify.ui",
 			"type": "Class"
 		},
