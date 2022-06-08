@@ -30,7 +30,7 @@ public abstract class AnimeDefinition {
         Timeline before = current = new Timeline();
         before();
         before.setOnFinished(e -> {
-            action.run();
+            if (action != null) action.run();
 
             Timeline after = current = new Timeline();
             after();

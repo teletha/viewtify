@@ -9,13 +9,10 @@
  */
 package viewtify.model;
 
-import java.util.List;
-
 import kiss.I;
-import kiss.Storable;
 import kiss.model.Model;
 
-public interface StorableModel<C extends List & Storable> {
+public interface StorableModel<C extends StorableList> {
 
     /**
      * The associated contianer for this item.

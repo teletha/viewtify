@@ -17,7 +17,7 @@ import kiss.Singleton;
 import kiss.Storable;
 
 @Managed(Singleton.class)
-public abstract class StorableList<E> extends ModifiableObservableListBase<E> implements Storable<StorableList<E>> {
+public abstract class StorableList<E extends StorableModel> extends ModifiableObservableListBase<E> implements Storable<StorableList<E>> {
 
     /** The actual container. */
     private final ArrayList<E> list = new ArrayList();
