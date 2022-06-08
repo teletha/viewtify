@@ -9,27 +9,29 @@
  */
 package viewtify.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.FlowPane;
+
 import kiss.WiseFunction;
 import viewtify.ui.anime.HideAnime;
 import viewtify.ui.anime.LayoutAnimator;
 import viewtify.ui.anime.ShowAnime;
 import viewtify.ui.helper.CollectableHelper;
 
-public class UITileView<E> extends UserInterface<UITileView<E>, TilePane> implements CollectableHelper<UITileView<E>, E> {
+public class UITileView<E> extends UserInterface<UITileView<E>, FlowPane> implements CollectableHelper<UITileView<E>, E> {
 
     /** The model. */
-    private final SimpleObjectProperty<ObservableList<E>> models = new SimpleObjectProperty(FXCollections.observableArrayList());
+    private final SimpleObjectProperty<ObservableList<E>> models = new SimpleObjectProperty();
 
     /** The view. */
     private final Map<E, View> views = new HashMap();
@@ -41,28 +43,46 @@ public class UITileView<E> extends UserInterface<UITileView<E>, TilePane> implem
 
     /** The model modifier. */
     private final ListChangeListener<E> modelModifier = c -> {
-        if (c.next()) {
-            removeUI(c.getRemoved());
-            addUI(c.getAddedSubList());
+        while (c.next()) {
+            if (c.wasPermutated()) {
+                for (int i = c.getFrom(); i < c.getTo(); ++i) {
+                    System.out.println("Permutated " + c.getPermutation(i));
+                }
+            } else if (c.wasUpdated()) {
+                System.out.println("Updated");
+            } else {
+                List<? extends E> added = c.getAddedSubList();
+                List<? extends E> removed = c.getRemoved();
+                List<? extends E> intersect = added.stream().filter(removed::contains).toList();
+                List<E> addedPure = new ArrayList(added);
+                addedPure.removeAll(intersect);
+                List<E> removedPure = new ArrayList(removed);
+                removedPure.removeAll(intersect);
 
-            ui.layout();
+                removeUI(removedPure);
+                addUI(addedPure);
+            }
         }
     };
 
     /** The model holder modifier. */
     private final ChangeListener<ObservableList<E>> modelsModifier = (property, oldList, newList) -> {
-        oldList.removeListener(modelModifier);
-        removeUI(oldList);
+        if (oldList != null) {
+            oldList.removeListener(modelModifier);
+            removeUI(oldList);
+        }
 
-        newList.addListener(modelModifier);
-        addUI(newList);
+        if (newList != null) {
+            newList.addListener(modelModifier);
+            addUI(newList);
+        }
     };
 
     /**
      * @param view
      */
     public UITileView(View view) {
-        super(new TilePane(), view);
+        super(new FlowPane(), view);
 
         models.addListener(modelsModifier);
     }
@@ -101,8 +121,9 @@ public class UITileView<E> extends UserInterface<UITileView<E>, TilePane> implem
             for (E added : models) {
                 View view = renderer.apply(added);
                 Node node = view.ui();
-                ui.getChildren().add(node);
+                ui.getChildren().add(this.models.get().indexOf(added), node);
                 views.put(added, view);
+                animator.observe(node);
 
                 ShowAnime.FadeIn.run(ui, node, null);
             }
@@ -121,6 +142,7 @@ public class UITileView<E> extends UserInterface<UITileView<E>, TilePane> implem
                 Node node = view.ui();
                 HideAnime.FadeOut.run(ui, node, () -> {
                     ui.getChildren().remove(node);
+                    animator.unobserve(node);
                 });
             }
         }

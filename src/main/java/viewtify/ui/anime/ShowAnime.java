@@ -12,6 +12,7 @@ package viewtify.ui.anime;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+
 import kiss.WiseRunnable;
 
 public interface ShowAnime {
