@@ -11,8 +11,12 @@ package viewtify.ui.helper;
 
 import java.util.Objects;
 
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.INamedCharacter;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.Property;
+import javafx.css.Styleable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -21,10 +25,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import org.controlsfx.glyphfont.Glyph;
-import org.controlsfx.glyphfont.INamedCharacter;
-
 import kiss.I;
 import kiss.Variable;
 import stylist.value.Color;
@@ -86,7 +86,9 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      */
     default Self text(INamedCharacter text) {
         if (text != null) {
-            text(new Glyph("FontAwesome", text));
+            Glyph g = new Glyph("FontAwesome", text);
+            g.getStyleClass().addAll(((Styleable) ui()).getStyleClass());
+            text(g);
         }
         return (Self) this;
     }
