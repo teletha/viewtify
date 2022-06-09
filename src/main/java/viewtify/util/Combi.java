@@ -9,24 +9,39 @@
  */
 package viewtify.util;
 
+import java.util.Objects;
+
 public class Combi<V> {
 
     public V previous;
 
     public V next;
 
+    public Combi() {
+    }
+
     public Combi(V initial) {
         reset(initial);
     }
 
-    public void set(V value) {
+    public Combi<V> set(V value) {
         this.previous = next;
         this.next = value;
+
+        return this;
     }
 
     public void reset(V value) {
         this.previous = value;
         this.next = value;
+    }
+
+    public boolean isDiff() {
+        return !isSame();
+    }
+
+    public boolean isSame() {
+        return Objects.equals(previous, next);
     }
 
     /**

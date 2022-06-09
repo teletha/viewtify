@@ -46,11 +46,11 @@ public abstract class AbstractFlowablePane<E, P extends Pane, Self extends Abstr
     private final ListChangeListener<E> modelModifier = c -> {
         while (c.next()) {
             if (c.wasPermutated()) {
-                for (int i = c.getFrom(); i < c.getTo(); ++i) {
-                    System.out.println("Permutated " + c.getPermutation(i));
+                for (int i = c.getFrom(); i < c.getTo(); i++) {
+                    moveUI(i, c.getPermutation(i));
                 }
             } else if (c.wasUpdated()) {
-                System.out.println("Updated");
+                // ignore
             } else {
                 List<? extends E> added = c.getAddedSubList();
                 List<? extends E> removed = c.getRemoved();
@@ -69,8 +69,8 @@ public abstract class AbstractFlowablePane<E, P extends Pane, Self extends Abstr
     /** The model holder modifier. */
     private final ChangeListener<ObservableList<E>> modelsModifier = (property, oldList, newList) -> {
         if (oldList != null) {
-            oldList.removeListener(modelModifier);
             removeUI(oldList);
+            oldList.removeListener(modelModifier);
         }
 
         if (newList != null) {
@@ -144,8 +144,13 @@ public abstract class AbstractFlowablePane<E, P extends Pane, Self extends Abstr
                 HideAnime.FadeOut.run(ui, node, () -> {
                     ui.getChildren().remove(node);
                     animator.unobserve(node);
+                    view.disposer.dispose();
                 });
             }
         }
+    }
+
+    private void moveUI(int start, int end) {
+
     }
 }

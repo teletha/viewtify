@@ -9,6 +9,7 @@
  */
 package viewtify.ui.helper;
 
+import java.lang.reflect.Method;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +30,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -550,6 +552,29 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     }
 
     /**
+     * Reapply the current filter and comparator.
+     * 
+     * @return
+     */
+    default Self reapply() {
+        Ð<E> refer = refer();
+        if (refer.filter.isPresent()) {
+            refer.invokeRefilter();
+        }
+        if (refer.sorter.isPresent()) {
+            refer.invokeResort();
+        }
+        return (Self) this;
+    }
+
+    default Self reapplyWhen(Signal<?> timing) {
+        if (timing != null) {
+            timing.to(() -> reapply());
+        }
+        return (Self) this;
+    }
+
+    /**
      * Retrieve the special reference holder.
      * 
      * @return
@@ -572,17 +597,39 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      */
     final class Ð<E> implements ListChangeListener<E> {
 
+        /** The internal method accessor. */
+        private static final Method refilter;
+
+        /** The internal method accessor. */
+        private static final Method resort;
+
+        // cache the internal method reference
+        static {
+            try {
+                refilter = FilteredList.class.getDeclaredMethod("refilter");
+                refilter.setAccessible(true);
+                resort = SortedList.class.getDeclaredMethod("doSortWithPermutationChange");
+                resort.setAccessible(true);
+            } catch (Exception e) {
+                throw I.quiet(e);
+            }
+        }
+
         /** The item holder. */
         private final Property<ObservableList<E>> items = new SmartProperty();
+
+        private FilteredList<E> filtered;
+
+        private SortedList<E> sorted;
 
         /** The filtered state. */
         private final Signaling<Boolean> filtering = new Signaling();
 
         /** The item taking filter. */
-        private final Variable<Predicate<E>> filter = Variable.empty();
+        private final Variable<Predicate<E>> filter = Variable.of(v -> true);
 
         /** The item sorter. */
-        private final Variable<Comparator<E>> sorter = Variable.empty();
+        private final Variable<Comparator<E>> sorter = Variable.of((a, b) -> -1);
 
         /** The item state observers. */
         private Function<E, Variable> notifier;
@@ -608,22 +655,35 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 list.addListener(this);
             }
 
-            Viewtify.observing(items).combineLatest(filter.observing(), sorter.observing()).to(v -> {
+            Viewtify.observing(items).skipNull().to(v -> {
                 updating.guard(() -> {
-                    ObservableList items = v.ⅰ;
+                    filtered = new FilteredList(v, filter.v);
+                    sorted = new SortedList(filtered, sorter.v);
 
-                    if (v.ⅱ != null) {
-                        FilteredList<E> filtered = items.filtered(v.ⅱ);
-                        filtering.accept(items.size() != filtered.size());
-                        items = filtered;
-                    }
-
-                    if (v.ⅲ != null) {
-                        items = items.sorted(v.ⅲ);
-                    }
-                    helper.itemsProperty().setValue(items);
+                    helper.itemsProperty().setValue(sorted);
                 });
             });
+
+            filter.observe().to(v -> filtered.setPredicate(v));
+            sorter.observe().to(v -> sorted.setComparator(v));
+
+            // Viewtify.observing(items).combineLatest(filter.observing(), sorter.observing()).to(v
+            // -> {
+            // updating.guard(() -> {
+            // ObservableList items = v.ⅰ;
+            //
+            // if (v.ⅱ != null) {
+            // FilteredList<E> filtered = items.filtered(v.ⅱ);
+            // filtering.accept(items.size() != filtered.size());
+            // items = filtered;
+            // }
+            //
+            // if (v.ⅲ != null) {
+            // items = items.sorted(v.ⅲ);
+            // }
+            // helper.itemsProperty().setValue(items);
+            // });
+            // });
         }
 
         /**
@@ -665,6 +725,28 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 }
             }
             return query;
+        }
+
+        /**
+         * Invoke the internal refilter method.
+         */
+        private void invokeRefilter() {
+            try {
+                refilter.invoke(filtered);
+            } catch (Exception e) {
+                throw I.quiet(e);
+            }
+        }
+
+        /**
+         * Invoke the internal resort method.
+         */
+        private void invokeResort() {
+            try {
+                resort.invoke(sorted);
+            } catch (Exception e) {
+                throw I.quiet(e);
+            }
         }
     }
 }

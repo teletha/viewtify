@@ -23,6 +23,7 @@ import javafx.scene.control.TableColumnBase;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
 import kiss.Variable;
@@ -33,6 +34,9 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
 
     /** The human-readable ID separator. */
     public static final String IDSeparator = " ➝ ";
+
+    /** The deconstructor. */
+    protected final Disposable disposer = Disposable.empty();
 
     /** The associated root node. */
     private Node root;
