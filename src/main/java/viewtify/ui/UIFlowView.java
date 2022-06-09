@@ -9,14 +9,14 @@
  */
 package viewtify.ui;
 
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.FlowPane;
 
-public class UITileView<E> extends AbstractFlowablePane<E, TilePane, UITileView<E>> {
+public class UIFlowView<E> extends AbstractFlowablePane<E, FlowPane, UIFlowView<E>> {
 
     /**
      * @param view
      */
-    public UITileView(View view) {
-        super(new TilePane(), view);
+    public UIFlowView(View view) {
+        super(new FlowPane(), view);
     }
 }

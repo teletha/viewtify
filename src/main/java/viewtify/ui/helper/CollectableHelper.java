@@ -29,7 +29,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -603,17 +602,11 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
          * @param helper
          */
         private Ð(CollectableHelper<?, E> helper) {
-            Property<ObservableList<E>> p = helper.itemsProperty();
-            ObservableList<E> list = p.getValue();
+            ObservableList<E> list = helper.itemsProperty().getValue();
             if (list != null) {
                 items.setValue(list);
                 list.addListener(this);
             }
-            p.addListener((v, o, n) -> {
-                if (o != null) o.removeListener(this);
-                if (n != null) n.addListener(this);
-                items.setValue(n);
-            });
 
             Viewtify.observing(items).combineLatest(filter.observing(), sorter.observing()).to(v -> {
                 updating.guard(() -> {
