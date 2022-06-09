@@ -21,6 +21,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AbstractFlowablePane",
+			"packageName": "viewtify.ui",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Actions",
 			"packageName": "viewtify.ui.helper",
 			"type": "Class"
@@ -505,6 +512,13 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UIDatePicker",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UIFlowView",
 			"packageName": "viewtify.ui",
 			"type": "Class"
 		},
