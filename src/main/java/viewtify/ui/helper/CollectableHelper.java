@@ -31,6 +31,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -554,9 +555,9 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     /**
      * Reapply the current filter and comparator.
      * 
-     * @return
+     * @return Chainable API.
      */
-    default Self reapply() {
+    default Self refilter() {
         Ð<E> refer = refer();
         if (refer.filter.isPresent()) {
             refer.invokeRefilter();
@@ -567,9 +568,41 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
         return (Self) this;
     }
 
-    default Self reapplyWhen(Signal<?> timing) {
+    /**
+     * Reapply the current filter and comparator when the specified timing.
+     * 
+     * @param timing A timing to reapply.
+     * @return Chainable API.
+     */
+    default Self refilterWhen(Signal<?> timing) {
         if (timing != null) {
-            timing.to(() -> reapply());
+            timing.to(() -> refilter());
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Reapply the current comparator.
+     * 
+     * @return Chainable API.
+     */
+    default Self resort() {
+        Ð<E> refer = refer();
+        if (refer.sorter.isPresent()) {
+            refer.invokeResort();
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Reapply the current comparator when the specified timing.
+     * 
+     * @param timing A timing to reapply.
+     * @return Chainable API.
+     */
+    default Self resortWhen(Signal<?> timing) {
+        if (timing != null) {
+            timing.to(() -> resort());
         }
         return (Self) this;
     }
@@ -626,10 +659,10 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
         private final Signaling<Boolean> filtering = new Signaling();
 
         /** The item taking filter. */
-        private final Variable<Predicate<E>> filter = Variable.of(v -> true);
+        private final Variable<Predicate<E>> filter = Variable.empty();
 
         /** The item sorter. */
-        private final Variable<Comparator<E>> sorter = Variable.of((a, b) -> -1);
+        private final Variable<Comparator<E>> sorter = Variable.empty();
 
         /** The item state observers. */
         private Function<E, Variable> notifier;
@@ -666,24 +699,6 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
 
             filter.observe().to(v -> filtered.setPredicate(v));
             sorter.observe().to(v -> sorted.setComparator(v));
-
-            // Viewtify.observing(items).combineLatest(filter.observing(), sorter.observing()).to(v
-            // -> {
-            // updating.guard(() -> {
-            // ObservableList items = v.ⅰ;
-            //
-            // if (v.ⅱ != null) {
-            // FilteredList<E> filtered = items.filtered(v.ⅱ);
-            // filtering.accept(items.size() != filtered.size());
-            // items = filtered;
-            // }
-            //
-            // if (v.ⅲ != null) {
-            // items = items.sorted(v.ⅲ);
-            // }
-            // helper.itemsProperty().setValue(items);
-            // });
-            // });
         }
 
         /**

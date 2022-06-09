@@ -10,10 +10,9 @@
 package viewtify.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ModifiableObservableListBase;
+
 import kiss.Managed;
 import kiss.Singleton;
 import kiss.Storable;
@@ -69,77 +68,5 @@ public abstract class StorableList<E extends StorableModel> extends ModifiableOb
     @Override
     protected E doRemove(int model) {
         return list.remove(model);
-    }
-
-    /**
-     * Update the specified model.
-     * 
-     * @param model
-     */
-    public void update(E model) {
-        if (model != null) {
-            fireChange(new Change(this) {
-
-                private boolean changed;
-
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                public boolean next() {
-                    boolean result = changed;
-                    changed = false;
-                    return result;
-                }
-
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                public void reset() {
-                    changed = true;
-                }
-
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                public int getFrom() {
-                    return indexOf(model);
-                }
-
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                public int getTo() {
-                    return indexOf(model) + 1;
-                }
-
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                public List getRemoved() {
-                    return List.of();
-                }
-
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                protected int[] getPermutation() {
-                    return new int[] {};
-                }
-
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                public boolean wasUpdated() {
-                    return true;
-                }
-            });
-        }
     }
 }

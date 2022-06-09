@@ -21,15 +21,15 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+
 import kiss.WiseFunction;
 import viewtify.ui.anime.HideAnime;
 import viewtify.ui.anime.LayoutAnimator;
 import viewtify.ui.anime.ShowAnime;
 import viewtify.ui.helper.CollectableHelper;
 
-public abstract class AbstractFlowablePane<E, P extends Pane, Self extends AbstractFlowablePane>
-        extends UserInterface<AbstractFlowablePane<E, P, Self>, P>
-        implements CollectableHelper<AbstractFlowablePane<E, P, Self>, E> {
+public abstract class AbstractPane<E, P extends Pane, Self extends AbstractPane> extends UserInterface<AbstractPane<E, P, Self>, P>
+        implements CollectableHelper<AbstractPane<E, P, Self>, E> {
 
     /** The model. */
     private final SimpleObjectProperty<ObservableList<E>> models = new SimpleObjectProperty();
@@ -46,17 +46,30 @@ public abstract class AbstractFlowablePane<E, P extends Pane, Self extends Abstr
     private final ListChangeListener<E> modelModifier = c -> {
         while (c.next()) {
             if (c.wasPermutated()) {
+                Map<Integer, Integer> mapping = new HashMap();
                 for (int i = c.getFrom(); i < c.getTo(); i++) {
-                    moveUI(i, c.getPermutation(i));
+                    int start = i;
+                    int end = c.getPermutation(i);
+                    System.out.println(i + "   " + end);
+
+                    if (start != end && (!mapping.containsKey(end) || !mapping.containsValue(start))) {
+                        mapping.put(start, end);
+                        swapUI(i, c.getPermutation(i));
+                    }
                 }
             } else if (c.wasUpdated()) {
                 // ignore
             } else {
+
                 List<? extends E> added = c.getAddedSubList();
+
                 List<? extends E> removed = c.getRemoved();
+
                 List<? extends E> intersect = added.stream().filter(removed::contains).toList();
+
                 List<E> addedPure = new ArrayList(added);
                 addedPure.removeAll(intersect);
+
                 List<E> removedPure = new ArrayList(removed);
                 removedPure.removeAll(intersect);
 
@@ -82,7 +95,7 @@ public abstract class AbstractFlowablePane<E, P extends Pane, Self extends Abstr
     /**
      * @param view
      */
-    protected AbstractFlowablePane(P pane, View view) {
+    protected AbstractPane(P pane, View view) {
         super(pane, view);
 
         models.addListener(modelsModifier);
@@ -113,7 +126,7 @@ public abstract class AbstractFlowablePane<E, P extends Pane, Self extends Abstr
     }
 
     /**
-     * Add models.
+     * Add UI.
      * 
      * @param models
      */
@@ -132,7 +145,7 @@ public abstract class AbstractFlowablePane<E, P extends Pane, Self extends Abstr
     }
 
     /**
-     * Remove models.
+     * Remove UI.
      * 
      * @param models
      */
@@ -150,7 +163,24 @@ public abstract class AbstractFlowablePane<E, P extends Pane, Self extends Abstr
         }
     }
 
-    private void moveUI(int start, int end) {
-
+    /**
+     * Swap UI.
+     * 
+     * @param start
+     * @param end
+     */
+    private void swapUI(int start, int end) {
+        if (start != end) {
+            ObservableList<Node> nodes = ui.getChildren();
+            if (start < end) {
+                Node swap = nodes.get(start);
+                nodes.set(start, nodes.remove(end));
+                nodes.add(end, swap);
+            } else {
+                Node swap = nodes.get(end);
+                nodes.set(end, nodes.remove(start));
+                nodes.add(start, swap);
+            }
+        }
     }
 }

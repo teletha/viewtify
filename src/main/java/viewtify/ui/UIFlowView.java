@@ -11,7 +11,7 @@ package viewtify.ui;
 
 import javafx.scene.layout.FlowPane;
 
-public class UIFlowView<E> extends AbstractFlowablePane<E, FlowPane, UIFlowView<E>> {
+public class UIFlowView<E> extends AbstractPane<E, FlowPane, UIFlowView<E>> {
 
     /**
      * @param view

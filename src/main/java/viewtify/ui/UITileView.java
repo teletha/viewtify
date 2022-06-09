@@ -11,7 +11,7 @@ package viewtify.ui;
 
 import javafx.scene.layout.TilePane;
 
-public class UITileView<E> extends AbstractFlowablePane<E, TilePane, UITileView<E>> {
+public class UITileView<E> extends AbstractPane<E, TilePane, UITileView<E>> {
 
     /**
      * @param view
