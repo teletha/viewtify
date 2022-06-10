@@ -136,9 +136,10 @@ public abstract class AbstractPane<E, P extends Pane, Self extends AbstractPane>
             for (E added : models) {
                 View view = renderer.apply(added);
                 Node node = view.ui();
-                ui.getChildren().add(this.models.get().indexOf(added), node);
                 views.put(added, view);
                 animator.observe(node);
+
+                ui.getChildren().add(this.models.get().indexOf(added), node);
 
                 ShowAnime.FadeIn.run(ui, node, null);
             }
