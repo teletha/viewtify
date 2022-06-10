@@ -31,7 +31,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -452,6 +451,20 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     }
 
     /**
+     * Sort items by the specified {@link Comparator}.
+     * 
+     * @param context An additional infomation.
+     * @param sorter A item comparator.
+     * @return Chainable API.
+     */
+    default <V> Self sort(ValueHelper<?, V> context, Function<V, Comparator<E>> sorter) {
+        if (context != null && sorter != null) {
+            context.observing().to(v -> sort(sorter.apply(v)));
+        }
+        return (Self) this;
+    }
+
+    /**
      * Get the filetering state.
      * 
      * @return
@@ -557,52 +570,13 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * 
      * @return Chainable API.
      */
-    default Self refilter() {
+    default Self reapply() {
         Ð<E> refer = refer();
         if (refer.filter.isPresent()) {
             refer.invokeRefilter();
         }
         if (refer.sorter.isPresent()) {
             refer.invokeResort();
-        }
-        return (Self) this;
-    }
-
-    /**
-     * Reapply the current filter and comparator when the specified timing.
-     * 
-     * @param timing A timing to reapply.
-     * @return Chainable API.
-     */
-    default Self refilterWhen(Signal<?> timing) {
-        if (timing != null) {
-            timing.to(() -> refilter());
-        }
-        return (Self) this;
-    }
-
-    /**
-     * Reapply the current comparator.
-     * 
-     * @return Chainable API.
-     */
-    default Self resort() {
-        Ð<E> refer = refer();
-        if (refer.sorter.isPresent()) {
-            refer.invokeResort();
-        }
-        return (Self) this;
-    }
-
-    /**
-     * Reapply the current comparator when the specified timing.
-     * 
-     * @param timing A timing to reapply.
-     * @return Chainable API.
-     */
-    default Self resortWhen(Signal<?> timing) {
-        if (timing != null) {
-            timing.to(() -> resort());
         }
         return (Self) this;
     }

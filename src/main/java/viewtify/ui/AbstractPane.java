@@ -21,7 +21,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-
 import kiss.WiseFunction;
 import viewtify.ui.anime.HideAnime;
 import viewtify.ui.anime.LayoutAnimator;
@@ -50,7 +49,6 @@ public abstract class AbstractPane<E, P extends Pane, Self extends AbstractPane>
                 for (int i = c.getFrom(); i < c.getTo(); i++) {
                     int start = i;
                     int end = c.getPermutation(i);
-                    System.out.println(i + "   " + end);
 
                     if (start != end && (!mapping.containsKey(end) || !mapping.containsValue(start))) {
                         mapping.put(start, end);
@@ -119,8 +117,11 @@ public abstract class AbstractPane<E, P extends Pane, Self extends AbstractPane>
         if (renderer != null && this.renderer != renderer) {
             this.renderer = renderer;
 
-            removeUI(models.get());
-            addUI(models.get());
+            ObservableList<E> list = models.get();
+            if (list != null) {
+                removeUI(list);
+                addUI(list);
+            }
         }
         return (Self) this;
     }
