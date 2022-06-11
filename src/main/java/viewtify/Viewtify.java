@@ -93,6 +93,9 @@ public final class Viewtify {
     /** The runtime info. */
     private static final boolean inTest;
 
+    /** The status of toolkit. */
+    private static boolean toolkitInitialized;
+
     /** The dispose on exit. */
     public static final Disposable Terminator = Disposable.empty();
 
@@ -327,6 +330,8 @@ public final class Viewtify {
 
         // launch application
         PlatformImpl.startup(() -> {
+            toolkitInitialized = true;
+
             V application = I.make(applicationClass);
             Stage stage = new Stage(stageStyle);
             stage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
@@ -600,6 +605,10 @@ public final class Viewtify {
      * will automatically launch an anonymous application.
      */
     public static synchronized void browser(Consumer<UIWeb> browser) {
+        if (!toolkitInitialized) {
+            Platform.startup(() -> toolkitInitialized = true);
+        }
+
         Viewtify.inUI(() -> {
             application().activate(AnonyBrowser.class, view -> browser.accept(view.web));
         });
