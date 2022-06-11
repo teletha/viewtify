@@ -186,6 +186,16 @@ public class UIWeb extends UserInterface<UIWeb, WebView> implements Disposable {
     }
 
     /**
+     * Delete all cookies.
+     * 
+     * @return
+     */
+    public UIWeb deleteCookies() {
+        cookies.removeAll();
+        return this;
+    }
+
+    /**
      * Click on the first element specified in the CSS selector.
      * 
      * @param cssSelector A css selector to click.
@@ -780,9 +790,8 @@ public class UIWeb extends UserInterface<UIWeb, WebView> implements Disposable {
          */
         @Override
         public synchronized boolean removeAll() {
-            // If this exception will be thrown, it is bug of this program. So we must rethrow the
-            // wrapped error in here.
-            throw new Error();
+            byDomain.clear();
+            return true;
         }
     }
 
