@@ -107,16 +107,20 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self items(List<E> items) {
-        Objects.requireNonNull(items);
+        if (items == null || items.isEmpty()) {
+            modifyItemUISafely(list -> {
+                list.clear();
+            });
+        } else {
+            if (this instanceof CollectableItemRenderingHelper && !items.isEmpty() && items.get(0) instanceof Translatable) {
+                ((CollectableItemRenderingHelper<?, Translatable>) this).renderByVariable(Translatable::toTraslated);
+            }
 
-        if (this instanceof CollectableItemRenderingHelper && !items.isEmpty() && items.get(0) instanceof Translatable) {
-            ((CollectableItemRenderingHelper<?, Translatable>) this).renderByVariable(Translatable::toTraslated);
+            modifyItemUISafely(list -> {
+                list.clear();
+                list.setAll(items);
+            });
         }
-
-        modifyItemUISafely(list -> {
-            list.clear();
-            list.setAll(items);
-        });
         return (Self) this;
     }
 
