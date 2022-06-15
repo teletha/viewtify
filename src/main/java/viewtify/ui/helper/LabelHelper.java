@@ -16,7 +16,6 @@ import org.controlsfx.glyphfont.INamedCharacter;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.Property;
-import javafx.css.Styleable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -27,6 +26,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import kiss.I;
 import kiss.Variable;
+import stylist.Style;
 import stylist.value.Color;
 import viewtify.Viewtify;
 import viewtify.ui.UILabel;
@@ -85,10 +85,20 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(INamedCharacter text) {
+        return text(text, (Style[]) null);
+    }
+
+    /**
+     * Set text.
+     * 
+     * @param text A text {@link Variable} to set.
+     * @return Chainable API.
+     */
+    default Self text(INamedCharacter text, Style... iconStyle) {
         if (text != null) {
-            Glyph g = new Glyph("FontAwesome", text);
-            g.getStyleClass().addAll(((Styleable) ui()).getStyleClass());
-            text(g);
+            Glyph glyph = new Glyph("FontAwesome", text);
+            // StyleHelper.of(glyph).style(iconStyle);
+            text(glyph);
         }
         return (Self) this;
     }
