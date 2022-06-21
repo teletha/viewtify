@@ -16,10 +16,12 @@ import java.util.function.Consumer;
 
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -55,6 +57,12 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
 
     /** The stack box. */
     protected static final UserInterfaceProvider sbox = new Box(StackPane.class);
+
+    /** The horizontal line. */
+    protected static final UserInterfaceProvider hsep = new Sep(Orientation.HORIZONTAL);
+
+    /** The horizontal line. */
+    protected static final UserInterfaceProvider vsep = new Sep(Orientation.VERTICAL);
 
     /**
      * 
@@ -319,6 +327,32 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
         @Override
         public P ui() {
             return I.make(type);
+        }
+    }
+
+    /**
+     * General separator.
+     */
+    private static final class Sep implements UserInterfaceProvider<Separator> {
+
+        /** The type. */
+        private final Orientation orientation;
+
+        /**
+         * The typed separator.
+         * 
+         * @param orientation A separator type.
+         */
+        private Sep(Orientation orientation) {
+            this.orientation = orientation;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Separator ui() {
+            return new Separator(orientation);
         }
     }
 }
