@@ -37,6 +37,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -63,9 +65,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -299,8 +298,10 @@ public final class Viewtify {
      * @param errorHandler
      * @return
      */
-    public Viewtify logging(BiConsumer<String, Throwable> errorHandler) {
-        if (errorHandler != null) {
+    public Viewtify error(BiConsumer<String, Throwable> errorHandler) {
+        if (errorHandler == null) {
+            Thread.setDefaultUncaughtExceptionHandler(null);
+        } else {
             Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {
                 errorHandler.accept("Error in " + thread.getName() + " : " + error.getLocalizedMessage(), error);
             });
