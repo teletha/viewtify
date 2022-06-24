@@ -15,7 +15,6 @@ import java.util.function.Consumer;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import kiss.I;
 import viewtify.ui.anime.SwapAnime;
 import viewtify.ui.helper.User;
@@ -32,7 +31,7 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> {
     private final VBox left = new VBox();
 
     /** The right container. */
-    private final UIPane right = new UIPane(null);
+    private final UIHBox right = new UIHBox(null);
 
     /**
      * 
