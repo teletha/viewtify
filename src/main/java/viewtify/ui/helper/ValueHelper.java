@@ -14,10 +14,12 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -30,7 +32,7 @@ import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 import viewtify.util.GuardedOperation;
 
-public interface ValueHelper<Self extends ValueHelper, V> {
+public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
 
     /**
      * Return the current model.
@@ -38,6 +40,14 @@ public interface ValueHelper<Self extends ValueHelper, V> {
      * @return
      */
     Property<V> valueProperty();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    default V get() {
+        return value();
+    }
 
     /**
      * Get the current value.
