@@ -11,8 +11,11 @@ package viewtify.ui;
 
 import javafx.scene.control.Button;
 
+import kiss.I;
+import viewtify.Command;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
+import viewtify.ui.helper.User;
 
 public class UIButton extends UserInterface<UIButton, Button> implements LabelHelper<UIButton>, ContextMenuHelper<UIButton> {
 
@@ -23,5 +26,32 @@ public class UIButton extends UserInterface<UIButton, Button> implements LabelHe
      */
     public UIButton(View view) {
         super(new Button(), view);
+    }
+
+    /**
+     * Contribute the specified {@link Command} to this button.
+     * 
+     * @param command An associated {@link Command}.
+     * @return
+     */
+    public <C extends Command> UIButton contribute(Class<C> command) {
+        if (command != null) {
+            contribute(I.make(command));
+        }
+        return this;
+    }
+
+    /**
+     * Assign the specified {@link Command} to this button. Contribute
+     * 
+     * @param command An associated {@link Command}.
+     * @return
+     */
+    public UIButton contribute(Command command) {
+        if (command != null) {
+            text(command.name());
+            when(User.Action, command::run);
+        }
+        return this;
     }
 }
