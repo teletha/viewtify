@@ -12,11 +12,12 @@ package viewtify.ui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView.TableViewSelectionModel;
-
+import kiss.Managed;
 import viewtify.Viewtify;
 
 public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
 
+    @Managed
     private final ObservableList<RowV> selected = FXCollections.observableArrayList();
 
     private final ObservableList<RowV> unmodifiable = FXCollections.unmodifiableObservableList(selected);
