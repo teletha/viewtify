@@ -21,7 +21,7 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "AbstractFlowablePane",
+			"name": "AbstractPane",
 			"packageName": "viewtify.ui",
 			"type": "AbstractClass"
 		},
@@ -652,6 +652,13 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UIText",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UITextArea",
 			"packageName": "viewtify.ui",
 			"type": "Class"
 		},

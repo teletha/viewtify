@@ -8,10 +8,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="Q">
-		<header class="f">
-			<h1 class="R" date="2022-06-09" ver="2.4.0"><code>Viewtify</code></h1>
-			<nav class="k"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="M">
+		<header class="j">
+			<h1 class="Z" date="2022-06-30" ver="2.4.0"><code>Viewtify</code></h1>
+			<nav class="S"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com//teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -20,7 +20,7 @@
 					</svg>Activity</a><a href="https://github.com//teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="W" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="f" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -28,20 +28,21 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="M">
-			<nav class="V">
+		<main class="i">
+			<nav class="g">
 				<div></div>
 			</nav>
-			<article class="N" id="Article">
-				<section class="I"><code class="O">viewtify.ui.helper</code>
-					<h2 class="Interface g"><code class="c">CollectableValuedItemRenderingHelper</code><code class="a">&#60;<code>Self</code>, <code>V</code>&#62;</code></h2>
-					<div class="K">
+			<article class="a" id="Article">
+				<section class="W"><code class="c">viewtify.ui.helper</code>
+					<h2 class="Interface V"><code class="R">CollectableValuedItemRenderingHelper</code><code class="K">&#60;<code>Self</code>, <code>V</code>&#62;</code></h2>
+					<div class="T">
 						<ul class="C D">
 							<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html">CollectableValuedItemRenderingHelper</a></code></code></li>
 							<li><code>V</code></li>
 						</ul>
 						<ul class="C F">
 							<li><code><a href="api/viewtify.ui.helper.CollectableItemRenderingHelper.html">CollectableItemRenderingHelper</a><code class="parameters"><code>Self</code>, <code>V</code></code></code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>V</code></code></code></li>
 							<li><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>Self</code>, <code>V</code></code></code></li>
 						</ul>
 						<ul class="C G">
@@ -49,45 +50,45 @@
 						</ul>
 					</div>
 				</section>
-				<section class="I" id="renderSelected(java.util.function.Function)">
-					<h2 class="H"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="c">renderSelected</code><code class="a">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">text</code>)</code><i class="P"><code>Self</code></i></h2>
-					<table class="l">
-						<tr class="d">
+				<section class="W" id="renderSelected(java.util.function.Function)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="R">renderSelected</code><code class="K">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">text</code>)</code><i class="Y"><code>Self</code></i></h2>
+					<table class="P">
+						<tr class="e">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code>text</code></td>
 							<td><span><p>A text to set.</p>
 								</span></td>
 						</tr>
-						<tr class="e">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Set text for the current value.</p>
 					</span></section>
-				<section class="I" id="renderSelectedByVariable(java.util.function.Function)">
-					<h2 class="H"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="c">renderSelectedByVariable</code><code class="a">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code> <code class="parameterName">text</code>)</code><i class="P"><code>Self</code></i></h2>
-					<table class="l">
-						<tr class="d">
+				<section class="W" id="renderSelectedByVariable(java.util.function.Function)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="R">renderSelectedByVariable</code><code class="K">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code> <code class="parameterName">text</code>)</code><i class="Y"><code>Self</code></i></h2>
+					<table class="P">
+						<tr class="e">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code> <code>text</code></td>
 							<td><span><p>A text to set.</p>
 								</span></td>
 						</tr>
-						<tr class="e">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Set text for the current value.</p>
 					</span></section>
-				<section class="I" id="renderSelectedWhen(java.util.function.Function)">
-					<h2 class="H"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="c">renderSelectedWhen</code><code class="a">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>kiss.Signal<code class="parameters"><code>V</code></code></code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code> <code class="parameterName">text</code>)</code><i class="P"><code>Self</code></i></h2>
-					<table class="l">
-						<tr class="d">
+				<section class="W" id="renderSelectedWhen(java.util.function.Function)">
+					<h2 class="b"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="R">renderSelectedWhen</code><code class="K">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>kiss.Signal<code class="parameters"><code>V</code></code></code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code> <code class="parameterName">text</code>)</code><i class="Y"><code>Self</code></i></h2>
+					<table class="P">
+						<tr class="e">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>kiss.Signal<code class="parameters"><code>V</code></code></code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code> <code>text</code></td>
 							<td><span><p>A text to set.</p>
 								</span></td>
 						</tr>
-						<tr class="e">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
@@ -95,13 +96,13 @@
 					</table><span class="B"><p>Set text for the current value.</p>
 					</span></section>
 			</article>
-			<aside class="J" id="SubNavi">
-				<div class="Z">
-					<h5 class="i">Methods</h5>
+			<aside class="H" id="SubNavi">
+				<div class="L">
+					<h5 class="O">Methods</h5>
 					<ul>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelected(java.util.function.Function)">renderSelected</a></code><code class="a">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">text</code>)</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelectedByVariable(java.util.function.Function)">renderSelectedByVariable</a></code><code class="a">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code> <code class="parameterName">text</code>)</code><i class="U"><code>Self</code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelectedWhen(java.util.function.Function)">renderSelectedWhen</a></code><code class="a">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>kiss.Signal<code class="parameters"><code>V</code></code></code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code> <code class="parameterName">text</code>)</code><i class="U"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelected(java.util.function.Function)">renderSelected</a></code><code class="K">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">text</code>)</code><i class="h"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelectedByVariable(java.util.function.Function)">renderSelectedByVariable</a></code><code class="K">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code> <code class="parameterName">text</code>)</code><i class="h"><code>Self</code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelectedWhen(java.util.function.Function)">renderSelectedWhen</a></code><code class="K">(<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>kiss.Signal<code class="parameters"><code>V</code></code></code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code> <code class="parameterName">text</code>)</code><i class="h"><code>Self</code></i></li>
 					</ul>
 				</div>
 			</aside>
