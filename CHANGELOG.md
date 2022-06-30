@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.5.1](https://www.github.com/teletha/viewtify/compare/v2.5.0...v2.5.1) (2022-06-30)
+
+
+### Bug Fixes
+
+* UIScrollPane can fit its contents properly. ([8242bb2](https://www.github.com/teletha/viewtify/commit/8242bb2f84b016acc57a28d3fd7f28a20326d46b))
+* UIScrollPane can layout its contents well. ([e465514](https://www.github.com/teletha/viewtify/commit/e465514416d8da4ee2c902e6bd9db93204b48662))
+
 ## [2.5.0](https://www.github.com/teletha/viewtify/compare/v2.4.0...v2.5.0) (2022-06-30)
 
 
