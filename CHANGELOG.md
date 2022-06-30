@@ -1,5 +1,62 @@
 # Changelog
 
+## [2.5.0](https://www.github.com/teletha/viewtify/compare/v2.4.0...v2.5.0) (2022-06-30)
+
+
+### Features
+
+* Add animation helper. ([65da300](https://www.github.com/teletha/viewtify/commit/65da3000fb515cc0f57a1ce6bc3d9369ba8ffa0e))
+* Add ContainerHelper. ([aa0ad31](https://www.github.com/teletha/viewtify/commit/aa0ad316eac184affbc0a7015e0eecd1f3c3735f))
+* Add DockSystem#select(tab id). ([1d49034](https://www.github.com/teletha/viewtify/commit/1d490347cc08bf631425c42bb0b986a2c90cd0b2))
+* Add GuardedOperation#protect(Runnable). ([9d02967](https://www.github.com/teletha/viewtify/commit/9d029670433329a7321292969977d4ca2e49be7b))
+* Add keyboard navigation system. ([8736254](https://www.github.com/teletha/viewtify/commit/87362548da715272362b88477b19fa88bbc6f9be))
+* Add LabelHelper#icon. ([2c9fe0b](https://www.github.com/teletha/viewtify/commit/2c9fe0b4937fc302b7fbebb4a46a5863f66e9378))
+* Add noborder css. ([9badc77](https://www.github.com/teletha/viewtify/commit/9badc77c12592ff69a014fd4c6cb193b3c565293))
+* Add some animation effect. ([cb09a12](https://www.github.com/teletha/viewtify/commit/cb09a12066dd16a09b1cd2a25bbe9f1654c26699))
+* Add StorableModel and StorableList. ([28d81d4](https://www.github.com/teletha/viewtify/commit/28d81d46d7971db2061609b4ad0c9d64b013dae0))
+* Add UIComboBox#show, #hide and #toggle to operate the popup. ([37dd910](https://www.github.com/teletha/viewtify/commit/37dd9107b571a33985266d039b30f4c17939573a))
+* Add UIFlowView. ([412be6a](https://www.github.com/teletha/viewtify/commit/412be6a328919486347cb496a416cc37f8a326db))
+* Add UISelectPane. ([e6a97c3](https://www.github.com/teletha/viewtify/commit/e6a97c3aced75938e26d1f57bf4c1338b424da93))
+* Add UITableCheckBoxColumn. ([58f7413](https://www.github.com/teletha/viewtify/commit/58f741382f9795d96067e39425f62cea70e719f2))
+* Add UIText#isTextSelected and #isNotTextSelected. ([38a1610](https://www.github.com/teletha/viewtify/commit/38a1610a8d8adb7abb137a4648997deaa07ba6d2))
+* Add UIText#prefix. ([52299c4](https://www.github.com/teletha/viewtify/commit/52299c47a1b6cc336ca167e5dbbea572eaddec85))
+* Add UIText#suffix. ([b421619](https://www.github.com/teletha/viewtify/commit/b421619d9425f30b24129706ce4d3939e1331965))
+* Add UITextArea. ([05813a4](https://www.github.com/teletha/viewtify/commit/05813a45f570d8e59eb4521504489c637ca77b4f))
+* Add UITileView. ([5942c0b](https://www.github.com/teletha/viewtify/commit/5942c0bff3db80d80f42bf8144b7b766a73efd0d))
+* Add ValueHelper#isNull. ([fd30cb9](https://www.github.com/teletha/viewtify/commit/fd30cb900b841fb2d0ec499e06b579363c8e744a))
+* Add ValueHelper#observe(boolean skipNull). ([79ecdc0](https://www.github.com/teletha/viewtify/commit/79ecdc0ebc00120f72b7dec6aaaf7a161b91bc72))
+* CollectableHelper can reapply the filter and sorter. ([29caa98](https://www.github.com/teletha/viewtify/commit/29caa98f994aa4b402a8afd8eaa482d4fa2bdb2f))
+* KeyboardNavigation recognize the verifier. ([b95b787](https://www.github.com/teletha/viewtify/commit/b95b787648e91211b2b475798551f840bcce3d66))
+* KeyboardNavigation supports checkbox input. ([1f8205a](https://www.github.com/teletha/viewtify/commit/1f8205a262a251b03dbf29595b537b6c6bff3f2d))
+* Support auto focus keyboard navigation. ([0114cb4](https://www.github.com/teletha/viewtify/commit/0114cb4d58a9ac91db8ae56e939b3f109bd8b49a))
+* Support style "text-decation: underline". ([5c39c75](https://www.github.com/teletha/viewtify/commit/5c39c7518466f4909b945c244047d71467ff700e))
+* Traverser supports widget focus order. ([2ea0f00](https://www.github.com/teletha/viewtify/commit/2ea0f0080b78aaff7c449e3a376a917eadbbc7c2))
+* UIButton can contribute any command. ([651ae13](https://www.github.com/teletha/viewtify/commit/651ae13b4482fea1ed53b2d6937b4533e9195782))
+* UIText supports auto complettion. ([418fc19](https://www.github.com/teletha/viewtify/commit/418fc19119113c82b67ed1f0619743664cb41cd6))
+* UIWeb#deleteCookies. ([8e70c6a](https://www.github.com/teletha/viewtify/commit/8e70c6a96ede4b98c8db9e7b57fae47597645803))
+* ValueHelper implements Consumer. ([0532413](https://www.github.com/teletha/viewtify/commit/0532413590073e58722a9ad31ed5be63bd1f75d2))
+* ValueHelper is Supplier. ([b0dbbaa](https://www.github.com/teletha/viewtify/commit/b0dbbaa235f89dead20dfc79178a9c7d78b84224))
+* ViewDSL provides generic separator. ([979d7d6](https://www.github.com/teletha/viewtify/commit/979d7d62a159f66dd5a63ae93b35c961843ad463))
+
+
+### Bug Fixes
+
+* Application policy. ([1512789](https://www.github.com/teletha/viewtify/commit/151278993a57a6671cbc7742c3215ab9bf54274b))
+* Auto focus for text input. ([0e0d532](https://www.github.com/teletha/viewtify/commit/0e0d5324a4f6e29f87000ff00b88d8772516102a))
+* CollectableHelper#items accepts null or empty list properly. ([0e6c223](https://www.github.com/teletha/viewtify/commit/0e6c223ec8aa335df100934b73fdc5ab8bb3b66d))
+* Enhance filter and sort function. ([1483c29](https://www.github.com/teletha/viewtify/commit/1483c29a8463a4a48b206c57acb6eb2c7e759fe0))
+* Enhance swap anime. ([9c08c6c](https://www.github.com/teletha/viewtify/commit/9c08c6cf2a00a9c4cda91157964bc3b063d71c45))
+* Key navigated combo box travese to next input when it select value. ([e9b59b4](https://www.github.com/teletha/viewtify/commit/e9b59b452a802f61b1348569fc0ed79f20403401))
+* LabelHelper#text(icon, style). ([1cfdd83](https://www.github.com/teletha/viewtify/commit/1cfdd83eb2507a94cfa01ba13fdfa076d5807a63))
+* Reset selection for redrawing. ([959a134](https://www.github.com/teletha/viewtify/commit/959a1347ef19a1d9270b529db83da5b8680cb5f9))
+* Returns the same ummodifiable view. ([52c6488](https://www.github.com/teletha/viewtify/commit/52c6488ee3b403a4cc94d0dcd25017b1675897c7))
+* scrollbar color ([7d49423](https://www.github.com/teletha/viewtify/commit/7d49423b5a30b60b7840328b3ee1a15363f94eeb))
+* SelectionHelper#whenSelect is broken on table. ([49e0ecd](https://www.github.com/teletha/viewtify/commit/49e0ecdd3a86315fd3d5f1dfe280b5a389c362d8))
+* Support virtual flow's size estimation. ([6053f65](https://www.github.com/teletha/viewtify/commit/6053f658e8da1ee3a67b1270bc8021ab451c2d9c))
+* UISelectPane can accept vertical padding. ([09cdef9](https://www.github.com/teletha/viewtify/commit/09cdef93332d8eda677879fe6f748cd8182018a5))
+* UIText#maximumInput can accept correctly at text replacement. ([1a3aae1](https://www.github.com/teletha/viewtify/commit/1a3aae168a6a5d9865af3f417baa037458674fd6))
+* Viewtify#browser can be invoked more safely. ([1048fa4](https://www.github.com/teletha/viewtify/commit/1048fa447bbde982a09c3dfe2fbc50877fa9618f))
+
 ## [2.4.0](https://www.github.com/teletha/viewtify/compare/v2.3.0...v2.4.0) (2022-03-17)
 
 
