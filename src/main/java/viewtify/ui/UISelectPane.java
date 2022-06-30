@@ -15,6 +15,7 @@ import java.util.function.Consumer;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
 import viewtify.ui.anime.SwapAnime;
 import viewtify.ui.helper.User;
@@ -31,7 +32,7 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> {
     private final VBox left = new VBox();
 
     /** The right container. */
-    private final UIHBox right = new UIHBox(null);
+    private final UIScrollPane right = new UIScrollPane(null);
 
     /**
      * 
@@ -90,6 +91,8 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> {
                 labels.get(i).unstyle("selected");
             }
         }
+
+        // right.ui.setContent((Node) providers.get(index).ui());
         right.content(providers.get(index), SwapAnime.FadeOutIn);
 
         return this;

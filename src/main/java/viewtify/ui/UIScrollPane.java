@@ -11,6 +11,7 @@ package viewtify.ui;
 
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.HBox;
@@ -18,7 +19,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import viewtify.ui.anime.SwapAnime;
+
 public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
+
+    final UIVBox box = new UIVBox(null);
 
     /**
      * @param view
@@ -26,8 +31,11 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
     public UIScrollPane(View view) {
         super(new SmoothScrollPane(), view);
 
+        ui.setContent(box.ui());
         ui.setFitToWidth(true);
+        ui.setFitToHeight(true);
         HBox.setHgrow(ui, Priority.ALWAYS);
+        VBox.setVgrow(ui, Priority.ALWAYS);
     }
 
     /**
@@ -44,6 +52,17 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
         if (vertical != null) {
             ui.setVbarPolicy(vertical);
         }
+        return this;
+    }
+
+    /**
+     * Set the first child content.
+     * 
+     * @param provider
+     * @return
+     */
+    public UIScrollPane content(UserInterfaceProvider<Node> provider, SwapAnime... anime) {
+        box.content(provider, anime);
         return this;
     }
 
