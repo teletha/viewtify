@@ -33,9 +33,7 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
 
         ui.setContent(box.ui());
         ui.setFitToWidth(true);
-        ui.setFitToHeight(true);
         HBox.setHgrow(ui, Priority.ALWAYS);
-        VBox.setVgrow(ui, Priority.ALWAYS);
     }
 
     /**
