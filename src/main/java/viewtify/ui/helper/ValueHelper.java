@@ -19,7 +19,6 @@ import java.util.function.Supplier;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -111,6 +110,16 @@ public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
     default Self value(V value) {
         valueProperty().setValue(value);
         return (Self) this;
+    }
+
+    /**
+     * Updates to the specified value.
+     * 
+     * @param value A new value to set.
+     * @return Chainable API.
+     */
+    default Self value(Variable<V> value) {
+        return value(value.v);
     }
 
     /**
