@@ -50,7 +50,18 @@ public class UIButton extends UserInterface<UIButton, Button> implements LabelHe
     public UIButton contribute(Command command) {
         if (command != null) {
             text(command.name());
-            when(User.Action, command::run);
+            when(User.Action, () -> {
+                I.schedule(() -> {
+                    try {
+                        disable(true);
+                        command.run();
+                    } catch (Exception e) {
+                        throw I.quiet(e);
+                    } finally {
+                        disable(false);
+                    }
+                });
+            });
         }
         return this;
     }
