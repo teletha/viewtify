@@ -116,7 +116,7 @@ public final class Viewtify {
     public static final Consumer<Runnable> UIThread = Viewtify::inUI;
 
     /** Executor for Worker Thread. */
-    public static final Consumer<Runnable> WorkerThread = pool::submit;
+    public static final Consumer<Runnable> WorkerThread = Viewtify::inWorker;
 
     static {
         // For Test
@@ -640,7 +640,11 @@ public final class Viewtify {
      * @param process
      */
     public final static void inWorker(Runnable process) {
-        pool.submit(process);
+        if (Platform.isFxApplicationThread()) {
+            pool.submit(process);
+        } else {
+            process.run();
+        }
     }
 
     /**
@@ -649,9 +653,14 @@ public final class Viewtify {
      * @param process
      */
     public final static void inWorker(Supplier<Disposable> process) {
-        pool.submit(() -> {
+        if (Platform.isFxApplicationThread()) {
+            pool.submit(() -> {
+                Terminator.add(process.get());
+            });
+        } else {
             Terminator.add(process.get());
-        });
+        }
+
     }
 
     /**
