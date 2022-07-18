@@ -28,6 +28,7 @@ import org.controlsfx.control.PopOver.ArrowLocation;
 
 import com.sun.javafx.scene.traversal.Direction;
 import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
+import com.sun.javafx.scene.traversal.TraversalMethod;
 
 import kiss.I;
 import viewtify.Key;
@@ -138,6 +139,7 @@ public class KeyboardNavigation {
         table.add(I.list(ui));
 
         for (UserInterface node : ui) {
+            System.out.println(node);
             if (node instanceof UIText) {
                 text.register((UIText) node);
             } else if (node instanceof UIComboBox) {
@@ -324,13 +326,13 @@ public class KeyboardNavigation {
 
         protected void focusNext(Node source) {
             Platform.runLater(() -> {
-                engine.trav(source, Direction.NEXT);
+                engine.trav(source, Direction.NEXT, TraversalMethod.DEFAULT);
             });
         }
 
         protected void focusPrevious(Node source) {
             Platform.runLater(() -> {
-                engine.trav(source, Direction.PREVIOUS);
+                engine.trav(source, Direction.PREVIOUS, TraversalMethod.DEFAULT);
             });
         }
 
@@ -361,7 +363,7 @@ public class KeyboardNavigation {
          */
         protected void focusRight(Node source) {
             Platform.runLater(() -> {
-                engine.trav(source, Direction.RIGHT);
+                engine.trav(source, Direction.RIGHT, TraversalMethod.DEFAULT);
             });
         }
 
@@ -372,7 +374,9 @@ public class KeyboardNavigation {
          */
         protected void focusLeft(Node source) {
             Platform.runLater(() -> {
-                engine.trav(source, Direction.LEFT);
+                System.out.println("LEFT");
+                engine.trav(source, Direction.LEFT, TraversalMethod.DEFAULT);
+                System.out.println("LEFT");
             });
         }
 
@@ -383,7 +387,7 @@ public class KeyboardNavigation {
          */
         protected void focusUp(Node source) {
             Platform.runLater(() -> {
-                engine.trav(source, Direction.UP);
+                engine.trav(source, Direction.UP, TraversalMethod.DEFAULT);
             });
         }
 
@@ -394,7 +398,7 @@ public class KeyboardNavigation {
          */
         protected void focusDown(Node source) {
             Platform.runLater(() -> {
-                engine.trav(source, Direction.DOWN);
+                engine.trav(source, Direction.DOWN, TraversalMethod.DEFAULT);
             });
         }
 
@@ -536,7 +540,7 @@ public class KeyboardNavigation {
         /** For popup list view. */
         private final EventHandler<KeyEvent> popupOperation = e -> {
             if (Key.Enter.match(e)) {
-                engine.trav(current.ui, Direction.NEXT);
+                engine.trav(current.ui, Direction.NEXT, TraversalMethod.DEFAULT);
             }
         };
 
