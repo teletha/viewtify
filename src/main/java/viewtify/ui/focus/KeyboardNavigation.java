@@ -138,7 +138,6 @@ public class KeyboardNavigation {
         table.add(I.list(ui));
 
         for (UserInterface node : ui) {
-            System.out.println(node);
             if (node instanceof UIText) {
                 text.register((UIText) node);
             } else if (node instanceof UIComboBox) {
