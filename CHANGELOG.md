@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.6.0](https://www.github.com/teletha/viewtify/compare/v2.5.0...v2.6.0) (2022-08-05)
+
+
+### Features
+
+* Add ValueHelper#value(Variable). ([88add90](https://www.github.com/teletha/viewtify/commit/88add90688f005e774aa8104d097d33f6fd260d3))
+* UITableCheckBoxColumn can observe its state. ([e7d66b0](https://www.github.com/teletha/viewtify/commit/e7d66b00074c3541debbe638fd95c4a00311b2ab))
+
+
+### Bug Fixes
+
+* Observe variable text. ([7b41180](https://www.github.com/teletha/viewtify/commit/7b41180333a71eddef712e8956116c49cba5aeef))
+* UIButton run its commnad asynchronously. ([922943d](https://www.github.com/teletha/viewtify/commit/922943d47071de5122c41386e819aa2e3e809d28))
+* UIScrollPane can fit its contents properly. ([8242bb2](https://www.github.com/teletha/viewtify/commit/8242bb2f84b016acc57a28d3fd7f28a20326d46b))
+* UIScrollPane can layout its contents well. ([e465514](https://www.github.com/teletha/viewtify/commit/e465514416d8da4ee2c902e6bd9db93204b48662))
+* update javafx ([6632465](https://www.github.com/teletha/viewtify/commit/6632465156a2c49fa2fbd7b718778bd9f59282ae))
+* Viewtify#inWorker ensures executing the task in Non-UI thread. ([146200a](https://www.github.com/teletha/viewtify/commit/146200aaca5e1a8c015c671eb7688baa56ef7b1f))
+
 ## [2.5.0](https://www.github.com/teletha/viewtify/compare/v2.4.0...v2.5.0) (2022-06-30)
 
 
