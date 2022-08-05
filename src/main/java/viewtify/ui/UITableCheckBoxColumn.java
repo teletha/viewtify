@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import kiss.Managed;
+import kiss.Signal;
 import viewtify.Viewtify;
 
 public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
@@ -65,5 +66,23 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
         Viewtify.inUI(() -> {
             ui.getTableView().getSelectionModel().select(value);
         });
+    }
+
+    /**
+     * Observe selection state.
+     * 
+     * @return
+     */
+    public Signal<Boolean> isSelected() {
+        return Viewtify.observing(selected).map(list -> !list.isEmpty());
+    }
+
+    /**
+     * Observe selection state.
+     * 
+     * @return
+     */
+    public Signal<Boolean> isNotSelected() {
+        return Viewtify.observing(selected).map(ObservableList::isEmpty);
     }
 }
