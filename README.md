@@ -7,7 +7,12 @@
 </p>
 
 
-## About The Project
+## Summary
+
+<p align="right"><a href="#top">back to top</a></p>
+
+
+## Usage
 
 <p align="right"><a href="#top">back to top</a></p>
 
@@ -23,7 +28,7 @@ OpenJDK 64-Bit Server VM (build 16+36-2231, mixed mode, sharing)
 ```
 <p align="right"><a href="#top">back to top</a></p>
 
-## Using in your build
+## Install
 For any code snippet below, please substitute the version given with the version of Viewtify you wish to use.
 #### [Maven](https://maven.apache.org/)
 Add JitPack repository at the end of repositories element in your build.xml:
@@ -38,20 +43,18 @@ Add it into in the dependencies element like so:
 <dependency>
     <groupId>com.github.teletha</groupId>
     <artifactId>viewtify</artifactId>
-    <version>2.4.0</version>
+    <version>2.5.0</version>
 </dependency>
 ```
 #### [Gradle](https://gradle.org/)
 Add JitPack repository at the end of repositories in your build.gradle:
 ```gradle
-repositories {
-    maven { url "https://jitpack.io" }
+repositories } url "https://jitpack.io" }
 }
 ```
 Add it into the dependencies section like so:
 ```gradle
-dependencies {
-    implementation 'com.github.teletha:viewtify:2.4.0'
+dependencies :viewtify:2.5.0'
 }
 ```
 #### [SBT](https://www.scala-sbt.org/)
@@ -61,7 +64,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add it into the libraryDependencies section like so:
 ```scala
-libraryDependencies += "com.github.teletha" % "viewtify" % "2.4.0"
+libraryDependencies += "com.github.teletha" % "viewtify" % "2.5.0"
 ```
 #### [Leiningen](https://leiningen.org/)
 Add JitPack repository at the end of repositories in your project.clj:
@@ -70,12 +73,12 @@ Add JitPack repository at the end of repositories in your project.clj:
 ```
 Add it into the dependencies section like so:
 ```clj
-:dependencies [[com.github.teletha/viewtify "2.4.0"]]
+:dependencies [[com.github.teletha/viewtify "2.5.0"]]
 ```
 #### [Bee](https://teletha.github.io/bee)
 Add it into your project definition class like so:
 ```java
-require("com.github.teletha", "viewtify", "2.4.0");
+require("com.github.teletha", "viewtify", "2.5.0");
 ```
 <p align="right"><a href="#top">back to top</a></p>
 
@@ -101,37 +104,24 @@ If you think something might be a bug, but you're not sure, ask on StackOverflow
 <p align="right"><a href="#top">back to top</a></p>
 
 
-## Built with
+## Dependency
 Viewtify depends on the following products on runtime.
 * [altfx-1.1.1](https://mvnrepository.com/artifact/com.github.teletha/altfx/1.1.1)
 * [controlsfx-11.1.1](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.1.1)
-* [javafx-base-19-ea+8](https://mvnrepository.com/artifact/org.openjfx/javafx-base/19-ea+8)
-* [javafx-base-19-ea+8-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/19-ea+8)
-* [javafx-controls-19-ea+8](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/19-ea+8)
-* [javafx-controls-19-ea+8-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/19-ea+8)
-* [javafx-graphics-19-ea+8](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/19-ea+8)
-* [javafx-graphics-19-ea+8-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/19-ea+8)
-* [javafx-media-19-ea+8](https://mvnrepository.com/artifact/org.openjfx/javafx-media/19-ea+8)
-* [javafx-media-19-ea+8-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/19-ea+8)
-* [javafx-web-19-ea+8](https://mvnrepository.com/artifact/org.openjfx/javafx-web/19-ea+8)
-* [javafx-web-19-ea+8-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/19-ea+8)
+* [javafx-base-20-ea+2](https://mvnrepository.com/artifact/org.openjfx/javafx-base/20-ea+2)
+* [javafx-base-20-ea+2-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/20-ea+2)
+* [javafx-controls-20-ea+2](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/20-ea+2)
+* [javafx-controls-20-ea+2-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/20-ea+2)
+* [javafx-graphics-20-ea+2](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/20-ea+2)
+* [javafx-graphics-20-ea+2-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/20-ea+2)
+* [javafx-media-20-ea+2](https://mvnrepository.com/artifact/org.openjfx/javafx-media/20-ea+2)
+* [javafx-media-20-ea+2-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/20-ea+2)
+* [javafx-web-20-ea+2](https://mvnrepository.com/artifact/org.openjfx/javafx-web/20-ea+2)
+* [javafx-web-20-ea+2-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/20-ea+2)
 * [openjfx-monocle-jdk-12.0.1+2](https://mvnrepository.com/artifact/org.testfx/openjfx-monocle/jdk-12.0.1+2)
 * [psychopath-1.6.0](https://mvnrepository.com/artifact/com.github.teletha/psychopath/1.6.0)
-* [sinobu-2.15.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/2.15.0)
+* [sinobu-2.20.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/2.20.0)
 * [stylist-1.4.0](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.4.0)
-
-Viewtify depends on the following products on test.
-* [antibug-1.3.0](https://mvnrepository.com/artifact/com.github.teletha/antibug/1.3.0)
-* [apiguardian-api-1.1.2](https://mvnrepository.com/artifact/org.apiguardian/apiguardian-api/1.1.2)
-* [byte-buddy-1.12.12](https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy/1.12.12)
-* [byte-buddy-agent-1.12.12](https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent/1.12.12)
-* [junit-jupiter-api-5.9.0-M1](https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api/5.9.0-M1)
-* [junit-jupiter-engine-5.9.0-M1](https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine/5.9.0-M1)
-* [junit-jupiter-params-5.9.0-M1](https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params/5.9.0-M1)
-* [junit-platform-commons-1.9.0-M1](https://mvnrepository.com/artifact/org.junit.platform/junit-platform-commons/1.9.0-M1)
-* [junit-platform-engine-1.9.0-M1](https://mvnrepository.com/artifact/org.junit.platform/junit-platform-engine/1.9.0-M1)
-* [junit-platform-launcher-1.9.0-M1](https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher/1.9.0-M1)
-* [opentest4j-1.2.0](https://mvnrepository.com/artifact/org.opentest4j/opentest4j/1.2.0)
 <p align="right"><a href="#top">back to top</a></p>
 
 
