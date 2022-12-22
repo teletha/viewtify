@@ -14,9 +14,9 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import kiss.Variable;
-import stylist.CSSValue;
 import stylist.Stylist;
 import stylist.util.Properties;
+import stylist.value.CSSValue;
 import stylist.value.Color;
 
 class CSSProcessor implements Consumer<Properties> {
