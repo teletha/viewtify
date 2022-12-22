@@ -20,13 +20,11 @@ import javafx.beans.value.WritableValue;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-
 import kiss.Decoder;
 import kiss.Encoder;
 import kiss.Variable;
 import stylist.CSSValue;
 import stylist.Style;
-import stylist.StyleRule;
 
 public class FXUtils {
 
@@ -88,8 +86,7 @@ public class FXUtils {
      * @return A computed JavaFX value.
      */
     public static double length(Style style, String propertyName, double defaultValue) {
-        StyleRule rule = StyleRule.create(style);
-        Variable<CSSValue> value = rule.properties.get(propertyName);
+        Variable<CSSValue> value = style.value(propertyName);
 
         if (value.isPresent()) {
             return Double.parseDouble(value.v.toString().replaceAll("[a-z]", ""));
@@ -118,8 +115,7 @@ public class FXUtils {
      * @return A computed JavaFX value.
      */
     public static double[] lengths(Style style, String propertyName, double[] defaultValue) {
-        StyleRule rule = StyleRule.create(style);
-        Variable<CSSValue> value = rule.properties.get(propertyName);
+        Variable<CSSValue> value = style.value(propertyName);
 
         if (value.isPresent()) {
             String[] values = value.get().toString().split(" ");
@@ -154,7 +150,6 @@ public class FXUtils {
      * @return A computed JavaFX value.
      */
     public static Color color(Style style, String propertyName, Color defaultValue) {
-        StyleRule rule = StyleRule.create(style);
         String[] names;
 
         if (propertyName.equals("color") || propertyName.equals("fill") || propertyName.equals("stroke")) {
@@ -164,7 +159,7 @@ public class FXUtils {
         }
 
         for (String name : names) {
-            Variable<CSSValue> color = rule.properties.get(name);
+            Variable<CSSValue> color = style.value(name);
 
             if (color.isAbsent()) {
                 continue;
