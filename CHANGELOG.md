@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.6.1](https://github.com/teletha/viewtify/compare/v2.6.0...v2.6.1) (2022-12-26)
+
+
+### Bug Fixes
+
+* ime related bug ([c195b89](https://github.com/teletha/viewtify/commit/c195b890f337cc4b8cafea6d83276e2edb4200b2))
+* update javafx ([437aad1](https://github.com/teletha/viewtify/commit/437aad10f6187966ce4ab13790c65fc50d5355bb))
+* update sinobu and lycoris ([c9bb997](https://github.com/teletha/viewtify/commit/c9bb997b02fb8215d902aae65c48e394340f1739))
+* update stylist ([8906110](https://github.com/teletha/viewtify/commit/89061107e9f1de149697cc24c572f33dc4ad8ee7))
+* update stylist ([c6449b8](https://github.com/teletha/viewtify/commit/c6449b85d55cb9804e41ea792a5db7911ddb766b))
+
 ## [2.6.0](https://github.com/teletha/viewtify/compare/v2.5.0...v2.6.0) (2022-08-31)
 
 
