@@ -23,8 +23,8 @@ import javafx.util.Duration;
 import kiss.Decoder;
 import kiss.Encoder;
 import kiss.Variable;
+import stylist.CSSValue;
 import stylist.Style;
-import stylist.value.CSSValue;
 
 public class FXUtils {
 
