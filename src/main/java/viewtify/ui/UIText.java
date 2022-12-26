@@ -32,6 +32,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
+import javafx.scene.control.TextInputControl;
+import javafx.scene.control.skin.TextInputControlSkin;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.paint.Color;
 import kiss.I;
 import viewtify.Viewtify;
@@ -44,6 +47,34 @@ import viewtify.util.GuardedOperation;
 
 public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
         implements ValueHelper<UIText<V>, V>, ContextMenuHelper<UIText<V>>, EditableHelper<UIText<V>>, PlaceholderHelper<UIText<V>> {
+
+    /** Cache */
+    private static final Method handleInputMethod;
+
+    static {
+        try {
+            handleInputMethod = TextInputControlSkin.class.getDeclaredMethod("handleInputMethodEvent", InputMethodEvent.class);
+            handleInputMethod.setAccessible(true);
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
+    }
+
+    /**
+     * Fix IME related problems.
+     * 
+     * @param node
+     */
+    static void fixIME(TextInputControl node) {
+        node.setOnInputMethodTextChanged(event -> {
+            try {
+                TextInputControlSkin skin = (TextInputControlSkin) node.getSkin();
+                handleInputMethod.invoke(skin, event);
+            } catch (Exception e) {
+                throw I.quiet(e);
+            }
+        });
+    }
 
     /** The input type. */
     public final Class type;
@@ -83,6 +114,8 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
                 }
             });
         });
+
+        fixIME(ui);
     }
 
     /**

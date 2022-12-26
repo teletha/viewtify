@@ -26,6 +26,8 @@ public class UITextArea extends UserInterface<UITextArea, TextArea>
      */
     public UITextArea(View view) {
         super(new TextArea(), view);
+
+        UIText.fixIME(ui);
     }
 
     /**
