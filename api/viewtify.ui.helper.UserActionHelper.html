@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="Z">
+		<header class="S">
+			<h1 class="M" date="2022-12-27" ver="2.6.2"><code>Viewtify</code></h1>
+			<nav class="b"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="W" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="T">
+			<nav class="L">
+				<div></div>
+			</nav>
+			<article class="X" id="Article">
+				<section class="c"><code class="h">viewtify.ui.helper</code>
+					<h2 class="Functional J"><code class="O">UserActionHelper</code><code class="Q">&#60;<code>Self</code>&#62;</code></h2>
+					<div class="V">
+						<ul class="C D">
+							<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a><code class="parameters"><code>Self</code></code></code></code></li>
+						</ul>
+						<ul class="C G">
+							<li><code><a href="api/viewtify.ui.AbstractPane.html">AbstractPane</a><code class="parameters"><code>E</code>, <code>P</code>, <code>Self</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></li>
+							<li><code><a href="api/viewtify.ui.UICheckBox.html">UICheckBox</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIChoiceBox.html">UIChoiceBox</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIColorPicker.html">UIColorPicker</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIComboBox.html">UIComboBox</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIComboCheckBox.html">UIComboCheckBox</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIDatePicker.html">UIDatePicker</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIFlowView.html">UIFlowView</a><code class="parameters"><code>E</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIFontPicker.html">UIFontPicker</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIHBox.html">UIHBox</a></code></li>
+							<li><code><a href="api/viewtify.ui.UILabel.html">UILabel</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIListView.html">UIListView</a><code class="parameters"><code>E</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIMenuItem.html">UIMenuItem</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIPane.html">UIPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIScrollPane.html">UIScrollPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UISelectPane.html">UISelectPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UISlidePane.html">UISlidePane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UISlider.html">UISlider</a></code></li>
+							<li><code><a href="api/viewtify.ui.UISpinner.html">UISpinner</a><code class="parameters"><code>T</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UISplitPane.html">UISplitPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UITabPane.html">UITabPane</a></code></li>
+							<li><code><a href="api/viewtify.ui.UITableView.html">UITableView</a><code class="parameters"><code>RowV</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UITextArea.html">UITextArea</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIText.html">UIText</a><code class="parameters"><code>V</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UITileView.html">UITileView</a><code class="parameters"><code>E</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIToggleButton.html">UIToggleButton</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIToolBar.html">UIToolBar</a></code></li>
+							<li><code><a href="api/viewtify.ui.UITreeTableView.html">UITreeTableView</a><code class="parameters"><code>RowV</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIVBox.html">UIVBox</a></code></li>
+							<li><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></li>
+							<li><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></li>
+						</ul>
+					</div>
+				</section>
+				<section class="c" id="ui()">
+					<h2 class="U"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="O">ui</code><code class="Q">()</code><i class="i"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code></i></h2>
+					<table class="a">
+						<tr class="P">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code></td>
+							<td><span><p>A UI component</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Return the JavaFX&#39;s UI component.</p>
+					</span></section>
+				<section class="c" id="when(viewtify.ui.helper.User)">
+					<h2 class="U"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="O">when</code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType</code>)</code><i class="i"><code>kiss.Signal<code class="parameters"><code>E</code></code></code></i></h2>
+					<table class="a">
+						<tr class="k">
+							<td><code>E</code><code class="extends"><code>javafx.event.Event</code></code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="P">
+							<td><code>kiss.Signal<code class="parameters"><code>E</code></code></code></td>
+							<td><span><p>An event Signal.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Listen the specified user action.</p>
+					</span></section>
+				<section class="c" id="when(viewtify.ui.helper.User...)">
+					<h2 class="U"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="O">when</code><code class="Q">(<code array="var"><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionTypes</code>)</code><i class="i"><code>kiss.Signal<code class="parameters"><code>E</code></code></code></i></h2>
+					<table class="a">
+						<tr class="k">
+							<td><code>E</code><code class="extends"><code>javafx.event.Event</code></code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code array="var"><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionTypes</code></td>
+							<td><span><p>A list of user actions to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="P">
+							<td><code>kiss.Signal<code class="parameters"><code>E</code></code></code></td>
+							<td><span><p>An event Signal.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Listen all specified user actions.</p>
+					</span></section>
+				<section class="c" id="when(viewtify.ui.helper.User,kiss.WiseRunnable)">
+					<h2 class="U"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="O">when</code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">listener</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="a">
+						<tr class="k">
+							<td><code>E</code><code class="extends"><code>javafx.event.Event</code></code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code>kiss.WiseRunnable</code> <code>listener</code></td>
+							<td><span><p>An event listener.</p>
+								</span></td>
+						</tr>
+						<tr class="P">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Listen the specified user action.</p>
+					</span></section>
+				<section class="c" id="when(viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseRunnable)">
+					<h2 class="U"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="O">when</code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">listener</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="a">
+						<tr class="k">
+							<td><code>E</code><code class="extends"><code>javafx.event.Event</code></code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType1</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType2</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code>kiss.WiseRunnable</code> <code>listener</code></td>
+							<td><span><p>An event listener.</p>
+								</span></td>
+						</tr>
+						<tr class="P">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Listen all specified user actions.</p>
+					</span></section>
+				<section class="c" id="when(viewtify.ui.helper.User,viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseRunnable)">
+					<h2 class="U"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="O">when</code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType3</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">listener</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="a">
+						<tr class="k">
+							<td><code>E</code><code class="extends"><code>javafx.event.Event</code></code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType1</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType2</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType3</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code>kiss.WiseRunnable</code> <code>listener</code></td>
+							<td><span><p>An event listener.</p>
+								</span></td>
+						</tr>
+						<tr class="P">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Listen all specified user actions.</p>
+					</span></section>
+				<section class="c" id="when(viewtify.ui.helper.User,kiss.WiseConsumer)">
+					<h2 class="U"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="O">when</code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType</code>, <code>kiss.WiseConsumer<code class="parameters"><code>E</code></code></code> <code class="parameterName">listener</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="a">
+						<tr class="k">
+							<td><code>E</code><code class="extends"><code>javafx.event.Event</code></code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code>kiss.WiseConsumer<code class="parameters"><code>E</code></code></code> <code>listener</code></td>
+							<td><span><p>An event listener.</p>
+								</span></td>
+						</tr>
+						<tr class="P">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Listen the specified user action.</p>
+					</span></section>
+				<section class="c" id="when(viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseConsumer)">
+					<h2 class="U"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="O">when</code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code>kiss.WiseConsumer<code class="parameters"><code>E</code></code></code> <code class="parameterName">listener</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="a">
+						<tr class="k">
+							<td><code>E</code><code class="extends"><code>javafx.event.Event</code></code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType1</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType2</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code>kiss.WiseConsumer<code class="parameters"><code>E</code></code></code> <code>listener</code></td>
+							<td><span><p>An event listener.</p>
+								</span></td>
+						</tr>
+						<tr class="P">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Listen all specified user actions.</p>
+					</span></section>
+				<section class="c" id="when(viewtify.ui.helper.User,viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseConsumer)">
+					<h2 class="U"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="O">when</code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType3</code>, <code>kiss.WiseConsumer<code class="parameters"><code>E</code></code></code> <code class="parameterName">listener</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="a">
+						<tr class="k">
+							<td><code>E</code><code class="extends"><code>javafx.event.Event</code></code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType1</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType2</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType3</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code>kiss.WiseConsumer<code class="parameters"><code>E</code></code></code> <code>listener</code></td>
+							<td><span><p>An event listener.</p>
+								</span></td>
+						</tr>
+						<tr class="P">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Listen all specified user actions.</p>
+					</span></section>
+				<section class="c" id="when(viewtify.ui.helper.User,kiss.WiseBiConsumer)">
+					<h2 class="U"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="O">when</code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType</code>, <code>kiss.WiseBiConsumer<code class="parameters"><code>E</code>, <code>Self</code></code></code> <code class="parameterName">listener</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="a">
+						<tr class="k">
+							<td><code>E</code><code class="extends"><code>javafx.event.Event</code></code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code>kiss.WiseBiConsumer<code class="parameters"><code>E</code>, <code>Self</code></code></code> <code>listener</code></td>
+							<td><span><p>An event listener.</p>
+								</span></td>
+						</tr>
+						<tr class="P">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Listen the specified user action.</p>
+					</span></section>
+				<section class="c" id="when(viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseBiConsumer)">
+					<h2 class="U"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="O">when</code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code>kiss.WiseBiConsumer<code class="parameters"><code>E</code>, <code>Self</code></code></code> <code class="parameterName">listener</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="a">
+						<tr class="k">
+							<td><code>E</code><code class="extends"><code>javafx.event.Event</code></code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType1</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType2</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code>kiss.WiseBiConsumer<code class="parameters"><code>E</code>, <code>Self</code></code></code> <code>listener</code></td>
+							<td><span><p>An event listener.</p>
+								</span></td>
+						</tr>
+						<tr class="P">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Listen all specified user actions.</p>
+					</span></section>
+				<section class="c" id="when(viewtify.ui.helper.User,viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseBiConsumer)">
+					<h2 class="U"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="O">when</code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType3</code>, <code>kiss.WiseBiConsumer<code class="parameters"><code>E</code>, <code>Self</code></code></code> <code class="parameterName">listener</code>)</code><i class="i"><code>Self</code></i></h2>
+					<table class="a">
+						<tr class="k">
+							<td><code>E</code><code class="extends"><code>javafx.event.Event</code></code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType1</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType2</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code>actionType3</code></td>
+							<td><span><p>A user action to detect.</p>
+								</span></td>
+						</tr>
+						<tr class="N">
+							<td><code>kiss.WiseBiConsumer<code class="parameters"><code>E</code>, <code>Self</code></code></code> <code>listener</code></td>
+							<td><span><p>An event listener.</p>
+								</span></td>
+						</tr>
+						<tr class="P">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Listen all specified user actions.</p>
+					</span></section>
+				<section class="c" id="of(javafx.event.EventTarget)">
+					<h2 class="U"><i class="STATIC PUBLIC"></i><code class="O">of</code><code class="Q">(<code>javafx.event.EventTarget</code> <code class="parameterName">eventTarget</code>)</code><i class="i"><code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a></code></i></h2>
+					<table class="a">
+						<tr class="N">
+							<td><code>javafx.event.EventTarget</code> <code>eventTarget</code></td>
+							<td></td>
+						</tr>
+						<tr class="P">
+							<td><code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Create temporary <code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a></code>.</p>
+					</span></section>
+			</article>
+			<aside class="f" id="SubNavi">
+				<div class="H">
+					<h5 class="j">Static Methods</h5>
+					<ul>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#of(javafx.event.EventTarget)">of</a></code><code class="Q">(<code>javafx.event.EventTarget</code> <code class="parameterName">eventTarget</code>)</code><i class="e"><code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a></code></i></li>
+					</ul>
+					<h5 class="j">Methods</h5>
+					<ul>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#ui()">ui</a></code><code class="Q">()</code><i class="e"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#when(viewtify.ui.helper.User)">when</a></code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType</code>)</code><i class="e"><code>kiss.Signal<code class="parameters"><code>E</code></code></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#when(viewtify.ui.helper.User...)">when</a></code><code class="Q">(<code array="var"><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionTypes</code>)</code><i class="e"><code>kiss.Signal<code class="parameters"><code>E</code></code></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#when(viewtify.ui.helper.User,kiss.WiseRunnable)">when</a></code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">listener</code>)</code><i class="e"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#when(viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseRunnable)">when</a></code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">listener</code>)</code><i class="e"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#when(viewtify.ui.helper.User,viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseRunnable)">when</a></code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType3</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">listener</code>)</code><i class="e"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#when(viewtify.ui.helper.User,kiss.WiseConsumer)">when</a></code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType</code>, <code>kiss.WiseConsumer<code class="parameters"><code>E</code></code></code> <code class="parameterName">listener</code>)</code><i class="e"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#when(viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseConsumer)">when</a></code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code>kiss.WiseConsumer<code class="parameters"><code>E</code></code></code> <code class="parameterName">listener</code>)</code><i class="e"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#when(viewtify.ui.helper.User,viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseConsumer)">when</a></code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType3</code>, <code>kiss.WiseConsumer<code class="parameters"><code>E</code></code></code> <code class="parameterName">listener</code>)</code><i class="e"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#when(viewtify.ui.helper.User,kiss.WiseBiConsumer)">when</a></code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType</code>, <code>kiss.WiseBiConsumer<code class="parameters"><code>E</code>, <code>Self</code></code></code> <code class="parameterName">listener</code>)</code><i class="e"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#when(viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseBiConsumer)">when</a></code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code>kiss.WiseBiConsumer<code class="parameters"><code>E</code>, <code>Self</code></code></code> <code class="parameterName">listener</code>)</code><i class="e"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.UserActionHelper.html#when(viewtify.ui.helper.User,viewtify.ui.helper.User,viewtify.ui.helper.User,kiss.WiseBiConsumer)">when</a></code><code class="Q">(<code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType1</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType2</code>, <code><a href="api/viewtify.ui.helper.User.html">User</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">actionType3</code>, <code>kiss.WiseBiConsumer<code class="parameters"><code>E</code>, <code>Self</code></code></code> <code class="parameterName">listener</code>)</code><i class="e"><code>Self</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="Z">
+		<header class="S">
+			<h1 class="M" date="2022-12-27" ver="2.6.2"><code>Viewtify</code></h1>
+			<nav class="b"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="W" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="T">
+			<nav class="L">
+				<div></div>
+			</nav>
+			<article class="X" id="Article">
+				<section class="c"><code class="h">viewtify.model</code>
+					<h2 class="AbstractClass J"><code class="O">StorableList</code><code class="Q">&#60;<code>E</code>&#62;</code></h2>
+					<div class="V">
+						<ul class="C D">
+							<li><code>E</code><code class="extends"><code><a href="api/viewtify.model.StorableModel.html">StorableModel</a></code></code></li>
+						</ul>
+						<ul class="C E">
+							<li><code>javafx.collections.ModifiableObservableListBase<code class="parameters"><code>E</code></code></code></li>
+							<li><code>javafx.collections.ObservableListBase<code class="parameters"><code>E</code></code></code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/AbstractList.html">AbstractList</a><code class="parameters"><code>E</code></code></code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/AbstractCollection.html">AbstractCollection</a><code class="parameters"><code>E</code></code></code></li>
+						</ul>
+						<ul class="C F">
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>E</code></code></code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>E</code></code></code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>E</code></code></code></li>
+							<li><code>javafx.beans.Observable</code></li>
+							<li><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></li>
+							<li><code>kiss.Storable<code class="parameters"><code><a href="api/viewtify.model.StorableList.html">StorableList</a><code class="parameters"><code>E</code></code></code></code></code></li>
+						</ul>
+					</div>
+				</section>
+				<section class="c" id="StorableList()">
+					<h2 class="U"><i class="PROTECTED"></i><code class="O">StorableList</code><code class="Q">()</code></h2><span class="B"><p>Hide constructor.</p>
+					</span></section>
+				<section class="c" id="get(int)">
+					<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="O">get</code><code class="Q">(<code>int</code> <code class="parameterName">index</code>)</code><i class="i"><code>E</code></i></h2>
+					<table class="a">
+						<tr class="N">
+							<td><code>int</code> <code>index</code></td>
+							<td></td>
+						</tr>
+						<tr class="P">
+							<td><code>E</code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="c" id="size()">
+					<h2 class="U"><i class="OVERRIDE PUBLIC"></i><code class="O">size</code><code class="Q">()</code><i class="i"><code>int</code></i></h2>
+					<table class="a">
+						<tr class="P">
+							<td><code>int</code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="c" id="doAdd(int,java.lang.Object)">
+					<h2 class="U"><i class="OVERRIDE PROTECTED"></i><code class="O">doAdd</code><code class="Q">(<code>int</code> <code class="parameterName">index</code>, <code>E</code> <code class="parameterName">model</code>)</code><i class="i"><code>void</code></i></h2>
+					<table class="a">
+						<tr class="N">
+							<td><code>int</code> <code>index</code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code>E</code> <code>model</code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="c" id="doSet(int,java.lang.Object)">
+					<h2 class="U"><i class="OVERRIDE PROTECTED"></i><code class="O">doSet</code><code class="Q">(<code>int</code> <code class="parameterName">index</code>, <code>E</code> <code class="parameterName">model</code>)</code><i class="i"><code>E</code></i></h2>
+					<table class="a">
+						<tr class="N">
+							<td><code>int</code> <code>index</code></td>
+							<td></td>
+						</tr>
+						<tr class="N">
+							<td><code>E</code> <code>model</code></td>
+							<td></td>
+						</tr>
+						<tr class="P">
+							<td><code>E</code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="c" id="doRemove(int)">
+					<h2 class="U"><i class="OVERRIDE PROTECTED"></i><code class="O">doRemove</code><code class="Q">(<code>int</code> <code class="parameterName">model</code>)</code><i class="i"><code>E</code></i></h2>
+					<table class="a">
+						<tr class="N">
+							<td><code>int</code> <code>model</code></td>
+							<td></td>
+						</tr>
+						<tr class="P">
+							<td><code>E</code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+			</article>
+			<aside class="f" id="SubNavi">
+				<div class="H">
+					<h5 class="j">Constructors</h5>
+					<ul>
+						<li><i class="PROTECTED"></i><code><a href="api/viewtify.model.StorableList.html#StorableList()">StorableList</a></code><code class="Q">()</code></li>
+					</ul>
+					<h5 class="j">Methods</h5>
+					<ul>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.model.StorableList.html#get(int)">get</a></code><code class="Q">(<code>int</code> <code class="parameterName">index</code>)</code><i class="e"><code>E</code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.model.StorableList.html#size()">size</a></code><code class="Q">()</code><i class="e"><code>int</code></i></li>
+						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.model.StorableList.html#doAdd(int,java.lang.Object)">doAdd</a></code><code class="Q">(<code>int</code> <code class="parameterName">index</code>, <code>E</code> <code class="parameterName">model</code>)</code><i class="e"><code>void</code></i></li>
+						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.model.StorableList.html#doSet(int,java.lang.Object)">doSet</a></code><code class="Q">(<code>int</code> <code class="parameterName">index</code>, <code>E</code> <code class="parameterName">model</code>)</code><i class="e"><code>E</code></i></li>
+						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.model.StorableList.html#doRemove(int)">doRemove</a></code><code class="Q">(<code>int</code> <code class="parameterName">model</code>)</code><i class="e"><code>E</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>
