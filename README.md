@@ -43,7 +43,7 @@ Add it into in the dependencies element like so:
 <dependency>
     <groupId>com.github.teletha</groupId>
     <artifactId>viewtify</artifactId>
-    <version>2.6.0</version>
+    <version>2.6.2</version>
 </dependency>
 ```
 #### [Gradle](https://gradle.org/)
@@ -56,7 +56,7 @@ repositories {
 Add it into the dependencies section like so:
 ```gradle
 dependencies {
-    implementation 'com.github.teletha:viewtify:2.6.0'
+    implementation 'com.github.teletha:viewtify:2.6.2'
 }
 ```
 #### [SBT](https://www.scala-sbt.org/)
@@ -66,7 +66,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add it into the libraryDependencies section like so:
 ```scala
-libraryDependencies += "com.github.teletha" % "viewtify" % "2.6.0"
+libraryDependencies += "com.github.teletha" % "viewtify" % "2.6.2"
 ```
 #### [Leiningen](https://leiningen.org/)
 Add JitPack repository at the end of repositories in your project.clj:
@@ -75,12 +75,12 @@ Add JitPack repository at the end of repositories in your project.clj:
 ```
 Add it into the dependencies section like so:
 ```clj
-:dependencies [[com.github.teletha/viewtify "2.6.0"]]
+:dependencies [[com.github.teletha/viewtify "2.6.2"]]
 ```
 #### [Bee](https://teletha.github.io/bee)
 Add it into your project definition class like so:
 ```java
-require("com.github.teletha", "viewtify", "2.6.0");
+require("com.github.teletha", "viewtify", "2.6.2");
 ```
 <p align="right"><a href="#top">back to top</a></p>
 
@@ -110,20 +110,21 @@ If you think something might be a bug, but you're not sure, ask on StackOverflow
 Viewtify depends on the following products on runtime.
 * [altfx-1.1.1](https://mvnrepository.com/artifact/com.github.teletha/altfx/1.1.1)
 * [controlsfx-11.1.2](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.1.2)
-* [javafx-base-20-ea+9](https://mvnrepository.com/artifact/org.openjfx/javafx-base/20-ea+9)
-* [javafx-base-20-ea+9-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/20-ea+9)
-* [javafx-controls-20-ea+9](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/20-ea+9)
-* [javafx-controls-20-ea+9-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/20-ea+9)
-* [javafx-graphics-20-ea+9](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/20-ea+9)
-* [javafx-graphics-20-ea+9-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/20-ea+9)
-* [javafx-media-20-ea+9](https://mvnrepository.com/artifact/org.openjfx/javafx-media/20-ea+9)
-* [javafx-media-20-ea+9-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/20-ea+9)
-* [javafx-web-20-ea+9](https://mvnrepository.com/artifact/org.openjfx/javafx-web/20-ea+9)
-* [javafx-web-20-ea+9-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/20-ea+9)
+* [javafx-base-20-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-base/20-ea+11)
+* [javafx-base-20-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/20-ea+11)
+* [javafx-controls-20-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/20-ea+11)
+* [javafx-controls-20-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/20-ea+11)
+* [javafx-graphics-20-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/20-ea+11)
+* [javafx-graphics-20-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/20-ea+11)
+* [javafx-media-20-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-media/20-ea+11)
+* [javafx-media-20-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/20-ea+11)
+* [javafx-web-20-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-web/20-ea+11)
+* [javafx-web-20-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/20-ea+11)
+* [lycoris-1.0.0](https://mvnrepository.com/artifact/com.github.teletha/lycoris/1.0.0)
 * [openjfx-monocle-jdk-12.0.1+2](https://mvnrepository.com/artifact/org.testfx/openjfx-monocle/jdk-12.0.1+2)
 * [psychopath-1.6.0](https://mvnrepository.com/artifact/com.github.teletha/psychopath/1.6.0)
-* [sinobu-2.21.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/2.21.0)
-* [stylist-1.6.0](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.6.0)
+* [sinobu-3.0.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/3.0.0)
+* [stylist-1.7.3](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.7.3)
 <p align="right"><a href="#top">back to top</a></p>
 
 
