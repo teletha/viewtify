@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.6.2](https://github.com/teletha/viewtify/compare/v2.6.1...v2.6.2) (2022-12-27)
+
+
+### Bug Fixes
+
+* update ci ([49e0fc4](https://github.com/teletha/viewtify/commit/49e0fc428ee5f8d2a407c888fc2217823ca65dd8))
+* update stylist ([5a3fb25](https://github.com/teletha/viewtify/commit/5a3fb256ab5c6a13bbc0feb6b38bff509d0ceb27))
+
 ## [2.6.1](https://github.com/teletha/viewtify/compare/v2.6.0...v2.6.1) (2022-12-26)
 
 
