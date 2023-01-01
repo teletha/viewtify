@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://docs.oracle.com/en/java/javase/19/"><img src="https://img.shields.io/badge/Java-Release%2019-green"/></a>
+    <a href="https://docs.oracle.com/en/java/javase/17/"><img src="https://img.shields.io/badge/Java-Release%2017-green"/></a>
     <span>&nbsp;</span>
     <a href="https://jitpack.io/#teletha/viewtify"><img src="https://img.shields.io/jitpack/v/github/teletha/viewtify?label=Repository&color=green"></a>
     <span>&nbsp;</span>
@@ -18,7 +18,7 @@
 
 
 ## Prerequisites
-Viewtify runs on all major operating systems and requires only [Java version 19](https://docs.oracle.com/en/java/javase/19/) or later to run.
+Viewtify runs on all major operating systems and requires only [Java version 17](https://docs.oracle.com/en/java/javase/17/) or later to run.
 To check, please run `java -version` from the command line interface. You should see something like this:
 ```
 > java -version
@@ -129,7 +129,7 @@ Viewtify depends on the following products on runtime.
 
 
 ## License
-Copyright (C) 2022 The VIEWTIFY Development Team
+Copyright (C) 2023 The VIEWTIFY Development Team
 
 MIT License
 

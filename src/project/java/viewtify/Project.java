@@ -7,10 +7,16 @@
  *
  *          https://opensource.org/licenses/MIT
  */
+package viewtify;
+
+import javax.lang.model.SourceVersion;
+
 public class Project extends bee.api.Project {
 
     {
         product("com.github.teletha", "viewtify", ref("version.txt"));
+
+        require(SourceVersion.RELEASE_19, SourceVersion.RELEASE_17);
 
         require("com.github.teletha", "altfx");
         require("com.github.teletha", "sinobu");
