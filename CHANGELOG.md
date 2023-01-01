@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.3](https://github.com/teletha/viewtify/compare/v2.6.2...v2.6.3) (2023-01-01)
+
+
+### Bug Fixes
+
+* headless mode is broken when anonymous browser ([bf4184a](https://github.com/teletha/viewtify/commit/bf4184aba253ee7e301a1c3fc7ce0b4221736373))
+
 ## [2.6.2](https://github.com/teletha/viewtify/compare/v2.6.1...v2.6.2) (2022-12-27)
 
 
