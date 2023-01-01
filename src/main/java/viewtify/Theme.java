@@ -30,6 +30,10 @@ public enum Theme {
      * @return
      */
     static String locate(String path) {
-        return ClassLoader.getSystemResource(path).toExternalForm();
+        try {
+            return ClassLoader.getSystemResource(path).toExternalForm();
+        } catch (Exception e) {
+            return "";
+        }
     }
 }

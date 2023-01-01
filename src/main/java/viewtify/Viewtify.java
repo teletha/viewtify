@@ -187,6 +187,32 @@ public final class Viewtify {
     }
 
     /**
+     * Check headless mode.
+     */
+    private static void checkHeadlessMode() {
+        if (I.env("javafx.headless", false)) {
+            // ====================================
+            // Support for JavaFX
+            // ====================================
+            // Disables hardware accelerated rendering and switches to software rendering.
+            System.setProperty("prism.order", "sw");
+
+            // See com.sun.glass.ui.PlatformFactory#getPlatformFactory()
+            // Set com.sun.glass.ui.monocle.MonoclePlatformFactory as platform factory.
+            System.setProperty("glass.platform", "Monocle");
+
+            // See com.sun.glass.ui.Platform#determinePlatform()
+            // Set Headless as monocle internal platform.
+            System.setProperty("monocle.platform", "Headless");
+
+            // ====================================
+            // Support for AWT
+            // ====================================
+            System.setProperty("java.awt.headless", "true");
+        }
+    }
+
+    /**
      * Gain application builder.
      * 
      * @return
@@ -369,6 +395,9 @@ public final class Viewtify {
      */
     private synchronized void initializeOnlyOnce(Class applicationClass) {
         if (stylesheets.size() == 0) {
+            // setting for headless mode
+            checkHeadlessMode();
+
             String prefs = ".preferences for " + applicationClass.getSimpleName().toLowerCase();
 
             // Compute application title
@@ -382,9 +411,6 @@ public final class Viewtify {
 
             // Restore Viewtify's setting
             I.make(Setting.class);
-
-            // setting for headless mode
-            checkHeadlessMode();
 
             // How to handle simultaneous application startup
             checkActivationPolicy(prefs);
@@ -411,32 +437,6 @@ public final class Viewtify {
                     .debounce(1, SECONDS)
                     .map(change -> change.context().externalForm())
                     .to(this::reloadStylesheet);
-        }
-    }
-
-    /**
-     * Check headless mode.
-     */
-    private void checkHeadlessMode() {
-        if (I.env("javafx.headless", false)) {
-            // ====================================
-            // Support for JavaFX
-            // ====================================
-            // Disables hardware accelerated rendering and switches to software rendering.
-            System.setProperty("prism.order", "sw");
-
-            // See com.sun.glass.ui.PlatformFactory#getPlatformFactory()
-            // Set com.sun.glass.ui.monocle.MonoclePlatformFactory as platform factory.
-            System.setProperty("glass.platform", "Monocle");
-
-            // See com.sun.glass.ui.Platform#determinePlatform()
-            // Set Headless as monocle internal platform.
-            System.setProperty("monocle.platform", "Headless");
-
-            // ====================================
-            // Support for AWT
-            // ====================================
-            System.setProperty("java.awt.headless", "true");
         }
     }
 
@@ -607,6 +607,7 @@ public final class Viewtify {
      */
     public static synchronized void browser(Consumer<UIWeb> browser) {
         if (!toolkitInitialized) {
+            checkHeadlessMode();
             Platform.startup(() -> toolkitInitialized = true);
         }
 
