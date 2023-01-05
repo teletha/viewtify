@@ -12,10 +12,12 @@ package viewtify.ui;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.scene.control.TextArea;
+
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.PlaceholderHelper;
 import viewtify.ui.helper.ValueHelper;
+import viewtify.util.MonkeyPatch;
 
 public class UITextArea extends UserInterface<UITextArea, TextArea>
         implements ValueHelper<UITextArea, String>, ContextMenuHelper<UITextArea>, EditableHelper<UITextArea>,
@@ -27,7 +29,7 @@ public class UITextArea extends UserInterface<UITextArea, TextArea>
     public UITextArea(View view) {
         super(new TextArea(), view);
 
-        UIText.fixIME(ui);
+        MonkeyPatch.fix(ui);
     }
 
     /**

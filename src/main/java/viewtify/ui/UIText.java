@@ -9,7 +9,6 @@
  */
 package viewtify.ui;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
@@ -18,27 +17,23 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
+import javafx.scene.paint.Color;
+
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.glyphfont.Glyph;
 import org.controlsfx.glyphfont.INamedCharacter;
 
 import impl.org.controlsfx.skin.CustomTextFieldSkin;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.Property;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.Skin;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
-import javafx.scene.control.TextInputControl;
-import javafx.scene.control.skin.TextInputControlSkin;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.paint.Color;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -47,31 +42,10 @@ import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.PlaceholderHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.util.GuardedOperation;
+import viewtify.util.MonkeyPatch;
 
 public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
         implements ValueHelper<UIText<V>, V>, ContextMenuHelper<UIText<V>>, EditableHelper<UIText<V>>, PlaceholderHelper<UIText<V>> {
-
-    /**
-     * Fix IME related problems.
-     * 
-     * @param node
-     */
-    static void fixIME(TextInputControl node) {
-        try {
-            Field field = TextInputControlSkin.class.getDeclaredField("inputMethodTextChangedHandler");
-            field.setAccessible(true);
-
-            Skin<?> skin = node.getSkin();
-            if (skin != null) {
-                EventHandler<InputMethodEvent> ime = (EventHandler<InputMethodEvent>) field.get(node.getSkin());
-
-                node.setOnInputMethodTextChanged(ime);
-                node.removeEventHandler(InputMethodEvent.INPUT_METHOD_TEXT_CHANGED, ime);
-            }
-        } catch (Exception e) {
-            throw I.quiet(e);
-        }
-    }
 
     /** The input type. */
     public final Class type;
@@ -112,7 +86,7 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
             });
         });
 
-        fixIME(ui);
+        MonkeyPatch.fix(ui);
     }
 
     /**
