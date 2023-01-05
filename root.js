@@ -308,6 +308,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "MonkeyPatch",
+			"packageName": "viewtify.util",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "PlaceholderHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
