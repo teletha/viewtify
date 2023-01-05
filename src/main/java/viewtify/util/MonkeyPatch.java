@@ -12,6 +12,7 @@ package viewtify.util;
 import java.lang.reflect.Field;
 
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
@@ -23,6 +24,16 @@ import javafx.scene.input.InputMethodEvent;
 import kiss.I;
 
 public class MonkeyPatch {
+
+    /**
+     * Apply all patches to the specified {@link Node} and its children.
+     * 
+     * @param node
+     */
+    public static void applyAll(Node node) {
+        I.signal(node.lookupAll(".text-area")).startWith(node).as(TextArea.class).to(MonkeyPatch::fix);
+        I.signal(node.lookupAll(".text-field")).startWith(node).as(TextField.class).to(MonkeyPatch::fix);
+    }
 
     /**
      * Fix {@link TextArea}.
