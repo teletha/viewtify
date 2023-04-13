@@ -107,31 +107,33 @@ public class Toast {
      * Layout all notifications.
      */
     private static void layoutNotifications() {
-        Rectangle2D rect = setting.screen.v.select().getBounds();
-        boolean isTopSide = setting.area.v.isTopSide();
-        double x = setting.area.v.isLeftSide() ? rect.getMinX() + MARGIN : rect.getMaxX() - setting.width.v - MARGIN;
-        double y = isTopSide ? MARGIN : rect.getMaxY() - MARGIN;
+        Viewtify.inUI(() -> {
+            Rectangle2D rect = setting.screen.v.select().getBounds();
+            boolean isTopSide = setting.area.v.isTopSide();
+            double x = setting.area.v.isLeftSide() ? rect.getMinX() + MARGIN : rect.getMaxX() - setting.width.v - MARGIN;
+            double y = isTopSide ? MARGIN : rect.getMaxY() - MARGIN;
 
-        Iterator<Notification> iterator = isTopSide ? notifications.descendingIterator() : notifications.iterator();
-        while (iterator.hasNext()) {
-            Toast.Notification notify = iterator.next();
+            Iterator<Notification> iterator = isTopSide ? notifications.descendingIterator() : notifications.iterator();
+            while (iterator.hasNext()) {
+                Toast.Notification notify = iterator.next();
 
-            if (notify.popup.isShowing()) {
-                if (!isTopSide) y -= notify.popup.getHeight() + MARGIN;
-                notify.popup.setX(x);
-                FXUtils.animate(setting.animation.v, notify.y, y);
-            } else {
-                notify.popup.setOpacity(0);
-                notify.popup.show(Window.getWindows().get(0));
-                if (!isTopSide) y -= notify.popup.getHeight() + MARGIN;
-                notify.popup.setX(x);
-                notify.popup.setY(y);
+                if (notify.popup.isShowing()) {
+                    if (!isTopSide) y -= notify.popup.getHeight() + MARGIN;
+                    notify.popup.setX(x);
+                    FXUtils.animate(setting.animation.v, notify.y, y);
+                } else {
+                    notify.popup.setOpacity(0);
+                    notify.popup.show(Window.getWindows().get(0));
+                    if (!isTopSide) y -= notify.popup.getHeight() + MARGIN;
+                    notify.popup.setX(x);
+                    notify.popup.setY(y);
 
-                FXUtils.animate(setting.animation.v, notify.popup.opacityProperty(), 1);
+                    FXUtils.animate(setting.animation.v, notify.popup.opacityProperty(), 1);
+                }
+
+                if (isTopSide) y += notify.popup.getHeight() + MARGIN;
             }
-
-            if (isTopSide) y += notify.popup.getHeight() + MARGIN;
-        }
+        });
     }
 
     /**
