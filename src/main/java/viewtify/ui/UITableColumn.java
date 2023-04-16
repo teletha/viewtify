@@ -22,7 +22,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -226,6 +225,9 @@ public class UITableColumn<RowV, ColumnV>
         /** The cell disposer. */
         private Disposable disposer = Disposable.empty();
 
+        /** The last used index. */
+        private int lastRowIndex = -1;
+
         /**
          * @param renderer
          */
@@ -249,6 +251,18 @@ public class UITableColumn<RowV, ColumnV>
                 disposer.dispose();
                 disposer = Disposable.empty();
             } else {
+                int rowIndex = getIndex();
+                if (rowIndex != lastRowIndex) {
+                    // Cells reused in rows different from previously used rows
+                    lastRowIndex = rowIndex;
+
+                    disposer.dispose();
+                    disposer = Disposable.empty();
+                } else {
+                    // Cells reused in the same row as previously used rows
+                    // do nothing
+                }
+
                 setGraphic(renderer.apply(context, I.pair(row, item), disposer));
             }
         }

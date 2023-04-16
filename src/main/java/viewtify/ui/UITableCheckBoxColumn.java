@@ -11,7 +11,6 @@ package viewtify.ui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import kiss.Managed;
 import kiss.Signal;
 import viewtify.Viewtify;
@@ -32,24 +31,17 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
         super(view, rowType, rowType);
 
         renderAsCheckBox((checkbox, value, disposer) -> {
-            ObservableList<RowV> items = ui.getTableView().getItems();
-            TableViewSelectionModel<RowV> model = ui.getTableView().getSelectionModel();
+            // sync to the current state
+            checkbox.value(selected.contains(value.ⅰ));
 
-            int index = items.indexOf(value.ⅰ);
-            if (model.isSelected(index)) {
-                checkbox.value(true);
-            }
-
-            checkbox.focusable(false).observing().to(on -> {
+            // sync state by user
+            checkbox.focusable(false).observe().to(on -> {
                 if (on) {
                     selected.add(value.ⅰ);
                 } else {
                     selected.remove(value.ⅰ);
                 }
-            }, disposer.add(() -> {
-                selected.remove(value.ⅰ);
-                checkbox.value(false); // reset value for redrawing
-            }));
+            }, disposer);
         });
     }
 
