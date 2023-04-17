@@ -812,6 +812,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "ViewForNode",
+			"packageName": "viewtify.ui",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Viewtify",
 			"packageName": "viewtify",
 			"type": "Class"
