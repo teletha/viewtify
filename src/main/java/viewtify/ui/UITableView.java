@@ -15,22 +15,23 @@ import javafx.beans.property.Property;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.skin.TableHeaderRow;
-import javafx.scene.control.skin.TableViewSkin;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+
 import kiss.I;
 import viewtify.ui.helper.User;
 
 public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITableView<RowV>> {
+
+    /** The configuration. */
+    private boolean dndable;
 
     /**
      * Enchanced view.
@@ -45,6 +46,8 @@ public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITabl
 
         // Use user data properties to pass UI instances to TableColumn.
         ui.getProperties().put(UITableView.class, this);
+
+        ui.setRowFactory(table -> new EnhancedRow());
     }
 
     /**
@@ -95,91 +98,88 @@ public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITabl
     }
 
     public UITableView<RowV> dndable(boolean enable) {
-        if (enable) {
-            ui.addEventHandler(MouseEvent.DRAG_DETECTED, dndDetector);
-            ui.addEventHandler(DragEvent.DRAG_OVER, dndOver);
-            ui.addEventHandler(DragEvent.DRAG_DROPPED, dndDropper);
-        } else {
-            ui.removeEventHandler(MouseEvent.DRAG_DETECTED, dndDetector);
-            ui.removeEventHandler(DragEvent.DRAG_OVER, dndOver);
-            ui.removeEventHandler(DragEvent.DRAG_DROPPED, dndDropper);
-        }
+        this.dndable = enable;
         return this;
     }
 
-    private final EventHandler<MouseEvent> dndDetector = event -> {
-        ObservableList<TablePosition> selectedCells = ui.getSelectionModel().getSelectedCells();
-        if (!selectedCells.isEmpty()) {
-            Dragboard dragboard = ui.startDragAndDrop(TransferMode.MOVE);
-            ClipboardContent content = new ClipboardContent();
-            content.putString(String.valueOf(selectedCells.get(0).getRow()));
-            dragboard.setContent(content);
-            event.consume();
-            System.out.println("OK");
+    /**
+     * 
+     */
+    private class EnhancedRow extends TableRow {
+
+        /**
+         * 
+         */
+        private EnhancedRow() {
+            addEventHandler(MouseEvent.DRAG_DETECTED, dndDetector);
+            addEventHandler(DragEvent.DRAG_OVER, dndOver);
+            addEventHandler(DragEvent.DRAG_DROPPED, dndDropper);
         }
-    };
 
-    private final EventHandler<DragEvent> dndOver = event -> {
-        Dragboard dragboard = event.getDragboard();
-        if (dragboard.hasString()) {
-            event.acceptTransferModes(TransferMode.MOVE);
-            event.consume();
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void updateItem(Object item, boolean empty) {
+            super.updateItem(item, empty);
         }
-    };
 
-    private final EventHandler<DragEvent> dndDropper = event -> {
-        Dragboard dragboard = event.getDragboard();
-        if (dragboard.hasString()) {
+        private final EventHandler<MouseEvent> dndDetector = event -> {
+            if (!dndable) {
+                return;
+            }
 
-            try {
-                int draggedIndex = Integer.parseInt(dragboard.getString());
-                int dropIndex = getTargetIndex(event);
-                swap(draggedIndex, dropIndex);
-                event.setDropCompleted(true);
-                ui.getSelectionModel().clearSelection();
+            ObservableList<TablePosition> selectedCells = ui.getSelectionModel().getSelectedCells();
+            if (!selectedCells.isEmpty()) {
+                Dragboard dragboard = ui.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(String.valueOf(selectedCells.get(0).getRow()));
+                dragboard.setContent(content);
+                event.consume();
+                System.out.println("OK");
+            }
+        };
+
+        private final EventHandler<DragEvent> dndOver = event -> {
+            if (!dndable) {
+                return;
+            }
+
+            Dragboard dragboard = event.getDragboard();
+            if (dragboard.hasString()) {
+                event.acceptTransferModes(TransferMode.MOVE);
                 event.consume();
 
-                System.out.println("from " + draggedIndex + " to " + dropIndex);
-            } catch (Throwable e) {
-                e.printStackTrace();
-                throw I.quiet(e);
+                System.out.println(detectPosition());
             }
-        }
-    };
+        };
 
-    private int getTargetIndex(DragEvent event) {
-        int dropIndex;
-        // テーブルビュー内でのドロップ位置を特定する
-        if (event.getGestureTarget() instanceof TableRow) {
-            TableRow targetRow = (TableRow) event.getGestureTarget();
-            dropIndex = targetRow.getIndex();
-        } else {
-            System.out.println(event.getGestureTarget().getClass());
-            dropIndex = ui.getItems().size() - 1;
-        }
-        System.out.println(dropIndex);
-        return dropIndex;
-    }
+        private final EventHandler<DragEvent> dndDropper = event -> {
+            if (!dndable) {
+                return;
+            }
 
-    private TableRow<RowV> getTableRow(Point2D mousePoint) {
-        TableViewSkin<?> skin = (TableViewSkin<?>) ui.getSkin();
-        if (skin == null) {
-            return null;
-        }
-        TableHeaderRow headerRow = skin.getTableHeaderRow();
-        double height = headerRow.getHeight();
-        double y = height;
-        for (int i = 0; i < tableView.getItems().size(); i++) {
-            TableRow<?> row = skin.getTableRow(i);
-            if (row == null) {
-                continue;
+            Dragboard dragboard = event.getDragboard();
+            if (dragboard.hasString()) {
+
+                try {
+                    int draggedIndex = Integer.parseInt(dragboard.getString());
+                    int dropIndex = 3;
+                    swap(draggedIndex, dropIndex);
+                    event.setDropCompleted(true);
+                    ui.getSelectionModel().clearSelection();
+                    event.consume();
+
+                    System.out.println("from " + draggedIndex + " to " + dropIndex);
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                    throw I.quiet(e);
+                }
             }
-            double rowHeight = row.getHeight();
-            y += rowHeight;
-            if (y > mousePoint.getY()) {
-                return (TableRow<YourObject>) row;
-            }
+        };
+
+        private int detectPosition() {
+            return Math.min(getIndex(), ui.getItems().size() - 1);
         }
-        return null;
     }
 }
