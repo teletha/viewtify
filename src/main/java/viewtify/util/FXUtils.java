@@ -9,13 +9,16 @@
  */
 package viewtify.util;
 
-import static java.lang.Double.*;
+import static java.lang.Double.parseDouble;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -287,6 +290,126 @@ public class FXUtils {
         @Override
         public String encode(Duration value) {
             return value.toString();
+        }
+    }
+
+    /**
+     * Listen the nested property.
+     * 
+     * @param <B>
+     * @param <P>
+     * @param base
+     * @param first
+     * @param listener
+     */
+    public static <B, P> void listen(B base, Function<B, ObservableValue<P>> first, ChangeListener<P> listener) {
+        first.apply(base).addListener(listener);
+    }
+
+    /**
+     * Listen the nested property.
+     * 
+     * @param <B>
+     * @param <P>
+     * @param <Q>
+     * @param base
+     * @param first
+     * @param second
+     * @param listener
+     */
+    public static <B, P, Q> void listen(B base, Function<B, ObservableValue<P>> first, Function<P, ObservableValue<Q>> second, ChangeListener<Q> listener) {
+        listen(base, first, new ChainListener(second, listener));
+    }
+
+    /**
+     * Listen the nested property.
+     * 
+     * @param <B>
+     * @param <P>
+     * @param <Q>
+     * @param <R>
+     * @param base
+     * @param first
+     * @param second
+     * @param third
+     * @param listener
+     */
+    public static <B, P, Q, R> void listen(B base, Function<B, ObservableValue<P>> first, Function<P, ObservableValue<Q>> second, Function<Q, ObservableValue<R>> third, ChangeListener<R> listener) {
+        listen(base, first, second, new ChainListener(third, listener));
+    }
+
+    /**
+     * Listen the nested property.
+     * 
+     * @param <B>
+     * @param <P>
+     * @param <Q>
+     * @param <R>
+     * @param <S>
+     * @param base
+     * @param first
+     * @param second
+     * @param third
+     * @param forth
+     * @param listener
+     */
+    public static <B, P, Q, R, S> void listen(B base, Function<B, ObservableValue<P>> first, Function<P, ObservableValue<Q>> second, Function<Q, ObservableValue<R>> third, Function<R, ObservableValue<S>> forth, ChangeListener<S> listener) {
+        listen(base, first, second, third, new ChainListener(forth, listener));
+    }
+
+    /**
+     * Listen the nested property.
+     * 
+     * @param <B>
+     * @param <P>
+     * @param <Q>
+     * @param <R>
+     * @param <S>
+     * @param <T>
+     * @param base
+     * @param first
+     * @param second
+     * @param third
+     * @param forth
+     * @param fifth
+     * @param listener
+     */
+    public static <B, P, Q, R, S, T> void listen(B base, Function<B, ObservableValue<P>> first, Function<P, ObservableValue<Q>> second, Function<Q, ObservableValue<R>> third, Function<R, ObservableValue<S>> forth, Function<S, ObservableValue<T>> fifth, ChangeListener<T> listener) {
+        listen(base, first, second, third, forth, new ChainListener(fifth, listener));
+    }
+
+    /**
+     * 
+     */
+    private static class ChainListener<PREV, NEXT> implements ChangeListener<PREV> {
+
+        private final Function<PREV, ObservableValue<NEXT>> nextFinder;
+
+        private final ChangeListener<NEXT> nextListener;
+
+        /**
+         * @param finder
+         */
+        private ChainListener(Function<PREV, ObservableValue<NEXT>> finder, ChangeListener<NEXT> nextListener) {
+            this.nextFinder = Objects.requireNonNull(finder);
+            this.nextListener = Objects.requireNonNull(nextListener);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void changed(ObservableValue<? extends PREV> observable, PREV oldValue, PREV newValue) {
+            if (oldValue != null) {
+                nextFinder.apply(oldValue).removeListener(nextListener);
+            }
+
+            if (newValue != null) {
+                ObservableValue<NEXT> next = nextFinder.apply(newValue);
+                next.addListener(nextListener);
+
+                nextListener.changed(next, null, next.getValue());
+            }
         }
     }
 }
