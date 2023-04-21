@@ -10,6 +10,7 @@
 package viewtify.ui.helper;
 
 import java.lang.reflect.Method;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -430,6 +431,20 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 iterator.previous();
                 iterator.remove();
             }
+        });
+        return (Self) this;
+    }
+
+    /**
+     * Swap its position each items.
+     * 
+     * @param one
+     * @param other
+     * @return Chainable API.
+     */
+    default Self swap(int one, int other) {
+        modifyItemUISafely(list -> {
+            Collections.swap(list, one, other);
         });
         return (Self) this;
     }
