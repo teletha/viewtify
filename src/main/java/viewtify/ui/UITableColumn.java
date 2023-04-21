@@ -228,6 +228,9 @@ public class UITableColumn<RowV, ColumnV>
         /** The last used index. */
         private int lastRowIndex = -1;
 
+        /** The last used value. */
+        private RowValue lastRow;
+
         /**
          * @param renderer
          */
@@ -252,9 +255,10 @@ public class UITableColumn<RowV, ColumnV>
                 disposer = Disposable.empty();
             } else {
                 int rowIndex = getIndex();
-                if (rowIndex != lastRowIndex) {
+                if (rowIndex != lastRowIndex || row != lastRow) {
                     // Cells reused in rows different from previously used rows
                     lastRowIndex = rowIndex;
+                    lastRow = row;
 
                     disposer.dispose();
                     disposer = Disposable.empty();

@@ -10,6 +10,7 @@
 package viewtify.ui;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import kiss.Managed;
 import kiss.Signal;
@@ -31,15 +32,42 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
         super(view, rowType, rowType);
 
         renderAsCheckBox((checkbox, value, disposer) -> {
-            // sync to the current state
-            checkbox.value(selected.contains(value.ⅰ));
+            RowV v = value.ⅰ;
 
-            // sync state by user
+            // sync to the current state
+            checkbox.value(selected.contains(v));
+
+            // sync from model to ui
+            ListChangeListener<RowV> listener = change -> {
+                while (change.next()) {
+                    for (RowV removed : change.getRemoved()) {
+                        if (v == removed) {
+                            checkbox.value(false);
+                            break;
+                        }
+                    }
+
+                    for (RowV added : change.getAddedSubList()) {
+                        if (v == added) {
+                            checkbox.value(true);
+                            break;
+                        }
+                    }
+                }
+            };
+            selected.addListener(listener);
+            disposer.add(() -> selected.removeListener(listener));
+
+            // sync from ui to model
             checkbox.focusable(false).observe().to(on -> {
                 if (on) {
-                    selected.add(value.ⅰ);
+                    if (!selected.contains(v)) {
+                        selected.add(v);
+                    }
                 } else {
-                    selected.remove(value.ⅰ);
+                    if (selected.contains(v)) {
+                        selected.remove(v);
+                    }
                 }
             }, disposer);
         });
@@ -54,10 +82,31 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
         return unmodifiable;
     }
 
+    /**
+     * Select checkbox by value.
+     * 
+     * @param value
+     */
     public void select(RowV value) {
-        Viewtify.inUI(() -> {
-            ui.getTableView().getSelectionModel().select(value);
-        });
+        if (!selected.contains(value)) {
+            Viewtify.inUI(() -> selected.add(value));
+        }
+    }
+
+    /**
+     * Select all checkboxes.
+     */
+    public void selectAll() {
+        for (RowV value : ui.getTableView().getItems()) {
+            select(value);
+        }
+    }
+
+    /**
+     * Deselect all checkboxes.
+     */
+    public void deselectAll() {
+        selected.clear();
     }
 
     /**
