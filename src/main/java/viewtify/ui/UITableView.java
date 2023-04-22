@@ -20,18 +20,80 @@ import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-
-import kiss.I;
 import viewtify.ui.helper.User;
 
 public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITableView<RowV>> {
 
-    /** The configuration. */
+    /** The specialized data format to handle the drag&drop gestures with table rows. */
+    private static final DataFormat DnD = new DataFormat("drag and drop manager for table row");
+
+    /** The configuration for DnD. */
     private boolean dndable;
+
+    /** The index of current dragging row. */
+    private int draggingIndex;
+
+    /** DnD starter */
+    private final EventHandler<MouseEvent> dndDetector = event -> {
+        if (!dndable) {
+            return;
+        }
+
+        ObservableList<TablePosition> selectedCells = ui.getSelectionModel().getSelectedCells();
+        if (selectedCells.size() == 1) {
+            event.consume(); // stop event propagation
+
+            EnhancedRow row = (EnhancedRow) event.getSource();
+
+            ClipboardContent content = new ClipboardContent();
+            content.put(DnD, DnD.toString());
+
+            Dragboard board = row.startDragAndDrop(TransferMode.MOVE);
+            board.setContent(content);
+
+            draggingIndex = row.getIndex();
+        }
+    };
+
+    /** DnD processor */
+    private final EventHandler<DragEvent> dndOver = event -> {
+        if (dndable && isValidDragboard(event)) {
+            event.acceptTransferModes(TransferMode.MOVE);
+            event.consume();
+
+            EnhancedRow row = (EnhancedRow) event.getSource();
+
+            int index = Math.min(row.getIndex(), ui.getItems().size() - 1);
+            if (draggingIndex != index) {
+                swap(draggingIndex, index);
+                draggingIndex = index;
+            }
+        }
+    };
+
+    /** DnD finisher */
+    private final EventHandler<DragEvent> dndDropper = event -> {
+        if (dndable && isValidDragboard(event)) {
+            event.setDropCompleted(true);
+            event.consume();
+        }
+    };
+
+    /**
+     * Validates the dragboard content.
+     *
+     * @param event The drag drop event.
+     * @return True if the dragboard of the event is valid.
+     */
+    private static boolean isValidDragboard(DragEvent event) {
+        Dragboard board = event.getDragboard();
+        return board.hasContent(DnD) && board.getContent(DnD).equals(DnD.toString());
+    }
 
     /**
      * Enchanced view.
@@ -97,6 +159,12 @@ public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITabl
         return operatable(false);
     }
 
+    /**
+     * Configure draggable row.
+     * 
+     * @param enable
+     * @return
+     */
     public UITableView<RowV> dndable(boolean enable) {
         this.dndable = enable;
         return this;
@@ -107,79 +175,10 @@ public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITabl
      */
     private class EnhancedRow extends TableRow {
 
-        /**
-         * 
-         */
         private EnhancedRow() {
             addEventHandler(MouseEvent.DRAG_DETECTED, dndDetector);
             addEventHandler(DragEvent.DRAG_OVER, dndOver);
             addEventHandler(DragEvent.DRAG_DROPPED, dndDropper);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected void updateItem(Object item, boolean empty) {
-            super.updateItem(item, empty);
-        }
-
-        private final EventHandler<MouseEvent> dndDetector = event -> {
-            if (!dndable) {
-                return;
-            }
-
-            ObservableList<TablePosition> selectedCells = ui.getSelectionModel().getSelectedCells();
-            if (!selectedCells.isEmpty()) {
-                Dragboard dragboard = ui.startDragAndDrop(TransferMode.MOVE);
-                ClipboardContent content = new ClipboardContent();
-                content.putString(String.valueOf(selectedCells.get(0).getRow()));
-                dragboard.setContent(content);
-                event.consume();
-                System.out.println("OK");
-            }
-        };
-
-        private final EventHandler<DragEvent> dndOver = event -> {
-            if (!dndable) {
-                return;
-            }
-
-            Dragboard dragboard = event.getDragboard();
-            if (dragboard.hasString()) {
-                event.acceptTransferModes(TransferMode.MOVE);
-                event.consume();
-
-                System.out.println(detectPosition());
-            }
-        };
-
-        private final EventHandler<DragEvent> dndDropper = event -> {
-            if (!dndable) {
-                return;
-            }
-
-            Dragboard dragboard = event.getDragboard();
-            if (dragboard.hasString()) {
-
-                try {
-                    int draggedIndex = Integer.parseInt(dragboard.getString());
-                    int dropIndex = 3;
-                    swap(draggedIndex, dropIndex);
-                    event.setDropCompleted(true);
-                    ui.getSelectionModel().clearSelection();
-                    event.consume();
-
-                    System.out.println("from " + draggedIndex + " to " + dropIndex);
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                    throw I.quiet(e);
-                }
-            }
-        };
-
-        private int detectPosition() {
-            return Math.min(getIndex(), ui.getItems().size() - 1);
         }
     }
 }
