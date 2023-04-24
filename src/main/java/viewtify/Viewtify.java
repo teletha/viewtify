@@ -468,7 +468,6 @@ public final class Viewtify {
                         root.file("close").touch();
                     }
 
-                    System.out.println("WAIT");
                     Thread.sleep(500);
                 }
             } catch (Throwable e) {
