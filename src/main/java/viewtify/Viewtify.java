@@ -361,7 +361,6 @@ public final class Viewtify {
 
         // launch application
         PlatformImpl.startup(() -> {
-            System.out.println("INIT");
             toolkitInitialized = true;
 
             V application = I.make(applicationClass);
