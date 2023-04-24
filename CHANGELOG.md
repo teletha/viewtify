@@ -1,5 +1,30 @@
 # Changelog
 
+## [2.7.0](https://github.com/teletha/viewtify/compare/v2.6.3...v2.7.0) (2023-04-24)
+
+
+### Features
+
+* Add monkey patch for text node. ([d88ac55](https://github.com/teletha/viewtify/commit/d88ac553bbfcf531cee21b64178c5bce3f893bba))
+* Add MonkeyPatch#applyAll to fix UI related bug. ([103c130](https://github.com/teletha/viewtify/commit/103c1304bdb68d4ec69a57f359035e9b49cc4219))
+* Add shorthand method to register user action. ([a745939](https://github.com/teletha/viewtify/commit/a74593975d7abd239fba97762bd4672b576c8132))
+* Add the specialized view for Node. ([1e9da17](https://github.com/teletha/viewtify/commit/1e9da1748cc6a18e79d07a59b306b46f26300ce9))
+* Add various collection manipulators. ([eca2147](https://github.com/teletha/viewtify/commit/eca2147d6a255c05940dda09633b49e8da53fc17))
+* Add various conditional state methods. ([acf1918](https://github.com/teletha/viewtify/commit/acf19180be818bfd33cffda41c65a084d156e8db))
+* Add various sort pattern. ([243cda9](https://github.com/teletha/viewtify/commit/243cda98db63c0377d77bc098cffac9aa5bef276))
+* Add Viewtify#isActive. ([7a4c5d3](https://github.com/teletha/viewtify/commit/7a4c5d390efa0d855d44e376ff118303cd3bad60))
+* Support drag and drop on table rows. ([c024ea8](https://github.com/teletha/viewtify/commit/c024ea854159f5b4d5bb1302347afc1573027e3a))
+* Support nested context menu. ([943c149](https://github.com/teletha/viewtify/commit/943c149baa9875ea41eeb7efe6823b986ec10cc8))
+* Support the nested property listener. ([e6413ff](https://github.com/teletha/viewtify/commit/e6413ffc42435c47f26141137a85c1c791fffd3d))
+
+
+### Bug Fixes
+
+* CheckboxTableCell is broken. ([71e8a0a](https://github.com/teletha/viewtify/commit/71e8a0a38941b97308189dd6748c9b811cfdfc1f))
+* Drag-and-drop is allowed only within the same table. ([e9fe311](https://github.com/teletha/viewtify/commit/e9fe31130031d386e7ae5ed544dca6cf1514f84f))
+* Toast is UI thread-safe. ([347a9b1](https://github.com/teletha/viewtify/commit/347a9b1e9fc5d0d8bc8f5989aaf43c081b9d33f0))
+* Updating checkbox on table is broken. ([3496b53](https://github.com/teletha/viewtify/commit/3496b53384279f18bb8f1538aa2a4f59e010b787))
+
 ## [2.6.3](https://github.com/teletha/viewtify/compare/v2.6.2...v2.6.3) (2023-01-01)
 
 
