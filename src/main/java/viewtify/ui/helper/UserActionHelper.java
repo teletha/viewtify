@@ -31,6 +31,15 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
     Object ui();
 
     /**
+     * Shorthand method to register user action.
+     * 
+     * @param action
+     */
+    default void action(WiseRunnable action) {
+        when(User.Action, action);
+    }
+
+    /**
      * Listen the specified user action.
      * 
      * @param actionType A user action to detect.
