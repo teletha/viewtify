@@ -10,19 +10,22 @@
 package viewtify.ui;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
+
 import kiss.Variable;
 
 public class UIContextMenu {
 
     /** The actual ui. */
-    private final ContextMenu ui;
+    private final Supplier<ObservableList<MenuItem>> menuProvider;
 
     /** The identifier of context menu. */
     private final Object id;
@@ -30,9 +33,9 @@ public class UIContextMenu {
     /**
      * Enchanced view.
      */
-    public UIContextMenu(Object id, ContextMenu ui) {
+    public UIContextMenu(Object id, Supplier<ObservableList<MenuItem>> menuProvider) {
         this.id = id;
-        this.ui = ui;
+        this.menuProvider = menuProvider;
     }
 
     /**
@@ -53,7 +56,7 @@ public class UIContextMenu {
         CustomMenuItem item = assignID(new CustomMenuItem(provider.ui()));
         item.setHideOnClick(hideOnClick);
 
-        ui.getItems().add(item);
+        menuProvider.get().add(item);
     }
 
     /**
@@ -64,7 +67,7 @@ public class UIContextMenu {
     public UIMenuItem menu() {
         MenuItem menu = assignID(new MenuItem());
         menu.getProperties().put(id, null);
-        ui.getItems().add(menu);
+        menuProvider.get().add(menu);
 
         return new UIMenuItem(menu);
     }
@@ -93,14 +96,13 @@ public class UIContextMenu {
      * Declare simple menu with text.
      * 
      * @param text A label text.
-     * @return Chainable API.
      */
-    public UIMenuItem menu(Object text, Consumer<UIContextMenu> sub) {
+    public void menu(Object text, Consumer<UIContextMenu> sub) {
         Menu menu = assignID(new Menu(String.valueOf(text)));
         menu.getProperties().put(id, null);
-        ui.getItems().add(menu);
+        menuProvider.get().add(menu);
 
-        return new UIMenuItem(menu);
+        sub.accept(new UIContextMenu(text, menu::getItems));
     }
 
     /**
@@ -110,9 +112,16 @@ public class UIContextMenu {
      */
     public UIMenuItem checkMenu() {
         CheckMenuItem menu = assignID(new CheckMenuItem());
-        ui.getItems().add(menu);
+        menuProvider.get().add(menu);
 
         return new UIMenuItem(menu);
+    }
+
+    /**
+     * Declare menu separator.
+     */
+    public void separator() {
+        menuProvider.get().add(new SeparatorMenuItem());
     }
 
     /**

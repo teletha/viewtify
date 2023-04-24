@@ -69,7 +69,7 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
         }
 
         // build context menus
-        builder.accept(new UIContextMenu(id, menus));
+        builder.accept(new UIContextMenu(id, menus::getItems));
 
         // API definition
         return (Self) this;
