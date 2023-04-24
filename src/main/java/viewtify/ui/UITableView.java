@@ -31,7 +31,7 @@ import viewtify.ui.helper.User;
 public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITableView<RowV>> {
 
     /** The specialized data format to handle the drag&drop gestures with table rows. */
-    private static final DataFormat DnD = new DataFormat("drag and drop manager for table row");
+    private final DataFormat DnD = new DataFormat("drag and drop manager for table " + this);
 
     /** The configuration for DnD. */
     private boolean dndable;
@@ -91,7 +91,7 @@ public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITabl
      * @param event The drag drop event.
      * @return True if the dragboard of the event is valid.
      */
-    private static boolean isValidDragboard(DragEvent event) {
+    private boolean isValidDragboard(DragEvent event) {
         Dragboard board = event.getDragboard();
         return board.hasContent(DnD) && board.getContent(DnD).equals(DnD.toString());
     }
