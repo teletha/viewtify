@@ -9,12 +9,14 @@
  */
 package viewtify.ui;
 
+import java.util.function.Consumer;
+
 import javafx.scene.Node;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-
 import kiss.Variable;
 
 public class UIContextMenu {
@@ -85,6 +87,20 @@ public class UIContextMenu {
      */
     public UIMenuItem menu(Variable text) {
         return menu().text(text);
+    }
+
+    /**
+     * Declare simple menu with text.
+     * 
+     * @param text A label text.
+     * @return Chainable API.
+     */
+    public UIMenuItem menu(Object text, Consumer<UIContextMenu> sub) {
+        Menu menu = assignID(new Menu(String.valueOf(text)));
+        menu.getProperties().put(id, null);
+        ui.getItems().add(menu);
+
+        return new UIMenuItem(menu);
     }
 
     /**

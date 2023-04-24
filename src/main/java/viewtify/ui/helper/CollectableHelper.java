@@ -10,6 +10,7 @@
 package viewtify.ui.helper;
 
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -370,6 +371,20 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     }
 
     /**
+     * Set the specified item.
+     * 
+     * @param index An index to add.
+     * @param item An item to add.
+     * @return Chainable API.
+     */
+    default Self setItemAt(int index, E item) {
+        if (item != null && 0 <= index) {
+            modifyItemUISafely(list -> list.set(Math.min(index, list.size()), item));
+        }
+        return (Self) this;
+    }
+
+    /**
      * Remove the specified item.
      * 
      * @param item An item to remove.
@@ -390,6 +405,17 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 }
             });
         }
+        return (Self) this;
+    }
+
+    /**
+     * Remove the specified item.
+     * 
+     * @param items A collection of items to remove.
+     * @return Chainable API.
+     */
+    default Self removeItems(Collection<E> items) {
+        items.forEach(this::removeItem);
         return (Self) this;
     }
 
@@ -432,6 +458,36 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 iterator.remove();
             }
         });
+        return (Self) this;
+    }
+
+    /**
+     * Replace the specified item.
+     * 
+     * @param target An index..
+     * @param replacer An item to replace.
+     * @return Chainable API.
+     */
+    default Self replaceItemAt(Variable<E> target, E replacer) {
+        return replaceItemAt(target.v, replacer);
+    }
+
+    /**
+     * Replace the specified item.
+     * 
+     * @param target An index..
+     * @param replacer An item to replace.
+     * @return Chainable API.
+     */
+    default Self replaceItemAt(E target, E replacer) {
+        if (target != null && replacer != null) {
+            modifyItemUISafely(list -> {
+                int index = list.indexOf(target);
+                if (index != -1) {
+                    list.set(index, replacer);
+                }
+            });
+        }
         return (Self) this;
     }
 

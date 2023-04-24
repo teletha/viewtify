@@ -16,6 +16,7 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.SingleSelectionModel;
+import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.helper.SelectionModelWrappers.IndexedCheckModelWrapper;
@@ -179,12 +180,21 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     /**
      * Handle the selected item.
      * 
+     * @return
+     */
+    default Signal<E> selected() {
+        return Viewtify.observing(model().selectedItemProperty()).skipNull();
+    }
+
+    /**
+     * Handle the selected item.
+     * 
      * @param selected
      * @return
      */
     default Self whenSelected(Consumer<E> selected) {
         if (selected != null) {
-            Viewtify.observing(model().selectedItemProperty()).skipNull().to(selected::accept);
+            selected().to(selected);
         }
         return (Self) this;
     }

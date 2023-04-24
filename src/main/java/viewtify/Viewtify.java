@@ -30,6 +30,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -63,6 +64,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Screen;
@@ -148,6 +150,9 @@ public final class Viewtify {
 
     /** The estimated application class. */
     private static volatile Class applicationLaunchingClass;
+
+    /** The main stage. */
+    private static volatile Stage mainStage;
 
     /** The configurable setting. */
     private ActivationPolicy policy = ActivationPolicy.Latest;
@@ -364,16 +369,16 @@ public final class Viewtify {
             toolkitInitialized = true;
 
             V application = I.make(applicationClass);
-            Stage stage = new Stage(stageStyle);
-            stage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
-            stage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
+            mainStage = new Stage(stageStyle);
+            mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
+            mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
 
             Scene scene = new Scene((Parent) application.ui());
-            manage(application.getClass().getName(), scene, stage, false);
+            manage(application.getClass().getName(), scene, mainStage, false);
 
             // root stage management
             views.add(application);
-            stage.showingProperty().addListener((observable, oldValue, newValue) -> {
+            mainStage.showingProperty().addListener((observable, oldValue, newValue) -> {
                 if (oldValue == true && newValue == false) {
                     views.remove(application);
 
@@ -382,8 +387,8 @@ public final class Viewtify {
                 }
             });
 
-            stage.setScene(scene);
-            stage.show();
+            mainStage.setScene(scene);
+            mainStage.show();
 
             if (view != null) {
                 view.accept(application);
@@ -703,6 +708,45 @@ public final class Viewtify {
      */
     public static boolean isActive() {
         return toolkitInitialized;
+    }
+
+    /**
+     * Show the text input dialog.
+     * 
+     * @param message
+     * @return
+     */
+    public static Optional<String> dialogText(String message) {
+        return dialogText(message, "");
+    }
+
+    /**
+     * Show the text input dialog.
+     * 
+     * @param message
+     * @param initialText
+     * @return
+     */
+    public static Optional<String> dialogText(String message, Variable<String> initialText) {
+        return dialogText(message, initialText.or(""));
+    }
+
+    /**
+     * Show the text input dialog.
+     * 
+     * @param message
+     * @param initialText
+     * @return
+     */
+    public static Optional<String> dialogText(String message, String initialText) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.initOwner(mainStage);
+        dialog.setHeaderText(null);
+        dialog.setTitle(message);
+        dialog.setGraphic(null);
+        dialog.getEditor().setText(initialText);
+        dialog.getDialogPane().setPrefWidth(300);
+        return dialog.showAndWait();
     }
 
     /**
