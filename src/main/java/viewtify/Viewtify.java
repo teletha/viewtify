@@ -39,10 +39,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -71,6 +71,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -89,6 +92,7 @@ import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
+import viewtify.ui.helper.ValueHelper;
 
 public final class Viewtify {
 
@@ -1269,6 +1273,62 @@ public final class Viewtify {
             // wrapped error in here.
             throw new Error();
         }
+    }
+
+    /**
+     * Combine conditional state.
+     * 
+     * @param values
+     * @return
+     */
+    public static Signal<Boolean> isNull(ValueHelper base, ValueHelper... values) {
+        return is(ValueHelper::isNull, base, values);
+    }
+
+    /**
+     * Combine conditional state.
+     * 
+     * @param values
+     * @return
+     */
+    public static Signal<Boolean> isNullAny(ValueHelper base, ValueHelper... values) {
+        return any(ValueHelper::isNull, base, values);
+    }
+
+    /**
+     * Combine conditional state.
+     * 
+     * @param values
+     * @return
+     */
+    public static <V> Signal<Boolean> is(Function<V, Signal<Boolean>> state, V base, V... values) {
+        return test((a, b) -> a && b, state, base, values);
+    }
+
+    /**
+     * Combine conditional state.
+     * 
+     * @param values
+     * @return
+     */
+    public static <V> Signal<Boolean> any(Function<V, Signal<Boolean>> state, V base, V... values) {
+        return test((a, b) -> a || b, state, base, values);
+    }
+
+    /**
+     * Combine conditional state.
+     * 
+     * @param values
+     * @return
+     */
+    private static <V> Signal<Boolean> test(BinaryOperator<Boolean> condition, Function<V, Signal<Boolean>> state, V base, V... values) {
+        Signal<Boolean> signal = state.apply(base);
+        Signal<Boolean>[] additionals = new Signal[values.length];
+    
+        for (int i = 0; i < additionals.length; i++) {
+            additionals[i] = state.apply(values[i]);
+        }
+        return signal.combineLatest(additionals, condition);
     }
 
     /**

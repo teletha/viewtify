@@ -612,6 +612,24 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     }
 
     /**
+     * Get the filetering state.
+     * 
+     * @return
+     */
+    default Signal<Boolean> hasNothing() {
+        return Viewtify.observe(items()).map(ObservableList::isEmpty);
+    }
+
+    /**
+     * Get the filetering state.
+     * 
+     * @return
+     */
+    default Signal<Boolean> hasSomething() {
+        return Viewtify.observe(items()).map(v -> !v.isEmpty());
+    }
+
+    /**
      * Filter items by the specified condition.
      * 
      * @param filter A conditional filter.
