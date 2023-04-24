@@ -49,10 +49,12 @@ public class Toast {
      * Show the specified node.
      */
     public static void show(String message) {
-        Label label = new Label(message);
-        label.setWrapText(true);
+        if (Viewtify.isActive()) {
+            Label label = new Label(message);
+            label.setWrapText(true);
 
-        show(label);
+            show(label);
+        }
     }
 
     /**

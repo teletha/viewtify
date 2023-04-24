@@ -9,9 +9,13 @@
  */
 package viewtify;
 
-import static java.nio.file.StandardOpenOption.*;
-import static java.util.concurrent.TimeUnit.*;
-import static java.util.stream.Collectors.*;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.WRITE;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -357,6 +361,7 @@ public final class Viewtify {
 
         // launch application
         PlatformImpl.startup(() -> {
+            System.out.println("INIT");
             toolkitInitialized = true;
 
             V application = I.make(applicationClass);
@@ -464,6 +469,7 @@ public final class Viewtify {
                         root.file("close").touch();
                     }
 
+                    System.out.println("WAIT");
                     Thread.sleep(500);
                 }
             } catch (Throwable e) {
@@ -690,6 +696,15 @@ public final class Viewtify {
                 Terminator.add(process.get());
             });
         }
+    }
+
+    /**
+     * Check wheterh JavaFX is initialized or not.
+     * 
+     * @return
+     */
+    public static boolean isActive() {
+        return toolkitInitialized;
     }
 
     /**
