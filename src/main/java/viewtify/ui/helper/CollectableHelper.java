@@ -23,6 +23,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 import java.util.stream.BaseStream;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -33,6 +36,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -528,6 +532,46 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     /**
      * Sort items by the specified {@link Comparator}.
      * 
+     * @param sorter A item comparator.
+     * @return Chainable API.
+     */
+    default <U extends Comparable<? super U>> Self sortBy(Function<? super E, ? extends U> sorter) {
+        return sort(Comparator.comparing(sorter));
+    }
+
+    /**
+     * Sort items by the specified {@link Comparator}.
+     * 
+     * @param sorter A item comparator.
+     * @return Chainable API.
+     */
+    default Self sortByInt(ToIntFunction<? super E> sorter) {
+        return sort(Comparator.comparingInt(sorter));
+    }
+
+    /**
+     * Sort items by the specified {@link Comparator}.
+     * 
+     * @param sorter A item comparator.
+     * @return Chainable API.
+     */
+    default Self sortByLong(ToLongFunction<? super E> sorter) {
+        return sort(Comparator.comparingLong(sorter));
+    }
+
+    /**
+     * Sort items by the specified {@link Comparator}.
+     * 
+     * @param sorter A item comparator.
+     * @return Chainable API.
+     */
+    default Self sortByDouble(ToDoubleFunction<? super E> sorter) {
+        return sort(Comparator.comparingDouble(sorter));
+    }
+
+    /**
+     * Sort items by the specified {@link Comparator}.
+     * 
      * @param context An additional infomation.
      * @param sorter A item comparator.
      * @return Chainable API.
@@ -537,6 +581,25 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
             context.observing().to(v -> sort(sorter.apply(v)));
         }
         return (Self) this;
+    }
+
+    /**
+     * Sorts items using the specified {@link Comparator}. However, items other than the selected
+     * item are excluded from the sort and remain fixed.
+     * 
+     * @param sorter A item comparator.
+     * @param selector A item selector to sort.
+     */
+    default Self sort(Comparator<E> sorter, Predicate<E> selector) {
+        ObservableList<E> items = items();
+
+        List<E> sorted = I.signal(items).take(selector).sort(sorter).toList();
+        I.signal(items).skip(selector).to(item -> {
+            int index = items.indexOf(item);
+            sorted.add(index, item);
+        });
+
+        return items(sorted);
     }
 
     /**
