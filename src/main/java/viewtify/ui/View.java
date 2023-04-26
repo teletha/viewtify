@@ -26,6 +26,7 @@ import javafx.stage.Window;
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
+import kiss.Signal;
 import kiss.Variable;
 import kiss.model.Model;
 import viewtify.Viewtify;
@@ -155,6 +156,17 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
             view = view.parent;
         }
         return Variable.empty();
+    }
+
+    /**
+     * Finds all declared UI by the specified type.
+     * 
+     * @param <T>
+     * @param type
+     * @return
+     */
+    public final <T> Signal<T> findUI(Class<T> type) {
+        return I.signal(getClass().getDeclaredFields()).take(f -> type.isAssignableFrom(f.getType())).map(f -> (T) f.get(this));
     }
 
     /**

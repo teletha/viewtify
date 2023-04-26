@@ -44,6 +44,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -62,8 +64,13 @@ import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -71,9 +78,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -93,6 +97,7 @@ import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.ValueHelper;
+import viewtify.ui.helper.VerifyHelper;
 
 public final class Viewtify {
 
@@ -714,6 +719,24 @@ public final class Viewtify {
         return toolkitInitialized;
     }
 
+    public static <V extends View, R> Optional<R> dialog(String message, Class<V> type, Function<V, R> result) {
+        V view = I.make(type);
+        Node ui = view.ui();
+
+        Alert dialog = new Alert(AlertType.CONFIRMATION);
+        dialog.initOwner(mainStage);
+        dialog.setHeaderText(null);
+        dialog.setTitle(message);
+        dialog.setGraphic(null);
+        dialog.getDialogPane().setContent(ui);
+
+        Button o = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+        List<VerifyHelper> list = view.findUI(VerifyHelper.class).toList();
+        System.out.println(list);
+
+        return dialog.showAndWait().map(b -> b == ButtonType.OK ? result.apply(view) : null);
+    }
+
     /**
      * Show the text input dialog.
      * 
@@ -1324,7 +1347,7 @@ public final class Viewtify {
     private static <V> Signal<Boolean> test(BinaryOperator<Boolean> condition, Function<V, Signal<Boolean>> state, V base, V... values) {
         Signal<Boolean> signal = state.apply(base);
         Signal<Boolean>[] additionals = new Signal[values.length];
-    
+
         for (int i = 0; i < additionals.length; i++) {
             additionals[i] = state.apply(values[i]);
         }
