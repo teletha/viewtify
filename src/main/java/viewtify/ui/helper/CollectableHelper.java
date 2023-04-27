@@ -419,7 +419,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self removeItems(Collection<E> items) {
-        items.forEach(this::removeItem);
+        modifyItemUISafely(list -> list.removeAll(items));
         return (Self) this;
     }
 
