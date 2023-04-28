@@ -7,10 +7,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="k">
-		<header class="l">
-			<h1 class="V" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
-			<nav class="N"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="j">
+		<header class="X">
+			<h1 class="l" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
+			<nav class="Q"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -19,7 +19,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="O" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="H" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -27,329 +27,342 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="H">
-			<nav class="e">
+		<main class="m">
+			<nav class="O">
 				<div></div>
 			</nav>
-			<article class="W" id="Article">
-				<section class="J"><code class="d">viewtify</code>
-					<h2 class="Class K"><code class="T">Viewtify</code></h2>
-					<div class="L"></div>
+			<article class="J" id="Article">
+				<section class="M"><code class="a">viewtify</code>
+					<h2 class="Class K"><code class="S">Viewtify</code></h2>
+					<div class="d"></div>
 				</section>
-				<section class="J" id="Terminator">
-					<h2 class="m"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="T">Terminator</code><i class="b"><code class="return">kiss.Disposable</code></i></h2><span class="B"><p>The dispose on exit.</p>
+				<section class="M" id="Terminator">
+					<h2 class="U"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="S">Terminator</code><i class="I"><code class="return">kiss.Disposable</code></i></h2><span class="B"><p>The dispose on exit.</p>
 					</span></section>
-				<section class="J" id="UIThread">
-					<h2 class="m"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="T">UIThread</code><i class="b"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code></code></code></i></h2><span class="B"><p>Executor for UI Thread.</p>
+				<section class="M" id="UIThread">
+					<h2 class="U"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="S">UIThread</code><i class="I"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code></code></code></i></h2><span class="B"><p>Executor for UI Thread.</p>
 					</span></section>
-				<section class="J" id="WorkerThread">
-					<h2 class="m"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="T">WorkerThread</code><i class="b"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code></code></code></i></h2><span class="B"><p>Executor for Worker Thread.</p>
+				<section class="M" id="WorkerThread">
+					<h2 class="U"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="S">WorkerThread</code><i class="I"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code></code></code></i></h2><span class="B"><p>Executor for Worker Thread.</p>
 					</span></section>
-				<section class="J" id="inHeadless()">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">inHeadless</code><code class="P">()</code><i class="b"><code>void</code></i></h2><span class="B"><p>Configures the GUI to start in headless mode. This setting cannot be reversed. It has no
+				<section class="M" id="inHeadless()">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">inHeadless</code><code class="b">()</code><i class="I"><code>void</code></i></h2><span class="B"><p>Configures the GUI to start in headless mode. This setting cannot be reversed. It has no
  effect if the GUI has already been started. It is recommended to call this method at a
  location right after the program is started. It is also possible to set the environment
  variable &#34;javafx.headless&#34; to true.</p>
 					</span></section>
-				<section class="J" id="application()">
-					<h2 class="m"><i class="SYNCHRONIZED"><i class="STATIC PUBLIC"></i></i><code class="T">application</code><code class="P">()</code><i class="b"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
-					<table class="Q">
-						<tr class="M">
+				<section class="M" id="application()">
+					<h2 class="U"><i class="SYNCHRONIZED"><i class="PUBLIC STATIC"></i></i><code class="S">application</code><code class="b">()</code><i class="I"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
+					<table class="R">
+						<tr class="T">
 							<td><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Gain application builder.</p>
 					</span></section>
-				<section class="J" id="onTerminating(java.lang.Runnable)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">onTerminating</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">termination</code>)</code><i class="b"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="onTerminating(java.lang.Runnable)">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">onTerminating</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">termination</code>)</code><i class="I"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code>termination</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Add termination action.</p>
 					</span></section>
-				<section class="J" id="use(viewtify.ActivationPolicy)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">use</code><code class="P">(<code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code> <code class="parameterName">policy</code>)</code><i class="b"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="use(viewtify.ActivationPolicy)">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">use</code><code class="b">(<code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code> <code class="parameterName">policy</code>)</code><i class="I"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code> <code>policy</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Configure application <code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code>.</p>
 					</span></section>
-				<section class="J" id="use(javafx.stage.StageStyle)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">use</code><code class="P">(<code>javafx.stage.StageStyle</code> <code class="parameterName">style</code>)</code><i class="b"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="use(javafx.stage.StageStyle)">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">use</code><code class="b">(<code>javafx.stage.StageStyle</code> <code class="parameterName">style</code>)</code><i class="I"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code>javafx.stage.StageStyle</code> <code>style</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Configure StageStyle.</p>
 					</span></section>
-				<section class="J" id="use(viewtify.Theme)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">use</code><code class="P">(<code><a href="api/viewtify.Theme.html">Theme</a></code> <code class="parameterName">theme</code>)</code><i class="b"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="use(viewtify.Theme)">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">use</code><code class="b">(<code><a href="api/viewtify.Theme.html">Theme</a></code> <code class="parameterName">theme</code>)</code><i class="I"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="api/viewtify.Theme.html">Theme</a></code> <code>theme</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Configure application <code><a href="api/viewtify.Theme.html">Theme</a></code>.</p>
 					</span></section>
-				<section class="J" id="icon(java.lang.String)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">icon</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">pathToIcon</code>)</code><i class="b"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="icon(java.lang.String)">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">icon</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">pathToIcon</code>)</code><i class="I"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>pathToIcon</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></td>
 							<td><span><p>A relative path to icon.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Configure application icon.</p>
 					</span></section>
-				<section class="J" id="title(java.lang.String)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">title</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">title</code>)</code><i class="b"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="title(java.lang.String)">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">title</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">title</code>)</code><i class="I"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>title</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></td>
 							<td><span><p>A title of this application.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Configure application title.</p>
 					</span></section>
-				<section class="J" id="size(double,double)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">size</code><code class="P">(<code>double</code> <code class="parameterName">width</code>, <code>double</code> <code class="parameterName">height</code>)</code><i class="b"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="size(double,double)">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">size</code><code class="b">(<code>double</code> <code class="parameterName">width</code>, <code>double</code> <code class="parameterName">height</code>)</code><i class="I"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code>double</code> <code>width</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>double</code> <code>height</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Configure application initial size</p>
 					</span></section>
-				<section class="J" id="error(java.util.function.BiConsumer)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">error</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code></code></code> <code class="parameterName">errorHandler</code>)</code><i class="b"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="error(java.util.function.BiConsumer)">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">error</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code></code></code> <code class="parameterName">errorHandler</code>)</code><i class="I"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code></code></code> <code>errorHandler</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Configure error logging.</p>
 					</span></section>
-				<section class="J" id="activate(java.lang.Class)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">activate</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code></code> <code class="parameterName">applicationClass</code>)</code><i class="b"><code>void</code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="activate(java.lang.Class)">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">activate</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code></code> <code class="parameterName">applicationClass</code>)</code><i class="I"><code>void</code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code></code> <code>applicationClass</code></td>
 							<td><span><p>The application <code><a href="api/viewtify.ui.View.html">View</a></code> to activate.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Activate the specified application. You can call this method as many times as you like.</p>
 					</span></section>
-				<section class="J" id="activate(java.lang.Class,java.util.function.Consumer)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">activate</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code>V</code></code></code></code> <code class="parameterName">applicationClass</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">view</code>)</code><i class="b"><code>void</code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="activate(java.lang.Class,java.util.function.Consumer)">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">activate</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code>V</code></code></code></code> <code class="parameterName">applicationClass</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">view</code>)</code><i class="I"><code>void</code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>V</code><code class="extends"><code><a href="api/viewtify.ui.View.html">View</a></code></code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code>V</code></code></code></code> <code>applicationClass</code></td>
 							<td><span><p>The application <code><a href="api/viewtify.ui.View.html">View</a></code> to activate.</p>
 								</span></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>V</code></code></code> <code>view</code></td>
 							<td><span><p>Callback to be called after the application is activated.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Activate the specified application. You can call this method as many times as you like.</p>
 					</span></section>
-				<section class="J" id="deactivate()">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">deactivate</code><code class="P">()</code><i class="b"><code>void</code></i></h2><span class="B"><p>Deactivate the current application.</p>
+				<section class="M" id="deactivate()">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">deactivate</code><code class="b">()</code><i class="I"><code>void</code></i></h2><span class="B"><p>Deactivate the current application.</p>
 					</span></section>
-				<section class="J" id="reactivate()">
-					<h2 class="m"><i class="PUBLIC"></i><code class="T">reactivate</code><code class="P">()</code><i class="b"><code>void</code></i></h2><span class="B"><p>Reactivate the current application.</p>
+				<section class="M" id="reactivate()">
+					<h2 class="U"><i class="PUBLIC"></i><code class="S">reactivate</code><code class="b">()</code><i class="I"><code>void</code></i></h2><span class="B"><p>Reactivate the current application.</p>
 					</span></section>
-				<section class="J" id="browser(java.util.function.Consumer)">
-					<h2 class="m"><i class="SYNCHRONIZED"><i class="STATIC PUBLIC"></i></i><code class="T">browser</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></code></code> <code class="parameterName">browser</code>)</code><i class="b"><code>void</code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="browser(java.util.function.Consumer)">
+					<h2 class="U"><i class="SYNCHRONIZED"><i class="PUBLIC STATIC"></i></i><code class="S">browser</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></code></code> <code class="parameterName">browser</code>)</code><i class="I"><code>void</code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></code></code> <code>browser</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Generates a separate window with only <code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code>. If the application is not running, it
  will automatically launch an anonymous application.</p>
 					</span></section>
-				<section class="J" id="inWorker(java.lang.Runnable)">
-					<h2 class="m"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="T">inWorker</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">process</code>)</code><i class="b"><code>void</code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="inWorker(java.lang.Runnable)">
+					<h2 class="U"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="S">inWorker</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">process</code>)</code><i class="I"><code>void</code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code>process</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Execute task in pooled-background-worker thread.</p>
 					</span></section>
-				<section class="J" id="inWorker(java.util.function.Supplier)">
-					<h2 class="m"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="T">inWorker</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>kiss.Disposable</code></code></code> <code class="parameterName">process</code>)</code><i class="b"><code>void</code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="inWorker(java.util.function.Supplier)">
+					<h2 class="U"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="S">inWorker</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>kiss.Disposable</code></code></code> <code class="parameterName">process</code>)</code><i class="I"><code>void</code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>kiss.Disposable</code></code></code> <code>process</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Execute task in pooled-background-worker thread.</p>
 					</span></section>
-				<section class="J" id="inUI(java.lang.Runnable)">
-					<h2 class="m"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="T">inUI</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">process</code>)</code><i class="b"><code>void</code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="inUI(java.lang.Runnable)">
+					<h2 class="U"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="S">inUI</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">process</code>)</code><i class="I"><code>void</code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code>process</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Execute task in UI thread.</p>
 					</span></section>
-				<section class="J" id="inUI(java.util.function.Supplier)">
-					<h2 class="m"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="T">inUI</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>kiss.Disposable</code></code></code> <code class="parameterName">process</code>)</code><i class="b"><code>void</code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="inUI(java.util.function.Supplier)">
+					<h2 class="U"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="S">inUI</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>kiss.Disposable</code></code></code> <code class="parameterName">process</code>)</code><i class="I"><code>void</code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>kiss.Disposable</code></code></code> <code>process</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Execute task in UI thread.</p>
 					</span></section>
-				<section class="J" id="isActive()">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">isActive</code><code class="P">()</code><i class="b"><code>boolean</code></i></h2>
-					<table class="Q">
-						<tr class="M">
+				<section class="M" id="isActive()">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">isActive</code><code class="b">()</code><i class="I"><code>boolean</code></i></h2>
+					<table class="R">
+						<tr class="T">
 							<td><code>boolean</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Check wheterh JavaFX is initialized or not.</p>
 					</span></section>
-				<section class="J" id="dialog(java.lang.String,java.lang.Class,java.util.function.Function)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">dialog</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>R</code></code></code> <code class="parameterName">converter</code>)</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code>R</code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="dialog(java.lang.String,java.lang.Class,java.util.function.Function)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">dialog</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>R</code></code></code> <code class="parameterName">converter</code>)</code><i class="I"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code>R</code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>V</code><code class="extends"><code><a href="api/viewtify.ui.View.html">View</a></code></code></td>
 							<td></td>
 						</tr>
-						<tr class="f">
+						<tr class="V">
 							<td><code>R</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code> <code>type</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>R</code></code></code> <code>converter</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code>R</code></code></code></td>
 							<td></td>
 						</tr>
-					</table>
-				</section>
-				<section class="J" id="dialogText(java.lang.String)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">dialogText</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+					</table><span class="B"><p>Show the user custom dialog.</p>
+					</span></section>
+				<section class="M" id="dialogConfirm(java.lang.String)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">dialogConfirm</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="I"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Show the confirm dialog.</p>
+					</span></section>
+				<section class="M" id="dialogText(java.lang.String)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">dialogText</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="I"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
+							<td></td>
+						</tr>
+						<tr class="T">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Show the text input dialog.</p>
 					</span></section>
-				<section class="J" id="dialogText(java.lang.String,kiss.Variable)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">dialogText</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">initialText</code>)</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="dialogText(java.lang.String,kiss.Variable)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">dialogText</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">initialText</code>)</code><i class="I"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code>initialText</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Show the text input dialog.</p>
 					</span></section>
-				<section class="J" id="dialogText(java.lang.String,java.lang.String)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">dialogText</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">initialText</code>)</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="dialogText(java.lang.String,java.lang.String)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">dialogText</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">initialText</code>)</code><i class="I"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>initialText</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Show the text input dialog.</p>
 					</span></section>
-				<section class="J" id="manage(java.lang.String,javafx.scene.Scene,boolean)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">manage</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>, <code><a href="api/javafx.scene.Scene.html">Scene</a></code> <code class="parameterName">scene</code>, <code>boolean</code> <code class="parameterName">untrackable</code>)</code><i class="b"><code>void</code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="manage(java.lang.String,javafx.scene.Scene,boolean)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">manage</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>, <code><a href="api/javafx.scene.Scene.html">Scene</a></code> <code class="parameterName">scene</code>, <code>boolean</code> <code class="parameterName">untrackable</code>)</code><i class="I"><code>void</code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>id</code></td>
 							<td><span><p>An identical name of the window.</p>
 								</span></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code><a href="api/javafx.scene.Scene.html">Scene</a></code> <code>scene</code></td>
 							<td><span><p>A target window to manage.</p>
 								</span></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>boolean</code> <code>untrackable</code></td>
 							<td><span><p>Window tracking state.</p>
 								</span></td>
@@ -358,549 +371,550 @@
  upcoming modification. Apply the application styles (design, icon etc) to the specified
  window.</p>
 					</span></section>
-				<section class="J" id="observe(javafx.beans.binding.IntegerExpression)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observe</code><code class="P">(<code>javafx.beans.binding.IntegerExpression</code> <code class="parameterName">value</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="observe(javafx.beans.binding.IntegerExpression)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observe</code><code class="b">(<code>javafx.beans.binding.IntegerExpression</code> <code class="parameterName">value</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code>javafx.beans.binding.IntegerExpression</code> <code>value</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Signal value changing.</p>
 					</span></section>
-				<section class="J" id="observe(javafx.beans.binding.LongExpression)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observe</code><code class="P">(<code>javafx.beans.binding.LongExpression</code> <code class="parameterName">value</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="observe(javafx.beans.binding.LongExpression)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observe</code><code class="b">(<code>javafx.beans.binding.LongExpression</code> <code class="parameterName">value</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code>javafx.beans.binding.LongExpression</code> <code>value</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Signal value changing.</p>
 					</span></section>
-				<section class="J" id="observe(javafx.beans.binding.FloatExpression)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observe</code><code class="P">(<code>javafx.beans.binding.FloatExpression</code> <code class="parameterName">value</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Float.html">Float</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="observe(javafx.beans.binding.FloatExpression)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observe</code><code class="b">(<code>javafx.beans.binding.FloatExpression</code> <code class="parameterName">value</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Float.html">Float</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code>javafx.beans.binding.FloatExpression</code> <code>value</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Float.html">Float</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Signal value changing.</p>
 					</span></section>
-				<section class="J" id="observe(javafx.beans.binding.DoubleExpression)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observe</code><code class="P">(<code>javafx.beans.binding.DoubleExpression</code> <code class="parameterName">value</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="observe(javafx.beans.binding.DoubleExpression)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observe</code><code class="b">(<code>javafx.beans.binding.DoubleExpression</code> <code class="parameterName">value</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code>javafx.beans.binding.DoubleExpression</code> <code>value</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Signal value changing.</p>
 					</span></section>
-				<section class="J" id="observe(javafx.beans.value.ObservableValue)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observe</code><code class="P">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">value</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observe(javafx.beans.value.ObservableValue)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observe</code><code class="b">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">value</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code>value</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Signal value changing.</p>
 					</span></section>
-				<section class="J" id="observe(javafx.beans.value.ObservableValue...)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observe</code><code class="P">(<code array="var">javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">values</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observe(javafx.beans.value.ObservableValue...)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observe</code><code class="b">(<code array="var">javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">values</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code array="var">javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code>values</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Signal value changing.</p>
 					</span></section>
-				<section class="J" id="observe(javafx.beans.property.ObjectProperty,java.lang.Object)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observe</code><code class="P">(<code>javafx.beans.property.ObjectProperty<code class="parameters"><code>javafx.event.EventHandler<code class="parameters"><code>javafx.event.Event</code></code></code></code></code> <code class="parameterName">eventHandlerProperty</code>, <code>T</code> <code class="parameterName">eventValue</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observe(javafx.beans.property.ObjectProperty,java.lang.Object)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observe</code><code class="b">(<code>javafx.beans.property.ObjectProperty<code class="parameters"><code>javafx.event.EventHandler<code class="parameters"><code>javafx.event.Event</code></code></code></code></code> <code class="parameterName">eventHandlerProperty</code>, <code>T</code> <code class="parameterName">eventValue</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.beans.property.ObjectProperty<code class="parameters"><code>javafx.event.EventHandler<code class="parameters"><code>javafx.event.Event</code></code></code></code></code> <code>eventHandlerProperty</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>T</code> <code>eventValue</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Build event signal.</p>
 					</span></section>
-				<section class="J" id="observe(javafx.collections.ObservableSet)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observe</code><code class="P">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observe(javafx.collections.ObservableSet)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observe</code><code class="b">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>E</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code>set</code></td>
 							<td><span><p>A set to observe its modification.</p>
 								</span></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code></code></code></td>
 							<td><span><p>A modification stream.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Observe set change evnet.</p>
 					</span></section>
-				<section class="J" id="observe(javafx.collections.ObservableList)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observe</code><code class="P">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observe(javafx.collections.ObservableList)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observe</code><code class="b">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>E</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code>list</code></td>
 							<td><span><p>A list to observe its modification.</p>
 								</span></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></code></code></td>
 							<td><span><p>A modification stream.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Observe list change evnet.</p>
 					</span></section>
-				<section class="J" id="observe(javafx.collections.ObservableMap)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observe</code><code class="P">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observe(javafx.collections.ObservableMap)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observe</code><code class="b">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>K</code></td>
 							<td></td>
 						</tr>
-						<tr class="f">
+						<tr class="V">
 							<td><code>V</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code>map</code></td>
 							<td><span><p>A map to observe its modification.</p>
 								</span></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code></code></code></td>
 							<td><span><p>A modification stream.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Observe map change evnet.</p>
 					</span></section>
-				<section class="J" id="observing(javafx.collections.ObservableSet)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observing</code><code class="P">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observing(javafx.collections.ObservableSet)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observing</code><code class="b">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>E</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code>set</code></td>
 							<td><span><p>A set to observe its modification.</p>
 								</span></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code></code></code></td>
 							<td><span><p>A modification stream.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Observe set change evnet.</p>
 					</span></section>
-				<section class="J" id="observing(javafx.collections.ObservableList)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observing</code><code class="P">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observing(javafx.collections.ObservableList)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observing</code><code class="b">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>E</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code>list</code></td>
 							<td><span><p>A list to observe its modification.</p>
 								</span></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></code></code></td>
 							<td><span><p>A modification stream.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Observe list change evnet.</p>
 					</span></section>
-				<section class="J" id="observing(javafx.collections.ObservableMap)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observing</code><code class="P">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observing(javafx.collections.ObservableMap)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observing</code><code class="b">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>K</code></td>
 							<td></td>
 						</tr>
-						<tr class="f">
+						<tr class="V">
 							<td><code>V</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code>map</code></td>
 							<td><span><p>A map to observe its modification.</p>
 								</span></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code></code></code></td>
 							<td><span><p>A modification stream.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Observe map change evnet.</p>
 					</span></section>
-				<section class="J" id="observing(javafx.beans.binding.IntegerExpression)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observing</code><code class="P">(<code>javafx.beans.binding.IntegerExpression</code> <code class="parameterName">value</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="observing(javafx.beans.binding.IntegerExpression)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observing</code><code class="b">(<code>javafx.beans.binding.IntegerExpression</code> <code class="parameterName">value</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code>javafx.beans.binding.IntegerExpression</code> <code>value</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Signal value changing.</p>
 					</span></section>
-				<section class="J" id="observing(javafx.beans.binding.LongExpression)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observing</code><code class="P">(<code>javafx.beans.binding.LongExpression</code> <code class="parameterName">value</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="observing(javafx.beans.binding.LongExpression)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observing</code><code class="b">(<code>javafx.beans.binding.LongExpression</code> <code class="parameterName">value</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code>javafx.beans.binding.LongExpression</code> <code>value</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Signal value changing.</p>
 					</span></section>
-				<section class="J" id="observing(javafx.beans.binding.FloatExpression)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observing</code><code class="P">(<code>javafx.beans.binding.FloatExpression</code> <code class="parameterName">value</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Float.html">Float</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="observing(javafx.beans.binding.FloatExpression)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observing</code><code class="b">(<code>javafx.beans.binding.FloatExpression</code> <code class="parameterName">value</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Float.html">Float</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code>javafx.beans.binding.FloatExpression</code> <code>value</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Float.html">Float</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Signal value changing.</p>
 					</span></section>
-				<section class="J" id="observing(javafx.beans.binding.DoubleExpression)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observing</code><code class="P">(<code>javafx.beans.binding.DoubleExpression</code> <code class="parameterName">value</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="observing(javafx.beans.binding.DoubleExpression)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observing</code><code class="b">(<code>javafx.beans.binding.DoubleExpression</code> <code class="parameterName">value</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code>javafx.beans.binding.DoubleExpression</code> <code>value</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Signal value changing.</p>
 					</span></section>
-				<section class="J" id="observing(javafx.beans.value.ObservableValue)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observing</code><code class="P">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">value</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observing(javafx.beans.value.ObservableValue)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observing</code><code class="b">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">value</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code>value</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Signal value changing.</p>
 					</span></section>
-				<section class="J" id="observeChange(javafx.collections.ObservableSet)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observeChange</code><code class="P">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>javafx.collections.SetChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observeChange(javafx.collections.ObservableSet)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observeChange</code><code class="b">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>javafx.collections.SetChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>E</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code>set</code></td>
 							<td><span><p>A set to observe its modification.</p>
 								</span></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>javafx.collections.SetChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code></code></code></td>
 							<td><span><p>A modification event stream.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Observe set change evnet.</p>
 					</span></section>
-				<section class="J" id="observeChange(javafx.collections.ObservableList)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observeChange</code><code class="P">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ListChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observeChange(javafx.collections.ObservableList)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observeChange</code><code class="b">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ListChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>E</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code>list</code></td>
 							<td><span><p>A set to observe its modification.</p>
 								</span></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>javafx.collections.ListChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code></code></code></td>
 							<td><span><p>A modification event stream.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Observe list change evnet.</p>
 					</span></section>
-				<section class="J" id="observeChange(javafx.collections.ObservableMap)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">observeChange</code><code class="P">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code>javafx.collections.MapChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>K</code></code>, <code>?</code><code class="extends"><code>V</code></code></code></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="observeChange(javafx.collections.ObservableMap)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">observeChange</code><code class="b">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code>javafx.collections.MapChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>K</code></code>, <code>?</code><code class="extends"><code>V</code></code></code></code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>K</code></td>
 							<td></td>
 						</tr>
-						<tr class="f">
+						<tr class="V">
 							<td><code>V</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code>map</code></td>
 							<td><span><p>A map to observe its modification.</p>
 								</span></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code>javafx.collections.MapChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>K</code></code>, <code>?</code><code class="extends"><code>V</code></code></code></code></code></code></td>
 							<td><span><p>A modification event stream.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Observe map change evnet.</p>
 					</span></section>
-				<section class="J" id="property(kiss.Variable)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">property</code><code class="P">(<code>kiss.Variable<code class="parameters"><code>T</code></code></code> <code class="parameterName">variable</code>)</code><i class="b"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="property(kiss.Variable)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">property</code><code class="b">(<code>kiss.Variable<code class="parameters"><code>T</code></code></code> <code class="parameterName">variable</code>)</code><i class="I"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>kiss.Variable<code class="parameters"><code>T</code></code></code> <code>variable</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Create the wrapped property of the specified Variable.</p>
 					</span></section>
-				<section class="J" id="propertyForUI(kiss.Variable)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">propertyForUI</code><code class="P">(<code>kiss.Variable<code class="parameters"><code>T</code></code></code> <code class="parameterName">variable</code>)</code><i class="b"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="propertyForUI(kiss.Variable)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">propertyForUI</code><code class="b">(<code>kiss.Variable<code class="parameters"><code>T</code></code></code> <code class="parameterName">variable</code>)</code><i class="I"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>kiss.Variable<code class="parameters"><code>T</code></code></code> <code>variable</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Create the wrapped UI property of the specified Variable.</p>
 					</span></section>
-				<section class="J" id="isNull(viewtify.ui.helper.ValueHelper,viewtify.ui.helper.ValueHelper...)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">isNull</code><code class="P">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">base</code>, <code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">values</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="isNull(viewtify.ui.helper.ValueHelper,viewtify.ui.helper.ValueHelper...)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">isNull</code><code class="b">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">base</code>, <code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">values</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code>base</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code>values</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Combine conditional state.</p>
 					</span></section>
-				<section class="J" id="isNullAny(viewtify.ui.helper.ValueHelper,viewtify.ui.helper.ValueHelper...)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">isNullAny</code><code class="P">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">base</code>, <code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">values</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="a">
+				<section class="M" id="isNullAny(viewtify.ui.helper.ValueHelper,viewtify.ui.helper.ValueHelper...)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">isNullAny</code><code class="b">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">base</code>, <code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">values</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="k">
 							<td><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code>base</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code>values</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Combine conditional state.</p>
 					</span></section>
-				<section class="J" id="is(java.util.function.Function,java.lang.Object,java.lang.Object...)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">is</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></code></code> <code class="parameterName">state</code>, <code>V</code> <code class="parameterName">base</code>, <code array="var">V</code> <code class="parameterName">values</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="is(java.util.function.Function,java.lang.Object,java.lang.Object...)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">is</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></code></code> <code class="parameterName">state</code>, <code>V</code> <code class="parameterName">base</code>, <code array="var">V</code> <code class="parameterName">values</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>V</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></code></code> <code>state</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>V</code> <code>base</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code array="var">V</code> <code>values</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Combine conditional state.</p>
 					</span></section>
-				<section class="J" id="any(java.util.function.Function,java.lang.Object,java.lang.Object...)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="T">any</code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></code></code> <code class="parameterName">state</code>, <code>V</code> <code class="parameterName">base</code>, <code array="var">V</code> <code class="parameterName">values</code>)</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
-					<table class="Q">
-						<tr class="f">
+				<section class="M" id="any(java.util.function.Function,java.lang.Object,java.lang.Object...)">
+					<h2 class="U"><i class="PUBLIC STATIC"></i><code class="S">any</code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></code></code> <code class="parameterName">state</code>, <code>V</code> <code class="parameterName">base</code>, <code array="var">V</code> <code class="parameterName">values</code>)</code><i class="I"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
+					<table class="R">
+						<tr class="V">
 							<td><code>V</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></code></code> <code>state</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code>V</code> <code>base</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
+						<tr class="k">
 							<td><code array="var">V</code> <code>values</code></td>
 							<td></td>
 						</tr>
-						<tr class="M">
+						<tr class="T">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Combine conditional state.</p>
 					</span></section>
 			</article>
-			<aside class="h" id="SubNavi">
-				<div class="I">
-					<h5 class="U">Static Fields</h5>
+			<aside class="L" id="SubNavi">
+				<div class="P">
+					<h5 class="Z">Static Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.Viewtify.html#Terminator">Terminator</a></code><i class="Z"><code class="return">kiss.Disposable</code></i></li>
-						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.Viewtify.html#UIThread">UIThread</a></code><i class="Z"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.Viewtify.html#WorkerThread">WorkerThread</a></code><i class="Z"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.Viewtify.html#Terminator">Terminator</a></code><i class="c"><code class="return">kiss.Disposable</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.Viewtify.html#UIThread">UIThread</a></code><i class="c"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.Viewtify.html#WorkerThread">WorkerThread</a></code><i class="c"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code></code></code></i></li>
 					</ul>
-					<h5 class="U">Static Methods</h5>
+					<h5 class="Z">Static Methods</h5>
 					<ul>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#inHeadless()">inHeadless</a></code><code class="P">()</code><i class="Z"><code>void</code></i></li>
-						<li><i class="SYNCHRONIZED"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.Viewtify.html#application()">application</a></code><code class="P">()</code><i class="Z"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
-						<li><i class="SYNCHRONIZED"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.Viewtify.html#browser(java.util.function.Consumer)">browser</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></code></code> <code class="parameterName">browser</code>)</code><i class="Z"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.Viewtify.html#inWorker(java.lang.Runnable)">inWorker</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">process</code>)</code><i class="Z"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.Viewtify.html#inWorker(java.util.function.Supplier)">inWorker</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>kiss.Disposable</code></code></code> <code class="parameterName">process</code>)</code><i class="Z"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.Viewtify.html#inUI(java.lang.Runnable)">inUI</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">process</code>)</code><i class="Z"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.Viewtify.html#inUI(java.util.function.Supplier)">inUI</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>kiss.Disposable</code></code></code> <code class="parameterName">process</code>)</code><i class="Z"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#isActive()">isActive</a></code><code class="P">()</code><i class="Z"><code>boolean</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#dialog(java.lang.String,java.lang.Class,java.util.function.Function)">dialog</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>R</code></code></code> <code class="parameterName">converter</code>)</code><i class="Z"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code>R</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#dialogText(java.lang.String)">dialogText</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="Z"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#dialogText(java.lang.String,kiss.Variable)">dialogText</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">initialText</code>)</code><i class="Z"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#dialogText(java.lang.String,java.lang.String)">dialogText</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">initialText</code>)</code><i class="Z"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#manage(java.lang.String,javafx.scene.Scene,boolean)">manage</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>, <code><a href="api/javafx.scene.Scene.html">Scene</a></code> <code class="parameterName">scene</code>, <code>boolean</code> <code class="parameterName">untrackable</code>)</code><i class="Z"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.binding.IntegerExpression)">observe</a></code><code class="P">(<code>javafx.beans.binding.IntegerExpression</code> <code class="parameterName">value</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.binding.LongExpression)">observe</a></code><code class="P">(<code>javafx.beans.binding.LongExpression</code> <code class="parameterName">value</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.binding.FloatExpression)">observe</a></code><code class="P">(<code>javafx.beans.binding.FloatExpression</code> <code class="parameterName">value</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Float.html">Float</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.binding.DoubleExpression)">observe</a></code><code class="P">(<code>javafx.beans.binding.DoubleExpression</code> <code class="parameterName">value</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.value.ObservableValue)">observe</a></code><code class="P">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">value</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.value.ObservableValue...)">observe</a></code><code class="P">(<code array="var">javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">values</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.property.ObjectProperty,java.lang.Object)">observe</a></code><code class="P">(<code>javafx.beans.property.ObjectProperty<code class="parameters"><code>javafx.event.EventHandler<code class="parameters"><code>javafx.event.Event</code></code></code></code></code> <code class="parameterName">eventHandlerProperty</code>, <code>T</code> <code class="parameterName">eventValue</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.collections.ObservableSet)">observe</a></code><code class="P">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.collections.ObservableList)">observe</a></code><code class="P">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.collections.ObservableMap)">observe</a></code><code class="P">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.collections.ObservableSet)">observing</a></code><code class="P">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.collections.ObservableList)">observing</a></code><code class="P">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.collections.ObservableMap)">observing</a></code><code class="P">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.beans.binding.IntegerExpression)">observing</a></code><code class="P">(<code>javafx.beans.binding.IntegerExpression</code> <code class="parameterName">value</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.beans.binding.LongExpression)">observing</a></code><code class="P">(<code>javafx.beans.binding.LongExpression</code> <code class="parameterName">value</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.beans.binding.FloatExpression)">observing</a></code><code class="P">(<code>javafx.beans.binding.FloatExpression</code> <code class="parameterName">value</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Float.html">Float</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.beans.binding.DoubleExpression)">observing</a></code><code class="P">(<code>javafx.beans.binding.DoubleExpression</code> <code class="parameterName">value</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.beans.value.ObservableValue)">observing</a></code><code class="P">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">value</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observeChange(javafx.collections.ObservableSet)">observeChange</a></code><code class="P">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>javafx.collections.SetChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observeChange(javafx.collections.ObservableList)">observeChange</a></code><code class="P">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ListChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#observeChange(javafx.collections.ObservableMap)">observeChange</a></code><code class="P">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code>javafx.collections.MapChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>K</code></code>, <code>?</code><code class="extends"><code>V</code></code></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#property(kiss.Variable)">property</a></code><code class="P">(<code>kiss.Variable<code class="parameters"><code>T</code></code></code> <code class="parameterName">variable</code>)</code><i class="Z"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#propertyForUI(kiss.Variable)">propertyForUI</a></code><code class="P">(<code>kiss.Variable<code class="parameters"><code>T</code></code></code> <code class="parameterName">variable</code>)</code><i class="Z"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#isNull(viewtify.ui.helper.ValueHelper,viewtify.ui.helper.ValueHelper...)">isNull</a></code><code class="P">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">base</code>, <code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">values</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#isNullAny(viewtify.ui.helper.ValueHelper,viewtify.ui.helper.ValueHelper...)">isNullAny</a></code><code class="P">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">base</code>, <code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">values</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#is(java.util.function.Function,java.lang.Object,java.lang.Object...)">is</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></code></code> <code class="parameterName">state</code>, <code>V</code> <code class="parameterName">base</code>, <code array="var">V</code> <code class="parameterName">values</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#any(java.util.function.Function,java.lang.Object,java.lang.Object...)">any</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></code></code> <code class="parameterName">state</code>, <code>V</code> <code class="parameterName">base</code>, <code array="var">V</code> <code class="parameterName">values</code>)</code><i class="Z"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#inHeadless()">inHeadless</a></code><code class="b">()</code><i class="c"><code>void</code></i></li>
+						<li><i class="SYNCHRONIZED"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.Viewtify.html#application()">application</a></code><code class="b">()</code><i class="c"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
+						<li><i class="SYNCHRONIZED"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.Viewtify.html#browser(java.util.function.Consumer)">browser</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></code></code> <code class="parameterName">browser</code>)</code><i class="c"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.Viewtify.html#inWorker(java.lang.Runnable)">inWorker</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">process</code>)</code><i class="c"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.Viewtify.html#inWorker(java.util.function.Supplier)">inWorker</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>kiss.Disposable</code></code></code> <code class="parameterName">process</code>)</code><i class="c"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.Viewtify.html#inUI(java.lang.Runnable)">inUI</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">process</code>)</code><i class="c"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.Viewtify.html#inUI(java.util.function.Supplier)">inUI</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>kiss.Disposable</code></code></code> <code class="parameterName">process</code>)</code><i class="c"><code>void</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#isActive()">isActive</a></code><code class="b">()</code><i class="c"><code>boolean</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#dialog(java.lang.String,java.lang.Class,java.util.function.Function)">dialog</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>R</code></code></code> <code class="parameterName">converter</code>)</code><i class="c"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code>R</code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#dialogConfirm(java.lang.String)">dialogConfirm</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="c"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#dialogText(java.lang.String)">dialogText</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="c"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#dialogText(java.lang.String,kiss.Variable)">dialogText</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">initialText</code>)</code><i class="c"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#dialogText(java.lang.String,java.lang.String)">dialogText</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">initialText</code>)</code><i class="c"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#manage(java.lang.String,javafx.scene.Scene,boolean)">manage</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">id</code>, <code><a href="api/javafx.scene.Scene.html">Scene</a></code> <code class="parameterName">scene</code>, <code>boolean</code> <code class="parameterName">untrackable</code>)</code><i class="c"><code>void</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.binding.IntegerExpression)">observe</a></code><code class="b">(<code>javafx.beans.binding.IntegerExpression</code> <code class="parameterName">value</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.binding.LongExpression)">observe</a></code><code class="b">(<code>javafx.beans.binding.LongExpression</code> <code class="parameterName">value</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.binding.FloatExpression)">observe</a></code><code class="b">(<code>javafx.beans.binding.FloatExpression</code> <code class="parameterName">value</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Float.html">Float</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.binding.DoubleExpression)">observe</a></code><code class="b">(<code>javafx.beans.binding.DoubleExpression</code> <code class="parameterName">value</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.value.ObservableValue)">observe</a></code><code class="b">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">value</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.value.ObservableValue...)">observe</a></code><code class="b">(<code array="var">javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">values</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.beans.property.ObjectProperty,java.lang.Object)">observe</a></code><code class="b">(<code>javafx.beans.property.ObjectProperty<code class="parameters"><code>javafx.event.EventHandler<code class="parameters"><code>javafx.event.Event</code></code></code></code></code> <code class="parameterName">eventHandlerProperty</code>, <code>T</code> <code class="parameterName">eventValue</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.collections.ObservableSet)">observe</a></code><code class="b">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.collections.ObservableList)">observe</a></code><code class="b">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observe(javafx.collections.ObservableMap)">observe</a></code><code class="b">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.collections.ObservableSet)">observing</a></code><code class="b">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.collections.ObservableList)">observing</a></code><code class="b">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.collections.ObservableMap)">observing</a></code><code class="b">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.beans.binding.IntegerExpression)">observing</a></code><code class="b">(<code>javafx.beans.binding.IntegerExpression</code> <code class="parameterName">value</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.beans.binding.LongExpression)">observing</a></code><code class="b">(<code>javafx.beans.binding.LongExpression</code> <code class="parameterName">value</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Long.html">Long</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.beans.binding.FloatExpression)">observing</a></code><code class="b">(<code>javafx.beans.binding.FloatExpression</code> <code class="parameterName">value</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Float.html">Float</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.beans.binding.DoubleExpression)">observing</a></code><code class="b">(<code>javafx.beans.binding.DoubleExpression</code> <code class="parameterName">value</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observing(javafx.beans.value.ObservableValue)">observing</a></code><code class="b">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">value</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observeChange(javafx.collections.ObservableSet)">observeChange</a></code><code class="b">(<code>javafx.collections.ObservableSet<code class="parameters"><code>E</code></code></code> <code class="parameterName">set</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>javafx.collections.SetChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observeChange(javafx.collections.ObservableList)">observeChange</a></code><code class="b">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code> <code class="parameterName">list</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>javafx.collections.ListChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#observeChange(javafx.collections.ObservableMap)">observeChange</a></code><code class="b">(<code>javafx.collections.ObservableMap<code class="parameters"><code>K</code>, <code>V</code></code></code> <code class="parameterName">map</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code>javafx.collections.MapChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>K</code></code>, <code>?</code><code class="extends"><code>V</code></code></code></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#property(kiss.Variable)">property</a></code><code class="b">(<code>kiss.Variable<code class="parameters"><code>T</code></code></code> <code class="parameterName">variable</code>)</code><i class="c"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#propertyForUI(kiss.Variable)">propertyForUI</a></code><code class="b">(<code>kiss.Variable<code class="parameters"><code>T</code></code></code> <code class="parameterName">variable</code>)</code><i class="c"><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#isNull(viewtify.ui.helper.ValueHelper,viewtify.ui.helper.ValueHelper...)">isNull</a></code><code class="b">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">base</code>, <code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">values</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#isNullAny(viewtify.ui.helper.ValueHelper,viewtify.ui.helper.ValueHelper...)">isNullAny</a></code><code class="b">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">base</code>, <code array="var"><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code> <code class="parameterName">values</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#is(java.util.function.Function,java.lang.Object,java.lang.Object...)">is</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></code></code> <code class="parameterName">state</code>, <code>V</code> <code class="parameterName">base</code>, <code array="var">V</code> <code class="parameterName">values</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.Viewtify.html#any(java.util.function.Function,java.lang.Object,java.lang.Object...)">any</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></code></code> <code class="parameterName">state</code>, <code>V</code> <code class="parameterName">base</code>, <code array="var">V</code> <code class="parameterName">values</code>)</code><i class="c"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
 					</ul>
-					<h5 class="U">Methods</h5>
+					<h5 class="Z">Methods</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#onTerminating(java.lang.Runnable)">onTerminating</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">termination</code>)</code><i class="Z"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#use(viewtify.ActivationPolicy)">use</a></code><code class="P">(<code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code> <code class="parameterName">policy</code>)</code><i class="Z"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#use(javafx.stage.StageStyle)">use</a></code><code class="P">(<code>javafx.stage.StageStyle</code> <code class="parameterName">style</code>)</code><i class="Z"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#use(viewtify.Theme)">use</a></code><code class="P">(<code><a href="api/viewtify.Theme.html">Theme</a></code> <code class="parameterName">theme</code>)</code><i class="Z"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#icon(java.lang.String)">icon</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">pathToIcon</code>)</code><i class="Z"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#title(java.lang.String)">title</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">title</code>)</code><i class="Z"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#size(double,double)">size</a></code><code class="P">(<code>double</code> <code class="parameterName">width</code>, <code>double</code> <code class="parameterName">height</code>)</code><i class="Z"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#error(java.util.function.BiConsumer)">error</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code></code></code> <code class="parameterName">errorHandler</code>)</code><i class="Z"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#activate(java.lang.Class)">activate</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code></code> <code class="parameterName">applicationClass</code>)</code><i class="Z"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#activate(java.lang.Class,java.util.function.Consumer)">activate</a></code><code class="P">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code>V</code></code></code></code> <code class="parameterName">applicationClass</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">view</code>)</code><i class="Z"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#deactivate()">deactivate</a></code><code class="P">()</code><i class="Z"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#reactivate()">reactivate</a></code><code class="P">()</code><i class="Z"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#onTerminating(java.lang.Runnable)">onTerminating</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">termination</code>)</code><i class="c"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#use(viewtify.ActivationPolicy)">use</a></code><code class="b">(<code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code> <code class="parameterName">policy</code>)</code><i class="c"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#use(javafx.stage.StageStyle)">use</a></code><code class="b">(<code>javafx.stage.StageStyle</code> <code class="parameterName">style</code>)</code><i class="c"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#use(viewtify.Theme)">use</a></code><code class="b">(<code><a href="api/viewtify.Theme.html">Theme</a></code> <code class="parameterName">theme</code>)</code><i class="c"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#icon(java.lang.String)">icon</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">pathToIcon</code>)</code><i class="c"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#title(java.lang.String)">title</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">title</code>)</code><i class="c"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#size(double,double)">size</a></code><code class="b">(<code>double</code> <code class="parameterName">width</code>, <code>double</code> <code class="parameterName">height</code>)</code><i class="c"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#error(java.util.function.BiConsumer)">error</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code></code></code> <code class="parameterName">errorHandler</code>)</code><i class="c"><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#activate(java.lang.Class)">activate</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/viewtify.ui.View.html">View</a></code></code></code></code> <code class="parameterName">applicationClass</code>)</code><i class="c"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#activate(java.lang.Class,java.util.function.Consumer)">activate</a></code><code class="b">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code>V</code></code></code></code> <code class="parameterName">applicationClass</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">view</code>)</code><i class="c"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#deactivate()">deactivate</a></code><code class="b">()</code><i class="c"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.Viewtify.html#reactivate()">reactivate</a></code><code class="b">()</code><i class="c"><code>void</code></i></li>
 					</ul>
 				</div>
 			</aside>
