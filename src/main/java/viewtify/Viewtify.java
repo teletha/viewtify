@@ -43,8 +43,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -76,6 +74,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -761,10 +762,10 @@ public final class Viewtify {
         Alert dialog = new Alert(AlertType.CONFIRMATION);
         dialog.initOwner(mainStage);
         dialog.setHeaderText(null);
-        dialog.setTitle(message);
-        dialog.setGraphic(null);
+        dialog.setContentText(message);
+        dialog.setTitle(null);
         dialog.getDialogPane().setPrefWidth(300);
-        return dialog.showAndWait();
+        return dialog.showAndWait().map(button -> button == ButtonType.OK);
     }
 
     /**
