@@ -15,6 +15,7 @@ const root = {
 		"viewtify.ui.helper",
 		"viewtify.ui.query",
 		"viewtify.ui.toast",
+		"viewtify.ui.view",
 		"viewtify.util"
 	],
 	"types": [
@@ -136,6 +137,13 @@ const root = {
 			"name": "Corner",
 			"packageName": "viewtify.util",
 			"type": "Enum"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "DecorationHelper",
+			"packageName": "viewtify.ui.helper",
+			"type": "Functional"
 		},
 		{
 			"modifiers": {
@@ -304,6 +312,13 @@ const root = {
 			"name": "Model.LongPreference",
 			"packageName": "viewtify.model",
 			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "ModelPropertySheet",
+			"packageName": "viewtify.ui.view",
+			"type": "AbstractClass"
 		},
 		{
 			"modifiers": {
