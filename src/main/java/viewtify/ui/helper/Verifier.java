@@ -118,6 +118,25 @@ public class Verifier {
     }
 
     /**
+     * @param other
+     * @return
+     */
+    public Verifier merge(VerifyHelper<?> other) {
+        Verifier merger = new Verifier();
+        message.observing().combineLatest(other.verifier().message.observing()).to(x -> {
+            if (x.ⅰ != null && !x.ⅰ.isEmpty()) {
+
+            }
+
+            if (x.ⅰ == null || x.ⅰ.isEmpty()) {
+
+            }
+        });
+
+        return merger;
+    }
+
+    /**
      * Builtin verifier.
      */
     public static final WiseConsumer<ValueHelper<?, String>> Number = ui -> {

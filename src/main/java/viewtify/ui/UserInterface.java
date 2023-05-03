@@ -18,17 +18,10 @@ import java.util.function.Consumer;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import org.controlsfx.control.decoration.Decorator;
-import org.controlsfx.control.decoration.GraphicDecoration;
 
 import kiss.I;
 import kiss.Managed;
@@ -39,6 +32,7 @@ import kiss.model.Model;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
+import viewtify.ui.helper.DecorationHelper;
 import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.PropertyAccessHelper;
 import viewtify.ui.helper.ReferenceHolder;
@@ -54,7 +48,7 @@ import viewtify.util.Icon;
 
 public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> extends ReferenceHolder
         implements UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, TooltipHelper<Self, W>, UserInterfaceProvider<W>,
-        PropertyAccessHelper, VerifyHelper<Self>, VisibleHelper<Self> {
+        PropertyAccessHelper, VerifyHelper<Self>, VisibleHelper<Self>, DecorationHelper<Self> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
@@ -198,59 +192,6 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
             if (!n) action.run();
         });
         return (Self) this;
-    }
-
-    /**
-     * Mark as valid interface.
-     * 
-     * @return
-     */
-    public final Self decorateBy(Icon icon) {
-        decorateBy(icon, null);
-
-        return (Self) this;
-    }
-
-    /**
-     * Decorate this ui by the specified icon.
-     * 
-     * @param icon
-     * @param message
-     */
-    private final void decorateBy(Icon icon, String message) {
-        I.signal(Decorator.getDecorations(ui))
-                .take(GraphicDecoration.class::isInstance)
-                .take(1)
-                .on(Viewtify.UIThread)
-                .to(deco -> Decorator.removeDecoration(ui, deco), e -> {
-
-                }, () -> {
-                    Label label = new Label();
-                    label.setGraphic(icon.image());
-                    label.setAlignment(Pos.CENTER);
-
-                    if (message != null && !message.isEmpty()) {
-                        Tooltip tooltip = new Tooltip(message);
-                        tooltip.setAutoFix(true);
-                        tooltip.setShowDelay(Duration.ZERO);
-                        tooltip.setShowDuration(Duration.INDEFINITE);
-                        StyleHelper.of(tooltip).style(Styles.ValidationToolTip);
-                        label.setTooltip(tooltip);
-                    }
-
-                    Decorator.addDecoration(ui, new GraphicDecoration(label, Pos.TOP_LEFT, 4, 4));
-                });
-    }
-
-    /**
-     * Undecorate all icons.
-     */
-    private final void undecorate() {
-        I.signal(Decorator.getDecorations(ui))
-                .take(GraphicDecoration.class::isInstance)
-                .take(1)
-                .on(Viewtify.UIThread)
-                .to(deco -> Decorator.removeDecoration(ui, deco));
     }
 
     /**

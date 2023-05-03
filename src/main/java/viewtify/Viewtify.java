@@ -43,8 +43,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -76,6 +74,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -95,6 +96,7 @@ import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.ValueHelper;
+import viewtify.ui.helper.VerifyHelper;
 
 public final class Viewtify {
 
@@ -723,32 +725,10 @@ public final class Viewtify {
      * @param <R>
      * @param message
      * @param type
-     * @param converter
      * @return
      */
-    public static <V extends View, R> Optional<R> dialog(String message, Class<V> type, Function<V, R> converter) {
-        V view = I.make(type);
-        Node ui = view.ui();
-
-        Alert dialog = new Alert(AlertType.CONFIRMATION);
-        dialog.initOwner(mainStage);
-        dialog.setHeaderText(null);
-        dialog.setTitle(message);
-        dialog.setGraphic(null);
-        dialog.getDialogPane().setContent(ui);
-
-        Node buttonOK = dialog.getDialogPane().lookupButton(ButtonType.OK);
-        view.findUI(ValueHelper.class).to(helper -> {
-            helper.observing().to(value -> {
-                try {
-                    buttonOK.setDisable(converter.apply(view) == null);
-                } catch (Throwable e) {
-                    buttonOK.setDisable(true);
-                }
-            });
-        });
-
-        return dialog.showAndWait().map(b -> b == ButtonType.OK ? converter.apply(view) : null);
+    public static <V extends View & ValueHelper<V, R> & VerifyHelper<V>, R> Optional<R> dialog(String message, Class<V> type) {
+        return dialog(message, type, null);
     }
 
     /**
@@ -758,13 +738,12 @@ public final class Viewtify {
      * @param <R>
      * @param message
      * @param type
-     * @param converter
      * @return
      */
-    public static <V extends View, R> Optional<R> dialog(String message, Class<V> type, Consumer<V> init, Function<V, R> converter) {
+    public static <V extends View & ValueHelper<V, R> & VerifyHelper<V>, R> Optional<R> dialog(String message, Class<V> type, R value) {
         V view = I.make(type);
         Node ui = view.ui();
-        init.accept(view);
+        view.value(value);
 
         Alert dialog = new Alert(AlertType.CONFIRMATION);
         dialog.initOwner(mainStage);
@@ -774,17 +753,9 @@ public final class Viewtify {
         dialog.getDialogPane().setContent(ui);
 
         Node buttonOK = dialog.getDialogPane().lookupButton(ButtonType.OK);
-        view.findUI(ValueHelper.class).to(helper -> {
-            helper.observing().to(value -> {
-                try {
-                    buttonOK.setDisable(converter.apply(view) == null);
-                } catch (Throwable e) {
-                    buttonOK.setDisable(true);
-                }
-            });
-        });
+        view.verifier().invalid.to(buttonOK::setDisable);
 
-        return dialog.showAndWait().map(b -> b == ButtonType.OK ? converter.apply(view) : null);
+        return dialog.showAndWait().map(b -> b == ButtonType.OK ? view.value() : null);
     }
 
     /**

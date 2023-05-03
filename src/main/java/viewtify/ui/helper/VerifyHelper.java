@@ -15,8 +15,10 @@ import java.util.function.Predicate;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
+import kiss.WiseBiConsumer;
 import kiss.WiseConsumer;
 import kiss.WiseRunnable;
+import viewtify.util.Icon;
 
 public interface VerifyHelper<Self extends VerifyHelper<Self>> {
 
@@ -115,6 +117,33 @@ public interface VerifyHelper<Self extends VerifyHelper<Self>> {
      */
     default Self verifyBy(WiseConsumer<? super Self> verifier) {
         return verifyBy(() -> verifier.accept((Self) this));
+    }
+
+    default <D extends DecorationHelper> Self verifyBy(D one, WiseConsumer<D> verification) {
+        return verifyBy(() -> {
+            try {
+                verification.accept(one);
+                one.undecorate();
+            } catch (Throwable e) {
+                one.decorateBy(Icon.Error, e.getLocalizedMessage());
+                throw e;
+            }
+        });
+    }
+
+    default <D extends DecorationHelper> Self verifyBy(D one, D other, WiseBiConsumer<D, D> verification) {
+        return verifyBy(() -> {
+            try {
+                verification.accept(one, other);
+                one.undecorate();
+                other.undecorate();
+            } catch (Throwable e) {
+                String message = e.getLocalizedMessage();
+                one.decorateBy(Icon.Error, message);
+                other.decorateBy(Icon.Error, message);
+                throw e;
+            }
+        });
     }
 
     /**

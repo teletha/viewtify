@@ -9,7 +9,14 @@
  */
 package viewtify.style;
 
-import static stylist.StyleDSL.*;
+import static stylist.StyleDSL.$;
+import static stylist.StyleDSL.background;
+import static stylist.StyleDSL.display;
+import static stylist.StyleDSL.font;
+import static stylist.StyleDSL.margin;
+import static stylist.StyleDSL.padding;
+import static stylist.StyleDSL.px;
+import static stylist.StyleDSL.text;
 
 import stylist.Style;
 import stylist.StyleDeclarable;
@@ -46,5 +53,11 @@ public interface FormStyles extends StyleDeclarable {
 
     Style FormButton = () -> {
         display.width(62, px);
+    };
+
+    Style ValidationToolTip = () -> {
+        font.size(12, px).color("-fx-light-text-color");
+        background.color($.rgba(60, 60, 60, 0.8));
+        padding.vertical(8, px).horizontal(12, px);
     };
 }
