@@ -13,14 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import javafx.beans.property.Property;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import kiss.I;
+import viewtify.property.SmartProperty;
 import viewtify.ui.anime.SwapAnime;
 import viewtify.ui.helper.User;
+import viewtify.ui.helper.ValueHelper;
 
-public class UISelectPane extends UserInterface<UISelectPane, HBox> {
+public class UISelectPane extends UserInterface<UISelectPane, HBox> implements ValueHelper<UISelectPane, UserInterfaceProvider> {
 
     /** The label manager. */
     private final List<UILabel> labels = new ArrayList();
@@ -33,6 +35,9 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> {
 
     /** The right container. */
     private final UIScrollPane right = new UIScrollPane(null);
+
+    /** The selection. */
+    private final SmartProperty<UserInterfaceProvider> selection = new SmartProperty();
 
     /**
      * 
@@ -92,9 +97,18 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> {
             }
         }
 
-        // right.ui.setContent((Node) providers.get(index).ui());
-        right.content(providers.get(index), SwapAnime.FadeOutIn);
+        UserInterfaceProvider ui = providers.get(index);
+        right.content(ui, SwapAnime.FadeOutIn);
+        selection.set(ui);
 
         return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Property<UserInterfaceProvider> valueProperty() {
+        return selection;
     }
 }
