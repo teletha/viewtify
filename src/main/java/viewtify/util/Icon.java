@@ -10,6 +10,7 @@
 package viewtify.util;
 
 import javafx.scene.image.ImageView;
+import viewtify.Viewtify;
 
 /**
  * @version 2018/08/28 22:50:57
@@ -30,7 +31,7 @@ public enum Icon {
      * @return
      */
     public String path() {
-        return "/viewtify/icon/" + name().toLowerCase() + ".png";
+        return "viewtify/icon/" + name().toLowerCase() + ".png";
     }
 
     /**
@@ -39,6 +40,6 @@ public enum Icon {
      * @return
      */
     public ImageView image() {
-        return new ImageView(path());
+        return new ImageView(Viewtify.loadImage(path()));
     }
 }

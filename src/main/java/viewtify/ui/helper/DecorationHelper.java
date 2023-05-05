@@ -9,15 +9,15 @@
  */
 package viewtify.ui.helper;
 
+import org.controlsfx.control.decoration.Decorator;
+import org.controlsfx.control.decoration.GraphicDecoration;
+
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
-
-import org.controlsfx.control.decoration.Decorator;
-import org.controlsfx.control.decoration.GraphicDecoration;
-
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.style.FormStyles;
@@ -48,15 +48,19 @@ public interface DecorationHelper<Self extends DecorationHelper<Self>> {
      * @param message
      */
     default Self decorateBy(Icon icon, String message) {
-        I.signal(Decorator.getDecorations(ui()))
+        Node node = ui();
+
+        I.signal(Decorator.getDecorations(node))
                 .take(GraphicDecoration.class::isInstance)
                 .take(1)
                 .on(Viewtify.UIThread)
-                .to(deco -> Decorator.removeDecoration(ui(), deco), e -> {
+                .to(deco -> Decorator.removeDecoration(node, deco), e -> {
 
                 }, () -> {
                     Label label = new Label();
                     label.setGraphic(icon.image());
+                    label.setScaleX(0.7);
+                    label.setScaleY(0.7);
                     label.setAlignment(Pos.CENTER);
 
                     if (message != null && !message.isEmpty()) {
@@ -66,12 +70,21 @@ public interface DecorationHelper<Self extends DecorationHelper<Self>> {
                         tooltip.setShowDuration(Duration.INDEFINITE);
                         StyleHelper.of(tooltip).style(FormStyles.ValidationToolTip);
                         label.setTooltip(tooltip);
-                    }
 
-                    Decorator.addDecoration(ui(), new GraphicDecoration(label, Pos.TOP_LEFT, 4, 4));
+                        Decorator.addDecoration(node, new GraphicDecoration(label, Pos.TOP_LEFT, 0, 1));
+                    }
                 });
 
         return (Self) this;
+    }
+
+    private void visualize(Node node, Tooltip tooltip, boolean show) {
+        if (show) {
+            Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+            tooltip.show(node, bounds.getMinX(), bounds.getMinY());
+        } else {
+            tooltip.hide();
+        }
     }
 
     /**
