@@ -43,8 +43,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -76,6 +74,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -181,9 +182,6 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private double height;
-
-    /** The configurable setting. */
-    private String archive;
 
     /** We must continue to hold the lock object to avoid releasing by GC. */
     @SuppressWarnings("unused")
@@ -355,19 +353,6 @@ public final class Viewtify {
     }
 
     /**
-     * Configure the updatable archive.
-     * 
-     * @param archive
-     * @return
-     */
-    public Viewtify autoUpdate(String archive) {
-        if (archive != null) {
-            this.archive = archive;
-        }
-        return this;
-    }
-
-    /**
      * Activate the specified application. You can call this method as many times as you like.
      * 
      * @param applicationClass The application {@link View} to activate.
@@ -426,23 +411,6 @@ public final class Viewtify {
      * @param applicationClass An application class.
      */
     private synchronized void initializeOnlyOnce(Class applicationClass) {
-        // check auto update
-        if (archive != null && !archive.isEmpty()) {
-            psychopath.Location current = Locator.locate(applicationClass);
-            if (current.isFile() || true) {
-                long currentTimeStamp = current.lastModifiedMilli();
-
-                File archive = Locator.file(this.archive);
-                if (archive.isPresent()) {
-                    if (currentTimeStamp < archive.lastModifiedMilli() || true) {
-                        // need to update application
-                        I.info("Update " + applicationClass);
-
-                    }
-                }
-            }
-        }
-
         if (stylesheets.size() == 0) {
             // setting for headless mode
             checkHeadlessMode();
@@ -571,14 +539,7 @@ public final class Viewtify {
      * Reactivate the current application.
      */
     public void reactivate() {
-        reactivate(false);
-    }
-
-    /**
-     * Reactivate the current application.
-     */
-    private void reactivate(boolean needUpdate) {
-        if (restartWithExewrap(needUpdate) || restartWithJava(needUpdate)) {
+        if (restartWithExewrap() || restartWithJava()) {
             deactivate();
         }
     }
@@ -588,7 +549,7 @@ public final class Viewtify {
      * 
      * @return
      */
-    private boolean restartWithJava(boolean needUpdate) {
+    private boolean restartWithJava() {
         ArrayList<String> commands = new ArrayList();
 
         // Java
@@ -615,7 +576,7 @@ public final class Viewtify {
      * 
      * @return
      */
-    private boolean restartWithExewrap(boolean needUpdate) {
+    private boolean restartWithExewrap() {
         String directory = System.getProperty("java.application.path");
         String name = System.getProperty("java.application.name");
         if (directory == null || name == null) {
