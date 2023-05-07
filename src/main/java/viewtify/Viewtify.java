@@ -43,6 +43,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -74,9 +76,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -97,6 +96,7 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.VerifyHelper;
+import viewtify.update.UpdaterView;
 
 public final class Viewtify {
 
@@ -368,6 +368,22 @@ public final class Viewtify {
      * @param view Callback to be called after the application is activated.
      */
     public <V extends View> void activate(Class<? extends V> applicationClass, Consumer<V> view) {
+        // check update mode
+        String updater = System.getProperty("viewtify.updater");
+        if (updater == null || updater.isEmpty()) {
+            activating(applicationClass, view);
+        } else {
+            activating(UpdaterView.class, v -> v.update(updater));
+        }
+    }
+
+    /**
+     * Activate the specified application. You can call this method as many times as you like.
+     * 
+     * @param applicationClass The application {@link View} to activate.
+     * @param view Callback to be called after the application is activated.
+     */
+    private <V extends View> void activating(Class<? extends V> applicationClass, Consumer<V> view) {
         // Execute a configuration for an application that should be processed only once throughout
         // the entire life cycle of the application. If you run it more than once, nothing happens.
         initializeOnlyOnce(applicationClass);
