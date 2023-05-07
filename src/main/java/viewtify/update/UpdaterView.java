@@ -28,8 +28,7 @@ public class UpdaterView extends View {
     }
 
     /**
-     * @param updater
      */
-    public void update(String updater) {
+    public void update(String archive) {
     }
 }
