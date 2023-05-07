@@ -16,6 +16,7 @@ const root = {
 		"viewtify.ui.query",
 		"viewtify.ui.toast",
 		"viewtify.ui.view",
+		"viewtify.update",
 		"viewtify.util"
 	],
 	"types": [
@@ -752,6 +753,34 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UIWeb.Operation",
 			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UpdateResult",
+			"packageName": "viewtify.update",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UpdateSite",
+			"packageName": "viewtify.update",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Updater",
+			"packageName": "viewtify.update",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UpdaterView",
+			"packageName": "viewtify.update",
 			"type": "Class"
 		},
 		{
