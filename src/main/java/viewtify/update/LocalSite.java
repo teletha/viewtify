@@ -32,4 +32,20 @@ class LocalSite extends UpdateSite {
     long lastModified() {
         return site.lastModifiedMilli();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    Directory locateRoot() {
+        return site;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    Directory locateLibrary() {
+        return site.directory("lib");
+    }
 }

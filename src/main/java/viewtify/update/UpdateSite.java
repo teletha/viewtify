@@ -9,6 +9,8 @@
  */
 package viewtify.update;
 
+import psychopath.Directory;
+
 public abstract class UpdateSite {
 
     /**
@@ -17,4 +19,25 @@ public abstract class UpdateSite {
      * @return
      */
     abstract long lastModified();
+
+    /**
+     * Locate the root directory.
+     */
+    abstract Directory locateRoot();
+
+    /**
+     * Locate library directory.
+     * 
+     * @return
+     */
+    abstract Directory locateLibrary();
+
+    /**
+     * @param dest
+     */
+    protected void copyTo(UpdateSite dest) {
+        locateRoot().observeCopyingTo(dest.locateRoot(), o -> o.strip().replaceExisting()).to(file -> {
+
+        });
+    }
 }

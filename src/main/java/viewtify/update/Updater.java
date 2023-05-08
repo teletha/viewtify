@@ -10,14 +10,14 @@
 package viewtify.update;
 
 import java.nio.file.Path;
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
 import kiss.Singleton;
-import kiss.Variable;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -38,10 +38,10 @@ public class Updater {
     private final long lastModified = libraries.stream().mapToLong(File::lastModifiedMilli).max().orElse(0);
 
     /** The configurable option. */
-    private LocalSite local;
+    private LocalSite local = new LocalSite(Locator.directory(""));
 
     /** The configurable option. */
-    private final Set<UpdateSite> updateSites = new LinkedHashSet();
+    private final List<UpdateTask> tasks = new ArrayList();
 
     /**
      * Add update site.
@@ -49,12 +49,12 @@ public class Updater {
      * @param site
      * @return
      */
-    public Updater addUpdateSite(String site) {
+    public Updater addTask(String site) {
         if (site != null && !site.isBlank()) {
             if (site.startsWith("http")) {
 
             } else {
-                addUpdateSite(Locator.directory(site));
+                addTask(Locator.directory(site));
             }
         }
         return this;
@@ -63,9 +63,9 @@ public class Updater {
     /**
      * @param site
      */
-    public Updater addUpdateSite(Directory site) {
+    public Updater addTask(Directory site) {
         if (site != null) {
-            updateSites.add(new LocalSite(site));
+            tasks.add(UpdateTask.copy(site, local.locateRoot()));
         }
         return this;
     }
@@ -73,9 +73,9 @@ public class Updater {
     /**
      * @param site
      */
-    public Updater addUpdateSite(Path site) {
+    public Updater addTask(Path site) {
         if (site != null) {
-            addUpdateSite(Locator.directory(site));
+            addTask(Locator.directory(site));
         }
         return this;
     }
@@ -104,30 +104,8 @@ public class Updater {
         return this;
     }
 
-    /**
-     * Check whether this updater is updatable or not.
-     * 
-     * @return
-     */
-    public UpdateResult canUpdate() {
-        if (local == null) {
-            return new UpdateResult(false, "The directory to be updated is not registered.");
-        }
+    public void update() {
 
-        Variable<UpdateSite> site = selectUpdateSite();
-
-        if (site.isAbsent()) {
-            return new UpdateResult(false, "The update site is not registered.");
-        } else {
-            return new UpdateResult(true, "");
-        }
-    }
-
-    /**
-     * @return
-     */
-    private Variable<UpdateSite> selectUpdateSite() {
-        return I.signal(updateSites).take(site -> local.lastModified() < site.lastModified()).first().to();
     }
 
     public void detectEnvironment() {
