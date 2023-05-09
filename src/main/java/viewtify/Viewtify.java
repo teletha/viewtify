@@ -557,7 +557,16 @@ public final class Viewtify {
      * Reactivate the current application.
      */
     public void reactivate() {
-        if (restartWithExewrap() || restartWithJava()) {
+        if (restartWithExewrap(false) || restartWithJava(false)) {
+            deactivate();
+        }
+    }
+
+    /**
+     * Reactivate the current application with update mode.
+     */
+    public void update() {
+        if (restartWithExewrap(true) || restartWithJava(true)) {
             deactivate();
         }
     }
@@ -567,7 +576,7 @@ public final class Viewtify {
      * 
      * @return
      */
-    private boolean restartWithJava() {
+    private boolean restartWithJava(boolean update) {
         ArrayList<String> commands = new ArrayList();
 
         // Java
@@ -594,7 +603,7 @@ public final class Viewtify {
      * 
      * @return
      */
-    private boolean restartWithExewrap() {
+    private boolean restartWithExewrap(boolean update) {
         String directory = System.getProperty("java.application.path");
         String name = System.getProperty("java.application.name");
         if (directory == null || name == null) {
