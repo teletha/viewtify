@@ -41,7 +41,7 @@ public class Updater {
     private LocalSite local = new LocalSite(Locator.directory(""));
 
     /** The configurable option. */
-    private final List<UpdateTask> tasks = new ArrayList();
+    private final List<Task> tasks = new ArrayList();
 
     /**
      * Add update site.
@@ -65,7 +65,7 @@ public class Updater {
      */
     public Updater addTask(Directory site) {
         if (site != null) {
-            tasks.add(UpdateTask.copy(site, local.locateRoot()));
+            tasks.add(Task.copy(site, local.locateRoot()));
         }
         return this;
     }
