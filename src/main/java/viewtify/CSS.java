@@ -27,6 +27,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -51,6 +52,10 @@ final class CSS {
     private static final Meta<Node, String> WidthKeyword = new Meta<>("-fx-width", StringConverter.getInstance(), (node, value) -> {
         if ("fill".equals(value)) {
             HBox.setHgrow(node, Priority.ALWAYS);
+
+            if (node instanceof ProgressBar bar) {
+                bar.setMaxWidth(Double.MAX_VALUE);
+            }
         }
     });
 

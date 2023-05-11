@@ -162,7 +162,7 @@ public class Toast {
         public final Preference<Double> opacity = initialize(0.85).requireBetween(0, 1);
 
         /** The width of notification area. */
-        public final Preference<Integer> width = initialize(250).requireMin(10);
+        public final Preference<Integer> width = initialize(250).requireMin(50);
 
         /**
          * Hide constructor.

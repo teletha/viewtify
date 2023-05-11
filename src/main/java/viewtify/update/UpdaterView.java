@@ -9,13 +9,12 @@
  */
 package viewtify.update;
 
-import javafx.scene.control.ProgressBar;
-
 import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
 import viewtify.ui.UILabel;
+import viewtify.ui.UIProgressBar;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 
@@ -26,13 +25,13 @@ public class UpdaterView extends View {
 
     UILabel message;
 
-    ProgressBar bar = new ProgressBar();
+    UIProgressBar bar;
 
     class UI extends ViewDSL {
         {
             $(vbox, style.root, () -> {
                 $(message);
-                $(() -> bar, style.bar);
+                $(bar, style.bar);
             });
         }
     }
@@ -44,7 +43,7 @@ public class UpdaterView extends View {
         };
 
         Style bar = () -> {
-            display.width(400, px);
+            display.width.fill();
             margin.top(5, px);
         };
     }
@@ -55,7 +54,7 @@ public class UpdaterView extends View {
     @Override
     protected void initialize() {
         message.text("Updating...");
-        bar.setProgress(0);
+        bar.value(0d);
     }
 
     /**
