@@ -62,7 +62,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Variable text) {
-        text.observing().to(v -> {
+        text.observing().on(Viewtify.UIThread).to(v -> {
             property(Type.Text).setValue(I.transform(v, String.class));
         });
         return (Self) this;
