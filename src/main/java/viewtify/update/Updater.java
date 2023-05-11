@@ -21,6 +21,7 @@ import kiss.Singleton;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
+import viewtify.update.UpdateTask.Task;
 
 @Managed(Singleton.class)
 public class Updater {

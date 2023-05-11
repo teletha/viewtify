@@ -10,6 +10,7 @@
 package viewtify.update;
 
 import kiss.I;
+import psychopath.Locator;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
@@ -21,7 +22,7 @@ import viewtify.ui.ViewDSL;
 public class UpdaterView extends View {
 
     /** The all tasks. */
-    private final UpdateTasks tasks = I.make(UpdateTasks.class).restore();
+    private final UpdateTask tasks = I.make(UpdateTask.class);
 
     UILabel message;
 
@@ -55,6 +56,22 @@ public class UpdaterView extends View {
     protected void initialize() {
         message.text("Updating...");
         bar.value(0d);
+
+        executeTask();
+    }
+
+    private void executeTask() {
+        String property = System.getProperty("tasks");
+        if (property == null) {
+            UpdateTask tasks = new UpdateTask();
+            tasks.unpack(Locator.file("test.zip"), Locator.directory(".test"));
+            property = I.write(tasks);
+        }
+
+        UpdateTask tasks = I.json(property).as(UpdateTask.class);
+        tasks.run(progress -> {
+            System.out.println(progress.completedFiles() + "/" + progress.totalFiles);
+        });
     }
 
     /**

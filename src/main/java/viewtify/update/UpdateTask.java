@@ -10,37 +10,31 @@
 package viewtify.update;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kiss.Managed;
 import kiss.Observer;
-import kiss.Singleton;
-import kiss.Storable;
 import kiss.WiseConsumer;
 import psychopath.Directory;
 import psychopath.File;
-import psychopath.Location;
-import viewtify.update.UpdateTasks.Task;
-import viewtify.update.UpdateTasks.Task.Copy;
-import viewtify.update.UpdateTasks.Task.Move;
-import viewtify.update.UpdateTasks.Task.Unpack;
+import psychopath.Progress;
+import viewtify.update.UpdateTask.Task.Copy;
+import viewtify.update.UpdateTask.Task.Move;
+import viewtify.update.UpdateTask.Task.Unpack;
 
-@SuppressWarnings("serial")
-@Managed(Singleton.class)
-public class UpdateTasks extends ArrayList<Task> implements Storable<UpdateTasks> {
+public class UpdateTask {
 
-    /**
-     * Hide constructor.
-     */
-    private UpdateTasks() {
-    }
+    /** The all tasks. */
+    @Managed
+    private List<Task> tasks = new ArrayList();
 
     /**
      * Execute all tasks.
      * 
      * @param listener
      */
-    void run(Observer<? super Location> listener) {
-        forEach(task -> {
+    void run(Observer<? super Progress> listener) {
+        tasks.forEach(task -> {
             task.accept(listener);
         });
     }
@@ -54,8 +48,7 @@ public class UpdateTasks extends ArrayList<Task> implements Storable<UpdateTasks
         task.departure = departure;
         task.destination = destination;
 
-        add(task);
-        store();
+        tasks.add(task);
     }
 
     /**
@@ -67,8 +60,7 @@ public class UpdateTasks extends ArrayList<Task> implements Storable<UpdateTasks
         task.departure = departure;
         task.destination = destination;
 
-        add(task);
-        store();
+        tasks.add(task);
     }
 
     /**
@@ -80,14 +72,13 @@ public class UpdateTasks extends ArrayList<Task> implements Storable<UpdateTasks
         task.departure = departure;
         task.destination = destination;
 
-        add(task);
-        store();
+        tasks.add(task);
     }
 
     /**
      * Internal tasks.
      */
-    public interface Task extends WiseConsumer<Observer<? super Location>> {
+    public interface Task extends WiseConsumer<Observer<? super Progress>> {
 
         /**
          * Move
@@ -101,8 +92,8 @@ public class UpdateTasks extends ArrayList<Task> implements Storable<UpdateTasks
              * {@inheritDoc}
              */
             @Override
-            public void ACCEPT(Observer<? super Location> listener) throws Throwable {
-                departure.observeMovingTo(destination, o -> o.replaceExisting().strip()).to(listener);
+            public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+                departure.trackMovingTo(destination, o -> o.replaceExisting().strip()).to(listener);
             }
         }
 
@@ -118,8 +109,8 @@ public class UpdateTasks extends ArrayList<Task> implements Storable<UpdateTasks
              * {@inheritDoc}
              */
             @Override
-            public void ACCEPT(Observer<? super Location> listener) throws Throwable {
-                departure.observeCopyingTo(destination, o -> o.replaceExisting().strip()).to(listener);
+            public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+                departure.trackCopyingTo(destination, o -> o.replaceExisting().strip()).to(listener);
             }
         }
 
@@ -135,8 +126,8 @@ public class UpdateTasks extends ArrayList<Task> implements Storable<UpdateTasks
              * {@inheritDoc}
              */
             @Override
-            public void ACCEPT(Observer<? super Location> listener) throws Throwable {
-                departure.observeUnpackingTo(destination, o -> o.replaceExisting()).to(listener);
+            public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+                departure.trackUnpackingTo(destination, o -> o.replaceExisting()).to(listener);
             }
         }
     }
