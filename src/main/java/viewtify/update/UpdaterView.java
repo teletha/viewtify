@@ -9,7 +9,12 @@
  */
 package viewtify.update;
 
+import java.util.List;
+import java.util.Locale;
+
 import kiss.I;
+import kiss.Variable;
+import psychopath.Directory;
 import psychopath.Locator;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -18,6 +23,7 @@ import viewtify.ui.UILabel;
 import viewtify.ui.UIProgressBar;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.update.UpdateTask.Task;
 
 public class UpdaterView extends View {
 
@@ -26,6 +32,8 @@ public class UpdaterView extends View {
 
     UILabel message;
 
+    UILabel detail;
+
     UIProgressBar bar;
 
     class UI extends ViewDSL {
@@ -33,6 +41,7 @@ public class UpdaterView extends View {
             $(vbox, style.root, () -> {
                 $(message);
                 $(bar, style.bar);
+                $(detail);
             });
         }
     }
@@ -45,7 +54,7 @@ public class UpdaterView extends View {
 
         Style bar = () -> {
             display.width.fill();
-            margin.top(5, px);
+            margin.vertical(5, px);
         };
     }
 
@@ -57,20 +66,62 @@ public class UpdaterView extends View {
         message.text("Updating...");
         bar.value(0d);
 
-        executeTask();
+        execute();
     }
 
-    private void executeTask() {
-        String property = System.getProperty("tasks");
-        if (property == null) {
-            UpdateTask tasks = new UpdateTask();
-            tasks.unpack(Locator.file("test.zip"), Locator.directory(".test"));
-            property = I.write(tasks);
-        }
+    private void execute() {
+        Viewtify.inWorker(() -> {
+            String property = System.getProperty("tasks");
+            if (property == null) {
+                Directory root = Locator.directory("app").absolutize();
+                Directory backup = Locator.directory(".backup");
+                Directory lib = Locator.directory("lib");
+                Directory jre = Locator.directory("jre");
 
-        UpdateTask tasks = I.json(property).as(UpdateTask.class);
-        tasks.run(progress -> {
-            System.out.println(progress.completedFiles() + "/" + progress.totalFiles);
+                UpdateTask tasks = new UpdateTask();
+                tasks.delay = 10;
+                tasks.rebootApp = root.file("yamato.exe");
+                tasks.delete("Deleting the old version.", root.directory(".test"));
+                tasks.unpack("Unpacking the new version.", root.file("test.zip"), root);
+                property = I.write(tasks);
+                System.out.println(property);
+            }
+
+            UpdateTask update = I.json(property).as(UpdateTask.class);
+            List<Task> tasks = update.tasks;
+            for (int i = 0; i < tasks.size(); i++) {
+                Task task = tasks.get(i);
+                Variable<String> m = I.translate(task.message);
+                Viewtify.inUI(() -> message.text(m));
+
+                double part = 1d / tasks.size();
+                task.accept(progress -> {
+                    if (update.delay != 0) {
+                        try {
+                            Thread.sleep(update.delay);
+                        } catch (InterruptedException e) {
+                            // ignore
+                        }
+                    }
+
+                    bar.value(v -> v + part / progress.totalFiles);
+                    Viewtify.inUI(() -> {
+                        message.text(m + " (" + progress.rateByFiles() + "%)");
+                        detail.text(progress.location);
+                    });
+                });
+                bar.value(part * (i + 1));
+                Viewtify.inUI(() -> detail.text(""));
+            }
+            Viewtify.inUI(() -> message.text(I.translate("Update is completed, reboot.")));
+
+            try {
+                new ProcessBuilder().directory(update.rebootApp.parent().asJavaFile()).inheritIO().command(update.rebootApp.path()).start();
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+
+            Viewtify.application().deactivate();
         });
     }
 
@@ -85,6 +136,8 @@ public class UpdaterView extends View {
      * @param args
      */
     public static void main(String[] args) {
+        I.Lang.set(Locale.JAPAN.getLanguage());
+
         Viewtify.application().title("Updater").size(400, 150).activate(UpdaterView.class);
     }
 }

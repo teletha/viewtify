@@ -43,8 +43,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -76,6 +74,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -96,6 +97,7 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.VerifyHelper;
+import viewtify.update.UpdateTask;
 
 public final class Viewtify {
 
@@ -538,7 +540,7 @@ public final class Viewtify {
      * Reactivate the current application.
      */
     public void reactivate() {
-        if (restartWithExewrap(false) || restartWithJava(false)) {
+        if (restartWithExewrap(null) || restartWithJava(null)) {
             deactivate();
         }
     }
@@ -546,8 +548,8 @@ public final class Viewtify {
     /**
      * Reactivate the current application with update mode.
      */
-    public void update() {
-        if (restartWithExewrap(true) || restartWithJava(true)) {
+    public void update(String archive) {
+        if (restartWithExewrap(archive) || restartWithJava(archive)) {
             deactivate();
         }
     }
@@ -557,7 +559,7 @@ public final class Viewtify {
      * 
      * @return
      */
-    private boolean restartWithJava(boolean update) {
+    private boolean restartWithJava(String update) {
         ArrayList<String> commands = new ArrayList();
 
         // Java
@@ -584,18 +586,26 @@ public final class Viewtify {
      * 
      * @return
      */
-    private boolean restartWithExewrap(boolean update) {
+    private boolean restartWithExewrap(String update) {
         String directory = System.getProperty("java.application.path");
         String name = System.getProperty("java.application.name");
         if (directory == null || name == null) {
             return false;
         }
 
+        Directory root = Locator.directory(directory);
+        File exe = root.file(name);
+
+        if (update != null) {
+            UpdateTask.run(update, app -> {
+                app.unpack("Unpacking the new version.", app.root.file("test.zip"), app.root);
+            });
+        }
+
         try {
-            new ProcessBuilder().directory(new java.io.File(directory)).inheritIO().command(directory + "\\" + name).start();
+            new ProcessBuilder().directory(root.asJavaFile()).inheritIO().command(exe.path()).start();
             return true;
         } catch (Throwable e) {
-            e.printStackTrace();
             return false;
         }
     }

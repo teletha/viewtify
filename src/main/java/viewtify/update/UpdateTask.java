@@ -17,36 +17,77 @@ import kiss.Observer;
 import kiss.WiseConsumer;
 import psychopath.Directory;
 import psychopath.File;
+import psychopath.Locator;
 import psychopath.Progress;
-import viewtify.update.UpdateTask.Task.Copy;
-import viewtify.update.UpdateTask.Task.Move;
-import viewtify.update.UpdateTask.Task.Unpack;
 
 public class UpdateTask {
 
+    /** The root directory of this application. */
+    public final Directory root;
+
     /** The all tasks. */
     @Managed
-    private List<Task> tasks = new ArrayList();
+    List<Task> tasks = new ArrayList();
+
+    /** The intentional delay for ui notification. */
+    @Managed
+    int delay;
+
+    /** The rebootable application name. */
+    @Managed
+    File rebootApp;
 
     /**
-     * Execute all tasks.
+     * Build the update task for the specified new version.
      * 
-     * @param listener
+     * @param location A locaiton of the new version.
+     * @param definition
      */
-    void run(Observer<? super Progress> listener) {
-        tasks.forEach(task -> {
-            task.accept(listener);
-        });
+    public static void run(String location, WiseConsumer<UpdateTask> definition) {
+        if (location == null || location.isBlank()) {
+            throw new Error("Unable to update because the location of the latest application is unknown.");
+        }
+
+        if (!location.endsWith(".zip")) {
+            throw new Error("The application must be zipped.");
+        }
+
+        UpdateTask task = new UpdateTask();
+
+        // check modification
+        if (location.startsWith("http://") || location.startsWith("https://")) {
+            throw new Error("Network access must be supported! FIXME");
+        } else {
+            File archive = Locator.file(location);
+
+            if (archive.isAbsent()) {
+                throw new Error("Archive [" + location + "] is not found.");
+            }
+
+            if (archive.lastModifiedMilli() <= task.root.lastModifiedMilli()) {
+                throw new Error("The current version is latest, no need to update.");
+            }
+
+            definition.accept(task);
+        }
+    }
+
+    /**
+     * Hide constructor.
+     */
+    private UpdateTask() {
+        this.root = Locator.directory("").absolutize();
     }
 
     /**
      * @param departure
      * @param destination
      */
-    void move(Directory departure, Directory destination) {
+    public void move(String message, Directory departure, Directory destination) {
         Move task = new Move();
         task.departure = departure;
         task.destination = destination;
+        task.message = message;
 
         tasks.add(task);
     }
@@ -55,10 +96,11 @@ public class UpdateTask {
      * @param departure
      * @param destination
      */
-    void copy(Directory departure, Directory destination) {
+    public void copy(String message, Directory departure, Directory destination) {
         Copy task = new Copy();
         task.departure = departure;
         task.destination = destination;
+        task.message = message;
 
         tasks.add(task);
     }
@@ -67,10 +109,23 @@ public class UpdateTask {
      * @param departure
      * @param destination
      */
-    void unpack(File departure, Directory destination) {
+    public void unpack(String message, File departure, Directory destination) {
         Unpack task = new Unpack();
         task.departure = departure;
         task.destination = destination;
+        task.message = message;
+
+        tasks.add(task);
+    }
+
+    /**
+     * @param target
+     */
+    public void delete(String message, Directory target, String... patterns) {
+        Delete task = new Delete();
+        task.target = target;
+        task.patterns = List.of(patterns);
+        task.message = message;
 
         tasks.add(task);
     }
@@ -78,57 +133,79 @@ public class UpdateTask {
     /**
      * Internal tasks.
      */
-    public interface Task extends WiseConsumer<Observer<? super Progress>> {
+    public static abstract class Task implements WiseConsumer<Observer<? super Progress>> {
 
         /**
-         * Move
+         * Task message.
          */
-        static class Move implements Task {
-            public Directory departure;
+        public String message;
+    }
 
-            public Directory destination;
+    /**
+     * Move
+     */
+    static class Move extends Task {
+        public Directory departure;
 
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
-                departure.trackMovingTo(destination, o -> o.replaceExisting().strip()).to(listener);
-            }
+        public Directory destination;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+            departure.trackMovingTo(destination, o -> o.replaceExisting().strip()).to(listener);
         }
+    }
+
+    /**
+     * Copy
+     */
+    static class Copy extends Task {
+        public Directory departure;
+
+        public Directory destination;
 
         /**
-         * Copy
+         * {@inheritDoc}
          */
-        static class Copy implements Task {
-            public Directory departure;
-
-            public Directory destination;
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
-                departure.trackCopyingTo(destination, o -> o.replaceExisting().strip()).to(listener);
-            }
+        @Override
+        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+            departure.trackCopyingTo(destination, o -> o.replaceExisting().strip()).to(listener);
         }
+    }
+
+    /**
+     * Unpack
+     */
+    static class Unpack extends Task {
+        public File departure;
+
+        public Directory destination;
 
         /**
-         * Unpack
+         * {@inheritDoc}
          */
-        static class Unpack implements Task {
-            public File departure;
+        @Override
+        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+            departure.trackUnpackingTo(destination, o -> o.replaceExisting()).to(listener);
+        }
+    }
 
-            public Directory destination;
+    /**
+     * Delete
+     */
+    static class Delete extends Task {
+        public Directory target;
 
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
-                departure.trackUnpackingTo(destination, o -> o.replaceExisting()).to(listener);
-            }
+        public List<String> patterns;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+            target.trackDeleting(patterns).to(listener);
         }
     }
 }

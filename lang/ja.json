@@ -3,9 +3,12 @@
 		"Application": "アプリケーション",
 		"BottomLeft": "左下",
 		"BottomRight": "右下",
+		"Deleting the old version.": "古いバージョンを削除します。",
 		"Mouse": "マウス",
 		"Primary": "プライマリー",
 		"TopLeft": "左左",
-		"TopRight": "トップライト"
+		"TopRight": "トップライト",
+		"Unpacking the new version.": "新しいバージョンを解凍します。",
+		"Update is completed, reboot.": "アップデートが完了したので再起動します。"
 	}
 }
