@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import psychopath.Directory;
 
-class LocalSite extends UpdateSite {
+class LocalSite extends Site {
 
     /** The update site. */
     private final Directory site;
@@ -22,7 +22,7 @@ class LocalSite extends UpdateSite {
      * @param site
      */
     LocalSite(Directory site) {
-        this.site = Objects.requireNonNull(site);
+        this.site = Objects.requireNonNull(site).absolutize();
     }
 
     /**
@@ -47,5 +47,13 @@ class LocalSite extends UpdateSite {
     @Override
     Directory locateLibrary() {
         return site.directory("lib");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    Directory locateJRE() {
+        return site.directory("jre");
     }
 }

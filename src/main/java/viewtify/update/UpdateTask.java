@@ -13,11 +13,14 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javafx.scene.control.ButtonType;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Observer;
+import kiss.Signal;
 import kiss.WiseConsumer;
 import psychopath.Directory;
 import psychopath.File;
@@ -56,7 +59,7 @@ public class UpdateTask {
         UpdateTask prepare = new UpdateTask(root, archive);
         prepare.verify("Verify new version.", archive);
         prepare.load("Download new version.");
-        prepare.unpack("Prepare to update.", prepare.archive, prepare.root.directory(".updater"));
+        prepare.build("Prepare to update.");
         prepare.message("Ready for update.");
         prepare.store();
 
@@ -138,6 +141,19 @@ public class UpdateTask {
         Load task = new Load();
         task.remote = archive.path();
         task.local = archive;
+        task.message = message;
+
+        tasks.add(task);
+    }
+
+    /**
+     * Build runtime.
+     * 
+     * @param message
+     */
+    public void build(String message) {
+        Build task = new Build();
+        task.root = Locator.temporaryDirectory();
         task.message = message;
 
         tasks.add(task);
@@ -346,9 +362,6 @@ public class UpdateTask {
         }
     }
 
-    /**
-     * Load
-     */
     static class Load extends Task {
 
         public String remote;
@@ -368,9 +381,42 @@ public class UpdateTask {
         }
     }
 
-    /**
-     * Reboot
-     */
+    static class Build extends Task {
+
+        public Directory root;
+
+        /** The current JVM. */
+        private final Directory jvm = Locator.directory(System.getProperty("java.home"));
+
+        /** The loaded libraries. */
+        private final Set<File> libraries = detectLibraries("jdk.module.path").concat(detectLibraries("java.class.path")).toSet();
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+            if (jvm.path().startsWith(root.path())) {
+                // need to copy runtime
+
+            }
+        }
+
+        /**
+         * Detect loaded libraries.
+         * 
+         * @param key
+         * @return
+         */
+        private Signal<File> detectLibraries(String key) {
+            return I.signal(System.getProperty(key))
+                    .skipNull()
+                    .flatArray(value -> value.split(java.io.File.pathSeparator))
+                    .take(path -> path.endsWith(".jar"))
+                    .map(path -> Locator.file(path));
+        }
+    }
+
     static class Reboot extends Task {
 
         /**

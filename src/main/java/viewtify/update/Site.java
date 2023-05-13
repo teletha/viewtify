@@ -11,7 +11,7 @@ package viewtify.update;
 
 import psychopath.Directory;
 
-public abstract class UpdateSite {
+public abstract class Site {
 
     /**
      * Get the last modified time.
@@ -33,9 +33,16 @@ public abstract class UpdateSite {
     abstract Directory locateLibrary();
 
     /**
+     * Locate JRE directory.
+     * 
+     * @return
+     */
+    abstract Directory locateJRE();
+
+    /**
      * @param dest
      */
-    protected void copyTo(UpdateSite dest) {
+    protected void copyTo(Site dest) {
         locateRoot().observeCopyingTo(dest.locateRoot(), o -> o.strip().replaceExisting()).to(file -> {
 
         });
