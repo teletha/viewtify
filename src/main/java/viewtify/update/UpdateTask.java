@@ -9,9 +9,13 @@
  */
 package viewtify.update;
 
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.ButtonType;
+import kiss.I;
 import kiss.Managed;
 import kiss.Observer;
 import kiss.WiseConsumer;
@@ -19,11 +23,15 @@ import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
 import psychopath.Progress;
+import viewtify.Viewtify;
 
 public class UpdateTask {
 
     /** The root directory of this application. */
-    public final Directory root;
+    public Directory root;
+
+    /** The archive of new application. */
+    public File archive;
 
     /** The all tasks. */
     @Managed
@@ -40,43 +48,99 @@ public class UpdateTask {
     /**
      * Build the update task for the specified new version.
      * 
-     * @param location A locaiton of the new version.
-     * @param definition
+     * @param root An application root directory.
+     * @param archive A locaiton of the new version.
      */
-    public static void run(String location, WiseConsumer<UpdateTask> definition) {
-        if (location == null || location.isBlank()) {
-            throw new Error("Unable to update because the location of the latest application is unknown.");
-        }
+    public static void run(Directory root, String archive) {
+        // prepare to update
+        UpdateTask prepare = new UpdateTask(root, archive);
+        prepare.verify("Verify new version.", archive);
+        prepare.load("Download new version.");
+        prepare.unpack("Prepare to update.", prepare.archive, prepare.root.directory(".updater"));
+        prepare.message("Ready for update.");
+        prepare.store();
 
-        if (!location.endsWith(".zip")) {
-            throw new Error("The application must be zipped.");
-        }
+        Viewtify.dialogConfirm("Updater", UpdaterView.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(start -> {
+            if (start) {
+                System.out.println("Update");
 
-        UpdateTask task = new UpdateTask();
+                Directory jre = root.directory(".updater/jre");
+                Directory lib = root.directory(".updater\\lib").absolutize();
 
-        // check modification
-        if (location.startsWith("http://") || location.startsWith("https://")) {
-            throw new Error("Network access must be supported! FIXME");
-        } else {
-            File archive = Locator.file(location);
+                UpdateTask update = new UpdateTask(root, archive);
+                update.unpack("Unpacking the new version.", update.archive, update.root);
+                update.reboot("Update is completed, reboot.");
 
-            if (archive.isAbsent()) {
-                throw new Error("Archive [" + location + "] is not found.");
+                ArrayList<String> commands = new ArrayList();
+
+                // Java
+                commands.add(jre + java.io.File.separator + "bin" + java.io.File.separator + "java.exe");
+                commands.addAll(ManagementFactory.getRuntimeMXBean().getInputArguments());
+
+                // classpath
+                commands.add("-cp");
+                commands.add(lib + "/*");
+
+                // Class to be executed
+                commands.add(UpdaterView.class.getName());
+
+                try {
+                    System.out.println(commands);
+                    new ProcessBuilder(commands).directory(root.asJavaFile()).inheritIO().start();
+
+                    Viewtify.application().deactivate();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        });
+    }
 
-            if (archive.lastModifiedMilli() <= task.root.lastModifiedMilli()) {
-                throw new Error("The current version is latest, no need to update.");
-            }
-
-            definition.accept(task);
-        }
+    /**
+     * Empty task.
+     */
+    UpdateTask() {
     }
 
     /**
      * Hide constructor.
      */
-    private UpdateTask() {
-        this.root = Locator.directory("").absolutize();
+    private UpdateTask(Directory root, String archive) {
+        this.root = root.absolutize();
+
+        if (archive.startsWith("http://") || archive.startsWith("https://")) {
+            throw new Error("Network access must be supported! FIXME");
+        }
+
+        this.archive = Locator.file(archive);
+    }
+
+    /**
+     * Verify archive.
+     * 
+     * @param message
+     */
+    public void verify(String message, String archive) {
+        Verify task = new Verify();
+        task.archive = archive;
+        task.root = root;
+        task.message = message;
+
+        tasks.add(task);
+    }
+
+    /**
+     * Load archive.
+     * 
+     * @param message
+     */
+    public void load(String message) {
+        Load task = new Load();
+        task.remote = archive.path();
+        task.local = archive;
+        task.message = message;
+
+        tasks.add(task);
     }
 
     /**
@@ -128,6 +192,44 @@ public class UpdateTask {
         task.message = message;
 
         tasks.add(task);
+    }
+
+    /**
+     * Reboot this application.
+     * 
+     * @param message
+     */
+    public void reboot(String message) {
+        Reboot task = new Reboot();
+        task.message = message;
+
+        tasks.add(task);
+    }
+
+    /**
+     * Notify message.
+     * 
+     * @param message
+     */
+    public void message(String message) {
+        Message task = new Message();
+        task.message = message;
+
+        tasks.add(task);
+    }
+
+    /**
+     * Store the serialized task.
+     */
+    void store() {
+        System.setProperty("viewtify.update.task", I.write(this));
+    }
+
+    /**
+     * Restore the serialized task.
+     */
+    void restore() {
+        I.json(System.getProperty("viewtify.update.task")).as(this);
     }
 
     /**
@@ -206,6 +308,87 @@ public class UpdateTask {
         @Override
         public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
             target.trackDeleting(patterns).to(listener);
+        }
+    }
+
+    /**
+     * Verify
+     */
+    static class Verify extends Task {
+
+        public String archive;
+
+        public Directory root;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+            if (archive == null || archive.isBlank()) {
+                throw new Error("Unable to update because the location of the new application is unknown.");
+            }
+
+            if (!archive.endsWith(".zip")) {
+                throw new Error("The new application must be zipped.");
+            }
+
+            // check modification
+            File zip = Locator.file(archive);
+
+            if (zip.isAbsent()) {
+                throw new Error("Archive [" + archive + "] is not found.");
+            }
+
+            if (zip.lastModifiedMilli() <= root.lastModifiedMilli()) {
+                throw new Error("The current version is latest, no need to update.");
+            }
+        }
+    }
+
+    /**
+     * Load
+     */
+    static class Load extends Task {
+
+        public String remote;
+
+        public File local;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+            if (local.path().equals(remote)) {
+                // do nothing
+            } else {
+                // download
+            }
+        }
+    }
+
+    /**
+     * Reboot
+     */
+    static class Reboot extends Task {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+        }
+    }
+
+    static class Message extends Task {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+            // do nothing
         }
     }
 }

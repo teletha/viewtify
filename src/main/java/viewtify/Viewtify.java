@@ -43,6 +43,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -74,9 +76,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -97,7 +96,6 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.VerifyHelper;
-import viewtify.update.UpdateTask;
 
 public final class Viewtify {
 
@@ -540,16 +538,7 @@ public final class Viewtify {
      * Reactivate the current application.
      */
     public void reactivate() {
-        if (restartWithExewrap(null) || restartWithJava(null)) {
-            deactivate();
-        }
-    }
-
-    /**
-     * Reactivate the current application with update mode.
-     */
-    public void update(String archive) {
-        if (restartWithExewrap(archive) || restartWithJava(archive)) {
+        if (restartWithExewrap() || restartWithJava()) {
             deactivate();
         }
     }
@@ -559,7 +548,7 @@ public final class Viewtify {
      * 
      * @return
      */
-    private boolean restartWithJava(String update) {
+    private boolean restartWithJava() {
         ArrayList<String> commands = new ArrayList();
 
         // Java
@@ -586,21 +575,17 @@ public final class Viewtify {
      * 
      * @return
      */
-    private boolean restartWithExewrap(String update) {
+    private boolean restartWithExewrap() {
         String directory = System.getProperty("java.application.path");
         String name = System.getProperty("java.application.name");
         if (directory == null || name == null) {
-            return false;
+            // return false;
+            directory = ".test-app";
+            name = "yamato.exe";
         }
 
-        Directory root = Locator.directory(directory);
+        Directory root = Locator.directory(directory).absolutize();
         File exe = root.file(name);
-
-        if (update != null) {
-            UpdateTask.run(update, app -> {
-                app.unpack("Unpacking the new version.", app.root.file("test.zip"), app.root);
-            });
-        }
 
         try {
             new ProcessBuilder().directory(root.asJavaFile()).inheritIO().command(exe.path()).start();
@@ -745,8 +730,8 @@ public final class Viewtify {
      * @param type
      * @return
      */
-    public static <V extends View & ValueHelper<V, R> & VerifyHelper<V>, R> Optional<R> dialog(String message, Class<V> type) {
-        return dialog(message, type, null);
+    public static <V extends View & ValueHelper<V, R> & VerifyHelper<V>, R> Optional<R> dialog(String message, Class<V> type, ButtonType... buttons) {
+        return dialog(message, type, null, buttons);
     }
 
     /**
@@ -758,7 +743,7 @@ public final class Viewtify {
      * @param type
      * @return
      */
-    public static <V extends View & ValueHelper<V, R> & VerifyHelper<V>, R> Optional<R> dialog(String message, Class<V> type, R value) {
+    public static <V extends View & ValueHelper<V, R> & VerifyHelper<V>, R> Optional<R> dialog(String message, Class<V> type, R value, ButtonType... buttons) {
         V view = I.make(type);
         Node ui = view.ui();
         view.value(value);
@@ -770,10 +755,17 @@ public final class Viewtify {
         dialog.setGraphic(null);
         dialog.getDialogPane().setContent(ui);
 
-        Node buttonOK = dialog.getDialogPane().lookupButton(ButtonType.OK);
-        view.verifier().invalid.to(buttonOK::setDisable);
+        Node button;
+        if (buttons != null && buttons.length != 0) {
+            dialog.getButtonTypes().setAll(buttons);
+            button = dialog.getDialogPane().lookupButton(buttons[0]);
+        } else {
+            button = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        }
+        view.verifier().invalid.to(button::setDisable);
 
-        return dialog.showAndWait().map(b -> b == ButtonType.OK ? view.value() : null);
+        return dialog.showAndWait()
+                .map(b -> (buttons == null || buttons.length == 0 ? b == ButtonType.OK : b == buttons[0]) ? view.value() : null);
     }
 
     /**
@@ -790,6 +782,37 @@ public final class Viewtify {
         dialog.setTitle(null);
         dialog.getDialogPane().setPrefWidth(300);
         return dialog.showAndWait().map(button -> button == ButtonType.OK);
+    }
+
+    /**
+     * Show the user custom dialog.
+     * 
+     * @param <V>
+     * @param message
+     * @param type
+     * @return
+     */
+    public static <V extends View & VerifyHelper<V>> Optional<Boolean> dialogConfirm(String message, Class<V> type, ButtonType... buttons) {
+        V view = I.make(type);
+        Node ui = view.ui();
+
+        Alert dialog = new Alert(AlertType.CONFIRMATION);
+        dialog.initOwner(mainStage);
+        dialog.setHeaderText(null);
+        dialog.setTitle(message);
+        dialog.setGraphic(null);
+        dialog.getDialogPane().setContent(ui);
+
+        Node button;
+        if (buttons != null && buttons.length != 0) {
+            dialog.getButtonTypes().setAll(buttons);
+            button = dialog.getDialogPane().lookupButton(buttons[0]);
+        } else {
+            button = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        }
+        view.verifier().invalid.to(button::setDisable);
+
+        return dialog.showAndWait().map(b -> buttons == null || buttons.length == 0 ? b == ButtonType.OK : b == buttons[0]);
     }
 
     /**

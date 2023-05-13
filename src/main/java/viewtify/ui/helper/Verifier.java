@@ -71,6 +71,28 @@ public class Verifier {
     }
 
     /**
+     * Make this verifier valid.
+     * 
+     * @return
+     */
+    public Verifier makeValid() {
+        message.set((String) null);
+        return this;
+    }
+
+    /**
+     * Make this verifier invalid.
+     * 
+     * @return
+     */
+    public Verifier makeInvalid() {
+        if (message.isAbsent()) {
+            message.set("Invalid");
+        }
+        return this;
+    }
+
+    /**
      * Register the self verifier.
      * 
      * @param verifier
