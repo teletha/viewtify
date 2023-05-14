@@ -16,10 +16,8 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.StackWalker.Option;
-import java.lang.management.ManagementFactory;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.WatchEvent;
@@ -96,6 +94,7 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.VerifyHelper;
+import viewtify.update.ApplicationPlatform;
 
 public final class Viewtify {
 
@@ -226,6 +225,15 @@ public final class Viewtify {
             // ====================================
             System.setProperty("java.awt.headless", "true");
         }
+    }
+
+    /**
+     * Get the application class.
+     * 
+     * @return
+     */
+    public static Class applicationClass() {
+        return applicationLaunchingClass;
     }
 
     /**
@@ -538,61 +546,8 @@ public final class Viewtify {
      * Reactivate the current application.
      */
     public void reactivate() {
-        if (restartWithExewrap() || restartWithJava()) {
-            deactivate();
-        }
-    }
-
-    /**
-     * Try to restart application in normal java environment.
-     * 
-     * @return
-     */
-    private boolean restartWithJava() {
-        ArrayList<String> commands = new ArrayList();
-
-        // Java
-        commands.add(System.getProperty("java.home") + java.io.File.separator + "bin" + java.io.File.separator + "java");
-        commands.addAll(ManagementFactory.getRuntimeMXBean().getInputArguments());
-
-        // classpath
-        commands.add("-cp");
-        commands.add(ManagementFactory.getRuntimeMXBean().getClassPath());
-
-        // Class to be executed
-        commands.add(applicationLaunchingClass.getName());
-
-        try {
-            new ProcessBuilder(commands).start();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Try to restart application in exewrap environment.
-     * 
-     * @return
-     */
-    private boolean restartWithExewrap() {
-        String directory = System.getProperty("java.application.path");
-        String name = System.getProperty("java.application.name");
-        if (directory == null || name == null) {
-            // return false;
-            directory = ".test-app";
-            name = "yamato.exe";
-        }
-
-        Directory root = Locator.directory(directory).absolutize();
-        File exe = root.file(name);
-
-        try {
-            new ProcessBuilder().directory(root.asJavaFile()).inheritIO().command(exe.path()).start();
-            return true;
-        } catch (Throwable e) {
-            return false;
-        }
+        ApplicationPlatform.current().boot();
+        deactivate();
     }
 
     /**
@@ -782,37 +737,6 @@ public final class Viewtify {
         dialog.setTitle(null);
         dialog.getDialogPane().setPrefWidth(300);
         return dialog.showAndWait().map(button -> button == ButtonType.OK);
-    }
-
-    /**
-     * Show the user custom dialog.
-     * 
-     * @param <V>
-     * @param message
-     * @param type
-     * @return
-     */
-    public static <V extends View & VerifyHelper<V>> Optional<Boolean> dialogConfirm(String message, Class<V> type, ButtonType... buttons) {
-        V view = I.make(type);
-        Node ui = view.ui();
-
-        Alert dialog = new Alert(AlertType.CONFIRMATION);
-        dialog.initOwner(mainStage);
-        dialog.setHeaderText(null);
-        dialog.setTitle(message);
-        dialog.setGraphic(null);
-        dialog.getDialogPane().setContent(ui);
-
-        Node button;
-        if (buttons != null && buttons.length != 0) {
-            dialog.getButtonTypes().setAll(buttons);
-            button = dialog.getDialogPane().lookupButton(buttons[0]);
-        } else {
-            button = dialog.getDialogPane().lookupButton(ButtonType.OK);
-        }
-        view.verifier().invalid.to(button::setDisable);
-
-        return dialog.showAndWait().map(b -> buttons == null || buttons.length == 0 ? b == ButtonType.OK : b == buttons[0]);
     }
 
     /**

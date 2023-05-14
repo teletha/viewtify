@@ -9,19 +9,14 @@
  */
 package viewtify.update;
 
-import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javafx.scene.control.ButtonType;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Observer;
-import kiss.Signal;
-import kiss.WiseConsumer;
+import kiss.WiseBiConsumer;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -30,23 +25,25 @@ import viewtify.Viewtify;
 
 public class UpdateTask {
 
-    /** The root directory of this application. */
-    public Directory root;
-
-    /** The archive of new application. */
-    public File archive;
-
     /** The all tasks. */
     @Managed
     List<Task> tasks = new ArrayList();
 
-    /** The intentional delay for ui notification. */
+    /** The root directory of this application. */
     @Managed
-    int delay;
+    private Directory root;
 
-    /** The rebootable application name. */
+    /** The archive of new application. */
     @Managed
-    File rebootApp;
+    private File archive;
+
+    /** The origin platform. */
+    @Managed
+    private ApplicationPlatform origin = ApplicationPlatform.current();
+
+    /** The updater platform. */
+    @Managed
+    private ApplicationPlatform updater;
 
     /**
      * Build the update task for the specified new version.
@@ -61,41 +58,17 @@ public class UpdateTask {
         prepare.load("Download new version.");
         prepare.build("Prepare to update.");
         prepare.message("Ready for update.");
-        prepare.store();
+        UpdaterView.tasks = prepare;
 
-        Viewtify.dialogConfirm("Updater", UpdaterView.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(start -> {
-            if (start) {
-                System.out.println("Update");
+        Viewtify.dialog("Updater", UpdaterView.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(tasks -> {
+            tasks.tasks.clear();
+            tasks.unpack("Unpacking the new version.", tasks.archive, tasks.root);
+            tasks.reboot("Update is completed, reboot.");
 
-                Directory jre = root.directory(".updater/jre");
-                Directory lib = root.directory(".updater\\lib").absolutize();
+            I.write(tasks, tasks.updater.locateRoot().file("updater.json").newBufferedWriter());
 
-                UpdateTask update = new UpdateTask(root, archive);
-                update.unpack("Unpacking the new version.", update.archive, update.root);
-                update.reboot("Update is completed, reboot.");
-
-                ArrayList<String> commands = new ArrayList();
-
-                // Java
-                commands.add(jre + java.io.File.separator + "bin" + java.io.File.separator + "java.exe");
-                commands.addAll(ManagementFactory.getRuntimeMXBean().getInputArguments());
-
-                // classpath
-                commands.add("-cp");
-                commands.add(lib + "/*");
-
-                // Class to be executed
-                commands.add(UpdaterView.class.getName());
-
-                try {
-                    System.out.println(commands);
-                    new ProcessBuilder(commands).directory(root.asJavaFile()).inheritIO().start();
-
-                    Viewtify.application().deactivate();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            tasks.updater.boot();
+            Viewtify.application().deactivate();
         });
     }
 
@@ -141,19 +114,6 @@ public class UpdateTask {
         Load task = new Load();
         task.remote = archive.path();
         task.local = archive;
-        task.message = message;
-
-        tasks.add(task);
-    }
-
-    /**
-     * Build runtime.
-     * 
-     * @param message
-     */
-    public void build(String message) {
-        Build task = new Build();
-        task.root = Locator.temporaryDirectory();
         task.message = message;
 
         tasks.add(task);
@@ -235,28 +195,35 @@ public class UpdateTask {
     }
 
     /**
-     * Store the serialized task.
+     * @param message
      */
-    void store() {
-        System.setProperty("viewtify.update.task", I.write(this));
-    }
+    public void build(String message) {
+        Build task = new Build();
+        task.message = message;
 
-    /**
-     * Restore the serialized task.
-     */
-    void restore() {
-        I.json(System.getProperty("viewtify.update.task")).as(this);
+        tasks.add(task);
     }
 
     /**
      * Internal tasks.
      */
-    public static abstract class Task implements WiseConsumer<Observer<? super Progress>> {
+    public static abstract class Task implements WiseBiConsumer<UpdateTask, Observer<? super Progress>> {
 
         /**
          * Task message.
          */
         public String message;
+    }
+
+    static class Build extends Task {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> param) throws Throwable {
+            tasks.updater = tasks.origin.updater();
+        }
     }
 
     /**
@@ -271,7 +238,7 @@ public class UpdateTask {
          * {@inheritDoc}
          */
         @Override
-        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
             departure.trackMovingTo(destination, o -> o.replaceExisting().strip()).to(listener);
         }
     }
@@ -288,7 +255,7 @@ public class UpdateTask {
          * {@inheritDoc}
          */
         @Override
-        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
             departure.trackCopyingTo(destination, o -> o.replaceExisting().strip()).to(listener);
         }
     }
@@ -305,7 +272,7 @@ public class UpdateTask {
          * {@inheritDoc}
          */
         @Override
-        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
             departure.trackUnpackingTo(destination, o -> o.replaceExisting()).to(listener);
         }
     }
@@ -322,7 +289,7 @@ public class UpdateTask {
          * {@inheritDoc}
          */
         @Override
-        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
             target.trackDeleting(patterns).to(listener);
         }
     }
@@ -340,7 +307,7 @@ public class UpdateTask {
          * {@inheritDoc}
          */
         @Override
-        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
             if (archive == null || archive.isBlank()) {
                 throw new Error("Unable to update because the location of the new application is unknown.");
             }
@@ -372,48 +339,12 @@ public class UpdateTask {
          * {@inheritDoc}
          */
         @Override
-        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
             if (local.path().equals(remote)) {
                 // do nothing
             } else {
                 // download
             }
-        }
-    }
-
-    static class Build extends Task {
-
-        public Directory root;
-
-        /** The current JVM. */
-        private final Directory jvm = Locator.directory(System.getProperty("java.home"));
-
-        /** The loaded libraries. */
-        private final Set<File> libraries = detectLibraries("jdk.module.path").concat(detectLibraries("java.class.path")).toSet();
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
-            if (jvm.path().startsWith(root.path())) {
-                // need to copy runtime
-
-            }
-        }
-
-        /**
-         * Detect loaded libraries.
-         * 
-         * @param key
-         * @return
-         */
-        private Signal<File> detectLibraries(String key) {
-            return I.signal(System.getProperty(key))
-                    .skipNull()
-                    .flatArray(value -> value.split(java.io.File.pathSeparator))
-                    .take(path -> path.endsWith(".jar"))
-                    .map(path -> Locator.file(path));
         }
     }
 
@@ -423,7 +354,10 @@ public class UpdateTask {
          * {@inheritDoc}
          */
         @Override
-        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
+            tasks.origin.boot();
+
+            Viewtify.application().deactivate();
         }
     }
 
@@ -433,7 +367,7 @@ public class UpdateTask {
          * {@inheritDoc}
          */
         @Override
-        public void ACCEPT(Observer<? super Progress> listener) throws Throwable {
+        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
             // do nothing
         }
     }
