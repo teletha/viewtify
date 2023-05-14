@@ -79,7 +79,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
     private void execute() {
         Viewtify.inWorker(() -> {
             try {
-                UpdateTask update = tasks != null ? tasks : I.json(Path.of("updater.json")).as(UpdateTask.class);
+                UpdateTask update = tasks != null ? tasks : I.json(Path.of(".updater")).as(UpdateTask.class);
                 List<Task> tasks = update.tasks;
 
                 for (int i = 0; i < tasks.size(); i++) {

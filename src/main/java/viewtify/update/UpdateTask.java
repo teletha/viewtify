@@ -65,7 +65,7 @@ public class UpdateTask {
             tasks.unpack("Unpacking the new version.", tasks.archive, tasks.root);
             tasks.reboot("Update is completed, reboot.");
 
-            I.write(tasks, tasks.updater.locateRoot().file("updater.json").newBufferedWriter());
+            I.write(tasks, tasks.updater.locateRoot().file(".updater").newBufferedWriter());
 
             tasks.updater.boot();
             Viewtify.application().deactivate();
