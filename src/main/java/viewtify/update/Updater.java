@@ -9,6 +9,9 @@
  */
 package viewtify.update;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -108,6 +111,11 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
 
                 property.set(update);
             } catch (Throwable e) {
+                try {
+                    e.printStackTrace(new PrintStream(new File("error.log")));
+                } catch (FileNotFoundException e1) {
+                    throw I.quiet(e);
+                }
                 message.text(I.translate(e.getMessage()));
             }
         });

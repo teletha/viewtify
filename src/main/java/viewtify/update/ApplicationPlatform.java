@@ -70,15 +70,6 @@ public abstract class ApplicationPlatform {
     }
 
     /**
-     * @param dest
-     */
-    protected void copyTo(ApplicationPlatform dest) {
-        locateRoot().observeCopyingTo(dest.locateRoot(), o -> o.strip().replaceExisting()).to(file -> {
-
-        });
-    }
-
-    /**
      * Detect the current site.
      * 
      * @return

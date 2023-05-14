@@ -59,7 +59,7 @@ class ExewrapPlatform extends ApplicationPlatform {
      */
     @Override
     public ApplicationPlatform updater() {
-        Directory temp = Locator.temporaryDirectory();
+        Directory temp = root.directory(".updater");
 
         JREPlatform updater = new JREPlatform();
         updater.rootAPP = temp;
@@ -69,7 +69,7 @@ class ExewrapPlatform extends ApplicationPlatform {
         updater.classPath = "lib/*";
 
         locateJRE().copyTo(temp);
-        locateLibrary().compareTo(temp);
+        locateLibrary().copyTo(temp);
 
         return updater;
     }

@@ -124,7 +124,7 @@ public class JREPlatform extends ApplicationPlatform {
             commands.add(application.getName());
 
             // execute process
-            new ProcessBuilder(commands).inheritIO().start();
+            new ProcessBuilder(commands).directory(rootAPP.asJavaFile()).inheritIO().start();
 
             return true;
         } catch (Throwable e) {

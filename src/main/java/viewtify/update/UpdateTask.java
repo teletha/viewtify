@@ -39,7 +39,7 @@ public class UpdateTask {
 
     /** The origin platform. */
     @Managed
-    private ApplicationPlatform origin = ApplicationPlatform.current();
+    private ApplicationPlatform origin;
 
     /** The updater platform. */
     @Managed
@@ -222,6 +222,7 @@ public class UpdateTask {
          */
         @Override
         public void ACCEPT(UpdateTask tasks, Observer<? super Progress> param) throws Throwable {
+            tasks.origin = ApplicationPlatform.current();
             tasks.updater = tasks.origin.updater();
         }
     }
