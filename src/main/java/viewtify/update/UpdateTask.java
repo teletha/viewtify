@@ -58,9 +58,9 @@ public class UpdateTask {
         prepare.load("Download new version.");
         prepare.build("Prepare to update.");
         prepare.message("Ready for update.");
-        UpdaterView.tasks = prepare;
+        Updater.tasks = prepare;
 
-        Viewtify.dialog("Updater", UpdaterView.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(tasks -> {
+        Viewtify.dialog("Updater", Updater.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(tasks -> {
             tasks.tasks.clear();
             tasks.unpack("Unpacking the new version.", tasks.archive, tasks.root);
             tasks.reboot("Update is completed, reboot.");

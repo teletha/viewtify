@@ -28,7 +28,7 @@ import viewtify.ui.helper.Verifier;
 import viewtify.ui.helper.VerifyHelper;
 import viewtify.update.UpdateTask.Task;
 
-public class UpdaterView extends View implements VerifyHelper<UpdaterView>, ValueHelper<UpdaterView, UpdateTask> {
+public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<Updater, UpdateTask> {
 
     /** The dirty variable bridge. */
     static UpdateTask tasks;
@@ -135,6 +135,6 @@ public class UpdaterView extends View implements VerifyHelper<UpdaterView>, Valu
      * @param args
      */
     public static void main(String[] args) {
-        Viewtify.application().title("Updater").size(400, 150).activate(UpdaterView.class);
+        Viewtify.application().title("Updater").size(400, 150).activate(Updater.class);
     }
 }

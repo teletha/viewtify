@@ -65,7 +65,7 @@ class ExewrapPlatform extends ApplicationPlatform {
         updater.rootAPP = temp;
         updater.rootJRE = temp.directory("jre");
         updater.rootLIB = temp.directory("lib");
-        updater.application = UpdaterView.class;
+        updater.application = Updater.class;
         updater.classPath = "lib/*";
 
         locateJRE().copyTo(temp);

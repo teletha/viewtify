@@ -141,7 +141,7 @@ public class JREPlatform extends ApplicationPlatform {
         updater.rootAPP = rootAPP;
         updater.rootJRE = rootJRE;
         updater.rootLIB = rootLIB;
-        updater.application = UpdaterView.class;
+        updater.application = Updater.class;
         updater.args = args;
         updater.classPath = classPath;
 
