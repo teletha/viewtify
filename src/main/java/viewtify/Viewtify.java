@@ -41,8 +41,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -74,6 +72,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -225,15 +226,6 @@ public final class Viewtify {
             // ====================================
             System.setProperty("java.awt.headless", "true");
         }
-    }
-
-    /**
-     * Get the application class.
-     * 
-     * @return
-     */
-    public static Class applicationClass() {
-        return applicationLaunchingClass;
     }
 
     /**
@@ -531,6 +523,15 @@ public final class Viewtify {
                 stylesheets.add(index[0], changed);
             });
         }
+    }
+
+    /**
+     * Find the application launcher.
+     * 
+     * @return
+     */
+    public Class launcher() {
+        return applicationLaunchingClass;
     }
 
     /**

@@ -9,6 +9,8 @@
  */
 package viewtify.update;
 
+import java.util.Map;
+
 import kiss.Managed;
 import psychopath.Directory;
 import psychopath.File;
@@ -45,9 +47,11 @@ class ExewrapPlatform extends ApplicationPlatform {
      * {@inheritDoc}
      */
     @Override
-    public boolean boot() {
+    public boolean boot(Map<String, String> params) {
         try {
-            new ProcessBuilder().directory(root.asJavaFile()).inheritIO().command(exe.path()).start();
+            ProcessBuilder process = new ProcessBuilder().directory(root.asJavaFile()).inheritIO().command(exe.path());
+            process.environment().putAll(params);
+            process.start();
             return true;
         } catch (Throwable e) {
             return false;

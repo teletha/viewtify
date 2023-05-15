@@ -9,6 +9,8 @@
  */
 package viewtify.update;
 
+import java.util.Map;
+
 import psychopath.Directory;
 
 public abstract class ApplicationPlatform {
@@ -42,7 +44,14 @@ public abstract class ApplicationPlatform {
     /**
      * Boot this site.
      */
-    public abstract boolean boot();
+    public boolean boot() {
+        return boot(Map.of());
+    }
+
+    /**
+     * Boot this site.
+     */
+    public abstract boolean boot(Map<String, String> params);
 
     /**
      * Create the updater platform.

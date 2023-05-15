@@ -9,9 +9,8 @@
  */
 package viewtify.update;
 
-import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import kiss.I;
@@ -40,10 +39,6 @@ public class JREPlatform extends ApplicationPlatform {
     @Managed
     Class application;
 
-    /** The application args. */
-    @Managed
-    List<String> args = new ArrayList();
-
     /** The application classpath. */
     @Managed
     String classPath;
@@ -63,9 +58,9 @@ public class JREPlatform extends ApplicationPlatform {
                 .to()
                 .exact();
 
-        application = Viewtify.applicationClass();
-        args.addAll(ManagementFactory.getRuntimeMXBean().getInputArguments());
-        classPath = ManagementFactory.getRuntimeMXBean().getClassPath();
+        application = Viewtify.application().launcher();
+
+        classPath = System.getProperty("java.class.path");
 
         return this;
     }
@@ -108,13 +103,12 @@ public class JREPlatform extends ApplicationPlatform {
      * {@inheritDoc}
      */
     @Override
-    public boolean boot() {
+    public boolean boot(Map<String, String> params) {
         try {
             ArrayList<String> commands = new ArrayList();
 
             // Java
             commands.add(rootJRE.path() + java.io.File.separator + "bin" + java.io.File.separator + "java");
-            commands.addAll(args);
 
             // classpath
             commands.add("-cp");
@@ -124,7 +118,9 @@ public class JREPlatform extends ApplicationPlatform {
             commands.add(application.getName());
 
             // execute process
-            new ProcessBuilder(commands).directory(rootAPP.asJavaFile()).inheritIO().start();
+            ProcessBuilder process = new ProcessBuilder(commands).directory(rootAPP.asJavaFile()).inheritIO();
+            process.environment().putAll(params);
+            process.start();
 
             return true;
         } catch (Throwable e) {
@@ -142,7 +138,6 @@ public class JREPlatform extends ApplicationPlatform {
         updater.rootJRE = rootJRE;
         updater.rootLIB = rootLIB;
         updater.application = Updater.class;
-        updater.args = args;
         updater.classPath = classPath;
 
         return updater;

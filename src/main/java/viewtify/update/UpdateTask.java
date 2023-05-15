@@ -11,8 +11,10 @@ package viewtify.update;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javafx.scene.control.ButtonType;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Observer;
@@ -48,12 +50,21 @@ public class UpdateTask {
     /**
      * Build the update task for the specified new version.
      * 
+     * @param archive A locaiton of the new version.
+     */
+    public static void run(String archive) {
+        run(Locator.directory(""), archive);
+    }
+
+    /**
+     * Build the update task for the specified new version.
+     * 
      * @param root An application root directory.
      * @param archive A locaiton of the new version.
      */
     public static void run(Directory root, String archive) {
         // prepare to update
-        UpdateTask prepare = new UpdateTask(root, archive);
+        UpdateTask prepare = new UpdateTask(root);
         prepare.verify("Verify new version.", archive);
         prepare.load("Download new version.");
         prepare.build("Prepare to update.");
@@ -65,9 +76,7 @@ public class UpdateTask {
             tasks.unpack("Unpacking the new version.", tasks.archive, tasks.root);
             tasks.reboot("Update is completed, reboot.");
 
-            I.write(tasks, tasks.updater.locateRoot().file(".updater").newBufferedWriter());
-
-            tasks.updater.boot();
+            tasks.updater.boot(Map.of("updater", I.write(tasks)));
             Viewtify.application().deactivate();
         });
     }
@@ -81,14 +90,8 @@ public class UpdateTask {
     /**
      * Hide constructor.
      */
-    private UpdateTask(Directory root, String archive) {
+    private UpdateTask(Directory root) {
         this.root = root.absolutize();
-
-        if (archive.startsWith("http://") || archive.startsWith("https://")) {
-            throw new Error("Network access must be supported! FIXME");
-        }
-
-        this.archive = Locator.file(archive);
     }
 
     /**
@@ -101,6 +104,7 @@ public class UpdateTask {
         task.archive = archive;
         task.root = root;
         task.message = message;
+        this.archive = Locator.file(archive).absolutize();
 
         tasks.add(task);
     }
@@ -318,7 +322,7 @@ public class UpdateTask {
             }
 
             // check modification
-            File zip = Locator.file(archive);
+            File zip = Locator.file(archive).absolutize();
 
             if (zip.isAbsent()) {
                 throw new Error("Archive [" + archive + "] is not found.");
@@ -327,6 +331,8 @@ public class UpdateTask {
             if (zip.lastModifiedMilli() <= root.lastModifiedMilli()) {
                 throw new Error("The current version is latest, no need to update.");
             }
+
+            tasks.archive = zip;
         }
     }
 

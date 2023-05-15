@@ -12,10 +12,10 @@ package viewtify.update;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.nio.file.Path;
 import java.util.List;
 
 import javafx.beans.property.Property;
+
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -82,7 +82,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
     private void execute() {
         Viewtify.inWorker(() -> {
             try {
-                UpdateTask update = tasks != null ? tasks : I.json(Path.of(".updater")).as(UpdateTask.class);
+                UpdateTask update = tasks != null ? tasks : I.json(System.getenv("updater")).as(UpdateTask.class);
                 List<Task> tasks = update.tasks;
 
                 for (int i = 0; i < tasks.size(); i++) {
