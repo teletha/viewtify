@@ -217,6 +217,10 @@ public class UpdateTask {
          * Task message.
          */
         public String message;
+
+        public double weight() {
+            return 20;
+        }
     }
 
     static class Build extends Task {
@@ -334,6 +338,14 @@ public class UpdateTask {
 
             tasks.archive = zip;
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public double weight() {
+            return 1;
+        }
     }
 
     static class Load extends Task {
@@ -366,6 +378,14 @@ public class UpdateTask {
 
             Viewtify.application().deactivate();
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public double weight() {
+            return 1;
+        }
     }
 
     static class Message extends Task {
@@ -376,6 +396,14 @@ public class UpdateTask {
         @Override
         public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
             // do nothing
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public double weight() {
+            return 1;
         }
     }
 }

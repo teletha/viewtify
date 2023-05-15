@@ -84,13 +84,15 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
             try {
                 UpdateTask update = tasks != null ? tasks : I.json(System.getenv("updater")).as(UpdateTask.class);
                 List<Task> tasks = update.tasks;
+                double total = tasks.stream().mapToDouble(x -> x.weight()).sum();
+                double[] sum = {0};
 
                 for (int i = 0; i < tasks.size(); i++) {
                     Task task = tasks.get(i);
                     Variable<String> m = I.translate(task.message);
                     Viewtify.inUI(() -> message.text(m));
 
-                    double part = 1d / tasks.size();
+                    double partTotal = task.weight();
                     task.accept(update, progress -> {
                         try {
                             Thread.sleep(25);
@@ -98,13 +100,15 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
                             // ignore
                         }
 
-                        bar.value(v -> v + part / progress.totalFiles);
+                        bar.value(sum[0] + partTotal / progress.totalFiles * progress.completedFiles());
                         Viewtify.inUI(() -> {
                             message.text(m + " (" + progress.rateByFiles() + "%)");
                             detail.text(progress.location);
                         });
                     });
-                    bar.value(part * (i + 1));
+
+                    sum[0] = sum[0] + partTotal;
+                    bar.value(sum[0] / total);
                     Viewtify.inUI(() -> detail.text(""));
                 }
                 verifier.makeValid();
