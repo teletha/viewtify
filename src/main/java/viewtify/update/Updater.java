@@ -15,7 +15,6 @@ import java.io.PrintStream;
 import java.util.List;
 
 import javafx.beans.property.Property;
-
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -84,31 +83,30 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
             try {
                 UpdateTask update = tasks != null ? tasks : I.json(System.getenv("updater")).as(UpdateTask.class);
                 List<Task> tasks = update.tasks;
-                double total = tasks.stream().mapToDouble(x -> x.weight()).sum();
-                double[] sum = {0};
+                double total = tasks.stream().mapToDouble(Task::weight).sum();
+                double parts = 0;
 
                 for (int i = 0; i < tasks.size(); i++) {
                     Task task = tasks.get(i);
                     Variable<String> m = I.translate(task.message);
                     Viewtify.inUI(() -> message.text(m));
 
-                    double partTotal = task.weight();
+                    double part = task.weight() / total;
                     task.accept(update, progress -> {
                         try {
-                            Thread.sleep(25);
+                            Thread.sleep(20);
                         } catch (InterruptedException e) {
                             // ignore
                         }
 
-                        bar.value(sum[0] + partTotal / progress.totalFiles * progress.completedFiles());
+                        bar.value(v -> v + (part / progress.totalFiles));
                         Viewtify.inUI(() -> {
                             message.text(m + " (" + progress.rateByFiles() + "%)");
                             detail.text(progress.location);
                         });
                     });
 
-                    sum[0] = sum[0] + partTotal;
-                    bar.value(sum[0] / total);
+                    bar.value(parts += part);
                     Viewtify.inUI(() -> detail.text(""));
                 }
                 verifier.makeValid();

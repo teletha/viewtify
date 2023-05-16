@@ -36,7 +36,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -827,8 +826,12 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 });
             });
 
-            filter.observe().to(v -> filtered.setPredicate(v));
-            sorter.observe().to(v -> sorted.setComparator(v));
+            filter.observe().to(v -> {
+                if (filtered != null) filtered.setPredicate(v);
+            });
+            sorter.observe().to(v -> {
+                if (sorted != null) sorted.setComparator(v);
+            });
         }
 
         /**

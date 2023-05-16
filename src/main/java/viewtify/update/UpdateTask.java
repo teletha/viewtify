@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.scene.control.ButtonType;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Observer;
@@ -73,7 +72,17 @@ public class UpdateTask {
 
         Viewtify.dialog("Updater", Updater.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(tasks -> {
             tasks.tasks.clear();
-            tasks.unpack("Unpacking the new version.", tasks.archive, tasks.root);
+            if (tasks.origin.canUpdateJRE()) {
+                tasks.delete("Uninstalling the old runtime.", tasks.origin.locateJRE());
+            } else {
+                tasks.delete("Uninstalling the old runtime.", tasks.origin.locateRoot().directory("jre"));
+            }
+            if (tasks.origin.canUpdateLibrary()) {
+                tasks.delete("Uninstalling the old version.", tasks.origin.locateLibrary());
+            } else {
+                tasks.delete("Uninstalling the old runtime.", tasks.origin.locateRoot().directory("lib"));
+            }
+            tasks.unpack("Installing the new version, please wait a minute.", tasks.archive, tasks.root);
             tasks.reboot("Update is completed, reboot.");
 
             tasks.updater.boot(Map.of("updater", I.write(tasks)));
