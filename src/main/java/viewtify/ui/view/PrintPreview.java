@@ -1,0 +1,320 @@
+/*
+ * Copyright (C) 2023 The YAMATO Development Team
+ *
+ * Licensed under the MIT License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *          https://opensource.org/licenses/MIT
+ */
+package viewtify.ui.view;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.beans.property.Property;
+import javafx.event.Event;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.PrintColor;
+import javafx.print.PrintQuality;
+import javafx.print.PrintSides;
+import javafx.print.Printer;
+import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+
+import org.controlsfx.control.SegmentedButton;
+
+import kiss.I;
+import stylist.Style;
+import stylist.StyleDSL;
+import stylist.value.Color;
+import viewtify.property.SmartProperty;
+import viewtify.style.FormStyles;
+import viewtify.ui.UIComboBox;
+import viewtify.ui.UILabel;
+import viewtify.ui.UISpinner;
+import viewtify.ui.UIText;
+import viewtify.ui.UIToggleButton;
+import viewtify.ui.View;
+import viewtify.ui.ViewDSL;
+import viewtify.ui.helper.User;
+import viewtify.ui.helper.ValueHelper;
+import viewtify.ui.helper.Verifier;
+import viewtify.ui.helper.VerifyHelper;
+import viewtify.ui.view.PrintPreview.PrintInfo;
+import viewtify.util.FXUtils;
+
+public class PrintPreview extends View implements VerifyHelper<PrintPreview>, ValueHelper<PrintPreview, PrintInfo> {
+
+    /** The main image view. */
+    private final ImageView view = new ImageView();
+
+    /** The associated print info. */
+    private final SmartProperty<PrintInfo> property = new SmartProperty(new PrintInfo());
+
+    /** The empty verifier. */
+    private final Verifier verifier = new Verifier();
+
+    /** The printer UI. */
+    private UILabel pageSize;
+
+    /** The printer UI. */
+    private UISpinner<Integer> copies;
+
+    /** The printer UI. */
+    private UIText<Integer> pager;
+
+    /** The printer UI. */
+    private UIComboBox<Printer> printer;
+
+    /** The printer UI. */
+    private UIComboBox<Paper> paper;
+
+    /** The printer UI. */
+    private UIComboBox<PrintColor> color;
+
+    /** The printer UI. */
+    private UIComboBox<PageOrientation> orientation;
+
+    /** The printer UI. */
+    private UIComboBox<PrintSides> side;
+
+    /** The printer UI. */
+    private UIComboBox<PrintQuality> quality;
+
+    /** The max page size. */
+    private int maxPage;
+
+    /** The current page index. */
+    private int currentPage = -1;
+
+    /** The page image set. */
+    private WritableImage[] images;
+
+    private UIToggleButton start;
+
+    private UIToggleButton prev;
+
+    private UIToggleButton location;
+
+    private UIToggleButton next;
+
+    private UIToggleButton end;
+
+    private SegmentedButton navi = new SegmentedButton();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ViewDSL declareUI() {
+        return new ViewDSL() {
+            {
+                $(hbox, () -> {
+                    $(sbox, () -> {
+                        $(() -> view);
+                        $(() -> navi, style.navi);
+                    });
+                    $(vbox, style.side, () -> {
+                        $(hbox, FormStyles.FormRow, style.title, () -> {
+                            label(en("Printing"), FormStyles.FormLabelMin);
+                            $(pageSize, FormStyles.FormInput);
+                        });
+
+                        $(hbox, FormStyles.FormRow, () -> {
+                            label(en("Number of copies"), FormStyles.FormLabelMin);
+                            $(copies, FormStyles.FormInput);
+                        });
+                        $(hbox, FormStyles.FormRow, () -> {
+                            label(en("Page"), FormStyles.FormLabelMin);
+                            $(pager, FormStyles.FormInput);
+                        });
+                        $(hbox, FormStyles.FormRow, () -> {
+                            label(en("Printer"), FormStyles.FormLabelMin);
+                            $(printer, FormStyles.FormInput);
+                        });
+                        $(hbox, FormStyles.FormRow, () -> {
+                            label(en("Paper"), FormStyles.FormLabelMin);
+                            $(paper, FormStyles.FormInput);
+                        });
+                        $(hbox, FormStyles.FormRow, () -> {
+                            label(en("Color mode"), FormStyles.FormLabelMin);
+                            $(color, FormStyles.FormInput);
+                        });
+                        $(hbox, FormStyles.FormRow, () -> {
+                            label(en("Print orientation"), FormStyles.FormLabelMin);
+                            $(orientation, FormStyles.FormInput);
+                        });
+                        $(hbox, FormStyles.FormRow, () -> {
+                            label(en("Print side"), FormStyles.FormLabelMin);
+                            $(side, FormStyles.FormInput);
+                        });
+                        $(hbox, FormStyles.FormRow, () -> {
+                            label(en("Quality"), FormStyles.FormLabelMin);
+                            $(quality, FormStyles.FormInput);
+                        });
+                    });
+                });
+            }
+        };
+    }
+
+    interface style extends StyleDSL {
+        Style side = () -> {
+            margin.left(22, px);
+        };
+
+        Style title = () -> {
+            border.bottom.solid().width(1, px).color(Color.White);
+            margin.bottom(10, px);
+            padding.bottom(7, px);
+        };
+
+        Style navi = () -> {
+            position.absolute().top(8, px);
+        };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void initialize() {
+        copies.ui.setValueFactory(new IntegerSpinnerValueFactory(1, 30));
+        pager.placeholder(en("all pages")).disable(true);
+        printer.items(Printer.getAllPrinters()).initialize(Printer.getDefaultPrinter()).disable(true);
+        paper.disable(true);
+        color.items(PrintColor.values()).initialize(PrintColor.COLOR).disable(true);
+        orientation.items(PageOrientation.values()).initialize(PageOrientation.LANDSCAPE).disable(true);
+        side.items(PrintSides.values()).initialize(PrintSides.ONE_SIDED).disable(true);
+        quality.items(PrintQuality.values()).initialize(PrintQuality.NORMAL).disable(true);
+
+        start.text("<<").focusable(false).when(User.MousePress, e -> drawPage(0, e));
+        prev.text("<").focusable(false).when(User.MousePress, e -> drawPage(currentPage - 1, e));
+        location.focusable(false).ignore(User.MousePress);
+        next.text(">").focusable(false).when(User.MousePress, e -> drawPage(currentPage + 1, e));
+        end.text(">>").focusable(false).when(User.MousePress, e -> drawPage(maxPage - 1, e));
+        navi.getButtons().addAll(start.ui, prev.ui, location.ui, next.ui, end.ui);
+
+        // bind configuration
+        copies.observing().to(v -> value().copies = v);
+        pager.observing(true).to(v -> value().pageSize = v);
+        printer.observing().to(v -> value().printer = v);
+        color.observing().to(v -> value().color = v);
+        orientation.observing().to(v -> value().orientation = v);
+        side.observing().to(v -> value().side = v);
+        quality.observing().to(v -> value().quality = v);
+
+        view.addEventHandler(ScrollEvent.SCROLL, e -> {
+            if (0 < e.getDeltaY()) {
+                drawPage(currentPage - 1);
+            } else {
+                drawPage(currentPage + 1);
+            }
+        });
+        view.addEventFilter(MouseEvent.MOUSE_ENTERED, e -> {
+            FXUtils.animate(250, navi.opacityProperty(), 1);
+        });
+        view.addEventFilter(MouseEvent.MOUSE_EXITED, e -> {
+            if (!view.getLayoutBounds().contains(e.getX(), e.getY())) {
+                FXUtils.animate(250, navi.opacityProperty(), 0);
+            }
+        });
+    }
+
+    /**
+     * @param images
+     */
+    public void images(WritableImage... images) {
+        this.maxPage = images.length;
+        this.images = images;
+        pageSize.text(I.translate("{0} pages", images.length));
+
+        value().pageSize = images.length;
+        for (int i = 0; i < images.length; i++) {
+            value().pages.add(i);
+        }
+
+        drawPage(0);
+    }
+
+    /**
+     * Draw the specified page.
+     */
+    private void drawPage(int page, Event e) {
+        e.consume();
+        drawPage(page);
+    }
+
+    /**
+     * Draw the specified page.
+     */
+    private void drawPage(int page) {
+        if (page < 0 || maxPage <= page || page == currentPage) {
+            return;
+        }
+
+        currentPage = page;
+        location.text(" " + (currentPage + 1) + " / " + maxPage + " ");
+
+        WritableImage image = images[currentPage];
+        view.setFitWidth(image.getWidth());
+        view.setFitHeight(image.getHeight());
+
+        FXUtils.animate(150, view.opacityProperty(), 0.1, () -> {
+            view.setImage(image);
+            FXUtils.animate(300, view.opacityProperty(), 1);
+        });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Property<PrintInfo> valueProperty() {
+        return property;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Verifier verifier() {
+        return verifier;
+    }
+
+    /**
+     * 
+     */
+    public static class PrintInfo {
+        public int copies;
+
+        public int pageSize;
+
+        public List<Integer> pages = new ArrayList();
+
+        public Paper paper;
+
+        public Printer printer;
+
+        public PrintColor color;
+
+        public PageOrientation orientation;
+
+        public PrintSides side;
+
+        public PrintQuality quality;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            return "PrintInfo [copies=" + copies + ", pageSize=" + pageSize + ", pages=" + pages + ", paper=" + paper + ", printer=" + printer + ", color=" + color + ", orientation=" + orientation + ", side=" + side + ", quality=" + quality + "]";
+        }
+    }
+}

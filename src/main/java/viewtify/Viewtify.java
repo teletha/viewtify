@@ -41,8 +41,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -74,6 +72,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -83,6 +84,7 @@ import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
+import kiss.WiseConsumer;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -698,10 +700,10 @@ public final class Viewtify {
      * @param type
      * @return
      */
-    public static <V extends View & ValueHelper<V, R> & VerifyHelper<V>, R> Optional<R> dialog(String message, Class<V> type, R value, ButtonType... buttons) {
+    public static <V extends View & ValueHelper<V, R> & VerifyHelper<V>, R> Optional<R> dialog(String message, Class<V> type, WiseConsumer<V> init, ButtonType... buttons) {
         V view = I.make(type);
         Node ui = view.ui();
-        view.value(value);
+        if (init != null) init.accept(view);
 
         Alert dialog = new Alert(AlertType.CONFIRMATION);
         dialog.initOwner(mainStage);

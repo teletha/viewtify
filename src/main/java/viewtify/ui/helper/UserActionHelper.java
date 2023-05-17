@@ -35,8 +35,22 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
      * 
      * @param action
      */
-    default void action(WiseRunnable action) {
-        when(User.Action, action);
+    default Self action(WiseRunnable action) {
+        return when(User.Action, action);
+    }
+
+    /**
+     * Disable event propagation.
+     * 
+     * @param <E>
+     * @param actionTypes A list of user action to disable.
+     * @return
+     */
+    default <E extends Event> Self ignore(User<E>... actionTypes) {
+        for (User<E> type : actionTypes) {
+            when(type, e -> e.consume());
+        }
+        return (Self) this;
     }
 
     /**
