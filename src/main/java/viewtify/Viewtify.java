@@ -719,10 +719,13 @@ public final class Viewtify {
         } else {
             button = dialog.getDialogPane().lookupButton(ButtonType.OK);
         }
-        view.verifier().invalid.to(button::setDisable);
+        view.verifier().invalid.to(button::setDisable, view);
 
-        return dialog.showAndWait()
+        Optional<R> result = dialog.showAndWait()
                 .map(b -> (buttons == null || buttons.length == 0 ? b == ButtonType.OK : b == buttons[0]) ? view.value() : null);
+
+        view.dispose();
+        return result;
     }
 
     /**

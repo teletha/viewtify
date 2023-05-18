@@ -45,7 +45,7 @@ public class UISpinner<T> extends UserInterface<UISpinner<T>, Spinner<T>>
             e.consume();
         });
 
-        I.Lang.observe().to(this::updateDisplay);
+        I.Lang.observe().to(x -> updateDisplay(), this);
     }
 
     /**

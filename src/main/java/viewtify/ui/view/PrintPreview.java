@@ -28,7 +28,6 @@ import javafx.scene.input.ScrollEvent;
 
 import org.controlsfx.control.SegmentedButton;
 
-import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
 import stylist.value.Color;
@@ -51,13 +50,13 @@ import viewtify.util.FXUtils;
 public class PrintPreview extends View implements VerifyHelper<PrintPreview>, ValueHelper<PrintPreview, PrintInfo> {
 
     /** The main image view. */
-    private final ImageView view = new ImageView();
+    private ImageView view = new ImageView();
 
     /** The associated print info. */
-    private final SmartProperty<PrintInfo> property = new SmartProperty(new PrintInfo());
+    private SmartProperty<PrintInfo> property = new SmartProperty(new PrintInfo());
 
     /** The empty verifier. */
-    private final Verifier verifier = new Verifier();
+    private Verifier verifier = new Verifier();
 
     /** The printer UI. */
     private UILabel pageSize;
@@ -95,16 +94,22 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
     /** The page image set. */
     private WritableImage[] images;
 
+    /** The navigation UI. */
     private UIToggleButton start;
 
+    /** The navigation UI. */
     private UIToggleButton prev;
 
+    /** The navigation UI. */
     private UIToggleButton location;
 
+    /** The navigation UI. */
     private UIToggleButton next;
 
+    /** The navigation UI. */
     private UIToggleButton end;
 
+    /** The navigation UI. */
     private SegmentedButton navi = new SegmentedButton();
 
     /**
@@ -232,7 +237,7 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
     public void images(WritableImage... images) {
         this.maxPage = images.length;
         this.images = images;
-        pageSize.text(I.translate("{0} pages", images.length));
+        pageSize.text(en("{0} pages", images.length));
 
         value().pageSize = images.length;
         for (int i = 0; i < images.length; i++) {
@@ -285,6 +290,18 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
     @Override
     public Verifier verifier() {
         return verifier;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        super.dispose();
+
+        view.setImage(null);
+        view = null;
+        navi = null;
     }
 
     /**

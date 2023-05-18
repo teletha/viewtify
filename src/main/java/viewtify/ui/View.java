@@ -17,12 +17,15 @@ import java.lang.reflect.Type;
 import java.util.function.Predicate;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumnBase;
+import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
@@ -31,13 +34,10 @@ import kiss.Variable;
 import kiss.model.Model;
 import viewtify.Viewtify;
 
-public abstract class View implements Extensible, UserInterfaceProvider<Node> {
+public abstract class View implements Extensible, UserInterfaceProvider<Node>, Disposable {
 
     /** The human-readable ID separator. */
     public static final String IDSeparator = " ➝ ";
-
-    /** The deconstructor. */
-    protected final Disposable disposer = Disposable.empty();
 
     /** The associated root node. */
     private Node root;
@@ -166,7 +166,10 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      * @return
      */
     public final <T> Signal<T> findUI(Class<T> type) {
-        return I.signal(getClass().getDeclaredFields()).take(f -> type.isAssignableFrom(f.getType())).map(f -> (T) f.get(this));
+        return I.signal(getClass().getDeclaredFields()).take(f -> type.isAssignableFrom(f.getType())).map(f -> {
+            f.setAccessible(true);
+            return (T) f.get(this);
+        });
     }
 
     /**
@@ -336,6 +339,39 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node> {
      * @return Localized text.
      */
     protected final Variable<String> en(String text, Object... context) {
-        return I.translate(text, context);
+        return I.translate(this, text, context);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void vandalize() {
+        findUI(Disposable.class).to(Disposable::dispose);
+
+        if (root instanceof Pane pane) {
+            deconstruct(pane);
+        }
+        root = null;
+
+        if (parent != null) {
+            parent.dispose();
+            parent = null;
+        }
+    }
+
+    /**
+     * Deconstruct UI.
+     * 
+     * @param pane
+     */
+    private void deconstruct(Pane pane) {
+        ObservableList<Node> children = pane.getChildren();
+        for (Node child : children) {
+            if (child instanceof Pane childPane) {
+                deconstruct(childPane);
+            }
+        }
+        children.clear();
     }
 }

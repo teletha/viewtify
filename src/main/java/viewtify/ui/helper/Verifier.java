@@ -20,7 +20,7 @@ import kiss.Variable;
 import kiss.WiseConsumer;
 import kiss.WiseRunnable;
 
-public class Verifier {
+public class Verifier implements Disposable {
 
     /** The validation message. */
     public final Variable<String> message = Variable.empty();
@@ -49,6 +49,16 @@ public class Verifier {
 
             // bind the new text
             translatableText = message.observing().to(this.message::set);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void vandalize() {
+        if (translatableText != null) {
+            translatableText.dispose();
         }
     }
 
