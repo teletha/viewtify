@@ -14,6 +14,7 @@ import java.util.function.Function;
 
 import kiss.Signal;
 import kiss.Variable;
+import viewtify.Viewtify;
 
 public interface CollectableValuedItemRenderingHelper<Self extends CollectableValuedItemRenderingHelper, V>
         extends ValueHelper<Self, V>, CollectableItemRenderingHelper<Self, V> {
@@ -39,7 +40,7 @@ public interface CollectableValuedItemRenderingHelper<Self extends CollectableVa
     default Self renderSelectedByVariable(Function<V, Variable<String>> text) {
         Objects.requireNonNull(text);
 
-        return renderSelectedWhen(s -> s.flatVariable(text::apply));
+        return renderSelectedWhen(s -> s.on(Viewtify.UIThread).flatVariable(text::apply));
     }
 
     /**

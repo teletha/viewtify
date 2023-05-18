@@ -11,6 +11,7 @@ package viewtify.ui.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javafx.beans.property.Property;
 import javafx.event.Event;
@@ -21,19 +22,19 @@ import javafx.print.PrintQuality;
 import javafx.print.PrintSides;
 import javafx.print.Printer;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 
 import org.controlsfx.control.SegmentedButton;
 
+import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
 import stylist.value.Color;
 import viewtify.property.SmartProperty;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIComboBox;
+import viewtify.ui.UIImage;
 import viewtify.ui.UILabel;
 import viewtify.ui.UISpinner;
 import viewtify.ui.UIText;
@@ -49,8 +50,12 @@ import viewtify.util.FXUtils;
 
 public class PrintPreview extends View implements VerifyHelper<PrintPreview>, ValueHelper<PrintPreview, PrintInfo> {
 
+    private static final List<Paper> JP = List.of(Paper.A3, Paper.A4, Paper.A5, Paper.JIS_B5, Paper.JIS_B6, Paper.JAPANESE_POSTCARD);
+
+    private static final Map<String, List<Paper>> PaperSet = Map.of("jp", JP);
+
     /** The main image view. */
-    private ImageView view = new ImageView();
+    private UIImage view;
 
     /** The associated print info. */
     private SmartProperty<PrintInfo> property = new SmartProperty(new PrintInfo());
@@ -121,13 +126,14 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
             {
                 $(hbox, () -> {
                     $(sbox, () -> {
-                        $(() -> view);
+                        $(view);
                         $(() -> navi, style.navi);
                     });
                     $(vbox, style.side, () -> {
                         $(hbox, FormStyles.FormRow, style.title, () -> {
-                            label(en("Printing"), FormStyles.FormLabelMin);
-                            $(pageSize, FormStyles.FormInput);
+                            label(en("Settings"), FormStyles.FormLabelMin);
+
+                            $(pageSize, FormStyles.FormInput, style.pageSize);
                         });
 
                         $(hbox, FormStyles.FormRow, () -> {
@@ -141,6 +147,10 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
                         $(hbox, FormStyles.FormRow, () -> {
                             label(en("Printer"), FormStyles.FormLabelMin);
                             $(printer, FormStyles.FormInput);
+                        });
+
+                        $(hbox, FormStyles.FormRow, style.advanced, () -> {
+                            label(en("Advanced Settings"), FormStyles.FormLabelMin);
                         });
                         $(hbox, FormStyles.FormRow, () -> {
                             label(en("Paper"), FormStyles.FormLabelMin);
@@ -173,10 +183,20 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
             margin.left(22, px);
         };
 
+        Style pageSize = () -> {
+            text.align.right();
+        };
+
         Style title = () -> {
             border.bottom.solid().width(1, px).color(Color.White);
             margin.bottom(10, px);
             padding.bottom(7, px);
+            font.weight.bolder();
+        };
+
+        Style advanced = () -> {
+            title.style();
+            margin.top(33, px);
         };
 
         Style navi = () -> {
@@ -189,14 +209,15 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
      */
     @Override
     protected void initialize() {
-        copies.ui.setValueFactory(new IntegerSpinnerValueFactory(1, 30));
+        copies.ui.setValueFactory(new IntegerSpinnerValueFactory(1, 300));
+
         pager.placeholder(en("all pages")).disable(true);
-        printer.items(Printer.getAllPrinters());
-        paper.items(Paper.A3, Paper.A4, Paper.A5, Paper.JIS_B4, Paper.JIS_B5, Paper.JIS_B6, Paper.JAPANESE_POSTCARD);
-        color.items(PrintColor.values()).renderByVariable(x -> en(x.name()));
-        orientation.items(PageOrientation.values()).renderByVariable(x -> en(x.name()));
-        side.items(PrintSides.values()).renderByVariable(x -> en(x.name()));
-        quality.items(PrintQuality.values()).renderByVariable(x -> en(x.name()));
+        printer.items(Printer.getAllPrinters()).value(Printer.getDefaultPrinter()).render(Printer::getName);
+        paper.items(PaperSet.getOrDefault(I.Lang.v, JP)).placeholder(en("Default")).renderByVariable(x -> en(x.getName()));
+        color.items(PrintColor.values()).value(PrintColor.COLOR).renderByVariable(x -> en(x.name()));
+        orientation.items(PageOrientation.values()).placeholder(en("Default")).renderByVariable(x -> en(x.name()));
+        side.items(PrintSides.values()).value(PrintSides.ONE_SIDED).renderByVariable(x -> en(x.name()));
+        quality.items(PrintQuality.values()).value(PrintQuality.NORMAL).renderByVariable(x -> en(x.name()));
 
         start.text("<<").focusable(false).when(User.MousePress, e -> drawPage(0, e));
         prev.text("<").focusable(false).when(User.MousePress, e -> drawPage(currentPage - 1, e));
@@ -215,18 +236,16 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
         side.observing().to(v -> value().side = v);
         quality.observing().to(v -> value().quality = v);
 
-        view.addEventHandler(ScrollEvent.SCROLL, e -> {
+        view.when(User.Scroll, e -> {
             if (0 < e.getDeltaY()) {
                 drawPage(currentPage - 1);
             } else {
                 drawPage(currentPage + 1);
             }
-        });
-        view.addEventFilter(MouseEvent.MOUSE_ENTERED, e -> {
+        }).when(User.MouseEnter, e -> {
             FXUtils.animate(250, navi.opacityProperty(), 1);
-        });
-        view.addEventFilter(MouseEvent.MOUSE_EXITED, e -> {
-            if (!view.getLayoutBounds().contains(e.getX(), e.getY())) {
+        }).when(User.MouseExit, e -> {
+            if (!view.ui.getLayoutBounds().contains(e.getX(), e.getY())) {
                 FXUtils.animate(250, navi.opacityProperty(), 0);
             }
         });
@@ -260,20 +279,21 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
      * Draw the specified page.
      */
     private void drawPage(int page) {
-        if (page < 0 || maxPage <= page || page == currentPage) {
+        if (page < 0 || maxPage <= page || (page == currentPage)) {
             return;
         }
 
         currentPage = page;
-        location.text(" " + (currentPage + 1) + " / " + maxPage + " ");
+
+        location.text("  " + (currentPage + 1) + " / " + maxPage + "  ");
 
         WritableImage image = images[currentPage];
-        view.setFitWidth(image.getWidth());
-        view.setFitHeight(image.getHeight());
+        view.ui.setFitWidth(image.getWidth());
+        view.ui.setFitHeight(image.getHeight());
 
-        FXUtils.animate(150, view.opacityProperty(), 0.1, () -> {
-            view.setImage(image);
-            FXUtils.animate(300, view.opacityProperty(), 1);
+        FXUtils.animate(150, view.ui.opacityProperty(), 0.1, () -> {
+            view.value(image);
+            FXUtils.animate(300, view.ui.opacityProperty(), 1);
         });
     }
 
@@ -300,7 +320,7 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
     public void dispose() {
         super.dispose();
 
-        view.setImage(null);
+        view.value((Image) null);
         view = null;
         navi = null;
     }
