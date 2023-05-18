@@ -191,12 +191,12 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
     protected void initialize() {
         copies.ui.setValueFactory(new IntegerSpinnerValueFactory(1, 30));
         pager.placeholder(en("all pages")).disable(true);
-        printer.items(Printer.getAllPrinters()).initialize(Printer.getDefaultPrinter()).disable(true);
-        paper.disable(true);
-        color.items(PrintColor.values()).initialize(PrintColor.COLOR).disable(true);
-        orientation.items(PageOrientation.values()).initialize(PageOrientation.LANDSCAPE).disable(true);
-        side.items(PrintSides.values()).initialize(PrintSides.ONE_SIDED).disable(true);
-        quality.items(PrintQuality.values()).initialize(PrintQuality.NORMAL).disable(true);
+        printer.items(Printer.getAllPrinters());
+        paper.items(Paper.A3, Paper.A4, Paper.A5, Paper.JIS_B4, Paper.JIS_B5, Paper.JIS_B6, Paper.JAPANESE_POSTCARD);
+        color.items(PrintColor.values()).renderByVariable(x -> en(x.name()));
+        orientation.items(PageOrientation.values()).renderByVariable(x -> en(x.name()));
+        side.items(PrintSides.values()).renderByVariable(x -> en(x.name()));
+        quality.items(PrintQuality.values()).renderByVariable(x -> en(x.name()));
 
         start.text("<<").focusable(false).when(User.MousePress, e -> drawPage(0, e));
         prev.text("<").focusable(false).when(User.MousePress, e -> drawPage(currentPage - 1, e));
@@ -207,6 +207,7 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
 
         // bind configuration
         copies.observing().to(v -> value().copies = v);
+        paper.observing().to(v -> value().paper = v);
         pager.observing(true).to(v -> value().pageSize = v);
         printer.observing().to(v -> value().printer = v);
         color.observing().to(v -> value().color = v);
