@@ -58,6 +58,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "ApplicationPlatform",
+			"packageName": "viewtify.update",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "CollectableHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
@@ -240,6 +247,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "JREPlatform",
+			"packageName": "viewtify.update",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Key",
 			"packageName": "viewtify",
 			"type": "Class"
@@ -334,6 +348,20 @@ const root = {
 			"name": "PlaceholderHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "PrintPreview",
+			"packageName": "viewtify.ui.view",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "PrintPreview.PrintInfo",
+			"packageName": "viewtify.ui.view",
+			"type": "Class"
 		},
 		{
 			"modifiers": {
@@ -562,6 +590,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UIImage",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UILabel",
 			"packageName": "viewtify.ui",
 			"type": "Class"
@@ -584,6 +619,13 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UIPane",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UIProgressBar",
 			"packageName": "viewtify.ui",
 			"type": "Class"
 		},
@@ -758,14 +800,14 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "UpdateResult",
+			"name": "UpdateTask",
 			"packageName": "viewtify.update",
 			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "UpdateSite",
+			"name": "UpdateTask.Task",
 			"packageName": "viewtify.update",
 			"type": "AbstractClass"
 		},
@@ -773,13 +815,6 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Updater",
-			"packageName": "viewtify.update",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "UpdaterView",
 			"packageName": "viewtify.update",
 			"type": "Class"
 		},

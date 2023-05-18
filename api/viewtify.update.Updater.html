@@ -7,10 +7,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="d">
-			<h1 class="M" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
-			<nav class="S"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="d">
+		<header class="T">
+			<h1 class="k" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
+			<nav class="L"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -19,7 +19,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="Y" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="b" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -27,125 +27,76 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="c">
-			<nav class="J">
+		<main class="f">
+			<nav class="i">
 				<div></div>
 			</nav>
-			<article class="H" id="Article">
-				<section class="X"><code class="L">viewtify.update</code>
-					<h2 class="Class e"><code class="P">Updater</code></h2>
-					<div class="b"></div>
+			<article class="Y" id="Article">
+				<section class="O"><code class="X">viewtify.update</code>
+					<h2 class="Class R"><code class="W">Updater</code></h2>
+					<div class="Z">
+						<ul class="C E">
+							<li><code><a href="api/viewtify.ui.View.html">View</a></code></li>
+						</ul>
+						<ul class="C F">
+							<li><code>kiss.Disposable</code></li>
+							<li><code>kiss.Extensible</code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code><a href="api/viewtify.update.Updater.html">Updater</a></code>, <code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></code></code></li>
+						</ul>
+					</div>
 				</section>
-				<section class="X" id="Updater()">
-					<h2 class="a"><i class="PUBLIC"></i><code class="P">Updater</code><code class="l">()</code></h2>
+				<section class="O" id="Updater()">
+					<h2 class="h"><i class="PUBLIC"></i><code class="W">Updater</code><code class="l">()</code></h2>
 				</section>
-				<section class="X" id="addUpdateSite(java.lang.String)">
-					<h2 class="a"><i class="PUBLIC"></i><code class="P">addUpdateSite</code><code class="l">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">site</code>)</code><i class="V"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></i></h2>
-					<table class="f">
-						<tr class="k">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>site</code></td>
-							<td></td>
-						</tr>
-						<tr class="g">
-							<td><code><a href="api/viewtify.update.Updater.html">Updater</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Add update site.</p>
-					</span></section>
-				<section class="X" id="addUpdateSite(psychopath.Directory)">
-					<h2 class="a"><i class="PUBLIC"></i><code class="P">addUpdateSite</code><code class="l">(<code>psychopath.Directory</code> <code class="parameterName">site</code>)</code><i class="V"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></i></h2>
-					<table class="f">
-						<tr class="k">
-							<td><code>psychopath.Directory</code> <code>site</code></td>
-							<td></td>
-						</tr>
-						<tr class="g">
-							<td><code><a href="api/viewtify.update.Updater.html">Updater</a></code></td>
+				<section class="O" id="initialize()">
+					<h2 class="h"><i class="OVERRIDE PROTECTED"></i><code class="W">initialize</code><code class="l">()</code><i class="V"><code>void</code></i></h2>
+				</section>
+				<section class="O" id="verifier()">
+					<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="W">verifier</code><code class="l">()</code><i class="V"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
+					<table class="J">
+						<tr class="c">
+							<td><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="X" id="addUpdateSite(java.nio.file.Path)">
-					<h2 class="a"><i class="PUBLIC"></i><code class="P">addUpdateSite</code><code class="l">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/nio/file/Path.html">Path</a></code> <code class="parameterName">site</code>)</code><i class="V"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></i></h2>
-					<table class="f">
-						<tr class="k">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/nio/file/Path.html">Path</a></code> <code>site</code></td>
-							<td></td>
-						</tr>
-						<tr class="g">
-							<td><code><a href="api/viewtify.update.Updater.html">Updater</a></code></td>
+				<section class="O" id="valueProperty()">
+					<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="W">valueProperty</code><code class="l">()</code><i class="V"><code>javafx.beans.property.Property<code class="parameters"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></code></code></i></h2>
+					<table class="J">
+						<tr class="c">
+							<td><code>javafx.beans.property.Property<code class="parameters"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="X" id="setRoot(psychopath.Directory)">
-					<h2 class="a"><i class="PUBLIC"></i><code class="P">setRoot</code><code class="l">(<code>psychopath.Directory</code> <code class="parameterName">directory</code>)</code><i class="V"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></i></h2>
-					<table class="f">
-						<tr class="k">
-							<td><code>psychopath.Directory</code> <code>directory</code></td>
+				<section class="O" id="main(java.lang.String[])">
+					<h2 class="h"><i class="PUBLIC STATIC"></i><code class="W">main</code><code class="l">(<code array="fix"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">args</code>)</code><i class="V"><code>void</code></i></h2>
+					<table class="J">
+						<tr class="I">
+							<td><code array="fix"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>args</code></td>
 							<td></td>
 						</tr>
-						<tr class="g">
-							<td><code><a href="api/viewtify.update.Updater.html">Updater</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Configure the root directory.</p>
+					</table><span class="B"><p>Entry point for updater.</p>
 					</span></section>
-				<section class="X" id="setRoot(java.nio.file.Path)">
-					<h2 class="a"><i class="PUBLIC"></i><code class="P">setRoot</code><code class="l">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/nio/file/Path.html">Path</a></code> <code class="parameterName">directory</code>)</code><i class="V"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></i></h2>
-					<table class="f">
-						<tr class="k">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/nio/file/Path.html">Path</a></code> <code>directory</code></td>
-							<td></td>
-						</tr>
-						<tr class="g">
-							<td><code><a href="api/viewtify.update.Updater.html">Updater</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Configure the root directory.</p>
-					</span></section>
-				<section class="X" id="canUpdate()">
-					<h2 class="a"><i class="PUBLIC"></i><code class="P">canUpdate</code><code class="l">()</code><i class="V"><code><a href="api/viewtify.update.UpdateResult.html">UpdateResult</a></code></i></h2>
-					<table class="f">
-						<tr class="g">
-							<td><code><a href="api/viewtify.update.UpdateResult.html">UpdateResult</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Check whether this updater is updatable or not.</p>
-					</span></section>
-				<section class="X" id="detectEnvironment()">
-					<h2 class="a"><i class="PUBLIC"></i><code class="P">detectEnvironment</code><code class="l">()</code><i class="V"><code>void</code></i></h2>
-				</section>
-				<section class="X" id="updateByZip(java.lang.String)">
-					<h2 class="a"><i class="PUBLIC"></i><code class="P">updateByZip</code><code class="l">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">path</code>)</code><i class="V"><code><a href="api/viewtify.update.UpdateResult.html">UpdateResult</a></code></i></h2>
-					<table class="f">
-						<tr class="k">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>path</code></td>
-							<td></td>
-						</tr>
-						<tr class="g">
-							<td><code><a href="api/viewtify.update.UpdateResult.html">UpdateResult</a></code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
 			</article>
-			<aside class="m" id="SubNavi">
-				<div class="Z">
-					<h5 class="j">Constructors</h5>
+			<aside class="M" id="SubNavi">
+				<div class="e">
+					<h5 class="P">Constructors</h5>
 					<ul>
 						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#Updater()">Updater</a></code><code class="l">()</code></li>
 					</ul>
-					<h5 class="j">Methods</h5>
+					<h5 class="P">Static Methods</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#addUpdateSite(java.lang.String)">addUpdateSite</a></code><code class="l">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">site</code>)</code><i class="I"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#addUpdateSite(psychopath.Directory)">addUpdateSite</a></code><code class="l">(<code>psychopath.Directory</code> <code class="parameterName">site</code>)</code><i class="I"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#addUpdateSite(java.nio.file.Path)">addUpdateSite</a></code><code class="l">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/nio/file/Path.html">Path</a></code> <code class="parameterName">site</code>)</code><i class="I"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#setRoot(psychopath.Directory)">setRoot</a></code><code class="l">(<code>psychopath.Directory</code> <code class="parameterName">directory</code>)</code><i class="I"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#setRoot(java.nio.file.Path)">setRoot</a></code><code class="l">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/nio/file/Path.html">Path</a></code> <code class="parameterName">directory</code>)</code><i class="I"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#canUpdate()">canUpdate</a></code><code class="l">()</code><i class="I"><code><a href="api/viewtify.update.UpdateResult.html">UpdateResult</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#detectEnvironment()">detectEnvironment</a></code><code class="l">()</code><i class="I"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#updateByZip(java.lang.String)">updateByZip</a></code><code class="l">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">path</code>)</code><i class="I"><code><a href="api/viewtify.update.UpdateResult.html">UpdateResult</a></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.update.Updater.html#main(java.lang.String[])">main</a></code><code class="l">(<code array="fix"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">args</code>)</code><i class="g"><code>void</code></i></li>
+					</ul>
+					<h5 class="P">Methods</h5>
+					<ul>
+						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.update.Updater.html#initialize()">initialize</a></code><code class="l">()</code><i class="g"><code>void</code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#verifier()">verifier</a></code><code class="l">()</code><i class="g"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#valueProperty()">valueProperty</a></code><code class="l">()</code><i class="g"><code>javafx.beans.property.Property<code class="parameters"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></code></code></i></li>
 					</ul>
 				</div>
 			</aside>
