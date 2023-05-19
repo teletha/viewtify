@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.scene.control.ButtonType;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Observer;
@@ -257,7 +258,7 @@ public class UpdateTask {
          */
         @Override
         public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            departure.trackMovingTo(destination, o -> o.replaceExisting().strip()).to(listener);
+            departure.trackMovingTo(destination, o -> o.replaceOld().strip()).to(listener);
         }
     }
 
@@ -274,7 +275,7 @@ public class UpdateTask {
          */
         @Override
         public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            departure.trackCopyingTo(destination, o -> o.replaceExisting().strip()).to(listener);
+            departure.trackCopyingTo(destination, o -> o.replaceOld().strip()).to(listener);
         }
     }
 
@@ -291,7 +292,7 @@ public class UpdateTask {
          */
         @Override
         public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            departure.trackUnpackingTo(destination, o -> o.replaceExisting()).to(listener);
+            departure.trackUnpackingTo(destination, o -> o.replaceOld()).to(listener);
         }
     }
 
