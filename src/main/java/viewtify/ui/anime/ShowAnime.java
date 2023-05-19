@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import kiss.WiseRunnable;
 
-public interface ShowAnime {
+public interface ShowAnime extends Animatable {
 
     /** Built-in swap animation. */
     ShowAnime FadeIn = (parent, before, action) -> {
@@ -33,6 +33,24 @@ public interface ShowAnime {
             }
         };
     };
+
+    /** Built-in swap animation. */
+    static ShowAnime fadeIn(double opacity) {
+        return (parent, before, action) -> {
+            new AnimeDefinition(action) {
+
+                @Override
+                public void initialize() {
+                    before.setOpacity(0);
+                };
+
+                @Override
+                public void before() {
+                    effect(before.opacityProperty(), opacity, 0.3);
+                }
+            };
+        };
+    }
 
     /** Built-in swap animation. */
     ShowAnime ZoomIn = (parent, before, action) -> {
@@ -85,8 +103,6 @@ public interface ShowAnime {
             }
         };
     };
-
-    void run(Pane parent, Node befor, WiseRunnable action);
 
     /**
      * Start animation.

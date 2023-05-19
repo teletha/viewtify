@@ -23,7 +23,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-
 import kiss.I;
 import kiss.Signal;
 import viewtify.Key;

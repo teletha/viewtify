@@ -45,13 +45,13 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Signaling;
 import kiss.Singleton;
 import kiss.Storable;
 import viewtify.Viewtify;
+import viewtify.ui.UIPane;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterfaceProvider;
 
@@ -114,6 +114,13 @@ public final class DockSystem {
      */
     static void requestSavingLayout() {
         layout().save.accept(true);
+    }
+
+    /**
+     * The root user interface for the docking system.
+     */
+    public static UIPane ui() {
+        return layout().findRoot().node;
     }
 
     /**
