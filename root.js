@@ -51,16 +51,16 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "AnimationAssistant",
-			"packageName": "viewtify.ui.helper",
-			"type": "Class"
+			"name": "AnimeDefinition",
+			"packageName": "viewtify.ui.anime",
+			"type": "AbstractClass"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "AnimeDefinition",
+			"name": "AnimeDefinition.BuiltinInterpolator",
 			"packageName": "viewtify.ui.anime",
-			"type": "AbstractClass"
+			"type": "Class"
 		},
 		{
 			"modifiers": {
