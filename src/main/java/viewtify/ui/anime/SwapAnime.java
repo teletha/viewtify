@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+
 import kiss.WiseRunnable;
 
 public interface SwapAnime {
@@ -113,18 +114,4 @@ public interface SwapAnime {
     };
 
     void run(Pane parent, Node before, Node after, WiseRunnable action);
-
-    /**
-     * Start animation.
-     * 
-     * @param animes
-     * @param action
-     */
-    public static void play(SwapAnime[] animes, Pane parent, Node before, Node after, WiseRunnable action) {
-        if (animes == null || animes.length == 0 || animes[0] == null) {
-            action.run();
-        } else {
-            animes[0].run(parent, before, after, action);
-        }
-    }
 }

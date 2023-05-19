@@ -10,9 +10,7 @@
 package viewtify.ui.anime;
 
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-import kiss.WiseRunnable;
 
 public interface HideAnime extends Animatable {
 
@@ -93,16 +91,13 @@ public interface HideAnime extends Animatable {
 
             @Override
             public void before() {
-                effect(before.scaleXProperty(), 1.1, BASE_DURATION.divide(2.3));
-                effect(before.scaleYProperty(), 1.1, BASE_DURATION.divide(2.3));
-            }
+                duration(BASE_DURATION.multiply(2));
+                interpolation(EASE_IN_OUT_BACK.enhance(v -> v * 2));
 
-            @Override
-            public void after() {
-                effect(before.opacityProperty(), 0, BASE_DURATION.divide(2));
-                effect(before.scaleXProperty(), 1 - scale, BASE_DURATION.divide(1.5));
-                effect(before.scaleYProperty(), 1 - scale, BASE_DURATION.divide(1.5));
-            };
+                effect(before.opacityProperty(), 0);
+                effect(before.scaleXProperty(), 1 - scale);
+                effect(before.scaleYProperty(), 1 - scale);
+            }
 
             @Override
             public void cleanup() {
@@ -125,16 +120,13 @@ public interface HideAnime extends Animatable {
 
             @Override
             public void before() {
-                effect(before.scaleXProperty(), 0.9, BASE_DURATION.divide(2.3));
-                effect(before.scaleYProperty(), 0.9, BASE_DURATION.divide(2.3));
-            }
+                duration(BASE_DURATION.multiply(2));
+                interpolation(EASE_IN_OUT_BACK.enhance(v -> v * 2));
 
-            @Override
-            public void after() {
-                effect(before.opacityProperty(), 0, BASE_DURATION.divide(2));
-                effect(before.scaleXProperty(), 1 + scale, BASE_DURATION.divide(1.5));
-                effect(before.scaleYProperty(), 1 + scale, BASE_DURATION.divide(1.5));
-            };
+                effect(before.opacityProperty(), 0);
+                effect(before.scaleXProperty(), 1 + scale);
+                effect(before.scaleYProperty(), 1 + scale);
+            }
 
             @Override
             public void cleanup() {
@@ -142,18 +134,4 @@ public interface HideAnime extends Animatable {
             }
         };
     };
-
-    /**
-     * Start animation.
-     * 
-     * @param animes
-     * @param action
-     */
-    public static void play(HideAnime[] animes, Pane parent, Node before, WiseRunnable action) {
-        if (animes == null || animes.length == 0 || animes[0] == null) {
-            action.run();
-        } else {
-            animes[0].run(parent, before, action);
-        }
-    }
 }

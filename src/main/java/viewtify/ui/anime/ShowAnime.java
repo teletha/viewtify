@@ -10,9 +10,7 @@
 package viewtify.ui.anime;
 
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-import kiss.WiseRunnable;
 
 public interface ShowAnime extends Animatable {
 
@@ -35,7 +33,7 @@ public interface ShowAnime extends Animatable {
     };
 
     /** Built-in swap animation. */
-    static ShowAnime fadeIn(double opacity) {
+    static ShowAnime FadeIn(double opacity) {
         return (parent, before, action) -> {
             new AnimeDefinition(action) {
 
@@ -103,18 +101,4 @@ public interface ShowAnime extends Animatable {
             }
         };
     };
-
-    /**
-     * Start animation.
-     * 
-     * @param animes
-     * @param action
-     */
-    public static void play(ShowAnime[] animes, Pane parent, Node before, WiseRunnable action) {
-        if (animes == null || animes.length == 0 || animes[0] == null) {
-            action.run();
-        } else {
-            animes[0].run(parent, before, action);
-        }
-    }
 }

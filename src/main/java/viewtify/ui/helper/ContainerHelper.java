@@ -12,6 +12,7 @@ package viewtify.ui.helper;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.anime.SwapAnime;
 
@@ -34,8 +35,8 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
                 children.add(after);
             } else {
                 Node before = children.get(0);
-                if (before != after) {
-                    SwapAnime.play(anime, parent, before, after, () -> children.set(0, after));
+                if (before != after && anime != null && 0 < anime.length) {
+                    anime[0].run(parent, before, after, () -> children.set(0, after));
                 }
             }
         }
