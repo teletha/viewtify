@@ -44,9 +44,9 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "AnimationAssistant",
-			"packageName": "viewtify.ui.helper",
-			"type": "Class"
+			"name": "Animatable",
+			"packageName": "viewtify.ui.anime",
+			"type": "Functional"
 		},
 		{
 			"modifiers": {
@@ -54,6 +54,13 @@ const root = {
 			"name": "AnimeDefinition",
 			"packageName": "viewtify.ui.anime",
 			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AnimeDefinition.BuiltinInterpolator",
+			"packageName": "viewtify.ui.anime",
+			"type": "Class"
 		},
 		{
 			"modifiers": {
@@ -668,6 +675,13 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UISplitPane",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UIStackPane",
 			"packageName": "viewtify.ui",
 			"type": "Class"
 		},
