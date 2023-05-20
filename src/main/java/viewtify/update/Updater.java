@@ -94,7 +94,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
                     double part = task.weight() / total;
                     task.accept(update, progress -> {
                         try {
-                            Thread.sleep(20);
+                            Thread.sleep(10);
                         } catch (InterruptedException e) {
                             // ignore
                         }
@@ -114,7 +114,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
                 property.set(update);
             } catch (Throwable e) {
                 try {
-                    e.printStackTrace(new PrintStream(new File("error.log")));
+                    e.printStackTrace(new PrintStream(new File("update-error.log")));
                 } catch (FileNotFoundException e1) {
                     throw I.quiet(e);
                 }

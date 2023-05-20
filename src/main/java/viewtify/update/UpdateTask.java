@@ -10,11 +10,11 @@
 package viewtify.update;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javafx.scene.control.ButtonType;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Observer;
@@ -73,17 +73,8 @@ public class UpdateTask {
 
         Viewtify.dialog("Updater", Updater.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(tasks -> {
             tasks.tasks.clear();
-            if (tasks.origin.canUpdateJRE()) {
-                tasks.delete("Uninstalling the old runtime.", tasks.origin.locateJRE());
-            } else {
-                tasks.delete("Uninstalling the old runtime.", tasks.origin.locateRoot().directory("jre"));
-            }
-            if (tasks.origin.canUpdateLibrary()) {
-                tasks.delete("Uninstalling the old version.", tasks.origin.locateLibrary());
-            } else {
-                tasks.delete("Uninstalling the old runtime.", tasks.origin.locateRoot().directory("lib"));
-            }
             tasks.unpack("Installing the new version, please wait a minute.", tasks.archive, tasks.root);
+            tasks.cleanup("Clean up old files.", tasks.origin.locateLibrary());
             tasks.reboot("Update is completed, reboot.");
 
             tasks.updater.boot(Map.of("updater", I.write(tasks)));
@@ -184,6 +175,14 @@ public class UpdateTask {
         tasks.add(task);
     }
 
+    public void cleanup(String message, Directory target) {
+        Clean task = new Clean();
+        task.target = target;
+        task.message = message;
+
+        tasks.add(task);
+    }
+
     /**
      * Reboot this application.
      * 
@@ -258,7 +257,7 @@ public class UpdateTask {
          */
         @Override
         public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            departure.trackMovingTo(destination, o -> o.replaceOld().strip()).to(listener);
+            departure.trackMovingTo(destination, o -> o.replaceDifferent().strip()).to(listener);
         }
     }
 
@@ -275,7 +274,7 @@ public class UpdateTask {
          */
         @Override
         public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            departure.trackCopyingTo(destination, o -> o.replaceOld().strip()).to(listener);
+            departure.trackCopyingTo(destination, o -> o.replaceDifferent().strip()).to(listener);
         }
     }
 
@@ -292,7 +291,7 @@ public class UpdateTask {
          */
         @Override
         public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            departure.trackUnpackingTo(destination, o -> o.replaceOld()).to(listener);
+            departure.trackUnpackingTo(destination, o -> o.replaceDifferent()).to(listener);
         }
     }
 
@@ -310,6 +309,51 @@ public class UpdateTask {
         @Override
         public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
             target.trackDeleting(patterns).to(listener);
+        }
+    }
+
+    /**
+     * Clean
+     */
+    static class Clean extends Task {
+
+        Directory target;
+
+        private Map<String, File> files = new HashMap();
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public double weight() {
+            return 5;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
+            target.walkFile("*.jar").to(file -> {
+                String name = name(file.name());
+                File old = files.put(name, file);
+                if (old != null) {
+                    old.trackDeleting().to(listener);
+                }
+            });
+        }
+
+        private String name(String value) {
+            int index = value.indexOf('-');
+            while (index != -1) {
+                char c = value.charAt(index + 1);
+                if (Character.isDigit(c)) {
+                    return value.substring(0, index);
+                } else {
+                    index = value.indexOf('-', index + 1);
+                }
+            }
+            return value;
         }
     }
 
