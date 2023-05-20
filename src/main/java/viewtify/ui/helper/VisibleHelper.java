@@ -242,4 +242,15 @@ public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAcces
     default Self invisibleBriefly() {
         return invisibleDuring(400, TimeUnit.MILLISECONDS);
     }
+
+    /**
+     * Set the opacity of this UI.
+     * 
+     * @param value
+     * @return
+     */
+    default Self opacity(double value) {
+        property(Type.Opacity).setValue(value);
+        return (Self) this;
+    }
 }
