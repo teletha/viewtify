@@ -22,7 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -33,6 +32,7 @@ import kiss.model.Model;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
+import viewtify.ui.helper.AnimateHelper;
 import viewtify.ui.helper.DecorationHelper;
 import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.PropertyAccessHelper;
@@ -48,8 +48,9 @@ import viewtify.ui.helper.VisibleHelper;
 import viewtify.util.Icon;
 
 public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> extends ReferenceHolder
-        implements Disposable, UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>, TooltipHelper<Self, W>,
-        UserInterfaceProvider<W>, PropertyAccessHelper, VerifyHelper<Self>, VisibleHelper<Self>, DecorationHelper<Self> {
+        implements AnimateHelper<Self>, Disposable, UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>,
+        TooltipHelper<Self, W>, UserInterfaceProvider<W>, PropertyAccessHelper, VerifyHelper<Self>, VisibleHelper<Self>,
+        DecorationHelper<Self> {
 
     /** User configuration for UI. */
     private static final Preference preference = I.make(Preference.class).restore();
