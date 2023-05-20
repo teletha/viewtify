@@ -122,7 +122,6 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
             }
 
             modifyItemUISafely(list -> {
-                list.clear();
                 list.setAll(items);
             });
         }
