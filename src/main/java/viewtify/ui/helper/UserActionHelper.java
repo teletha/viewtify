@@ -13,7 +13,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.WiseBiConsumer;
@@ -115,7 +114,8 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
      * @return Chainable API.
      */
     default <E extends Event> Self when(User<E> actionType, WiseRunnable listener) {
-        return when(I.signal(actionType), listener);
+        WiseConsumer wise = I.wiseC(listener);
+        return (Self) when(actionType, wise);
     }
 
     /**
@@ -126,8 +126,9 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
      * @param listener An event listener.
      * @return Chainable API.
      */
-    default <E extends Event> Self when(User<E> actionType1, User<E> actionType2, WiseRunnable listener) {
-        return when(I.signal(actionType1, actionType2), listener);
+    default <E1 extends Event, E2 extends Event> Self when(User<E1> actionType1, User<E2> actionType2, WiseRunnable listener) {
+        WiseConsumer wise = I.wiseC(listener);
+        return (Self) when(actionType1, wise).when(actionType2, wise);
     }
 
     /**
@@ -139,19 +140,9 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
      * @param listener An event listener.
      * @return Chainable API.
      */
-    default <E extends Event> Self when(User<E> actionType1, User<E> actionType2, User<E> actionType3, WiseRunnable listener) {
-        return when(I.signal(actionType1, actionType2, actionType3), listener);
-    }
-
-    /**
-     * Listen all specified user actions.
-     * 
-     * @param actionTypes A list of user actions to detect.
-     * @param listener An event listener.
-     * @return Chainable API.
-     */
-    private <E extends Event> Self when(Signal<User<E>> actionTypes, WiseRunnable listener) {
-        return when(actionTypes, I.wiseC(listener));
+    default <E1 extends Event, E2 extends Event, E3 extends Event> Self when(User<E1> actionType1, User<E2> actionType2, User<E3> actionType3, WiseRunnable listener) {
+        WiseConsumer wise = I.wiseC(listener);
+        return (Self) when(actionType1, wise).when(actionType2, wise).when(actionType3, wise);
     }
 
     /**
