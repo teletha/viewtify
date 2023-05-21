@@ -22,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -48,7 +49,7 @@ import viewtify.ui.helper.VisibleHelper;
 import viewtify.util.Icon;
 
 public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> extends ReferenceHolder
-        implements AnimateHelper<Self>, Disposable, UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>,
+        implements AnimateHelper<Self, W>, Disposable, UserActionHelper<Self>, StyleHelper<Self, W>, DisableHelper<Self>,
         TooltipHelper<Self, W>, UserInterfaceProvider<W>, PropertyAccessHelper, VerifyHelper<Self>, VisibleHelper<Self>,
         DecorationHelper<Self> {
 

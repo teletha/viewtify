@@ -17,6 +17,22 @@
 		-fx-underline: true;
 }
 
+/* ==========================================================================
+  Tdited Mode
+===========================================================================*/
+.edited {
+    -fx-background-color: #ffa431, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: -1.4, 0, 1, 2;
+    -fx-background-radius:  6.4, 5, 4, 3;
+}
+
+
+.table-view.edited,
+.tree-table-view.edited {
+    -fx-background-color: #ffa431, -fx-box-border,-fx-control-inner-background;
+    -fx-background-insets: -1.4, 0, 1;
+    -fx-background-radius: 1.4, 0, 0;
+}
 
 /* ==========================================================================
   Tab

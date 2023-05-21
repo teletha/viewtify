@@ -16,6 +16,7 @@ import java.util.function.Consumer;
 import javafx.beans.property.Property;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
 import viewtify.property.SmartProperty;
 import viewtify.ui.anime.SwapAnime;
@@ -31,10 +32,10 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> implements V
     private final List<UserInterfaceProvider> providers = new ArrayList();
 
     /** The left container. */
-    private final VBox left = new VBox();
+    public final VBox left = new VBox();
 
     /** The right container. */
-    private final UIScrollPane right = new UIScrollPane(null);
+    public final UIScrollPane right = new UIScrollPane(null);
 
     /** The selection. */
     private final SmartProperty<UserInterfaceProvider> selection = new SmartProperty();

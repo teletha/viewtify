@@ -14,7 +14,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -23,12 +25,21 @@ import viewtify.Viewtify;
 public interface DisableHelper<Self extends DisableHelper> extends PropertyAccessHelper {
 
     /**
+     * Get the disable property.
+     * 
+     * @return
+     */
+    default Property<Boolean> disableProperty() {
+        return property(Type.Disable);
+    }
+
+    /**
      * Gets whether it is disable.
      * 
      * @return A result.
      */
     default boolean isDisable() {
-        return property(Type.Disable).getValue() == true;
+        return disableProperty().getValue() == true;
     }
 
     /**
@@ -47,7 +58,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * @return Chainable API.
      */
     default Self disable(boolean state) {
-        property(Type.Disable).setValue(state);
+        disableProperty().setValue(state);
         return (Self) this;
     }
 
@@ -73,7 +84,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      */
     default Self disableWhen(Signal<Boolean> condition, Signal<Boolean>... conditions) {
         if (condition != null) {
-            condition.combineLatest(conditions, (one, other) -> one || other).to(property(Type.Disable)::setValue);
+            condition.combineLatest(conditions, (one, other) -> one || other).to(disableProperty()::setValue);
         }
         return (Self) this;
     }
@@ -113,7 +124,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      */
     default Self disableWhen(ObservableValue<Boolean> condition) {
         if (condition != null) {
-            property(Type.Disable).bind(condition);
+            disableProperty().bind(condition);
         }
         return (Self) this;
     }
@@ -162,7 +173,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * @return A result.
      */
     default boolean isEnable() {
-        return property(Type.Disable).getValue() == false;
+        return disableProperty().getValue() == false;
     }
 
     /**
