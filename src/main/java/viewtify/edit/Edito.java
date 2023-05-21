@@ -110,13 +110,6 @@ public class Edito {
     }
 
     /**
-     * 
-     */
-    public boolean isEditing() {
-        return !edited.isEmpty();
-    }
-
-    /**
      * Create snapshot of {@link List}.
      * 
      * @param <V>
