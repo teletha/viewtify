@@ -32,6 +32,7 @@ import kiss.WiseConsumer;
 import kiss.model.Model;
 import stylist.Style;
 import stylist.StyleDSL;
+import viewtify.Key;
 import viewtify.Viewtify;
 import viewtify.ui.helper.AnimateHelper;
 import viewtify.ui.helper.DecorationHelper;
@@ -115,6 +116,17 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
         KeyCombination stroke = KeyCodeCombination.keyCombination(key);
         when(User.KeyPress).take(stroke::match).to(action::run);
         return (Self) this;
+    }
+
+    /**
+     * Register keyborad shortcut.
+     * 
+     * @param key
+     * @param action
+     * @return
+     */
+    public Self keybind(Key key, Runnable action) {
+        return keybind(key.name, action);
     }
 
     /**
