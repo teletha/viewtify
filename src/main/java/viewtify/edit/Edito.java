@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
@@ -26,6 +25,8 @@ import javafx.collections.ObservableMap;
 import kiss.I;
 import kiss.Signal;
 import kiss.Signaling;
+import kiss.WiseConsumer;
+import kiss.WiseRunnable;
 import kiss.model.Model;
 import viewtify.Viewtify;
 import viewtify.ui.UITableView;
@@ -51,17 +52,17 @@ public class Edito {
      * @param <V>
      * @param table
      */
-    public <V extends Serializable> void manage(UITableView<V> table) {
+    public <V extends Serializable> void manage(UITableView<V> table, WiseRunnable save) {
         Viewtify.observing(table.items())
                 .subscribeOn(Viewtify.UIThread) // need
-                .scan(x -> I.pair(x, snapshot(x, table::items)), (x, v) -> I.pair(v, x.ⅱ))
+                .scan(value -> snapshot(value, table::items, save), Snapshot::update)
                 .skip(1)
                 .takeUntil(stop.expose)
-                .to(x -> edited(table, x.ⅰ, x.ⅱ));
+                .to(snapshot -> edited(table, snapshot));
     }
 
-    private void edited(UserInterface ui, Object value, Snapshot snapshot) {
-        if (snapshot.match(value)) {
+    private void edited(UserInterface ui, Snapshot snapshot) {
+        if (snapshot.match()) {
             Object removed = edited.remove(ui);
             if (removed != null) {
                 ui.unstyle("edited");
@@ -70,6 +71,22 @@ public class Edito {
             Object old = edited.put(ui, snapshot);
             if (old == null) {
                 ui.style("edited");
+            }
+        }
+    }
+
+    /**
+     * Save all changes.
+     */
+    public void save() {
+        for (Entry<UserInterface, Snapshot> entry : edited.entrySet()) {
+            UserInterface ui = entry.getKey();
+            Snapshot snap = entry.getValue();
+
+            snap.save();
+            Object removed = edited.remove(ui);
+            if (removed != null) {
+                ui.unstyle("edited");
             }
         }
     }
@@ -100,26 +117,28 @@ public class Edito {
      * @param revert
      * @return
      */
-    private static <V extends Serializable> Snapshot<List<V>> snapshot(List<V> value, Consumer<List<V>> revert) {
-        List copy = new ArrayList();
-        for (Serializable serializable : value) {
-            copy.add(clone(serializable));
-        }
-
-        return new Snapshot<List<V>>(copy, revert) {
+    private static <V extends Serializable> Snapshot<List<V>> snapshot(List<V> value, WiseConsumer<List<V>> revert, WiseRunnable save) {
+        return new Snapshot<List<V>>(value, revert, save) {
             @Override
-            public boolean match(Object target) {
-                if (target instanceof List list) {
-                    if (list.size() == copy.size()) {
-                        for (int i = 0; i < list.size(); i++) {
-                            if (!Objects.equals(list.get(i), copy.get(i))) {
-                                return false;
-                            }
+            public boolean match() {
+                if (latest.size() == initial.size()) {
+                    for (int i = 0; i < latest.size(); i++) {
+                        if (!Objects.equals(latest.get(i), initial.get(i))) {
+                            return false;
                         }
-                        return true;
                     }
+                    return true;
                 }
                 return false;
+            }
+
+            @Override
+            protected List<V> clone(List<V> value) {
+                List copy = new ArrayList();
+                for (Serializable serializable : value) {
+                    copy.add(Edito.clone(serializable));
+                }
+                return copy;
             }
         };
     }
@@ -182,36 +201,72 @@ public class Edito {
     protected static class Snapshot<T> {
 
         /** The snapshoted value. This is immutable. */
-        private final T value;
+        protected T initial;
+
+        /** The latest value. */
+        protected T latest;
 
         /** The revert action. */
-        private final Consumer<T> revert;
+        private final WiseConsumer<T> revert;
+
+        /** The save action. */
+        private final WiseRunnable save;
 
         /**
          * Hide constructor.
          * 
-         * @param value
+         * @param initial
          */
-        protected Snapshot(T value, Consumer<T> revert) {
-            this.value = value;
+        protected Snapshot(T initial, WiseConsumer<T> revert, WiseRunnable save) {
+            this.initial = clone(initial);
+            this.latest = initial;
             this.revert = Objects.requireNonNull(revert);
+            this.save = Objects.requireNonNull(save);
+        }
+
+        /**
+         * Update the latest value.
+         * 
+         * @param value
+         * @return
+         */
+        protected Snapshot<T> update(T value) {
+            this.latest = value;
+            return this;
         }
 
         /**
          * Verify if the target object and this snapshotted object have the same value.
          * 
-         * @param target
          * @return
          */
-        protected boolean match(Object target) {
-            return Objects.equals(value, target);
+        protected boolean match() {
+            return Objects.equals(initial, latest);
         }
 
         /**
          * Revet to the stored value.
          */
         protected void revert() {
-            revert.accept(value);
+            revert.accept(initial);
+        }
+
+        /**
+         * Save data to the backend storage.
+         */
+        protected void save() {
+            save.run();
+            initial = clone(latest);
+        }
+
+        /**
+         * Clone object.
+         * 
+         * @param value
+         * @return
+         */
+        protected T clone(T value) {
+            return Edito.clone(value);
         }
     }
 }
