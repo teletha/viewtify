@@ -4,6 +4,7 @@ const root = {
 	"packages": [
 		"javafx.scene.control.skin",
 		"viewtify",
+		"viewtify.edit",
 		"viewtify.model",
 		"viewtify.property",
 		"viewtify.style",
@@ -53,7 +54,7 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "AnimateHelper",
 			"packageName": "viewtify.ui.helper",
-			"type": "Interface"
+			"type": "Functional"
 		},
 		{
 			"modifiers": {
@@ -215,6 +216,20 @@ const root = {
 			"name": "EditableHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Edito",
+			"packageName": "viewtify.edit",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Edito.Snapshot",
+			"packageName": "viewtify.edit",
+			"type": "Class"
 		},
 		{
 			"modifiers": {
@@ -439,6 +454,13 @@ const root = {
 			"name": "ShowAnime",
 			"packageName": "viewtify.ui.anime",
 			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Slide",
+			"packageName": "viewtify.ui.anime",
+			"type": "Interface"
 		},
 		{
 			"modifiers": {

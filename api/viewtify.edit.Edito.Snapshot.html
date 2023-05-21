@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="m">
+		<header class="N">
+			<h1 class="f" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
+			<nav class="Y"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="l" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="P">
+			<nav class="W">
+				<div></div>
+			</nav>
+			<article class="Z" id="Article">
+				<section class="h"><code class="c">viewtify.edit</code>
+					<h2 class="Class a"><code class="g">Edito.Snapshot</code><code class="R">&#60;<code>T</code>&#62;</code></h2>
+					<div class="Q">
+						<ul class="C D">
+							<li><code>T</code></li>
+						</ul>
+					</div><span class="B"><p>Snapshot object.</p>
+					</span></section>
+				<section class="h" id="Snapshot(java.lang.Object,java.util.function.Consumer)">
+					<h2 class="I"><i class="PROTECTED"></i><code class="g">Snapshot</code><code class="R">(<code>T</code> <code class="parameterName">value</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>T</code></code></code> <code class="parameterName">revert</code>)</code></h2>
+					<table class="L">
+						<tr class="i">
+							<td><code>T</code> <code>value</code></td>
+							<td></td>
+						</tr>
+						<tr class="i">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>T</code></code></code> <code>revert</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Hide constructor.</p>
+					</span></section>
+				<section class="h" id="match(java.lang.Object)">
+					<h2 class="I"><i class="PROTECTED"></i><code class="g">match</code><code class="R">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">target</code>)</code><i class="K"><code>boolean</code></i></h2>
+					<table class="L">
+						<tr class="i">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code> <code>target</code></td>
+							<td></td>
+						</tr>
+						<tr class="j">
+							<td><code>boolean</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Verify if the target object and this snapshotted object have the same value.</p>
+					</span></section>
+				<section class="h" id="revert()">
+					<h2 class="I"><i class="PROTECTED"></i><code class="g">revert</code><code class="R">()</code><i class="K"><code>void</code></i></h2><span class="B"><p>Revet to the stored value.</p>
+					</span></section>
+			</article>
+			<aside class="U" id="SubNavi">
+				<div class="S">
+					<h5 class="k">Constructors</h5>
+					<ul>
+						<li><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#Snapshot(java.lang.Object,java.util.function.Consumer)">Snapshot</a></code><code class="R">(<code>T</code> <code class="parameterName">value</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>T</code></code></code> <code class="parameterName">revert</code>)</code></li>
+					</ul>
+					<h5 class="k">Methods</h5>
+					<ul>
+						<li><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#match(java.lang.Object)">match</a></code><code class="R">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">target</code>)</code><i class="V"><code>boolean</code></i></li>
+						<li><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#revert()">revert</a></code><code class="R">()</code><i class="V"><code>void</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>

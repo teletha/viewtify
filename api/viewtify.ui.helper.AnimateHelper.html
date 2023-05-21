@@ -7,10 +7,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="b">
-		<header class="Z">
-			<h1 class="I" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
-			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="m">
+		<header class="N">
+			<h1 class="f" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
+			<nav class="Y"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -19,7 +19,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="m" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="l" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -28,15 +28,19 @@
 				</a></div>
 		</header>
 		<main class="P">
-			<nav class="e">
+			<nav class="W">
 				<div></div>
 			</nav>
-			<article class="O" id="Article">
-				<section class="g"><code class="V">viewtify.ui.helper</code>
-					<h2 class="Interface l"><code class="J">AnimateHelper</code><code class="f">&#60;<code>Self</code>&#62;</code></h2>
-					<div class="d">
+			<article class="Z" id="Article">
+				<section class="h"><code class="c">viewtify.ui.helper</code>
+					<h2 class="Functional a"><code class="g">AnimateHelper</code><code class="R">&#60;<code>Self</code>, <code>N</code>&#62;</code></h2>
+					<div class="Q">
 						<ul class="C D">
-							<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.helper.AnimateHelper.html">AnimateHelper</a><code class="parameters"><code>Self</code></code></code></code></li>
+							<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.helper.AnimateHelper.html">AnimateHelper</a><code class="parameters"><code>Self</code>, <code>N</code></code></code></code></li>
+							<li><code>N</code><code class="extends"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></li>
+						</ul>
+						<ul class="C F">
+							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>N</code></code></code></li>
 						</ul>
 						<ul class="C G">
 							<li><code><a href="api/viewtify.ui.AbstractPane.html">AbstractPane</a><code class="parameters"><code>E</code>, <code>P</code>, <code>Self</code></code></code></li>
@@ -76,29 +80,131 @@
 						</ul>
 					</div>
 				</section>
-				<section class="g" id="animate(viewtify.ui.anime.Animatable,kiss.WiseRunnable)">
-					<h2 class="W"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="J">animate</code><code class="f">(<code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code class="parameterName">animatable</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">finisher</code>)</code><i class="h"><code>Self</code></i></h2>
-					<table class="S">
-						<tr class="a">
+				<section class="h" id="animate(viewtify.ui.anime.Animatable)">
+					<h2 class="I"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="g">animate</code><code class="R">(<code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code class="parameterName">animatable</code>)</code><i class="K"><code>Self</code></i></h2>
+					<table class="L">
+						<tr class="i">
 							<td><code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code>animatable</code></td>
 							<td></td>
 						</tr>
-						<tr class="a">
-							<td><code>kiss.WiseRunnable</code> <code>finisher</code></td>
-							<td></td>
-						</tr>
-						<tr class="i">
+						<tr class="j">
 							<td><code>Self</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Animate this UI.</p>
 					</span></section>
+				<section class="h" id="animate(viewtify.ui.anime.Animatable,kiss.WiseRunnable)">
+					<h2 class="I"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="g">animate</code><code class="R">(<code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code class="parameterName">animatable</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">finisher</code>)</code><i class="K"><code>Self</code></i></h2>
+					<table class="L">
+						<tr class="i">
+							<td><code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code>animatable</code></td>
+							<td></td>
+						</tr>
+						<tr class="i">
+							<td><code>kiss.WiseRunnable</code> <code>finisher</code></td>
+							<td></td>
+						</tr>
+						<tr class="j">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Animate this UI.</p>
+					</span></section>
+				<section class="h" id="animateLater(long,viewtify.ui.anime.Animatable)">
+					<h2 class="I"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="g">animateLater</code><code class="R">(<code>long</code> <code class="parameterName">delayMilliseconds</code>, <code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code class="parameterName">animatable</code>)</code><i class="K"><code>Self</code></i></h2>
+					<table class="L">
+						<tr class="i">
+							<td><code>long</code> <code>delayMilliseconds</code></td>
+							<td></td>
+						</tr>
+						<tr class="i">
+							<td><code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code>animatable</code></td>
+							<td></td>
+						</tr>
+						<tr class="j">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Animate this UI.</p>
+					</span></section>
+				<section class="h" id="animateLater(long,viewtify.ui.anime.Animatable,kiss.WiseRunnable)">
+					<h2 class="I"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="g">animateLater</code><code class="R">(<code>long</code> <code class="parameterName">delayMilliseconds</code>, <code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code class="parameterName">animatable</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">finisher</code>)</code><i class="K"><code>Self</code></i></h2>
+					<table class="L">
+						<tr class="i">
+							<td><code>long</code> <code>delayMilliseconds</code></td>
+							<td></td>
+						</tr>
+						<tr class="i">
+							<td><code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code>animatable</code></td>
+							<td></td>
+						</tr>
+						<tr class="i">
+							<td><code>kiss.WiseRunnable</code> <code>finisher</code></td>
+							<td></td>
+						</tr>
+						<tr class="j">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Animate this UI.</p>
+					</span></section>
+				<section class="h" id="translateX(double)">
+					<h2 class="I"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="g">translateX</code><code class="R">(<code>double</code> <code class="parameterName">value</code>)</code><i class="K"><code>Self</code></i></h2>
+					<table class="L">
+						<tr class="i">
+							<td><code>double</code> <code>value</code></td>
+							<td><span><p>A value to set.</p>
+								</span></td>
+						</tr>
+						<tr class="j">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Set the x-axis location.</p>
+					</span></section>
+				<section class="h" id="translateY(double)">
+					<h2 class="I"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="g">translateY</code><code class="R">(<code>double</code> <code class="parameterName">value</code>)</code><i class="K"><code>Self</code></i></h2>
+					<table class="L">
+						<tr class="i">
+							<td><code>double</code> <code>value</code></td>
+							<td><span><p>A value to set.</p>
+								</span></td>
+						</tr>
+						<tr class="j">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Set the y-axis location.</p>
+					</span></section>
+				<section class="h" id="translateZ(double)">
+					<h2 class="I"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="g">translateZ</code><code class="R">(<code>double</code> <code class="parameterName">value</code>)</code><i class="K"><code>Self</code></i></h2>
+					<table class="L">
+						<tr class="i">
+							<td><code>double</code> <code>value</code></td>
+							<td><span><p>A value to set.</p>
+								</span></td>
+						</tr>
+						<tr class="j">
+							<td><code>Self</code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Set the z-axis location.</p>
+					</span></section>
 			</article>
-			<aside class="T" id="SubNavi">
-				<div class="R">
-					<h5 class="Q">Methods</h5>
+			<aside class="U" id="SubNavi">
+				<div class="S">
+					<h5 class="k">Methods</h5>
 					<ul>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.AnimateHelper.html#animate(viewtify.ui.anime.Animatable,kiss.WiseRunnable)">animate</a></code><code class="f">(<code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code class="parameterName">animatable</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">finisher</code>)</code><i class="K"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.AnimateHelper.html#animate(viewtify.ui.anime.Animatable)">animate</a></code><code class="R">(<code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code class="parameterName">animatable</code>)</code><i class="V"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.AnimateHelper.html#animate(viewtify.ui.anime.Animatable,kiss.WiseRunnable)">animate</a></code><code class="R">(<code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code class="parameterName">animatable</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">finisher</code>)</code><i class="V"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.AnimateHelper.html#animateLater(long,viewtify.ui.anime.Animatable)">animateLater</a></code><code class="R">(<code>long</code> <code class="parameterName">delayMilliseconds</code>, <code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code class="parameterName">animatable</code>)</code><i class="V"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.AnimateHelper.html#animateLater(long,viewtify.ui.anime.Animatable,kiss.WiseRunnable)">animateLater</a></code><code class="R">(<code>long</code> <code class="parameterName">delayMilliseconds</code>, <code><a href="api/viewtify.ui.anime.Animatable.html">Animatable</a></code> <code class="parameterName">animatable</code>, <code>kiss.WiseRunnable</code> <code class="parameterName">finisher</code>)</code><i class="V"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.AnimateHelper.html#translateX(double)">translateX</a></code><code class="R">(<code>double</code> <code class="parameterName">value</code>)</code><i class="V"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.AnimateHelper.html#translateY(double)">translateY</a></code><code class="R">(<code>double</code> <code class="parameterName">value</code>)</code><i class="V"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.AnimateHelper.html#translateZ(double)">translateZ</a></code><code class="R">(<code>double</code> <code class="parameterName">value</code>)</code><i class="V"><code>Self</code></i></li>
 					</ul>
 				</div>
 			</aside>

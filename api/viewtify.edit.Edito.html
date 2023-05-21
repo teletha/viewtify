@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="m">
+		<header class="N">
+			<h1 class="f" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
+			<nav class="Y"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="l" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="P">
+			<nav class="W">
+				<div></div>
+			</nav>
+			<article class="Z" id="Article">
+				<section class="h"><code class="c">viewtify.edit</code>
+					<h2 class="Class a"><code class="g">Edito</code></h2>
+					<div class="Q"></div><span class="B"><p>The editing state manager.</p>
+					</span></section>
+				<section class="h" id="editing">
+					<h2 class="I"><i class="FINAL"><i class="PUBLIC"></i></i><code class="g">editing</code><i class="K"><code class="return">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2><span class="B"><p>The edited event.</p>
+					</span></section>
+				<section class="h" id="Edito()">
+					<h2 class="I"><i class="PUBLIC"></i><code class="g">Edito</code><code class="R">()</code></h2>
+				</section>
+				<section class="h" id="manage(viewtify.ui.UITableView)">
+					<h2 class="I"><i class="PUBLIC"></i><code class="g">manage</code><code class="R">(<code><a href="api/viewtify.ui.UITableView.html">UITableView</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">table</code>)</code><i class="K"><code>void</code></i></h2>
+					<table class="L">
+						<tr class="M">
+							<td><code>V</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></code></td>
+							<td></td>
+						</tr>
+						<tr class="i">
+							<td><code><a href="api/viewtify.ui.UITableView.html">UITableView</a><code class="parameters"><code>V</code></code></code> <code>table</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Manage edit state of the specified UI.</p>
+					</span></section>
+				<section class="h" id="revert()">
+					<h2 class="I"><i class="PUBLIC"></i><code class="g">revert</code><code class="R">()</code><i class="K"><code>void</code></i></h2><span class="B"><p>Revert all changes.</p>
+					</span></section>
+				<section class="h" id="stop()">
+					<h2 class="I"><i class="PUBLIC"></i><code class="g">stop</code><code class="R">()</code><i class="K"><code>void</code></i></h2><span class="B"><p>Stop edit management.</p>
+					</span></section>
+			</article>
+			<aside class="U" id="SubNavi">
+				<div class="S">
+					<h5 class="k">Constructors</h5>
+					<ul>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.edit.Edito.html#Edito()">Edito</a></code><code class="R">()</code></li>
+					</ul>
+					<h5 class="k">Fields</h5>
+					<ul>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.edit.Edito.html#editing">editing</a></code><i class="V"><code class="return">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+					</ul>
+					<h5 class="k">Methods</h5>
+					<ul>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.edit.Edito.html#manage(viewtify.ui.UITableView)">manage</a></code><code class="R">(<code><a href="api/viewtify.ui.UITableView.html">UITableView</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">table</code>)</code><i class="V"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.edit.Edito.html#revert()">revert</a></code><code class="R">()</code><i class="V"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.edit.Edito.html#stop()">stop</a></code><code class="R">()</code><i class="V"><code>void</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>
