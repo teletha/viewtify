@@ -52,12 +52,21 @@ public class Edito {
      * @param table
      */
     public <V> void manage(UITableView<V> table, WiseRunnable save) {
-        Viewtify.observing(table.items())
-                .subscribeOn(Viewtify.UIThread) // need
-                .scan(value -> snapshot(value, table::items, save), Snapshot::update)
-                .skip(1)
-                .takeUntil(stop.expose)
-                .to(snapshot -> edited(table, snapshot));
+        // Why are we running on UI thread?
+        //
+        // Data must be preconfigured to get a snapshot of initial values, but in many cases, data
+        // is often retrieved in an external thread and then the data is configured in the UI
+        // thread. In this case, if the management system is configured on an external thread, there
+        // is a risk that the data will be retrieved in a state where the data has not yet been
+        // configured or where the previous data remains. To avoid this situation, the management
+        // system settings are done on the UI thread.
+        Viewtify.inUI(() -> {
+            Viewtify.observing(table.items())
+                    .scan(value -> snapshot(value, table::items, save), Snapshot::update)
+                    .skip(1)
+                    .takeUntil(stop.expose)
+                    .to(snapshot -> edited(table, snapshot));
+        });
     }
 
     private void edited(UserInterface ui, Snapshot snapshot) {
