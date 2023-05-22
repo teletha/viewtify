@@ -33,7 +33,7 @@
 			</nav>
 			<article class="c" id="Article">
 				<section class="Q"><code class="g">viewtify.update</code>
-					<h2 class="Class J"><code class="Z">Updater</code></h2>
+					<h2 class="Class J"><code class="Z">InstructionView</code></h2>
 					<div class="j">
 						<ul class="C E">
 							<li><code><a href="api/viewtify.ui.View.html">View</a></code></li>
@@ -41,15 +41,15 @@
 						<ul class="C F">
 							<li><code>kiss.Disposable</code></li>
 							<li><code>kiss.Extensible</code></li>
-							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></code></code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="api/viewtify.update.Instruction.html">Instruction</a></code></code></code></li>
 							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code><a href="api/viewtify.update.Updater.html">Updater</a></code>, <code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code><a href="api/viewtify.update.Updater.html">Updater</a></code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code><a href="api/viewtify.update.InstructionView.html">InstructionView</a></code>, <code><a href="api/viewtify.update.Instruction.html">Instruction</a></code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code><a href="api/viewtify.update.InstructionView.html">InstructionView</a></code></code></code></li>
 						</ul>
 					</div>
 				</section>
-				<section class="Q" id="Updater()">
-					<h2 class="m"><i class="PUBLIC"></i><code class="Z">Updater</code><code class="L">()</code></h2>
+				<section class="Q" id="InstructionView()">
+					<h2 class="m"><i class="PUBLIC"></i><code class="Z">InstructionView</code><code class="L">()</code></h2>
 				</section>
 				<section class="Q" id="initialize()">
 					<h2 class="m"><i class="OVERRIDE PROTECTED"></i><code class="Z">initialize</code><code class="L">()</code><i class="i"><code>void</code></i></h2>
@@ -64,14 +64,27 @@
 					</table>
 				</section>
 				<section class="Q" id="valueProperty()">
-					<h2 class="m"><i class="OVERRIDE PUBLIC"></i><code class="Z">valueProperty</code><code class="L">()</code><i class="i"><code>javafx.beans.property.Property<code class="parameters"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></code></code></i></h2>
+					<h2 class="m"><i class="OVERRIDE PUBLIC"></i><code class="Z">valueProperty</code><code class="L">()</code><i class="i"><code>javafx.beans.property.Property<code class="parameters"><code><a href="api/viewtify.update.Instruction.html">Instruction</a></code></code></code></i></h2>
 					<table class="T">
 						<tr class="M">
-							<td><code>javafx.beans.property.Property<code class="parameters"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></code></code></td>
+							<td><code>javafx.beans.property.Property<code class="parameters"><code><a href="api/viewtify.update.Instruction.html">Instruction</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
+				<section class="Q" id="update(psychopath.File)">
+					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="Z">update</code><code class="L">(<code>psychopath.File</code> <code class="parameterName">archive</code>)</code><i class="i"><code><a href="api/viewtify.update.Instruction.html">Instruction</a></code></i></h2>
+					<table class="T">
+						<tr class="b">
+							<td><code>psychopath.File</code> <code>archive</code></td>
+							<td></td>
+						</tr>
+						<tr class="M">
+							<td><code><a href="api/viewtify.update.Instruction.html">Instruction</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Create update instruction.</p>
+					</span></section>
 				<section class="Q" id="main(java.lang.String[])">
 					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="Z">main</code><code class="L">(<code array="fix"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">args</code>)</code><i class="i"><code>void</code></i></h2>
 					<table class="T">
@@ -86,17 +99,18 @@
 				<div class="S">
 					<h5 class="N">Constructors</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#Updater()">Updater</a></code><code class="L">()</code></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.InstructionView.html#InstructionView()">InstructionView</a></code><code class="L">()</code></li>
 					</ul>
 					<h5 class="N">Static Methods</h5>
 					<ul>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#main(java.lang.String[])">main</a></code><code class="L">(<code array="fix"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">args</code>)</code><i class="l"><code>void</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.update.InstructionView.html#update(psychopath.File)">update</a></code><code class="L">(<code>psychopath.File</code> <code class="parameterName">archive</code>)</code><i class="l"><code><a href="api/viewtify.update.Instruction.html">Instruction</a></code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.update.InstructionView.html#main(java.lang.String[])">main</a></code><code class="L">(<code array="fix"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">args</code>)</code><i class="l"><code>void</code></i></li>
 					</ul>
 					<h5 class="N">Methods</h5>
 					<ul>
-						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.update.Updater.html#initialize()">initialize</a></code><code class="L">()</code><i class="l"><code>void</code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#verifier()">verifier</a></code><code class="L">()</code><i class="l"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.update.Updater.html#valueProperty()">valueProperty</a></code><code class="L">()</code><i class="l"><code>javafx.beans.property.Property<code class="parameters"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></code></code></i></li>
+						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.update.InstructionView.html#initialize()">initialize</a></code><code class="L">()</code><i class="l"><code>void</code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.update.InstructionView.html#verifier()">verifier</a></code><code class="L">()</code><i class="l"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.update.InstructionView.html#valueProperty()">valueProperty</a></code><code class="L">()</code><i class="l"><code>javafx.beans.property.Property<code class="parameters"><code><a href="api/viewtify.update.Instruction.html">Instruction</a></code></code></code></i></li>
 					</ul>
 				</div>
 			</aside>
