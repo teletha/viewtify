@@ -10,6 +10,7 @@
 package viewtify.ui.helper;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -428,6 +429,36 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      */
     default Self removeItemAll() {
         modifyItemUISafely(List<E>::clear);
+        return (Self) this;
+    }
+
+    /**
+     * Remove an item at the specified index.
+     * 
+     * @return Chainable API.
+     */
+    default Self removeItemAt(int... indexies) {
+        if (indexies.length != 0) {
+            Arrays.sort(indexies);
+
+            modifyItemUISafely(list -> {
+                for (int i = indexies.length - 1; 0 <= i; i--) {
+                    list.remove(indexies[i]);
+                }
+            });
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Remove an item at the specified index.
+     * 
+     * @return Chainable API.
+     */
+    default Self removeItemAt(List<Integer> indexies) {
+        if (indexies != null && !indexies.isEmpty()) {
+            removeItemAt(indexies.stream().mapToInt(Integer::intValue).toArray());
+        }
         return (Self) this;
     }
 

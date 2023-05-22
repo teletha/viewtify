@@ -74,6 +74,15 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
+     * Get live-state list of the selected items.
+     * 
+     * @return
+     */
+    default ObservableList<Integer> selectedIndices() {
+        return model().getSelectedIndices();
+    }
+
+    /**
      * Select the specified item.
      * 
      * @param item
