@@ -16,11 +16,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
 import kiss.I;
 import kiss.Signal;
 import kiss.Signaling;
@@ -39,11 +39,14 @@ public class Edito {
     /** The stop notifier of edit management. */
     private final Signaling<Boolean> stop = new Signaling();
 
+    /** The edit notifier of edit management. */
+    private final Signaling<Map> edit = new Signaling();
+
     /** The edited user interface. */
-    private final ObservableMap<UserInterface, Snapshot> edited = FXCollections.observableHashMap();
+    private final Map<UserInterface, Snapshot> edited = new ConcurrentHashMap();
 
     /** The edited event. */
-    public final Signal<Boolean> editing = Viewtify.observe(edited).map(x -> !x.isEmpty());
+    public final Signal<Boolean> editing = edit.expose.map(x -> !x.isEmpty());
 
     /**
      * Manage edit state of the specified UI.
@@ -74,11 +77,13 @@ public class Edito {
             Object removed = edited.remove(ui);
             if (removed != null) {
                 ui.unstyle("edited");
+                edit.accept(edited);
             }
         } else {
             Object old = edited.put(ui, snapshot);
             if (old == null) {
                 ui.style("edited");
+                edit.accept(edited);
             }
         }
     }
@@ -95,6 +100,7 @@ public class Edito {
             Object removed = edited.remove(ui);
             if (removed != null) {
                 ui.unstyle("edited");
+                edit.accept(edited);
             }
         }
     }
