@@ -9,11 +9,14 @@
  */
 package viewtify.update;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import psychopath.Directory;
 
-public abstract class ApplicationPlatform {
+public abstract class ApplicationPlatform implements Serializable {
+
+    private static final long serialVersionUID = -2784979601406683792L;
 
     /**
      * Get the last modified time.
@@ -59,6 +62,13 @@ public abstract class ApplicationPlatform {
      * @return
      */
     public abstract ApplicationPlatform updater();
+
+    /**
+     * Create the updater platform.
+     * 
+     * @return
+     */
+    public abstract ApplicationPlatform updater2();
 
     /**
      * Check updatable state.

@@ -23,6 +23,11 @@ import viewtify.Viewtify;
 
 public class JREPlatform extends ApplicationPlatform {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5527997855769445322L;
+
     /** The application root. */
     @Managed
     Directory rootAPP;
@@ -138,6 +143,21 @@ public class JREPlatform extends ApplicationPlatform {
         updater.rootJRE = rootJRE;
         updater.rootLIB = rootLIB;
         updater.application = Updater.class;
+        updater.classPath = classPath;
+
+        return updater;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ApplicationPlatform updater2() {
+        JREPlatform updater = new JREPlatform();
+        updater.rootAPP = rootAPP;
+        updater.rootJRE = rootJRE;
+        updater.rootLIB = rootLIB;
+        updater.application = InstructionView.class;
         updater.classPath = classPath;
 
         return updater;

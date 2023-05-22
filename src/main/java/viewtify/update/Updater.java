@@ -15,6 +15,7 @@ import java.io.PrintStream;
 import java.util.List;
 
 import javafx.beans.property.Property;
+
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -118,6 +119,8 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
                 } catch (FileNotFoundException e1) {
                     throw I.quiet(e);
                 }
+                I.error(e.getMessage());
+                I.error(e);
                 message.text(I.translate(e.getMessage()));
             }
         });
@@ -145,6 +148,9 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
      * @param args
      */
     public static void main(String[] args) {
-        Viewtify.application().title("Updater").size(400, 150).activate(Updater.class);
+        Viewtify.application().title("Updater").error((mes, e) -> {
+            I.error(mes);
+            I.error(e);
+        }).size(400, 150).activate(Updater.class);
     }
 }

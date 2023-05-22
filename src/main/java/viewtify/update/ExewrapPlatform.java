@@ -18,6 +18,8 @@ import psychopath.Locator;
 
 class ExewrapPlatform extends ApplicationPlatform {
 
+    private static final long serialVersionUID = 7081682284741896593L;
+
     /** The update site. */
     @Managed
     private Directory root;
@@ -74,6 +76,23 @@ class ExewrapPlatform extends ApplicationPlatform {
 
         locateJRE().copyTo(temp);
         locateLibrary().copyTo(temp);
+
+        return updater;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ApplicationPlatform updater2() {
+        Directory temp = Locator.temporaryDirectory();
+
+        JREPlatform updater = new JREPlatform();
+        updater.rootAPP = temp;
+        updater.rootJRE = temp.directory("jre");
+        updater.rootLIB = temp.directory("lib");
+        updater.application = InstructionView.class;
+        updater.classPath = "lib/*";
 
         return updater;
     }
