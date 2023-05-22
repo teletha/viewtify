@@ -25,7 +25,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
@@ -353,11 +352,6 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
             deconstruct(pane);
         }
         root = null;
-
-        if (parent != null) {
-            parent.dispose();
-            parent = null;
-        }
     }
 
     /**

@@ -21,7 +21,6 @@ import java.util.Objects;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Signaling;
@@ -52,7 +51,7 @@ public class Edito {
      * @param <V>
      * @param table
      */
-    public <V extends Serializable> void manage(UITableView<V> table, WiseRunnable save) {
+    public <V> void manage(UITableView<V> table, WiseRunnable save) {
         Viewtify.observing(table.items())
                 .subscribeOn(Viewtify.UIThread) // need
                 .scan(value -> snapshot(value, table::items, save), Snapshot::update)
@@ -117,7 +116,7 @@ public class Edito {
      * @param revert
      * @return
      */
-    private static <V extends Serializable> Snapshot<List<V>> snapshot(List<V> value, WiseConsumer<List<V>> revert, WiseRunnable save) {
+    private static <V> Snapshot<List<V>> snapshot(List<V> value, WiseConsumer<List<V>> revert, WiseRunnable save) {
         return new Snapshot<List<V>>(value, revert, save) {
             @Override
             public boolean match() {
@@ -135,9 +134,10 @@ public class Edito {
             @Override
             protected List<V> clone(List<V> value) {
                 List copy = new ArrayList();
-                for (Serializable serializable : value) {
-                    copy.add(Edito.clone(serializable));
+                for (Object v : value) {
+                    copy.add(Edito.clone(v));
                 }
+                System.out.println("Create snapshot " + copy);
                 return copy;
             }
         };

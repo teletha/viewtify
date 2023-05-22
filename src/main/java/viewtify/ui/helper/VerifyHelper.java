@@ -139,11 +139,8 @@ public interface VerifyHelper<Self extends VerifyHelper<Self>> {
                 other.undecorate();
             } catch (Throwable e) {
                 String message = e.getLocalizedMessage();
-                System.out.println("Error  " + message);
                 one.decorateBy(Icon.Error, message);
-                System.out.println("Decorate one");
                 other.decorateBy(Icon.Error, message);
-                System.out.println("Decorate other");
                 throw e;
             }
         });
