@@ -1,5 +1,35 @@
 # Changelog
 
+## [2.8.0](https://github.com/teletha/viewtify/compare/v2.7.0...v2.8.0) (2023-05-23)
+
+
+### Features
+
+* Add Animatable. ([ff9cc3c](https://github.com/teletha/viewtify/commit/ff9cc3c9902bb1646ad01f7bef62cb94f697df7e))
+* Add AnimateHelper. ([b122bf6](https://github.com/teletha/viewtify/commit/b122bf60a6bf08a5106425168be33cddf2f72b45))
+* Add application updater. ([c461105](https://github.com/teletha/viewtify/commit/c461105c78f02f87def63139963f5ddedc041bd6))
+* Add CollectableHelper#removeItemAt(int...) and #removeItemAt(List) ([71c44c3](https://github.com/teletha/viewtify/commit/71c44c38fb2be6da1ec37042a37d7ac271dca50b))
+* Add DecorationHelper. ([f1bfb37](https://github.com/teletha/viewtify/commit/f1bfb37f00b9bf280009ff07a9b5115a83175f76))
+* Add image UI. ([eabdcfa](https://github.com/teletha/viewtify/commit/eabdcfa613f6b1c17b4317718fbe9b3f5419a1b7))
+* Add print preview. ([9e7f5ed](https://github.com/teletha/viewtify/commit/9e7f5ed2c80887e19462cda5041081c97d6b61f5))
+* Add UIProgressBar. ([e76092d](https://github.com/teletha/viewtify/commit/e76092dfc9690c15d0ca8e77eb119e02657494fa))
+* Add UserInterface#keybind(Key, WiseRunnable). ([8be29f6](https://github.com/teletha/viewtify/commit/8be29f63ec894be8b7625495307f5ca49472ca18))
+* Add various interpolators. ([c6d2f76](https://github.com/teletha/viewtify/commit/c6d2f760c94aa35c277536b87d9b6f7272dc8dd1))
+* Add VisibleHelper#opacity. ([f5d3544](https://github.com/teletha/viewtify/commit/f5d35447167bc3ea472e50953759231edab5c7a5))
+* Edito can save editing state. ([1007299](https://github.com/teletha/viewtify/commit/10072998c7b62375f3fe8108d2bb21581651291d))
+* Provide editing state manager. ([2f78cbd](https://github.com/teletha/viewtify/commit/2f78cbd3436489bbb1ad99124dcbd14a861f2b14))
+* UISelectPane implements ValueHelper&lt;UserInterfaceProvide&gt;. ([336962e](https://github.com/teletha/viewtify/commit/336962ea141fe03ab61092fee7df1e467973cc7c))
+
+
+### Bug Fixes
+
+* Registering editing state on UI thread. ([d517ebd](https://github.com/teletha/viewtify/commit/d517ebd8060709e1e7e5cbd3fb81325f334448ab))
+* remove extra code (List#clear then List#setAll) ([38ac6fe](https://github.com/teletha/viewtify/commit/38ac6feaf185801ff35bcb8f964fdd336e608567))
+* Text translation must be executed on UI thread. ([90c5b51](https://github.com/teletha/viewtify/commit/90c5b51c0aaed43aaea5c663ae0fa4c0fe0a52cd))
+* update print preview ([f623477](https://github.com/teletha/viewtify/commit/f623477344bb85e6f1c3f03320acb907b3c17fff))
+* UserActionHelper accepts multiple action types. ([3465183](https://github.com/teletha/viewtify/commit/346518363319a4f0ed91fb333306033290e78ff7))
+* View has memory leak. ([e02aa29](https://github.com/teletha/viewtify/commit/e02aa29feb5598f085c0c6736d9aceb3f95bca4c))
+
 ## [2.7.0](https://github.com/teletha/viewtify/compare/v2.6.3...v2.7.0) (2023-04-24)
 
 
