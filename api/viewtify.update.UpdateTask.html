@@ -7,10 +7,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="R">
-		<header class="K">
-			<h1 class="Y" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
-			<nav class="g"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="Y">
+		<header class="m">
+			<h1 class="h" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
+			<nav class="Q"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -27,77 +27,49 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="m">
-			<nav class="O">
+		<main class="a">
+			<nav class="j">
 				<div></div>
 			</nav>
-			<article class="U" id="Article">
-				<section class="d"><code class="k">viewtify.update</code>
-					<h2 class="Class I"><code class="h">UpdateTask</code></h2>
-					<div class="X">
+			<article class="P" id="Article">
+				<section class="g"><code class="S">viewtify.update</code>
+					<h2 class="Class U"><code class="R">UpdateTask</code></h2>
+					<div class="d">
 						<ul class="C F">
 							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></li>
 						</ul>
 					</div>
 				</section>
-				<section class="d" id="run(java.lang.String)">
-					<h2 class="M"><i class="STATIC PUBLIC"></i><code class="h">run</code><code class="c">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="l">
-						<tr class="P">
+				<section class="g" id="create(viewtify.update.UpdateTask.Code)">
+					<h2 class="c"><i class="PUBLIC STATIC"></i><code class="R">create</code><code class="K">(<code><a href="api/viewtify.update.UpdateTask.Code.html">Code</a></code> <code class="parameterName">task</code>)</code><i class="N"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></i></h2>
+					<table class="W">
+						<tr class="X">
+							<td><code><a href="api/viewtify.update.UpdateTask.Code.html">Code</a></code> <code>task</code></td>
+							<td></td>
+						</tr>
+						<tr class="i">
+							<td><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="g" id="update(java.lang.String)">
+					<h2 class="c"><i class="PUBLIC STATIC"></i><code class="R">update</code><code class="K">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="N"><code>void</code></i></h2>
+					<table class="W">
+						<tr class="X">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>archive</code></td>
 							<td><span><p>A locaiton of the new version.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Build the update task for the specified new version.</p>
 					</span></section>
-				<section class="d" id="store(viewtify.update.UpdateTask)">
-					<h2 class="M"><i class="STATIC PUBLIC"></i><code class="h">store</code><code class="c">(<code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code> <code class="parameterName">tasks</code>)</code><i class="i"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="l">
-						<tr class="P">
-							<td><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code> <code>tasks</code></td>
-							<td></td>
-						</tr>
-						<tr class="Q">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Store all tasks.</p>
-					</span></section>
-				<section class="d" id="restore(java.lang.String)">
-					<h2 class="M"><i class="STATIC PUBLIC"></i><code class="h">restore</code><code class="c">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">tasks</code>)</code><i class="i"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></i></h2>
-					<table class="l">
-						<tr class="P">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>tasks</code></td>
-							<td></td>
-						</tr>
-						<tr class="Q">
-							<td><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Restore tasks.</p>
-					</span></section>
-				<section class="d" id="create(viewtify.update.UpdateTask.Code)">
-					<h2 class="M"><i class="STATIC PUBLIC"></i><code class="h">create</code><code class="c">(<code><a href="api/viewtify.update.UpdateTask.Code.html">Code</a></code> <code class="parameterName">task</code>)</code><i class="i"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></i></h2>
-					<table class="l">
-						<tr class="P">
-							<td><code><a href="api/viewtify.update.UpdateTask.Code.html">Code</a></code> <code>task</code></td>
-							<td></td>
-						</tr>
-						<tr class="Q">
-							<td><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
 			</article>
-			<aside class="j" id="SubNavi">
-				<div class="W">
-					<h5 class="b">Static Methods</h5>
+			<aside class="b" id="SubNavi">
+				<div class="H">
+					<h5 class="T">Static Methods</h5>
 					<ul>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#run(java.lang.String)">run</a></code><code class="c">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="N"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#store(viewtify.update.UpdateTask)">store</a></code><code class="c">(<code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code> <code class="parameterName">tasks</code>)</code><i class="N"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#restore(java.lang.String)">restore</a></code><code class="c">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">tasks</code>)</code><i class="N"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#create(viewtify.update.UpdateTask.Code)">create</a></code><code class="c">(<code><a href="api/viewtify.update.UpdateTask.Code.html">Code</a></code> <code class="parameterName">task</code>)</code><i class="N"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.update.UpdateTask.html#create(viewtify.update.UpdateTask.Code)">create</a></code><code class="K">(<code><a href="api/viewtify.update.UpdateTask.Code.html">Code</a></code> <code class="parameterName">task</code>)</code><i class="O"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.update.UpdateTask.html#update(java.lang.String)">update</a></code><code class="K">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="O"><code>void</code></i></li>
 					</ul>
 				</div>
 			</aside>
