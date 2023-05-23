@@ -871,9 +871,9 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "UpdateTask.Task",
+			"name": "UpdateTask.Code",
 			"packageName": "viewtify.update",
-			"type": "AbstractClass"
+			"type": "Functional"
 		},
 		{
 			"modifiers": {

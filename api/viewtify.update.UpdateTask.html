@@ -7,10 +7,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="K">
-		<header class="I">
-			<h1 class="X" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
-			<nav class="d"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="Y">
+		<header class="a">
+			<h1 class="Q" date="2023-04-24" ver="2.7.0"><code>Viewtify</code></h1>
+			<nav class="T"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -19,7 +19,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="H" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="V" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -27,190 +27,176 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="e">
-			<nav class="Y">
+		<main class="Z">
+			<nav class="m">
 				<div></div>
 			</nav>
-			<article class="c" id="Article">
-				<section class="Q"><code class="g">viewtify.update</code>
-					<h2 class="Class J"><code class="Z">UpdateTask</code></h2>
-					<div class="j"></div>
+			<article class="g" id="Article">
+				<section class="I"><code class="O">viewtify.update</code>
+					<h2 class="Class U"><code class="b">UpdateTask</code></h2>
+					<div class="K">
+						<ul class="C F">
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></li>
+						</ul>
+					</div>
 				</section>
-				<section class="Q" id="run(java.lang.String)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="Z">run</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
+				<section class="I" id="run(java.lang.String)">
+					<h2 class="h"><i class="PUBLIC STATIC"></i><code class="b">run</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="L">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>archive</code></td>
 							<td><span><p>A locaiton of the new version.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Build the update task for the specified new version.</p>
 					</span></section>
-				<section class="Q" id="run(psychopath.Directory,java.lang.String)">
-					<h2 class="m"><i class="STATIC PUBLIC"></i><code class="Z">run</code><code class="L">(<code>psychopath.Directory</code> <code class="parameterName">root</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
-							<td><code>psychopath.Directory</code> <code>root</code></td>
-							<td><span><p>An application root directory.</p>
-								</span></td>
+				<section class="I" id="store(viewtify.update.UpdateTask)">
+					<h2 class="h"><i class="PUBLIC STATIC"></i><code class="b">store</code><code class="e">(<code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code> <code class="parameterName">tasks</code>)</code><i class="W"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="L">
+						<tr class="k">
+							<td><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code> <code>tasks</code></td>
+							<td></td>
 						</tr>
-						<tr class="b">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>archive</code></td>
-							<td><span><p>A locaiton of the new version.</p>
-								</span></td>
+						<tr class="R">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
+							<td></td>
 						</tr>
-					</table><span class="B"><p>Build the update task for the specified new version.</p>
+					</table><span class="B"><p>Store all tasks.</p>
 					</span></section>
-				<section class="Q" id="verify(java.lang.String,java.lang.String)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="Z">verify</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
+				<section class="I" id="restore(java.lang.String)">
+					<h2 class="h"><i class="PUBLIC STATIC"></i><code class="b">restore</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">tasks</code>)</code><i class="W"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></i></h2>
+					<table class="L">
+						<tr class="k">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>tasks</code></td>
+							<td></td>
+						</tr>
+						<tr class="R">
+							<td><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Restore tasks.</p>
+					</span></section>
+				<section class="I" id="add(java.lang.String,viewtify.update.UpdateTask.Code)">
+					<h2 class="h"><i class="PUBLIC"></i><code class="b">add</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="api/viewtify.update.UpdateTask.Code.html">Code</a></code> <code class="parameterName">code</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="L">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
 							<td></td>
 						</tr>
-						<tr class="b">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>archive</code></td>
+						<tr class="k">
+							<td><code><a href="api/viewtify.update.UpdateTask.Code.html">Code</a></code> <code>code</code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Verify archive.</p>
-					</span></section>
-				<section class="Q" id="load(java.lang.String)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="Z">load</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
+					</table>
+				</section>
+				<section class="I" id="move(java.lang.String,psychopath.Directory,psychopath.Directory)">
+					<h2 class="h"><i class="PUBLIC"></i><code class="b">move</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="L">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Load archive.</p>
-					</span></section>
-				<section class="Q" id="move(java.lang.String,psychopath.Directory,psychopath.Directory)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="Z">move</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
-							<td></td>
-						</tr>
-						<tr class="b">
+						<tr class="k">
 							<td><code>psychopath.Directory</code> <code>departure</code></td>
 							<td></td>
 						</tr>
-						<tr class="b">
+						<tr class="k">
 							<td><code>psychopath.Directory</code> <code>destination</code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Q" id="copy(java.lang.String,psychopath.Directory,psychopath.Directory)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="Z">copy</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
+				<section class="I" id="copy(java.lang.String,psychopath.Directory,psychopath.Directory)">
+					<h2 class="h"><i class="PUBLIC"></i><code class="b">copy</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="L">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
 							<td></td>
 						</tr>
-						<tr class="b">
+						<tr class="k">
 							<td><code>psychopath.Directory</code> <code>departure</code></td>
 							<td></td>
 						</tr>
-						<tr class="b">
+						<tr class="k">
 							<td><code>psychopath.Directory</code> <code>destination</code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Q" id="unpack(java.lang.String,psychopath.File,psychopath.Directory)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="Z">unpack</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.File</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
+				<section class="I" id="unpack(java.lang.String,psychopath.File,psychopath.Directory)">
+					<h2 class="h"><i class="PUBLIC"></i><code class="b">unpack</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.File</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="L">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
 							<td></td>
 						</tr>
-						<tr class="b">
+						<tr class="k">
 							<td><code>psychopath.File</code> <code>departure</code></td>
 							<td></td>
 						</tr>
-						<tr class="b">
+						<tr class="k">
 							<td><code>psychopath.Directory</code> <code>destination</code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Q" id="delete(java.lang.String,psychopath.Directory,java.lang.String...)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="Z">delete</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">target</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">patterns</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
+				<section class="I" id="delete(java.lang.String,psychopath.Directory,java.lang.String...)">
+					<h2 class="h"><i class="PUBLIC"></i><code class="b">delete</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">target</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">patterns</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="L">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
 							<td></td>
 						</tr>
-						<tr class="b">
+						<tr class="k">
 							<td><code>psychopath.Directory</code> <code>target</code></td>
 							<td></td>
 						</tr>
-						<tr class="b">
+						<tr class="k">
 							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>patterns</code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Q" id="cleanup(java.lang.String,psychopath.Directory)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="Z">cleanup</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">target</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
+				<section class="I" id="cleanup(java.lang.String,psychopath.Directory)">
+					<h2 class="h"><i class="PUBLIC"></i><code class="b">cleanup</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">target</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="L">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
 							<td></td>
 						</tr>
-						<tr class="b">
+						<tr class="k">
 							<td><code>psychopath.Directory</code> <code>target</code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Q" id="reboot(java.lang.String)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="Z">reboot</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
+				<section class="I" id="reboot(java.lang.String)">
+					<h2 class="h"><i class="PUBLIC"></i><code class="b">reboot</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="W"><code>void</code></i></h2>
+					<table class="L">
+						<tr class="k">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Reboot this application.</p>
 					</span></section>
-				<section class="Q" id="message(java.lang.String)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="Z">message</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Notify message.</p>
-					</span></section>
-				<section class="Q" id="build(java.lang.String)">
-					<h2 class="m"><i class="PUBLIC"></i><code class="Z">build</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="i"><code>void</code></i></h2>
-					<table class="T">
-						<tr class="b">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
 			</article>
-			<aside class="h" id="SubNavi">
-				<div class="S">
-					<h5 class="N">Static Methods</h5>
+			<aside class="M" id="SubNavi">
+				<div class="N">
+					<h5 class="l">Static Methods</h5>
 					<ul>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#run(java.lang.String)">run</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="l"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#run(psychopath.Directory,java.lang.String)">run</a></code><code class="L">(<code>psychopath.Directory</code> <code class="parameterName">root</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="l"><code>void</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.update.UpdateTask.html#run(java.lang.String)">run</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="H"><code>void</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.update.UpdateTask.html#store(viewtify.update.UpdateTask)">store</a></code><code class="e">(<code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code> <code class="parameterName">tasks</code>)</code><i class="H"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.update.UpdateTask.html#restore(java.lang.String)">restore</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">tasks</code>)</code><i class="H"><code><a href="api/viewtify.update.UpdateTask.html">UpdateTask</a></code></i></li>
 					</ul>
-					<h5 class="N">Methods</h5>
+					<h5 class="l">Methods</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#verify(java.lang.String,java.lang.String)">verify</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="l"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#load(java.lang.String)">load</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="l"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#move(java.lang.String,psychopath.Directory,psychopath.Directory)">move</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="l"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#copy(java.lang.String,psychopath.Directory,psychopath.Directory)">copy</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="l"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#unpack(java.lang.String,psychopath.File,psychopath.Directory)">unpack</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.File</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="l"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#delete(java.lang.String,psychopath.Directory,java.lang.String...)">delete</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">target</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">patterns</code>)</code><i class="l"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#cleanup(java.lang.String,psychopath.Directory)">cleanup</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">target</code>)</code><i class="l"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#reboot(java.lang.String)">reboot</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="l"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#message(java.lang.String)">message</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="l"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#build(java.lang.String)">build</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="l"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#add(java.lang.String,viewtify.update.UpdateTask.Code)">add</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code><a href="api/viewtify.update.UpdateTask.Code.html">Code</a></code> <code class="parameterName">code</code>)</code><i class="H"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#move(java.lang.String,psychopath.Directory,psychopath.Directory)">move</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="H"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#copy(java.lang.String,psychopath.Directory,psychopath.Directory)">copy</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="H"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#unpack(java.lang.String,psychopath.File,psychopath.Directory)">unpack</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.File</code> <code class="parameterName">departure</code>, <code>psychopath.Directory</code> <code class="parameterName">destination</code>)</code><i class="H"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#delete(java.lang.String,psychopath.Directory,java.lang.String...)">delete</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">target</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">patterns</code>)</code><i class="H"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#cleanup(java.lang.String,psychopath.Directory)">cleanup</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>psychopath.Directory</code> <code class="parameterName">target</code>)</code><i class="H"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.UpdateTask.html#reboot(java.lang.String)">reboot</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="H"><code>void</code></i></li>
 					</ul>
 				</div>
 			</aside>
