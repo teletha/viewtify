@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import javafx.scene.control.ButtonType;
+
 import kiss.I;
 import kiss.WiseBiConsumer;
 import kiss.WiseConsumer;
@@ -45,11 +46,22 @@ public class UpdateTask implements Serializable {
     private final ApplicationPlatform updater = origin.createUpdater();
 
     /**
+     * Empty task.
+     */
+    private UpdateTask(Code code) {
+        this.code = code;
+    }
+
+    public static UpdateTask create(Code task) {
+        return new UpdateTask(task);
+    }
+
+    /**
      * Build the update task for the specified new version.
      * 
      * @param archive A locaiton of the new version.
      */
-    public static void run(String archive) {
+    public static void update(String archive) {
         // prepare to update
         UpdateTask prepare = UpdateTask.create((tasks, monitor) -> {
             monitor.message("Verify the update.");
@@ -85,15 +97,17 @@ public class UpdateTask implements Serializable {
                 monitor.message("Installing the new version, please wait a minute.");
                 tasks.archive.trackUnpackingTo(tasks.origin.locateRoot(), o -> o.replaceDifferent()).to(monitor);
 
-                monitor.message("Clean up old files.");
-                Map<String, File> files = new HashMap();
-                tasks.origin.locateLibrary().walkFile("*.jar").to(file -> {
-                    String name = name(file.name());
-                    File old = files.put(name, file);
-                    if (old != null) {
-                        old.delete();
-                    }
-                });
+                if (tasks.origin.canUpdateLibrary()) {
+                    monitor.message("Clean up old files.");
+                    Map<String, File> files = new HashMap();
+                    tasks.origin.locateLibrary().walkFile("*.jar").to(file -> {
+                        String name = name(file.name());
+                        File old = files.put(name, file);
+                        if (old != null) {
+                            old.delete();
+                        }
+                    });
+                }
 
                 monitor.message("Update is completed, reboot.");
                 tasks.origin.boot();
@@ -124,7 +138,7 @@ public class UpdateTask implements Serializable {
      * 
      * @return
      */
-    public static String store(UpdateTask tasks) {
+    static String store(UpdateTask tasks) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
@@ -143,7 +157,7 @@ public class UpdateTask implements Serializable {
      * @param tasks
      * @return
      */
-    public static UpdateTask restore(String tasks) {
+    static UpdateTask restore(String tasks) {
         try {
             byte[] bytes = Base64.getDecoder().decode(tasks);
             System.out.println(tasks);
@@ -153,18 +167,6 @@ public class UpdateTask implements Serializable {
         } catch (Exception e) {
             throw I.quiet(e);
         }
-    }
-
-    public static UpdateTask create(Code task) {
-        UpdateTask tasks = new UpdateTask(task);
-        return tasks;
-    }
-
-    /**
-     * Empty task.
-     */
-    private UpdateTask(Code code) {
-        this.code = code;
     }
 
     /**

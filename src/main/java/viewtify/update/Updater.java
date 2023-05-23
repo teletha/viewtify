@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
 import javafx.beans.property.Property;
+
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -87,7 +88,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
                 m.observe().switchVariable(x -> I.translate(x)).on(Viewtify.UIThread).to(x -> message.text(x));
 
                 update.code.accept(update, new Monitor(m, progress -> {
-                    Thread.sleep(15);
+                    Thread.sleep(3);
 
                     Viewtify.inUI(() -> {
                         bar.value(progress.rateByFiles() / 100d);
