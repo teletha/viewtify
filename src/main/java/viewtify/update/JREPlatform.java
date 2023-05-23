@@ -15,10 +15,12 @@ import java.util.Set;
 
 import kiss.I;
 import kiss.Managed;
+import kiss.Observer;
 import kiss.Signal;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
+import psychopath.Progress;
 import viewtify.Viewtify;
 
 public class JREPlatform extends ApplicationPlatform {
@@ -137,7 +139,7 @@ public class JREPlatform extends ApplicationPlatform {
      * {@inheritDoc}
      */
     @Override
-    public ApplicationPlatform updater() {
+    public ApplicationPlatform createUpdater(Observer<? super Progress> observer) {
         JREPlatform updater = new JREPlatform();
         updater.rootAPP = rootAPP;
         updater.rootJRE = rootJRE;

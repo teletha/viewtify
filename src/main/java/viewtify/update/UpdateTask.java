@@ -9,14 +9,20 @@
  */
 package viewtify.update;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javafx.scene.control.ButtonType;
 import kiss.I;
-import kiss.Managed;
 import kiss.Observer;
 import kiss.WiseBiConsumer;
 import psychopath.Directory;
@@ -25,26 +31,18 @@ import psychopath.Locator;
 import psychopath.Progress;
 import viewtify.Viewtify;
 
-public class UpdateTask {
+public class UpdateTask implements Serializable {
 
     /** The all tasks. */
-    @Managed
     List<Task> tasks = new ArrayList();
 
-    /** The root directory of this application. */
-    @Managed
-    private Directory root;
-
     /** The archive of new application. */
-    @Managed
     private File archive;
 
     /** The origin platform. */
-    @Managed
-    private ApplicationPlatform origin;
+    private final ApplicationPlatform origin = ApplicationPlatform.current();
 
     /** The updater platform. */
-    @Managed
     private ApplicationPlatform updater;
 
     /**
@@ -53,324 +51,9 @@ public class UpdateTask {
      * @param archive A locaiton of the new version.
      */
     public static void run(String archive) {
-        run(Locator.directory(""), archive);
-    }
-
-    /**
-     * Build the update task for the specified new version.
-     * 
-     * @param root An application root directory.
-     * @param archive A locaiton of the new version.
-     */
-    public static void run(Directory root, String archive) {
         // prepare to update
-        UpdateTask prepare = new UpdateTask(root);
-        prepare.verify("Verify new version.", archive);
-        prepare.load("Download new version.");
-        prepare.build("Prepare to update.");
-        prepare.message("Ready for update.");
-        Updater.tasks = prepare;
-
-        Viewtify.dialog("Updater", Updater.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(tasks -> {
-            tasks.tasks.clear();
-            tasks.unpack("Installing the new version, please wait a minute.", tasks.archive, tasks.root);
-            tasks.cleanup("Clean up old files.", tasks.origin.locateLibrary());
-            tasks.reboot("Update is completed, reboot.");
-
-            tasks.updater.boot(Map.of("updater", I.write(tasks)));
-            Viewtify.application().deactivate();
-        });
-    }
-
-    /**
-     * Empty task.
-     */
-    UpdateTask() {
-    }
-
-    /**
-     * Hide constructor.
-     */
-    private UpdateTask(Directory root) {
-        this.root = root.absolutize();
-    }
-
-    /**
-     * Verify archive.
-     * 
-     * @param message
-     */
-    public void verify(String message, String archive) {
-        Verify task = new Verify();
-        task.archive = archive;
-        task.root = root;
-        task.message = message;
-        this.archive = Locator.file(archive).absolutize();
-
-        tasks.add(task);
-    }
-
-    /**
-     * Load archive.
-     * 
-     * @param message
-     */
-    public void load(String message) {
-        Load task = new Load();
-        task.remote = archive.path();
-        task.local = archive;
-        task.message = message;
-
-        tasks.add(task);
-    }
-
-    /**
-     * @param departure
-     * @param destination
-     */
-    public void move(String message, Directory departure, Directory destination) {
-        Move task = new Move();
-        task.departure = departure;
-        task.destination = destination;
-        task.message = message;
-
-        tasks.add(task);
-    }
-
-    /**
-     * @param departure
-     * @param destination
-     */
-    public void copy(String message, Directory departure, Directory destination) {
-        Copy task = new Copy();
-        task.departure = departure;
-        task.destination = destination;
-        task.message = message;
-
-        tasks.add(task);
-    }
-
-    /**
-     * @param departure
-     * @param destination
-     */
-    public void unpack(String message, File departure, Directory destination) {
-        Unpack task = new Unpack();
-        task.departure = departure;
-        task.destination = destination;
-        task.message = message;
-
-        tasks.add(task);
-    }
-
-    /**
-     * @param target
-     */
-    public void delete(String message, Directory target, String... patterns) {
-        Delete task = new Delete();
-        task.target = target;
-        task.patterns = List.of(patterns);
-        task.message = message;
-
-        tasks.add(task);
-    }
-
-    public void cleanup(String message, Directory target) {
-        Clean task = new Clean();
-        task.target = target;
-        task.message = message;
-
-        tasks.add(task);
-    }
-
-    /**
-     * Reboot this application.
-     * 
-     * @param message
-     */
-    public void reboot(String message) {
-        Reboot task = new Reboot();
-        task.message = message;
-
-        tasks.add(task);
-    }
-
-    /**
-     * Notify message.
-     * 
-     * @param message
-     */
-    public void message(String message) {
-        Message task = new Message();
-        task.message = message;
-
-        tasks.add(task);
-    }
-
-    /**
-     * @param message
-     */
-    public void build(String message) {
-        Build task = new Build();
-        task.message = message;
-
-        tasks.add(task);
-    }
-
-    /**
-     * Internal tasks.
-     */
-    public static abstract class Task implements WiseBiConsumer<UpdateTask, Observer<? super Progress>> {
-
-        /**
-         * Task message.
-         */
-        public String message;
-
-        public double weight() {
-            return 20;
-        }
-    }
-
-    static class Build extends Task {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> param) throws Throwable {
-            tasks.origin = ApplicationPlatform.current();
-            tasks.updater = tasks.origin.updater();
-        }
-    }
-
-    /**
-     * Move
-     */
-    static class Move extends Task {
-        public Directory departure;
-
-        public Directory destination;
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            departure.trackMovingTo(destination, o -> o.replaceDifferent().strip()).to(listener);
-        }
-    }
-
-    /**
-     * Copy
-     */
-    static class Copy extends Task {
-        public Directory departure;
-
-        public Directory destination;
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            departure.trackCopyingTo(destination, o -> o.replaceDifferent().strip()).to(listener);
-        }
-    }
-
-    /**
-     * Unpack
-     */
-    static class Unpack extends Task {
-        public File departure;
-
-        public Directory destination;
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            departure.trackUnpackingTo(destination, o -> o.replaceDifferent()).to(listener);
-        }
-    }
-
-    /**
-     * Delete
-     */
-    static class Delete extends Task {
-        public Directory target;
-
-        public List<String> patterns;
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            target.trackDeleting(patterns).to(listener);
-        }
-    }
-
-    /**
-     * Clean
-     */
-    static class Clean extends Task {
-
-        Directory target;
-
-        private Map<String, File> files = new HashMap();
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public double weight() {
-            return 5;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            target.walkFile("*.jar").to(file -> {
-                String name = name(file.name());
-                File old = files.put(name, file);
-                if (old != null) {
-                    old.trackDeleting().to(listener);
-                }
-            });
-        }
-
-        private String name(String value) {
-            int index = value.indexOf('-');
-            while (index != -1) {
-                char c = value.charAt(index + 1);
-                if (Character.isDigit(c)) {
-                    return value.substring(0, index);
-                } else {
-                    index = value.indexOf('-', index + 1);
-                }
-            }
-            return value;
-        }
-    }
-
-    /**
-     * Verify
-     */
-    static class Verify extends Task {
-
-        public String archive;
-
-        public Directory root;
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
+        UpdateTask prepare = new UpdateTask();
+        prepare.add("Prepare to update.", (tasks, p) -> {
             if (archive == null || archive.isBlank()) {
                 throw new Error("Unable to update because the location of the new application is unknown.");
             }
@@ -386,78 +69,185 @@ public class UpdateTask {
                 throw new Error("Archive [" + archive + "] is not found.");
             }
 
-            if (zip.lastModifiedMilli() <= root.lastModifiedMilli()) {
+            if (zip.lastModifiedMilli() <= tasks.origin.locateRoot().lastModifiedMilli()) {
                 throw new Error("The current version is latest, no need to update.");
             }
 
             tasks.archive = zip;
-        }
+            tasks.updater = tasks.origin.createUpdater(p);
+        });
+        prepare.add("Ready for update.", (tasks, p) -> {
+        });
+        Updater.tasks = prepare;
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public double weight() {
-            return 1;
+        Viewtify.dialog("Updater", Updater.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(tasks -> {
+            tasks.tasks.clear();
+            tasks.unpack("Installing the new version, please wait a minute.", tasks.archive, tasks.origin.locateRoot());
+            tasks.cleanup("Clean up old files.", tasks.origin.locateLibrary());
+            tasks.reboot("Update is completed, reboot.");
+
+            tasks.updater.boot(Map.of("updater", store(tasks)));
+            Viewtify.application().deactivate();
+        });
+    }
+
+    /**
+     * Store all tasks.
+     * 
+     * @return
+     */
+    public static String store(UpdateTask tasks) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(tasks);
+            oos.close();
+            byte[] bytes = baos.toByteArray();
+            return Base64.getEncoder().encodeToString(bytes);
+        } catch (IOException e) {
+            throw I.quiet(e);
         }
     }
 
-    static class Load extends Task {
+    /**
+     * Restore tasks.
+     * 
+     * @param tasks
+     * @return
+     */
+    public static UpdateTask restore(String tasks) {
+        try {
+            byte[] bytes = Base64.getDecoder().decode(tasks);
+            System.out.println(tasks);
+            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return (UpdateTask) ois.readObject();
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
+    }
 
-        public String remote;
+    /**
+     * Empty task.
+     */
+    UpdateTask() {
+    }
 
-        public File local;
+    public void add(String message, Code code) {
+        Task task = new Task();
+        task.message = message;
+        task.code = code;
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            if (local.path().equals(remote)) {
-                // do nothing
+        tasks.add(task);
+    }
+
+    /**
+     * @param departure
+     * @param destination
+     */
+    public void move(String message, Directory departure, Directory destination) {
+        add(message, (tasks, p) -> {
+            departure.trackMovingTo(destination, o -> o.replaceDifferent().strip()).to(p);
+        });
+    }
+
+    /**
+     * @param departure
+     * @param destination
+     */
+    public void copy(String message, Directory departure, Directory destination) {
+        add(message, (tasks, p) -> {
+            departure.trackCopyingTo(destination, o -> o.replaceDifferent().strip()).to(p);
+        });
+    }
+
+    /**
+     * @param departure
+     * @param destination
+     */
+    public void unpack(String message, File departure, Directory destination) {
+        add(message, (tasks, p) -> {
+            departure.trackUnpackingTo(destination, o -> o.replaceDifferent()).to(p);
+        });
+    }
+
+    /**
+     * @param target
+     */
+    public void delete(String message, Directory target, String... patterns) {
+        add(message, (tasks, p) -> {
+            target.trackDeleting(patterns).to(p);
+        });
+    }
+
+    public void cleanup(String message, Directory target) {
+        add(message, (tasks, p) -> {
+            Map<String, File> files = new HashMap();
+
+            target.walkFile("*.jar").to(file -> {
+                String name = name(file.name());
+                File old = files.put(name, file);
+                if (old != null) {
+                    old.trackDeleting().to(p);
+                }
+            });
+        });
+    }
+
+    private String name(String value) {
+        int index = value.indexOf('-');
+        while (index != -1) {
+            char c = value.charAt(index + 1);
+            if (Character.isDigit(c)) {
+                return value.substring(0, index);
             } else {
-                // download
+                index = value.indexOf('-', index + 1);
             }
         }
+        return value;
     }
 
-    static class Reboot extends Task {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
+    /**
+     * Reboot this application.
+     * 
+     * @param message
+     */
+    public void reboot(String message) {
+        add(message, (tasks, p) -> {
             tasks.origin.boot();
 
             Viewtify.application().deactivate();
+        });
+    }
+
+    /**
+     * Internal tasks.
+     */
+    static class Task implements WiseBiConsumer<UpdateTask, Observer<? super Progress>>, Serializable {
+
+        /**
+         * Task message.
+         */
+        public String message;
+
+        private Code code;
+
+        public double weight() {
+            return 20;
         }
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public double weight() {
-            return 1;
+        public void ACCEPT(UpdateTask param1, Observer<? super Progress> param2) throws Throwable {
+            code.accept(param1, param2);
         }
     }
 
-    static class Message extends Task {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void ACCEPT(UpdateTask tasks, Observer<? super Progress> listener) throws Throwable {
-            // do nothing
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public double weight() {
-            return 1;
-        }
+    /**
+     * Serializable task.
+     */
+    public interface Code extends WiseBiConsumer<UpdateTask, Observer<? super Progress>>, Serializable {
     }
 }

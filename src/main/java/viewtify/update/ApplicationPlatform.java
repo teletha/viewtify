@@ -12,7 +12,9 @@ package viewtify.update;
 import java.io.Serializable;
 import java.util.Map;
 
+import kiss.Observer;
 import psychopath.Directory;
+import psychopath.Progress;
 
 public abstract class ApplicationPlatform implements Serializable {
 
@@ -61,7 +63,7 @@ public abstract class ApplicationPlatform implements Serializable {
      * 
      * @return
      */
-    public abstract ApplicationPlatform updater();
+    public abstract ApplicationPlatform createUpdater(Observer<? super Progress> observer);
 
     /**
      * Create the updater platform.

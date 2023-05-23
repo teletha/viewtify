@@ -15,7 +15,6 @@ import java.io.PrintStream;
 import java.util.List;
 
 import javafx.beans.property.Property;
-
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -82,7 +81,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
     private void execute() {
         Viewtify.inWorker(() -> {
             try {
-                UpdateTask update = tasks != null ? tasks : I.json(System.getenv("updater")).as(UpdateTask.class);
+                UpdateTask update = tasks != null ? tasks : UpdateTask.restore(System.getenv("updater"));
                 List<Task> tasks = update.tasks;
                 double total = tasks.stream().mapToDouble(Task::weight).sum();
                 double parts = 0;

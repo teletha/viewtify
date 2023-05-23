@@ -22,7 +22,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
 import kiss.I;
 
 /**
@@ -39,7 +38,7 @@ public class Instruction implements Serializable {
     final ApplicationPlatform origin = ApplicationPlatform.current();
 
     /** The remote environment. */
-    final ApplicationPlatform remote = origin.updater();
+    final ApplicationPlatform remote = origin.updater2();
 
     transient StringProperty message = new SimpleStringProperty();
 
