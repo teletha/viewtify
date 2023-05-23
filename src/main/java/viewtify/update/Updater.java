@@ -79,10 +79,6 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
         message.text("Updating...");
         bar.value(0d);
 
-        execute();
-    }
-
-    private void execute() {
         UpdateTask update = tasks != null ? tasks : UpdateTask.restore(System.getenv("updater"));
 
         Viewtify.inWorker(() -> {
@@ -90,7 +86,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
                 Variable<String> m = Variable.of("");
                 m.observe().switchVariable(x -> I.translate(x)).on(Viewtify.UIThread).to(x -> message.text(x));
 
-                update.task.accept(update, new Monitor(m, progress -> {
+                update.code.accept(update, new Monitor(m, progress -> {
                     Thread.sleep(15);
 
                     Viewtify.inUI(() -> {
@@ -103,6 +99,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
                 Viewtify.inUI(() -> {
                     percentage.text("");
                     detail.text("");
+                    bar.value(1d);
                 });
                 verifier.makeValid();
 

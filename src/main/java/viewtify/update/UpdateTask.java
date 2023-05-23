@@ -33,7 +33,7 @@ import viewtify.Viewtify;
 public class UpdateTask implements Serializable {
 
     /** The all tasks. */
-    Task task;
+    Code code;
 
     /** The archive of new application. */
     private File archive;
@@ -155,7 +155,7 @@ public class UpdateTask implements Serializable {
         }
     }
 
-    public static UpdateTask create(Task task) {
+    public static UpdateTask create(Code task) {
         UpdateTask tasks = new UpdateTask(task);
         return tasks;
     }
@@ -163,14 +163,14 @@ public class UpdateTask implements Serializable {
     /**
      * Empty task.
      */
-    UpdateTask(Task task) {
-        this.task = task;
+    private UpdateTask(Code code) {
+        this.code = code;
     }
 
     /**
      * Internal tasks.
      */
-    static interface Task extends WiseBiConsumer<UpdateTask, Monitor>, Serializable {
+    static interface Code extends WiseBiConsumer<UpdateTask, Monitor>, Serializable {
     }
 
     public static class Monitor implements WiseConsumer<Progress> {
