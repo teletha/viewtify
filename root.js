@@ -276,27 +276,6 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Instruction",
-			"packageName": "viewtify.update",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Instruction.Code",
-			"packageName": "viewtify.update",
-			"type": "Functional"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "InstructionView",
-			"packageName": "viewtify.update",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "JREPlatform",
 			"packageName": "viewtify.update",
 			"type": "Class"
@@ -871,9 +850,9 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "UpdateTask.Code",
+			"name": "UpdateTask.Monitor",
 			"packageName": "viewtify.update",
-			"type": "Functional"
+			"type": "Class"
 		},
 		{
 			"modifiers": {
