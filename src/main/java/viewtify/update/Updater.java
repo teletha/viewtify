@@ -12,7 +12,6 @@ package viewtify.update;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.util.List;
 
 import javafx.beans.property.Property;
 import kiss.I;
@@ -28,7 +27,7 @@ import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.Verifier;
 import viewtify.ui.helper.VerifyHelper;
-import viewtify.update.UpdateTask.Task;
+import viewtify.update.UpdateTask.Monitor;
 
 public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<Updater, UpdateTask> {
 
@@ -36,6 +35,8 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
     static UpdateTask tasks;
 
     UILabel message;
+
+    UILabel percentage;
 
     UILabel detail;
 
@@ -48,7 +49,10 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
     class UI extends ViewDSL {
         {
             $(vbox, style.root, () -> {
-                $(message);
+                $(hbox, () -> {
+                    $(message);
+                    $(percentage);
+                });
                 $(bar, style.bar);
                 $(detail);
             });
@@ -79,36 +83,27 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
     }
 
     private void execute() {
+        UpdateTask update = tasks != null ? tasks : UpdateTask.restore(System.getenv("updater"));
+
         Viewtify.inWorker(() -> {
             try {
-                UpdateTask update = tasks != null ? tasks : UpdateTask.restore(System.getenv("updater"));
-                List<Task> tasks = update.tasks;
-                double total = tasks.stream().mapToDouble(Task::weight).sum();
-                double parts = 0;
+                Variable<String> m = Variable.of("");
+                m.observe().switchVariable(x -> I.translate(x)).on(Viewtify.UIThread).to(x -> message.text(x));
 
-                for (int i = 0; i < tasks.size(); i++) {
-                    Task task = tasks.get(i);
-                    Variable<String> m = I.translate(task.message);
-                    Viewtify.inUI(() -> message.text(m));
+                update.task.accept(update, new Monitor(m, progress -> {
+                    Thread.sleep(15);
 
-                    double part = task.weight() / total;
-                    task.accept(update, progress -> {
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException e) {
-                            // ignore
-                        }
-
-                        bar.value(v -> v + (part / progress.totalFiles));
-                        Viewtify.inUI(() -> {
-                            message.text(m + " (" + progress.rateByFiles() + "%)");
-                            detail.text(progress.location);
-                        });
+                    Viewtify.inUI(() -> {
+                        bar.value(progress.rateByFiles() / 100d);
+                        percentage.text(" (" + progress.rateByFiles() + "%)");
+                        detail.text(progress.location);
                     });
+                }));
 
-                    bar.value(parts += part);
-                    Viewtify.inUI(() -> detail.text(""));
-                }
+                Viewtify.inUI(() -> {
+                    percentage.text("");
+                    detail.text("");
+                });
                 verifier.makeValid();
 
                 property.set(update);
@@ -120,7 +115,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
                 }
                 I.error(e.getMessage());
                 I.error(e);
-                message.text(I.translate(e.getMessage()));
+                message.text(e.getMessage());
             }
         });
     }

@@ -12,11 +12,9 @@ package viewtify.update;
 import java.util.Map;
 
 import kiss.Managed;
-import kiss.Observer;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
-import psychopath.Progress;
 
 class ExewrapPlatform extends ApplicationPlatform {
 
@@ -66,7 +64,7 @@ class ExewrapPlatform extends ApplicationPlatform {
      * {@inheritDoc}
      */
     @Override
-    public ApplicationPlatform createUpdater(Observer<? super Progress> observer) {
+    public ApplicationPlatform createUpdater() {
         Directory temp = Locator.temporaryDirectory();
 
         JREPlatform updater = new JREPlatform();
@@ -74,26 +72,6 @@ class ExewrapPlatform extends ApplicationPlatform {
         updater.rootJRE = temp.directory("jre");
         updater.rootLIB = temp.directory("lib");
         updater.application = Updater.class;
-        updater.classPath = "lib/*";
-
-        locateJRE().trackCopyingTo(temp).to(observer);
-        locateLibrary().trackCopyingTo(temp).to(observer);
-
-        return updater;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ApplicationPlatform updater2() {
-        Directory temp = Locator.temporaryDirectory();
-
-        JREPlatform updater = new JREPlatform();
-        updater.rootAPP = temp;
-        updater.rootJRE = temp.directory("jre");
-        updater.rootLIB = temp.directory("lib");
-        updater.application = InstructionView.class;
         updater.classPath = "lib/*";
 
         return updater;
