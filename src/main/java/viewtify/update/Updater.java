@@ -9,12 +9,7 @@
  */
 package viewtify.update;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-
 import javafx.beans.property.Property;
-
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -63,6 +58,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
     interface style extends StyleDSL {
 
         Style root = () -> {
+            display.minWidth(380, px);
             padding.size(10, px);
         };
 
@@ -82,13 +78,13 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
 
         UpdateTask update = tasks != null ? tasks : UpdateTask.restore(System.getenv("updater"));
 
+        Variable<String> m = Variable.of("");
+        m.observe().switchVariable(x -> I.translate(x)).on(Viewtify.UIThread).to(x -> message.text(x));
+
         Viewtify.inWorker(() -> {
             try {
-                Variable<String> m = Variable.of("");
-                m.observe().switchVariable(x -> I.translate(x)).on(Viewtify.UIThread).to(x -> message.text(x));
-
                 update.code.accept(update, new Monitor(m, progress -> {
-                    Thread.sleep(3);
+                    Thread.sleep(5);
 
                     Viewtify.inUI(() -> {
                         bar.value(progress.rateByFiles() / 100d);
@@ -106,14 +102,8 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
 
                 property.set(update);
             } catch (Throwable e) {
-                try {
-                    e.printStackTrace(new PrintStream(new File("update-error.log")));
-                } catch (FileNotFoundException e1) {
-                    throw I.quiet(e);
-                }
                 I.error(e.getMessage());
                 I.error(e);
-                message.text(e.getMessage());
             }
         });
     }

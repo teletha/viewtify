@@ -16,13 +16,13 @@ import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.EventHandler;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
-
 import viewtify.ui.UIContextMenu;
 
 public interface ContextMenuHelper<Self extends ContextMenuHelper> extends PropertyAccessHelper {
@@ -116,6 +116,19 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
                 }
             }
         }
+    }
+
+    /**
+     * Show the associated context menu.
+     * 
+     * @return
+     */
+    default Self showContext(Node anchor) {
+        ContextMenu context = property(Type.ContextMenu).getValue();
+        if (context != null) {
+            context.show(anchor, Side.RIGHT, 0, 0);
+        }
+        return (Self) this;
     }
 
     /**

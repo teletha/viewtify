@@ -34,6 +34,7 @@ import viewtify.Key;
 import viewtify.ui.UICheckBox;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UISpinner;
+import viewtify.ui.UITableView;
 import viewtify.ui.UIText;
 import viewtify.ui.UserInterface;
 import viewtify.ui.View;
@@ -41,7 +42,7 @@ import viewtify.ui.View;
 public class KeyboardNavigation {
 
     /** The managed nodes. */
-    private final List<List<UserInterface>> table = new ArrayList();
+    private final List<List<UserInterface>> managed = new ArrayList();
 
     private Key next = Key.None;
 
@@ -72,6 +73,8 @@ public class KeyboardNavigation {
     private final CheckBoxNavigator checkbox = new CheckBoxNavigator();
 
     private final SpinnerNavigator spinner = new SpinnerNavigator();
+
+    private final TableNavigator table = new TableNavigator();
 
     private TopMostTraversalEngine engine;
 
@@ -135,20 +138,23 @@ public class KeyboardNavigation {
      * @return
      */
     public KeyboardNavigation group(UserInterface... ui) {
-        table.add(I.list(ui));
+        managed.add(I.list(ui));
 
         for (UserInterface node : ui) {
-            if (node instanceof UIText) {
-                text.register((UIText) node);
-            } else if (node instanceof UIComboBox) {
-                combo.register((UIComboBox) node);
-            } else if (node instanceof UICheckBox) {
-                checkbox.register((UICheckBox) node);
-            } else if (node instanceof UISpinner) {
-                spinner.register((UISpinner) node);
+            if (node instanceof UIText x) {
+                text.register(x);
+            } else if (node instanceof UIComboBox x) {
+                combo.register(x);
+            } else if (node instanceof UICheckBox x) {
+                checkbox.register(x);
+            } else if (node instanceof UISpinner x) {
+                spinner.register(x);
+            } else if (node instanceof UITableView x) {
+                table.register(x);
             }
         }
         return this;
+
     }
 
     /**
@@ -252,8 +258,8 @@ public class KeyboardNavigation {
      * @return
      */
     public KeyboardNavigation focusFirst() {
-        if (!table.isEmpty()) {
-            List<UserInterface> nest = table.get(0);
+        if (!managed.isEmpty()) {
+            List<UserInterface> nest = managed.get(0);
             if (!nest.isEmpty()) {
                 nest.get(0).focus();
                 System.out.println("focust " + nest.get(0).ui);
@@ -399,8 +405,8 @@ public class KeyboardNavigation {
         }
 
         private int[] locate(Node node) {
-            for (int i = 0; i < table.size(); i++) {
-                List<UserInterface> row = table.get(i);
+            for (int i = 0; i < managed.size(); i++) {
+                List<UserInterface> row = managed.get(i);
                 for (int j = 0; j < row.size(); j++) {
                     Node item = row.get(j).ui;
                     if (item == node) {
@@ -413,12 +419,12 @@ public class KeyboardNavigation {
 
         private void moveTo(int rowIndex, int columnIndex) {
             if (rowIndex < 0) {
-                rowIndex = canLoop ? table.size() - 1 : 0;
-            } else if (table.size() <= rowIndex) {
-                rowIndex = canLoop ? 0 : table.size() - 1;
+                rowIndex = canLoop ? managed.size() - 1 : 0;
+            } else if (managed.size() <= rowIndex) {
+                rowIndex = canLoop ? 0 : managed.size() - 1;
             }
 
-            List<UserInterface> row = table.get(rowIndex);
+            List<UserInterface> row = managed.get(rowIndex);
 
             if (columnIndex < 0) {
                 moveTo(rowIndex - 1, 0);
@@ -666,6 +672,62 @@ public class KeyboardNavigation {
             } else if (Key.Numpad0.match(e) || Key.Digit0.match(e)) {
                 current.value(0);
                 if (focusable) focusNext(node);
+            }
+        };
+    }
+
+    /**
+     * Special Navigator for {@link UITableView}.
+     */
+    private class TableNavigator extends Navigator<UITableView> {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void register(UITableView node) {
+            node.ui.focusedProperty().addListener((v, o, n) -> {
+                current = node;
+                if (n) {
+                    node.ui.addEventFilter(KeyEvent.KEY_PRESSED, this);
+                    node.ui.addEventFilter(KeyEvent.KEY_PRESSED, operation);
+
+                } else {
+                    node.ui.removeEventFilter(KeyEvent.KEY_PRESSED, this);
+                    node.ui.removeEventFilter(KeyEvent.KEY_PRESSED, operation);
+                }
+            });
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected boolean canNavigate(UITableView node, KeyEvent event) {
+            switch (event.getCode()) {
+            case UP:
+                return node.selectedItem().equals(node.first());
+
+            case DOWN:
+                return node.selectedItem().equals(node.last());
+
+            default:
+                return true;
+            }
+        }
+
+        /** For table. */
+        private final EventHandler<KeyEvent> operation = e -> {
+            Node node = (Node) e.getSource();
+
+            if (Key.Up.match(e)) {
+                if (current.selectedItem().equals(current.first())) {
+                    if (focusable) focusUp(node);
+                }
+            } else if (Key.Down.match(e)) {
+                if (current.selectedItem().equals(current.last())) {
+                    if (focusable) focusDown(node);
+                }
             }
         };
     }

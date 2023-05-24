@@ -16,15 +16,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Base64;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
 import javafx.scene.control.ButtonType;
-
 import kiss.I;
 import kiss.WiseBiConsumer;
 import kiss.WiseConsumer;
+import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
 import psychopath.Progress;
@@ -36,14 +35,11 @@ public class UpdateTask implements Serializable {
     /** The all tasks. */
     Code code;
 
-    /** The archive of new application. */
-    private File archive;
-
     /** The origin platform. */
     private final ApplicationPlatform origin = ApplicationPlatform.current();
 
     /** The updater platform. */
-    private final ApplicationPlatform updater = origin.createUpdater();
+    private ApplicationPlatform updater;
 
     /**
      * Empty task.
@@ -67,26 +63,35 @@ public class UpdateTask implements Serializable {
             monitor.message("Verify the update.");
 
             if (archive == null || archive.isBlank()) {
-                throw new Error("Unable to update because the location of the new application is unknown.");
+                monitor.message("Unable to update because the location of the new application is unknown.");
+                return;
             }
 
             // check archive
             File zip = Locator.file(archive).absolutize();
 
             if (zip.isAbsent() || !zip.extension().equals("zip")) {
-                throw new Error("Zipped archive [" + archive + "] is not found.");
+                monitor.message("Zipped archive [" + archive + "] is not found.");
+                return;
             }
 
             if (zip.lastModifiedMilli() <= tasks.origin.locateRoot().lastModifiedMilli()) {
-                throw new Error("The current version is latest, no need to update.");
+                monitor.message("The current version is latest, no need to update.");
+                return;
             }
-
-            tasks.archive = zip;
 
             monitor.message("Prepare to update.");
-            if (tasks.origin.canUpdateJRE()) {
-                tasks.origin.locateRoot().trackCopyingTo(tasks.updater.locateRoot(), o -> o.strip().glob("lib/**", "jre/**")).to(monitor);
-            }
+
+            Directory temp = Locator.directory(".updater").absolutize();
+            JREPlatform updater = new JREPlatform();
+            updater.rootAPP = temp;
+            updater.rootJRE = temp.directory("jre");
+            updater.rootLIB = temp.directory("lib");
+            updater.application = Updater.class;
+            updater.classPath = "lib/*";
+            tasks.updater = updater;
+
+            zip.trackUnpackingTo(temp, o -> o.replaceDifferent().sync()).to(monitor);
 
             monitor.message("Ready for update.");
         });
@@ -95,19 +100,11 @@ public class UpdateTask implements Serializable {
         Viewtify.dialog("Updater", Updater.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(tasks -> {
             UpdateTask update = UpdateTask.create((x, monitor) -> {
                 monitor.message("Installing the new version, please wait a minute.");
-                tasks.archive.trackUnpackingTo(tasks.origin.locateRoot(), o -> o.replaceDifferent()).to(monitor);
 
-                if (tasks.origin.canUpdateLibrary()) {
-                    monitor.message("Clean up old files.");
-                    Map<String, File> files = new HashMap();
-                    tasks.origin.locateLibrary().walkFile("*.jar").to(file -> {
-                        String name = name(file.name());
-                        File old = files.put(name, file);
-                        if (old != null) {
-                            old.delete();
-                        }
-                    });
-                }
+                String[] patterns = {"jre/**", "lib/**", "lang/**", "*.exe"};
+                tasks.updater.locateRoot()
+                        .trackCopyingTo(tasks.origin.locateRoot(), o -> o.strip().glob(patterns).replaceDifferent().sync())
+                        .to(monitor);
 
                 monitor.message("Update is completed, reboot.");
                 tasks.origin.boot();

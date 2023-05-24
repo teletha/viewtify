@@ -152,7 +152,6 @@ public class Edito {
                 for (Object v : value) {
                     copy.add(Edito.clone(v));
                 }
-                System.out.println("Create snapshot " + copy);
                 return copy;
             }
         };
