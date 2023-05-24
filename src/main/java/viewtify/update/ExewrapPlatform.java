@@ -51,4 +51,18 @@ class ExewrapPlatform extends ApplicationPlatform {
             return false;
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ApplicationPlatform updater() {
+        JREPlatform updater = new JREPlatform();
+        updater.root = root.directory(".updater");
+        updater.jre = updater.root.directory("jre");
+        updater.application = Updater.class;
+        updater.classPath = "lib/*";
+
+        return updater;
+    }
 }

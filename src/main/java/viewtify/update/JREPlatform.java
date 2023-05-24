@@ -60,4 +60,18 @@ public class JREPlatform extends ApplicationPlatform {
             return false;
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ApplicationPlatform updater() {
+        JREPlatform updater = new JREPlatform();
+        updater.root = root;
+        updater.jre = jre;
+        updater.application = Updater.class;
+        updater.classPath = classPath;
+
+        return updater;
+    }
 }

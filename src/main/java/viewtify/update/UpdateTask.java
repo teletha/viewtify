@@ -105,12 +105,7 @@ public class UpdateTask implements Serializable {
                 Viewtify.application().deactivate();
             });
 
-            JREPlatform updater = new JREPlatform();
-            updater.root = updateDir;
-            updater.jre = updateDir.directory("jre");
-            updater.application = Updater.class;
-            updater.classPath = "lib/*";
-            updater.boot(Map.of("updater", store(update)));
+            origin.updater().boot(Map.of("updater", store(update)));
 
             Viewtify.application().deactivate();
         });

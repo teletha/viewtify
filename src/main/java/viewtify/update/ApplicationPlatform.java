@@ -37,6 +37,13 @@ public abstract class ApplicationPlatform implements Serializable {
     public abstract boolean boot(Map<String, String> params);
 
     /**
+     * Create new updater application.
+     * 
+     * @return
+     */
+    public abstract ApplicationPlatform updater();
+
+    /**
      * Detect the current site.
      * 
      * @return
