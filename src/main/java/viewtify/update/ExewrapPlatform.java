@@ -11,21 +11,13 @@ package viewtify.update;
 
 import java.util.Map;
 
-import kiss.Managed;
-import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
 
+@SuppressWarnings("serial")
 class ExewrapPlatform extends ApplicationPlatform {
 
-    private static final long serialVersionUID = 7081682284741896593L;
-
-    /** The update site. */
-    @Managed
-    private Directory root;
-
     /** The executable file. */
-    @Managed
     private File exe;
 
     /**
@@ -58,59 +50,5 @@ class ExewrapPlatform extends ApplicationPlatform {
         } catch (Throwable e) {
             return false;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ApplicationPlatform createUpdater() {
-        Directory temp = Locator.temporaryDirectory();
-
-        JREPlatform updater = new JREPlatform();
-        updater.rootAPP = temp;
-        updater.rootJRE = temp.directory("jre");
-        updater.rootLIB = temp.directory("lib");
-        updater.application = Updater.class;
-        updater.classPath = "lib/*";
-
-        return updater;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    long lastModified() {
-        return root.lastModifiedMilli();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    Directory locateRoot() {
-        return root;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    Directory locateLibrary() {
-        return root.directory("lib");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    Directory locateJRE() {
-        Directory dir = root.directory("jre");
-        if (dir.isPresent()) {
-            return dir;
-        }
-
-        return root.directory("jdk");
     }
 }

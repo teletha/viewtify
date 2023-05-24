@@ -16,10 +16,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
 import javafx.scene.control.ButtonType;
+
 import kiss.I;
 import kiss.WiseBiConsumer;
 import kiss.WiseConsumer;
@@ -34,12 +36,6 @@ public class UpdateTask implements Serializable {
 
     /** The all tasks. */
     Code code;
-
-    /** The origin platform. */
-    private final ApplicationPlatform origin = ApplicationPlatform.current();
-
-    /** The updater platform. */
-    private ApplicationPlatform updater;
 
     /**
      * Empty task.
@@ -58,76 +54,66 @@ public class UpdateTask implements Serializable {
      * @param archive A locaiton of the new version.
      */
     public static void update(String archive) {
+        Directory updateDir = Locator.directory(".updater").absolutize();
+        ApplicationPlatform origin = ApplicationPlatform.current();
+
         // prepare to update
         UpdateTask prepare = UpdateTask.create((tasks, monitor) -> {
             monitor.message("Verify the update.");
 
+            // ====================================
+            // check parameter
+            // ====================================
             if (archive == null || archive.isBlank()) {
                 monitor.message("Unable to update because the location of the new application is unknown.");
                 return;
             }
 
+            // ====================================
             // check archive
-            File zip = Locator.file(archive).absolutize();
+            // ====================================
+            File file = Locator.file(archive).absolutize();
 
-            if (zip.isAbsent() || !zip.extension().equals("zip")) {
+            if (file.isAbsent() || !file.extension().equals("zip")) {
                 monitor.message("Zipped archive [" + archive + "] is not found.");
                 return;
             }
 
-            if (zip.lastModifiedMilli() <= tasks.origin.locateRoot().lastModifiedMilli()) {
+            if (file.isBefore(origin.root)) {
                 monitor.message("The current version is latest, no need to update.");
                 return;
             }
 
             monitor.message("Prepare to update.");
-
-            Directory temp = Locator.directory(".updater").absolutize();
-            JREPlatform updater = new JREPlatform();
-            updater.rootAPP = temp;
-            updater.rootJRE = temp.directory("jre");
-            updater.rootLIB = temp.directory("lib");
-            updater.application = Updater.class;
-            updater.classPath = "lib/*";
-            tasks.updater = updater;
-
-            zip.trackUnpackingTo(temp, o -> o.replaceDifferent().sync()).to(monitor);
+            file.trackUnpackingTo(updateDir, option -> option.sync().replaceDifferent()).to(monitor);
 
             monitor.message("Ready for update.");
         });
         Updater.tasks = prepare;
 
         Viewtify.dialog("Updater", Updater.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(tasks -> {
+
             UpdateTask update = UpdateTask.create((x, monitor) -> {
                 monitor.message("Installing the new version, please wait a minute.");
 
-                String[] patterns = {"jre/**", "lib/**", "lang/**", "*.exe"};
-                tasks.updater.locateRoot()
-                        .trackCopyingTo(tasks.origin.locateRoot(), o -> o.strip().glob(patterns).replaceDifferent().sync())
-                        .to(monitor);
+                List<String> patterns = updateDir.children().map(c -> c.isFile() ? c.name() : c.name() + "/**").toList();
+                updateDir.trackCopyingTo(origin.root, o -> o.strip().glob(patterns).replaceDifferent().sync()).to(monitor);
 
                 monitor.message("Update is completed, reboot.");
-                tasks.origin.boot();
+                origin.boot();
 
                 Viewtify.application().deactivate();
             });
 
-            tasks.updater.boot(Map.of("updater", store(update)));
+            JREPlatform updater = new JREPlatform();
+            updater.root = updateDir;
+            updater.jre = updateDir.directory("jre");
+            updater.application = Updater.class;
+            updater.classPath = "lib/*";
+            updater.boot(Map.of("updater", store(update)));
+
             Viewtify.application().deactivate();
         });
-    }
-
-    private static String name(String value) {
-        int index = value.indexOf('-');
-        while (index != -1) {
-            char c = value.charAt(index + 1);
-            if (Character.isDigit(c)) {
-                return value.substring(0, index);
-            } else {
-                index = value.indexOf('-', index + 1);
-            }
-        }
-        return value;
     }
 
     /**

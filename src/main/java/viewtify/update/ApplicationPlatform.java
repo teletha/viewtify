@@ -13,36 +13,16 @@ import java.io.Serializable;
 import java.util.Map;
 
 import psychopath.Directory;
+import psychopath.Locator;
 
+@SuppressWarnings("serial")
 public abstract class ApplicationPlatform implements Serializable {
 
-    private static final long serialVersionUID = -2784979601406683792L;
+    /** The application root directory. */
+    public Directory root = Locator.directory("").absolutize();
 
-    /**
-     * Get the last modified time.
-     * 
-     * @return
-     */
-    abstract long lastModified();
-
-    /**
-     * Locate the root directory.
-     */
-    abstract Directory locateRoot();
-
-    /**
-     * Locate library directory.
-     * 
-     * @return
-     */
-    abstract Directory locateLibrary();
-
-    /**
-     * Locate JRE directory.
-     * 
-     * @return
-     */
-    abstract Directory locateJRE();
+    /** The JRE direcotry. */
+    public Directory jre = Locator.directory(System.getProperty("java.home")).absolutize();
 
     /**
      * Boot this site.
@@ -57,31 +37,6 @@ public abstract class ApplicationPlatform implements Serializable {
     public abstract boolean boot(Map<String, String> params);
 
     /**
-     * Create the updater platform.
-     * 
-     * @return
-     */
-    public abstract ApplicationPlatform createUpdater();
-
-    /**
-     * Check updatable state.
-     * 
-     * @return
-     */
-    public boolean canUpdateLibrary() {
-        return locateLibrary().path().startsWith(locateRoot().path());
-    }
-
-    /**
-     * Check updatable state.
-     * 
-     * @return
-     */
-    public boolean canUpdateJRE() {
-        return locateJRE().path().startsWith(locateRoot().path());
-    }
-
-    /**
      * Detect the current site.
      * 
      * @return
@@ -91,7 +46,7 @@ public abstract class ApplicationPlatform implements Serializable {
         String name = System.getProperty("java.application.name");
 
         if (directory == null || name == null) {
-            return new JREPlatform().initialize();
+            return new JREPlatform();
         } else {
             return new ExewrapPlatform(directory, name);
         }
