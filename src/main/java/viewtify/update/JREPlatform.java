@@ -67,7 +67,7 @@ public class JREPlatform extends ApplicationPlatform {
     @Override
     public ApplicationPlatform updater() {
         JREPlatform updater = new JREPlatform();
-        updater.root = root;
+        updater.root = root.directory(".updater");
         updater.jre = jre;
         updater.application = Updater.class;
         updater.classPath = classPath;
