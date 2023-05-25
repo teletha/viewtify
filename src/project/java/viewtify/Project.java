@@ -20,10 +20,10 @@ public class Project extends bee.api.Project {
 
         require("com.github.teletha", "altfx");
         require("com.github.teletha", "sinobu");
-        require("com.github.teletha", "psychopath");
+        require("com.github.teletha", "psychopath", "1.12.0");
         require("com.github.teletha", "stylist");
         require("com.github.teletha", "lycoris");
-        require("com.github.teletha", "conjure");
+        require("com.github.teletha", "conjure", "1.1.0");
         require("com.github.teletha", "icymanipulator").atAnnotation();
         require("com.github.teletha", "antibug").atTest();
         require("org.openjfx", "javafx-base");
