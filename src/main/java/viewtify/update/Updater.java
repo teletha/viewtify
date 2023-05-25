@@ -82,6 +82,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
         m.observe().switchVariable(x -> I.translate(x)).on(Viewtify.UIThread).to(x -> message.text(x));
 
         Viewtify.inWorker(() -> {
+            try {
                 update.code.accept(update, new Monitor(m, progress -> {
                     Thread.sleep(5);
 
@@ -100,6 +101,10 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
                 verifier.makeValid();
 
                 property.set(update);
+            } catch (Throwable e) {
+                m.set(e.getMessage());
+                throw I.quiet(e);
+            }
         });
     }
 

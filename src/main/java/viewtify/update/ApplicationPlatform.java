@@ -24,6 +24,9 @@ public abstract class ApplicationPlatform implements Serializable {
     /** The JRE direcotry. */
     public Directory jre = Locator.directory(System.getProperty("java.home")).absolutize();
 
+    /** The application classpath. */
+    public String classPath = System.getProperty("java.class.path");
+
     /**
      * Boot this site.
      */

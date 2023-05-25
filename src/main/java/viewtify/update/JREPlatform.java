@@ -20,16 +20,11 @@ public class JREPlatform extends ApplicationPlatform {
     /** The application class. */
     Class application;
 
-    /** The application classpath. */
-    String classPath;
-
     /**
      * 
      */
     JREPlatform() {
         application = Viewtify.application().launcher();
-
-        classPath = System.getProperty("java.class.path");
     }
 
     /**

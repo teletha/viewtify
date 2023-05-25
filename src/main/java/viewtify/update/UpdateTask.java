@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import javafx.scene.control.ButtonType;
-
 import kiss.I;
 import kiss.WiseBiConsumer;
 import kiss.WiseConsumer;
@@ -65,8 +64,7 @@ public class UpdateTask implements Serializable {
             // check parameter
             // ====================================
             if (archive == null || archive.isBlank()) {
-                monitor.message("Unable to update because the location of the new application is unknown.");
-                return;
+                monitor.error("Unable to update because the location of the new application is unknown.");
             }
 
             // ====================================
@@ -75,14 +73,12 @@ public class UpdateTask implements Serializable {
             File file = Locator.file(archive).absolutize();
 
             if (file.isAbsent() || !file.extension().equals("zip")) {
-                monitor.message("Zipped archive [" + archive + "] is not found.");
-                return;
+                monitor.error("Zipped archive [" + archive + "] is not found.");
             }
 
-            if (file.isBefore(origin.root)) {
-                monitor.message("The current version is latest, no need to update.");
-                return;
-            }
+            // if (file.isBefore(origin.root)) {
+            // monitor.error("The current version is latest, no need to update.");
+            // }
 
             monitor.message("Prepare to update.");
             file.trackUnpackingTo(updateDir, option -> option.sync().replaceDifferent()).to(monitor);
@@ -97,6 +93,7 @@ public class UpdateTask implements Serializable {
                 monitor.message("Installing the new version, please wait a minute.");
 
                 List<String> patterns = updateDir.children().map(c -> c.isFile() ? c.name() : c.name() + "/**").toList();
+                patterns.add(".preferences for *");
                 updateDir.trackCopyingTo(origin.root, o -> o.strip().glob(patterns).replaceDifferent().sync()).to(monitor);
 
                 monitor.message("Update is completed, reboot.");
@@ -138,7 +135,6 @@ public class UpdateTask implements Serializable {
     static UpdateTask restore(String tasks) {
         try {
             byte[] bytes = Base64.getDecoder().decode(tasks);
-            System.out.println(tasks);
             ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
             ObjectInputStream ois = new ObjectInputStream(bais);
             return (UpdateTask) ois.readObject();
@@ -183,6 +179,16 @@ public class UpdateTask implements Serializable {
          */
         public void message(String message) {
             messenger.accept(message);
+        }
+
+        /**
+         * Notify error message.
+         * 
+         * @param message
+         * @throws Exception
+         */
+        public void error(String message) throws Exception {
+            throw new Error(message);
         }
     }
 }

@@ -35,6 +35,8 @@ class ExewrapPlatform extends ApplicationPlatform {
     ExewrapPlatform(String directory, String name) {
         this.root = Locator.directory(directory).absolutize();
         this.exe = root.file(name);
+        this.jre = root.directory("jre");
+        this.classPath = "lib/*";
     }
 
     /**
@@ -61,7 +63,7 @@ class ExewrapPlatform extends ApplicationPlatform {
         updater.root = root.directory(".updater");
         updater.jre = updater.root.directory("jre");
         updater.application = Updater.class;
-        updater.classPath = "lib/*";
+        updater.classPath = classPath;
 
         return updater;
     }
