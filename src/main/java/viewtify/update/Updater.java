@@ -107,9 +107,11 @@ class Updater extends View implements VerifyHelper<Updater>, ValueHelper<Updater
                     Viewtify.inUI(() -> detail.text(progress.location));
                 }));
 
-                percentage.text("");
-                detail.text("");
-                bar.value(1d);
+                Viewtify.inUI(() -> {
+                    percentage.text("");
+                    detail.text("");
+                    bar.value(1d);
+                });
 
                 verifier.makeValid();
                 property.set(update);
