@@ -13,6 +13,7 @@ import java.util.List;
 
 import javafx.beans.property.Property;
 import javafx.scene.control.ButtonType;
+
 import kiss.I;
 import kiss.Variable;
 import psychopath.Directory;
@@ -155,7 +156,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
 
         // prepare to update
         Updater.task = monitor -> {
-            monitor.message("Verify the update.");
+            monitor.message("Checking the latest version.");
 
             // ====================================
             // check parameter
@@ -177,7 +178,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
             // check modification
             // ====================================
             if (file.isBefore(origin.root)) {
-                monitor.error("The current version is latest, no need to update.");
+                monitor.error("The latest version is used, no need to update.");
             }
 
             // ====================================

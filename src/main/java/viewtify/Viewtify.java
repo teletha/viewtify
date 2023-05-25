@@ -41,8 +41,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -74,10 +72,14 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
 import kiss.I;
+import kiss.JUL;
 import kiss.Managed;
 import kiss.Signal;
 import kiss.Singleton;
@@ -132,6 +134,8 @@ public final class Viewtify {
     public static final Consumer<Runnable> WorkerThread = Viewtify::inWorker;
 
     static {
+        JUL.replace();
+
         // For Test
         inTest = I.signal(new Error().getStackTrace())
                 .take(e -> e.getClassName().startsWith("org.junit."))
