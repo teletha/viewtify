@@ -15,7 +15,7 @@ import java.util.Map;
 import viewtify.Viewtify;
 
 @SuppressWarnings("serial")
-public class JREPlatform extends ApplicationPlatform {
+public class JavaBlueprint extends Blueprint {
 
     /** The application class. */
     Class application;
@@ -23,7 +23,7 @@ public class JREPlatform extends ApplicationPlatform {
     /**
      * 
      */
-    JREPlatform() {
+    JavaBlueprint() {
         application = Viewtify.application().launcher();
     }
 
@@ -60,8 +60,8 @@ public class JREPlatform extends ApplicationPlatform {
      * {@inheritDoc}
      */
     @Override
-    public ApplicationPlatform updater() {
-        JREPlatform updater = new JREPlatform();
+    public Blueprint updater() {
+        JavaBlueprint updater = new JavaBlueprint();
         updater.root = root.directory(".updater");
         updater.jre = jre;
         updater.application = Updater.class;

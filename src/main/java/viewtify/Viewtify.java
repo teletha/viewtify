@@ -97,7 +97,7 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.VerifyHelper;
-import viewtify.update.ApplicationPlatform;
+import viewtify.update.Blueprint;
 
 public final class Viewtify {
 
@@ -551,7 +551,7 @@ public final class Viewtify {
      * Reactivate the current application.
      */
     public void reactivate() {
-        ApplicationPlatform.current().boot();
+        Blueprint.detect().boot();
         deactivate();
     }
 

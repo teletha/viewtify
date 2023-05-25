@@ -15,16 +15,10 @@ import psychopath.File;
 import psychopath.Locator;
 
 @SuppressWarnings("serial")
-class ExewrapPlatform extends ApplicationPlatform {
+class ExewrapBlueprint extends Blueprint {
 
     /** The executable file. */
     private File exe;
-
-    /**
-     * For desirialization.
-     */
-    ExewrapPlatform() {
-    }
 
     /**
      * Build site.
@@ -32,7 +26,7 @@ class ExewrapPlatform extends ApplicationPlatform {
      * @param directory
      * @param name
      */
-    ExewrapPlatform(String directory, String name) {
+    ExewrapBlueprint(String directory, String name) {
         this.root = Locator.directory(directory).absolutize();
         this.exe = root.file(name);
         this.jre = root.directory("jre");
@@ -58,8 +52,8 @@ class ExewrapPlatform extends ApplicationPlatform {
      * {@inheritDoc}
      */
     @Override
-    public ApplicationPlatform updater() {
-        JREPlatform updater = new JREPlatform();
+    public Blueprint updater() {
+        JavaBlueprint updater = new JavaBlueprint();
         updater.root = root.directory(".updater");
         updater.jre = updater.root.directory("jre");
         updater.application = Updater.class;

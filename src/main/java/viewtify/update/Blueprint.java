@@ -19,7 +19,7 @@ import viewtify.Viewtify;
 import viewtify.task.MonitorableTask;
 
 @SuppressWarnings("serial")
-public abstract class ApplicationPlatform implements Serializable {
+public abstract class Blueprint implements Serializable {
 
     /** The application root directory. */
     public Directory root = Locator.directory("").absolutize();
@@ -41,7 +41,7 @@ public abstract class ApplicationPlatform implements Serializable {
      * Boot this application.
      */
     public final boolean boot(MonitorableTask<Progress> task) {
-        return boot(Map.of("updater", MonitorableTask.store(task)));
+        return boot(Map.of(Updater.class.getName(), MonitorableTask.store(task)));
     }
 
     /**
@@ -60,7 +60,7 @@ public abstract class ApplicationPlatform implements Serializable {
      * Deactivate the current application and boot this application.
      */
     public final boolean reboot(MonitorableTask<Progress> task) {
-        return reboot(Map.of("updater", MonitorableTask.store(task)));
+        return reboot(Map.of(Updater.class.getName(), MonitorableTask.store(task)));
     }
 
     /**
@@ -79,21 +79,21 @@ public abstract class ApplicationPlatform implements Serializable {
      * 
      * @return
      */
-    public abstract ApplicationPlatform updater();
+    public abstract Blueprint updater();
 
     /**
      * Detect the current site.
      * 
      * @return
      */
-    public static ApplicationPlatform current() {
+    public static Blueprint detect() {
         String directory = System.getProperty("java.application.path");
         String name = System.getProperty("java.application.name");
 
         if (directory == null || name == null) {
-            return new JREPlatform();
+            return new JavaBlueprint();
         } else {
-            return new ExewrapPlatform(directory, name);
+            return new ExewrapBlueprint(directory, name);
         }
     }
 }
