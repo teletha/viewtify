@@ -74,7 +74,7 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Blueprint",
+			"name": "ApplicationPlatform",
 			"packageName": "viewtify.update",
 			"type": "AbstractClass"
 		},
@@ -277,7 +277,7 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "JavaBlueprint",
+			"name": "JREPlatform",
 			"packageName": "viewtify.update",
 			"type": "Class"
 		},
@@ -858,7 +858,7 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Update",
+			"name": "Updater",
 			"packageName": "viewtify.update",
 			"type": "Class"
 		},
