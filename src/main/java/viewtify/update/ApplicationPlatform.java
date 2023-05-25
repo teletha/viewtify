@@ -14,6 +14,9 @@ import java.util.Map;
 
 import psychopath.Directory;
 import psychopath.Locator;
+import psychopath.Progress;
+import viewtify.Viewtify;
+import viewtify.task.MonitorableTask;
 
 @SuppressWarnings("serial")
 public abstract class ApplicationPlatform implements Serializable {
@@ -28,16 +31,48 @@ public abstract class ApplicationPlatform implements Serializable {
     public String classPath = System.getProperty("java.class.path");
 
     /**
-     * Boot this site.
+     * Boot this application.
      */
-    public boolean boot() {
+    public final boolean boot() {
         return boot(Map.of());
     }
 
     /**
-     * Boot this site.
+     * Boot this application.
+     */
+    public final boolean boot(MonitorableTask<Progress> task) {
+        return boot(Map.of("updater", MonitorableTask.store(task)));
+    }
+
+    /**
+     * Boot this application.
      */
     public abstract boolean boot(Map<String, String> params);
+
+    /**
+     * Deactivate the current application and boot this application.
+     */
+    public final boolean reboot() {
+        return reboot(Map.of());
+    }
+
+    /**
+     * Deactivate the current application and boot this application.
+     */
+    public final boolean reboot(MonitorableTask<Progress> task) {
+        return reboot(Map.of("updater", MonitorableTask.store(task)));
+    }
+
+    /**
+     * Deactivate the current application and boot this application.
+     */
+    public final boolean reboot(Map<String, String> params) {
+        try {
+            return boot(params);
+        } finally {
+            Viewtify.application().deactivate();
+        }
+    }
 
     /**
      * Create new updater application.

@@ -9,13 +9,22 @@
  */
 package viewtify.update;
 
+import java.util.List;
+
 import javafx.beans.property.Property;
+import javafx.scene.control.ButtonType;
 import kiss.I;
 import kiss.Variable;
+import psychopath.Directory;
+import psychopath.File;
+import psychopath.Locator;
+import psychopath.Progress;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
+import viewtify.task.Monitor;
+import viewtify.task.MonitorableTask;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIProgressBar;
 import viewtify.ui.View;
@@ -23,12 +32,11 @@ import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.Verifier;
 import viewtify.ui.helper.VerifyHelper;
-import viewtify.update.UpdateTask.Monitor;
 
-public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<Updater, UpdateTask> {
+public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<Updater, MonitorableTask> {
 
     /** The dirty variable bridge. */
-    static UpdateTask tasks;
+    private static MonitorableTask<Progress> task;
 
     UILabel message;
 
@@ -40,7 +48,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
 
     private final Verifier verifier = new Verifier().makeInvalid();
 
-    private final SmartProperty<UpdateTask> property = new SmartProperty();
+    private final SmartProperty<MonitorableTask> property = new SmartProperty();
 
     class UI extends ViewDSL {
         {
@@ -76,21 +84,24 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
         message.text("Updating...");
         bar.value(0d);
 
-        UpdateTask update = tasks != null ? tasks : UpdateTask.restore(System.getenv("updater"));
+        MonitorableTask update = task != null ? task : MonitorableTask.restore(System.getenv("updater"));
 
-        Variable<String> m = Variable.of("");
-        m.observe().switchVariable(x -> I.translate(x)).on(Viewtify.UIThread).to(x -> message.text(x));
+        Variable<String> mes = Variable.of("");
+        mes.observe().switchVariable(x -> I.translate(x)).on(Viewtify.UIThread).to(x -> message.text(x));
+
+        Variable<Double> per = Variable.of(0d);
+        per.observe().on(Viewtify.UIThread).to(x -> {
+            bar.value(x / 100d);
+            percentage.text("(" + x.intValue() + "%)");
+        });
 
         Viewtify.inWorker(() -> {
             try {
-                update.code.accept(update, new Monitor(m, progress -> {
-                    Thread.sleep(5);
+                update.accept(new Monitor<Progress>(mes, per, (monitor, progress) -> {
+                    Thread.sleep(2);
 
-                    Viewtify.inUI(() -> {
-                        bar.value(progress.rateByFiles() / 100d);
-                        percentage.text(" (" + progress.rateByFiles() + "%)");
-                        detail.text(progress.location);
-                    });
+                    monitor.complete(progress.rateByFiles());
+                    Viewtify.inUI(() -> detail.text(progress.location));
                 }));
 
                 Viewtify.inUI(() -> {
@@ -102,7 +113,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
 
                 property.set(update);
             } catch (Throwable e) {
-                m.set(e.getMessage());
+                mes.set(e.getMessage());
                 throw I.quiet(e);
             }
         });
@@ -120,7 +131,7 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
      * {@inheritDoc}
      */
     @Override
-    public Property<UpdateTask> valueProperty() {
+    public Property<MonitorableTask> valueProperty() {
         return property;
     }
 
@@ -130,9 +141,68 @@ public class Updater extends View implements VerifyHelper<Updater>, ValueHelper<
      * @param args
      */
     public static void main(String[] args) {
-        Viewtify.application().title("Updater").error((mes, e) -> {
-            I.error(mes);
-            I.error(e);
-        }).size(400, 150).activate(Updater.class);
+        Viewtify.application().title("Updater").size(400, 150).activate(Updater.class);
+    }
+
+    /**
+     * Build the update task for the specified new version.
+     * 
+     * @param archive A locaiton of the new version.
+     */
+    public static void apply(String archive) {
+        Directory updateDir = Locator.directory(".updater").absolutize();
+        ApplicationPlatform origin = ApplicationPlatform.current();
+
+        // prepare to update
+        Updater.task = monitor -> {
+            monitor.message("Verify the update.");
+
+            // ====================================
+            // check parameter
+            // ====================================
+            if (archive == null || archive.isBlank()) {
+                monitor.error("Unable to update because the location of the new application is unknown.");
+            }
+
+            // ====================================
+            // check archive
+            // ====================================
+            File file = Locator.file(archive).absolutize();
+
+            if (file.isAbsent() || !file.extension().equals("zip")) {
+                monitor.error("Zipped archive [" + archive + "] is not found.");
+            }
+
+            // ====================================
+            // check modification
+            // ====================================
+            if (file.isBefore(origin.root)) {
+                monitor.error("The current version is latest, no need to update.");
+            }
+
+            // ====================================
+            // unpack archive
+            // ====================================
+            monitor.message("Prepare to update.", 2);
+            file.trackUnpackingTo(updateDir, option -> option.sync().replaceDifferent()).to(monitor.spawn(98));
+
+            monitor.message("Ready for update.", 100);
+        };
+
+        Viewtify.dialog("Updater", Updater.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(tasks -> {
+            origin.updater().reboot(monitor -> {
+                monitor.message("Installing the new version, please wait a minute.");
+
+                // ====================================
+                // copying resources
+                // ====================================
+                List<String> patterns = updateDir.children().map(c -> c.isFile() ? c.name() : c.name() + "/**").toList();
+                patterns.add("!.preferences for */**");
+                updateDir.trackCopyingTo(origin.root, o -> o.strip().glob(patterns).replaceDifferent().sync()).to(monitor);
+
+                monitor.message("Update is completed, reboot.", 100);
+                origin.reboot();
+            });
+        });
     }
 }
