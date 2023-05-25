@@ -8,7 +8,6 @@ const root = {
 		"viewtify.model",
 		"viewtify.property",
 		"viewtify.style",
-		"viewtify.task",
 		"viewtify.ui",
 		"viewtify.ui.anime",
 		"viewtify.ui.canvas",
@@ -364,20 +363,6 @@ const root = {
 			"name": "ModelPropertySheet",
 			"packageName": "viewtify.ui.view",
 			"type": "AbstractClass"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Monitor",
-			"packageName": "viewtify.task",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "MonitorableTask",
-			"packageName": "viewtify.task",
-			"type": "Functional"
 		},
 		{
 			"modifiers": {
@@ -853,6 +838,20 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UIWeb.Operation",
 			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UpdateTask",
+			"packageName": "viewtify.update",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UpdateTask.Monitor",
+			"packageName": "viewtify.update",
 			"type": "Class"
 		},
 		{
