@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="e">
+		<header class="W">
+			<h1 class="m" date="2023-05-23" ver="2.8.0"><code>Viewtify</code></h1>
+			<nav class="R"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="N" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="Z">
+			<nav class="S">
+				<div></div>
+			</nav>
+			<article class="T" id="Article">
+				<section class="a"><code class="l">viewtify.task</code>
+					<h2 class="Class U"><code class="k">Monitor</code><code class="X">&#60;<code>P</code>&#62;</code></h2>
+					<div class="Q">
+						<ul class="C D">
+							<li><code>P</code></li>
+						</ul>
+						<ul class="C F">
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>P</code></code></code></li>
+							<li><code>kiss.Narrow<code class="parameters"><code>kiss.WiseRunnable</code>, <code>P</code>, <code>kiss.WiseRunnable</code>, <code>P</code></code></code></li>
+							<li><code>kiss.Wise</code></li>
+							<li><code>kiss.WiseConsumer<code class="parameters"><code>P</code></code></code></li>
+						</ul>
+					</div>
+				</section>
+				<section class="a" id="Monitor(java.util.function.Consumer,java.util.function.Consumer,kiss.WiseBiConsumer)">
+					<h2 class="Y"><i class="PUBLIC"></i><code class="k">Monitor</code><code class="X">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">messenger</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code> <code class="parameterName">percentager</code>, <code>kiss.WiseBiConsumer<code class="parameters"><code><a href="api/viewtify.task.Monitor.html">Monitor</a><code class="parameters"><code>P</code></code></code>, <code>P</code></code></code> <code class="parameterName">progression</code>)</code></h2>
+					<table class="O">
+						<tr class="P">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code>messenger</code></td>
+							<td></td>
+						</tr>
+						<tr class="P">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code> <code>percentager</code></td>
+							<td></td>
+						</tr>
+						<tr class="P">
+							<td><code>kiss.WiseBiConsumer<code class="parameters"><code><a href="api/viewtify.task.Monitor.html">Monitor</a><code class="parameters"><code>P</code></code></code>, <code>P</code></code></code> <code>progression</code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="a" id="ACCEPT(java.lang.Object)">
+					<h2 class="Y"><i class="OVERRIDE PUBLIC"></i><code class="k">ACCEPT</code><code class="X">(<code>P</code> <code class="parameterName">progress</code>)</code><i class="f"><code>void</code></i></h2>
+					<table class="O">
+						<tr class="P">
+							<td><code>P</code> <code>progress</code></td>
+							<td></td>
+						</tr>
+						<tr class="h">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="a" id="message(java.lang.String)">
+					<h2 class="Y"><i class="PUBLIC"></i><code class="k">message</code><code class="X">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="f"><code>void</code></i></h2>
+					<table class="O">
+						<tr class="P">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Notify message.</p>
+					</span></section>
+				<section class="a" id="message(java.lang.String,double)">
+					<h2 class="Y"><i class="PUBLIC"></i><code class="k">message</code><code class="X">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>double</code> <code class="parameterName">completed</code>)</code><i class="f"><code>void</code></i></h2>
+					<table class="O">
+						<tr class="P">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
+							<td></td>
+						</tr>
+						<tr class="P">
+							<td><code>double</code> <code>completed</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Notify message with progress.</p>
+					</span></section>
+				<section class="a" id="error(java.lang.String)">
+					<h2 class="Y"><i class="PUBLIC"></i><code class="k">error</code><code class="X">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="f"><code>void</code></i></h2>
+					<table class="O">
+						<tr class="P">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
+							<td></td>
+						</tr>
+						<tr class="h">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Exception.html">Exception</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Notify error message.</p>
+					</span></section>
+				<section class="a" id="complete(double)">
+					<h2 class="Y"><i class="PUBLIC"></i><code class="k">complete</code><code class="X">(<code>double</code> <code class="parameterName">completed</code>)</code><i class="f"><code>void</code></i></h2>
+					<table class="O">
+						<tr class="P">
+							<td><code>double</code> <code>completed</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Configure the completed progress. (0 - 100)</p>
+					</span></section>
+				<section class="a" id="spawn(double)">
+					<h2 class="Y"><i class="PUBLIC"></i><code class="k">spawn</code><code class="X">(<code>double</code> <code class="parameterName">total</code>)</code><i class="f"><code><a href="api/viewtify.task.Monitor.html">Monitor</a><code class="parameters"><code>P</code></code></code></i></h2>
+					<table class="O">
+						<tr class="P">
+							<td><code>double</code> <code>total</code></td>
+							<td></td>
+						</tr>
+						<tr class="V">
+							<td><code><a href="api/viewtify.task.Monitor.html">Monitor</a><code class="parameters"><code>P</code></code></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Spawn sub monitor.</p>
+					</span></section>
+			</article>
+			<aside class="b" id="SubNavi">
+				<div class="K">
+					<h5 class="i">Constructors</h5>
+					<ul>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.task.Monitor.html#Monitor(java.util.function.Consumer,java.util.function.Consumer,kiss.WiseBiConsumer)">Monitor</a></code><code class="X">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">messenger</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code> <code class="parameterName">percentager</code>, <code>kiss.WiseBiConsumer<code class="parameters"><code><a href="api/viewtify.task.Monitor.html">Monitor</a><code class="parameters"><code>P</code></code></code>, <code>P</code></code></code> <code class="parameterName">progression</code>)</code></li>
+					</ul>
+					<h5 class="i">Methods</h5>
+					<ul>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.task.Monitor.html#ACCEPT(java.lang.Object)">ACCEPT</a></code><code class="X">(<code>P</code> <code class="parameterName">progress</code>)</code><i class="j"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.task.Monitor.html#message(java.lang.String)">message</a></code><code class="X">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="j"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.task.Monitor.html#message(java.lang.String,double)">message</a></code><code class="X">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code>double</code> <code class="parameterName">completed</code>)</code><i class="j"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.task.Monitor.html#error(java.lang.String)">error</a></code><code class="X">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="j"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.task.Monitor.html#complete(double)">complete</a></code><code class="X">(<code>double</code> <code class="parameterName">completed</code>)</code><i class="j"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.task.Monitor.html#spawn(double)">spawn</a></code><code class="X">(<code>double</code> <code class="parameterName">total</code>)</code><i class="j"><code><a href="api/viewtify.task.Monitor.html">Monitor</a><code class="parameters"><code>P</code></code></code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>
