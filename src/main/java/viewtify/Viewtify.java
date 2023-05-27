@@ -682,6 +682,15 @@ public final class Viewtify {
     }
 
     /**
+     * Create the general dialog builder.
+     * 
+     * @return
+     */
+    public static <V> ViewtyDialog<?> dialog() {
+        return new ViewtyDialog();
+    }
+
+    /**
      * Show the user custom dialog.
      * 
      * @param <V>
