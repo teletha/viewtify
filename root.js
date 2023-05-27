@@ -949,6 +949,20 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "ViewtyDialog",
+			"packageName": "viewtify",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "ViewtyDialog.DialogView",
+			"packageName": "viewtify",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "VisibleHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
