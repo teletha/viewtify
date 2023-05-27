@@ -29,6 +29,15 @@ public class UIButton extends UserInterface<UIButton, Button> implements LabelHe
     }
 
     /**
+     * Enchanced view.
+     * 
+     * @param view A {@link View} to which the widget belongs.
+     */
+    public UIButton(Button button, View view) {
+        super(button, view);
+    }
+
+    /**
      * Contribute the specified {@link Command} to this button.
      * 
      * @param command An associated {@link Command}.
