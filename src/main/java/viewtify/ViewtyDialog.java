@@ -22,6 +22,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -102,7 +103,7 @@ public final class ViewtyDialog<T> {
      */
     public ViewtyDialog<T> button(String buttonOK, String... buttonOthers) {
         List<ButtonType> types = I.signal(buttonOthers)
-                .map(ButtonType::new)
+                .map(x -> new ButtonType(x, ButtonData.CANCEL_CLOSE))
                 .startWith(new ButtonType(buttonOK, ButtonData.OK_DONE))
                 .toList();
 
@@ -169,15 +170,15 @@ public final class ViewtyDialog<T> {
      */
     public <V, D extends DialogView<V, D>> Variable<V> show(D view, WiseConsumer<D> initializer) {
         if (view != null) {
-            if (initializer != null) initializer.accept(view);
-            Node ui = view.ui();
-
             dialogPane.getButtonTypes()
                     .stream()
                     .filter(x -> x.getButtonData() == ButtonData.OK_DONE)
                     .map(x -> (Button) dialogPane.lookupButton(x))
                     .findFirst()
                     .ifPresent(b -> view.button = new UIButton(b, view));
+
+            if (initializer != null) initializer.accept(view);
+            Node ui = view.ui();
 
             dialogPane.setContent(ui);
         }
@@ -212,7 +213,7 @@ public final class ViewtyDialog<T> {
         protected final Verifier verifier = new Verifier();
 
         /** The button. */
-        protected UIButton button;
+        public UIButton button;
 
         /**
          * {@inheritDoc}
