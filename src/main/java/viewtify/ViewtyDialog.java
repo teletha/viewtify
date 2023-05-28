@@ -22,7 +22,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -53,8 +52,9 @@ public final class ViewtyDialog<T> {
     /**
      * Hide constructor.
      */
-    ViewtyDialog() {
+    ViewtyDialog(Stage stage) {
         dialog = new Dialog();
+        dialog.initOwner(stage);
         dialogPane = dialog.getDialogPane();
         dialogStage = (Stage) dialogPane.getScene().getWindow();
     }
@@ -134,7 +134,7 @@ public final class ViewtyDialog<T> {
      * @param view
      * @return
      */
-    public <V, D extends DialogView<V>> Variable<V> show(Class<D> view) {
+    public <V, D extends DialogView<V, D>> Variable<V> show(Class<D> view) {
         return show(view, null);
     }
 
@@ -145,7 +145,7 @@ public final class ViewtyDialog<T> {
      * @param view
      * @return
      */
-    public <V> Variable<V> show(DialogView<V> view) {
+    public <V, D extends DialogView<V, D>> Variable<V> show(D view) {
         return show(view, null);
     }
 
@@ -156,7 +156,7 @@ public final class ViewtyDialog<T> {
      * @param view
      * @return
      */
-    public <V, D extends DialogView<V>> Variable<V> show(Class<D> view, WiseConsumer<D> initializer) {
+    public <V, D extends DialogView<V, D>> Variable<V> show(Class<D> view, WiseConsumer<D> initializer) {
         return show(I.make(view), initializer);
     }
 
@@ -167,9 +167,10 @@ public final class ViewtyDialog<T> {
      * @param view
      * @return
      */
-    public <V, D extends DialogView<V>> Variable<V> show(D view, WiseConsumer<D> initializer) {
+    public <V, D extends DialogView<V, D>> Variable<V> show(D view, WiseConsumer<D> initializer) {
         if (view != null) {
-            DialogPane pane = dialog.getDialogPane();
+            if (initializer != null) initializer.accept(view);
+            Node ui = view.ui();
 
             dialogPane.getButtonTypes()
                     .stream()
@@ -178,11 +179,7 @@ public final class ViewtyDialog<T> {
                     .findFirst()
                     .ifPresent(b -> view.button = new UIButton(b, view));
 
-            Node ui = view.ui();
-            if (initializer != null) {
-                initializer.accept(view);
-            }
-            pane.setContent(ui);
+            dialogPane.setContent(ui);
         }
 
         dialog.setOnCloseRequest(e -> {
@@ -203,7 +200,8 @@ public final class ViewtyDialog<T> {
     /**
      * Specialized view for dialog.
      */
-    public static abstract class DialogView<V> extends View implements VerifyHelper<DialogView<V>>, ValueHelper<DialogView<V>, V> {
+    public static abstract class DialogView<V, Self extends DialogView<V, Self>> extends View
+            implements VerifyHelper<Self>, ValueHelper<Self, V> {
 
         /** The value holder. */
         public final Variable<V> value = Variable.empty();

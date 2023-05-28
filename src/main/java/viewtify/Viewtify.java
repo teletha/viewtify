@@ -41,6 +41,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -72,9 +74,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -687,7 +686,7 @@ public final class Viewtify {
      * @return
      */
     public static <V> ViewtyDialog<?> dialog() {
-        return new ViewtyDialog();
+        return new ViewtyDialog(mainStage);
     }
 
     /**
