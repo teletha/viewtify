@@ -13,6 +13,13 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
+
+import com.sun.javafx.scene.traversal.Direction;
+import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
+import com.sun.javafx.scene.traversal.TraversalMethod;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
@@ -22,14 +29,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-
-import org.controlsfx.control.PopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
-
-import com.sun.javafx.scene.traversal.Direction;
-import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
-import com.sun.javafx.scene.traversal.TraversalMethod;
-
 import kiss.I;
 import viewtify.Key;
 import viewtify.ui.UIButton;
