@@ -12,7 +12,6 @@ package viewtify;
 import java.util.List;
 import java.util.Optional;
 
-import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -22,14 +21,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseConsumer;
 import viewtify.ui.UIButton;
 import viewtify.ui.View;
-import viewtify.ui.helper.ValueHelper;
 import viewtify.ui.helper.Verifier;
 import viewtify.ui.helper.VerifyHelper;
 
@@ -177,8 +174,10 @@ public final class ViewtyDialog<T> {
                     .findFirst()
                     .ifPresent(b -> view.button = new UIButton(b, view));
 
-            if (initializer != null) initializer.accept(view);
             Node ui = view.ui();
+            if (initializer != null) {
+                initializer.accept(view);
+            }
 
             dialogPane.setContent(ui);
         }
@@ -193,21 +192,24 @@ public final class ViewtyDialog<T> {
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isEmpty() || view == null) {
             return Variable.empty();
-        } else {
+        }
+
+        ButtonData data = result.get().getButtonData();
+
+        if (data == ButtonData.OK_DONE) {
             return view.value;
+        } else {
+            return Variable.empty();
         }
     }
 
     /**
      * Specialized view for dialog.
      */
-    public static abstract class DialogView<V, Self extends DialogView<V, Self>> extends View
-            implements VerifyHelper<Self>, ValueHelper<Self, V> {
+    public static abstract class DialogView<V, Self extends DialogView<V, Self>> extends View implements VerifyHelper<Self> {
 
         /** The value holder. */
         public final Variable<V> value = Variable.empty();
-
-        private Property<V> p = Viewtify.property(value);
 
         /** The value holder. */
         protected final Verifier verifier = new Verifier();
@@ -221,14 +223,6 @@ public final class ViewtyDialog<T> {
         @Override
         public Verifier verifier() {
             return verifier;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property<V> valueProperty() {
-            return p;
         }
     }
 }

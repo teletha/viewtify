@@ -9,29 +9,36 @@
  */
 package viewtify.ui.view;
 
+import static javafx.print.PageOrientation.PORTRAIT;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javafx.beans.property.Property;
+import org.controlsfx.control.SegmentedButton;
+
 import javafx.event.Event;
+import javafx.geometry.Bounds;
 import javafx.print.PageOrientation;
 import javafx.print.Paper;
 import javafx.print.PrintColor;
 import javafx.print.PrintQuality;
 import javafx.print.PrintSides;
 import javafx.print.Printer;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-
-import org.controlsfx.control.SegmentedButton;
-
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import kiss.I;
+import kiss.WiseSupplier;
 import stylist.Style;
 import stylist.StyleDSL;
 import stylist.value.Color;
-import viewtify.property.SmartProperty;
+import viewtify.Viewtify;
+import viewtify.ViewtyDialog.DialogView;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UIImage;
@@ -39,16 +46,12 @@ import viewtify.ui.UILabel;
 import viewtify.ui.UISpinner;
 import viewtify.ui.UIText;
 import viewtify.ui.UIToggleButton;
-import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
-import viewtify.ui.helper.ValueHelper;
-import viewtify.ui.helper.Verifier;
-import viewtify.ui.helper.VerifyHelper;
 import viewtify.ui.view.PrintPreview.PrintInfo;
 import viewtify.util.FXUtils;
 
-public class PrintPreview extends View implements VerifyHelper<PrintPreview>, ValueHelper<PrintPreview, PrintInfo> {
+public class PrintPreview extends DialogView<PrintInfo, PrintPreview> {
 
     private static final List<Paper> JP = List.of(Paper.A3, Paper.A4, Paper.A5, Paper.JIS_B5, Paper.JIS_B6, Paper.JAPANESE_POSTCARD);
 
@@ -56,12 +59,6 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
 
     /** The main image view. */
     private UIImage view;
-
-    /** The associated print info. */
-    private SmartProperty<PrintInfo> property = new SmartProperty(new PrintInfo());
-
-    /** The empty verifier. */
-    private Verifier verifier = new Verifier();
 
     /** The printer UI. */
     private UILabel pageSize;
@@ -200,7 +197,7 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
         };
 
         Style navi = () -> {
-            position.absolute().top(8, px);
+            position.absolute().top(5, px);
         };
     }
 
@@ -209,6 +206,9 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
      */
     @Override
     protected void initialize() {
+        value.set(new PrintInfo());
+        System.out.println("INIT");
+
         copies.ui.setValueFactory(new IntegerSpinnerValueFactory(1, 300));
 
         pager.placeholder(en("all pages")).disable(true);
@@ -227,14 +227,14 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
         navi.getButtons().addAll(start.ui, prev.ui, location.ui, next.ui, end.ui);
 
         // bind configuration
-        copies.observing().to(v -> value().copies = v);
-        paper.observing().to(v -> value().paper = v);
-        pager.observing(true).to(v -> value().pageSize = v);
-        printer.observing().to(v -> value().printer = v);
-        color.observing().to(v -> value().color = v);
-        orientation.observing().to(v -> value().orientation = v);
-        side.observing().to(v -> value().side = v);
-        quality.observing().to(v -> value().quality = v);
+        copies.observing().to(v -> value.get().copies = v);
+        paper.observing().to(v -> value.get().paper = v);
+        pager.observing(true).to(v -> value.get().pageSize = v);
+        printer.observing().to(v -> value.get().printer = v);
+        color.observing().to(v -> value.get().color = v);
+        orientation.observing().to(v -> value.get().orientation = v);
+        side.observing().to(v -> value.get().side = v);
+        quality.observing().to(v -> value.get().quality = v);
 
         view.when(User.Scroll, e -> {
             if (0 < e.getDeltaY()) {
@@ -254,17 +254,68 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
     /**
      * @param images
      */
-    public void images(WritableImage... images) {
-        this.maxPage = images.length;
-        this.images = images;
-        pageSize.text(en("{0} pages", images.length));
+    public void loadImage(WritableImage... images) {
+        Viewtify.inUI(() -> {
+            this.maxPage = images.length;
+            this.images = images;
+            pageSize.text(en("{0} pages", images.length));
 
-        value().pageSize = images.length;
-        for (int i = 0; i < images.length; i++) {
-            value().pages.add(i);
+            value.get().pageSize = images.length;
+            for (int i = 0; i < images.length; i++) {
+                value.get().pages.add(i);
+            }
+
+            drawPage(0);
+        });
+    }
+
+    /**
+     * @param builder
+     */
+    public void loadImageLazy(Paper paper, PageOrientation orientation, float scale, String placeholder, WiseSupplier<List<WritableImage>> builder) {
+        int w = (int) (paper.getWidth() * scale);
+        int h = (int) (paper.getHeight() * scale);
+        view.value(orientation == PORTRAIT ? spacer(w, h, placeholder) : spacer(h, w, placeholder));
+
+        Viewtify.inWorker(() -> {
+            loadImage(builder.get().toArray(WritableImage[]::new));
+        });
+    }
+
+    /**
+     * Create spacer image.
+     * 
+     * @param width
+     * @param height
+     * @param placeholder
+     * @return
+     */
+    private WritableImage spacer(int width, int height, String placeholder) {
+        WritableImage image = new WritableImage(width, height);
+        PixelWriter writer = image.getPixelWriter();
+
+        Text text = new Text(placeholder);
+        text.setFont(Font.font("Arial", 24));
+        text.setFill(FXUtils.color(Color.rgb(50, 50, 50, 0.6)));
+
+        Bounds bounds = text.getBoundsInLocal();
+        int textX = width / 2 - (int) (bounds.getWidth() / 2);
+        int textY = height / 2 + (int) (bounds.getHeight() / 2);
+
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(javafx.scene.paint.Color.TRANSPARENT);
+        WritableImage textImage = text.snapshot(params, null);
+
+        for (int x = 0; x < textImage.getWidth(); x++) {
+            for (int y = 0; y < textImage.getHeight(); y++) {
+                javafx.scene.paint.Color color = textImage.getPixelReader().getColor(x, y);
+                if (!color.equals(javafx.scene.paint.Color.TRANSPARENT)) {
+                    writer.setColor(textX + x, textY + y, color);
+                }
+            }
         }
 
-        drawPage(0);
+        return image;
     }
 
     /**
@@ -295,22 +346,6 @@ public class PrintPreview extends View implements VerifyHelper<PrintPreview>, Va
             view.value(image);
             FXUtils.animate(300, view.ui.opacityProperty(), 1);
         });
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Property<PrintInfo> valueProperty() {
-        return property;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Verifier verifier() {
-        return verifier;
     }
 
     /**
