@@ -104,7 +104,7 @@ public final class User<E extends Event> {
     /**
      * Helper method to detect {@link Key}.
      * 
-     * @param button A target key to detect.
+     * @param buttonOK A target key to detect.
      * @return
      */
     private static Predicate<KeyEvent> valid(Key key) {

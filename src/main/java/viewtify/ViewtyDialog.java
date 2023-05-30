@@ -9,7 +9,6 @@
  */
 package viewtify;
 
-import java.util.List;
 import java.util.Optional;
 
 import javafx.collections.ObservableList;
@@ -21,14 +20,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseConsumer;
 import viewtify.ui.UIButton;
 import viewtify.ui.View;
-import viewtify.ui.helper.Verifier;
-import viewtify.ui.helper.VerifyHelper;
 
 /**
  * The specialized dialog builder.
@@ -99,15 +97,21 @@ public final class ViewtyDialog<T> {
      * @return
      */
     public ViewtyDialog<T> button(String buttonOK, String... buttonOthers) {
-        List<ButtonType> types = I.signal(buttonOthers)
+        I.signal(buttonOthers)
                 .map(x -> new ButtonType(x, ButtonData.CANCEL_CLOSE))
                 .startWith(new ButtonType(buttonOK, ButtonData.OK_DONE))
-                .toList();
+                .toCollection(dialogPane.getButtonTypes());
 
-        ObservableList<ButtonType> list = dialogPane.getButtonTypes();
-        list.addAll(types);
+        return this;
+    }
 
-        for (ButtonType type : types) {
+    /**
+     * Configure automatic translation of this dialog.
+     * 
+     * @return
+     */
+    public ViewtyDialog<T> translateButtons() {
+        for (ButtonType type : dialogPane.getButtonTypes()) {
             Button button = (Button) dialogPane.lookupButton(type);
             I.translate(type.getText()).observing().on(Viewtify.UIThread).to(button::setText, disposer);
         }
@@ -119,7 +123,7 @@ public final class ViewtyDialog<T> {
      * 
      * @return
      */
-    public ViewtyDialog<T> disableDefaultButtonOrder() {
+    public ViewtyDialog<T> disableSystemButtonOrder() {
         ButtonBar buttonBar = (ButtonBar) dialogPane.lookup(".button-bar");
         buttonBar.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
         return this;
@@ -167,12 +171,7 @@ public final class ViewtyDialog<T> {
      */
     public <V, D extends DialogView<V>> Variable<V> show(D view, WiseConsumer<D> initializer) {
         if (view != null) {
-            dialogPane.getButtonTypes()
-                    .stream()
-                    .filter(x -> x.getButtonData() == ButtonData.OK_DONE)
-                    .map(x -> (Button) dialogPane.lookupButton(x))
-                    .findFirst()
-                    .ifPresent(b -> view.button = new UIButton(b, view));
+            view.injectButtons(dialogPane);
 
             Node ui = view.ui();
             if (initializer != null) {
@@ -197,7 +196,7 @@ public final class ViewtyDialog<T> {
         ButtonData data = result.get().getButtonData();
 
         if (data == ButtonData.OK_DONE) {
-            return view.value;
+            return Variable.of(view.value);
         } else {
             return Variable.empty();
         }
@@ -206,23 +205,26 @@ public final class ViewtyDialog<T> {
     /**
      * Specialized view for dialog.
      */
-    public static abstract class DialogView<V> extends View implements VerifyHelper<DialogView<V>> {
+    public static abstract class DialogView<V> extends View {
 
         /** The value holder. */
-        public final Variable<V> value = Variable.empty();
+        public V value;
 
-        /** The value holder. */
-        protected final Verifier verifier = new Verifier();
-
-        /** The button. */
-        public UIButton button;
+        /** The button for OK. */
+        public UIButton buttonOK;
 
         /**
-         * {@inheritDoc}
+         * Inject dialog's buttons.
+         * 
+         * @param pane The actual dialog pane.
          */
-        @Override
-        public Verifier verifier() {
-            return verifier;
+        void injectButtons(DialogPane pane) {
+            I.signal(pane.getButtonTypes())
+                    .take(x -> x.getButtonData() == ButtonData.OK_DONE)
+                    .map(x -> pane.lookupButton(x))
+                    .as(Button.class)
+                    .first()
+                    .to(x -> buttonOK = new UIButton(x, this));
         }
     }
 }

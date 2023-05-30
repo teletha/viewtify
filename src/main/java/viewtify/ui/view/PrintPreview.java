@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.controlsfx.control.SegmentedButton;
-
 import javafx.event.Event;
 import javafx.geometry.Bounds;
 import javafx.print.PageOrientation;
@@ -32,6 +30,9 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import org.controlsfx.control.SegmentedButton;
+
 import kiss.I;
 import kiss.WiseSupplier;
 import stylist.Style;
@@ -206,8 +207,7 @@ public class PrintPreview extends DialogView<PrintInfo> {
      */
     @Override
     protected void initialize() {
-        value.set(new PrintInfo());
-        System.out.println("INIT");
+        value = new PrintInfo();
 
         copies.ui.setValueFactory(new IntegerSpinnerValueFactory(1, 300));
 
@@ -227,14 +227,14 @@ public class PrintPreview extends DialogView<PrintInfo> {
         navi.getButtons().addAll(start.ui, prev.ui, location.ui, next.ui, end.ui);
 
         // bind configuration
-        copies.observing().to(v -> value.get().copies = v);
-        paper.observing().to(v -> value.get().paper = v);
-        pager.observing(true).to(v -> value.get().pageSize = v);
-        printer.observing().to(v -> value.get().printer = v);
-        color.observing().to(v -> value.get().color = v);
-        orientation.observing().to(v -> value.get().orientation = v);
-        side.observing().to(v -> value.get().side = v);
-        quality.observing().to(v -> value.get().quality = v);
+        copies.observing().to(v -> value.copies = v);
+        paper.observing().to(v -> value.paper = v);
+        pager.observing(true).to(v -> value.pageSize = v);
+        printer.observing().to(v -> value.printer = v);
+        color.observing().to(v -> value.color = v);
+        orientation.observing().to(v -> value.orientation = v);
+        side.observing().to(v -> value.side = v);
+        quality.observing().to(v -> value.quality = v);
 
         view.when(User.Scroll, e -> {
             if (0 < e.getDeltaY()) {
@@ -260,9 +260,9 @@ public class PrintPreview extends DialogView<PrintInfo> {
             this.images = images;
             pageSize.text(en("{0} pages", images.length));
 
-            value.get().pageSize = images.length;
+            value.pageSize = images.length;
             for (int i = 0; i < images.length; i++) {
-                value.get().pages.add(i);
+                value.pages.add(i);
             }
 
             drawPage(0);
