@@ -132,7 +132,7 @@ public final class ViewtyDialog<T> {
      * @param view
      * @return
      */
-    public <V, D extends DialogView<V, D>> Variable<V> show(Class<D> view) {
+    public <V, D extends DialogView<V>> Variable<V> show(Class<D> view) {
         return show(view, null);
     }
 
@@ -143,7 +143,7 @@ public final class ViewtyDialog<T> {
      * @param view
      * @return
      */
-    public <V, D extends DialogView<V, D>> Variable<V> show(D view) {
+    public <V, D extends DialogView<V>> Variable<V> show(D view) {
         return show(view, null);
     }
 
@@ -154,7 +154,7 @@ public final class ViewtyDialog<T> {
      * @param view
      * @return
      */
-    public <V, D extends DialogView<V, D>> Variable<V> show(Class<D> view, WiseConsumer<D> initializer) {
+    public <V, D extends DialogView<V>> Variable<V> show(Class<D> view, WiseConsumer<D> initializer) {
         return show(I.make(view), initializer);
     }
 
@@ -165,7 +165,7 @@ public final class ViewtyDialog<T> {
      * @param view
      * @return
      */
-    public <V, D extends DialogView<V, D>> Variable<V> show(D view, WiseConsumer<D> initializer) {
+    public <V, D extends DialogView<V>> Variable<V> show(D view, WiseConsumer<D> initializer) {
         if (view != null) {
             dialogPane.getButtonTypes()
                     .stream()
@@ -206,7 +206,7 @@ public final class ViewtyDialog<T> {
     /**
      * Specialized view for dialog.
      */
-    public static abstract class DialogView<V, Self extends DialogView<V, Self>> extends View implements VerifyHelper<Self> {
+    public static abstract class DialogView<V> extends View implements VerifyHelper<DialogView<V>> {
 
         /** The value holder. */
         public final Variable<V> value = Variable.empty();

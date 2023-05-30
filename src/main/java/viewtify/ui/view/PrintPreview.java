@@ -51,7 +51,7 @@ import viewtify.ui.helper.User;
 import viewtify.ui.view.PrintPreview.PrintInfo;
 import viewtify.util.FXUtils;
 
-public class PrintPreview extends DialogView<PrintInfo, PrintPreview> {
+public class PrintPreview extends DialogView<PrintInfo> {
 
     private static final List<Paper> JP = List.of(Paper.A3, Paper.A4, Paper.A5, Paper.JIS_B5, Paper.JIS_B6, Paper.JAPANESE_POSTCARD);
 
