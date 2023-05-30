@@ -7,10 +7,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="W">
-		<header class="S">
-			<h1 class="O" date="2023-05-23" ver="2.8.0"><code>Viewtify</code></h1>
-			<nav class="J"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="Z">
+		<header class="c">
+			<h1 class="b" date="2023-05-23" ver="2.8.0"><code>Viewtify</code></h1>
+			<nav class="m"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -19,7 +19,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="Q" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="L" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -27,466 +27,466 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="Z">
-			<nav class="N">
+		<main class="S">
+			<nav class="J">
 				<div></div>
 			</nav>
-			<article class="H" id="Article">
-				<section class="K"><code class="i">viewtify.util</code>
-					<h2 class="Class L"><code class="M">FXUtils</code></h2>
-					<div class="R"></div>
+			<article class="O" id="Article">
+				<section class="e"><code class="a">viewtify.util</code>
+					<h2 class="Class X"><code class="R">FXUtils</code></h2>
+					<div class="l"></div>
 				</section>
-				<section class="K" id="FXUtils()">
-					<h2 class="T"><i class="PUBLIC"></i><code class="M">FXUtils</code><code class="X">()</code></h2>
+				<section class="e" id="FXUtils()">
+					<h2 class="P"><i class="PUBLIC"></i><code class="R">FXUtils</code><code class="M">()</code></h2>
 				</section>
-				<section class="K" id="animate(int,javafx.beans.value.WritableValue,java.lang.Object,java.lang.Runnable...)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">animate</code><code class="X">(<code>int</code> <code class="parameterName">durationMills</code>, <code>javafx.beans.value.WritableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">property</code>, <code>T</code> <code class="parameterName">endValue</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">endEffect</code>)</code><i class="m"><code>void</code></i></h2>
-					<table class="U">
-						<tr class="j">
+				<section class="e" id="animate(int,javafx.beans.value.WritableValue,java.lang.Object,java.lang.Runnable...)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">animate</code><code class="M">(<code>int</code> <code class="parameterName">durationMills</code>, <code>javafx.beans.value.WritableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">property</code>, <code>T</code> <code class="parameterName">endValue</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">endEffect</code>)</code><i class="h"><code>void</code></i></h2>
+					<table class="W">
+						<tr class="k">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>int</code> <code>durationMills</code></td>
 							<td><span><p>Animation time.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>javafx.beans.value.WritableValue<code class="parameters"><code>T</code></code></code> <code>property</code></td>
 							<td><span><p>A target property to animate.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>T</code> <code>endValue</code></td>
 							<td><span><p>A end value of animated property.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code>endEffect</code></td>
 							<td><span><p>An optional end effect.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Animate the specified property.</p>
 					</span></section>
-				<section class="K" id="animate(javafx.util.Duration,javafx.beans.value.WritableValue,java.lang.Object,java.lang.Runnable...)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">animate</code><code class="X">(<code>javafx.util.Duration</code> <code class="parameterName">duration</code>, <code>javafx.beans.value.WritableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">property</code>, <code>T</code> <code class="parameterName">endValue</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">endEffect</code>)</code><i class="m"><code>void</code></i></h2>
-					<table class="U">
-						<tr class="j">
+				<section class="e" id="animate(javafx.util.Duration,javafx.beans.value.WritableValue,java.lang.Object,java.lang.Runnable...)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">animate</code><code class="M">(<code>javafx.util.Duration</code> <code class="parameterName">duration</code>, <code>javafx.beans.value.WritableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">property</code>, <code>T</code> <code class="parameterName">endValue</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">endEffect</code>)</code><i class="h"><code>void</code></i></h2>
+					<table class="W">
+						<tr class="k">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>javafx.util.Duration</code> <code>duration</code></td>
 							<td><span><p>Animation time.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>javafx.beans.value.WritableValue<code class="parameters"><code>T</code></code></code> <code>property</code></td>
 							<td><span><p>A target property to animate.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>T</code> <code>endValue</code></td>
 							<td><span><p>A end value of animated property.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code>endEffect</code></td>
 							<td><span><p>An optional end effect.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Animate the specified property.</p>
 					</span></section>
-				<section class="K" id="length(stylist.Style,java.lang.String)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">length</code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="m"><code>double</code></i></h2>
-					<table class="U">
-						<tr class="l">
+				<section class="e" id="length(stylist.Style,java.lang.String)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">length</code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="h"><code>double</code></i></h2>
+					<table class="W">
+						<tr class="j">
 							<td><code>stylist.Style</code> <code>style</code></td>
 							<td><span><p>A target style.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>propertyName</code></td>
 							<td><span><p>A target property name.</p>
 								</span></td>
 						</tr>
-						<tr class="V">
+						<tr class="g">
 							<td><code>double</code></td>
 							<td><span><p>A computed JavaFX value.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Compute length property.</p>
 					</span></section>
-				<section class="K" id="length(stylist.Style,java.lang.String,double)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">length</code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code>double</code> <code class="parameterName">defaultValue</code>)</code><i class="m"><code>double</code></i></h2>
-					<table class="U">
-						<tr class="l">
+				<section class="e" id="length(stylist.Style,java.lang.String,double)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">length</code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code>double</code> <code class="parameterName">defaultValue</code>)</code><i class="h"><code>double</code></i></h2>
+					<table class="W">
+						<tr class="j">
 							<td><code>stylist.Style</code> <code>style</code></td>
 							<td><span><p>A target style.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>propertyName</code></td>
 							<td><span><p>A target property name.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>double</code> <code>defaultValue</code></td>
 							<td><span><p>A default value when the propoerty is not defined.</p>
 								</span></td>
 						</tr>
-						<tr class="V">
+						<tr class="g">
 							<td><code>double</code></td>
 							<td><span><p>A computed JavaFX value.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Compute length property.</p>
 					</span></section>
-				<section class="K" id="lengths(stylist.Style,java.lang.String)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">lengths</code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="m"><code array="fix">double</code></i></h2>
-					<table class="U">
-						<tr class="l">
+				<section class="e" id="lengths(stylist.Style,java.lang.String)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">lengths</code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="h"><code array="fix">double</code></i></h2>
+					<table class="W">
+						<tr class="j">
 							<td><code>stylist.Style</code> <code>style</code></td>
 							<td><span><p>A target style.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>propertyName</code></td>
 							<td><span><p>A target property name.</p>
 								</span></td>
 						</tr>
-						<tr class="V">
+						<tr class="g">
 							<td><code array="fix">double</code></td>
 							<td><span><p>A computed JavaFX value.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Compute length array property.</p>
 					</span></section>
-				<section class="K" id="lengths(stylist.Style,java.lang.String,double[])">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">lengths</code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code array="fix">double</code> <code class="parameterName">defaultValue</code>)</code><i class="m"><code array="fix">double</code></i></h2>
-					<table class="U">
-						<tr class="l">
+				<section class="e" id="lengths(stylist.Style,java.lang.String,double[])">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">lengths</code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code array="fix">double</code> <code class="parameterName">defaultValue</code>)</code><i class="h"><code array="fix">double</code></i></h2>
+					<table class="W">
+						<tr class="j">
 							<td><code>stylist.Style</code> <code>style</code></td>
 							<td><span><p>A target style.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>propertyName</code></td>
 							<td><span><p>A target property name.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code array="fix">double</code> <code>defaultValue</code></td>
 							<td><span><p>A default value when the propoerty is not defined.</p>
 								</span></td>
 						</tr>
-						<tr class="V">
+						<tr class="g">
 							<td><code array="fix">double</code></td>
 							<td><span><p>A computed JavaFX value.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Compute length array property.</p>
 					</span></section>
-				<section class="K" id="color(stylist.Style,java.lang.String)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">color</code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="m"><code>javafx.scene.paint.Color</code></i></h2>
-					<table class="U">
-						<tr class="l">
+				<section class="e" id="color(stylist.Style,java.lang.String)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">color</code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="h"><code>javafx.scene.paint.Color</code></i></h2>
+					<table class="W">
+						<tr class="j">
 							<td><code>stylist.Style</code> <code>style</code></td>
 							<td><span><p>A target style.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>propertyName</code></td>
 							<td><span><p>A target property name.</p>
 								</span></td>
 						</tr>
-						<tr class="V">
+						<tr class="g">
 							<td><code>javafx.scene.paint.Color</code></td>
 							<td><span><p>A computed JavaFX value.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Compute color property.</p>
 					</span></section>
-				<section class="K" id="color(stylist.Style,java.lang.String,javafx.scene.paint.Color)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">color</code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code>javafx.scene.paint.Color</code> <code class="parameterName">defaultValue</code>)</code><i class="m"><code>javafx.scene.paint.Color</code></i></h2>
-					<table class="U">
-						<tr class="l">
+				<section class="e" id="color(stylist.Style,java.lang.String,javafx.scene.paint.Color)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">color</code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code>javafx.scene.paint.Color</code> <code class="parameterName">defaultValue</code>)</code><i class="h"><code>javafx.scene.paint.Color</code></i></h2>
+					<table class="W">
+						<tr class="j">
 							<td><code>stylist.Style</code> <code>style</code></td>
 							<td><span><p>A target style.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>propertyName</code></td>
 							<td><span><p>A target property name.</p>
 								</span></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>javafx.scene.paint.Color</code> <code>defaultValue</code></td>
 							<td><span><p>A default value when the propoerty is not defined.</p>
 								</span></td>
 						</tr>
-						<tr class="V">
+						<tr class="g">
 							<td><code>javafx.scene.paint.Color</code></td>
 							<td><span><p>A computed JavaFX value.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Compute color property.</p>
 					</span></section>
-				<section class="K" id="color(stylist.value.Color)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">color</code><code class="X">(<code>stylist.value.Color</code> <code class="parameterName">color</code>)</code><i class="m"><code>javafx.scene.paint.Color</code></i></h2>
-					<table class="U">
-						<tr class="l">
+				<section class="e" id="color(stylist.value.Color)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">color</code><code class="M">(<code>stylist.value.Color</code> <code class="parameterName">color</code>)</code><i class="h"><code>javafx.scene.paint.Color</code></i></h2>
+					<table class="W">
+						<tr class="j">
 							<td><code>stylist.value.Color</code> <code>color</code></td>
 							<td></td>
 						</tr>
-						<tr class="V">
+						<tr class="g">
 							<td><code>javafx.scene.paint.Color</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Convert from Stylist color to JavaFX color.</p>
 					</span></section>
-				<section class="K" id="color(javafx.scene.paint.Color)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">color</code><code class="X">(<code>javafx.scene.paint.Color</code> <code class="parameterName">color</code>)</code><i class="m"><code>stylist.value.Color</code></i></h2>
-					<table class="U">
-						<tr class="l">
+				<section class="e" id="color(javafx.scene.paint.Color)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">color</code><code class="M">(<code>javafx.scene.paint.Color</code> <code class="parameterName">color</code>)</code><i class="h"><code>stylist.value.Color</code></i></h2>
+					<table class="W">
+						<tr class="j">
 							<td><code>javafx.scene.paint.Color</code> <code>color</code></td>
 							<td></td>
 						</tr>
-						<tr class="V">
+						<tr class="g">
 							<td><code>stylist.value.Color</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Convert from JavaFX color to Stylist color.</p>
 					</span></section>
-				<section class="K" id="listen(java.lang.Object,java.util.function.Function,javafx.beans.value.ChangeListener)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">listen</code><code class="X">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>P</code></code></code> <code class="parameterName">listener</code>)</code><i class="m"><code>void</code></i></h2>
-					<table class="U">
-						<tr class="j">
+				<section class="e" id="listen(java.lang.Object,java.util.function.Function,javafx.beans.value.ChangeListener)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">listen</code><code class="M">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>P</code></code></code> <code class="parameterName">listener</code>)</code><i class="h"><code>void</code></i></h2>
+					<table class="W">
+						<tr class="k">
 							<td><code>B</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>P</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>B</code> <code>base</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code>first</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>javafx.beans.value.ChangeListener<code class="parameters"><code>P</code></code></code> <code>listener</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Listen the nested property.</p>
 					</span></section>
-				<section class="K" id="listen(java.lang.Object,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">listen</code><code class="X">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>Q</code></code></code> <code class="parameterName">listener</code>)</code><i class="m"><code>void</code></i></h2>
-					<table class="U">
-						<tr class="j">
+				<section class="e" id="listen(java.lang.Object,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">listen</code><code class="M">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>Q</code></code></code> <code class="parameterName">listener</code>)</code><i class="h"><code>void</code></i></h2>
+					<table class="W">
+						<tr class="k">
 							<td><code>B</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>P</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>Q</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>B</code> <code>base</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code>first</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code>second</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>javafx.beans.value.ChangeListener<code class="parameters"><code>Q</code></code></code> <code>listener</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Listen the nested property.</p>
 					</span></section>
-				<section class="K" id="listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">listen</code><code class="X">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>R</code></code></code> <code class="parameterName">listener</code>)</code><i class="m"><code>void</code></i></h2>
-					<table class="U">
-						<tr class="j">
+				<section class="e" id="listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">listen</code><code class="M">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>R</code></code></code> <code class="parameterName">listener</code>)</code><i class="h"><code>void</code></i></h2>
+					<table class="W">
+						<tr class="k">
 							<td><code>B</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>P</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>Q</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>R</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>B</code> <code>base</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code>first</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code>second</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code>third</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>javafx.beans.value.ChangeListener<code class="parameters"><code>R</code></code></code> <code>listener</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Listen the nested property.</p>
 					</span></section>
-				<section class="K" id="listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">listen</code><code class="X">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>R</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>S</code></code></code></code></code> <code class="parameterName">forth</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>S</code></code></code> <code class="parameterName">listener</code>)</code><i class="m"><code>void</code></i></h2>
-					<table class="U">
-						<tr class="j">
+				<section class="e" id="listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">listen</code><code class="M">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>R</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>S</code></code></code></code></code> <code class="parameterName">forth</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>S</code></code></code> <code class="parameterName">listener</code>)</code><i class="h"><code>void</code></i></h2>
+					<table class="W">
+						<tr class="k">
 							<td><code>B</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>P</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>Q</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>R</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>S</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>B</code> <code>base</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code>first</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code>second</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code>third</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>R</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>S</code></code></code></code></code> <code>forth</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>javafx.beans.value.ChangeListener<code class="parameters"><code>S</code></code></code> <code>listener</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Listen the nested property.</p>
 					</span></section>
-				<section class="K" id="listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">
-					<h2 class="T"><i class="STATIC PUBLIC"></i><code class="M">listen</code><code class="X">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>R</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>S</code></code></code></code></code> <code class="parameterName">forth</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>S</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code></code></code> <code class="parameterName">fifth</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>T</code></code></code> <code class="parameterName">listener</code>)</code><i class="m"><code>void</code></i></h2>
-					<table class="U">
-						<tr class="j">
+				<section class="e" id="listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">
+					<h2 class="P"><i class="STATIC PUBLIC"></i><code class="R">listen</code><code class="M">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>R</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>S</code></code></code></code></code> <code class="parameterName">forth</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>S</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code></code></code> <code class="parameterName">fifth</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>T</code></code></code> <code class="parameterName">listener</code>)</code><i class="h"><code>void</code></i></h2>
+					<table class="W">
+						<tr class="k">
 							<td><code>B</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>P</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>Q</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>R</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>S</code></td>
 							<td></td>
 						</tr>
-						<tr class="j">
+						<tr class="k">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>B</code> <code>base</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code>first</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code>second</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code>third</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>R</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>S</code></code></code></code></code> <code>forth</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>S</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code></code></code> <code>fifth</code></td>
 							<td></td>
 						</tr>
-						<tr class="l">
+						<tr class="j">
 							<td><code>javafx.beans.value.ChangeListener<code class="parameters"><code>T</code></code></code> <code>listener</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Listen the nested property.</p>
 					</span></section>
 			</article>
-			<aside class="f" id="SubNavi">
-				<div class="g">
-					<h5 class="P">Constructors</h5>
+			<aside class="d" id="SubNavi">
+				<div class="Y">
+					<h5 class="Q">Constructors</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#FXUtils()">FXUtils</a></code><code class="X">()</code></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#FXUtils()">FXUtils</a></code><code class="M">()</code></li>
 					</ul>
-					<h5 class="P">Static Methods</h5>
+					<h5 class="Q">Static Methods</h5>
 					<ul>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#animate(int,javafx.beans.value.WritableValue,java.lang.Object,java.lang.Runnable...)">animate</a></code><code class="X">(<code>int</code> <code class="parameterName">durationMills</code>, <code>javafx.beans.value.WritableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">property</code>, <code>T</code> <code class="parameterName">endValue</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">endEffect</code>)</code><i class="Y"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#animate(javafx.util.Duration,javafx.beans.value.WritableValue,java.lang.Object,java.lang.Runnable...)">animate</a></code><code class="X">(<code>javafx.util.Duration</code> <code class="parameterName">duration</code>, <code>javafx.beans.value.WritableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">property</code>, <code>T</code> <code class="parameterName">endValue</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">endEffect</code>)</code><i class="Y"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#length(stylist.Style,java.lang.String)">length</a></code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="Y"><code>double</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#length(stylist.Style,java.lang.String,double)">length</a></code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code>double</code> <code class="parameterName">defaultValue</code>)</code><i class="Y"><code>double</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#lengths(stylist.Style,java.lang.String)">lengths</a></code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="Y"><code array="fix">double</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#lengths(stylist.Style,java.lang.String,double[])">lengths</a></code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code array="fix">double</code> <code class="parameterName">defaultValue</code>)</code><i class="Y"><code array="fix">double</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#color(stylist.Style,java.lang.String)">color</a></code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="Y"><code>javafx.scene.paint.Color</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#color(stylist.Style,java.lang.String,javafx.scene.paint.Color)">color</a></code><code class="X">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code>javafx.scene.paint.Color</code> <code class="parameterName">defaultValue</code>)</code><i class="Y"><code>javafx.scene.paint.Color</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#color(stylist.value.Color)">color</a></code><code class="X">(<code>stylist.value.Color</code> <code class="parameterName">color</code>)</code><i class="Y"><code>javafx.scene.paint.Color</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#color(javafx.scene.paint.Color)">color</a></code><code class="X">(<code>javafx.scene.paint.Color</code> <code class="parameterName">color</code>)</code><i class="Y"><code>stylist.value.Color</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#listen(java.lang.Object,java.util.function.Function,javafx.beans.value.ChangeListener)">listen</a></code><code class="X">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>P</code></code></code> <code class="parameterName">listener</code>)</code><i class="Y"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#listen(java.lang.Object,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">listen</a></code><code class="X">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>Q</code></code></code> <code class="parameterName">listener</code>)</code><i class="Y"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">listen</a></code><code class="X">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>R</code></code></code> <code class="parameterName">listener</code>)</code><i class="Y"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">listen</a></code><code class="X">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>R</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>S</code></code></code></code></code> <code class="parameterName">forth</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>S</code></code></code> <code class="parameterName">listener</code>)</code><i class="Y"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">listen</a></code><code class="X">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>R</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>S</code></code></code></code></code> <code class="parameterName">forth</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>S</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code></code></code> <code class="parameterName">fifth</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>T</code></code></code> <code class="parameterName">listener</code>)</code><i class="Y"><code>void</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#animate(int,javafx.beans.value.WritableValue,java.lang.Object,java.lang.Runnable...)">animate</a></code><code class="M">(<code>int</code> <code class="parameterName">durationMills</code>, <code>javafx.beans.value.WritableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">property</code>, <code>T</code> <code class="parameterName">endValue</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">endEffect</code>)</code><i class="K"><code>void</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#animate(javafx.util.Duration,javafx.beans.value.WritableValue,java.lang.Object,java.lang.Runnable...)">animate</a></code><code class="M">(<code>javafx.util.Duration</code> <code class="parameterName">duration</code>, <code>javafx.beans.value.WritableValue<code class="parameters"><code>T</code></code></code> <code class="parameterName">property</code>, <code>T</code> <code class="parameterName">endValue</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code> <code class="parameterName">endEffect</code>)</code><i class="K"><code>void</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#length(stylist.Style,java.lang.String)">length</a></code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="K"><code>double</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#length(stylist.Style,java.lang.String,double)">length</a></code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code>double</code> <code class="parameterName">defaultValue</code>)</code><i class="K"><code>double</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#lengths(stylist.Style,java.lang.String)">lengths</a></code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="K"><code array="fix">double</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#lengths(stylist.Style,java.lang.String,double[])">lengths</a></code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code array="fix">double</code> <code class="parameterName">defaultValue</code>)</code><i class="K"><code array="fix">double</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#color(stylist.Style,java.lang.String)">color</a></code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>)</code><i class="K"><code>javafx.scene.paint.Color</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#color(stylist.Style,java.lang.String,javafx.scene.paint.Color)">color</a></code><code class="M">(<code>stylist.Style</code> <code class="parameterName">style</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">propertyName</code>, <code>javafx.scene.paint.Color</code> <code class="parameterName">defaultValue</code>)</code><i class="K"><code>javafx.scene.paint.Color</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#color(stylist.value.Color)">color</a></code><code class="M">(<code>stylist.value.Color</code> <code class="parameterName">color</code>)</code><i class="K"><code>javafx.scene.paint.Color</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#color(javafx.scene.paint.Color)">color</a></code><code class="M">(<code>javafx.scene.paint.Color</code> <code class="parameterName">color</code>)</code><i class="K"><code>stylist.value.Color</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#listen(java.lang.Object,java.util.function.Function,javafx.beans.value.ChangeListener)">listen</a></code><code class="M">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>P</code></code></code> <code class="parameterName">listener</code>)</code><i class="K"><code>void</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#listen(java.lang.Object,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">listen</a></code><code class="M">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>Q</code></code></code> <code class="parameterName">listener</code>)</code><i class="K"><code>void</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">listen</a></code><code class="M">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>R</code></code></code> <code class="parameterName">listener</code>)</code><i class="K"><code>void</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">listen</a></code><code class="M">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>R</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>S</code></code></code></code></code> <code class="parameterName">forth</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>S</code></code></code> <code class="parameterName">listener</code>)</code><i class="K"><code>void</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.util.FXUtils.html#listen(java.lang.Object,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,java.util.function.Function,javafx.beans.value.ChangeListener)">listen</a></code><code class="M">(<code>B</code> <code class="parameterName">base</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>B</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>P</code></code></code></code></code> <code class="parameterName">first</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>P</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>Q</code></code></code></code></code> <code class="parameterName">second</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Q</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>R</code></code></code></code></code> <code class="parameterName">third</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>R</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>S</code></code></code></code></code> <code class="parameterName">forth</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>S</code>, <code>javafx.beans.value.ObservableValue<code class="parameters"><code>T</code></code></code></code></code> <code class="parameterName">fifth</code>, <code>javafx.beans.value.ChangeListener<code class="parameters"><code>T</code></code></code> <code class="parameterName">listener</code>)</code><i class="K"><code>void</code></i></li>
 					</ul>
 				</div>
 			</aside>
