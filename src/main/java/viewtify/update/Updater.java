@@ -9,26 +9,20 @@
  */
 package viewtify.update;
 
-import javafx.beans.property.Property;
-
 import kiss.I;
 import kiss.Variable;
 import psychopath.Progress;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
-import viewtify.property.SmartProperty;
+import viewtify.ViewtyDialog.DialogView;
 import viewtify.task.Monitor;
 import viewtify.task.MonitorableTask;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIProgressBar;
-import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.helper.ValueHelper;
-import viewtify.ui.helper.Verifier;
-import viewtify.ui.helper.VerifyHelper;
 
-class Updater extends View implements VerifyHelper<Updater>, ValueHelper<Updater, MonitorableTask> {
+class Updater extends DialogView<MonitorableTask> {
 
     /** The registered task. */
     static MonitorableTask<Progress> task;
@@ -44,12 +38,6 @@ class Updater extends View implements VerifyHelper<Updater>, ValueHelper<Updater
 
     /** The updater UI. */
     private UIProgressBar bar;
-
-    /** Disabler */
-    private final Verifier verifier = new Verifier().makeInvalid();
-
-    /** USELESS. */
-    private final SmartProperty<MonitorableTask> property = new SmartProperty();
 
     /**
      * UI definition.
@@ -87,7 +75,8 @@ class Updater extends View implements VerifyHelper<Updater>, ValueHelper<Updater
      */
     @Override
     protected void initialize() {
-        MonitorableTask update = task != null ? task : MonitorableTask.restore(System.getenv(Updater.class.getName()));
+        if (buttonOK != null) buttonOK.disableNow();
+        value = task != null ? task : MonitorableTask.restore(System.getenv(Updater.class.getName()));
 
         Variable<String> mes = Variable.of("");
         mes.observe().switchVariable(x -> I.translate(x)).on(Viewtify.UIThread).to(x -> message.text(x));
@@ -100,7 +89,7 @@ class Updater extends View implements VerifyHelper<Updater>, ValueHelper<Updater
 
         Viewtify.inWorker(() -> {
             try {
-                update.accept(new Monitor<Progress>(mes, per, (monitor, progress) -> {
+                value.accept(new Monitor<Progress>(mes, per, (monitor, progress) -> {
                     Thread.sleep(2);
 
                     monitor.complete(progress.rateByFiles());
@@ -113,29 +102,12 @@ class Updater extends View implements VerifyHelper<Updater>, ValueHelper<Updater
                     bar.value(1d);
                 });
 
-                verifier.makeValid();
-                property.set(update);
+                if (buttonOK != null) buttonOK.enableNow();
             } catch (Throwable e) {
                 mes.set(e.getMessage());
                 throw I.quiet(e);
             }
         });
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Verifier verifier() {
-        return verifier;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Property<MonitorableTask> valueProperty() {
-        return property;
     }
 
     /**

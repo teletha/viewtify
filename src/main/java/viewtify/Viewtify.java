@@ -690,56 +690,6 @@ public final class Viewtify {
     }
 
     /**
-     * Show the user custom dialog.
-     * 
-     * @param <V>
-     * @param <R>
-     * @param message
-     * @param type
-     * @return
-     */
-    public static <V extends View & ValueHelper<V, R> & VerifyHelper<V>, R> Optional<R> dialog(String message, Class<V> type, ButtonType... buttons) {
-        return dialog(message, type, null, buttons);
-    }
-
-    /**
-     * Show the user custom dialog.
-     * 
-     * @param <V>
-     * @param <R>
-     * @param message
-     * @param type
-     * @return
-     */
-    public static <V extends View & ValueHelper<V, R> & VerifyHelper<V>, R> Optional<R> dialog(String message, Class<V> type, WiseConsumer<V> init, ButtonType... buttons) {
-        V view = I.make(type);
-        Node ui = view.ui();
-        if (init != null) init.accept(view);
-
-        Alert dialog = new Alert(AlertType.CONFIRMATION);
-        dialog.initOwner(mainStage);
-        dialog.setHeaderText(null);
-        dialog.setTitle(message);
-        dialog.setGraphic(null);
-        dialog.getDialogPane().setContent(ui);
-
-        Node button;
-        if (buttons != null && buttons.length != 0) {
-            dialog.getButtonTypes().setAll(buttons);
-            button = dialog.getDialogPane().lookupButton(buttons[0]);
-        } else {
-            button = dialog.getDialogPane().lookupButton(ButtonType.OK);
-        }
-        view.verifier().invalid.to(button::setDisable, view);
-
-        Optional<R> result = dialog.showAndWait()
-                .map(b -> (buttons == null || buttons.length == 0 ? b == ButtonType.OK : b == buttons[0]) ? view.value() : null);
-
-        view.dispose();
-        return result;
-    }
-
-    /**
      * Show the confirm dialog.
      * 
      * @param message

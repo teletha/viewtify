@@ -11,8 +11,6 @@ package viewtify.update;
 
 import java.util.List;
 
-import javafx.scene.control.ButtonType;
-
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -65,7 +63,7 @@ public class Update {
             monitor.message("Ready for update.", 100);
         };
 
-        Viewtify.dialog("Updater", Updater.class, ButtonType.APPLY, ButtonType.CLOSE).ifPresent(tasks -> {
+        Viewtify.dialog().title("Updater").button("Update", "Cancel").translateButtons().show(Updater.class).to(tasks -> {
             origin.updater().reboot(monitor -> {
                 monitor.message("Installing the new version, please wait a minute.");
 
