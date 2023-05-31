@@ -338,15 +338,15 @@ public final class ViewtyDialog<T> {
         }
 
         if (0 < width) {
-            dialogPane.setPrefWidth(width);
+            dialogPane.setMinWidth(width);
         } else if (0 < GlobalWidth) {
-            dialogPane.setPrefWidth(GlobalWidth);
+            dialogPane.setMinWidth(GlobalWidth);
         }
 
         if (0 < height) {
-            dialogPane.setPrefHeight(height);
+            dialogPane.setMinHeight(height);
         } else if (0 < GlobalHeight) {
-            dialogPane.setPrefHeight(GlobalHeight);
+            dialogPane.setMinHeight(GlobalHeight);
         }
 
         return dialog;
