@@ -90,6 +90,20 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
+     * Disables itself when any specified condition is True, and enables it when False.
+     * 
+     * @param condition A timing condition.
+     * @param conditions Additional timing conditions.
+     * @return Chainable API.
+     */
+    default Self disableWhenAny(Signal<Boolean> condition, Signal<Boolean>... conditions) {
+        if (condition != null) {
+            condition.combineLatest(conditions, (one, other) -> one && other).to(disableProperty()::setValue);
+        }
+        return (Self) this;
+    }
+
+    /**
      * Disables itself when the specified condition is True, and enables it when False.
      * 
      * @param condition A timing condition.
@@ -218,6 +232,20 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     default Self enableWhen(Signal<Boolean> condition, Signal<Boolean>... conditions) {
         if (condition != null) {
             condition.combineLatest(conditions, (one, other) -> one || other).to(this::enable);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Enables itself when any specified condition is True, and enables it when False.
+     * 
+     * @param condition A timing condition.
+     * @param conditions Additional timing conditions.
+     * @return Chainable API.
+     */
+    default Self enableWhenAny(Signal<Boolean> condition, Signal<Boolean>... conditions) {
+        if (condition != null) {
+            condition.combineLatest(conditions, (one, other) -> one && other).to(this::enable);
         }
         return (Self) this;
     }
