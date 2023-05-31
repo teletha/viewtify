@@ -20,7 +20,6 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -28,13 +27,23 @@ import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseConsumer;
+import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
+import viewtify.ui.UILabel;
+import viewtify.ui.UIText;
 import viewtify.ui.View;
+import viewtify.ui.ViewDSL;
 
 /**
  * The specialized dialog builder.
  */
 public final class ViewtyDialog<T> {
+
+    /** The global setting. */
+    private static int GlobalWidth;
+
+    /** The global setting. */
+    private static int GlobalHeight;
 
     /** The associated stage. */
     private final Stage stage;
@@ -50,6 +59,12 @@ public final class ViewtyDialog<T> {
 
     /** The button's order setting. */
     private boolean disableSystemButtonOrder;
+
+    /** The width of this dialog. */
+    private int width;
+
+    /** The height of this dialog. */
+    private int height;
 
     /** The diposer. */
     private final Disposable disposer = Disposable.empty();
@@ -127,6 +142,37 @@ public final class ViewtyDialog<T> {
      */
     public ViewtyDialog<T> disableSystemButtonOrder() {
         this.disableSystemButtonOrder = true;
+        return this;
+    }
+
+    /**
+     * Configure the size of dialog.
+     * 
+     * @return
+     */
+    public ViewtyDialog<T> width(int width) {
+        this.width = width;
+        return this;
+    }
+
+    /**
+     * Configure the size of dialog.
+     * 
+     * @return
+     */
+    public ViewtyDialog<T> height(int height) {
+        this.height = height;
+        return this;
+    }
+
+    /**
+     * Configure the size of dialog.
+     * 
+     * @return
+     */
+    public ViewtyDialog<T> size(int width, int height) {
+        this.width = width;
+        this.height = height;
         return this;
     }
 
@@ -231,8 +277,8 @@ public final class ViewtyDialog<T> {
      * @param message
      * @return
      */
-    public Variable<String> showTextInput(String message) {
-        return showTextInput(message, "");
+    public Variable<String> showInput(String message) {
+        return showInput(message, (WiseConsumer) null);
     }
 
     /**
@@ -241,13 +287,23 @@ public final class ViewtyDialog<T> {
      * @param message
      * @return
      */
-    public Variable<String> showTextInput(String message, String defaultValue) {
-        TextInputDialog dialog = initialize(new TextInputDialog());
-        dialog.setContentText(null);
-        dialog.setHeaderText(message);
-        dialog.setGraphic(null);
+    public Variable<String> showInput(String message, String defaultValue) {
+        return showInput(message, ui -> ui.value(defaultValue));
+    }
 
-        return showAndTell(dialog, "");
+    /**
+     * Show the text input dialog.
+     * 
+     * @param message
+     * @return
+     */
+    public Variable<String> showInput(String message, WiseConsumer<UIText<String>> setting) {
+        return button(ButtonType.OK, ButtonType.CANCEL).show(TextInputDialog.class, view -> {
+            view.label.text(message);
+            if (setting != null) {
+                setting.accept(view.input);
+            }
+        });
     }
 
     /**
@@ -259,28 +315,40 @@ public final class ViewtyDialog<T> {
     private <D extends Dialog<R>, R> D initialize(D dialog) {
         dialog.initOwner(stage);
         DialogPane dialogPane = dialog.getDialogPane();
-    
+
         if (title != null) {
             title.observing().to(dialog::setTitle, disposer);
         }
-    
+
         if (buttons != null) {
             dialogPane.getButtonTypes().clear();
             dialogPane.getButtonTypes().addAll(buttons);
         }
-    
+
         if (needTranslate) {
             for (ButtonType type : dialogPane.getButtonTypes()) {
                 Button button = (Button) dialogPane.lookupButton(type);
                 I.translate(type.getText()).observing().on(Viewtify.UIThread).to(button::setText, disposer);
             }
         }
-    
+
         if (disableSystemButtonOrder) {
             ButtonBar buttonBar = (ButtonBar) dialogPane.lookup(".button-bar");
             buttonBar.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
         }
-    
+
+        if (0 < width) {
+            dialogPane.setPrefWidth(width);
+        } else if (0 < GlobalWidth) {
+            dialogPane.setPrefWidth(GlobalWidth);
+        }
+
+        if (0 < height) {
+            dialogPane.setPrefHeight(height);
+        } else if (0 < GlobalHeight) {
+            dialogPane.setPrefHeight(GlobalHeight);
+        }
+
         return dialog;
     }
 
@@ -298,6 +366,17 @@ public final class ViewtyDialog<T> {
         } finally {
             disposer.dispose();
         }
+    }
+
+    /**
+     * Configure the default size of dialog.
+     * 
+     * @param width
+     * @param height
+     */
+    public static void setDefaultSize(int width, int height) {
+        GlobalWidth = width;
+        GlobalHeight = height;
     }
 
     /**
@@ -323,6 +402,39 @@ public final class ViewtyDialog<T> {
                     .as(Button.class)
                     .first()
                     .to(x -> buttonOK = new UIButton(x, this));
+        }
+    }
+
+    /**
+     * Specialized dialog.
+     */
+    private static class TextInputDialog extends DialogView<String> {
+
+        private UILabel label;
+
+        private UIText<String> input;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected ViewDSL declareUI() {
+            return new ViewDSL() {
+                {
+                    $(vbox, () -> {
+                        $(label, FormStyles.FormRow);
+                        $(input, FormStyles.FormRow);
+                    });
+                }
+            };
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void initialize() {
+            input.focus().observing().to(x -> value = x);
         }
     }
 }

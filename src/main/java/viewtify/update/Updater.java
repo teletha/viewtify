@@ -75,6 +75,12 @@ class Updater extends DialogView<MonitorableTask> {
      */
     @Override
     protected void initialize() {
+        // stage().to(stage -> {
+        // stage.setMaximized(false);
+        // stage.setResizable(false);
+        // stage.setOnCloseRequest(WindowEvent::consume);
+        // });
+
         if (buttonOK != null) buttonOK.disableNow();
         value = task != null ? task : MonitorableTask.restore(System.getenv(Updater.class.getName()));
 
@@ -116,6 +122,6 @@ class Updater extends DialogView<MonitorableTask> {
      * @param args
      */
     public static void main(String[] args) {
-        Viewtify.application().title("Updater").size(400, 150).activate(Updater.class);
+        Viewtify.application().title("Updater").size(380, 135).activate(Updater.class);
     }
 }

@@ -27,7 +27,6 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -40,8 +39,6 @@ import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -61,19 +58,17 @@ import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -84,7 +79,6 @@ import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
-import kiss.WiseConsumer;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -95,7 +89,6 @@ import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.ValueHelper;
-import viewtify.ui.helper.VerifyHelper;
 import viewtify.update.Blueprint;
 
 public final class Viewtify {
@@ -687,61 +680,6 @@ public final class Viewtify {
      */
     public static <V> ViewtyDialog<?> dialog() {
         return new ViewtyDialog(mainStage);
-    }
-
-    /**
-     * Show the confirm dialog.
-     * 
-     * @param message
-     * @return
-     */
-    public static Optional<Boolean> dialogConfirm(String message) {
-        Alert dialog = new Alert(AlertType.CONFIRMATION);
-        dialog.initOwner(mainStage);
-        dialog.setHeaderText(null);
-        dialog.setContentText(message);
-        dialog.setTitle(null);
-        dialog.getDialogPane().setPrefWidth(300);
-        return dialog.showAndWait().map(button -> button == ButtonType.OK);
-    }
-
-    /**
-     * Show the text input dialog.
-     * 
-     * @param message
-     * @return
-     */
-    public static Optional<String> dialogText(String message) {
-        return dialogText(message, "");
-    }
-
-    /**
-     * Show the text input dialog.
-     * 
-     * @param message
-     * @param initialText
-     * @return
-     */
-    public static Optional<String> dialogText(String message, Variable<String> initialText) {
-        return dialogText(message, initialText.or(""));
-    }
-
-    /**
-     * Show the text input dialog.
-     * 
-     * @param message
-     * @param initialText
-     * @return
-     */
-    public static Optional<String> dialogText(String message, String initialText) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.initOwner(mainStage);
-        dialog.setHeaderText(null);
-        dialog.setTitle(message);
-        dialog.setGraphic(null);
-        dialog.getEditor().setText(initialText);
-        dialog.getDialogPane().setPrefWidth(300);
-        return dialog.showAndWait();
     }
 
     /**
