@@ -39,12 +39,6 @@ import viewtify.ui.ViewDSL;
  */
 public final class ViewtyDialog<T> {
 
-    /** The global setting. */
-    private static int GlobalWidth;
-
-    /** The global setting. */
-    private static int GlobalHeight;
-
     /** The associated stage. */
     private final Stage stage;
 
@@ -338,15 +332,11 @@ public final class ViewtyDialog<T> {
         }
 
         if (0 < width) {
-            dialogPane.setMinWidth(width);
-        } else if (0 < GlobalWidth) {
-            dialogPane.setMinWidth(GlobalWidth);
+            dialogPane.setPrefWidth(width);
         }
 
         if (0 < height) {
-            dialogPane.setMinHeight(height);
-        } else if (0 < GlobalHeight) {
-            dialogPane.setMinHeight(GlobalHeight);
+            dialogPane.setPrefWidth(height);
         }
 
         return dialog;
@@ -366,17 +356,6 @@ public final class ViewtyDialog<T> {
         } finally {
             disposer.dispose();
         }
-    }
-
-    /**
-     * Configure the default size of dialog.
-     * 
-     * @param width
-     * @param height
-     */
-    public static void setDefaultSize(int width, int height) {
-        GlobalWidth = width;
-        GlobalHeight = height;
     }
 
     /**
