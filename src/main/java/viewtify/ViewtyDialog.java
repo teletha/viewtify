@@ -9,16 +9,19 @@
  */
 package viewtify;
 
-import java.util.Optional;
+import java.util.List;
 
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import kiss.Disposable;
@@ -33,14 +36,20 @@ import viewtify.ui.View;
  */
 public final class ViewtyDialog<T> {
 
-    /** The actual dialog. */
-    private final Dialog<ButtonType> dialog;
+    /** The associated stage. */
+    private final Stage stage;
 
-    /** The actual dialog. */
-    private final DialogPane dialogPane;
+    /** The title of this dialog. */
+    private Variable<String> title;
 
-    /** The actual stage. */
-    private final Stage dialogStage;
+    /** The button set. */
+    private List<ButtonType> buttons;
+
+    /** The translation mode. */
+    private boolean needTranslate;
+
+    /** The button's order setting. */
+    private boolean disableSystemButtonOrder;
 
     /** The diposer. */
     private final Disposable disposer = Disposable.empty();
@@ -49,10 +58,7 @@ public final class ViewtyDialog<T> {
      * Hide constructor.
      */
     ViewtyDialog(Stage stage) {
-        dialog = new Dialog();
-        dialog.initOwner(stage);
-        dialogPane = dialog.getDialogPane();
-        dialogStage = (Stage) dialogPane.getScene().getWindow();
+        this.stage = stage;
     }
 
     /**
@@ -62,7 +68,7 @@ public final class ViewtyDialog<T> {
      * @return Chainable API.
      */
     public ViewtyDialog<T> title(String title) {
-        dialog.setTitle(title);
+        this.title = Variable.of(title);
         return this;
     }
 
@@ -73,7 +79,7 @@ public final class ViewtyDialog<T> {
      * @return Chainable API.
      */
     public ViewtyDialog<T> title(Variable<String> title) {
-        title.observing().to(this::title, disposer);
+        this.title = title;
         return this;
     }
 
@@ -84,8 +90,7 @@ public final class ViewtyDialog<T> {
      * @return
      */
     public ViewtyDialog<T> button(ButtonType... buttons) {
-        ObservableList<ButtonType> list = dialogPane.getButtonTypes();
-        list.addAll(buttons);
+        this.buttons = List.of(buttons);
         return this;
     }
 
@@ -97,10 +102,10 @@ public final class ViewtyDialog<T> {
      * @return
      */
     public ViewtyDialog<T> button(String buttonOK, String... buttonOthers) {
-        I.signal(buttonOthers)
+        this.buttons = I.signal(buttonOthers)
                 .map(x -> new ButtonType(x, ButtonData.CANCEL_CLOSE))
                 .startWith(new ButtonType(buttonOK, ButtonData.OK_DONE))
-                .toCollection(dialogPane.getButtonTypes());
+                .toList();
 
         return this;
     }
@@ -111,10 +116,7 @@ public final class ViewtyDialog<T> {
      * @return
      */
     public ViewtyDialog<T> translateButtons() {
-        for (ButtonType type : dialogPane.getButtonTypes()) {
-            Button button = (Button) dialogPane.lookupButton(type);
-            I.translate(type.getText()).observing().on(Viewtify.UIThread).to(button::setText, disposer);
-        }
+        this.needTranslate = true;
         return this;
     }
 
@@ -124,8 +126,7 @@ public final class ViewtyDialog<T> {
      * @return
      */
     public ViewtyDialog<T> disableSystemButtonOrder() {
-        ButtonBar buttonBar = (ButtonBar) dialogPane.lookup(".button-bar");
-        buttonBar.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
+        this.disableSystemButtonOrder = true;
         return this;
     }
 
@@ -170,35 +171,132 @@ public final class ViewtyDialog<T> {
      * @return
      */
     public <V, D extends DialogView<V>> Variable<V> show(D view, WiseConsumer<D> initializer) {
-        if (view != null) {
-            view.injectButtons(dialogPane);
+        Dialog<V> dialog = initialize(new Dialog());
+        dialog.setResultConverter(x -> x.getButtonData() == ButtonData.OK_DONE ? view.value : null);
 
-            Node ui = view.ui();
-            if (initializer != null) {
-                initializer.accept(view);
+        DialogPane dialogPane = dialog.getDialogPane();
+        view.injectButtons(dialogPane);
+
+        Node ui = view.ui();
+        if (initializer != null) {
+            initializer.accept(view);
+        }
+
+        dialogPane.setContent(ui);
+
+        return showAndTell(dialog, null);
+    }
+
+    /**
+     * Show the notification dialog.
+     * 
+     * @param type
+     * @param message
+     * @return
+     */
+    public Variable<ButtonType> show(AlertType type, String message) {
+        return show(type, Variable.of(message));
+    }
+
+    /**
+     * Show the notification dialog.
+     * 
+     * @param type
+     * @param message
+     * @return
+     */
+    public Variable<ButtonType> show(AlertType type, Variable<String> message) {
+        Alert dialog = initialize(new Alert(type));
+        dialog.setContentText(null);
+        dialog.setHeaderText(null);
+        dialog.setGraphic(null);
+
+        message.observing().on(Viewtify.UIThread).to(dialog::setContentText, disposer);
+
+        I.signal(type)
+                .skip(AlertType.NONE)
+                .map(x -> x.name().toLowerCase().replace("confirmation", "confirm"))
+                .map(x -> "com/sun/javafx/scene/control/skin/caspian/dialog-" + x + ".png")
+                .to(x -> {
+                    Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(x)));
+                });
+
+        return showAndTell(dialog, ButtonType.CANCEL);
+    }
+
+    /**
+     * Show the text input dialog.
+     * 
+     * @param message
+     * @return
+     */
+    public Variable<String> showTextInput(String message) {
+        return showTextInput(message, "");
+    }
+
+    /**
+     * Show the text input dialog.
+     * 
+     * @param message
+     * @return
+     */
+    public Variable<String> showTextInput(String message, String defaultValue) {
+        TextInputDialog dialog = initialize(new TextInputDialog());
+        dialog.setContentText(null);
+        dialog.setHeaderText(message);
+        dialog.setGraphic(null);
+
+        return showAndTell(dialog, "");
+    }
+
+    /**
+     * Initialize the dialog.
+     * 
+     * @param dialog
+     * @return
+     */
+    private <D extends Dialog<R>, R> D initialize(D dialog) {
+        dialog.initOwner(stage);
+        DialogPane dialogPane = dialog.getDialogPane();
+    
+        if (title != null) {
+            title.observing().to(dialog::setTitle, disposer);
+        }
+    
+        if (buttons != null) {
+            dialogPane.getButtonTypes().clear();
+            dialogPane.getButtonTypes().addAll(buttons);
+        }
+    
+        if (needTranslate) {
+            for (ButtonType type : dialogPane.getButtonTypes()) {
+                Button button = (Button) dialogPane.lookupButton(type);
+                I.translate(type.getText()).observing().on(Viewtify.UIThread).to(button::setText, disposer);
             }
-
-            dialogPane.setContent(ui);
         }
-
-        dialog.setOnCloseRequest(e -> {
-            System.out.println("CLOSE");
-        });
-        dialogStage.setOnCloseRequest(e -> {
-            System.out.println("CLOSE WINDOW");
-        });
-
-        Optional<ButtonType> result = dialog.showAndWait();
-        if (result.isEmpty() || view == null) {
-            return Variable.empty();
+    
+        if (disableSystemButtonOrder) {
+            ButtonBar buttonBar = (ButtonBar) dialogPane.lookup(".button-bar");
+            buttonBar.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
         }
+    
+        return dialog;
+    }
 
-        ButtonData data = result.get().getButtonData();
-
-        if (data == ButtonData.OK_DONE) {
-            return Variable.of(view.value);
-        } else {
-            return Variable.empty();
+    /**
+     * Show the dialog.
+     * 
+     * @param <V>
+     * @param dialog
+     * @param defaultValue
+     * @return
+     */
+    private <V> Variable<V> showAndTell(Dialog<V> dialog, V defaultValue) {
+        try {
+            return Variable.of(dialog.showAndWait().orElse(defaultValue));
+        } finally {
+            disposer.dispose();
         }
     }
 
