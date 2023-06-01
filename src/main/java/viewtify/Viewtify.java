@@ -40,6 +40,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -66,9 +68,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -158,7 +157,10 @@ public final class Viewtify {
     private static volatile Stage mainStage;
 
     /** The configurable setting. */
-    private ActivationPolicy policy = ActivationPolicy.Latest;
+    private ActivationPolicy activationPolicy = ActivationPolicy.Latest;
+
+    /** The configurable setting. */
+    private UpdatePolicy updatePolicy = UpdatePolicy.Never;
 
     /** The configurable setting. */
     private StageStyle stageStyle = StageStyle.DECORATED;
@@ -257,7 +259,20 @@ public final class Viewtify {
      */
     public Viewtify use(ActivationPolicy policy) {
         if (policy != null) {
-            this.policy = policy;
+            this.activationPolicy = policy;
+        }
+        return this;
+    }
+
+    /**
+     * Configure application {@link UpdatePolicy}.
+     * 
+     * @param policy
+     * @return
+     */
+    public Viewtify use(UpdatePolicy policy) {
+        if (policy != null) {
+            this.updatePolicy = policy;
         }
         return this;
     }
@@ -458,7 +473,7 @@ public final class Viewtify {
      * @param prefs An application preference root directory.
      */
     private void checkActivationPolicy(String prefs) {
-        if (policy != ActivationPolicy.Multiple) {
+        if (activationPolicy != ActivationPolicy.Multiple) {
             // create application specified directory for lock
             Directory root = Locator.directory(prefs + "/lock").touch();
             FileChannel channel = root.file(".lock").newFileChannel(CREATE, WRITE);
@@ -466,7 +481,7 @@ public final class Viewtify {
             try {
                 while ((lock = channel.tryLock()) == null) {
                     // another application is activated
-                    if (policy == ActivationPolicy.Earliest) {
+                    if (activationPolicy == ActivationPolicy.Earliest) {
                         // make the window active
                         root.file("active").touch();
 
