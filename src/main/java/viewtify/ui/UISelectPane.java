@@ -12,11 +12,11 @@ package viewtify.ui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.IntPredicate;
 
 import javafx.beans.property.Property;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import kiss.I;
 import viewtify.property.SmartProperty;
 import viewtify.ui.anime.SwapAnime;
@@ -39,6 +39,9 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> implements V
 
     /** The selection. */
     private final SmartProperty<UserInterfaceProvider> selection = new SmartProperty();
+
+    /** The selectable confirmation. */
+    private IntPredicate selectable;
 
     /**
      * 
@@ -90,6 +93,10 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> implements V
      * @return
      */
     public UISelectPane selectAt(int index) {
+        if (selectable != null && !selectable.test(index)) {
+            return this;
+        }
+
         for (int i = 0; i < labels.size(); i++) {
             if (i == index) {
                 labels.get(i).style("selected");
@@ -102,6 +109,17 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> implements V
         right.content(ui, SwapAnime.FadeOutIn);
         selection.set(ui);
 
+        return this;
+    }
+
+    /**
+     * Configure the selectable tab.
+     * 
+     * @param selectable
+     * @return
+     */
+    public UISelectPane selectable(IntPredicate selectable) {
+        this.selectable = selectable;
         return this;
     }
 

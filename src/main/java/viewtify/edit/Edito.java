@@ -89,6 +89,24 @@ public class Edito {
     }
 
     /**
+     * Test whether there is any editing state or not.
+     * 
+     * @return
+     */
+    public boolean isEditing() {
+        return !edited.isEmpty();
+    }
+
+    /**
+     * Count the number of editing state.
+     * 
+     * @return
+     */
+    public int countEditing() {
+        return edited.size();
+    }
+
+    /**
      * Save all changes.
      */
     public void save() {
