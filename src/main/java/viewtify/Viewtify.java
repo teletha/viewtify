@@ -16,6 +16,9 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.SplashScreen;
 import java.io.InputStream;
 import java.lang.StackWalker.Option;
 import java.nio.channels.FileChannel;
@@ -78,6 +81,7 @@ import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
+import kiss.WiseConsumer;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -346,6 +350,26 @@ public final class Viewtify {
     }
 
     /**
+     * Configure application splash screen.
+     * 
+     * @param writer
+     * @return
+     */
+    public Viewtify splash(WiseConsumer<Graphics2D> writer) {
+        if (writer != null) {
+            SplashScreen screen = SplashScreen.getSplashScreen();
+            if (screen != null) {
+                Graphics2D g = screen.createGraphics();
+                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                writer.accept(g);
+                screen.update();
+            }
+        }
+        return this;
+    }
+
+    /**
      * Configure error logging.
      * 
      * @param errorHandler
@@ -410,6 +434,12 @@ public final class Viewtify {
 
             if (view != null) {
                 view.accept(application);
+            }
+
+            // release resources for splash screen
+            SplashScreen screen = SplashScreen.getSplashScreen();
+            if (screen != null) {
+                screen.close();
             }
         }, false);
     }
