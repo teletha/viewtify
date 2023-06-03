@@ -39,6 +39,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -173,6 +174,9 @@ public final class Viewtify {
     private Theme theme = Theme.Light;
 
     /** The configurable setting. */
+    private BooleanSupplier closer;
+
+    /** The configurable setting. */
     private String icon = "";
 
     /** The configurable setting. */
@@ -240,6 +244,17 @@ public final class Viewtify {
             applicationLaunchingClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).getCallerClass();
         }
         return viewtify;
+    }
+
+    /**
+     * Configure the closing request.
+     * 
+     * @param closer
+     * @return
+     */
+    public Viewtify onClosing(BooleanSupplier closer) {
+        this.closer = closer;
+        return this;
     }
 
     /**
@@ -428,6 +443,14 @@ public final class Viewtify {
                     if (views.isEmpty()) deactivate();
                 }
             });
+
+            if (closer != null) {
+                mainStage.setOnCloseRequest(e -> {
+                    if (!closer.getAsBoolean()) {
+                        e.consume();
+                    }
+                });
+            }
 
             mainStage.setScene(scene);
             mainStage.show();
