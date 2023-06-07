@@ -22,7 +22,7 @@ import viewtify.ui.UILabel;
 import viewtify.ui.UIProgressBar;
 import viewtify.ui.ViewDSL;
 
-class Updater extends DialogView<MonitorableTask> {
+public class Updater extends DialogView<MonitorableTask> {
 
     /** The registered task. */
     static MonitorableTask<Progress> task;
@@ -60,7 +60,7 @@ class Updater extends DialogView<MonitorableTask> {
      */
     interface style extends StyleDSL {
         Style root = () -> {
-            display.minWidth(380, px);
+            display.minWidth(380, px).width(380, px);
             padding.size(10, px);
         };
 

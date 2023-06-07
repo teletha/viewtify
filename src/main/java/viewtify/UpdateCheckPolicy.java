@@ -9,9 +9,10 @@
  */
 package viewtify;
 
-public enum UpdatePolicy {
+public enum UpdateCheckPolicy {
 
-    Never(Long.MAX_VALUE), EveryTime(0), EveryDay(60 * 60 * 24), EveryWeek(60 * 60 * 24 * 7), EveryMonth(60 * 60 * 24 * 30);
+    Never(Long.MAX_VALUE), EveryTime(0), EveryHour(60 * 60), EveryDay(60 * 60 * 24), EveryWeek(60 * 60 * 24 * 7), EveryMonth(
+            60 * 60 * 24 * 30);
 
     /** The interval time (second). */
     public final long interval;
@@ -21,7 +22,7 @@ public enum UpdatePolicy {
      * 
      * @param intervalSeconds
      */
-    private UpdatePolicy(long intervalSeconds) {
+    private UpdateCheckPolicy(long intervalSeconds) {
         this.interval = intervalSeconds;
     }
 }

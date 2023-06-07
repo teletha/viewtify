@@ -19,11 +19,46 @@ import viewtify.Viewtify;
 public class Update {
 
     /**
-     * Build the update task for the specified new version.
+     * Check whether the application can be updatable or not.
      * 
-     * @param archive A locaiton of the new version.
+     * @return An error message.
      */
-    public static void apply(String archive) {
+    public static String check() {
+        String archive = Viewtify.application().archive();
+        Blueprint origin = Blueprint.detect();
+
+        // ====================================
+        // check parameter
+        // ====================================
+        if (archive == null || archive.isBlank()) {
+            return "Unable to update because the location of the new application is unknown.";
+        }
+
+        // ====================================
+        // check archive
+        // ====================================
+        File file = Locator.file(archive).absolutize();
+
+        if (file.isAbsent() || !file.extension().equals("zip")) {
+            return "Zipped archive [" + archive + "] is not found.";
+        }
+
+        // ====================================
+        // check modification
+        // ====================================
+        if (file.isBefore(origin.root)) {
+            return "The latest version is used, no need to update.";
+        }
+
+        // We can update
+        return null;
+    }
+
+    /**
+     * Build the update task for the specified new version.
+     */
+    public static void apply() {
+        String archive = Viewtify.application().archive();
         Directory updateDir = Locator.directory(".updater").absolutize();
         Blueprint origin = Blueprint.detect();
 
@@ -31,32 +66,15 @@ public class Update {
         Updater.task = monitor -> {
             monitor.message("Checking the latest version.");
 
-            // ====================================
-            // check parameter
-            // ====================================
-            if (archive == null || archive.isBlank()) {
-                monitor.error("Unable to update because the location of the new application is unknown.");
-            }
-
-            // ====================================
-            // check archive
-            // ====================================
-            File file = Locator.file(archive).absolutize();
-
-            if (file.isAbsent() || !file.extension().equals("zip")) {
-                monitor.error("Zipped archive [" + archive + "] is not found.");
-            }
-
-            // ====================================
-            // check modification
-            // ====================================
-            if (file.isBefore(origin.root)) {
-                monitor.error("The latest version is used, no need to update.");
+            String error = check();
+            if (error != null) {
+                monitor.error(error);
             }
 
             // ====================================
             // unpack archive
             // ====================================
+            File file = Locator.file(archive).absolutize();
             monitor.message("Prepare to update.", 2);
             file.trackUnpackingTo(updateDir, option -> option.sync().replaceDifferent()).to(monitor.spawn(98));
 

@@ -24,6 +24,7 @@ import java.lang.StackWalker.Option;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.WatchEvent;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.EnumSet;
@@ -94,6 +95,7 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.update.Blueprint;
+import viewtify.update.Update;
 
 public final class Viewtify {
 
@@ -165,7 +167,10 @@ public final class Viewtify {
     private ActivationPolicy activationPolicy = ActivationPolicy.Latest;
 
     /** The configurable setting. */
-    private UpdatePolicy updatePolicy = UpdatePolicy.Never;
+    private UpdateCheckPolicy updateCheckPolicy = UpdateCheckPolicy.Never;
+
+    /** The configurable setting. */
+    private String updateArchive;
 
     /** The configurable setting. */
     private StageStyle stageStyle = StageStyle.DECORATED;
@@ -284,19 +289,6 @@ public final class Viewtify {
     }
 
     /**
-     * Configure application {@link UpdatePolicy}.
-     * 
-     * @param policy
-     * @return
-     */
-    public Viewtify use(UpdatePolicy policy) {
-        if (policy != null) {
-            this.updatePolicy = policy;
-        }
-        return this;
-    }
-
-    /**
      * Configure {@link StageStyle}.
      * 
      * @param style
@@ -343,6 +335,18 @@ public final class Viewtify {
         if (title != null) {
             this.title = title;
         }
+        return this;
+    }
+
+    /**
+     * Configure application update strategy.
+     * 
+     * @return Chainable API.
+     */
+    public Viewtify update(String archive, UpdateCheckPolicy updatePolicy) {
+        this.updateArchive = archive;
+        this.updateCheckPolicy = updatePolicy;
+
         return this;
     }
 
@@ -568,6 +572,33 @@ public final class Viewtify {
     }
 
     /**
+     * Check {@link UpdateCheckPolicy}.
+     */
+    private boolean checkUpdatePolicy() {
+        boolean replace = false;
+        Setting setting = I.make(Setting.class);
+
+        if (updateCheckPolicy != UpdateCheckPolicy.Never) {
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime next = setting.lastChecked.plusSeconds(updateCheckPolicy.interval);
+            if (now.isAfter(next)) {
+                String error = Update.check();
+                if (error != null) {
+                    I.info(error);
+                } else {
+                    Viewtify.application().title("Checking Update").activate(StartupUpdater.class);
+                }
+
+                // save last checked time
+                setting.lastChecked = now;
+                setting.store();
+                System.out.println("Store");
+            }
+        }
+        return replace;
+    }
+
+    /**
      * Reload the specified stylesheet.
      * 
      * @param changed A target shtylesheet's location.
@@ -596,6 +627,15 @@ public final class Viewtify {
      */
     public Class launcher() {
         return applicationLaunchingClass;
+    }
+
+    /**
+     * Find the application update's archive.
+     * 
+     * @return
+     */
+    public String archive() {
+        return updateArchive;
     }
 
     /**
@@ -1459,11 +1499,36 @@ public final class Viewtify {
         /** The user language. */
         public final Variable<String> language = I.Lang;
 
+        /** The latest checked time of update. */
+        public LocalDateTime lastChecked = LocalDateTime.MIN;
+
         /**
          * Hide constructor.
          */
         private Setting() {
             restore().auto();
+        }
+    }
+
+    private static class StartupUpdater extends View {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected ViewDSL declareUI() {
+            return new ViewDSL() {
+                {
+                    $(vbox);
+                }
+            };
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void initialize() {
         }
     }
 }

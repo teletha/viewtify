@@ -22,7 +22,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -50,6 +49,9 @@ public final class ViewtyDialog<T> {
 
     /** The translation mode. */
     private boolean needTranslate;
+
+    /** The button's visibility. */
+    private boolean enableButtons = true;
 
     /** The button's order setting. */
     private boolean disableSystemButtonOrder;
@@ -126,6 +128,16 @@ public final class ViewtyDialog<T> {
      */
     public ViewtyDialog<T> translateButtons() {
         this.needTranslate = true;
+        return this;
+    }
+
+    /**
+     * Configure the button enable / disable.
+     * 
+     * @return
+     */
+    public ViewtyDialog<T> enableButtons(boolean enable) {
+        this.enableButtons = enable;
         return this;
     }
 
@@ -329,6 +341,11 @@ public final class ViewtyDialog<T> {
         if (disableSystemButtonOrder) {
             ButtonBar buttonBar = (ButtonBar) dialogPane.lookup(".button-bar");
             buttonBar.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
+        }
+
+        if (!enableButtons) {
+            ButtonBar buttonBar = (ButtonBar) dialogPane.lookup(".button-bar");
+            buttonBar.setDisable(true);
         }
 
         if (0 < width) {
