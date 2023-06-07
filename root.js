@@ -865,9 +865,23 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "UpdatePolicy",
+			"name": "UpdateApplyPolicy",
 			"packageName": "viewtify",
 			"type": "Enum"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UpdateCheckPolicy",
+			"packageName": "viewtify",
+			"type": "Enum"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Updater",
+			"packageName": "viewtify.update",
+			"type": "Class"
 		},
 		{
 			"modifiers": {
