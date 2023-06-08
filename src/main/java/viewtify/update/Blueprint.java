@@ -53,14 +53,14 @@ public abstract class Blueprint implements Serializable {
      * Deactivate the current application and boot this application.
      */
     public final boolean reboot() {
-        return reboot(Map.of());
+        return reboot(Map.of("ignoreStartupUpdate", "true"));
     }
 
     /**
      * Deactivate the current application and boot this application.
      */
     public final boolean reboot(MonitorableTask<Progress> task) {
-        return reboot(Map.of(Updater.class.getName(), MonitorableTask.store(task)));
+        return reboot(Map.of(Updater.class.getName(), MonitorableTask.store(task), "ignoreStartupUpdate", "true"));
     }
 
     /**

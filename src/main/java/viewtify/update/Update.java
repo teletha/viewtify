@@ -11,6 +11,7 @@ package viewtify.update;
 
 import java.util.List;
 
+import kiss.I;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -23,8 +24,20 @@ public class Update {
      * 
      * @return An error message.
      */
-    public static String check() {
-        String archive = Viewtify.application().archive();
+    public static boolean isAvailable(String archive, boolean startup) {
+        return check(archive, startup) == null;
+    }
+
+    /**
+     * Check whether the application can be updatable or not.
+     * 
+     * @return An error message.
+     */
+    private static String check(String archive, boolean startup) {
+        if (startup && I.env("ignoreStartupUpdate", false)) {
+            return "Ignore startup update.";
+        }
+
         Blueprint origin = Blueprint.detect();
 
         // ====================================
@@ -57,8 +70,7 @@ public class Update {
     /**
      * Build the update task for the specified new version.
      */
-    public static void apply() {
-        String archive = Viewtify.application().archive();
+    public static void apply(String archive) {
         Directory updateDir = Locator.directory(".updater").absolutize();
         Blueprint origin = Blueprint.detect();
 
@@ -66,7 +78,7 @@ public class Update {
         Updater.task = monitor -> {
             monitor.message("Checking the latest version.");
 
-            String error = check();
+            String error = check(archive, false);
             if (error != null) {
                 monitor.error(error);
             }

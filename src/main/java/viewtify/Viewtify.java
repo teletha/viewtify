@@ -24,7 +24,6 @@ import java.lang.StackWalker.Option;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.WatchEvent;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.EnumSet;
@@ -165,9 +164,6 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private ActivationPolicy activationPolicy = ActivationPolicy.Latest;
-
-    /** The configurable setting. */
-    private UpdateCheckPolicy updateCheckPolicy = UpdateCheckPolicy.Never;
 
     /** The configurable setting. */
     private String updateArchive;
@@ -343,9 +339,8 @@ public final class Viewtify {
      * 
      * @return Chainable API.
      */
-    public Viewtify update(String archive, UpdateCheckPolicy updatePolicy) {
+    public Viewtify update(String archive) {
         this.updateArchive = archive;
-        this.updateCheckPolicy = updatePolicy;
 
         return this;
     }
@@ -429,10 +424,13 @@ public final class Viewtify {
         PlatformImpl.startup(() -> {
             toolkitInitialized = true;
 
-            V application = I.make(applicationClass);
+            boolean updatable = Update.isAvailable(updateArchive, true);
+
+            V application = updatable ? (V) new Empty() : I.make(applicationClass);
             mainStage = new Stage(stageStyle);
             mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
             mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
+            if (updatable) mainStage.setOpacity(0);
 
             Scene scene = new Scene((Parent) application.ui());
             manage(application.getClass().getName(), scene, mainStage, false);
@@ -459,7 +457,7 @@ public final class Viewtify {
             mainStage.setScene(scene);
             mainStage.show();
 
-            if (view != null) {
+            if (view != null && !updatable) {
                 view.accept(application);
             }
 
@@ -572,33 +570,6 @@ public final class Viewtify {
     }
 
     /**
-     * Check {@link UpdateCheckPolicy}.
-     */
-    private boolean checkUpdatePolicy() {
-        boolean replace = false;
-        Setting setting = I.make(Setting.class);
-
-        if (updateCheckPolicy != UpdateCheckPolicy.Never) {
-            LocalDateTime now = LocalDateTime.now();
-            LocalDateTime next = setting.lastChecked.plusSeconds(updateCheckPolicy.interval);
-            if (now.isAfter(next)) {
-                String error = Update.check();
-                if (error != null) {
-                    I.info(error);
-                } else {
-                    Viewtify.application().title("Checking Update").activate(StartupUpdater.class);
-                }
-
-                // save last checked time
-                setting.lastChecked = now;
-                setting.store();
-                System.out.println("Store");
-            }
-        }
-        return replace;
-    }
-
-    /**
      * Reload the specified stylesheet.
      * 
      * @param changed A target shtylesheet's location.
@@ -627,15 +598,6 @@ public final class Viewtify {
      */
     public Class launcher() {
         return applicationLaunchingClass;
-    }
-
-    /**
-     * Find the application update's archive.
-     * 
-     * @return
-     */
-    public String archive() {
-        return updateArchive;
     }
 
     /**
@@ -1499,9 +1461,6 @@ public final class Viewtify {
         /** The user language. */
         public final Variable<String> language = I.Lang;
 
-        /** The latest checked time of update. */
-        public LocalDateTime lastChecked = LocalDateTime.MIN;
-
         /**
          * Hide constructor.
          */
@@ -1510,7 +1469,7 @@ public final class Viewtify {
         }
     }
 
-    private static class StartupUpdater extends View {
+    private class Empty extends View {
 
         /**
          * {@inheritDoc}
@@ -1529,6 +1488,7 @@ public final class Viewtify {
          */
         @Override
         protected void initialize() {
+            Update.apply(updateArchive);
         }
     }
 }
