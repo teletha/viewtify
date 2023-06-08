@@ -44,8 +44,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -72,6 +70,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -406,27 +407,26 @@ public final class Viewtify {
      * @param applicationClass The application {@link View} to activate.
      */
     public void activate(Class<? extends View> applicationClass) {
-        activate(applicationClass, null);
+        activate(I.make(applicationClass));
     }
 
     /**
      * Activate the specified application. You can call this method as many times as you like.
      * 
-     * @param applicationClass The application {@link View} to activate.
-     * @param view Callback to be called after the application is activated.
+     * @param application The application {@link View} to activate.
      */
-    public <V extends View> void activate(Class<? extends V> applicationClass, Consumer<V> view) {
+    public <V extends View> void activate(V application) {
         // Execute a configuration for an application that should be processed only once throughout
         // the entire life cycle of the application. If you run it more than once, nothing happens.
-        initializeOnlyOnce(applicationClass);
+        initializeOnlyOnce(application.getClass());
 
         // launch application
         PlatformImpl.startup(() -> {
             toolkitInitialized = true;
 
             boolean updatable = Update.isAvailable(updateArchive, true);
+            updatable = false;
 
-            V application = updatable ? (V) new Empty() : I.make(applicationClass);
             mainStage = new Stage(stageStyle);
             mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
             mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
@@ -457,14 +457,12 @@ public final class Viewtify {
             mainStage.setScene(scene);
             mainStage.show();
 
-            if (view != null && !updatable) {
-                view.accept(application);
-            }
-
             // release resources for splash screen
-            SplashScreen screen = SplashScreen.getSplashScreen();
-            if (screen != null) {
-                screen.close();
+            if (!I.env("javafx.headless", false)) {
+                SplashScreen screen = SplashScreen.getSplashScreen();
+                if (screen != null) {
+                    screen.close();
+                }
             }
         }, false);
     }
@@ -654,7 +652,9 @@ public final class Viewtify {
         }
 
         Viewtify.inUI(() -> {
-            application().activate(AnonyBrowser.class, view -> browser.accept(view.web));
+            AnonyBrowser anon = new AnonyBrowser();
+            application().activate(anon);
+            Platform.runLater(() -> browser.accept(anon.web));
         });
     }
 
@@ -672,6 +672,9 @@ public final class Viewtify {
             }
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected void initialize() {
         }
