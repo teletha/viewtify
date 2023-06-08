@@ -87,7 +87,6 @@ import kiss.WiseConsumer;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
-import viewtify.model.Model;
 import viewtify.ui.UIWeb;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
@@ -211,10 +210,19 @@ public final class Viewtify {
     }
 
     /**
+     * Test headless mode.
+     * 
+     * @return
+     */
+    private static boolean isHeadless() {
+        return I.env("javafx.headless", false);
+    }
+
+    /**
      * Check headless mode.
      */
     private static void checkHeadlessMode() {
-        if (I.env("javafx.headless", false)) {
+        if (isHeadless()) {
             // ====================================
             // Support for JavaFX
             // ====================================
@@ -415,7 +423,7 @@ public final class Viewtify {
      * 
      * @param application The application {@link View} to activate.
      */
-    public <V extends View> void activate(V application) {
+    public void activate(View application) {
         // Execute a configuration for an application that should be processed only once throughout
         // the entire life cycle of the application. If you run it more than once, nothing happens.
         initializeOnlyOnce(application.getClass());
@@ -425,15 +433,15 @@ public final class Viewtify {
             toolkitInitialized = true;
 
             boolean updatable = Update.isAvailable(updateArchive, true);
-            updatable = false;
+            View actual = updatable ? new Empty() : application;
 
             mainStage = new Stage(stageStyle);
             mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
             mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
             if (updatable) mainStage.setOpacity(0);
 
-            Scene scene = new Scene((Parent) application.ui());
-            manage(application.getClass().getName(), scene, mainStage, false);
+            Scene scene = new Scene((Parent) actual.ui());
+            manage(actual.getClass().getName(), scene, mainStage, false);
 
             // root stage management
             views.add(application);
@@ -457,12 +465,10 @@ public final class Viewtify {
             mainStage.setScene(scene);
             mainStage.show();
 
-            // release resources for splash screen
-            if (!I.env("javafx.headless", false)) {
+            if (!isHeadless()) {
+                // release resources for splash screen
                 SplashScreen screen = SplashScreen.getSplashScreen();
-                if (screen != null) {
-                    screen.close();
-                }
+                if (screen != null) screen.close();
             }
         }, false);
     }
@@ -490,7 +496,7 @@ public final class Viewtify {
             System.setProperty("javafx.cachedir", prefs + "/native");
 
             // Restore Viewtify's setting
-            I.make(Setting.class);
+            I.make(ViewtySetting.class);
 
             // How to handle simultaneous application startup
             checkActivationPolicy(prefs);
@@ -1452,23 +1458,6 @@ public final class Viewtify {
             locator.state = Integer.parseInt(values[4]);
 
             return locator;
-        }
-    }
-
-    /**
-     * General setting holder for {@link Viewtify}.
-     */
-    @SuppressWarnings("unused")
-    private static class Setting extends Model<Setting> {
-
-        /** The user language. */
-        public final Variable<String> language = I.Lang;
-
-        /**
-         * Hide constructor.
-         */
-        private Setting() {
-            restore().auto();
         }
     }
 
