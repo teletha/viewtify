@@ -970,13 +970,6 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "ViewtySetting",
-			"packageName": "viewtify",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "VisibleHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
