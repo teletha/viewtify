@@ -10,6 +10,7 @@
 package viewtify.update;
 
 import javafx.stage.WindowEvent;
+
 import kiss.I;
 import kiss.Variable;
 import psychopath.Progress;
@@ -136,6 +137,6 @@ public class Updater extends DialogView<MonitorableTask> {
      * @param args
      */
     public static void main(String[] args) {
-        Viewtify.application().title("Updater").size(380, 135).activate(Updater.class);
+        Viewtify.application().title("Updater").size(400, 180).activate(Updater.class);
     }
 }

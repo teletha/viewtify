@@ -11,12 +11,10 @@ package viewtify.update;
 
 import java.util.List;
 
-import kiss.I;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
 import viewtify.Viewtify;
-import viewtify.ViewtySetting;
 
 public class Update {
 
@@ -59,11 +57,6 @@ public class Update {
             return "The latest version is used, no need to update.";
         }
 
-        ViewtySetting setting = I.make(ViewtySetting.class);
-        if (file.lastModifiedDateTime().isBefore(setting.updatedTime)) {
-            return "The latest version is used, no need to update.";
-        }
-
         // We can update
         return null;
     }
@@ -75,6 +68,7 @@ public class Update {
      * @param forcibly Force to update or not.
      */
     public static void apply(String archive, boolean forcibly) {
+        File file = Locator.file(archive).absolutize();
         Directory updateDir = Locator.directory(".updater").absolutize();
         Blueprint origin = Blueprint.detect();
 
@@ -90,7 +84,6 @@ public class Update {
             // ====================================
             // unpack archive
             // ====================================
-            File file = Locator.file(archive).absolutize();
             monitor.message("Prepare to update.", 2);
             file.trackUnpackingTo(updateDir, option -> option.sync().replaceDifferent()).to(monitor.spawn(98));
 
@@ -118,9 +111,7 @@ public class Update {
                         // ====================================
                         // update version
                         // ====================================
-                        ViewtySetting setting = I.make(ViewtySetting.class);
-                        setting.updatedTime = Locator.file(archive).lastModifiedDateTime();
-                        setting.store();
+                        origin.root.lastModifiedTime(file.lastModifiedTime());
 
                         monitor.message("Update is completed, reboot.", 100);
                         origin.reboot();
