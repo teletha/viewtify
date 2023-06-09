@@ -62,9 +62,6 @@ public final class ViewtyDialog<T> {
     /** The height of this dialog. */
     private int height;
 
-    /** The fade time. */
-    private int fade;
-
     /** The diposer. */
     private final Disposable disposer = Disposable.empty();
 
@@ -182,16 +179,6 @@ public final class ViewtyDialog<T> {
     public ViewtyDialog<T> size(int width, int height) {
         this.width = width;
         this.height = height;
-        return this;
-    }
-
-    /**
-     * Configure the fade time of dialog.
-     * 
-     * @return
-     */
-    public ViewtyDialog<T> fade(int mills) {
-        this.fade = mills;
         return this;
     }
 

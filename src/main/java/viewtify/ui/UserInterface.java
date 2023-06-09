@@ -22,7 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -30,8 +29,6 @@ import kiss.Singleton;
 import kiss.Storable;
 import kiss.WiseConsumer;
 import kiss.model.Model;
-import stylist.Style;
-import stylist.StyleDSL;
 import viewtify.Key;
 import viewtify.Viewtify;
 import viewtify.ui.helper.AnimateHelper;
@@ -295,17 +292,5 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     @SuppressWarnings("serial")
     @Managed(value = Singleton.class)
     private static class Preference extends ConcurrentSkipListMap<String, String> implements Storable<Preference> {
-    }
-
-    /**
-     * 
-     */
-    private static class Styles implements StyleDSL {
-
-        static Style ValidationToolTip = () -> {
-            font.size(12, px).color("-fx-light-text-color");
-            background.color($.rgba(60, 60, 60, 0.8));
-            padding.vertical(8, px).horizontal(12, px);
-        };
     }
 }

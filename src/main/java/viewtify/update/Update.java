@@ -16,12 +16,8 @@ import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
 import viewtify.Viewtify;
-import viewtify.ViewtySetting;
 
 public class Update {
-
-    /** The update setting. */
-    private static final ViewtySetting setting = I.make(ViewtySetting.class);
 
     /**
      * Check whether the application can be updatable or not.
