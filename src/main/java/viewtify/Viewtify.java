@@ -496,9 +496,6 @@ public final class Viewtify {
             // Specify JavaFX cache directory
             System.setProperty("javafx.cachedir", prefs + "/native");
 
-            // Restore Viewtify's setting
-            I.make(ViewtySetting.class);
-
             // How to handle simultaneous application startup
             checkActivationPolicy(prefs);
 
