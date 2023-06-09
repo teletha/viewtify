@@ -10,7 +10,6 @@
 package viewtify.ui;
 
 import javafx.scene.control.Button;
-
 import kiss.I;
 import viewtify.Command;
 import viewtify.ui.helper.ContextMenuHelper;
@@ -72,6 +71,16 @@ public class UIButton extends UserInterface<UIButton, Button> implements LabelHe
                 });
             });
         }
+        return this;
+    }
+
+    /**
+     * Emulate the user action.
+     * 
+     * @return
+     */
+    public UIButton fire() {
+        ui.fire();
         return this;
     }
 }

@@ -9,6 +9,7 @@
  */
 package viewtify.update;
 
+import javafx.stage.WindowEvent;
 import kiss.I;
 import kiss.Variable;
 import psychopath.Progress;
@@ -27,6 +28,9 @@ public class Updater extends DialogView<MonitorableTask> {
     /** The registered task. */
     static MonitorableTask<Progress> task;
 
+    /** The update mode. */
+    private final boolean forcibly;
+
     /** The updater UI. */
     private UILabel message;
 
@@ -38,6 +42,13 @@ public class Updater extends DialogView<MonitorableTask> {
 
     /** The updater UI. */
     private UIProgressBar bar;
+
+    /**
+     * @param forcibly
+     */
+    Updater(boolean forcibly) {
+        this.forcibly = forcibly;
+    }
 
     /**
      * UI definition.
@@ -75,11 +86,11 @@ public class Updater extends DialogView<MonitorableTask> {
      */
     @Override
     protected void initialize() {
-        // stage().to(stage -> {
-        // stage.setMaximized(false);
-        // stage.setResizable(false);
-        // stage.setOnCloseRequest(WindowEvent::consume);
-        // });
+        stage().to(stage -> {
+            stage.setMaximized(false);
+            stage.setResizable(false);
+            stage.setOnCloseRequest(WindowEvent::consume);
+        });
 
         if (buttonOK != null) buttonOK.disableNow();
         value = task != null ? task : MonitorableTask.restore(System.getenv(Updater.class.getName()));
@@ -106,9 +117,12 @@ public class Updater extends DialogView<MonitorableTask> {
                     percentage.text("");
                     detail.text("");
                     bar.value(1d);
-                });
 
-                if (buttonOK != null) buttonOK.enableNow();
+                    if (buttonOK != null) {
+                        buttonOK.enableNow();
+                        if (forcibly) buttonOK.fire();
+                    }
+                });
             } catch (Throwable e) {
                 mes.set(e.getMessage());
                 throw I.quiet(e);

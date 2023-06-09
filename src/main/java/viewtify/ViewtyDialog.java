@@ -22,6 +22,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -51,7 +52,10 @@ public final class ViewtyDialog<T> {
     private boolean needTranslate;
 
     /** The button's visibility. */
-    private boolean enableButtons = true;
+    private boolean disableButtons;
+
+    /** The close button's visibility. */
+    private boolean disableCloseButton;
 
     /** The button's order setting. */
     private boolean disableSystemButtonOrder;
@@ -136,8 +140,18 @@ public final class ViewtyDialog<T> {
      * 
      * @return
      */
-    public ViewtyDialog<T> enableButtons(boolean enable) {
-        this.enableButtons = enable;
+    public ViewtyDialog<T> disableButtons(boolean disable) {
+        this.disableButtons = disable;
+        return this;
+    }
+
+    /**
+     * Configure the close button enable / disable.
+     * 
+     * @return
+     */
+    public ViewtyDialog<T> disableCloseButton(boolean disable) {
+        this.disableCloseButton = disable;
         return this;
     }
 
@@ -343,9 +357,14 @@ public final class ViewtyDialog<T> {
             buttonBar.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
         }
 
-        if (!enableButtons) {
-            ButtonBar buttonBar = (ButtonBar) dialogPane.lookup(".button-bar");
-            buttonBar.setDisable(true);
+        if (disableButtons) {
+            for (ButtonType type : dialogPane.getButtonTypes()) {
+                dialogPane.lookupButton(type).setDisable(true);
+            }
+        }
+
+        if (disableCloseButton) {
+            ((Stage) dialogPane.getScene().getWindow()).setOnCloseRequest(WindowEvent::consume);
         }
 
         if (0 < width) {

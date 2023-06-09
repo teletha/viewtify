@@ -44,6 +44,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -70,9 +72,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -428,17 +427,18 @@ public final class Viewtify {
         // the entire life cycle of the application. If you run it more than once, nothing happens.
         initializeOnlyOnce(application.getClass());
 
+        boolean canUpdate = I.env("UpdateOnStartup", updateArchive != null);
+        boolean needUpdate = canUpdate && Update.isValid(updateArchive);
+
         // launch application
         PlatformImpl.startup(() -> {
             toolkitInitialized = true;
 
-            boolean updatable = Update.isAvailable(updateArchive, true);
-            View actual = updatable ? new Empty() : application;
-
+            View actual = needUpdate ? new Empty() : application;
             mainStage = new Stage(stageStyle);
             mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
             mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
-            if (updatable) mainStage.setOpacity(0);
+            if (needUpdate) mainStage.setOpacity(0);
 
             Scene scene = new Scene((Parent) actual.ui());
             manage(actual.getClass().getName(), scene, mainStage, false);
@@ -608,9 +608,9 @@ public final class Viewtify {
      * Deactivate the current application.
      */
     public void deactivate() {
-        Platform.exit();
-
         Terminator.dispose();
+
+        Platform.exit();
     }
 
     /**
@@ -1480,7 +1480,7 @@ public final class Viewtify {
          */
         @Override
         protected void initialize() {
-            Update.apply(updateArchive);
+            Update.apply(updateArchive, true);
         }
     }
 }

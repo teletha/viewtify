@@ -9,12 +9,13 @@
  */
 package viewtify;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 import kiss.I;
 import kiss.Managed;
 import kiss.Singleton;
 import kiss.Variable;
+import psychopath.Locator;
 import viewtify.model.Model;
 
 /**
@@ -27,7 +28,7 @@ public class ViewtySetting extends Model<ViewtySetting> {
     public final Variable<String> language = I.Lang;
 
     /** The latest updated time. */
-    public LocalDate updatedTime = LocalDate.MIN;
+    public ZonedDateTime updatedTime = Locator.directory("").lastModifiedDateTime();
 
     /**
      * Hide constructor.

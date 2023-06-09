@@ -16,6 +16,7 @@ import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
 import viewtify.Viewtify;
+import viewtify.ViewtySetting;
 
 public class Update {
 
@@ -24,8 +25,8 @@ public class Update {
      * 
      * @return An error message.
      */
-    public static boolean isAvailable(String archive, boolean startup) {
-        return check(archive, startup) == null;
+    public static boolean isValid(String archive) {
+        return validate(archive) == null;
     }
 
     /**
@@ -33,13 +34,7 @@ public class Update {
      * 
      * @return An error message.
      */
-    private static String check(String archive, boolean startup) {
-        if (startup && I.env("ignoreStartupUpdate", false)) {
-            return "Ignore startup update.";
-        }
-
-        Blueprint origin = Blueprint.detect();
-
+    private static String validate(String archive) {
         // ====================================
         // check parameter
         // ====================================
@@ -57,9 +52,15 @@ public class Update {
         }
 
         // ====================================
-        // check modification
+        // check version
         // ====================================
+        Blueprint origin = Blueprint.detect();
         if (file.isBefore(origin.root)) {
+            return "The latest version is used, no need to update.";
+        }
+
+        ViewtySetting setting = I.make(ViewtySetting.class);
+        if (file.lastModifiedDateTime().isBefore(setting.updatedTime)) {
             return "The latest version is used, no need to update.";
         }
 
@@ -69,8 +70,11 @@ public class Update {
 
     /**
      * Build the update task for the specified new version.
+     * 
+     * @param archive A location of new version.
+     * @param forcibly Force to update or not.
      */
-    public static void apply(String archive) {
+    public static void apply(String archive, boolean forcibly) {
         Directory updateDir = Locator.directory(".updater").absolutize();
         Blueprint origin = Blueprint.detect();
 
@@ -78,7 +82,7 @@ public class Update {
         Updater.task = monitor -> {
             monitor.message("Checking the latest version.");
 
-            String error = check(archive, false);
+            String error = validate(archive);
             if (error != null) {
                 monitor.error(error);
             }
@@ -93,20 +97,34 @@ public class Update {
             monitor.message("Ready for update.", 100);
         };
 
-        Viewtify.dialog().title("Updater").button("Update", "Cancel").translateButtons().show(Updater.class).to(tasks -> {
-            origin.updater().reboot(monitor -> {
-                monitor.message("Installing the new version, please wait a minute.");
+        Viewtify.dialog()
+                .title("Updater")
+                .button("Update", "Cancel")
+                .translateButtons()
+                .disableButtons(forcibly)
+                .disableCloseButton(forcibly)
+                .show(new Updater(forcibly))
+                .to(tasks -> {
+                    origin.updater().reboot(monitor -> {
+                        monitor.message("Installing the new version, please wait a minute.");
 
-                // ====================================
-                // copying resources
-                // ====================================
-                List<String> patterns = updateDir.children().map(c -> c.isFile() ? c.name() : c.name() + "/**").toList();
-                patterns.add("!.preferences for */**");
-                updateDir.trackCopyingTo(origin.root, o -> o.strip().glob(patterns).replaceDifferent().sync()).to(monitor);
+                        // ====================================
+                        // copy resources
+                        // ====================================
+                        List<String> patterns = updateDir.children().map(c -> c.isFile() ? c.name() : c.name() + "/**").toList();
+                        patterns.add("!.preferences for */**");
+                        updateDir.trackCopyingTo(origin.root, o -> o.strip().glob(patterns).replaceDifferent().sync()).to(monitor);
 
-                monitor.message("Update is completed, reboot.", 100);
-                origin.reboot();
-            });
-        });
+                        // ====================================
+                        // update version
+                        // ====================================
+                        ViewtySetting setting = I.make(ViewtySetting.class);
+                        setting.updatedTime = Locator.file(archive).lastModifiedDateTime();
+                        setting.store();
+
+                        monitor.message("Update is completed, reboot.", 100);
+                        origin.reboot();
+                    });
+                });
     }
 }
