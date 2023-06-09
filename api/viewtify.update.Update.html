@@ -7,10 +7,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="e">
-		<header class="Y">
-			<h1 class="f" date="2023-05-23" ver="2.8.0"><code>Viewtify</code></h1>
-			<nav class="P"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="h">
+		<header class="V">
+			<h1 class="Z" date="2023-05-23" ver="2.8.0"><code>Viewtify</code></h1>
+			<nav class="M"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -19,7 +19,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="j" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="f" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -27,56 +27,58 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="U">
-			<nav class="a">
+		<main class="i">
+			<nav class="Q">
 				<div></div>
 			</nav>
-			<article class="Z" id="Article">
-				<section class="V"><code class="N">viewtify.update</code>
-					<h2 class="Class R"><code class="c">Update</code></h2>
-					<div class="L"></div>
+			<article class="T" id="Article">
+				<section class="b"><code class="d">viewtify.update</code>
+					<h2 class="Class l"><code class="m">Update</code></h2>
+					<div class="S"></div>
 				</section>
-				<section class="V" id="Update()">
-					<h2 class="W"><i class="PUBLIC"></i><code class="c">Update</code><code class="J">()</code></h2>
+				<section class="b" id="Update()">
+					<h2 class="X"><i class="PUBLIC"></i><code class="m">Update</code><code class="H">()</code></h2>
 				</section>
-				<section class="V" id="isAvailable(java.lang.String,boolean)">
-					<h2 class="W"><i class="PUBLIC STATIC"></i><code class="c">isAvailable</code><code class="J">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>, <code>boolean</code> <code class="parameterName">startup</code>)</code><i class="I"><code>boolean</code></i></h2>
-					<table class="O">
-						<tr class="K">
+				<section class="b" id="isValid(java.lang.String)">
+					<h2 class="X"><i class="PUBLIC STATIC"></i><code class="m">isValid</code><code class="H">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="O"><code>boolean</code></i></h2>
+					<table class="U">
+						<tr class="e">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>archive</code></td>
 							<td></td>
 						</tr>
-						<tr class="K">
-							<td><code>boolean</code> <code>startup</code></td>
-							<td></td>
-						</tr>
-						<tr class="g">
+						<tr class="I">
 							<td><code>boolean</code></td>
 							<td><span><p>An error message.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Check whether the application can be updatable or not.</p>
 					</span></section>
-				<section class="V" id="apply(java.lang.String)">
-					<h2 class="W"><i class="PUBLIC STATIC"></i><code class="c">apply</code><code class="J">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="I"><code>void</code></i></h2>
-					<table class="O">
-						<tr class="K">
+				<section class="b" id="apply(java.lang.String,boolean)">
+					<h2 class="X"><i class="PUBLIC STATIC"></i><code class="m">apply</code><code class="H">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>, <code>boolean</code> <code class="parameterName">forcibly</code>)</code><i class="O"><code>void</code></i></h2>
+					<table class="U">
+						<tr class="e">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>archive</code></td>
-							<td></td>
+							<td><span><p>A location of new version.</p>
+								</span></td>
+						</tr>
+						<tr class="e">
+							<td><code>boolean</code> <code>forcibly</code></td>
+							<td><span><p>Force to update or not.</p>
+								</span></td>
 						</tr>
 					</table><span class="B"><p>Build the update task for the specified new version.</p>
 					</span></section>
 			</article>
-			<aside class="b" id="SubNavi">
-				<div class="X">
-					<h5 class="k">Constructors</h5>
+			<aside class="R" id="SubNavi">
+				<div class="W">
+					<h5 class="j">Constructors</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Update.html#Update()">Update</a></code><code class="J">()</code></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Update.html#Update()">Update</a></code><code class="H">()</code></li>
 					</ul>
-					<h5 class="k">Static Methods</h5>
+					<h5 class="j">Static Methods</h5>
 					<ul>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.update.Update.html#isAvailable(java.lang.String,boolean)">isAvailable</a></code><code class="J">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>, <code>boolean</code> <code class="parameterName">startup</code>)</code><i class="i"><code>boolean</code></i></li>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.update.Update.html#apply(java.lang.String)">apply</a></code><code class="J">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="i"><code>void</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.update.Update.html#isValid(java.lang.String)">isValid</a></code><code class="H">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>)</code><i class="g"><code>boolean</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.update.Update.html#apply(java.lang.String,boolean)">apply</a></code><code class="H">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">archive</code>, <code>boolean</code> <code class="parameterName">forcibly</code>)</code><i class="g"><code>void</code></i></li>
 					</ul>
 				</div>
 			</aside>
