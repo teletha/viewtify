@@ -53,7 +53,7 @@ public class Update {
         // check version
         // ====================================
         Blueprint origin = Blueprint.detect();
-        if (file.isBefore(origin.root)) {
+        if (!file.isAfter(origin.root)) {
             return "The latest version is used, no need to update.";
         }
 
