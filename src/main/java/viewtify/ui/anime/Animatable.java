@@ -9,9 +9,16 @@
  */
 package viewtify.ui.anime;
 
+import java.util.Objects;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.value.WritableValue;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import kiss.WiseRunnable;
 import viewtify.ui.UserInterfaceProvider;
 
@@ -65,4 +72,42 @@ public interface Animatable {
      * @param action
      */
     void run(Pane parent, Node befor, WiseRunnable action);
+
+    /**
+     * Animate the specified property.
+     * 
+     * @param <T>
+     * @param durationMills Animation time.
+     * @param property A target property to animate.
+     * @param endValue A end value of animated property.
+     * @param endEffect An optional end effect.
+     */
+    static <T> void play(int durationMills, WritableValue<T> property, T endValue, Runnable... endEffect) {
+        play(Duration.millis(durationMills), property, endValue, endEffect);
+    }
+
+    /**
+     * Animate the specified property.
+     * 
+     * @param <T>
+     * @param duration Animation time.
+     * @param property A target property to animate.
+     * @param endValue A end value of animated property.
+     * @param endEffect An optional end effect.
+     */
+    static <T> void play(Duration duration, WritableValue<T> property, T endValue, Runnable... endEffect) {
+        Objects.requireNonNull(duration);
+        Objects.requireNonNull(property);
+        Objects.requireNonNull(endEffect);
+    
+        Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(property, endValue)));
+        if (0 < endEffect.length) {
+            timeline.setOnFinished(e -> {
+                for (Runnable effect : endEffect) {
+                    effect.run();
+                }
+            });
+        }
+        timeline.play();
+    }
 }

@@ -12,6 +12,7 @@ package viewtify.ui.toast;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 import javafx.beans.value.WritableDoubleValue;
 import javafx.geometry.Rectangle2D;
@@ -27,11 +28,11 @@ import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
 import viewtify.model.Model;
+import viewtify.ui.anime.Animatable;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.util.Corner;
-import viewtify.util.FXUtils;
 import viewtify.util.ScreenSelector;
 
 public class Toast {
@@ -49,12 +50,11 @@ public class Toast {
      * Show the specified node.
      */
     public static void show(String message) {
-        if (Viewtify.isActive()) {
+        show(() -> {
             Label label = new Label(message);
             label.setWrapText(true);
-
-            show(label);
-        }
+            return label;
+        });
     }
 
     /**
@@ -63,6 +63,15 @@ public class Toast {
      * @param node
      */
     public static void show(Node node) {
+        show(() -> node);
+    }
+
+    /**
+     * Show the specified node.
+     * 
+     * @param node
+     */
+    public static void show(Supplier<Node> node) {
         add(new Notification(node));
     }
 
@@ -95,9 +104,9 @@ public class Toast {
             }
 
             // UI effect
-            FXUtils.animate(setting.animation.v, notification.popup.opacityProperty(), 0, () -> {
-                notification.popup.hide();
-                notification.popup.getContent().clear();
+            Animatable.play(setting.animation.v, notification.ui().opacityProperty(), 0, () -> {
+                notification.ui().hide();
+                notification.ui().getContent().clear();
             });
 
             // draw UI
@@ -118,22 +127,23 @@ public class Toast {
             Iterator<Notification> iterator = isTopSide ? notifications.descendingIterator() : notifications.iterator();
             while (iterator.hasNext()) {
                 Toast.Notification notify = iterator.next();
+                Popup popup = notify.ui();
 
-                if (notify.popup.isShowing()) {
-                    if (!isTopSide) y -= notify.popup.getHeight() + MARGIN;
-                    notify.popup.setX(x);
-                    FXUtils.animate(setting.animation.v, notify.y, y);
+                if (popup.isShowing()) {
+                    if (!isTopSide) y -= popup.getHeight() + MARGIN;
+                    popup.setX(x);
+                    Animatable.play(setting.animation.v, notify.y, y);
                 } else {
-                    notify.popup.setOpacity(0);
-                    notify.popup.show(Window.getWindows().get(0));
-                    if (!isTopSide) y -= notify.popup.getHeight() + MARGIN;
-                    notify.popup.setX(x);
-                    notify.popup.setY(y);
+                    popup.setOpacity(0);
+                    popup.show(Window.getWindows().get(0));
+                    if (!isTopSide) y -= popup.getHeight() + MARGIN;
+                    popup.setX(x);
+                    popup.setY(y);
 
-                    FXUtils.animate(setting.animation.v, notify.popup.opacityProperty(), 1);
+                    Animatable.play(setting.animation.v, popup.opacityProperty(), 1);
                 }
 
-                if (isTopSide) y += notify.popup.getHeight() + MARGIN;
+                if (isTopSide) y += popup.getHeight() + MARGIN;
             }
         });
     }
@@ -177,8 +187,10 @@ public class Toast {
      */
     private static class Notification {
 
+        private final Supplier<Node> builder;
+
         /** The base transparent window. */
-        private final Popup popup = new Popup();
+        private Popup ui;
 
         /** Expose location y property. */
         private final WritableDoubleValue y = new WritableDoubleValue() {
@@ -190,7 +202,7 @@ public class Toast {
 
             @Override
             public double get() {
-                return popup.getY();
+                return ui().getY();
             }
 
             @Override
@@ -200,7 +212,7 @@ public class Toast {
 
             @Override
             public void set(double value) {
-                popup.setY(value);
+                ui().setY(value);
             }
         };
 
@@ -209,24 +221,36 @@ public class Toast {
         /**
          * @param node
          */
-        private Notification(Node node) {
-            VBox box = new VBox(node);
-            StyleHelper.of(box).style(Styles.popup);
-            box.setMaxWidth(setting.width.v);
-            box.setMinWidth(setting.width.v);
-            box.setOpacity(setting.opacity.v);
-
-            popup.setX(0);
-            popup.getContent().add(box);
-            UserActionHelper.of(popup).when(User.MouseClick).to(() -> remove(this));
-            if (0 < setting.autoHide.v.toMillis()) {
-                disposer = I.schedule((long) setting.autoHide.v.toMillis(), TimeUnit.MILLISECONDS)
-                        .first()
-                        .on(Viewtify.UIThread)
-                        .to(() -> remove(this));
-            }
+        private Notification(Supplier<Node> builder) {
+            this.builder = builder;
         }
 
+        /**
+         * Generate UI lazy.
+         * 
+         * @return
+         */
+        private synchronized Popup ui() {
+            if (ui == null) {
+                ui = new Popup();
+                VBox box = new VBox(builder.get());
+                StyleHelper.of(box).style(Styles.popup);
+                box.setMaxWidth(setting.width.v);
+                box.setMinWidth(setting.width.v);
+                box.setOpacity(setting.opacity.v);
+
+                ui.setX(0);
+                ui.getContent().add(box);
+                UserActionHelper.of(ui).when(User.MouseClick).to(() -> remove(this));
+                if (0 < setting.autoHide.v.toMillis()) {
+                    disposer = I.schedule((long) setting.autoHide.v.toMillis(), TimeUnit.MILLISECONDS)
+                            .first()
+                            .on(Viewtify.UIThread)
+                            .to(() -> remove(this));
+                }
+            }
+            return ui;
+        }
     }
 
     /**

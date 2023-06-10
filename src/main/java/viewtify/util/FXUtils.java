@@ -14,12 +14,8 @@ import static java.lang.Double.parseDouble;
 import java.util.Objects;
 import java.util.function.Function;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.beans.value.WritableValue;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -30,44 +26,6 @@ import stylist.Style;
 import stylist.value.CSSValue;
 
 public class FXUtils {
-
-    /**
-     * Animate the specified property.
-     * 
-     * @param <T>
-     * @param durationMills Animation time.
-     * @param property A target property to animate.
-     * @param endValue A end value of animated property.
-     * @param endEffect An optional end effect.
-     */
-    public static <T> void animate(int durationMills, WritableValue<T> property, T endValue, Runnable... endEffect) {
-        animate(Duration.millis(durationMills), property, endValue, endEffect);
-    }
-
-    /**
-     * Animate the specified property.
-     * 
-     * @param <T>
-     * @param duration Animation time.
-     * @param property A target property to animate.
-     * @param endValue A end value of animated property.
-     * @param endEffect An optional end effect.
-     */
-    public static <T> void animate(Duration duration, WritableValue<T> property, T endValue, Runnable... endEffect) {
-        Objects.requireNonNull(duration);
-        Objects.requireNonNull(property);
-        Objects.requireNonNull(endEffect);
-
-        Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(property, endValue)));
-        if (0 < endEffect.length) {
-            timeline.setOnFinished(e -> {
-                for (Runnable effect : endEffect) {
-                    effect.run();
-                }
-            });
-        }
-        timeline.play();
-    }
 
     /**
      * Compute length property.

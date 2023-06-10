@@ -742,15 +742,6 @@ public final class Viewtify {
     }
 
     /**
-     * Check wheterh JavaFX is initialized or not.
-     * 
-     * @return
-     */
-    public static boolean isActive() {
-        return toolkitInitialized;
-    }
-
-    /**
      * Create the general dialog builder.
      * 
      * @return

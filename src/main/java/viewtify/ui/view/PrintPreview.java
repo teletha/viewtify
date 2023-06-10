@@ -48,6 +48,7 @@ import viewtify.ui.UISpinner;
 import viewtify.ui.UIText;
 import viewtify.ui.UIToggleButton;
 import viewtify.ui.ViewDSL;
+import viewtify.ui.anime.Animatable;
 import viewtify.ui.helper.User;
 import viewtify.ui.view.PrintPreview.PrintInfo;
 import viewtify.util.FXUtils;
@@ -243,10 +244,10 @@ public class PrintPreview extends DialogView<PrintInfo> {
                 drawPage(currentPage + 1);
             }
         }).when(User.MouseEnter, e -> {
-            FXUtils.animate(250, navi.opacityProperty(), 1);
+            Animatable.play(250, navi.opacityProperty(), 1);
         }).when(User.MouseExit, e -> {
             if (!view.ui.getLayoutBounds().contains(e.getX(), e.getY())) {
-                FXUtils.animate(250, navi.opacityProperty(), 0);
+                Animatable.play(250, navi.opacityProperty(), 0);
             }
         });
     }
@@ -342,9 +343,9 @@ public class PrintPreview extends DialogView<PrintInfo> {
         view.ui.setFitWidth(image.getWidth());
         view.ui.setFitHeight(image.getHeight());
 
-        FXUtils.animate(150, view.ui.opacityProperty(), 0.1, () -> {
+        Animatable.play(150, view.ui.opacityProperty(), 0.1, () -> {
             view.value(image);
-            FXUtils.animate(300, view.ui.opacityProperty(), 1);
+            Animatable.play(300, view.ui.opacityProperty(), 1);
         });
     }
 
