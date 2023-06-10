@@ -28,8 +28,9 @@ import kiss.WiseConsumer;
 import kiss.WiseRunnable;
 import kiss.model.Model;
 import viewtify.Viewtify;
-import viewtify.ui.UITableView;
 import viewtify.ui.UserInterface;
+import viewtify.ui.helper.CollectableHelper;
+import viewtify.ui.helper.ValueHelper;
 
 /**
  * The editing state manager.
@@ -52,9 +53,9 @@ public class Edito {
      * Manage edit state of the specified UI.
      * 
      * @param <V>
-     * @param table
+     * @param ui
      */
-    public <V> void manage(UITableView<V> table, WiseRunnable save) {
+    public <V extends UserInterface & ValueHelper<V, X>, X> void manageValue(V ui, WiseRunnable save) {
         // Why are we running on UI thread?
         //
         // Data must be preconfigured to get a snapshot of initial values, but in many cases, data
@@ -64,11 +65,35 @@ public class Edito {
         // configured or where the previous data remains. To avoid this situation, the management
         // system settings are done on the UI thread.
         Viewtify.inUI(() -> {
-            Viewtify.observing(table.items())
-                    .scan(value -> snapshot(value, table::items, save), Snapshot::update)
+            ui.observing()
+                    .scan(value -> snapshot(value, x -> ui.value(x), save), Snapshot::update)
                     .skip(1)
                     .takeUntil(stop.expose)
-                    .to(snapshot -> edited(table, snapshot));
+                    .to(snapshot -> edited(ui, snapshot));
+        });
+    }
+
+    /**
+     * Manage edit state of the specified UI.
+     * 
+     * @param <V>
+     * @param ui
+     */
+    public <V extends UserInterface & CollectableHelper<V, X>, X> void manageList(V ui, WiseRunnable save) {
+        // Why are we running on UI thread?
+        //
+        // Data must be preconfigured to get a snapshot of initial values, but in many cases, data
+        // is often retrieved in an external thread and then the data is configured in the UI
+        // thread. In this case, if the management system is configured on an external thread, there
+        // is a risk that the data will be retrieved in a state where the data has not yet been
+        // configured or where the previous data remains. To avoid this situation, the management
+        // system settings are done on the UI thread.
+        Viewtify.inUI(() -> {
+            Viewtify.observing(ui.items())
+                    .scan(value -> snapshot(value, x -> ui.items(x), save), Snapshot::update)
+                    .skip(1)
+                    .takeUntil(stop.expose)
+                    .to(snapshot -> edited(ui, snapshot));
         });
     }
 
@@ -139,6 +164,18 @@ public class Edito {
         revert();
 
         stop.accept(Boolean.TRUE);
+    }
+
+    /**
+     * Create snapshot of some value.
+     * 
+     * @param <V>
+     * @param value
+     * @param revert
+     * @return
+     */
+    private static <V> Snapshot<V> snapshot(V value, WiseConsumer<V> revert, WiseRunnable save) {
+        return new Snapshot(value, revert, save);
     }
 
     /**
