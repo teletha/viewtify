@@ -29,12 +29,16 @@ import kiss.model.Model;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 import viewtify.ui.helper.CollectableHelper;
+import viewtify.ui.helper.CommitHelper;
 import viewtify.ui.helper.ValueHelper;
 
 /**
  * The editing state manager.
  */
 public class Edito {
+
+    /** The root edit context. */
+    public static final Edito Root = new Edito();
 
     /** The stop notifier of edit management. */
     private final Signaling<Boolean> stop = new Signaling();
@@ -47,6 +51,18 @@ public class Edito {
 
     /** The edited event. */
     public final Signal<Boolean> editing = edit.expose.map(x -> !x.isEmpty());
+
+    /**
+     * Manage edit state of the specified UI.
+     * 
+     * @param ui
+     * @param save
+     */
+    public <V extends CommitHelper<V, X>, X> void manage(V ui, WiseConsumer<X> save) {
+        if (ui instanceof ValueHelper helper) {
+            manageValue(helper, save);
+        }
+    }
 
     /**
      * Manage edit state of the specified UI.
