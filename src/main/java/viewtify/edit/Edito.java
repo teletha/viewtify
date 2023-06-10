@@ -25,7 +25,6 @@ import kiss.I;
 import kiss.Signal;
 import kiss.Signaling;
 import kiss.WiseConsumer;
-import kiss.WiseRunnable;
 import kiss.model.Model;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
@@ -55,7 +54,7 @@ public class Edito {
      * @param <V>
      * @param ui
      */
-    public <V extends UserInterface & ValueHelper<V, X>, X> void manageValue(V ui, WiseRunnable save) {
+    public <V extends UserInterface & ValueHelper<V, X>, X> void manageValue(V ui, WiseConsumer<X> save) {
         // Why are we running on UI thread?
         //
         // Data must be preconfigured to get a snapshot of initial values, but in many cases, data
@@ -79,7 +78,7 @@ public class Edito {
      * @param <V>
      * @param ui
      */
-    public <V extends UserInterface & CollectableHelper<V, X>, X> void manageList(V ui, WiseRunnable save) {
+    public <V extends UserInterface & CollectableHelper<V, X>, X> void manageList(V ui, WiseConsumer<List<X>> save) {
         // Why are we running on UI thread?
         //
         // Data must be preconfigured to get a snapshot of initial values, but in many cases, data
@@ -174,7 +173,7 @@ public class Edito {
      * @param revert
      * @return
      */
-    private static <V> Snapshot<V> snapshot(V value, WiseConsumer<V> revert, WiseRunnable save) {
+    private static <V> Snapshot<V> snapshot(V value, WiseConsumer<V> revert, WiseConsumer<V> save) {
         return new Snapshot(value, revert, save);
     }
 
@@ -186,7 +185,7 @@ public class Edito {
      * @param revert
      * @return
      */
-    private static <V> Snapshot<List<V>> snapshot(List<V> value, WiseConsumer<List<V>> revert, WiseRunnable save) {
+    private static <V> Snapshot<List<V>> snapshot(List<V> value, WiseConsumer<List<V>> revert, WiseConsumer<List<V>> save) {
         return new Snapshot<List<V>>(value, revert, save) {
             @Override
             public boolean match() {
@@ -279,14 +278,14 @@ public class Edito {
         private final WiseConsumer<T> revert;
 
         /** The save action. */
-        private final WiseRunnable save;
+        private final WiseConsumer<T> save;
 
         /**
          * Hide constructor.
          * 
          * @param initial
          */
-        protected Snapshot(T initial, WiseConsumer<T> revert, WiseRunnable save) {
+        protected Snapshot(T initial, WiseConsumer<T> revert, WiseConsumer<T> save) {
             this.initial = clone(initial);
             this.latest = initial;
             this.revert = Objects.requireNonNull(revert);
@@ -324,7 +323,7 @@ public class Edito {
          * Save data to the backend storage.
          */
         protected void save() {
-            save.run();
+            save.accept(latest);
             initial = clone(latest);
         }
 
