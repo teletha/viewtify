@@ -18,12 +18,23 @@
 }
 
 /* ==========================================================================
-  Tdited Mode
+  Edited Mode
 ===========================================================================*/
 .edited {
     -fx-background-color: #ffa431, -fx-outer-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: -1.4, 0, 1, 2;
     -fx-background-radius:  6.4, 5, 4, 3;
+}
+
+.check-box.edited {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.check-box.edited > .box {
+    -fx-background-color: #ffa431, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: -1.4, 0, 1, 2;
+    -fx-background-radius: 3.4, 2, 1, 1;
 }
 
 
