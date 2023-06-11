@@ -19,7 +19,6 @@ import java.util.function.Supplier;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -29,6 +28,7 @@ import kiss.WiseConsumer;
 import kiss.WiseFunction;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
+import viewtify.edit.Edito;
 import viewtify.ui.UserInterface;
 import viewtify.util.GuardedOperation;
 
@@ -193,6 +193,30 @@ public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
     default Self initializeLazy(Signal<V> initialValue) {
         if (initialValue != null) {
             initialValue.first().to(this::initialize);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Maintain an edit history of this value with default context.
+     * 
+     * @param save
+     * @return
+     */
+    default Self historical(WiseConsumer<V> save) {
+        return historical(save, null);
+    }
+
+    /**
+     * Maintains an edit history of this value with your context.
+     * 
+     * @param save
+     * @return
+     */
+    default <X extends UserInterface & ValueHelper<X, V>> Self historical(WiseConsumer<V> save, Edito context) {
+        if (save != null) {
+            if (context == null) context = Edito.Root;
+            context.manageValue((X) this, save);
         }
         return (Self) this;
     }

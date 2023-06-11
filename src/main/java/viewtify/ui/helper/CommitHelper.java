@@ -12,20 +12,11 @@ package viewtify.ui.helper;
 import kiss.WiseConsumer;
 import viewtify.edit.Edito;
 
-public interface CommitHelper<Self extends CommitHelper<Self, V>, V> extends StyleHelper {
+public interface CommitHelper<Self extends CommitHelper<Self, V>, V> {
 
     default Self comittable(WiseConsumer<V> save) {
         return comittable(save, null);
     }
 
-    default Self comittable(WiseConsumer<V> save, Edito context) {
-        if (save != null) {
-            if (context == null) {
-                context = Edito.Root;
-            }
-            context.manage(this, save);
-        }
-
-        return (Self) this;
-    }
+    Self comittable(WiseConsumer<V> save, Edito context);
 }

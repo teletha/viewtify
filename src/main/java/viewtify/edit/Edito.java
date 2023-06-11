@@ -29,7 +29,6 @@ import kiss.model.Model;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 import viewtify.ui.helper.CollectableHelper;
-import viewtify.ui.helper.CommitHelper;
 import viewtify.ui.helper.ValueHelper;
 
 /**
@@ -51,18 +50,6 @@ public class Edito {
 
     /** The edited event. */
     public final Signal<Boolean> editing = edit.expose.map(x -> !x.isEmpty());
-
-    /**
-     * Manage edit state of the specified UI.
-     * 
-     * @param ui
-     * @param save
-     */
-    public <V extends CommitHelper<V, X>, X> void manage(V ui, WiseConsumer<X> save) {
-        if (ui instanceof ValueHelper helper) {
-            manageValue(helper, save);
-        }
-    }
 
     /**
      * Manage edit state of the specified UI.

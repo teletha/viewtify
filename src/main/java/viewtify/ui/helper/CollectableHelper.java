@@ -42,8 +42,11 @@ import kiss.I;
 import kiss.Signal;
 import kiss.Signaling;
 import kiss.Variable;
+import kiss.WiseConsumer;
 import viewtify.Viewtify;
+import viewtify.edit.Edito;
 import viewtify.property.SmartProperty;
+import viewtify.ui.UserInterface;
 import viewtify.ui.query.CompoundQuery;
 import viewtify.util.GuardedOperation;
 import viewtify.util.Translatable;
@@ -232,6 +235,30 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
 
         if (this instanceof ValueHelper && !initialItems.isEmpty()) {
             ((ValueHelper) this).initialize(defaultValue);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Maintain an edit history of this value with default context.
+     * 
+     * @param save
+     * @return
+     */
+    default Self historical(WiseConsumer<List<E>> save) {
+        return historical(save, null);
+    }
+
+    /**
+     * Maintains an edit history of this value with your context.
+     * 
+     * @param save
+     * @return
+     */
+    default <X extends UserInterface & CollectableHelper<X, E>> Self historical(WiseConsumer<List<E>> save, Edito context) {
+        if (save != null) {
+            if (context == null) context = Edito.Root;
+            context.manageList((X) this, save);
         }
         return (Self) this;
     }
