@@ -11,6 +11,7 @@ package viewtify;
 
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -47,6 +48,12 @@ public final class ViewtyDialog<T> {
 
     /** The button set. */
     private List<ButtonType> buttons;
+
+    /** The fisrt focused button. */
+    private int focusIndex;
+
+    /** The shortcut key. */
+    private List<Key> shortcut;
 
     /** The translation mode. */
     private boolean needTranslate;
@@ -122,6 +129,28 @@ public final class ViewtyDialog<T> {
                 .startWith(new ButtonType(buttonOK, ButtonData.OK_DONE))
                 .toList();
 
+        return this;
+    }
+
+    /**
+     * Configure the initial focused button.
+     * 
+     * @return
+     */
+    public ViewtyDialog<T> focusOn(int index) {
+        this.focusIndex = index;
+        return this;
+    }
+
+    /**
+     * Configure the button set of this dialog.
+     * 
+     * @param buttonOK
+     * @param buttonOthers
+     * @return
+     */
+    public ViewtyDialog<T> shortcut(Key buttonOK, Key... buttonOthers) {
+        this.shortcut = I.signal(buttonOthers).startWith(buttonOK).toList();
         return this;
     }
 
@@ -352,6 +381,17 @@ public final class ViewtyDialog<T> {
             }
         }
 
+        if (shortcut != null) {
+            for (int i = 0; i < shortcut.size(); i++) {
+                Key key = shortcut.get(i);
+                if (key != null) {
+                    Button button = (Button) dialogPane.lookupButton(dialogPane.getButtonTypes().get(i));
+                    button.setText(button.getText() + "(" + key.name + ")");
+                    dialogPane.getScene().getAccelerators().put(key.combi(), button::fire);
+                }
+            }
+        }
+
         if (disableSystemButtonOrder) {
             ButtonBar buttonBar = (ButtonBar) dialogPane.lookup(".button-bar");
             buttonBar.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
@@ -365,6 +405,12 @@ public final class ViewtyDialog<T> {
 
         if (disableCloseButton) {
             ((Stage) dialogPane.getScene().getWindow()).setOnCloseRequest(WindowEvent::consume);
+        }
+
+        if (0 <= focusIndex) {
+            Platform.runLater(() -> {
+                dialogPane.lookupButton(dialogPane.getButtonTypes().get(focusIndex)).requestFocus();
+            });
         }
 
         if (0 < width) {

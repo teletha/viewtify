@@ -9,6 +9,8 @@
  */
 package viewtify;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -664,6 +666,10 @@ public class Key {
             return false;
         }
         return true;
+    }
+
+    public KeyCodeCombination combi() {
+        return new KeyCodeCombination(KeyCode.getKeyCode(name));
     }
 
     /**
