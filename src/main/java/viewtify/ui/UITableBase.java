@@ -10,7 +10,6 @@
 package viewtify.ui;
 
 import javafx.scene.control.Control;
-
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PlaceholderHelper;

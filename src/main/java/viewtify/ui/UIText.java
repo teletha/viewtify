@@ -12,11 +12,13 @@ package viewtify.ui;
 import java.lang.reflect.Method;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
+import org.controlsfx.control.textfield.AutoCompletionBinding.ISuggestionRequest;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.glyphfont.Glyph;
@@ -33,6 +35,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -378,6 +382,28 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
      */
     public UIText<V> suggest(List<V> suggests) {
         TextFields.bindAutoCompletion(ui, suggests);
+        return this;
+    }
+
+    /**
+     * Support auto-completion.
+     * 
+     * @param suggestionProvider
+     * @return
+     */
+    public UIText<V> suggest(Callback<ISuggestionRequest, Collection<V>> suggestionProvider) {
+        TextFields.bindAutoCompletion(ui, suggestionProvider);
+        return this;
+    }
+
+    /**
+     * Support auto-completion.
+     * 
+     * @param suggestionProvider
+     * @return
+     */
+    public UIText<V> suggest(Callback<ISuggestionRequest, Collection<V>> suggestionProvider, StringConverter<V> converter) {
+        TextFields.bindAutoCompletion(ui, suggestionProvider, converter);
         return this;
     }
 

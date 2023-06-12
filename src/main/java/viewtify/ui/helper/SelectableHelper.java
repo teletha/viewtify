@@ -43,6 +43,24 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
+     * Handle the selected state.
+     * 
+     * @return
+     */
+    default Signal<Boolean> isSelected() {
+        return Viewtify.observing(model().selectedItemProperty()).map(v -> v != null);
+    }
+
+    /**
+     * Handle the selected state.
+     * 
+     * @return
+     */
+    default Signal<Boolean> isNotSelected() {
+        return isSelected().map(v -> !v);
+    }
+
+    /**
      * Config {@link SelectionMode}.
      * 
      * @param mode
