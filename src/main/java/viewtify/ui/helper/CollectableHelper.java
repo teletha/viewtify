@@ -37,6 +37,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -54,11 +55,33 @@ import viewtify.util.Translatable;
 public interface CollectableHelper<Self extends ReferenceHolder & CollectableHelper<Self, E>, E> {
 
     /**
+     * Dispose by self.
+     * 
+     * @param disposable
+     * @return
+     */
+    private Self dispose(Disposable disposable) {
+        if (this instanceof Disposable disposer) {
+            disposer.add(disposable);
+        }
+        return (Self) this;
+    }
+
+    /**
      * Returns the managed item list.
      * 
      * @return
      */
     Property<ObservableList<E>> itemsProperty();
+
+    /**
+     * Get the all artifacts.
+     * 
+     * @return A live item list.
+     */
+    default ObservableList<E> artifacts() {
+        return itemsProperty().getValue();
+    }
 
     /**
      * Get the all items.
@@ -87,6 +110,16 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      */
     default Self items(Signal<E> items) {
         return items(items.toList());
+    }
+
+    /**
+     * Sets all values as items.
+     * 
+     * @param items All items to set.
+     * @return Chainable API.
+     */
+    default Self itemAll(Signal<List<E>> items) {
+        return dispose(items.to(list -> items(list)));
     }
 
     /**
@@ -269,7 +302,22 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return
      */
     default Variable<E> first() {
-        ObservableList<E> items = refer().items.getValue();
+        ObservableList<E> items = items();
+
+        if (items.isEmpty()) {
+            return Variable.empty();
+        } else {
+            return Variable.of(items.get(0));
+        }
+    }
+
+    /**
+     * Returns the first item.
+     * 
+     * @return
+     */
+    default Variable<E> firstArtifact() {
+        ObservableList<E> items = artifacts();
 
         if (items.isEmpty()) {
             return Variable.empty();
@@ -284,7 +332,22 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return
      */
     default Variable<E> last() {
-        ObservableList<E> items = refer().items.getValue();
+        ObservableList<E> items = items();
+
+        if (items.isEmpty()) {
+            return Variable.empty();
+        } else {
+            return Variable.of(items.get(items.size() - 1));
+        }
+    }
+
+    /**
+     * Returns the last item.
+     * 
+     * @return
+     */
+    default Variable<E> lastArtifact() {
+        ObservableList<E> items = artifacts();
 
         if (items.isEmpty()) {
             return Variable.empty();
@@ -725,6 +788,16 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @param filter A conditional filter.
      * @return Chainable API.
      */
+    default Self take(Signal<Predicate<E>> filter) {
+        return dispose(filter.to(this::take));
+    }
+
+    /**
+     * Filter items by the specified condition.
+     * 
+     * @param filter A conditional filter.
+     * @return Chainable API.
+     */
     default Self skip(Predicate<E> filter) {
         return take(filter.negate());
     }
@@ -775,6 +848,42 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
         refer.disposers = new WeakHashMap();
         refer.notifier = stateExtractor;
         return (Self) this;
+    }
+
+    /**
+     * Observe the modification of items.
+     * 
+     * @return
+     */
+    default Signal<ObservableList<E>> observeItems() {
+        return Viewtify.observe(items());
+    }
+
+    /**
+     * Observe the modification of items.
+     * 
+     * @return
+     */
+    default Self observeItems(WiseConsumer<ObservableList<E>> listener) {
+        return dispose(observeItems().to(listener));
+    }
+
+    /**
+     * Observe the modification of artifacts.
+     * 
+     * @return
+     */
+    default Signal<ObservableList<E>> observeArtifacts() {
+        return Viewtify.observe(artifacts());
+    }
+
+    /**
+     * Observe the modification of artifacts.
+     * 
+     * @return
+     */
+    default Self observeArtifacts(WiseConsumer<ObservableList<E>> listener) {
+        return dispose(observeArtifacts().to(listener));
     }
 
     /**

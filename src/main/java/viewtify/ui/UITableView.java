@@ -23,10 +23,9 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+
 import viewtify.ui.helper.User;
 
 public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITableView<RowV>> {
@@ -170,39 +169,6 @@ public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITabl
     public UITableView<RowV> dndable(boolean enable) {
         this.dndable = enable;
         return this;
-    }
-
-    /**
-     * Configure draggable row.
-     * 
-     * @return
-     */
-    public UITableView<RowV> loopable() {
-        ui.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.UP) {
-                selectLoopablePrevious(e);
-            } else if (e.getCode() == KeyCode.DOWN) {
-                selectLoopableNext(e);
-            }
-        });
-
-        return this;
-    }
-
-    private void selectLoopablePrevious(KeyEvent e) {
-        RowV selected = selectedItem().v;
-        RowV target = ui.getItems().get(0);
-        if (selected == null || selected == target) {
-            selectLast();
-        }
-    }
-
-    private void selectLoopableNext(KeyEvent e) {
-        RowV selected = selectedItem().v;
-        RowV target = ui.getItems().get(ui.getItems().size() - 1);
-        if (selected == null || selected == target) {
-            selectFirst();
-        }
     }
 
     /**
