@@ -172,38 +172,6 @@ public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITabl
     }
 
     /**
-     * Select the previous artifact.
-     * 
-     * @return
-     */
-    public UITableView<RowV> selectPreviousArtifact() {
-        RowV selected = selectedItem().v;
-        RowV limit = firstArtifact().v;
-        if (selected == null || selected == limit) {
-            selectLast();
-        } else {
-            selectPrevious();
-        }
-        return this;
-    }
-
-    /**
-     * Select the next artifact.
-     * 
-     * @return
-     */
-    public UITableView<RowV> selectNextArtifact() {
-        RowV selected = selectedItem().v;
-        RowV limit = lastArtifact().v;
-        if (selected == null || selected == limit) {
-            selectFirst();
-        } else {
-            selectNext();
-        }
-        return this;
-    }
-
-    /**
      * 
      */
     private class EnhancedRow extends TableRow {
