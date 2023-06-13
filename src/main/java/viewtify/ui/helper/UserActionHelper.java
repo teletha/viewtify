@@ -13,6 +13,8 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
+import javafx.scene.Node;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.WiseBiConsumer;
@@ -36,6 +38,19 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
      */
     default Self action(WiseRunnable action) {
         return when(User.Action, action);
+    }
+
+    /**
+     * Fire the specified event on this event target.
+     * 
+     * @param event An event to fire.
+     * @return Chainable API
+     */
+    default Self fire(Event event) {
+        if (ui() instanceof Node node) {
+            node.fireEvent(event);
+        }
+        return (Self) this;
     }
 
     /**

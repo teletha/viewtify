@@ -16,6 +16,7 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.SingleSelectionModel;
+
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
@@ -43,11 +44,29 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
+     * Check the current selection.
+     * 
+     * @return
+     */
+    default boolean isSelected() {
+        return !model().isEmpty();
+    }
+
+    /**
+     * Check the current selection.
+     * 
+     * @return
+     */
+    default boolean isNotSelected() {
+        return model().isEmpty();
+    }
+
+    /**
      * Handle the selected state.
      * 
      * @return
      */
-    default Signal<Boolean> isSelected() {
+    default Signal<Boolean> hasSelection() {
         return Viewtify.observing(model().selectedItemProperty()).map(v -> v != null);
     }
 
@@ -56,8 +75,8 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * 
      * @return
      */
-    default Signal<Boolean> isNotSelected() {
-        return isSelected().map(v -> !v);
+    default Signal<Boolean> hasNoSelection() {
+        return hasSelection().map(v -> !v);
     }
 
     /**
