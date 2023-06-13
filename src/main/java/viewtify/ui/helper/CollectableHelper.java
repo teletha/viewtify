@@ -634,7 +634,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @param action
      */
     private void modifyItemUISafely(Consumer<ObservableList<E>> action) {
-        Viewtify.inUI(() -> action.accept(refer().items.getValue()));
+        action.accept(items());
     }
 
     /**

@@ -58,21 +58,10 @@ public class Edito {
      * @param ui
      */
     public <V extends UserInterface & ValueHelper<V, X>, X> void manageValue(V ui, WiseConsumer<X> save) {
-        // Why are we running on UI thread?
-        //
-        // Data must be preconfigured to get a snapshot of initial values, but in many cases, data
-        // is often retrieved in an external thread and then the data is configured in the UI
-        // thread. In this case, if the management system is configured on an external thread, there
-        // is a risk that the data will be retrieved in a state where the data has not yet been
-        // configured or where the previous data remains. To avoid this situation, the management
-        // system settings are done on the UI thread.
-        Viewtify.inUI(() -> {
-            ui.observing()
-                    .scan(value -> snapshot(value, x -> ui.value(x), save), Snapshot::update)
-                    .skip(1)
-                    .takeUntil(stop.expose)
-                    .to(snapshot -> edited(ui, snapshot));
-        });
+        ui.observing()
+                .scan(value -> snapshot(value, x -> ui.value(x), save), Snapshot::update)
+                .takeUntil(stop.expose)
+                .to(snapshot -> edited(ui, snapshot));
     }
 
     /**
@@ -82,21 +71,10 @@ public class Edito {
      * @param ui
      */
     public <V extends UserInterface & CollectableHelper<V, X>, X> void manageList(V ui, WiseConsumer<List<X>> save) {
-        // Why are we running on UI thread?
-        //
-        // Data must be preconfigured to get a snapshot of initial values, but in many cases, data
-        // is often retrieved in an external thread and then the data is configured in the UI
-        // thread. In this case, if the management system is configured on an external thread, there
-        // is a risk that the data will be retrieved in a state where the data has not yet been
-        // configured or where the previous data remains. To avoid this situation, the management
-        // system settings are done on the UI thread.
-        Viewtify.inUI(() -> {
-            Viewtify.observing(ui.items())
-                    .scan(value -> snapshot(value, x -> ui.items(x), save), Snapshot::update)
-                    .skip(1)
-                    .takeUntil(stop.expose)
-                    .to(snapshot -> edited(ui, snapshot));
-        });
+        Viewtify.observing(ui.items())
+                .scan(value -> snapshot(value, x -> ui.items(x), save), Snapshot::update)
+                .takeUntil(stop.expose)
+                .to(snapshot -> edited(ui, snapshot));
     }
 
     private void edited(UserInterface ui, Snapshot snapshot) {
@@ -312,6 +290,12 @@ public class Edito {
          * @return
          */
         protected boolean match() {
+            // special equality check for empty string
+            if (initial instanceof String text && text.isEmpty() && latest == null) {
+                return true;
+            } else if (latest instanceof String text && text.isEmpty() && initial == null) {
+                return true;
+            }
             return Objects.equals(initial, latest);
         }
 
