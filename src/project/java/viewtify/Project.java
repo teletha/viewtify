@@ -37,7 +37,7 @@ public class Project extends bee.api.Project {
                 * Shortcut management
                 * User preference
                 * Dark theme
-                * Automatic translation
+                * Automatic translation in real time
                 * Tooltip and Popup
                 * Notification like Toast
                 * Headless UI

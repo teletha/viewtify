@@ -29,7 +29,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 * Shortcut management
 * User preference
 * Dark theme
-* Automatic translation
+* Automatic translation in real time
 * Tooltip and Popup
 * Notification like Toast
 * Headless UI
