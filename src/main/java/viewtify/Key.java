@@ -670,9 +670,7 @@ public class Key {
     }
 
     public KeyCodeCombination combi() {
-        KeyCodeCombination a = new KeyCodeCombination(KeyCode.getKeyCode(name), mod(SHIFT), mod(CTRL), mod(ALT), mod(META), mod(SHORTCUT));
-        System.out.println(a);
-        return a;
+        return new KeyCodeCombination(KeyCode.getKeyCode(name), mod(SHIFT), mod(CTRL), mod(ALT), mod(META), mod(SHORTCUT));
     }
 
     private ModifierValue mod(int target) {

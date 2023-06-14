@@ -80,7 +80,11 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
         Viewtify.observe(ui.textProperty()).to(uiText -> {
             updating.guard(() -> {
                 if (uiText.isBlank()) {
-                    model.set(null);
+                    if (type == String.class) {
+                        model.set((V) "");
+                    } else {
+                        model.set(null);
+                    }
                 } else if (type == String.class) {
                     model.set((V) uiText);
                 } else {
