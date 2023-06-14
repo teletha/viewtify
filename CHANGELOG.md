@@ -1,5 +1,38 @@
 # Changelog
 
+## [2.9.0](https://github.com/teletha/viewtify/compare/v2.8.0...v2.9.0) (2023-06-14)
+
+
+### Features
+
+* Add configuration for closing request. ([1007b4f](https://github.com/teletha/viewtify/commit/1007b4ff1230c4f1c57af37b8128de8693c5bad3))
+* Add dialog builder. ([e515913](https://github.com/teletha/viewtify/commit/e515913e6c8153264891329179aa75c40cfd4cd9))
+* Add DisableHelper#disableWhenAny and #enableWhenAny. ([295b8d6](https://github.com/teletha/viewtify/commit/295b8d66d5c52cbe4f7b9aafc78e58c807bbadcc))
+* Add global ViewtySetting. ([1b1e27e](https://github.com/teletha/viewtify/commit/1b1e27ec6b4497d8ffbee5ef258624c16483b2f8))
+* Add MonitorableTask. ([d5d4479](https://github.com/teletha/viewtify/commit/d5d4479b0e8fa5ad19c9497891b4d82214a610a3))
+* Add UpdatePolicy ([d69d13b](https://github.com/teletha/viewtify/commit/d69d13b3b9c016532dfb0f6736283f1e3c6aaed9))
+* Add UserActionHelper#fire(javaf's event) ([417dbf7](https://github.com/teletha/viewtify/commit/417dbf752d52cb17a4ec5bac8d4733fddd721e10))
+* Add Viewtify#dialog to build various dialog. ([cfa8a2d](https://github.com/teletha/viewtify/commit/cfa8a2d1acbe6f70ac551542b76799474b2a0c11))
+* Enhance ColletableHelper. ([423c03e](https://github.com/teletha/viewtify/commit/423c03ed02edaa73bd04c581c4da90a5968bfd99))
+* Enhance Edito. ([95baced](https://github.com/teletha/viewtify/commit/95baced25cd7a07c68097d724eec809678c7b413))
+* Support splash image. ([bd252b0](https://github.com/teletha/viewtify/commit/bd252b047e5e9f8c498673c52985cc12914f2215))
+* ValueHelper and CollectableHelper can manage histrical value. ([1d0daf2](https://github.com/teletha/viewtify/commit/1d0daf26f8685596fe831f408d32816b94e5b47f))
+* ViewtyDialog can cofigure shortcut key for each buttons. ([17dab22](https://github.com/teletha/viewtify/commit/17dab22a9cce33369687145a22268929f8baf866))
+
+
+### Bug Fixes
+
+* checking update time is incorrect. ([db2fe68](https://github.com/teletha/viewtify/commit/db2fe6846221556ba3d92af2864ffcc33964b2e2))
+* compile error ([940e83b](https://github.com/teletha/viewtify/commit/940e83bd5c8782b2b5520b4c1661b0b49a9c1f9a))
+* edit style ([6c56e22](https://github.com/teletha/viewtify/commit/6c56e22a838cb7156488cc9d424f93f683ac4fe6))
+* remove unused class ([325ef29](https://github.com/teletha/viewtify/commit/325ef298ed7faa241ce5bd776a7ad88c6bd8b95c))
+* revert the setting of dialog's size ([810efb8](https://github.com/teletha/viewtify/commit/810efb895459d4172010c1acd7566d0fed26bb05))
+* Simplify DialogView. ([377f8a2](https://github.com/teletha/viewtify/commit/377f8a23822dc51ae9006d751fb82d2772dd2357))
+* Simplify DialogView. ([7584b0e](https://github.com/teletha/viewtify/commit/7584b0e22e5ec8b18e34132ff9ea4fe2f70ef271))
+* Update customfx. ([eccbc62](https://github.com/teletha/viewtify/commit/eccbc62a7d558eab5d2bd25afa00608137f6f41d))
+* Update PrintPreview. ([e66a225](https://github.com/teletha/viewtify/commit/e66a225b6b13bbaa94887492ced32f7f01af7b55))
+* Use minimum size on dialog setting. ([e48d263](https://github.com/teletha/viewtify/commit/e48d26308d138acb8d885b80b5a4d57320ff068e))
+
 ## [2.8.0](https://github.com/teletha/viewtify/compare/v2.7.0...v2.8.0) (2023-05-23)
 
 
