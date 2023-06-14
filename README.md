@@ -9,6 +9,7 @@
 
 ## Summary
 Viewtify provides an API for using [JavaFX](https://openjfx.io/) more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML.
+
 Declarative and Reactive API
 * UI tree declaration
 * UI widget operations (support all built-in JavaFX widgets)
