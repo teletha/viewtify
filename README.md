@@ -22,16 +22,16 @@ Additional useful functions and widgets that do not exist in JavaFX.
 * Application launcher
 * Application updater
 * Docking UI like Eclipse
-* Undo Redo support
+* Notification UI like Toast
 * Print preview
 * Monitorable task
-* Focus management
+* Undo/Redo management
+* Focus manager
 * Shortcut management
 * User preference
 * Dark theme
 * Automatic translation in real time
 * Tooltip and Popup
-* Notification like Toast
 * Headless UI
 * Browser manipulation
 <p align="right"><a href="#top">back to top</a></p>
