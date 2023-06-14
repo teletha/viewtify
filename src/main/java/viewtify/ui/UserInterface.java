@@ -19,11 +19,8 @@ import java.util.function.Consumer;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.scene.Node;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -112,7 +109,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
      * @param action
      * @return
      */
-    public Self keybind(String key, WiseRunnable action) {
+    public Self keybind(Key key, WiseRunnable action) {
         return keybind(key, I.wiseC(action));
     }
 
@@ -123,32 +120,9 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
      * @param action
      * @return
      */
-    public Self keybind(String key, WiseConsumer<KeyEvent> action) {
-        KeyCombination stroke = KeyCodeCombination.keyCombination(key);
-        when(User.KeyPress).take(stroke::match).to(action);
-        return (Self) this;
-    }
-
-    /**
-     * Register keyborad shortcut.
-     * 
-     * @param key
-     * @param action
-     * @return
-     */
-    public Self keybind(Key key, WiseRunnable action) {
-        return keybind(key.name, action);
-    }
-
-    /**
-     * Register keyborad shortcut.
-     * 
-     * @param key
-     * @param action
-     * @return
-     */
     public Self keybind(Key key, WiseConsumer<KeyEvent> action) {
-        return keybind(key.name, action);
+        when(User.KeyPress).take(key.combi()::match).to(action);
+        return (Self) this;
     }
 
     /**

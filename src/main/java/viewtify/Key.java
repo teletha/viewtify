@@ -11,6 +11,7 @@ package viewtify;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination.ModifierValue;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -669,7 +670,13 @@ public class Key {
     }
 
     public KeyCodeCombination combi() {
-        return new KeyCodeCombination(KeyCode.getKeyCode(name));
+        KeyCodeCombination a = new KeyCodeCombination(KeyCode.getKeyCode(name), mod(SHIFT), mod(CTRL), mod(ALT), mod(META), mod(SHORTCUT));
+        System.out.println(a);
+        return a;
+    }
+
+    private ModifierValue mod(int target) {
+        return (modifiers & target) == 0 ? ModifierValue.ANY : ModifierValue.DOWN;
     }
 
     /**
