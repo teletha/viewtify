@@ -32,7 +32,7 @@ public class Project extends bee.api.Project {
                 * Docking UI like Eclipse
                 * Undo Redo support
                 * Print preview
-                * Monitarable task
+                * Monitorable task
                 * Focus management
                 * Shortcut management
                 * User preference

@@ -24,7 +24,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 * Docking UI like Eclipse
 * Undo Redo support
 * Print preview
-* Monitarable task
+* Monitorable task
 * Focus management
 * Shortcut management
 * User preference
