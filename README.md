@@ -11,23 +11,27 @@
 Viewtify provides an API for using [JavaFX](https://openjfx.io/) more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML.
 
 Declarative and Reactive API
-* UI tree declaration
+* UI tree definition
 * UI widget operations (support all built-in JavaFX widgets)
-* Style declaration (CSS API via [Stylist](https://github.com/teletha/stylist))
+* Style definition (CSS API via [Stylist](https://github.com/teletha/stylist))
 * Animation
 * Dialog
+* Context menu
 
 Additional useful functions and widgets that do not exist in JavaFX.
 * Application launcher
 * Application updater
-* Docking UI like Eclipse.
-* Notification
+* Docking UI like Eclipse
 * Undo Redo support
 * Print preview
 * Monitarable task
 * Focus management
-* Shorcut key management
+* Shortcut management
 * User preference
+* Dark theme
+* Automatic translation
+* Tooltip and Popup
+* Notification (like toast)
 <p align="right"><a href="#top">back to top</a></p>
 
 
