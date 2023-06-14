@@ -37,7 +37,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -278,8 +277,8 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @param save
      * @return
      */
-    default Self historical(WiseConsumer<List<E>> save) {
-        return historical(save, null);
+    default Self historicalItems(WiseConsumer<List<E>> save) {
+        return historicalItems(save, null);
     }
 
     /**
@@ -288,7 +287,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @param save
      * @return
      */
-    default <X extends UserInterface & CollectableHelper<X, E>> Self historical(WiseConsumer<List<E>> save, Edito context) {
+    default <X extends UserInterface & CollectableHelper<X, E>> Self historicalItems(WiseConsumer<List<E>> save, Edito context) {
         if (save != null) {
             if (context == null) context = Edito.Root;
             context.manageList((X) this, save);
