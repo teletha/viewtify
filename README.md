@@ -31,7 +31,9 @@ Additional useful functions and widgets that do not exist in JavaFX.
 * Dark theme
 * Automatic translation
 * Tooltip and Popup
-* Notification (like toast)
+* Notification like Toast
+* Headless UI
+* Browser manipulation
 <p align="right"><a href="#top">back to top</a></p>
 
 

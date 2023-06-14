@@ -39,7 +39,9 @@ public class Project extends bee.api.Project {
                 * Dark theme
                 * Automatic translation
                 * Tooltip and Popup
-                * Notification (like toast)
+                * Notification like Toast
+                * Headless UI
+                * Browser manipulation
                 """);
 
         require(SourceVersion.RELEASE_19, SourceVersion.RELEASE_17);
