@@ -15,6 +15,27 @@ public class Project extends bee.api.Project {
 
     {
         product("com.github.teletha", "viewtify", ref("version.txt"));
+        describe("""
+                Viewtify provides an API for using [JavaFX](https://openjfx.io/) more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML.
+                Declarative and Reactive API
+                * UI tree declaration
+                * UI widget operations (support all built-in JavaFX widgets)
+                * Style declaration (CSS API via [Stylist](https://github.com/teletha/stylist))
+                * Animation
+                * Dialog
+
+                Additional useful functions and widgets that do not exist in JavaFX.
+                * Application launcher
+                * Application updater
+                * Docking UI like Eclipse.
+                * Notification
+                * Undo Redo support
+                * Print preview
+                * Monitarable task
+                * Focus management
+                * Shorcut key management
+                * User preference
+                """);
 
         require(SourceVersion.RELEASE_19, SourceVersion.RELEASE_17);
 

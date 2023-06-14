@@ -8,7 +8,25 @@
 
 
 ## Summary
+Viewtify provides an API for using [JavaFX](https://openjfx.io/) more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML.
+Declarative and Reactive API
+* UI tree declaration
+* UI widget operations (support all built-in JavaFX widgets)
+* Style declaration (CSS API via [Stylist](https://github.com/teletha/stylist))
+* Animation
+* Dialog
 
+Additional useful functions and widgets that do not exist in JavaFX.
+* Application launcher
+* Application updater
+* Docking UI like Eclipse.
+* Notification
+* Undo Redo support
+* Print preview
+* Monitarable task
+* Focus management
+* Shorcut key management
+* User preference
 <p align="right"><a href="#top">back to top</a></p>
 
 
@@ -43,7 +61,7 @@ Add it into in the dependencies element like so:
 <dependency>
     <groupId>com.github.teletha</groupId>
     <artifactId>viewtify</artifactId>
-    <version>2.8.0</version>
+    <version>2.9.0</version>
 </dependency>
 ```
 #### [Gradle](https://gradle.org/)
@@ -56,7 +74,7 @@ repositories {
 Add it into the dependencies section like so:
 ```gradle
 dependencies {
-    implementation 'com.github.teletha:viewtify:2.8.0'
+    implementation 'com.github.teletha:viewtify:2.9.0'
 }
 ```
 #### [SBT](https://www.scala-sbt.org/)
@@ -66,7 +84,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add it into the libraryDependencies section like so:
 ```scala
-libraryDependencies += "com.github.teletha" % "viewtify" % "2.8.0"
+libraryDependencies += "com.github.teletha" % "viewtify" % "2.9.0"
 ```
 #### [Leiningen](https://leiningen.org/)
 Add JitPack repository at the end of repositories in your project.clj:
@@ -75,12 +93,12 @@ Add JitPack repository at the end of repositories in your project.clj:
 ```
 Add it into the dependencies section like so:
 ```clj
-:dependencies [[com.github.teletha/viewtify "2.8.0"]]
+:dependencies [[com.github.teletha/viewtify "2.9.0"]]
 ```
 #### [Bee](https://teletha.github.io/bee)
 Add it into your project definition class like so:
 ```java
-require("com.github.teletha", "viewtify", "2.8.0");
+require("com.github.teletha", "viewtify", "2.9.0");
 ```
 <p align="right"><a href="#top">back to top</a></p>
 
@@ -108,23 +126,23 @@ If you think something might be a bug, but you're not sure, ask on StackOverflow
 
 ## Dependency
 Viewtify depends on the following products on runtime.
-* [altfx-1.1.1](https://mvnrepository.com/artifact/com.github.teletha/altfx/1.1.1)
+* [altfx-1.2.0](https://mvnrepository.com/artifact/com.github.teletha/altfx/1.2.0)
 * [conjure-1.1.0](https://mvnrepository.com/artifact/com.github.teletha/conjure/1.1.0)
 * [controlsfx-11.1.2](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.1.2)
-* [javafx-base-21-ea+17](https://mvnrepository.com/artifact/org.openjfx/javafx-base/21-ea+17)
-* [javafx-base-21-ea+17-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/21-ea+17)
-* [javafx-controls-21-ea+17](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/21-ea+17)
-* [javafx-controls-21-ea+17-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/21-ea+17)
-* [javafx-graphics-21-ea+17](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/21-ea+17)
-* [javafx-graphics-21-ea+17-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/21-ea+17)
-* [javafx-media-21-ea+17](https://mvnrepository.com/artifact/org.openjfx/javafx-media/21-ea+17)
-* [javafx-media-21-ea+17-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/21-ea+17)
-* [javafx-web-21-ea+17](https://mvnrepository.com/artifact/org.openjfx/javafx-web/21-ea+17)
-* [javafx-web-21-ea+17-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/21-ea+17)
+* [javafx-base-21-ea+21](https://mvnrepository.com/artifact/org.openjfx/javafx-base/21-ea+21)
+* [javafx-base-21-ea+21-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/21-ea+21)
+* [javafx-controls-21-ea+21](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/21-ea+21)
+* [javafx-controls-21-ea+21-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/21-ea+21)
+* [javafx-graphics-21-ea+21](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/21-ea+21)
+* [javafx-graphics-21-ea+21-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/21-ea+21)
+* [javafx-media-21-ea+21](https://mvnrepository.com/artifact/org.openjfx/javafx-media/21-ea+21)
+* [javafx-media-21-ea+21-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/21-ea+21)
+* [javafx-web-21-ea+21](https://mvnrepository.com/artifact/org.openjfx/javafx-web/21-ea+21)
+* [javafx-web-21-ea+21-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/21-ea+21)
 * [lycoris-1.0.0](https://mvnrepository.com/artifact/com.github.teletha/lycoris/1.0.0)
 * [openjfx-monocle-jdk-12.0.1+2](https://mvnrepository.com/artifact/org.testfx/openjfx-monocle/jdk-12.0.1+2)
-* [psychopath-1.12.0](https://mvnrepository.com/artifact/com.github.teletha/psychopath/1.12.0)
-* [sinobu-3.3.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/3.3.0)
+* [psychopath-1.12.1](https://mvnrepository.com/artifact/com.github.teletha/psychopath/1.12.1)
+* [sinobu-3.5.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/3.5.0)
 * [stylist-1.7.3](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.7.3)
 <p align="right"><a href="#top">back to top</a></p>
 
