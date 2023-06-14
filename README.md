@@ -26,7 +26,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 * Print preview
 * Monitorable task
 * Undo/Redo management
-* Focus manager
+* Focus management
 * Shortcut management
 * User preference
 * Dark theme

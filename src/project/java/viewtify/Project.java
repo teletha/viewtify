@@ -34,7 +34,7 @@ public class Project extends bee.api.Project {
                 * Print preview
                 * Monitorable task
                 * Undo/Redo management
-                * Focus manager
+                * Focus management
                 * Shortcut management
                 * User preference
                 * Dark theme
