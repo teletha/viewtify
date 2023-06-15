@@ -84,6 +84,7 @@ import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseConsumer;
+import kiss.WiseRunnable;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -99,7 +100,7 @@ import viewtify.update.Update;
 public final class Viewtify {
 
     /** Command Repository */
-    static final Map<Command, Deque<Runnable>> commands = new ConcurrentHashMap();
+    static final Map<Command, Deque<WiseRunnable>> commands = new ConcurrentHashMap();
 
     /** The runtime info. */
     private static final boolean inTest;

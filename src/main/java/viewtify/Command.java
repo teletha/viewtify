@@ -54,7 +54,7 @@ public interface Command<E extends Enum<E>> extends Extensible, WiseRunnable {
      */
     @Override
     default void RUN() throws Throwable {
-        Deque<Runnable> stack = Viewtify.commands.get(this);
+        Deque<WiseRunnable> stack = Viewtify.commands.get(this);
 
         if (stack != null && !stack.isEmpty()) {
             stack.peekLast().run();
@@ -67,12 +67,12 @@ public interface Command<E extends Enum<E>> extends Extensible, WiseRunnable {
      * @param command
      * @return
      */
-    default Disposable contribute(Runnable command) {
+    default Disposable contribute(WiseRunnable command) {
         if (command == null) {
             return Disposable.empty();
         }
 
-        Deque<Runnable> stack = Viewtify.commands.computeIfAbsent(this, k -> new LinkedList());
+        Deque<WiseRunnable> stack = Viewtify.commands.computeIfAbsent(this, k -> new LinkedList());
 
         stack.addLast(command);
         return () -> {
