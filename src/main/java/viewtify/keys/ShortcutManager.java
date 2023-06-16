@@ -7,21 +7,26 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify;
+package viewtify.keys;
 
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.scene.input.KeyEvent;
-
 import kiss.Managed;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.WiseRunnable;
 
 @Managed(Singleton.class)
 public final class ShortcutManager implements Storable<ShortcutManager> {
+
+    /** Command Repository */
+    static final Map<Command, Deque<WiseRunnable>> commands = new ConcurrentHashMap();
 
     private Map<Key, Command> overridden = new HashMap();
 
@@ -75,7 +80,7 @@ public final class ShortcutManager implements Storable<ShortcutManager> {
      * 
      * @param e
      */
-    void activate(KeyEvent e) {
+    public void activate(KeyEvent e) {
         Key key = new Key(e);
 
         Command command = overridden.get(key);

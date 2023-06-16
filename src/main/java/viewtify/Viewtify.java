@@ -25,13 +25,10 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.WeakHashMap;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -43,6 +40,8 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -70,9 +69,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -84,10 +80,10 @@ import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseConsumer;
-import kiss.WiseRunnable;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
+import viewtify.keys.ShortcutManager;
 import viewtify.ui.UIWeb;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
@@ -98,9 +94,6 @@ import viewtify.update.Blueprint;
 import viewtify.update.Update;
 
 public final class Viewtify {
-
-    /** Command Repository */
-    static final Map<Command, Deque<WiseRunnable>> commands = new ConcurrentHashMap();
 
     /** The runtime info. */
     private static final boolean inTest;

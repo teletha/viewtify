@@ -25,7 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import kiss.I;
 import kiss.Signal;
-import viewtify.Key;
+import viewtify.keys.Key;
 
 public final class User<E extends Event> {
 

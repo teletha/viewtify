@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify;
+package viewtify.keys;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;

@@ -11,7 +11,7 @@ package viewtify.ui;
 
 import javafx.scene.control.Button;
 import kiss.I;
-import viewtify.Command;
+import viewtify.keys.Command;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.User;

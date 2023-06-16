@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify;
+package viewtify.keys;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -54,7 +54,7 @@ public interface Command<E extends Enum<E>> extends Extensible, WiseRunnable {
      */
     @Override
     default void RUN() throws Throwable {
-        Deque<WiseRunnable> stack = Viewtify.commands.get(this);
+        Deque<WiseRunnable> stack = ShortcutManager.commands.get(this);
 
         if (stack != null && !stack.isEmpty()) {
             stack.peekLast().run();
@@ -72,14 +72,14 @@ public interface Command<E extends Enum<E>> extends Extensible, WiseRunnable {
             return Disposable.empty();
         }
 
-        Deque<WiseRunnable> stack = Viewtify.commands.computeIfAbsent(this, k -> new LinkedList());
+        Deque<WiseRunnable> stack = ShortcutManager.commands.computeIfAbsent(this, k -> new LinkedList());
 
         stack.addLast(command);
         return () -> {
             stack.remove(command);
 
             if (stack.isEmpty()) {
-                Viewtify.commands.remove(this);
+                ShortcutManager.commands.remove(this);
             }
         };
     }

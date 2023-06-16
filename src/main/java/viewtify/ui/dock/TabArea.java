@@ -23,8 +23,8 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
 
 import kiss.I;
-import viewtify.Key;
 import viewtify.Viewtify;
+import viewtify.keys.Key;
 import viewtify.ui.UITab;
 import viewtify.ui.UITabPane;
 import viewtify.ui.helper.User;

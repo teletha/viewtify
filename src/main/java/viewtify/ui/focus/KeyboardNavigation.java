@@ -32,7 +32,7 @@ import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
 import com.sun.javafx.scene.traversal.TraversalMethod;
 
 import kiss.I;
-import viewtify.Key;
+import viewtify.keys.Key;
 import viewtify.ui.UIButton;
 import viewtify.ui.UICheckBox;
 import viewtify.ui.UIComboBox;

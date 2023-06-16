@@ -14,6 +14,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import viewtify.keys.Command;
+
 class CommandTest {
 
     @Test
