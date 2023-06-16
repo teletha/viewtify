@@ -292,6 +292,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "KeyBindingView",
+			"packageName": "viewtify.keys",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "KeyboardNavigation",
 			"packageName": "viewtify.ui.focus",
 			"type": "Class"
