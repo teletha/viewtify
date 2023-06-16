@@ -24,11 +24,6 @@ import viewtify.ui.helper.SelectionModelWrappers.SingleSelectionModelWrapper;
 
 public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> extends PropertyAccessHelper {
 
-    /**
-     * Return the current model.
-     * 
-     * @return
-     */
     default SelectionModel<E> selectionModelProperty() {
         return property(Type.SelectionModel).getValue();
     }
@@ -47,7 +42,6 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
                 return new SingleSelectionModelWrapper((SingleSelectionModel) model);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return new IndexedCheckModelWrapper(property(Type.CheckModel).getValue());
         }
     }
@@ -58,7 +52,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return
      */
     default boolean isSelected() {
-        return !model().isEmpty();
+        return !selectionModelProperty().isEmpty();
     }
 
     /**
@@ -67,7 +61,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return
      */
     default boolean isNotSelected() {
-        return model().isEmpty();
+        return selectionModelProperty().isEmpty();
     }
 
     /**
@@ -76,7 +70,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return
      */
     default Signal<Boolean> hasSelection() {
-        return Viewtify.observing(model().selectedItemProperty()).map(v -> v != null);
+        return Viewtify.observing(selectionModelProperty().selectedItemProperty()).map(v -> v != null);
     }
 
     /**
@@ -107,7 +101,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return
      */
     default Variable<E> selectedItem() {
-        return Variable.of(model().getSelectedItem());
+        return Variable.of(selectionModelProperty().getSelectedItem());
     }
 
     /**
@@ -136,7 +130,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      */
     default Self select(E item) {
         if (item != null) {
-            model().select(item);
+            selectionModelProperty().select(item);
         }
         return (Self) this;
     }
@@ -149,7 +143,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      */
     default Self selectAt(int index) {
         if (0 <= index) {
-            model().select(index);
+            selectionModelProperty().select(index);
         }
         return (Self) this;
     }
@@ -160,7 +154,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return Chainable API.
      */
     default Self selectNext() {
-        model().selectNext();
+        selectionModelProperty().selectNext();
         return (Self) this;
     }
 
@@ -170,7 +164,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return Chainable API.
      */
     default Self selectPrevious() {
-        model().selectPrevious();
+        selectionModelProperty().selectPrevious();
         return (Self) this;
     }
 
@@ -180,7 +174,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return Chainable API.
      */
     default Self selectFirst() {
-        model().selectFirst();
+        selectionModelProperty().selectFirst();
         return (Self) this;
     }
 
@@ -190,7 +184,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return Chainable API.
      */
     default Self selectLast() {
-        model().selectLast();
+        selectionModelProperty().selectLast();
         return (Self) this;
     }
 
@@ -200,7 +194,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return Chainable API.
      */
     default Self unselect() {
-        model().clearSelection();
+        selectionModelProperty().clearSelection();
         return (Self) this;
     }
 
@@ -228,7 +222,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return Chainable API.
      */
     default Self unselectAt(int index) {
-        model().clearSelection(index);
+        selectionModelProperty().clearSelection(index);
         return (Self) this;
     }
 
@@ -238,7 +232,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      * @return
      */
     default Signal<E> selected() {
-        return Viewtify.observing(model().selectedItemProperty()).skipNull();
+        return Viewtify.observing(selectionModelProperty().selectedItemProperty()).skipNull();
     }
 
     /**
