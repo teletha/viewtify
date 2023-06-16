@@ -5,6 +5,7 @@ const root = {
 		"javafx.scene.control.skin",
 		"viewtify",
 		"viewtify.edit",
+		"viewtify.keys",
 		"viewtify.model",
 		"viewtify.property",
 		"viewtify.style",
@@ -117,7 +118,7 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Command",
-			"packageName": "viewtify",
+			"packageName": "viewtify.keys",
 			"type": "Functional"
 		},
 		{
@@ -285,7 +286,7 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Key",
-			"packageName": "viewtify",
+			"packageName": "viewtify.keys",
 			"type": "Class"
 		},
 		{
@@ -460,7 +461,7 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "ShortcutManager",
-			"packageName": "viewtify",
+			"packageName": "viewtify.keys",
 			"type": "Class"
 		},
 		{
