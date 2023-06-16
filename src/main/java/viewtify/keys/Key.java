@@ -9,6 +9,8 @@
  */
 package viewtify.keys;
 
+import org.controlsfx.tools.Platform;
+
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination.ModifierValue;
@@ -546,9 +548,6 @@ public class Key {
     /** The modifier. */
     private static final int SHIFT = 1 << 3;
 
-    /** The modifier. */
-    private static final int SHORTCUT = 1 << 4;
-
     /** The native key code. */
     public final int code;
 
@@ -585,7 +584,6 @@ public class Key {
         if (e.isControlDown()) modifiers |= CTRL;
         if (e.isMetaDown()) modifiers |= META;
         if (e.isShiftDown()) modifiers |= SHIFT;
-        if (e.isShortcutDown()) modifiers |= SHORTCUT;
 
         this.code = e.getCode().getCode();
         this.name = e.getText();
@@ -629,15 +627,6 @@ public class Key {
     }
 
     /**
-     * With modifier.
-     * 
-     * @return A modified key combination.
-     */
-    public Key shortcut() {
-        return new Key(code, name, modifiers | SHORTCUT);
-    }
-
-    /**
      * Tests if this key matches the combination on the specified KeyEvent.
      * 
      * @param e
@@ -662,15 +651,11 @@ public class Key {
         if ((modifiers & SHIFT) != 0 && !e.isShiftDown()) {
             return false;
         }
-
-        if ((modifiers & SHORTCUT) != 0 && !e.isShortcutDown()) {
-            return false;
-        }
         return true;
     }
 
     public KeyCodeCombination combi() {
-        return new KeyCodeCombination(KeyCode.getKeyCode(name), mod(SHIFT), mod(CTRL), mod(ALT), mod(META), mod(SHORTCUT));
+        return new KeyCodeCombination(KeyCode.getKeyCode(name), mod(SHIFT), mod(CTRL), mod(ALT), mod(META), ModifierValue.ANY);
     }
 
     private ModifierValue mod(int target) {
@@ -699,5 +684,21 @@ public class Key {
 
         Key other = (Key) obj;
         return code == other.code && modifiers == other.modifiers;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        boolean mac = Platform.getCurrent() == Platform.OSX;
+        StringBuilder builder = new StringBuilder();
+        if ((modifiers & CTRL) == CTRL) builder.append(mac ? "Command" : "Ctrl").append("+");
+        if ((modifiers & ALT) == ALT) builder.append(mac ? "Option" : "Alt").append("+");
+        if ((modifiers & SHIFT) == SHIFT) builder.append("Shift+");
+        if ((modifiers & META) == META) builder.append("Meta+");
+        builder.append(name);
+
+        return builder.toString();
     }
 }

@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
+import kiss.Variable;
 import kiss.WiseRunnable;
 
 public interface Command<E extends Enum<E>> extends Extensible, WiseRunnable {
@@ -85,6 +86,15 @@ public interface Command<E extends Enum<E>> extends Extensible, WiseRunnable {
     }
 
     /**
+     * Get the associated key.
+     * 
+     * @return
+     */
+    default Variable<Key> shortcut() {
+        return I.make(ShortcutManager.class).detectKey(this);
+    }
+
+    /**
      * Asign the default shortcut key.
      * 
      * @param key
@@ -95,5 +105,14 @@ public interface Command<E extends Enum<E>> extends Extensible, WiseRunnable {
             I.make(ShortcutManager.class).bindAsDefault(key, this);
         }
         return (E) this;
+    }
+
+    /**
+     * Get the associated key.
+     * 
+     * @return
+     */
+    default String shortcutCode() {
+        return shortcut().map(x -> x.name).or("");
     }
 }

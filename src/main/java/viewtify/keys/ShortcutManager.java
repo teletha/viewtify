@@ -20,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import kiss.Managed;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.Variable;
 import kiss.WiseRunnable;
 
 @Managed(Singleton.class)
@@ -94,5 +95,28 @@ public final class ShortcutManager implements Storable<ShortcutManager> {
             command.run();
             return;
         }
+    }
+
+    /**
+     * Detect the associated shortcut key.
+     * 
+     * @param command
+     * @return
+     */
+    public Variable<Key> detectKey(Command command) {
+        Variable<Key> set = findByCommand(overridden, command);
+        if (set.isAbsent()) {
+            set = findByCommand(defaults, command);
+        }
+        return set;
+    }
+
+    private Variable<Key> findByCommand(Map<Key, Command> map, Command command) {
+        for (Entry<Key, Command> entry : map.entrySet()) {
+            if (entry.getValue() == command) {
+                return Variable.of(entry.getKey());
+            }
+        }
+        return Variable.empty();
     }
 }
