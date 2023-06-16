@@ -16,7 +16,6 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.SingleSelectionModel;
-
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
@@ -26,19 +25,29 @@ import viewtify.ui.helper.SelectionModelWrappers.SingleSelectionModelWrapper;
 public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> extends PropertyAccessHelper {
 
     /**
+     * Return the current model.
+     * 
+     * @return
+     */
+    default SelectionModel<E> selectionModelProperty() {
+        return property(Type.SelectionModel).getValue();
+    }
+
+    /**
      * Retrieve the {@link MultipleSelectionModel}.
      * 
      * @return
      */
     private MultipleSelectionModel<E> model() {
         try {
-            SelectionModel<E> model = property(Type.SelectionModel).getValue();
+            SelectionModel<E> model = selectionModelProperty();
             if (model instanceof MultipleSelectionModel) {
                 return (MultipleSelectionModel<E>) model;
             } else {
                 return new SingleSelectionModelWrapper((SingleSelectionModel) model);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return new IndexedCheckModelWrapper(property(Type.CheckModel).getValue());
         }
     }

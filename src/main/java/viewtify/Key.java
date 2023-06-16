@@ -456,7 +456,7 @@ public class Key {
     /**
      * Constant for the F6 function key.
      */
-    public static final Key F6 = new Key(0x11775, "F6");
+    public static final Key F6 = new Key(117, "F6");
 
     /**
      * Constant for the F7 function key.

@@ -14,16 +14,17 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.IntPredicate;
 
-import javafx.beans.property.Property;
+import javafx.scene.control.SelectionModel;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import kiss.I;
-import viewtify.property.SmartProperty;
+import viewtify.Viewtify;
 import viewtify.ui.anime.SwapAnime;
+import viewtify.ui.helper.SelectableHelper;
 import viewtify.ui.helper.User;
-import viewtify.ui.helper.ValueHelper;
 
-public class UISelectPane extends UserInterface<UISelectPane, HBox> implements ValueHelper<UISelectPane, UserInterfaceProvider> {
+public class UISelectPane extends UserInterface<UISelectPane, HBox> implements SelectableHelper<UISelectPane, UserInterfaceProvider> {
 
     /** The label manager. */
     private final List<UILabel> labels = new ArrayList();
@@ -37,11 +38,28 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> implements V
     /** The right container. */
     public final UIScrollPane right = new UIScrollPane(null);
 
-    /** The selection. */
-    private final SmartProperty<UserInterfaceProvider> selection = new SmartProperty();
-
     /** The selectable confirmation. */
     private IntPredicate selectable;
+
+    /** The selection model. */
+    private final SingleSelectionModel<UserInterfaceProvider> model = new SingleSelectionModel() {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected UserInterfaceProvider getModelItem(int index) {
+            return providers.get(index);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected int getItemCount() {
+            return providers.size();
+        }
+    };
 
     /**
      * 
@@ -53,6 +71,23 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> implements V
         right.ui.getStyleClass().add("select-content");
         ui.getStyleClass().add("select-pane");
         ui.getChildren().addAll(left, right.ui());
+
+        Viewtify.observe(model.selectedIndexProperty()).to(index -> {
+            if (selectable != null && !selectable.test(index)) {
+                return;
+            }
+
+            for (int i = 0; i < labels.size(); i++) {
+                if (i == index) {
+                    labels.get(i).style("selected");
+                } else {
+                    labels.get(i).unstyle("selected");
+                }
+            }
+
+            UserInterfaceProvider ui = providers.get(index);
+            right.content(ui, SwapAnime.FadeOutIn);
+        });
     }
 
     /**
@@ -87,32 +122,6 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> implements V
     }
 
     /**
-     * Select the specified tab.
-     * 
-     * @param index
-     * @return
-     */
-    public UISelectPane selectAt(int index) {
-        if (selectable != null && !selectable.test(index)) {
-            return this;
-        }
-
-        for (int i = 0; i < labels.size(); i++) {
-            if (i == index) {
-                labels.get(i).style("selected");
-            } else {
-                labels.get(i).unstyle("selected");
-            }
-        }
-
-        UserInterfaceProvider ui = providers.get(index);
-        right.content(ui, SwapAnime.FadeOutIn);
-        selection.set(ui);
-
-        return this;
-    }
-
-    /**
      * Configure the selectable tab.
      * 
      * @param selectable
@@ -127,7 +136,7 @@ public class UISelectPane extends UserInterface<UISelectPane, HBox> implements V
      * {@inheritDoc}
      */
     @Override
-    public Property<UserInterfaceProvider> valueProperty() {
-        return selection;
+    public SelectionModel<UserInterfaceProvider> selectionModelProperty() {
+        return model;
     }
 }
