@@ -20,6 +20,7 @@ const root = {
 		"viewtify.ui.toast",
 		"viewtify.ui.view",
 		"viewtify.update",
+		"viewtify.user",
 		"viewtify.util"
 	],
 	"types": [
@@ -875,6 +876,13 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Updater",
 			"packageName": "viewtify.update",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "User",
+			"packageName": "viewtify.user",
 			"type": "Class"
 		},
 		{
