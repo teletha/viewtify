@@ -77,10 +77,10 @@ public class KeyBindingView extends View {
     @Override
     protected void initialize() {
         ShortcutManager manager = I.make(ShortcutManager.class);
-        filter.placeholder("Search command");
+        filter.placeholder(en("Search command"));
 
-        name.text("Command").render(x -> x.ⅰ.name());
-        key.text("Key").modelByVar(x -> manager.detectKey(x)).render(x -> x.ⅱ.toString());
+        name.text(en("Command")).render(x -> x.ⅰ.name());
+        key.text(en("Key Setting")).modelByVar(x -> manager.detectKey(x)).render(x -> x.ⅱ.toString());
 
         table.items(I.find(Command.class)).take(filter.observing().map(text -> {
             if (text == null || text.isEmpty()) {
@@ -90,7 +90,7 @@ public class KeyBindingView extends View {
             }
         })).when(User.DoubleClick).to(() -> {
             Viewtify.dialog()
-                    .title("Change shortcut key")
+                    .title(en("Change shortcut key"))
                     .button("Modify", "Cancel")
                     .disableCloseButton(true)
                     .translateButtons()
@@ -115,7 +115,7 @@ public class KeyBindingView extends View {
             return new ViewDSL() {
                 {
                     $(vbox, () -> {
-                        label(I.translate("Enter a new shortcut key to assign to {0}", command.name()));
+                        label(en("Enter a new shortcut key to assign to {0}", command.name()));
                         $(hbox, FormStyles.FormRow, () -> {
                             $(input, FormStyles.FormInput);
                         });

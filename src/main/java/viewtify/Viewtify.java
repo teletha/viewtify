@@ -9,13 +9,6 @@
  */
 package viewtify;
 
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.WRITE;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toList;
-
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.SplashScreen;
@@ -23,6 +16,7 @@ import java.io.InputStream;
 import java.lang.StackWalker.Option;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -40,6 +34,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -59,10 +54,21 @@ import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -473,6 +479,62 @@ public final class Viewtify {
         }, false);
     }
 
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("User Login");
+
+        // フォームの作成
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+
+        // タイトルの作成
+        Text scenetitle = new Text("Welcome");
+        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        grid.add(scenetitle, 0, 0, 2, 1);
+
+        // ユーザー名ラベルとテキストフィールドの作成
+        Label userName = new Label("User Name:");
+        grid.add(userName, 0, 1);
+
+        TextField userTextField = new TextField();
+        grid.add(userTextField, 1, 1);
+
+        // パスワードラベルとパスワードフィールドの作成
+        Label pw = new Label("Password:");
+        grid.add(pw, 0, 2);
+
+        PasswordField pwBox = new PasswordField();
+        grid.add(pwBox, 1, 2);
+
+        // ログインボタンの作成
+        Button loginBtn = new Button("Sign In");
+        HBox hbBtn = new HBox(10);
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().add(loginBtn);
+        grid.add(hbBtn, 1, 4);
+
+        // ログインボタンのクリックイベントの処理
+        loginBtn.setOnAction(e -> {
+            String username = userTextField.getText();
+            String password = pwBox.getText();
+            // ログインの処理を実行するメソッドを呼び出す
+            login(username, password);
+        });
+
+        Scene scene = new Scene(grid, 300, 275);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private void login(String username, String password) {
+        // ユーザーのログイン処理を実装する
+        // ここでは単純にコンソールにユーザー名とパスワードを表示するだけの例とする
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
+    }
+
     /**
      * Execute a configuration for an application that should be processed only once throughout the
      * entire life cycle of the application. If you run it more than once, nothing happens.
@@ -513,11 +575,11 @@ public final class Viewtify {
             I.signal(stylesheets)
                     .take(uri -> uri.startsWith("file:/"))
                     .map(uri -> Locator.file(uri.substring(6).replace("%20", " ")))
-                    .scan(groupingBy(File::parent, mapping(File::name, toList())))
+                    .scan(Collectors.groupingBy(File::parent, Collectors.mapping(File::name, Collectors.toList())))
                     .last()
                     .flatIterable(m -> m.entrySet())
                     .flatMap(e -> e.getKey().observe(e.getValue()))
-                    .debounce(1, SECONDS)
+                    .debounce(1, TimeUnit.SECONDS)
                     .map(change -> change.context().externalForm())
                     .to(this::reloadStylesheet);
         }
@@ -532,7 +594,7 @@ public final class Viewtify {
         if (activationPolicy != ActivationPolicy.Multiple) {
             // create application specified directory for lock
             Directory root = Locator.directory(prefs + "/lock").touch();
-            FileChannel channel = root.file(".lock").newFileChannel(CREATE, WRITE);
+            FileChannel channel = root.file(".lock").newFileChannel(StandardOpenOption.CREATE, StandardOpenOption.WRITE);
 
             try {
                 while ((lock = channel.tryLock()) == null) {
