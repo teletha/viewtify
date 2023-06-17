@@ -54,6 +54,7 @@ class CSSProcessor implements Consumer<Properties> {
 
         alignment(properties);
         borderRadius(properties);
+        fontSmooth(properties);
         height(properties);
         textIndent(properties);
         userSelect(properties);
@@ -114,6 +115,23 @@ class CSSProcessor implements Consumer<Properties> {
 
         if (value.isPresent()) {
             properties.set("background-radius", value.v);
+        }
+    }
+
+    /**
+     * Configure border-radius.
+     * 
+     * @param properties
+     */
+    private void fontSmooth(Properties properties) {
+        Variable<CSSValue> value = properties.get("font-smooth");
+
+        if (value.isPresent()) {
+            if (value.v.match("antialiased")) {
+                properties.set("font-smoothing-type", "lcd");
+            } else if (value.v.match("grayscale")) {
+                properties.set("font-smoothing-type", "gray");
+            }
         }
     }
 

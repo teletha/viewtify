@@ -9,12 +9,12 @@
  */
 package viewtify.keys;
 
-import org.controlsfx.tools.Platform;
-
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination.ModifierValue;
 import javafx.scene.input.KeyEvent;
+
+import org.controlsfx.tools.Platform;
 
 /**
  * @version 2018/08/02 11:31:46
@@ -693,10 +693,10 @@ public class Key {
     public String toString() {
         boolean mac = Platform.getCurrent() == Platform.OSX;
         StringBuilder builder = new StringBuilder();
-        if ((modifiers & CTRL) == CTRL) builder.append(mac ? "Command" : "Ctrl").append("+");
-        if ((modifiers & ALT) == ALT) builder.append(mac ? "Option" : "Alt").append("+");
-        if ((modifiers & SHIFT) == SHIFT) builder.append("Shift+");
-        if ((modifiers & META) == META) builder.append("Meta+");
+        if ((modifiers & CTRL) == CTRL) builder.append(mac ? "Command" : "Ctrl").append(" + ");
+        if ((modifiers & ALT) == ALT) builder.append(mac ? "Option" : "Alt").append(" + ");
+        if ((modifiers & SHIFT) == SHIFT) builder.append("Shift + ");
+        if ((modifiers & META) == META) builder.append("Meta + ");
         builder.append(name);
 
         return builder.toString();
