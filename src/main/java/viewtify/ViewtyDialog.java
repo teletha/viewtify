@@ -10,6 +10,7 @@
 package viewtify;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -23,8 +24,8 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -43,6 +44,9 @@ public final class ViewtyDialog<T> {
 
     /** The associated stage. */
     private final Stage stage;
+
+    /** The dialog style. */
+    private StageStyle style = StageStyle.DECORATED;
 
     /** The title of this dialog. */
     private Variable<String> title;
@@ -97,6 +101,19 @@ public final class ViewtyDialog<T> {
      */
     public ViewtyDialog<T> title(Variable<String> title) {
         this.title = title;
+        return this;
+    }
+
+    /**
+     * Configure style of this dialog.
+     * 
+     * @param style A dialog style.
+     * @return Chainable API.
+     */
+    public ViewtyDialog<T> style(StageStyle style) {
+        if (style != null) {
+            this.style = style;
+        }
         return this;
     }
 
@@ -252,7 +269,7 @@ public final class ViewtyDialog<T> {
 
         dialogPane.setContent(ui);
 
-        return showAndTell(dialog, null);
+        return showAndTell(dialog, disableButtons ? () -> view.value : () -> null);
     }
 
     /**
@@ -290,7 +307,7 @@ public final class ViewtyDialog<T> {
                     stage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(x)));
                 });
 
-        return showAndTell(dialog, ButtonType.CANCEL);
+        return showAndTell(dialog, () -> ButtonType.CANCEL);
     }
 
     /**
@@ -336,22 +353,15 @@ public final class ViewtyDialog<T> {
      */
     private <D extends Dialog<R>, R> D initialize(D dialog) {
         dialog.initOwner(stage);
+        dialog.initStyle(style);
         DialogPane dialogPane = dialog.getDialogPane();
+        dialog.setGraphic(null);
+        dialog.setContentText(null);
+        dialogPane.getButtonTypes().clear();
+        dialogPane.setPrefHeight(0);
 
         if (title != null) {
             title.observing().to(dialog::setTitle, disposer);
-        }
-
-        if (buttons != null) {
-            dialogPane.getButtonTypes().clear();
-            dialogPane.getButtonTypes().addAll(buttons);
-        }
-
-        if (needTranslate) {
-            for (ButtonType type : dialogPane.getButtonTypes()) {
-                Button button = (Button) dialogPane.lookupButton(type);
-                I.translate(type.getText()).observing().on(Viewtify.UIThread).to(button::setText, disposer);
-            }
         }
 
         ButtonBar buttonBar = (ButtonBar) dialogPane.lookup(".button-bar");
@@ -364,6 +374,23 @@ public final class ViewtyDialog<T> {
         if (disableButtons) {
             for (ButtonType type : dialogPane.getButtonTypes()) {
                 dialogPane.lookupButton(type).setDisable(true);
+            }
+        }
+
+        if (buttons != null) {
+            dialogPane.getButtonTypes().clear();
+            dialogPane.getButtonTypes().addAll(buttons);
+        } else {
+            Node lookup = buttonBar.lookup(".container");
+            // System.out.println(dialogPane.getStyleClass() + " " +
+            // buttonBar.getChildrenUnmodifiable());
+            // System.out.println(lookup.getClass());
+        }
+
+        if (needTranslate) {
+            for (ButtonType type : dialogPane.getButtonTypes()) {
+                Button button = (Button) dialogPane.lookupButton(type);
+                I.translate(type.getText()).observing().on(Viewtify.UIThread).to(button::setText, disposer);
             }
         }
 
@@ -381,6 +408,8 @@ public final class ViewtyDialog<T> {
             dialogPane.setPrefHeight(height);
         }
 
+        Viewtify.manage("dialog", dialogPane.getScene(), true);
+
         return dialog;
     }
 
@@ -392,9 +421,9 @@ public final class ViewtyDialog<T> {
      * @param defaultValue
      * @return
      */
-    private <V> Variable<V> showAndTell(Dialog<V> dialog, V defaultValue) {
+    private <V> Variable<V> showAndTell(Dialog<V> dialog, Supplier<V> defaultValue) {
         try {
-            return Variable.of(dialog.showAndWait().orElse(defaultValue));
+            return Variable.of(dialog.showAndWait().orElseGet(defaultValue));
         } finally {
             disposer.dispose();
         }

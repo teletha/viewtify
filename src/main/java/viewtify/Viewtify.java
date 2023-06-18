@@ -194,6 +194,12 @@ public final class Viewtify {
     @SuppressWarnings("unused")
     private FileLock lock;
 
+    /** The current user. */
+    private String user;
+
+    /** The user detector. */
+    private Supplier<String> userDetector;
+
     /**
      * Hide.
      */
@@ -321,6 +327,17 @@ public final class Viewtify {
     }
 
     /**
+     * Configure application user.
+     * 
+     * @param userDetector
+     * @return
+     */
+    public Viewtify user(Supplier<String> userDetector) {
+        this.userDetector = userDetector;
+        return this;
+    }
+
+    /**
      * Configure application icon.
      * 
      * @return A relative path to icon.
@@ -436,43 +453,61 @@ public final class Viewtify {
         PlatformImpl.startup(() -> {
             toolkitInitialized = true;
 
-            View actual = needUpdate ? new Empty() : application;
-            mainStage = new Stage(stageStyle);
-            mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
-            mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
-            if (needUpdate) mainStage.setOpacity(0);
-
-            Scene scene = new Scene((Parent) actual.ui());
-            manage(actual.getClass().getName(), scene, mainStage, false);
-
-            // root stage management
-            views.add(application);
-            mainStage.showingProperty().addListener((observable, oldValue, newValue) -> {
-                if (oldValue == true && newValue == false) {
-                    views.remove(application);
-
-                    // If the last window has been closed, deactivate this application.
-                    if (views.isEmpty()) deactivate();
-                }
-            });
-
-            if (closer != null) {
-                mainStage.setOnCloseRequest(e -> {
-                    if (!closer.getAsBoolean()) {
-                        e.consume();
-                    }
+            if (userDetector == null || needUpdate) {
+                user = application.getClass().getSimpleName().toLowerCase();
+                activateMain(application, needUpdate);
+            } else {
+                Platform.runLater(() -> {
+                    user = userDetector.get();
+                    activateMain(application, needUpdate);
                 });
             }
-
-            mainStage.setScene(scene);
-            mainStage.show();
-
-            if (!isHeadless()) {
-                // release resources for splash screen
-                SplashScreen screen = SplashScreen.getSplashScreen();
-                if (screen != null) screen.close();
-            }
         }, false);
+    }
+
+    /**
+     * Activate the specified application.
+     * 
+     * @param application
+     * @param needUpdate
+     */
+    private void activateMain(View application, boolean needUpdate) {
+        View actual = needUpdate ? new Empty() : application;
+        mainStage = new Stage(stageStyle);
+        mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
+        mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
+        if (needUpdate) mainStage.setOpacity(0);
+
+        Scene scene = new Scene((Parent) actual.ui());
+        manage(actual.getClass().getName(), scene, mainStage, false);
+
+        // root stage management
+        views.add(application);
+        mainStage.showingProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue == true && newValue == false) {
+                views.remove(application);
+
+                // If the last window has been closed, deactivate this application.
+                if (views.isEmpty()) deactivate();
+            }
+        });
+
+        if (closer != null) {
+            mainStage.setOnCloseRequest(e -> {
+                if (!closer.getAsBoolean()) {
+                    e.consume();
+                }
+            });
+        }
+
+        mainStage.setScene(scene);
+        mainStage.show();
+
+        if (!isHeadless()) {
+            // release resources for splash screen
+            SplashScreen screen = SplashScreen.getSplashScreen();
+            if (screen != null) screen.close();
+        }
     }
 
     public void start(Stage primaryStage) {
