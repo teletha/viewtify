@@ -31,10 +31,13 @@ public class Anime {
     /** The initial timeline. */
     private final Timeline initial = new Timeline();
 
+    /** The current timeline. */
     private Timeline current = initial;
 
+    /** The default duraion. */
     private Duration defaultDuration = BASE_DURATION;
 
+    /** The default interpolation. */
     private Interpolator defaultInterpolator = Interpolator.LINEAR;
 
     /**
