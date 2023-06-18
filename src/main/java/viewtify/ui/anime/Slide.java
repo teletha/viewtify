@@ -35,7 +35,7 @@ public interface Slide {
                 @Override
                 public void before() {
                     duration(Duration.seconds(0.8));
-                    interpolation(EASE_IN_OUT_BACK);
+                    interpolation(Interpolate.EASE_IN_OUT_BACK);
 
                     effect(extractor.apply(before), location);
                 }

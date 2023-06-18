@@ -92,7 +92,7 @@ public interface HideAnime extends Animatable {
             @Override
             public void before() {
                 duration(BASE_DURATION.multiply(2));
-                interpolation(EASE_IN_OUT_BACK.enhance(v -> v * 2));
+                interpolation(Interpolate.EASE_IN_OUT_BACK.enhance(v -> v * 2));
 
                 effect(before.opacityProperty(), 0);
                 effect(before.scaleXProperty(), 1 - scale);
@@ -121,7 +121,7 @@ public interface HideAnime extends Animatable {
             @Override
             public void before() {
                 duration(BASE_DURATION.multiply(2));
-                interpolation(EASE_IN_OUT_BACK.enhance(v -> v * 2));
+                interpolation(Interpolate.EASE_IN_OUT_BACK.enhance(v -> v * 2));
 
                 effect(before.opacityProperty(), 0);
                 effect(before.scaleXProperty(), 1 + scale);

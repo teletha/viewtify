@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import kiss.WiseRunnable;
 import viewtify.ui.UserInterfaceProvider;
 
@@ -50,6 +51,8 @@ public interface Animatable {
     default void play(Node node, WiseRunnable action) {
         Parent parent = node.getParent();
         if (parent instanceof Pane pane) {
+            run(pane, node, action);
+        } else if (node instanceof Pane pane) {
             run(pane, node, action);
         }
     }
@@ -99,7 +102,7 @@ public interface Animatable {
         Objects.requireNonNull(duration);
         Objects.requireNonNull(property);
         Objects.requireNonNull(endEffect);
-    
+
         Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(property, endValue)));
         if (0 < endEffect.length) {
             timeline.setOnFinished(e -> {
