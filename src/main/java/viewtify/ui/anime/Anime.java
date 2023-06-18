@@ -65,16 +65,34 @@ public class Anime {
         this.initializer = init;
     }
 
+    /**
+     * Set default interpolation.
+     * 
+     * @param interpolator
+     * @return Chainable API.
+     */
     public final Anime interpolator(Interpolator interpolator) {
         this.defaultInterpolator = interpolator;
         return this;
     }
 
+    /**
+     * Set default duration.
+     * 
+     * @param duration
+     * @return Chainable API.
+     */
     public final Anime duration(double duration) {
         this.defaultDuration = Duration.seconds(duration);
         return this;
     }
 
+    /**
+     * Set default duration.
+     * 
+     * @param duration
+     * @return Chainable API.
+     */
     public final Anime duration(Duration duration) {
         this.defaultDuration = duration;
         return this;
