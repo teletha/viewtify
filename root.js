@@ -68,13 +68,6 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "AnimeDefinition",
-			"packageName": "viewtify.ui.anime",
-			"type": "AbstractClass"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Blueprint",
 			"packageName": "viewtify.update",
 			"type": "AbstractClass"
