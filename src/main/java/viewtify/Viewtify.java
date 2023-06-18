@@ -29,10 +29,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -1329,22 +1327,6 @@ public final class Viewtify {
             // wrapped error in here.
             throw new Error();
         }
-    }
-
-    /**
-     * Combine conditional state.
-     * 
-     * @param values
-     * @return
-     */
-    private static <V> Signal<Boolean> test(BinaryOperator<Boolean> condition, Function<V, Signal<Boolean>> state, V base, V... values) {
-        Signal<Boolean> signal = state.apply(base);
-        Signal<Boolean>[] additionals = new Signal[values.length];
-
-        for (int i = 0; i < additionals.length; i++) {
-            additionals[i] = state.apply(values[i]);
-        }
-        return signal.combineLatest(additionals, condition);
     }
 
     /**
