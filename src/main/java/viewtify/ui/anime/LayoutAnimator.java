@@ -73,7 +73,7 @@ public class LayoutAnimator implements ChangeListener<Number>, ListChangeListene
         case "layoutX":
             t = nodeXTransitions.get(node);
             if (t == null) {
-                t = new TranslateTransition(AnimeDefinition.BASE_DURATION, node);
+                t = new TranslateTransition(Anime.BASE_DURATION, node);
                 t.setToX(0);
                 nodeXTransitions.put(node, t);
             }
@@ -84,7 +84,7 @@ public class LayoutAnimator implements ChangeListener<Number>, ListChangeListene
         default: // "layoutY"
             t = nodeYTransitions.get(node);
             if (t == null) {
-                t = new TranslateTransition(AnimeDefinition.BASE_DURATION, node);
+                t = new TranslateTransition(Anime.BASE_DURATION, node);
                 t.setToY(0);
                 nodeYTransitions.put(node, t);
             }

@@ -10,128 +10,63 @@
 package viewtify.ui.anime;
 
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+
+import kiss.WiseRunnable;
 
 public interface HideAnime extends Animatable {
 
-    /** Built-in swap animation. */
-    HideAnime FadeOut = (parent, before, action) -> {
-        new AnimeDefinition(action) {
+    /** Built-in animation. */
+    HideAnime FadeOut = (parent, before, action) -> Anime.define().effect(before.opacityProperty(), 0, 0.3).run();
 
-            @Override
-            public void before() {
-                effect(before.opacityProperty(), 0, 0.3);
-            }
-        };
-    };
+    /** Built-in animation. */
+    HideAnime ZoomIn = (parent, before, action) -> zoom(parent, before, action, -0.15);
 
-    /** Built-in swap animation. */
-    HideAnime ZoomIn = (parent, before, action) -> {
-        double scale = 0.15;
+    /** Built-in animation. */
+    HideAnime ZoomOut = (parent, before, action) -> zoom(parent, before, action, 0.15);
+
+    /**
+     * Run pop animation.
+     * 
+     * @param parent
+     * @param before
+     * @param action
+     * @param diff
+     */
+    private static void zoom(Pane parent, Node before, WiseRunnable action, double diff) {
         Node clip = parent.getClip();
+        Anime.define(() -> parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight())))
+                .duration(Anime.BASE_DURATION.multiply(2))
+                .interpolator(Interpolate.EASE_IN_CUBIC)
+                .effect(before.opacityProperty(), 0)
+                .effect(before.scaleXProperty(), 1 + diff)
+                .effect(before.scaleYProperty(), 1 + diff)
+                .run(() -> parent.setClip(clip), action);
+    }
 
-        new AnimeDefinition(action) {
+    /** Built-in animation. */
+    HideAnime PopIn = (parent, before, action) -> pop(parent, before, action, -0.2);
 
-            @Override
-            public void initialize() {
-                parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight()));
-            }
+    /** Built-in animation. */
+    HideAnime PopOut = (parent, before, action) -> pop(parent, before, action, 0.2);
 
-            @Override
-            public void before() {
-                effect(before.opacityProperty(), 0);
-                effect(before.scaleXProperty(), 1 - scale);
-                effect(before.scaleYProperty(), 1 - scale);
-            }
-
-            @Override
-            public void cleanup() {
-                parent.setClip(clip);
-            }
-        };
-    };
-
-    /** Built-in swap animation. */
-    HideAnime ZoomOut = (parent, before, action) -> {
-        double scale = 0.15;
+    /**
+     * Run pop animation.
+     * 
+     * @param parent
+     * @param before
+     * @param action
+     * @param diff
+     */
+    private static void pop(Pane parent, Node before, WiseRunnable action, double diff) {
         Node clip = parent.getClip();
-
-        new AnimeDefinition(action) {
-
-            @Override
-            public void initialize() {
-                parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight()));
-            }
-
-            @Override
-            public void before() {
-                effect(before.opacityProperty(), 0);
-                effect(before.scaleXProperty(), 1 + scale);
-                effect(before.scaleYProperty(), 1 + scale);
-            }
-
-            @Override
-            public void cleanup() {
-                parent.setClip(clip);
-            }
-        };
-    };
-
-    /** Built-in swap animation. */
-    HideAnime PopIn = (parent, before, action) -> {
-        double scale = 0.2;
-        Node clip = parent.getClip();
-
-        new AnimeDefinition(action) {
-
-            @Override
-            public void initialize() {
-                parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight()));
-            }
-
-            @Override
-            public void before() {
-                duration(BASE_DURATION.multiply(2));
-                interpolation(Interpolate.EASE_IN_OUT_BACK.enhance(v -> v * 2));
-
-                effect(before.opacityProperty(), 0);
-                effect(before.scaleXProperty(), 1 - scale);
-                effect(before.scaleYProperty(), 1 - scale);
-            }
-
-            @Override
-            public void cleanup() {
-                parent.setClip(clip);
-            }
-        };
-    };
-
-    /** Built-in swap animation. */
-    HideAnime PopOut = (parent, before, action) -> {
-        double scale = 0.2;
-        Node clip = parent.getClip();
-
-        new AnimeDefinition(action) {
-
-            @Override
-            public void initialize() {
-                parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight()));
-            }
-
-            @Override
-            public void before() {
-                duration(BASE_DURATION.multiply(2));
-                interpolation(Interpolate.EASE_IN_OUT_BACK.enhance(v -> v * 2));
-
-                effect(before.opacityProperty(), 0);
-                effect(before.scaleXProperty(), 1 + scale);
-                effect(before.scaleYProperty(), 1 + scale);
-            }
-
-            @Override
-            public void cleanup() {
-                parent.setClip(clip);
-            }
-        };
-    };
+        Anime.define(() -> parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight())))
+                .duration(Anime.BASE_DURATION.multiply(2))
+                .interpolator(Interpolate.EASE_IN_OUT_BACK.enhance(v -> v * 2))
+                .effect(before.opacityProperty(), 0)
+                .effect(before.scaleXProperty(), 1 + diff)
+                .effect(before.scaleYProperty(), 1 + diff)
+                .run(() -> parent.setClip(clip), action);
+    }
 }

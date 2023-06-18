@@ -10,95 +10,40 @@
 package viewtify.ui.anime;
 
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+
+import kiss.WiseRunnable;
 
 public interface ShowAnime extends Animatable {
 
-    /** Built-in swap animation. */
-    ShowAnime FadeIn = (parent, before, action) -> {
-        double opacity = before.getOpacity();
-
-        new AnimeDefinition(action) {
-
-            @Override
-            public void initialize() {
-                before.setOpacity(0);
-            };
-
-            @Override
-            public void before() {
-                effect(before.opacityProperty(), opacity, 0.3);
-            }
-        };
-    };
-
-    /** Built-in swap animation. */
+    /** Built-in animation. */
     static ShowAnime FadeIn(double opacity) {
         return (parent, before, action) -> {
-            new AnimeDefinition(action) {
-
-                @Override
-                public void initialize() {
-                    before.setOpacity(0);
-                };
-
-                @Override
-                public void before() {
-                    effect(before.opacityProperty(), opacity, 0.3);
-                }
-            };
+            Anime.define(() -> before.setOpacity(0)).effect(before.opacityProperty(), opacity, 0.3);
         };
     }
 
-    /** Built-in swap animation. */
-    ShowAnime ZoomIn = (parent, before, action) -> {
-        double scale = 0.15;
+    /** Built-in animation. */
+    ShowAnime ZoomIn = (parent, before, action) -> zoom(parent, before, action, -0.15);
+
+    /** Built-in animation. */
+    ShowAnime ZoomOut = (parent, before, action) -> zoom(parent, before, action, 0.15);
+
+    /**
+     * Run zoom animation.
+     * 
+     * @param parent
+     * @param before
+     * @param action
+     * @param diff
+     */
+    private static void zoom(Pane parent, Node before, WiseRunnable action, double diff) {
         Node clip = parent.getClip();
-
-        new AnimeDefinition(action) {
-
-            @Override
-            public void initialize() {
-                parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight()));
-            }
-
-            @Override
-            public void before() {
-                effect(before.opacityProperty(), 0);
-                effect(before.scaleXProperty(), 1 - scale);
-                effect(before.scaleYProperty(), 1 - scale);
-            }
-
-            @Override
-            public void cleanup() {
-                parent.setClip(clip);
-            }
-        };
-    };
-
-    /** Built-in swap animation. */
-    ShowAnime ZoomOut = (parent, before, action) -> {
-        double scale = 0.15;
-        Node clip = parent.getClip();
-
-        new AnimeDefinition(action) {
-
-            @Override
-            public void initialize() {
-                parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight()));
-            }
-
-            @Override
-            public void before() {
-                effect(before.opacityProperty(), 0);
-                effect(before.scaleXProperty(), 1 + scale);
-                effect(before.scaleYProperty(), 1 + scale);
-            }
-
-            @Override
-            public void cleanup() {
-                parent.setClip(clip);
-            }
-        };
-    };
+        Anime.define(() -> parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight())))
+                .effect(before.opacityProperty(), 1)
+                .effect(before.scaleXProperty(), 1 + diff)
+                .effect(before.scaleYProperty(), 1 + diff)
+                .run(() -> parent.setClip(clip), action);
+    }
 }

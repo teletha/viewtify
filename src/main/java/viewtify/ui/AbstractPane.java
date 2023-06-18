@@ -21,6 +21,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+
 import kiss.WiseFunction;
 import viewtify.ui.anime.HideAnime;
 import viewtify.ui.anime.LayoutAnimator;
@@ -141,7 +142,7 @@ public abstract class AbstractPane<E, P extends Pane, Self extends AbstractPane>
 
                 ui.getChildren().add(this.models.get().indexOf(added), node);
 
-                ShowAnime.FadeIn.run(ui, node, null);
+                ShowAnime.FadeIn(1).run(ui, node);
             }
         }
     }

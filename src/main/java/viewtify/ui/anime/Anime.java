@@ -22,17 +22,53 @@ import kiss.WiseRunnable;
 
 public class Anime {
 
+    /** The standard effect time. */
+    public static final Duration BASE_DURATION = Duration.seconds(0.2);
+
+    /** The initialization. */
+    private final WiseRunnable initializer;
+
     /** The initial timeline. */
     private final Timeline initial = new Timeline();
 
     private Timeline current = initial;
 
-    private Duration defaultDuration = Duration.millis(200);
+    private Duration defaultDuration = BASE_DURATION;
 
     private Interpolator defaultInterpolator = Interpolator.LINEAR;
 
+    /**
+     * Create new {@link Anime}.
+     * 
+     * @return
+     */
+    public static Anime define() {
+        return define(null);
+    }
+
+    /**
+     * Create new {@link Anime}.
+     * 
+     * @return
+     */
+    public static Anime define(WiseRunnable init) {
+        return new Anime(init);
+    }
+
+    /**
+     * Hide constructor.
+     */
+    private Anime(WiseRunnable init) {
+        this.initializer = init;
+    }
+
     public final Anime interpolator(Interpolator interpolator) {
         this.defaultInterpolator = interpolator;
+        return this;
+    }
+
+    public final Anime duration(double duration) {
+        this.defaultDuration = Duration.seconds(duration);
         return this;
     }
 
@@ -85,6 +121,7 @@ public class Anime {
 
         current.getKeyFrames().add(new KeyFrame(duration, new KeyValue(value, num, interpolator)));
 
+        System.out.println("Effect " + current);
         return this;
     }
 
@@ -107,12 +144,28 @@ public class Anime {
         Timeline after = current = new Timeline();
         before.setOnFinished(e -> {
             if (finisher != null) finisher.run();
+            System.out.println("After " + after.getKeyFrames());
             after.play();
         });
         return this;
     }
 
-    public final void run() {
-
+    /**
+     * Play animation.
+     */
+    public final void run(WiseRunnable... finisher) {
+        if (finisher != null && finisher.length != 0) {
+            current.setOnFinished(e -> {
+                for (WiseRunnable runner : finisher) {
+                    if (runner != null) {
+                        runner.run();
+                    }
+                }
+            });
+        }
+        if (initializer != null) {
+            initializer.run();
+        }
+        initial.play();
     }
 }

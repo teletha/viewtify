@@ -71,10 +71,20 @@ public interface Animatable {
      * Run animation.
      * 
      * @param parent
-     * @param befor
+     * @param before
+     */
+    default void run(Pane parent, Node before) {
+        run(parent, before, null);
+    }
+
+    /**
+     * Run animation.
+     * 
+     * @param parent
+     * @param before
      * @param action
      */
-    void run(Pane parent, Node befor, WiseRunnable action);
+    void run(Pane parent, Node before, WiseRunnable action);
 
     /**
      * Animate the specified property.

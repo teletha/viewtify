@@ -20,98 +20,47 @@ public interface SwapAnime {
 
     /** Built-in swap animation. */
     SwapAnime FadeOutIn = (parent, before, after, action) -> {
-        new AnimeDefinition(action) {
-
-            @Override
-            public void initialize() {
-                after.setOpacity(0);
-            }
-
-            @Override
-            public void before() {
-                effect(before.opacityProperty(), 0, 0.15);
-            }
-
-            @Override
-            public void after() {
-                effect(after.opacityProperty(), 1, 0.15);
-            }
-        };
+        Anime.define(() -> after.setOpacity(0))
+                .effect(before.opacityProperty(), 0, 0.15)
+                .then(action)
+                .effect(after.opacityProperty(), 1, 0.15)
+                .run();
     };
 
-    /** Built-in swap animation. */
-    SwapAnime ZoomIn = (parent, before, after, action) -> {
-        double scale = 0.15;
-        int index = parent.getChildren().indexOf(before);
+    /** Built-in animation. */
+    SwapAnime ZoomIn = (parent, before, after, action) -> zoom(parent, before, after, action, -0.15);
+
+    /** Built-in animation. */
+    SwapAnime ZoomOut = (parent, before, after, action) -> zoom(parent, before, after, action, 0.15);
+
+    /**
+     * Run zoom animation.
+     * 
+     * @param parent
+     * @param before
+     * @param action
+     * @param diff
+     */
+    private static void zoom(Pane parent, Node before, Node after, WiseRunnable action, double diff) {
         Node clip = parent.getClip();
-
-        new AnimeDefinition(action) {
-
-            @Override
-            public void initialize() {
-                parent.getChildren().add(index, new StackPane(after, before));
-                parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight()));
-
-                after.setOpacity(0);
-                after.setScaleX(1 + scale);
-                after.setScaleY(1 + scale);
-            }
-
-            @Override
-            public void before() {
-                effect(before.opacityProperty(), 0);
-                effect(before.scaleXProperty(), 1 - scale);
-                effect(before.scaleYProperty(), 1 - scale);
-
-                effect(after.opacityProperty(), 1);
-                effect(after.scaleXProperty(), 1);
-                effect(after.scaleYProperty(), 1);
-            }
-
-            @Override
-            public void cleanup() {
-                parent.getChildren().set(index, after);
-                parent.setClip(clip);
-            }
-        };
-    };
-
-    /** Built-in swap animation. */
-    SwapAnime ZoomOut = (parent, before, after, action) -> {
-        double scale = 0.15;
         int index = parent.getChildren().indexOf(before);
-        Node clip = parent.getClip();
 
-        new AnimeDefinition(action) {
+        parent.getChildren().add(index, new StackPane(after, before));
+        parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight()));
+        after.setOpacity(0);
+        after.setScaleX(1 - diff);
+        after.setScaleY(1 - diff);
 
-            @Override
-            public void initialize() {
-                parent.getChildren().add(index, new StackPane(after, before));
-                parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight()));
-
-                after.setOpacity(0);
-                after.setScaleX(1 - scale);
-                after.setScaleY(1 - scale);
-            }
-
-            @Override
-            public void before() {
-                effect(before.opacityProperty(), 0);
-                effect(before.scaleXProperty(), 1 + scale);
-                effect(before.scaleYProperty(), 1 + scale);
-
-                effect(after.opacityProperty(), 1);
-                effect(after.scaleXProperty(), 1);
-                effect(after.scaleYProperty(), 1);
-            }
-
-            @Override
-            public void cleanup() {
-                parent.getChildren().set(index, after);
-                parent.setClip(clip);
-            }
-        };
-    };
+        Anime.define()
+                .effect(before.opacityProperty(), 0)
+                .effect(before.scaleXProperty(), 1 + diff)
+                .effect(before.scaleYProperty(), 1 + diff)
+                .then()
+                .effect(after.opacityProperty(), 1)
+                .effect(after.scaleXProperty(), 1 + diff)
+                .effect(after.scaleYProperty(), 1 + diff)
+                .run(() -> parent.setClip(clip), action);
+    }
 
     void run(Pane parent, Node before, Node after, WiseRunnable action);
 }

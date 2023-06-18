@@ -13,7 +13,6 @@ import java.util.function.Function;
 
 import javafx.beans.property.Property;
 import javafx.scene.Node;
-import javafx.util.Duration;
 
 public interface Slide {
 
@@ -30,16 +29,7 @@ public interface Slide {
     /** Built-in animation. */
     private static ShowAnime slide(int location, Function<Node, Property> extractor) {
         return (parent, before, action) -> {
-            new AnimeDefinition(action) {
-
-                @Override
-                public void before() {
-                    duration(Duration.seconds(0.8));
-                    interpolation(Interpolate.EASE_IN_OUT_BACK);
-
-                    effect(extractor.apply(before), location);
-                }
-            };
+            Anime.define().duration(0.8).interpolator(Interpolate.EASE_IN_OUT_BACK).effect(extractor.apply(before), location);
         };
     }
 }
