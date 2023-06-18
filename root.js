@@ -61,16 +61,16 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "AnimeDefinition",
+			"name": "Anime",
 			"packageName": "viewtify.ui.anime",
-			"type": "AbstractClass"
+			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "AnimeDefinition.BuiltinInterpolator",
+			"name": "AnimeDefinition",
 			"packageName": "viewtify.ui.anime",
-			"type": "Class"
+			"type": "AbstractClass"
 		},
 		{
 			"modifiers": {
@@ -274,6 +274,13 @@ const root = {
 			"name": "Icon",
 			"packageName": "viewtify.util",
 			"type": "Enum"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Interpolate",
+			"packageName": "viewtify.ui.anime",
+			"type": "Class"
 		},
 		{
 			"modifiers": {
