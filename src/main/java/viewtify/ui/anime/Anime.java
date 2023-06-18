@@ -123,8 +123,6 @@ public class Anime {
         interpolator = Objects.requireNonNullElse(interpolator, defaultInterpolator);
 
         current.getKeyFrames().add(new KeyFrame(duration, new KeyValue(value, num, interpolator)));
-
-        System.out.println("Effect " + current);
         return this;
     }
 
@@ -147,7 +145,6 @@ public class Anime {
         Timeline after = current = new Timeline();
         before.setOnFinished(e -> {
             if (finisher != null) finisher.run();
-            System.out.println("After " + after.getKeyFrames());
             after.play();
         });
         return this;
