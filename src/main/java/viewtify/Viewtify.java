@@ -34,8 +34,6 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -54,25 +52,17 @@ import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -472,6 +462,8 @@ public final class Viewtify {
      * @param needUpdate
      */
     private void activateMain(View application, boolean needUpdate) {
+        initilaizeUser();
+
         View actual = needUpdate ? new Empty() : application;
         mainStage = new Stage(stageStyle);
         mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
@@ -510,62 +502,6 @@ public final class Viewtify {
         }
     }
 
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("User Login");
-
-        // フォームの作成
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
-
-        // タイトルの作成
-        Text scenetitle = new Text("Welcome");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        grid.add(scenetitle, 0, 0, 2, 1);
-
-        // ユーザー名ラベルとテキストフィールドの作成
-        Label userName = new Label("User Name:");
-        grid.add(userName, 0, 1);
-
-        TextField userTextField = new TextField();
-        grid.add(userTextField, 1, 1);
-
-        // パスワードラベルとパスワードフィールドの作成
-        Label pw = new Label("Password:");
-        grid.add(pw, 0, 2);
-
-        PasswordField pwBox = new PasswordField();
-        grid.add(pwBox, 1, 2);
-
-        // ログインボタンの作成
-        Button loginBtn = new Button("Sign In");
-        HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(loginBtn);
-        grid.add(hbBtn, 1, 4);
-
-        // ログインボタンのクリックイベントの処理
-        loginBtn.setOnAction(e -> {
-            String username = userTextField.getText();
-            String password = pwBox.getText();
-            // ログインの処理を実行するメソッドを呼び出す
-            login(username, password);
-        });
-
-        Scene scene = new Scene(grid, 300, 275);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    private void login(String username, String password) {
-        // ユーザーのログイン処理を実装する
-        // ここでは単純にコンソールにユーザー名とパスワードを表示するだけの例とする
-        System.out.println("Username: " + username);
-        System.out.println("Password: " + password);
-    }
-
     /**
      * Execute a configuration for an application that should be processed only once throughout the
      * entire life cycle of the application. If you run it more than once, nothing happens.
@@ -577,13 +513,10 @@ public final class Viewtify {
             // setting for headless mode
             checkHeadlessMode();
 
-            String prefs = ".preferences for " + applicationClass.getSimpleName().toLowerCase();
+            String prefs = ".preferences";
 
             // Compute application title
             if (title == null) title(applicationClass.getSimpleName());
-
-            // Separate settings for each application
-            I.env("PreferenceDirectory", prefs);
 
             // Specify JavaFX cache directory
             System.setProperty("javafx.cachedir", prefs + "/native");
@@ -614,6 +547,11 @@ public final class Viewtify {
                     .map(change -> change.context().externalForm())
                     .to(this::reloadStylesheet);
         }
+    }
+
+    private void initilaizeUser() {
+        // Separate settings for each application
+        I.env("PreferenceDirectory", ".preferences/users/" + user);
     }
 
     /**
