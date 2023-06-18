@@ -36,6 +36,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -73,9 +75,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -96,7 +95,6 @@ import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
-import viewtify.ui.helper.ValueHelper;
 import viewtify.update.Blueprint;
 import viewtify.update.Update;
 
@@ -1331,46 +1329,6 @@ public final class Viewtify {
             // wrapped error in here.
             throw new Error();
         }
-    }
-
-    /**
-     * Combine conditional state.
-     * 
-     * @param values
-     * @return
-     */
-    public static Signal<Boolean> isNull(ValueHelper base, ValueHelper... values) {
-        return is(ValueHelper::isNull, base, values);
-    }
-
-    /**
-     * Combine conditional state.
-     * 
-     * @param values
-     * @return
-     */
-    public static Signal<Boolean> isNullAny(ValueHelper base, ValueHelper... values) {
-        return any(ValueHelper::isNull, base, values);
-    }
-
-    /**
-     * Combine conditional state.
-     * 
-     * @param values
-     * @return
-     */
-    public static <V> Signal<Boolean> is(Function<V, Signal<Boolean>> state, V base, V... values) {
-        return test((a, b) -> a && b, state, base, values);
-    }
-
-    /**
-     * Combine conditional state.
-     * 
-     * @param values
-     * @return
-     */
-    public static <V> Signal<Boolean> any(Function<V, Signal<Boolean>> state, V base, V... values) {
-        return test((a, b) -> a || b, state, base, values);
     }
 
     /**

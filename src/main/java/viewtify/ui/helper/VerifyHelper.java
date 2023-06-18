@@ -10,6 +10,8 @@
 package viewtify.ui.helper;
 
 import java.util.Objects;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import kiss.I;
@@ -170,5 +172,41 @@ public interface VerifyHelper<Self extends VerifyHelper<Self>> {
         I.signal(timings).skipNull().map(ValueHelper::isChanged).to(verifier()::verifyWhen);
 
         return (Self) this;
+    }
+
+    /**
+     * Combine conditional state.
+     * 
+     * @param values
+     * @return
+     */
+    static Signal<Boolean> validAll(VerifyHelper<?> base, VerifyHelper<?>... values) {
+        return test((a, b) -> a && b, VerifyHelper::isValid, base, values);
+    }
+
+    /**
+     * Combine conditional state.
+     * 
+     * @param values
+     * @return
+     */
+    static Signal<Boolean> invalidAny(VerifyHelper<?> base, VerifyHelper<?>... values) {
+        return test((a, b) -> a || b, VerifyHelper::isInvalid, base, values);
+    }
+
+    /**
+     * Combine conditional state.
+     * 
+     * @param values
+     * @return
+     */
+    private static <V> Signal<Boolean> test(BinaryOperator<Boolean> condition, Function<V, Signal<Boolean>> state, V base, V... values) {
+        Signal<Boolean> signal = state.apply(base);
+        Signal<Boolean>[] additionals = new Signal[values.length];
+
+        for (int i = 0; i < additionals.length; i++) {
+            additionals[i] = state.apply(values[i]);
+        }
+        return signal.combineLatest(additionals, condition);
     }
 }
