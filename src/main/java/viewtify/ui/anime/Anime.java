@@ -149,20 +149,17 @@ public class Anime {
      * 
      * @return
      */
-    public final Anime then() {
-        return then(null);
-    }
-
-    /**
-     * Define the next action.
-     * 
-     * @return
-     */
-    public final Anime then(WiseRunnable finisher) {
+    public final Anime then(WiseRunnable... finisher) {
         Timeline before = current;
         Timeline after = current = new Timeline();
         before.setOnFinished(e -> {
-            if (finisher != null) finisher.run();
+            if (finisher != null && finisher.length != 0) {
+                for (WiseRunnable runner : finisher) {
+                    if (runner != null) {
+                        runner.run();
+                    }
+                }
+            }
             after.play();
         });
         return this;
