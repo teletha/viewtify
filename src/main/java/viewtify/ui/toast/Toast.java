@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.util.Duration;
+
 import kiss.Disposable;
 import kiss.I;
 import stylist.Style;
@@ -178,7 +179,7 @@ public class Toast {
          * Hide constructor.
          */
         private Setting() {
-            restore().auto();
+            sync();
         }
     }
 

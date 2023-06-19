@@ -187,6 +187,12 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
             return this;
         }
 
+        /**
+         * Synchronize value to the target sink.
+         * 
+         * @param target
+         * @return
+         */
         public Preference<V> syncTo(Consumer<V> target) {
             if (target != null) {
                 observe().to(target);
@@ -194,6 +200,12 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
             return this;
         }
 
+        /**
+         * Synchronize value to the target sink.
+         * 
+         * @param target
+         * @return
+         */
         public <R> Preference<V> syncTo(WiseFunction<V, R> converter, Consumer<R> target) {
             if (target != null) {
                 observe().map(converter).to(target);

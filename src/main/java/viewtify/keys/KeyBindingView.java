@@ -52,7 +52,7 @@ public class KeyBindingView extends View {
 
     interface style extends StyleDSL {
         Style root = () -> {
-            display.maxWidth(380, px).maxHeight(250, px);
+            display.maxWidth(380, px).minHeight(250, px).maxHeight(250, px);
             margin.top(5, px);
         };
 
