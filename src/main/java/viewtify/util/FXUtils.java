@@ -19,6 +19,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
 import kiss.Decoder;
 import kiss.Encoder;
 import kiss.Variable;
@@ -239,7 +240,7 @@ public class FXUtils {
          */
         @Override
         public Duration decode(String value) {
-            return Duration.valueOf(value);
+            return Duration.millis(Double.parseDouble(value));
         }
 
         /**
@@ -247,7 +248,7 @@ public class FXUtils {
          */
         @Override
         public String encode(Duration value) {
-            return value.toString();
+            return String.valueOf(value.toMillis());
         }
     }
 

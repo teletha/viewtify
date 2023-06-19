@@ -25,6 +25,8 @@ import javafx.util.Duration;
 
 import kiss.Disposable;
 import kiss.I;
+import kiss.Managed;
+import kiss.Singleton;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
@@ -149,9 +151,7 @@ public class Toast {
         });
     }
 
-    /**
-     * 
-     */
+    @Managed(value = Singleton.class, name = "toast")
     public static class Setting extends PreferenceModel<Setting> {
 
         /** The maximum size of notifications. */
