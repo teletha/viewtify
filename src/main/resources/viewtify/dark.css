@@ -38,7 +38,9 @@
     -fx-selection-bar-non-focused: rgb(50, 50, 50);
 }
 
-/* Fix derived prompt color for text fields */
+/* ==========================================================================
+  Text Input
+===========================================================================*/
 .text-input {
     -fx-prompt-text-fill: derive(-fx-control-inner-background, +50%);
 }
@@ -51,6 +53,7 @@
 .text-field {
   -fx-text-box-border: -fx-color;
 }
+
 
 /* ==========================================================================
   ToggleButton
