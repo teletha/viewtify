@@ -483,7 +483,7 @@ public final class Viewtify {
             I.env("PreferenceDirectory", prefs);
 
             // Configure the directory of user's preference
-            if (UserPreference.isAbsent()) UserPreference.set(Locator.directory(prefs + "/user"));
+            if (UserPreference.isAbsent()) UserPreference.set(Locator.directory(prefs));
 
             // Compute application title
             if (title == null) title(applicationClass.getSimpleName());
