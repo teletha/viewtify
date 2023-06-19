@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="l">
+		<header class="Q">
+			<h1 class="S" date="2023-06-14" ver="2.9.0"><code>Viewtify</code></h1>
+			<nav class="V"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="g" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="Y">
+			<nav class="m">
+				<div></div>
+			</nav>
+			<article class="d" id="Article">
+				<section class="j"><code class="N">viewtify.util</code>
+					<h2 class="Class Z"><code class="K">Toast</code></h2>
+					<div class="k">
+						<ul class="C E">
+							<li><code><a href="api/viewtify.model.PreferenceModel.html">PreferenceModel</a><code class="parameters"><code><a href="api/viewtify.util.Toast.html">Toast</a></code></code></code></li>
+						</ul>
+						<ul class="C F">
+							<li><code>kiss.Storable<code class="parameters"><code><a href="api/viewtify.util.Toast.html">Toast</a></code></code></code></li>
+						</ul>
+					</div>
+				</section>
+				<section class="j" id="setting">
+					<h2 class="a"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="K">setting</code><i class="e"><code class="return"><a href="api/viewtify.util.Toast.html">Toast</a></code></i></h2>
+				</section>
+				<section class="j" id="max">
+					<h2 class="a"><i class="FINAL"><i class="PUBLIC"></i></i><code class="K">max</code><i class="e"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2><span class="B"><p>The maximum size of notifications.</p>
+					</span></section>
+				<section class="j" id="animation">
+					<h2 class="a"><i class="FINAL"><i class="PUBLIC"></i></i><code class="K">animation</code><i class="e"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code>javafx.util.Duration</code></code></code></i></h2><span class="B"><p>The animation time.</p>
+					</span></section>
+				<section class="j" id="autoHide">
+					<h2 class="a"><i class="FINAL"><i class="PUBLIC"></i></i><code class="K">autoHide</code><i class="e"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code>javafx.util.Duration</code></code></code></i></h2><span class="B"><p>The automatic hiding time.</p>
+					</span></section>
+				<section class="j" id="area">
+					<h2 class="a"><i class="FINAL"><i class="PUBLIC"></i></i><code class="K">area</code><i class="e"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code><a href="api/viewtify.util.Corner.html">Corner</a></code></code></code></i></h2><span class="B"><p>The notification area.</p>
+					</span></section>
+				<section class="j" id="screen">
+					<h2 class="a"><i class="FINAL"><i class="PUBLIC"></i></i><code class="K">screen</code><i class="e"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code><a href="api/viewtify.util.ScreenSelector.html">ScreenSelector</a></code></code></code></i></h2><span class="B"><p>The notification screen.</p>
+					</span></section>
+				<section class="j" id="opacity">
+					<h2 class="a"><i class="FINAL"><i class="PUBLIC"></i></i><code class="K">opacity</code><i class="e"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></i></h2><span class="B"><p>The opacity of notification area.</p>
+					</span></section>
+				<section class="j" id="width">
+					<h2 class="a"><i class="FINAL"><i class="PUBLIC"></i></i><code class="K">width</code><i class="e"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2><span class="B"><p>The width of notification area.</p>
+					</span></section>
+				<section class="j" id="show(java.lang.String)">
+					<h2 class="a"><i class="PUBLIC STATIC"></i><code class="K">show</code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="e"><code>void</code></i></h2>
+					<table class="U">
+						<tr class="P">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Show the specified node.</p>
+					</span></section>
+				<section class="j" id="show(javafx.scene.Node)">
+					<h2 class="a"><i class="PUBLIC STATIC"></i><code class="K">show</code><code class="h">(<code><a href="api/javafx.scene.Node.html">Node</a></code> <code class="parameterName">node</code>)</code><i class="e"><code>void</code></i></h2>
+					<table class="U">
+						<tr class="P">
+							<td><code><a href="api/javafx.scene.Node.html">Node</a></code> <code>node</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Show the specified node.</p>
+					</span></section>
+				<section class="j" id="show(java.util.function.Supplier)">
+					<h2 class="a"><i class="PUBLIC STATIC"></i><code class="K">show</code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code> <code class="parameterName">node</code>)</code><i class="e"><code>void</code></i></h2>
+					<table class="U">
+						<tr class="P">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code> <code>node</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Show the specified node.</p>
+					</span></section>
+			</article>
+			<aside class="W" id="SubNavi">
+				<div class="O">
+					<h5 class="T">Static Fields</h5>
+					<ul>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.util.Toast.html#setting">setting</a></code><i class="c"><code class="return"><a href="api/viewtify.util.Toast.html">Toast</a></code></i></li>
+					</ul>
+					<h5 class="T">Fields</h5>
+					<ul>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.util.Toast.html#max">max</a></code><i class="c"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.util.Toast.html#animation">animation</a></code><i class="c"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code>javafx.util.Duration</code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.util.Toast.html#autoHide">autoHide</a></code><i class="c"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code>javafx.util.Duration</code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.util.Toast.html#area">area</a></code><i class="c"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code><a href="api/viewtify.util.Corner.html">Corner</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.util.Toast.html#screen">screen</a></code><i class="c"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code><a href="api/viewtify.util.ScreenSelector.html">ScreenSelector</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.util.Toast.html#opacity">opacity</a></code><i class="c"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.util.Toast.html#width">width</a></code><i class="c"><code class="return"><a href="api/viewtify.model.PreferenceModel.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
+					</ul>
+					<h5 class="T">Static Methods</h5>
+					<ul>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.util.Toast.html#show(java.lang.String)">show</a></code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="c"><code>void</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.util.Toast.html#show(javafx.scene.Node)">show</a></code><code class="h">(<code><a href="api/javafx.scene.Node.html">Node</a></code> <code class="parameterName">node</code>)</code><i class="c"><code>void</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.util.Toast.html#show(java.util.function.Supplier)">show</a></code><code class="h">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code> <code class="parameterName">node</code>)</code><i class="c"><code>void</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>

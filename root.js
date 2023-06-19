@@ -17,7 +17,6 @@ const root = {
 		"viewtify.ui.focus",
 		"viewtify.ui.helper",
 		"viewtify.ui.query",
-		"viewtify.ui.toast",
 		"viewtify.ui.view",
 		"viewtify.update",
 		"viewtify.util"
@@ -545,14 +544,7 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Toast",
-			"packageName": "viewtify.ui.toast",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Toast.Setting",
-			"packageName": "viewtify.ui.toast",
+			"packageName": "viewtify.util",
 			"type": "Class"
 		},
 		{
