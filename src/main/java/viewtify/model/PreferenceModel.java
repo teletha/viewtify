@@ -152,7 +152,7 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
      * @return
      */
     protected String getModelName() {
-        return getClass().getName();
+        return Model.of(this).type.getName();
     }
 
     /**
