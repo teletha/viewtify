@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import kiss.I;
@@ -20,6 +21,7 @@ import kiss.Managed;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
+import kiss.WiseFunction;
 import kiss.model.Model;
 import kiss.model.Property;
 import viewtify.Viewtify;
@@ -181,6 +183,20 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
         public Preference<V> require(Function<V, V> requirement) {
             if (requirement != null) {
                 requirements.add(requirement);
+            }
+            return this;
+        }
+
+        public Preference<V> syncTo(Consumer<V> target) {
+            if (target != null) {
+                observe().to(target);
+            }
+            return this;
+        }
+
+        public <R> Preference<V> syncTo(WiseFunction<V, R> converter, Consumer<R> target) {
+            if (target != null) {
+                observe().map(converter).to(target);
             }
             return this;
         }
