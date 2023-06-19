@@ -26,6 +26,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -355,10 +356,6 @@ public final class ViewtyDialog<T> {
         dialog.initOwner(stage);
         dialog.initStyle(style);
         DialogPane dialogPane = dialog.getDialogPane();
-        dialog.setGraphic(null);
-        dialog.setContentText(null);
-        dialogPane.getButtonTypes().clear();
-        dialogPane.setPrefHeight(0);
 
         if (title != null) {
             title.observing().to(dialog::setTitle, disposer);
