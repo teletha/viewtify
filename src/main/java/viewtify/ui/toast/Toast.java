@@ -27,7 +27,7 @@ import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
-import viewtify.model.Model;
+import viewtify.model.PreferenceModel;
 import viewtify.ui.anime.Animatable;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
@@ -151,7 +151,7 @@ public class Toast {
     /**
      * 
      */
-    public static class Setting extends Model<Setting> {
+    public static class Setting extends PreferenceModel<Setting> {
 
         /** The maximum size of notifications. */
         public final Preference<Integer> max = initialize(7).requireMin(1);

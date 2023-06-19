@@ -29,7 +29,7 @@ public interface Slide {
     /** Built-in animation. */
     private static ShowAnime slide(int location, Function<Node, Property> extractor) {
         return (parent, before, action) -> {
-            Anime.define().duration(0.8).interpolator(Interpolate.EASE_IN_OUT_BACK).effect(extractor.apply(before), location);
+            Anime.define().duration(0.8).interpolator(Interpolate.EASE_IN_OUT_BACK).effect(extractor.apply(before), location).run(action);
         };
     }
 }

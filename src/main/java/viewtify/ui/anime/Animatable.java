@@ -19,7 +19,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import kiss.WiseRunnable;
 import viewtify.ui.UserInterfaceProvider;
 

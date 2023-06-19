@@ -34,6 +34,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -60,9 +62,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -116,6 +115,9 @@ public final class Viewtify {
 
     /** Executor for Worker Thread. */
     public static final Consumer<Runnable> WorkerThread = Viewtify::inWorker;
+
+    /** The directory of user's preference. */
+    public static final Variable<Directory> UserPreference = Variable.empty();
 
     static {
         JUL.replace();
@@ -183,12 +185,6 @@ public final class Viewtify {
     /** We must continue to hold the lock object to avoid releasing by GC. */
     @SuppressWarnings("unused")
     private FileLock lock;
-
-    /** The current user. */
-    private String user;
-
-    /** The user detector. */
-    private Supplier<String> userDetector;
 
     /**
      * Hide.
@@ -317,17 +313,6 @@ public final class Viewtify {
     }
 
     /**
-     * Configure application user.
-     * 
-     * @param userDetector
-     * @return
-     */
-    public Viewtify user(Supplier<String> userDetector) {
-        this.userDetector = userDetector;
-        return this;
-    }
-
-    /**
      * Configure application icon.
      * 
      * @return A relative path to icon.
@@ -443,63 +428,43 @@ public final class Viewtify {
         PlatformImpl.startup(() -> {
             toolkitInitialized = true;
 
-            if (userDetector == null || needUpdate) {
-                user = application.getClass().getSimpleName().toLowerCase();
-                activateMain(application, needUpdate);
-            } else {
-                Platform.runLater(() -> {
-                    user = userDetector.get();
-                    activateMain(application, needUpdate);
-                });
-            }
-        }, false);
-    }
+            View actual = needUpdate ? new Empty() : application;
+            mainStage = new Stage(stageStyle);
+            mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
+            mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
+            if (needUpdate) mainStage.setOpacity(0);
 
-    /**
-     * Activate the specified application.
-     * 
-     * @param application
-     * @param needUpdate
-     */
-    private void activateMain(View application, boolean needUpdate) {
-        initilaizeUser();
+            Scene scene = new Scene((Parent) actual.ui());
+            manage(actual.getClass().getName(), scene, mainStage, false);
 
-        View actual = needUpdate ? new Empty() : application;
-        mainStage = new Stage(stageStyle);
-        mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
-        mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
-        if (needUpdate) mainStage.setOpacity(0);
+            // root stage management
+            views.add(application);
+            mainStage.showingProperty().addListener((observable, oldValue, newValue) -> {
+                if (oldValue == true && newValue == false) {
+                    views.remove(application);
 
-        Scene scene = new Scene((Parent) actual.ui());
-        manage(actual.getClass().getName(), scene, mainStage, false);
-
-        // root stage management
-        views.add(application);
-        mainStage.showingProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue == true && newValue == false) {
-                views.remove(application);
-
-                // If the last window has been closed, deactivate this application.
-                if (views.isEmpty()) deactivate();
-            }
-        });
-
-        if (closer != null) {
-            mainStage.setOnCloseRequest(e -> {
-                if (!closer.getAsBoolean()) {
-                    e.consume();
+                    // If the last window has been closed, deactivate this application.
+                    if (views.isEmpty()) deactivate();
                 }
             });
-        }
 
-        mainStage.setScene(scene);
-        mainStage.show();
+            if (closer != null) {
+                mainStage.setOnCloseRequest(e -> {
+                    if (!closer.getAsBoolean()) {
+                        e.consume();
+                    }
+                });
+            }
 
-        if (!isHeadless()) {
-            // release resources for splash screen
-            SplashScreen screen = SplashScreen.getSplashScreen();
-            if (screen != null) screen.close();
-        }
+            mainStage.setScene(scene);
+            mainStage.show();
+
+            if (!isHeadless()) {
+                // release resources for splash screen
+                SplashScreen screen = SplashScreen.getSplashScreen();
+                if (screen != null) screen.close();
+            }
+        }, false);
     }
 
     /**
@@ -513,7 +478,12 @@ public final class Viewtify {
             // setting for headless mode
             checkHeadlessMode();
 
-            String prefs = ".preferences";
+            // Configure the directory of application's preference
+            String prefs = ".preferences for " + applicationClass.getSimpleName().toLowerCase();
+            I.env("PreferenceDirectory", prefs);
+
+            // Configure the directory of user's preference
+            if (UserPreference.isAbsent()) UserPreference.set(Locator.directory(prefs + "/user"));
 
             // Compute application title
             if (title == null) title(applicationClass.getSimpleName());
@@ -547,11 +517,6 @@ public final class Viewtify {
                     .map(change -> change.context().externalForm())
                     .to(this::reloadStylesheet);
         }
-    }
-
-    private void initilaizeUser() {
-        // Separate settings for each application
-        I.env("PreferenceDirectory", ".preferences/users/" + user);
     }
 
     /**

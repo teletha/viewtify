@@ -12,7 +12,6 @@ package viewtify.ui.anime;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-
 import kiss.WiseRunnable;
 
 public interface ShowAnime extends Animatable {
@@ -20,7 +19,7 @@ public interface ShowAnime extends Animatable {
     /** Built-in animation. */
     static ShowAnime FadeIn(double opacity) {
         return (parent, before, action) -> {
-            Anime.define(() -> before.setOpacity(0)).effect(before.opacityProperty(), opacity, 0.3);
+            Anime.define(() -> before.setOpacity(0)).effect(before.opacityProperty(), opacity, 0.3).run(action);
         };
     }
 

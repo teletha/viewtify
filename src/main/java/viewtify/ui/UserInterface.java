@@ -291,5 +291,13 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     @SuppressWarnings("serial")
     @Managed(value = Singleton.class)
     private static class Preference extends ConcurrentSkipListMap<String, String> implements Storable<Preference> {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String locate() {
+            return Viewtify.UserPreference.v.file(Preference.class.getName() + ".json").path();
+        }
     }
 }

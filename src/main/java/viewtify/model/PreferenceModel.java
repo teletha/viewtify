@@ -9,18 +9,23 @@
  */
 package viewtify.model;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
+import kiss.I;
 import kiss.Managed;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
+import kiss.model.Model;
+import kiss.model.Property;
+import viewtify.Viewtify;
 
 @Managed(Singleton.class)
-public abstract class Model<Self extends Model> implements Storable<Self> {
+public abstract class PreferenceModel<Self extends PreferenceModel> implements Storable<Self> {
 
     /**
      * Create {@link Preference} with the default value.
@@ -87,9 +92,65 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
     }
 
     /**
+     * Synchronize data from/to source.
+     */
+    protected final void sync() {
+        Viewtify.UserPreference.observing().to(x -> {
+            // Not all property values are preserved in the restore source, so they must always be
+            // reset before restoring. If not reset, some properties may continue to apply the
+            // previous user's values to the new user.
+            reset();
+            restore();
+        });
+        auto();
+    }
+
+    /**
+     * Reset all values to default.
+     */
+    public final void reset() {
+        I.signal(Model.of(this).properties()).flatVariable(this::findBy).to(Preference::reset);
+    }
+
+    /**
+     * Find the actual value by property.
+     * 
+     * @param <V>
+     * @param property
+     * @return
+     */
+    private <V> Variable<Preference<V>> findBy(Property property) {
+        Class clazz = getClass();
+
+        while (clazz != null) {
+            try {
+                Field field = clazz.getDeclaredField(property.name);
+                if (Preference.class.isAssignableFrom(field.getType())) {
+                    return Variable.of((Preference<V>) field.get(this));
+                }
+            } catch (Exception e) {
+                // ignore
+            }
+            clazz = clazz.getSuperclass();
+        }
+        return Variable.empty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String locate() {
+        return Viewtify.UserPreference.exact().file(Model.of(this).type.getName() + ".json").path();
+    }
+
+    /**
      * Preference value.
      */
     public class Preference<V> extends Variable<V> {
+
+        /** The default value. */
+        private final V defaultValue;
 
         /** Requirements. */
         protected final List<Function<V, V>> requirements = new ArrayList();
@@ -108,6 +169,7 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
             });
 
             require(v -> Objects.requireNonNullElse(v, defaultValue));
+            this.defaultValue = defaultValue;
         }
 
         /**
@@ -131,7 +193,16 @@ public abstract class Model<Self extends Model> implements Storable<Self> {
          */
         public Self with(V value) {
             set(value);
-            return (Self) Model.this;
+            return (Self) PreferenceModel.this;
+        }
+
+        /**
+         * Reset to the default value.
+         * 
+         * @return
+         */
+        public Self reset() {
+            return with(defaultValue);
         }
     }
 

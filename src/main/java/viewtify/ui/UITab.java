@@ -18,7 +18,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.StackPane;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.WiseFunction;
@@ -90,7 +89,7 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
      * @return
      */
     public final UITab contents(View contents) {
-        return contents(tab -> contents);
+        return contentsLazy(tab -> contents);
     }
 
     /**
@@ -99,7 +98,17 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
      * @param contents
      * @return
      */
-    public final UITab contents(Function<UITab, View> contents) {
+    public final UITab contentsLazy(Class<? extends View> contents) {
+        return contentsLazy(tab -> I.make(contents));
+    }
+
+    /**
+     * Set contents.
+     * 
+     * @param contents
+     * @return
+     */
+    public final UITab contentsLazy(Function<UITab, View> contents) {
         viewBuilder = contents;
 
         if (isSelected()) {

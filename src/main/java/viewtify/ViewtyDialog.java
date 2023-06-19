@@ -26,7 +26,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -405,8 +404,6 @@ public final class ViewtyDialog<T> {
             dialogPane.setMinHeight(height);
             dialogPane.setPrefHeight(height);
         }
-
-        Viewtify.manage("dialog", dialogPane.getScene(), true);
 
         return dialog;
     }
