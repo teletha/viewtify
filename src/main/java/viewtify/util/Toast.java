@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify.ui.toast;
+package viewtify.util;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -22,11 +22,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.util.Duration;
-
 import kiss.Disposable;
 import kiss.I;
-import kiss.Managed;
-import kiss.Singleton;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
@@ -35,10 +32,8 @@ import viewtify.ui.anime.Animatable;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
-import viewtify.util.Corner;
-import viewtify.util.ScreenSelector;
 
-public class Toast {
+public class Toast extends PreferenceModel<Toast> {
 
     /** The margin for each notifications. */
     private static final int MARGIN = 12;
@@ -46,8 +41,35 @@ public class Toast {
     /** The base transparent window. */
     private static final LinkedList<Notification> notifications = new LinkedList();
 
-    /** The setting. */
-    public static final Setting setting = I.make(Setting.class);
+    public static final Toast setting = I.make(Toast.class);
+
+    /** The maximum size of notifications. */
+    public final Preference<Integer> max = initialize(7).requireMin(1);
+
+    /** The animation time. */
+    public final Preference<Duration> animation = initialize(Duration.millis(333)).requireMin(Duration.ONE);
+
+    /** The automatic hiding time. */
+    public final Preference<Duration> autoHide = initialize(Duration.seconds(60)).requireMin(Duration.ZERO);
+
+    /** The notification area. */
+    public final Preference<Corner> area = initialize(Corner.TopRight);
+
+    /** The notification screen. */
+    public final Preference<ScreenSelector> screen = initialize(ScreenSelector.Application);
+
+    /** The opacity of notification area. */
+    public final Preference<Double> opacity = initialize(0.85).requireBetween(0, 1);
+
+    /** The width of notification area. */
+    public final Preference<Integer> width = initialize(250).requireMin(50);
+
+    /**
+     * Hide constructor.
+     */
+    private Toast() {
+        sync();
+    }
 
     /**
      * Show the specified node.
@@ -149,38 +171,6 @@ public class Toast {
                 if (isTopSide) y += popup.getHeight() + MARGIN;
             }
         });
-    }
-
-    @Managed(value = Singleton.class, name = "toast")
-    public static class Setting extends PreferenceModel<Setting> {
-
-        /** The maximum size of notifications. */
-        public final Preference<Integer> max = initialize(7).requireMin(1);
-
-        /** The animation time. */
-        public final Preference<Duration> animation = initialize(Duration.millis(333)).requireMin(Duration.ONE);
-
-        /** The automatic hiding time. */
-        public final Preference<Duration> autoHide = initialize(Duration.seconds(60)).requireMin(Duration.ZERO);
-
-        /** The notification area. */
-        public final Preference<Corner> area = initialize(Corner.TopRight);
-
-        /** The notification screen. */
-        public final Preference<ScreenSelector> screen = initialize(ScreenSelector.Application);
-
-        /** The opacity of notification area. */
-        public final Preference<Double> opacity = initialize(0.85).requireBetween(0, 1);
-
-        /** The width of notification area. */
-        public final Preference<Integer> width = initialize(250).requireMin(50);
-
-        /**
-         * Hide constructor.
-         */
-        private Setting() {
-            sync();
-        }
     }
 
     /**

@@ -22,6 +22,7 @@ import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 import viewtify.util.Corner;
 import viewtify.util.ScreenSelector;
+import viewtify.util.Toast;
 
 public class ToastSample {
 

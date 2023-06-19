@@ -143,11 +143,16 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
      */
     @Override
     public final String locate() {
-        Class<?> clazz = getClass();
-        Managed managed = clazz.getAnnotation(Managed.class);
-        String name = managed == null || managed.name().isEmpty() ? clazz.getSimpleName() : managed.name();
+        return Viewtify.UserPreference.exact().file(getModelName() + ".json").path();
+    }
 
-        return Viewtify.UserPreference.exact().file(name.toLowerCase() + ".json").path();
+    /**
+     * Get the identical model name.
+     * 
+     * @return
+     */
+    protected String getModelName() {
+        return getClass().getSimpleName();
     }
 
     /**
