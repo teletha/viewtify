@@ -327,48 +327,6 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Model",
-			"packageName": "viewtify.model",
-			"type": "AbstractClass"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Model",
-			"packageName": "viewtify.model",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Model",
-			"packageName": "viewtify.model",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Model.DoublePreference",
-			"packageName": "viewtify.model",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Model.IntPreference",
-			"packageName": "viewtify.model",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Model.LongPreference",
-			"packageName": "viewtify.model",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "ModelPropertySheet",
 			"packageName": "viewtify.ui.view",
 			"type": "AbstractClass"
@@ -400,6 +358,48 @@ const root = {
 			"name": "PlaceholderHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "PreferenceModel",
+			"packageName": "viewtify.model",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "PreferenceModel",
+			"packageName": "viewtify.model",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "PreferenceModel",
+			"packageName": "viewtify.model",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "PreferenceModel.DoublePreference",
+			"packageName": "viewtify.model",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "PreferenceModel.IntPreference",
+			"packageName": "viewtify.model",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "PreferenceModel.LongPreference",
+			"packageName": "viewtify.model",
+			"type": "Class"
 		},
 		{
 			"modifiers": {
