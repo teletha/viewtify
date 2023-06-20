@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.10.0](https://github.com/teletha/viewtify/compare/v2.9.0...v2.10.0) (2023-06-20)
+
+
+### Features
+
+* Add KeyBindingView to edit shortcut. ([70f4313](https://github.com/teletha/viewtify/commit/70f4313b0a46be505288b37249a5d59073d02334))
+* PreferenceModel can reset to the default value. ([9e6b3be](https://github.com/teletha/viewtify/commit/9e6b3be156a6341052dbd8f7a894cc73d154e8a1))
+* Support design scheme. ([e28446a](https://github.com/teletha/viewtify/commit/e28446acf7da83599a1f289aadf645cac9711d98))
+* Support font smooth property. ([bd3f04e](https://github.com/teletha/viewtify/commit/bd3f04e79528b5585a55392912670ff255025ac3))
+* UISelectPane implements not ValueHelper but SelectableHelper. ([b05b291](https://github.com/teletha/viewtify/commit/b05b2918dfc2a400ccd968b593e44584e57ed6ad))
+* UserInterface#keybind supports modifier. ([2235133](https://github.com/teletha/viewtify/commit/22351334ae5ea1123065dc267229f037ac82e425))
+
+
+### Bug Fixes
+
+* disable anti-alias ([183de7e](https://github.com/teletha/viewtify/commit/183de7e67bfaa7383b1a582a7c4f7f07ad2e1153))
+* Duration codec is broken. ([869f13c](https://github.com/teletha/viewtify/commit/869f13c59c0ec844c9ad0dd81f5641866286d81d))
+* keep backward compatibility ([e9ec5c4](https://github.com/teletha/viewtify/commit/e9ec5c4d2c08721eda883e3f974631d5cf9e6c2b))
+* Preference#syncTo can propagate value lazy. ([4fdd73b](https://github.com/teletha/viewtify/commit/4fdd73b3fcfec3ec5c42e416fea324f8a7ad0bf1))
+* refactoring toast ([a46ea3c](https://github.com/teletha/viewtify/commit/a46ea3cac40332d66fe4a5e3f47922efa4bcbe1c))
+* remove pom ([7649f9b](https://github.com/teletha/viewtify/commit/7649f9b1b6c43f38fcd29c8add7caa9b88dde762))
+* Shortcut related classes move to keys package. ([60628bf](https://github.com/teletha/viewtify/commit/60628bf5debd50a215f1be1d5c04690ca4ef9d2d))
+* UIText should handle null string as empty string. ([3f1add0](https://github.com/teletha/viewtify/commit/3f1add0db5a0a0cd83d3ff13a21b7dca9af2a718))
+
 ## [2.9.0](https://github.com/teletha/viewtify/compare/v2.8.0...v2.9.0) (2023-06-14)
 
 
