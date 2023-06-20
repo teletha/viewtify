@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -203,10 +204,7 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
          * @return
          */
         public Preference<V> syncTo(Consumer<V> target) {
-            if (target != null) {
-                observe().to(target);
-            }
-            return this;
+            return syncTo(x -> x, target);
         }
 
         /**
@@ -217,7 +215,7 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
          */
         public <R> Preference<V> syncTo(WiseFunction<V, R> converter, Consumer<R> target) {
             if (target != null) {
-                observe().map(converter).to(target);
+                observe().debounce(250, TimeUnit.MILLISECONDS).map(converter).diff().to(target);
             }
             return this;
         }
@@ -239,7 +237,10 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
          * @return
          */
         public Self reset() {
-            return with(defaultValue);
+            if (defaultValue != get()) {
+                set(defaultValue);
+            }
+            return (Self) PreferenceModel.this;
         }
     }
 
