@@ -61,6 +61,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import kiss.Decoder;
 import kiss.Disposable;
@@ -76,6 +77,7 @@ import kiss.WiseConsumer;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
+import stylist.design.DesignScheme;
 import viewtify.keys.ShortcutManager;
 import viewtify.ui.UIWeb;
 import viewtify.ui.View;
@@ -169,6 +171,9 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private Theme theme = Theme.Light;
+
+    /** The configurable setting. */
+    private Class<? extends DesignScheme> scheme;
 
     /** The configurable setting. */
     private BooleanSupplier closer;
@@ -311,6 +316,19 @@ public final class Viewtify {
     public Viewtify use(Theme theme) {
         if (theme != null) {
             this.theme = theme;
+        }
+        return this;
+    }
+
+    /**
+     * Configure application {@link Theme}.
+     * 
+     * @param scheme
+     * @return
+     */
+    public Viewtify design(Class<? extends DesignScheme> scheme) {
+        if (scheme != null) {
+            this.scheme = scheme;
         }
         return this;
     }
@@ -506,7 +524,7 @@ public final class Viewtify {
             // collect stylesheets for application
             stylesheets.add(Theme.locate("viewtify/ui.css"));
             stylesheets.add(viewtify.theme.location);
-            stylesheets.add(Locator.file(CSSProcessor.pretty().formatTo(prefs + "/application.css")).externalForm());
+            stylesheets.add(Locator.file(CSSProcessor.pretty().scheme(scheme).formatTo(prefs + "/application.css")).externalForm());
 
             // observe stylesheet's modification
             I.signal(stylesheets)
@@ -754,7 +772,31 @@ public final class Viewtify {
      * @param theme
      */
     public static void manage(Theme theme) {
-        System.out.println(theme);
+        if (theme == Theme.Light) {
+            String remove = Theme.Dark.location;
+            stylesheets.remove(remove);
+
+            inUI(() -> {
+                for (Window window : Window.getWindows()) {
+                    window.getScene().getStylesheets().remove(remove);
+                    ObservableList<String> classes = window.getScene().getRoot().getStyleClass();
+                    classes.remove("dark");
+                    classes.add("light");
+                }
+            });
+        } else {
+            String add = Theme.Dark.location;
+            stylesheets.add(add);
+
+            inUI(() -> {
+                for (Window window : Window.getWindows()) {
+                    window.getScene().getStylesheets().add(add);
+                    ObservableList<String> classes = window.getScene().getRoot().getStyleClass();
+                    classes.remove("light");
+                    classes.add("dark");
+                }
+            });
+        }
     }
 
     /**
