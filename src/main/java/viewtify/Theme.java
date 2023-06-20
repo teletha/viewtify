@@ -11,7 +11,7 @@ package viewtify;
 
 public enum Theme {
 
-    Light(""), Dark("viewtify/dark.css");
+    Light, Dark;
 
     /** The location. */
     public final String location;
@@ -19,21 +19,17 @@ public enum Theme {
     /**
      * @param path
      */
-    private Theme(String path) {
-        this.location = locate(path);
+    private Theme() {
+        this.location = locate(name().toLowerCase());
     }
 
     /**
      * Locate css file resource.
      * 
-     * @param path
+     * @param name
      * @return
      */
-    static String locate(String path) {
-        try {
-            return ClassLoader.getSystemResource(path).toExternalForm();
-        } catch (Exception e) {
-            return "";
-        }
+    static String locate(String name) {
+            return ClassLoader.getSystemResource("viewtify/" + name + ".css").toExternalForm();
     }
 }
