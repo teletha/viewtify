@@ -593,8 +593,9 @@ public final class Viewtify {
      * @param changed A target shtylesheet's location.
      */
     private void reloadStylesheet(String changed) {
-        for (View view : views) {
-            ObservableList<String> stylesheets = view.ui().getScene().getStylesheets();
+        for (Window window : Window.getWindows()) {
+            System.out.println(window + "   " + changed);
+            ObservableList<String> stylesheets = window.getScene().getStylesheets();
             int[] index = {-1};
 
             // Note that reapplying the style will only take effect if you delete the stylesheet

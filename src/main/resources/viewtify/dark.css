@@ -56,6 +56,30 @@
 
 
 /* ==========================================================================
+  Dialog
+===========================================================================*/
+.ok-button {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, rgb(30, 30, 30);
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+    -fx-text-fill: rgb(220, 220, 220);
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
+}
+.ok-button:hover {
+    -fx-color: -fx-hover-base;
+}
+.ok-button:armed {
+    -fx-color: -fx-pressed-base;
+}
+.ok-button:focused {
+    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
+    -fx-background-insets: -0.2, 1, 2, -1.4, 2.6;
+    -fx-background-radius: 3, 2, 1, 4, 1;
+}
+
+/* ==========================================================================
   ToggleButton
 ===========================================================================*/
 .toggle-button {
