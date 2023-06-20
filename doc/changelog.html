@@ -7,10 +7,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="l">
+	<body class="m">
 		<header class="k">
-			<h1 class="a" date="2023-06-14" ver="2.9.0"><code>Viewtify</code></h1>
-			<nav class="L"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+			<h1 class="h" date="2023-06-14" ver="2.10.0"><code>Viewtify</code></h1>
+			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -19,7 +19,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="j" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="g" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -27,29 +27,112 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="U">
-			<nav class="f">
+		<main class="S">
+			<nav class="N">
 				<div></div>
 			</nav>
-			<article class="W" id="Article">
-				<section class="Y B" id="2.9.0(2023-06-14)">
-					<header class="B P">
-						<h2>2.9.0 (2023-06-14)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+			<article class="b" id="Article">
+				<section class="l B" id="2.10.0(2023-06-20)">
+					<header class="B V">
+						<h2>2.10.0 (2023-06-20)</h2>
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="Features">
-						<header class="B S">
+					<section class="B U" id="Features">
+						<header class="B Z">
 							<h3>Features</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
+										<use href="main.svg#twitter"/>
+									</svg>
+								</a></div>
+						</header>
+						<ul>
+
+							<li>Add KeyBindingView to edit shortcut. (<a href="https://github.com/teletha/viewtify/commit/70f4313b0a46be505288b37249a5d59073d02334">70f4313</a>)</li>
+
+							<li>PreferenceModel can reset to the default value. (<a href="https://github.com/teletha/viewtify/commit/9e6b3be156a6341052dbd8f7a894cc73d154e8a1">9e6b3be</a>)</li>
+
+							<li>Support design scheme. (<a href="https://github.com/teletha/viewtify/commit/e28446acf7da83599a1f289aadf645cac9711d98">e28446a</a>)</li>
+
+							<li>Support font smooth property. (<a href="https://github.com/teletha/viewtify/commit/bd3f04e79528b5585a55392912670ff255025ac3">bd3f04e</a>)</li>
+
+							<li>UISelectPane implements not ValueHelper but SelectableHelper. (<a href="https://github.com/teletha/viewtify/commit/b05b2918dfc2a400ccd968b593e44584e57ed6ad">b05b291</a>)</li>
+
+							<li>UserInterface#keybind supports modifier. (<a href="https://github.com/teletha/viewtify/commit/22351334ae5ea1123065dc267229f037ac82e425">2235133</a>)</li>
+</ul>
+					</section>
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
+							<h3>Bug Fixes</h3>
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
+										<use href="main.svg#copy"/>
+									</svg>
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
+										<use href="main.svg#twitter"/>
+									</svg>
+								</a></div>
+						</header>
+						<ul>
+
+							<li>disable anti-alias (<a href="https://github.com/teletha/viewtify/commit/183de7e67bfaa7383b1a582a7c4f7f07ad2e1153">183de7e</a>)</li>
+
+							<li>Duration codec is broken. (<a href="https://github.com/teletha/viewtify/commit/869f13c59c0ec844c9ad0dd81f5641866286d81d">869f13c</a>)</li>
+
+							<li>keep backward compatibility (<a href="https://github.com/teletha/viewtify/commit/e9ec5c4d2c08721eda883e3f974631d5cf9e6c2b">e9ec5c4</a>)</li>
+
+							<li>Preference#syncTo can propagate value lazy. (<a href="https://github.com/teletha/viewtify/commit/4fdd73b3fcfec3ec5c42e416fea324f8a7ad0bf1">4fdd73b</a>)</li>
+
+							<li>refactoring toast (<a href="https://github.com/teletha/viewtify/commit/a46ea3cac40332d66fe4a5e3f47922efa4bcbe1c">a46ea3c</a>)</li>
+
+							<li>remove pom (<a href="https://github.com/teletha/viewtify/commit/7649f9b1b6c43f38fcd29c8add7caa9b88dde762">7649f9b</a>)</li>
+
+							<li>Shortcut related classes move to keys package. (<a href="https://github.com/teletha/viewtify/commit/60628bf5debd50a215f1be1d5c04690ca4ef9d2d">60628bf</a>)</li>
+
+							<li>UIText should handle null string as empty string. (<a href="https://github.com/teletha/viewtify/commit/3f1add0db5a0a0cd83d3ff13a21b7dca9af2a718">3f1add0</a>)</li>
+</ul>
+					</section>
+					<section class="B U" id="Asserts">
+						<header class="B Z">
+							<h3>Assets</h3>
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
+										<use href="main.svg#copy"/>
+									</svg>
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
+										<use href="main.svg#twitter"/>
+									</svg>
+								</a></div>
+						</header>
+						<ul>
+							<li><a href="https://github.com/teletha/viewtify/archive/refs/tags/v2.10.0.zip">Source code</a> (zip)</li>
+						</ul>
+					</section>
+				</section>
+				<section class="l B" id="2.9.0(2023-06-14)">
+					<header class="B V">
+						<h2>2.9.0 (2023-06-14)</h2>
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
+									<use href="main.svg#copy"/>
+								</svg>
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
+									<use href="main.svg#twitter"/>
+								</svg>
+							</a></div>
+					</header>
+					<section class="B U" id="Features">
+						<header class="B Z">
+							<h3>Features</h3>
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
+										<use href="main.svg#copy"/>
+									</svg>
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -83,13 +166,13 @@
 							<li>ViewtyDialog can cofigure shortcut key for each buttons. (<a href="https://github.com/teletha/viewtify/commit/17dab22a9cce33369687145a22268929f8baf866">17dab22</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -117,13 +200,13 @@
 							<li>Use minimum size on dialog setting. (<a href="https://github.com/teletha/viewtify/commit/e48d26308d138acb8d885b80b5a4d57320ff068e">e48d263</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -133,24 +216,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.8.0(2023-05-23)">
-					<header class="B P">
+				<section class="l B" id="2.8.0(2023-05-23)">
+					<header class="B V">
 						<h2>2.8.0 (2023-05-23)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="Features">
-						<header class="B S">
+					<section class="B U" id="Features">
+						<header class="B Z">
 							<h3>Features</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -186,13 +269,13 @@
 							<li>UISelectPane implements ValueHelper&#60;UserInterfaceProvide&#62;. (<a href="https://github.com/teletha/viewtify/commit/336962ea141fe03ab61092fee7df1e467973cc7c">336962e</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -212,13 +295,13 @@
 							<li>View has memory leak. (<a href="https://github.com/teletha/viewtify/commit/e02aa29feb5598f085c0c6736d9aceb3f95bca4c">e02aa29</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -228,24 +311,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.7.0(2023-04-24)">
-					<header class="B P">
+				<section class="l B" id="2.7.0(2023-04-24)">
+					<header class="B V">
 						<h2>2.7.0 (2023-04-24)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="Features">
-						<header class="B S">
+					<section class="B U" id="Features">
+						<header class="B Z">
 							<h3>Features</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -275,13 +358,13 @@
 							<li>Support the nested property listener. (<a href="https://github.com/teletha/viewtify/commit/e6413ffc42435c47f26141137a85c1c791fffd3d">e6413ff</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -297,13 +380,13 @@
 							<li>Updating checkbox on table is broken. (<a href="https://github.com/teletha/viewtify/commit/3496b53384279f18bb8f1538aa2a4f59e010b787">3496b53</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -313,24 +396,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.6.3(2023-01-01)">
-					<header class="B P">
+				<section class="l B" id="2.6.3(2023-01-01)">
+					<header class="B V">
 						<h2>2.6.3 (2023-01-01)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -340,13 +423,13 @@
 							<li>headless mode is broken when anonymous browser (<a href="https://github.com/teletha/viewtify/commit/bf4184aba253ee7e301a1c3fc7ce0b4221736373">bf4184a</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -356,24 +439,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.6.2(2022-12-27)">
-					<header class="B P">
+				<section class="l B" id="2.6.2(2022-12-27)">
+					<header class="B V">
 						<h2>2.6.2 (2022-12-27)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -385,13 +468,13 @@
 							<li>update stylist (<a href="https://github.com/teletha/viewtify/commit/5a3fb256ab5c6a13bbc0feb6b38bff509d0ceb27">5a3fb25</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -401,24 +484,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.6.1(2022-12-26)">
-					<header class="B P">
+				<section class="l B" id="2.6.1(2022-12-26)">
+					<header class="B V">
 						<h2>2.6.1 (2022-12-26)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -436,13 +519,13 @@
 							<li>update stylist (<a href="https://github.com/teletha/viewtify/commit/c6449b85d55cb9804e41ea792a5db7911ddb766b">c6449b8</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -452,24 +535,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.6.0(2022-08-31)">
-					<header class="B P">
+				<section class="l B" id="2.6.0(2022-08-31)">
+					<header class="B V">
 						<h2>2.6.0 (2022-08-31)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="Features">
-						<header class="B S">
+					<section class="B U" id="Features">
+						<header class="B Z">
 							<h3>Features</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -481,13 +564,13 @@
 							<li>UITableCheckBoxColumn can observe its state. (<a href="https://github.com/teletha/viewtify/commit/e7d66b00074c3541debbe638fd95c4a00311b2ab">e7d66b0</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -507,13 +590,13 @@
 							<li>Viewtify#inWorker ensures executing the task in Non-UI thread. (<a href="https://github.com/teletha/viewtify/commit/146200aaca5e1a8c015c671eb7688baa56ef7b1f">146200a</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -523,24 +606,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.5.0(2022-06-30)">
-					<header class="B P">
+				<section class="l B" id="2.5.0(2022-06-30)">
+					<header class="B V">
 						<h2>2.5.0 (2022-06-30)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="Features">
-						<header class="B S">
+					<section class="B U" id="Features">
+						<header class="B Z">
 							<h3>Features</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -612,13 +695,13 @@
 							<li>ViewDSL provides generic separator. (<a href="https://www.github.com/teletha/viewtify/commit/979d7d62a159f66dd5a63ae93b35c961843ad463">979d7d6</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -656,13 +739,13 @@
 							<li>Viewtify#browser can be invoked more safely. (<a href="https://www.github.com/teletha/viewtify/commit/1048fa447bbde982a09c3dfe2fbc50877fa9618f">1048fa4</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -672,24 +755,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.4.0(2022-03-17)">
-					<header class="B P">
+				<section class="l B" id="2.4.0(2022-03-17)">
+					<header class="B V">
 						<h2>2.4.0 (2022-03-17)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="Features">
-						<header class="B S">
+					<section class="B U" id="Features">
+						<header class="B Z">
 							<h3>Features</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -699,13 +782,13 @@
 							<li>Add UIWeb#attribute which accessing to the attribute value. (<a href="https://www.github.com/teletha/viewtify/commit/a794c080429b4ff1852fea494f9792d1507276d3">a794c08</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -715,24 +798,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.3.0(2022-03-14)">
-					<header class="B P">
+				<section class="l B" id="2.3.0(2022-03-14)">
+					<header class="B V">
 						<h2>2.3.0 (2022-03-14)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="Features">
-						<header class="B S">
+					<section class="B U" id="Features">
+						<header class="B Z">
 							<h3>Features</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -744,13 +827,13 @@
 							<li>Support more flexible dock layout. (<a href="https://www.github.com/teletha/viewtify/commit/ed5abe65e16f87ebaceac9a3143f15fd34c11d0d">ed5abe6</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -768,13 +851,13 @@
 							<li>Restore the location of separated window. (<a href="https://www.github.com/teletha/viewtify/commit/c16dc7d014bf493621e5841abf96daaecbd70ff8">c16dc7d</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -784,24 +867,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.2.1(2022-01-02)">
-					<header class="B P">
+				<section class="l B" id="2.2.1(2022-01-02)">
+					<header class="B V">
 						<h2>2.2.1 (2022-01-02)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -811,13 +894,13 @@
 							<li>Stabilize headless mode. (<a href="https://www.github.com/teletha/viewtify/commit/fd5c781c2964d87412258b5bf782cb329087bccb">fd5c781</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -827,24 +910,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.2.0(2022-01-02)">
-					<header class="B P">
+				<section class="l B" id="2.2.0(2022-01-02)">
+					<header class="B V">
 						<h2>2.2.0 (2022-01-02)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="Features">
-						<header class="B S">
+					<section class="B U" id="Features">
+						<header class="B Z">
 							<h3>Features</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -854,13 +937,13 @@
 							<li>UIWeb#load can load HTML contents directly. (<a href="https://www.github.com/teletha/viewtify/commit/d4678529833fc675001bf18896add40ba13280ec">d467852</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -872,13 +955,13 @@
 							<li>Invoke Viewtify#browser on FX thread. (<a href="https://www.github.com/teletha/viewtify/commit/ba96bbedc22fef41dcb5a8c970720ca6f69516d3">ba96bbe</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -888,24 +971,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.1.0(2021-12-30)">
-					<header class="B P">
+				<section class="l B" id="2.1.0(2021-12-30)">
+					<header class="B V">
 						<h2>2.1.0 (2021-12-30)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="Features">
-						<header class="B S">
+					<section class="B U" id="Features">
+						<header class="B Z">
 							<h3>Features</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -921,13 +1004,13 @@
 							<li>update javafx. (<a href="https://www.github.com/teletha/viewtify/commit/805350f6fe61662d3c08500c99adca95498b355b">805350f</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -937,24 +1020,24 @@
 						</ul>
 					</section>
 				</section>
-				<section class="Y B" id="2.0.0(2021-03-29)">
-					<header class="B P">
+				<section class="l B" id="2.0.0(2021-03-29)">
+					<header class="B V">
 						<h2>2.0.0 (2021-03-29)</h2>
-						<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+						<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#copy"/>
 								</svg>
-							</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+							</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 									<use href="main.svg#twitter"/>
 								</svg>
 							</a></div>
 					</header>
-					<section class="B O" id="BugFixes">
-						<header class="B S">
+					<section class="B U" id="BugFixes">
+						<header class="B Z">
 							<h3>Bug Fixes</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -1018,13 +1101,13 @@
 							<li>Validation doesn&#39;t verify initial state. (<a href="https://www.github.com/Teletha/viewtify/commit/cbb0eb07c72c30a44a860cecfb2f448a9c2dd743">cbb0eb0</a>)</li>
 </ul>
 					</section>
-					<section class="B O" id="Asserts">
-						<header class="B S">
+					<section class="B U" id="Asserts">
+						<header class="B Z">
 							<h3>Assets</h3>
-							<div class="Q"><a class="perp T"><svg class="A svg" viewBox="0 0 24 24">
+							<div class="O"><a class="perp L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#copy"/>
 									</svg>
-								</a><a class="tweet T"><svg class="A svg" viewBox="0 0 24 24">
+								</a><a class="tweet L"><svg class="A svg" viewBox="0 0 24 24">
 										<use href="main.svg#twitter"/>
 									</svg>
 								</a></div>
@@ -1035,9 +1118,10 @@
 					</section>
 				</section>
 			</article>
-			<aside class="N" id="SubNavi">
-				<div class="m">
+			<aside class="I" id="SubNavi">
+				<div class="f">
 					<ul>
+						<li><a href="doc/changelog.html#2.10.0(2023-06-20)">2.10.0 (2023-06-20)</a></li>
 						<li><a href="doc/changelog.html#2.9.0(2023-06-14)">2.9.0 (2023-06-14)</a></li>
 						<li><a href="doc/changelog.html#2.8.0(2023-05-23)">2.8.0 (2023-05-23)</a></li>
 						<li><a href="doc/changelog.html#2.7.0(2023-04-24)">2.7.0 (2023-04-24)</a></li>
