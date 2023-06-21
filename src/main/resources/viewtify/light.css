@@ -1,0 +1,30 @@
+/*
+ * Copyright (C) 2023 The VIEWTIFY Development Team
+ *
+ * Licensed under the MIT License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *          https://opensource.org/licenses/MIT
+ */
+.root {
+    -fx-base: #f4f1de;
+    -fx-background: #faf0ca;
+
+    /* A bright blue for highlighting/accenting objects.  For example: selected
+     * text; selected items in menus, lists, trees, and tables; progress bars */
+    -fx-accent: #3d405b;
+    
+    /* Default buttons color, this is similar to accent but more subtle */
+    -fx-default-button: -fx-background;
+
+    /* A bright blue for the focus indicator of objects. Typically used as the
+     * first color in -fx-background-color for the "focused" pseudo-class. Also
+     * typically used with insets of -1.4 to provide a glowing effect.
+     */
+    -fx-focus-color: #4f772d;
+    -fx-faint-focus-color: #4f772d20;
+    
+    -fx-edit-color: #e07a5f;
+    -fx-faint-edit-color: #e07a5f20;
+}
