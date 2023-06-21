@@ -443,9 +443,7 @@ public final class ViewtyDialog<T> {
                     .map(x -> pane.lookupButton(x))
                     .as(Button.class)
                     .first()
-                    .to(x -> {
-                        buttonOK = new UIButton(x, this);
-                    });
+                    .to(x -> buttonOK = new UIButton(x, this));
         }
     }
 

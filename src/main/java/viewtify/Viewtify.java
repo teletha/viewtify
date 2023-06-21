@@ -534,8 +534,8 @@ public final class Viewtify {
                     .scan(Collectors.groupingBy(File::parent, Collectors.mapping(File::name, Collectors.toList())))
                     .last()
                     .flatIterable(m -> m.entrySet())
-                    .flatMap(e -> e.getKey().observe(e.getValue()))
-                    .debounce(1, TimeUnit.SECONDS)
+                    .flatMap(e -> e.getKey().observe("*.css"))
+                    .debounce(300, TimeUnit.MILLISECONDS)
                     .map(change -> change.context().externalForm())
                     .to(this::reloadStylesheet);
         }
@@ -595,7 +595,6 @@ public final class Viewtify {
      */
     private void reloadStylesheet(String changed) {
         for (Window window : Window.getWindows()) {
-            System.out.println(window + "   " + changed);
             ObservableList<String> stylesheets = window.getScene().getStylesheets();
             int[] index = {-1};
 

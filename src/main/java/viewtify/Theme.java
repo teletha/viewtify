@@ -9,6 +9,9 @@
  */
 package viewtify;
 
+import psychopath.File;
+import psychopath.Locator;
+
 public enum Theme {
 
     Light, Dark;
@@ -30,6 +33,10 @@ public enum Theme {
      * @return
      */
     static String locate(String name) {
-            return ClassLoader.getSystemResource("viewtify/" + name + ".css").toExternalForm();
+        File css = Locator.directory("").absolutize().parent().file("viewtify/src/main/resources/viewtify/" + name + ".css");
+        if (css.isPresent()) {
+            return css.externalForm();
+        }
+        return ClassLoader.getSystemResource("viewtify/" + name + ".css").toExternalForm();
     }
 }
