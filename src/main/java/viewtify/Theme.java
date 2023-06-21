@@ -19,9 +19,6 @@ public enum Theme {
     // Monotone
     Light, Dark, CaffeLatte, GreenTea,
 
-    // Caspian
-    Caspian,
-
     // High Contrast
     WhiteOnBlack, YellowOnBlack, BlackOnWhite;
 
@@ -53,11 +50,6 @@ public enum Theme {
         }
 
         resource = ClassLoader.getSystemResource("com/sun/javafx/scene/control/skin/modena/" + name + ".css");
-        if (resource != null) {
-            return resource.toExternalForm();
-        }
-
-        resource = ClassLoader.getSystemResource("com/sun/javafx/scene/control/skin/caspian/" + name + ".css");
         if (resource != null) {
             return resource.toExternalForm();
         }
