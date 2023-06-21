@@ -9,12 +9,21 @@
  */
 package viewtify;
 
+import java.net.URL;
+
 import psychopath.File;
 import psychopath.Locator;
 
 public enum Theme {
 
-    Light, Dark, CaffeLatte, GreenTea;
+    // Monotone
+    Light, Dark, CaffeLatte, GreenTea,
+
+    // Caspian
+    Caspian,
+
+    // High Contrast
+    WhiteOnBlack, YellowOnBlack, BlackOnWhite;
 
     /** The location. */
     public final String location;
@@ -23,7 +32,7 @@ public enum Theme {
      * @param path
      */
     private Theme() {
-        this.location = locate(name().toLowerCase());
+        this.location = locate(Character.toLowerCase(name().charAt(0)) + name().substring(1));
     }
 
     /**
@@ -37,6 +46,22 @@ public enum Theme {
         if (css.isPresent()) {
             return css.externalForm();
         }
-        return ClassLoader.getSystemResource("viewtify/" + name + ".css").toExternalForm();
+
+        URL resource = ClassLoader.getSystemResource("viewtify/" + name + ".css");
+        if (resource != null) {
+            return resource.toExternalForm();
+        }
+
+        resource = ClassLoader.getSystemResource("com/sun/javafx/scene/control/skin/modena/" + name + ".css");
+        if (resource != null) {
+            return resource.toExternalForm();
+        }
+
+        resource = ClassLoader.getSystemResource("com/sun/javafx/scene/control/skin/caspian/" + name + ".css");
+        if (resource != null) {
+            return resource.toExternalForm();
+        }
+
+        throw new Error("Theme [" + name + "] is not found.");
     }
 }
