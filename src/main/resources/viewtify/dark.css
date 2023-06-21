@@ -31,11 +31,26 @@
 
     /* A bright blue for highlighting/accenting objects.  For example: selected
      * text; selected items in menus, lists, trees, and tables; progress bars */
-    -fx-accent: rgb(0, 60, 80);
+    -fx-accent: #4d729880;
     -fx-link: rgb(72, 186, 234);
     
     /* Default buttons color, this is similar to accent but more subtle */
     -fx-default-button: -fx-background;
+
+    /* A bright blue for the focus indicator of objects. Typically used as the
+     * first color in -fx-background-color for the "focused" pseudo-class. Also
+     * typically used with insets of -1.4 to provide a glowing effect.
+     */
+    -fx-focus-color: #b4e1ff;
+    -fx-faint-focus-color: #b4e1ff33;
+    
+    /* The color that is used in styling controls. The default value is based
+     * on -fx-base, but is changed by pseudoclasses to change the base color.
+     * For example, the "hover" pseudoclass will typically set -fx-color to
+     * -fx-hover-base (see below) and the "armed" pseudoclass will typically
+     * set -fx-color to -fx-pressed-base.
+     */
+    -fx-color: -fx-base;
 
     /* color of non-focused yet selected elements */
     -fx-selection-bar-non-focused: rgb(50, 50, 50);
@@ -45,7 +60,7 @@
   Text Input
 ===========================================================================*/
 .text-input {
-    -fx-prompt-text-fill: derive(-fx-control-inner-background, +50%);
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, +70%);
 }
 
 /* Keep prompt invisible when focused (above color fix overrides it) */
