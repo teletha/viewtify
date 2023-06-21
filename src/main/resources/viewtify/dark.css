@@ -17,7 +17,7 @@
      * -fx-text-background-color, which should be used as the -fx-text-fill
      * value for text painted on top of backgrounds colored with -fx-background.
      */
-    -fx-background: rgb(30, 30, 30);
+    -fx-background: -fx-base;
 
 
     /* make controls (buttons, thumb, etc.) slightly lighter */
@@ -26,7 +26,7 @@
     -fx-pressed-base: derive(-fx-base, 20%);
 
     /* text fields and table rows background */
-    -fx-control-inner-background: rgb(30, 30, 30);
+    -fx-control-inner-background: rgb(40, 40, 40);
 
     /* text colors depending on background's brightness */
     -fx-light-text-color: rgb(220, 220, 220);
@@ -61,6 +61,8 @@
 
     /* color of non-focused yet selected elements */
     -fx-selection-bar-non-focused: rgb(50, 50, 50);
+    
+    -fx-text-box-border: -fx-base;
 }
 
 /* ==========================================================================
