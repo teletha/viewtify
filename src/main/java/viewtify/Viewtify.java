@@ -171,7 +171,7 @@ public final class Viewtify {
     private StageStyle stageStyle = StageStyle.DECORATED;
 
     /** The configurable setting. */
-    private Theme theme = Theme.Light;
+    private Theme theme = Theme.Gray;
 
     /** The configurable setting. */
     private Class<? extends DesignScheme> scheme;
