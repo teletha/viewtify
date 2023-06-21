@@ -45,7 +45,7 @@
     -fx-accent: hsb(86, 15%, 78%);
     
     /* Default buttons color, this is similar to accent but more subtle */
-    -fx-default-button: -fx-background;
+    -fx-default-button: -fx-accent;
 
     /* A bright blue for the focus indicator of objects. Typically used as the
      * first color in -fx-background-color for the "focused" pseudo-class. Also
