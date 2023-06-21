@@ -7,6 +7,14 @@
  *
  *          https://opensource.org/licenses/MIT
  */
+.root {
+		-fx-edit-color: #ffa431;
+		-fx-faint-edit-color: #ffa43150;
+}
+ 
+/* ==========================================================================
+  Edited Mode
+===========================================================================*/
 .hyperlink {
 		-fx-text-fill: -fx-link;
 		-fx-underline: false;
@@ -20,10 +28,12 @@
 /* ==========================================================================
   Edited Mode
 ===========================================================================*/
-.edited {
-    -fx-background-color: #ffa431, -fx-outer-border, -fx-inner-border, -fx-body-color;
-    -fx-background-insets: -1.4, 0, 1, 2;
-    -fx-background-radius:  6.4, 5, 4, 3;
+.text-input.edited {
+    -fx-background-color:
+        -fx-edit-color,
+        -fx-control-inner-background,
+        -fx-faint-edit-color,
+        linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
 }
 
 .check-box.edited {
@@ -32,17 +42,16 @@
 }
 
 .check-box.edited > .box {
-    -fx-background-color: #ffa431, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-color: -fx-edit-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: -1.4, 0, 1, 2;
     -fx-background-radius: 3.4, 2, 1, 1;
 }
 
-
 .table-view.edited,
 .tree-table-view.edited {
-    -fx-background-color: #ffa431, -fx-box-border,-fx-control-inner-background;
-    -fx-background-insets: -1.4, 0, 1;
-    -fx-background-radius: 1.4, 0, 0;
+    -fx-background-color: -fx-faint-edit-color, -fx-edit-color, -fx-control-inner-background;
+    -fx-background-insets: -1.4, -0.3, 1;
+    -fx-background-radius: 2, 0, 0;
 }
 
 /* ==========================================================================

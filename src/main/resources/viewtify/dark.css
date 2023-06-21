@@ -7,8 +7,6 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-
-/* Redefine base colors */
 .root {
     -fx-base: rgb(30, 30, 30);
     -fx-background: rgb(30, 30, 30);
@@ -21,8 +19,6 @@
 
     /* text fields and table rows background */
     -fx-control-inner-background: rgb(30, 30, 30);
-    /* version of -fx-control-inner-background for alternative rows */
-    -fx-control-inner-background-alt: rgb(30, 30, 30);
 
     /* text colors depending on background's brightness */
     -fx-light-text-color: rgb(220, 220, 220);
@@ -43,6 +39,9 @@
      */
     -fx-focus-color: #b4e1ff;
     -fx-faint-focus-color: #b4e1ff33;
+    
+		-fx-edit-color: #ffa431;
+		-fx-faint-edit-color: #ffa43150;
     
     /* The color that is used in styling controls. The default value is based
      * on -fx-base, but is changed by pseudoclasses to change the base color.
