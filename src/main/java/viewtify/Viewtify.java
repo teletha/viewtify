@@ -781,11 +781,13 @@ public final class Viewtify {
 
                 // clear previous theme
                 for (Theme old : Theme.values()) {
+                    stylesheets.remove(old.location);
                     sheets.remove(old.location);
                     classes.remove(old.name().toLowerCase());
                 }
 
                 // add new theme
+                stylesheets.add(theme.location);
                 sheets.add(theme.location);
                 classes.add(theme.name().toLowerCase());
             }
@@ -832,6 +834,7 @@ public final class Viewtify {
         // are automatically detected and reapplied at any time.
         // ================================================================
         scene.getStylesheets().addAll(stylesheets);
+        System.out.println(stylesheets);
 
         // apply title and icon
         stage.setTitle(viewtify.title);
