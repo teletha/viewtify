@@ -11,10 +11,8 @@ package viewtify.ui.helper;
 
 import java.util.Objects;
 
-import org.controlsfx.glyphfont.Glyph;
-import org.controlsfx.glyphfont.INamedCharacter;
-
 import javafx.beans.property.Property;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -25,6 +23,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.INamedCharacter;
+
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -277,38 +279,19 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * Set icon.
      * 
      * @param icon
+     * @param styles
      * @return
      */
-    default Self icon(INamedCharacter icon) {
-        return icon(icon, (javafx.scene.paint.Color) null);
-    }
-
-    /**
-     * Set icon.
-     * 
-     * @param icon
-     * @param color
-     * @return
-     */
-    default Self icon(INamedCharacter icon, Color color) {
-        return icon(icon, FXUtils.color(color));
-    }
-
-    /**
-     * Set icon.
-     * 
-     * @param icon
-     * @param color
-     * @return
-     */
-    default Self icon(INamedCharacter icon, javafx.scene.paint.Color color) {
-        if (color == null) {
-            color = javafx.scene.paint.Color.GRAY;
-        }
-
+    default Self icon(INamedCharacter icon, Style... styles) {
         Glyph glyph = new Glyph("FontAwesome", icon);
         glyph.setPadding(new Insets(0, 2, 0, 2));
-        glyph.setColor(color);
+
+        ObservableList<String> classes = glyph.getStyleClass();
+        classes.clear();
+        for (Style style : styles) {
+            classes.addAll(style.className());
+        }
+
         property(Type.Graphic).setValue(glyph);
         return (Self) this;
     }
