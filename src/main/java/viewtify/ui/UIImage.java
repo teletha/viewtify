@@ -13,6 +13,7 @@ import javafx.beans.property.Property;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import viewtify.Viewtify;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.TooltipHelper;
@@ -37,5 +38,15 @@ public class UIImage extends UserInterface<UIImage, ImageView>
     @Override
     public Property<Image> valueProperty() {
         return ui.imageProperty();
+    }
+
+    /**
+     * Set image by path.
+     * 
+     * @param path
+     * @return
+     */
+    public UIImage value(String path) {
+        return value(Viewtify.loadImage(path));
     }
 }
