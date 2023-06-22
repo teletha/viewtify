@@ -12,10 +12,11 @@ package viewtify.model;
 import java.util.ArrayList;
 
 import javafx.collections.ModifiableObservableListBase;
-
 import kiss.Managed;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.model.Model;
+import viewtify.Viewtify;
 
 @Managed(Singleton.class)
 public abstract class StorableList<E extends StorableModel> extends ModifiableObservableListBase<E> implements Storable<StorableList<E>> {
@@ -27,7 +28,7 @@ public abstract class StorableList<E extends StorableModel> extends ModifiableOb
      * Hide constructor.
      */
     protected StorableList() {
-        restore();
+        sync();
     }
 
     /**
@@ -68,5 +69,35 @@ public abstract class StorableList<E extends StorableModel> extends ModifiableOb
     @Override
     protected E doRemove(int model) {
         return list.remove(model);
+    }
+
+    /**
+     * Synchronize data from/to source.
+     */
+    protected final void sync() {
+        Viewtify.UserPreference.observing().to(x -> {
+            // Not all property values are preserved in the restore source, so they must always be
+            // reset before restoring. If not reset, some properties may continue to apply the
+            // previous user's values to the new user.
+            clear();
+            restore();
+        });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String locate() {
+        return Viewtify.UserPreference.exact().file(getModelName() + ".json").path();
+    }
+
+    /**
+     * Get the identical model name.
+     * 
+     * @return
+     */
+    protected String getModelName() {
+        return Model.of(this).type.getName();
     }
 }

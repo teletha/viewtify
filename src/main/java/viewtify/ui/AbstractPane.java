@@ -21,7 +21,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-
 import kiss.WiseFunction;
 import viewtify.ui.anime.HideAnime;
 import viewtify.ui.anime.LayoutAnimator;
@@ -59,11 +58,8 @@ public abstract class AbstractPane<E, P extends Pane, Self extends AbstractPane>
             } else if (c.wasUpdated()) {
                 // ignore
             } else {
-
                 List<? extends E> added = c.getAddedSubList();
-
                 List<? extends E> removed = c.getRemoved();
-
                 List<? extends E> intersect = added.stream().filter(removed::contains).toList();
 
                 List<E> addedPure = new ArrayList(added);
@@ -160,7 +156,7 @@ public abstract class AbstractPane<E, P extends Pane, Self extends AbstractPane>
                 HideAnime.FadeOut.run(ui, node, () -> {
                     ui.getChildren().remove(node);
                     animator.unobserve(node);
-                    view.dispose();
+                    // view.dispose();
                 });
             }
         }

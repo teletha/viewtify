@@ -12,13 +12,12 @@ package viewtify.ui.anime;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-
 import kiss.WiseRunnable;
 
 public interface HideAnime extends Animatable {
 
     /** Built-in animation. */
-    HideAnime FadeOut = (parent, before, action) -> Anime.define().effect(before.opacityProperty(), 0, 0.3).run();
+    HideAnime FadeOut = (parent, before, action) -> Anime.define().effect(before.opacityProperty(), 0, 0.3).run(action);
 
     /** Built-in animation. */
     HideAnime ZoomIn = (parent, before, action) -> zoom(parent, before, action, -0.15);
