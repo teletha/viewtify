@@ -16,11 +16,7 @@ import psychopath.Locator;
 
 public enum Theme {
 
-    // Monotone
-    Light, Dark, CaffeLatte, GreenTea,
-
-    // High Contrast
-    WhiteOnBlack, YellowOnBlack, BlackOnWhite;
+    Light, Dark, CaffeLatte, GreenTea;
 
     /** The location. */
     public final String location;
@@ -45,11 +41,6 @@ public enum Theme {
         }
 
         URL resource = ClassLoader.getSystemResource("viewtify/" + name + ".css");
-        if (resource != null) {
-            return resource.toExternalForm();
-        }
-
-        resource = ClassLoader.getSystemResource("com/sun/javafx/scene/control/skin/modena/" + name + ".css");
         if (resource != null) {
             return resource.toExternalForm();
         }
