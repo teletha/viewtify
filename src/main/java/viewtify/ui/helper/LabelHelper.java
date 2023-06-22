@@ -11,19 +11,20 @@ package viewtify.ui.helper;
 
 import java.util.Objects;
 
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.INamedCharacter;
+
 import javafx.beans.property.Property;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import org.controlsfx.glyphfont.Glyph;
-import org.controlsfx.glyphfont.INamedCharacter;
-
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -309,6 +310,32 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
         glyph.setPadding(new Insets(0, 2, 0, 2));
         glyph.setColor(color);
         property(Type.Graphic).setValue(glyph);
+        return (Self) this;
+    }
+
+    /**
+     * Set icon.
+     * 
+     * @param iconPath
+     * @return
+     */
+    default Self icon(String iconPath) {
+        return icon(iconPath, 0, 0);
+    }
+
+    /**
+     * Set icon.
+     * 
+     * @param iconPath
+     * @return
+     */
+    default Self icon(String iconPath, int width, int height) {
+        Image image = new Image(ClassLoader.getSystemResourceAsStream(iconPath));
+        ImageView view = new ImageView(image);
+        if (0 < width) view.setFitWidth(width);
+        if (0 < height) view.setFitHeight(height);
+
+        property(Type.Graphic).setValue(view);
         return (Self) this;
     }
 }

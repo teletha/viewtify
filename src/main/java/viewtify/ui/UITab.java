@@ -23,10 +23,11 @@ import kiss.Signal;
 import kiss.WiseFunction;
 import viewtify.Viewtify;
 import viewtify.ui.helper.ContextMenuHelper;
+import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 
-public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<UITab>, ContextMenuHelper<UITab> {
+public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<UITab>, ContextMenuHelper<UITab>, DisableHelper<UITab> {
 
     /** Cache to find tab node. */
     private static final WiseFunction<Node, Object> findTab;
