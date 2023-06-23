@@ -655,13 +655,6 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "UILineChart",
-			"packageName": "viewtify.ui",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UIListView",
 			"packageName": "viewtify.ui",
 			"type": "Class"
@@ -670,6 +663,13 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UIMenuItem",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UINumberLineChart",
 			"packageName": "viewtify.ui",
 			"type": "Class"
 		},
