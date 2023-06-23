@@ -245,3 +245,12 @@
     -fx-background-radius: 3, 2, 4, 0;
     -fx-prompt-text-fill: transparent;
 }
+
+/* ==========================================================================
+  Tooltip
+===========================================================================*/
+.tooltip {
+    -fx-background: rgba(30,30,30);
+    -fx-background-color: rgba(30,30,30,0.7);
+    -fx-font-size: 1em;
+}
