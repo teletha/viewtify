@@ -33,6 +33,8 @@ import javafx.scene.shape.Circle;
 import javafx.util.StringConverter;
 
 import kiss.I;
+import kiss.Signal;
+import viewtify.Viewtify;
 import viewtify.ui.helper.TooltipHelper;
 import viewtify.ui.helper.UserActionHelper;
 
@@ -159,16 +161,11 @@ public class UINumberLineChart<X extends Number, Y extends Number> extends UserI
      * @param data
      * @return
      */
-    public UINumberLineChart<X, Y> data(String name, List<XYChart.Data<X, Y>> data) {
+    public UINumberLineChart<X, Y> data(String name, Signal<XYChart.Data<X, Y>> data) {
+
         XYChart.Series<X, Y> series = new XYChart.Series();
         series.setName(name);
-        series.getData().addAll(data);
-
-        ui.getData().add(series);
-
-        for (Data<X, Y> d : data) {
-            d.getNode().setVisible(false);
-        }
+        Viewtify.inUI(() -> ui.getData().add(series));
 
         Circle mark = new Circle(4);
         mark.setFill(Color.rgb(255, 255, 255));
@@ -181,6 +178,12 @@ public class UINumberLineChart<X extends Number, Y extends Number> extends UserI
         label.setPadding(new Insets(5, 0, 2, 0));
 
         root.getChildren().add(label);
+
+        data.on(Viewtify.UIThread).to(x -> {
+            series.getData().add(x);
+
+            x.getNode().setVisible(false);
+        });
         return this;
     }
 
@@ -246,7 +249,8 @@ public class UINumberLineChart<X extends Number, Y extends Number> extends UserI
                 double valueX = axisX.getValueForDisplay(e.getX() - (inner.getMinX() - outer.getMinX())).doubleValue();
                 X detected = detector.apply(valueX);
 
-                title.setText(axisX.getTickLabelFormatter().toString(detected));
+                StringConverter<Number> formatter = axisX.getTickLabelFormatter();
+                title.setText(formatter == null ? detected.toString() : formatter.toString(detected));
 
                 root: for (int i = 0; i < ui.getData().size(); i++) {
                     Series<X, Y> series = ui.getData().get(i);
