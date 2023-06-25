@@ -35,7 +35,8 @@ import kiss.Signal;
 import viewtify.Viewtify;
 import viewtify.ui.helper.TooltipHelper;
 
-public class UINumberLineChart<X extends Number, Y extends Number> extends AbstractChart<UINumberLineChart<X, Y>, LineChart<X, Y>>
+public class UINumberLineChart<X extends Number, Y extends Number>
+        extends AbstractChart<UINumberLineChart<X, Y>, LineChart<X, Y>, LineChart.Data<X, Y>>
         implements TooltipHelper<UINumberLineChart<X, Y>, LineChart<X, Y>> {
 
     private Label title;
@@ -135,29 +136,36 @@ public class UINumberLineChart<X extends Number, Y extends Number> extends Abstr
      * @param data
      * @return
      */
-    public UINumberLineChart<X, Y> data(String name, Signal<XYChart.Data<X, Y>> data) {
-
+    @Override
+    public UINumberLineChart<X, Y> data(String name, Signal<Data<X, Y>> data) {
         XYChart.Series<X, Y> series = new XYChart.Series();
         series.setName(name);
-        Viewtify.inUI(() -> ui.getData().add(series));
 
-        Circle mark = new Circle(4);
-        mark.setFill(Color.rgb(255, 255, 255));
-        mark.setStrokeWidth(2);
-        mark.getStyleClass().addAll("default-color" + ((tooltip().size() - 1)), "chart-series-line");
+        Viewtify.inUI(() -> {
+            // build data source
+            ui.getData().add(series);
 
-        Label label = new Label();
-        label.setGraphic(mark);
-        label.setGraphicTextGap(8);
-        label.setPadding(new Insets(5, 0, 2, 0));
+            // build tooltip UI
+            Circle mark = new Circle(4);
+            mark.setFill(Color.rgb(255, 255, 255));
+            mark.setStrokeWidth(2);
+            mark.getStyleClass().addAll("default-color" + ((tooltip().size() - 1)), "chart-series-line");
 
-        tooltip().add(label);
+            Label label = new Label();
+            label.setGraphic(mark);
+            label.setGraphicTextGap(8);
+            label.setPadding(new Insets(5, 0, 2, 0));
+
+            tooltip().add(label);
+        });
 
         data.on(Viewtify.UIThread).to(x -> {
+            // update data source
             series.getData().add(x);
 
+            // initialize tooltip label^
             x.getNode().setVisible(false);
-        });
+        }, view);
         return this;
     }
 

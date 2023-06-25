@@ -14,6 +14,7 @@ import java.text.NumberFormat;
 
 import javafx.geometry.Insets;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -22,7 +23,7 @@ import kiss.Signal;
 import viewtify.Viewtify;
 import viewtify.ui.helper.TooltipHelper;
 
-public class UIPieChart extends AbstractChart<UIPieChart, PieChart> implements TooltipHelper<UIPieChart, PieChart> {
+public class UIPieChart extends AbstractChart<UIPieChart, PieChart, PieChart.Data> implements TooltipHelper<UIPieChart, PieChart> {
 
     private NumberFormat formatter = DecimalFormat.getInstance();
 
@@ -34,14 +35,12 @@ public class UIPieChart extends AbstractChart<UIPieChart, PieChart> implements T
     }
 
     /**
-     * Set data.
-     * 
-     * @param data
-     * @return
+     * {@inheritDoc}
      */
-    public UIPieChart data(PieChart.Data data) {
-        Viewtify.inUI(() -> {
-            ui.getData().add(data);
+    @Override
+    public UIPieChart data(String name, Signal<Data> data) {
+        data.on(Viewtify.UIThread).to(x -> {
+            ui.getData().add(x);
 
             Circle mark = new Circle(4);
             mark.setFill(Color.rgb(255, 255, 255));
@@ -52,10 +51,10 @@ public class UIPieChart extends AbstractChart<UIPieChart, PieChart> implements T
             label.setGraphic(mark);
             label.setGraphicTextGap(8);
             label.setPadding(new Insets(5, 0, 2, 0));
-            label.setText(data.getName() + " - " + formatter.format(data.getPieValue()));
+            label.setText(x.getName() + " - " + formatter.format(x.getPieValue()));
 
             tooltip().add(label);
-        });
+        }, view);
         return this;
     }
 
@@ -70,18 +69,6 @@ public class UIPieChart extends AbstractChart<UIPieChart, PieChart> implements T
         if (decimalFormat != null) {
             this.formatter = new DecimalFormat(decimalFormat);
         }
-        return this;
-    }
-
-    /**
-     * Set data.
-     * 
-     * @param data
-     * @return
-     */
-    public UIPieChart data(Signal<PieChart.Data> data) {
-        data.to(ui.getData()::add);
-
         return this;
     }
 

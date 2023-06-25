@@ -18,17 +18,21 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
+import kiss.I;
+import kiss.Signal;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 
-public abstract class AbstractChart<Self extends AbstractChart<Self, C>, C extends Chart> extends UserInterface<Self, C>
+public abstract class AbstractChart<Self extends AbstractChart<Self, C, D>, C extends Chart, D> extends UserInterface<Self, C>
         implements UserActionHelper<Self> {
 
     private VBox root;
 
-    private Tooltip tooltip = new Tooltip();
+    private Tooltip tooltip;
 
     private boolean popuped;
+
+    private int legendLimit;
 
     /**
      * @param view
@@ -81,8 +85,72 @@ public abstract class AbstractChart<Self extends AbstractChart<Self, C>, C exten
         return (Self) this;
     }
 
+    public Self limitLegend(int size) {
+        this.legendLimit = size;
+        return (Self) this;
+    }
+
+    /**
+     * Provide new data.
+     * 
+     * @param data
+     * @return
+     */
+    public final Self data(D data) {
+        return data("", data);
+    }
+
+    /**
+     * Provide new data.
+     * 
+     * @param data
+     * @return
+     */
+    public final Self data(Iterable<D> data) {
+        return data("", data);
+    }
+
+    /**
+     * Provide new data.
+     * 
+     * @param data
+     * @return
+     */
+    public final Self data(Signal<D> data) {
+        return data("", data);
+    }
+
+    /**
+     * Provide new data.
+     * 
+     * @param data
+     * @return
+     */
+    public final Self data(String name, D data) {
+        return data(name, I.signal(data));
+    }
+
+    /**
+     * Provide new data.
+     * 
+     * @param data
+     * @return
+     */
+    public final Self data(String name, Iterable<D> data) {
+        return data(name, I.signal(data));
+    }
+
+    /**
+     * Provide new data.
+     * 
+     * @param data
+     * @return
+     */
+    public abstract Self data(String name, Signal<D> data);
+
     public Self popup() {
         root = new VBox();
+        tooltip = new Tooltip();
         tooltip.setGraphic(root);
 
         when(User.MouseMove, e -> {
