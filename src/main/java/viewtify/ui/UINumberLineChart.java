@@ -17,7 +17,6 @@ import java.util.function.Function;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
-import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
@@ -31,14 +30,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.StringConverter;
-
 import kiss.I;
 import kiss.Signal;
 import viewtify.Viewtify;
 import viewtify.ui.helper.TooltipHelper;
 import viewtify.ui.helper.UserActionHelper;
 
-public class UINumberLineChart<X extends Number, Y extends Number> extends UserInterface<UINumberLineChart<X, Y>, LineChart<X, Y>>
+public class UINumberLineChart<X extends Number, Y extends Number> extends AbstractChart<UINumberLineChart<X, Y>, LineChart<X, Y>>
         implements UserActionHelper<UINumberLineChart<X, Y>>, TooltipHelper<UINumberLineChart<X, Y>, LineChart<X, Y>> {
 
     private final VBox root = new VBox();
@@ -54,28 +52,6 @@ public class UINumberLineChart<X extends Number, Y extends Number> extends UserI
         super(new LineChart(new NumberAxis(), new NumberAxis()), view);
 
         root.getChildren().add(title);
-    }
-
-    /**
-     * Set title.
-     * 
-     * @param title
-     * @return
-     */
-    public UINumberLineChart<X, Y> title(String title) {
-        ui.setTitle(title);
-        return this;
-    }
-
-    /**
-     * Set title location.
-     * 
-     * @param side
-     * @return
-     */
-    public UINumberLineChart<X, Y> title(Side side) {
-        ui.setTitleSide(side);
-        return this;
     }
 
     /**
