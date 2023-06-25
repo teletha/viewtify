@@ -7,10 +7,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="X">
-		<header class="N">
-			<h1 class="U" date="2023-06-20" ver="2.10.0"><code>Viewtify</code></h1>
-			<nav class="O"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="U">
+		<header class="Q">
+			<h1 class="l" date="2023-06-20" ver="2.10.0"><code>Viewtify</code></h1>
+			<nav class="S"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -19,7 +19,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="i" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="k" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -27,16 +27,16 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="m">
-			<nav class="d">
+		<main class="j">
+			<nav class="M">
 				<div></div>
 			</nav>
 			<article class="L" id="Article">
-				<section class="Z"><code class="h">viewtify.ui</code>
-					<h2 class="Class H"><code class="P">UIPieChart</code></h2>
+				<section class="J"><code class="N">viewtify.ui</code>
+					<h2 class="Class f"><code class="W">UIPieChart</code></h2>
 					<div class="K">
 						<ul class="C E">
-							<li><code><a href="api/viewtify.ui.AbstractChart.html">AbstractChart</a><code class="parameters"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code>, <code>javafx.scene.chart.PieChart</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.AbstractChart.html">AbstractChart</a><code class="parameters"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code>, <code>javafx.scene.chart.PieChart</code>, <code>javafx.scene.chart.PieChart.Data</code></code></code></li>
 							<li><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a><code class="parameters"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code>, <code>javafx.scene.chart.PieChart</code></code></code></li>
 							<li><code><a href="api/viewtify.ui.helper.ReferenceHolder.html">ReferenceHolder</a></code></li>
 						</ul>
@@ -55,81 +55,71 @@
 						</ul>
 					</div>
 				</section>
-				<section class="Z" id="UIPieChart(viewtify.ui.View)">
-					<h2 class="I"><i class="PUBLIC"></i><code class="P">UIPieChart</code><code class="j">(<code><a href="api/viewtify.ui.View.html">View</a></code> <code class="parameterName">view</code>)</code></h2>
-					<table class="M">
+				<section class="J" id="UIPieChart(viewtify.ui.View)">
+					<h2 class="a"><i class="PUBLIC"></i><code class="W">UIPieChart</code><code class="H">(<code><a href="api/viewtify.ui.View.html">View</a></code> <code class="parameterName">view</code>)</code></h2>
+					<table class="P">
 						<tr class="b">
 							<td><code><a href="api/viewtify.ui.View.html">View</a></code> <code>view</code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Z" id="data(javafx.scene.chart.PieChart.Data)">
-					<h2 class="I"><i class="PUBLIC"></i><code class="P">data</code><code class="j">(<code>javafx.scene.chart.PieChart.Data</code> <code class="parameterName">data</code>)</code><i class="l"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></h2>
-					<table class="M">
+				<section class="J" id="data(java.lang.String,kiss.Signal)">
+					<h2 class="a"><i class="OVERRIDE PUBLIC"></i><code class="W">data</code><code class="H">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">name</code>, <code>kiss.Signal<code class="parameters"><code>javafx.scene.chart.PieChart.Data</code></code></code> <code class="parameterName">data</code>)</code><i class="e"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></h2>
+					<table class="P">
 						<tr class="b">
-							<td><code>javafx.scene.chart.PieChart.Data</code> <code>data</code></td>
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>name</code></td>
 							<td></td>
 						</tr>
-						<tr class="c">
+						<tr class="b">
+							<td><code>kiss.Signal<code class="parameters"><code>javafx.scene.chart.PieChart.Data</code></code></code> <code>data</code></td>
+							<td></td>
+						</tr>
+						<tr class="X">
 							<td><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Set data.</p>
-					</span></section>
-				<section class="Z" id="dataFormat(java.lang.String)">
-					<h2 class="I"><i class="PUBLIC"></i><code class="P">dataFormat</code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">decimalFormat</code>)</code><i class="l"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></h2>
-					<table class="M">
+					</table>
+				</section>
+				<section class="J" id="dataFormat(java.lang.String)">
+					<h2 class="a"><i class="PUBLIC"></i><code class="W">dataFormat</code><code class="H">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">decimalFormat</code>)</code><i class="e"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></h2>
+					<table class="P">
 						<tr class="b">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>decimalFormat</code></td>
 							<td><span><p>A decimal pattern.</p>
 								</span></td>
 						</tr>
-						<tr class="c">
+						<tr class="X">
 							<td><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Set the tick label of y-axis.</p>
 					</span></section>
-				<section class="Z" id="data(kiss.Signal)">
-					<h2 class="I"><i class="PUBLIC"></i><code class="P">data</code><code class="j">(<code>kiss.Signal<code class="parameters"><code>javafx.scene.chart.PieChart.Data</code></code></code> <code class="parameterName">data</code>)</code><i class="l"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></h2>
-					<table class="M">
-						<tr class="b">
-							<td><code>kiss.Signal<code class="parameters"><code>javafx.scene.chart.PieChart.Data</code></code></code> <code>data</code></td>
-							<td></td>
-						</tr>
-						<tr class="c">
-							<td><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Set data.</p>
-					</span></section>
-				<section class="Z" id="startAngle(double)">
-					<h2 class="I"><i class="PUBLIC"></i><code class="P">startAngle</code><code class="j">(<code>double</code> <code class="parameterName">angle</code>)</code><i class="l"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></h2>
-					<table class="M">
+				<section class="J" id="startAngle(double)">
+					<h2 class="a"><i class="PUBLIC"></i><code class="W">startAngle</code><code class="H">(<code>double</code> <code class="parameterName">angle</code>)</code><i class="e"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></h2>
+					<table class="P">
 						<tr class="b">
 							<td><code>double</code> <code>angle</code></td>
 							<td></td>
 						</tr>
-						<tr class="c">
+						<tr class="X">
 							<td><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
 			</article>
-			<aside class="a" id="SubNavi">
-				<div class="f">
-					<h5 class="V">Constructors</h5>
+			<aside class="d" id="SubNavi">
+				<div class="I">
+					<h5 class="h">Constructors</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UIPieChart.html#UIPieChart(viewtify.ui.View)">UIPieChart</a></code><code class="j">(<code><a href="api/viewtify.ui.View.html">View</a></code> <code class="parameterName">view</code>)</code></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UIPieChart.html#UIPieChart(viewtify.ui.View)">UIPieChart</a></code><code class="H">(<code><a href="api/viewtify.ui.View.html">View</a></code> <code class="parameterName">view</code>)</code></li>
 					</ul>
-					<h5 class="V">Methods</h5>
+					<h5 class="h">Methods</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UIPieChart.html#data(javafx.scene.chart.PieChart.Data)">data</a></code><code class="j">(<code>javafx.scene.chart.PieChart.Data</code> <code class="parameterName">data</code>)</code><i class="g"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UIPieChart.html#dataFormat(java.lang.String)">dataFormat</a></code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">decimalFormat</code>)</code><i class="g"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UIPieChart.html#data(kiss.Signal)">data</a></code><code class="j">(<code>kiss.Signal<code class="parameters"><code>javafx.scene.chart.PieChart.Data</code></code></code> <code class="parameterName">data</code>)</code><i class="g"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UIPieChart.html#startAngle(double)">startAngle</a></code><code class="j">(<code>double</code> <code class="parameterName">angle</code>)</code><i class="g"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.UIPieChart.html#data(java.lang.String,kiss.Signal)">data</a></code><code class="H">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">name</code>, <code>kiss.Signal<code class="parameters"><code>javafx.scene.chart.PieChart.Data</code></code></code> <code class="parameterName">data</code>)</code><i class="Y"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UIPieChart.html#dataFormat(java.lang.String)">dataFormat</a></code><code class="H">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">decimalFormat</code>)</code><i class="Y"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UIPieChart.html#startAngle(double)">startAngle</a></code><code class="H">(<code>double</code> <code class="parameterName">angle</code>)</code><i class="Y"><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></i></li>
 					</ul>
 				</div>
 			</aside>
