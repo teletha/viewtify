@@ -9,10 +9,26 @@
  */
 package viewtify.ui;
 
+import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.chart.Chart;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 
-public abstract class AbstractChart<Self extends AbstractChart<Self, C>, C extends Chart> extends UserInterface<Self, C> {
+import viewtify.ui.helper.User;
+import viewtify.ui.helper.UserActionHelper;
+
+public abstract class AbstractChart<Self extends AbstractChart<Self, C>, C extends Chart> extends UserInterface<Self, C>
+        implements UserActionHelper<Self> {
+
+    private VBox root;
+
+    private Tooltip tooltip = new Tooltip();
+
+    private boolean popuped;
 
     /**
      * @param view
@@ -63,5 +79,49 @@ public abstract class AbstractChart<Self extends AbstractChart<Self, C>, C exten
     public Self legend(Side side) {
         ui.setLegendSide(side);
         return (Self) this;
+    }
+
+    public Self popup() {
+        root = new VBox();
+        tooltip.setGraphic(root);
+
+        when(User.MouseMove, e -> {
+            if (!showTooltip(e)) {
+                hideTooltip(e);
+            }
+        });
+        when(User.MouseExit, this::hideTooltip);
+        return (Self) this;
+    }
+
+    /**
+     * Get the tooltip pane.
+     * 
+     * @return
+     */
+    protected ObservableList<Node> tooltip() {
+        return root.getChildren();
+    }
+
+    protected boolean showTooltip(MouseEvent e) {
+        Bounds outer = ui.localToScreen(ui.getBoundsInLocal());
+        double x = outer.getMinX() + e.getX() + 20;
+        double y = outer.getMinY() + e.getY() - 15;
+
+        if (popuped) {
+            tooltip.setX(x);
+            tooltip.setY(y);
+        } else {
+            popuped = true;
+            tooltip.show(ui, x, y);
+        }
+        return true;
+    }
+
+    protected void hideTooltip(MouseEvent e) {
+        if (popuped) {
+            popuped = false;
+            tooltip.hide();
+        }
     }
 }

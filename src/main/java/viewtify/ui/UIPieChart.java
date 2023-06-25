@@ -12,25 +12,17 @@ package viewtify.ui;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+
 import kiss.Signal;
 import viewtify.Viewtify;
 import viewtify.ui.helper.TooltipHelper;
-import viewtify.ui.helper.UserActionHelper;
 
-public class UIPieChart extends AbstractChart<UIPieChart, PieChart>
-        implements UserActionHelper<UIPieChart>, TooltipHelper<UIPieChart, PieChart> {
-
-    private final VBox root = new VBox();
-
-    private boolean popuped;
+public class UIPieChart extends AbstractChart<UIPieChart, PieChart> implements TooltipHelper<UIPieChart, PieChart> {
 
     private NumberFormat formatter = DecimalFormat.getInstance();
 
@@ -54,7 +46,7 @@ public class UIPieChart extends AbstractChart<UIPieChart, PieChart>
             Circle mark = new Circle(4);
             mark.setFill(Color.rgb(255, 255, 255));
             mark.setStrokeWidth(2);
-            mark.getStyleClass().addAll("default-color" + ((root.getChildren().size() - 1)), "chart-series-line");
+            mark.getStyleClass().addAll("default-color" + ((tooltip().size() - 1)), "chart-series-line");
 
             Label label = new Label();
             label.setGraphic(mark);
@@ -62,7 +54,7 @@ public class UIPieChart extends AbstractChart<UIPieChart, PieChart>
             label.setPadding(new Insets(5, 0, 2, 0));
             label.setText(data.getName() + " - " + formatter.format(data.getPieValue()));
 
-            root.getChildren().add(label);
+            tooltip().add(label);
         });
         return this;
     }
@@ -95,32 +87,6 @@ public class UIPieChart extends AbstractChart<UIPieChart, PieChart>
 
     public UIPieChart startAngle(double angle) {
         ui.setStartAngle(angle);
-        return this;
-    }
-
-    public UIPieChart popup() {
-        Tooltip tooltip = new Tooltip();
-        tooltip.setGraphic(root);
-
-        ui.setOnMouseExited(e -> {
-            popuped = false;
-            tooltip.hide();
-        });
-
-        ui.setOnMouseMoved(e -> {
-            Bounds outer = ui.localToScreen(ui.getBoundsInLocal());
-            double x = outer.getMinX() + e.getX() + 20;
-            double y = outer.getMinY() + e.getY() - 15;
-
-            if (popuped) {
-                tooltip.setX(x);
-                tooltip.setY(y);
-            } else {
-                popuped = true;
-                tooltip.show(ui, x, y);
-            }
-        });
-
         return this;
     }
 }

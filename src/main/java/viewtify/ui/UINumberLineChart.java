@@ -25,33 +25,31 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.StringConverter;
+
 import kiss.I;
 import kiss.Signal;
 import viewtify.Viewtify;
 import viewtify.ui.helper.TooltipHelper;
-import viewtify.ui.helper.UserActionHelper;
 
 public class UINumberLineChart<X extends Number, Y extends Number> extends AbstractChart<UINumberLineChart<X, Y>, LineChart<X, Y>>
-        implements UserActionHelper<UINumberLineChart<X, Y>>, TooltipHelper<UINumberLineChart<X, Y>, LineChart<X, Y>> {
+        implements TooltipHelper<UINumberLineChart<X, Y>, LineChart<X, Y>> {
 
-    private final VBox root = new VBox();
+    private Label title;
 
-    private final Label title = new Label();
+    /** The cache of hovered line points. */
+    private List<Node> hovers;
 
-    private boolean popuped;
+    private Function<Double, X> detector;
 
     /**
      * @param view
      */
     public UINumberLineChart(View view) {
         super(new LineChart(new NumberAxis(), new NumberAxis()), view);
-
-        root.getChildren().add(title);
     }
 
     /**
@@ -146,14 +144,14 @@ public class UINumberLineChart<X extends Number, Y extends Number> extends Abstr
         Circle mark = new Circle(4);
         mark.setFill(Color.rgb(255, 255, 255));
         mark.setStrokeWidth(2);
-        mark.getStyleClass().addAll("default-color" + ((root.getChildren().size() - 1)), "chart-series-line");
+        mark.getStyleClass().addAll("default-color" + ((tooltip().size() - 1)), "chart-series-line");
 
         Label label = new Label();
         label.setGraphic(mark);
         label.setGraphicTextGap(8);
         label.setPadding(new Insets(5, 0, 2, 0));
 
-        root.getChildren().add(label);
+        tooltip().add(label);
 
         data.on(Viewtify.UIThread).to(x -> {
             series.getData().add(x);
@@ -199,67 +197,68 @@ public class UINumberLineChart<X extends Number, Y extends Number> extends Abstr
      * @return Chainable API
      */
     public UINumberLineChart<X, Y> popup(Function<Double, X> detector) {
-        Tooltip tooltip = new Tooltip();
-        tooltip.setGraphic(root);
+        popup();
+
+        this.detector = detector;
+        this.hovers = new ArrayList();
+        this.title = new Label();
+        tooltip().add(title);
+
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected boolean showTooltip(MouseEvent e) {
+        Node back = ui.lookup(".chart-plot-background");
+        Bounds outer = ui.localToScreen(ui.getBoundsInLocal());
+        Bounds inner = back.localToScreen(back.getBoundsInLocal());
+
+        if (!inner.contains(e.getScreenX(), e.getScreenY())) {
+            return false;
+        }
+        hideLinePoint();
 
         NumberAxis axisX = (NumberAxis) ui.getXAxis();
-        List<Node> hovers = new ArrayList();
-        Node back = ui.lookup(".chart-plot-background");
+        double valueX = axisX.getValueForDisplay(e.getX() - (inner.getMinX() - outer.getMinX())).doubleValue();
+        X detected = detector.apply(valueX);
 
-        ui.setOnMouseExited(e -> {
-            popuped = false;
-            tooltip.hide();
-            ui.getData().stream().flatMap(x -> x.getData().stream()).forEach(x -> x.getNode().setVisible(false));
-        });
-        ui.setOnMouseMoved(e -> {
-            Bounds outer = ui.localToScreen(ui.getBoundsInLocal());
-            Bounds inner = back.localToScreen(back.getBoundsInLocal());
+        StringConverter<Number> formatter = axisX.getTickLabelFormatter();
+        title.setText(formatter == null ? detected.toString() : formatter.toString(detected));
 
-            // remove old hover effect
-            for (Node hover : hovers) {
-                hover.setVisible(false);
-            }
-            hovers.clear();
+        root: for (int i = 0; i < ui.getData().size(); i++) {
+            Series<X, Y> series = ui.getData().get(i);
+            for (Data<X, Y> data : series.getData()) {
+                if (data.getXValue().equals(detected)) {
+                    Label label = (Label) tooltip().get(i + 1);
+                    label.setText(series.getName() + "   " + data.getYValue());
 
-            if (inner.contains(e.getScreenX(), e.getScreenY())) {
-                double valueX = axisX.getValueForDisplay(e.getX() - (inner.getMinX() - outer.getMinX())).doubleValue();
-                X detected = detector.apply(valueX);
-
-                StringConverter<Number> formatter = axisX.getTickLabelFormatter();
-                title.setText(formatter == null ? detected.toString() : formatter.toString(detected));
-
-                root: for (int i = 0; i < ui.getData().size(); i++) {
-                    Series<X, Y> series = ui.getData().get(i);
-                    for (Data<X, Y> data : series.getData()) {
-                        if (data.getXValue().equals(detected)) {
-                            Label label = (Label) root.getChildren().get(i + 1);
-                            label.setText(series.getName() + "   " + data.getYValue());
-
-                            Node node = data.getNode();
-                            node.setVisible(true);
-                            hovers.add(node);
-                            continue root;
-                        }
-                    }
-                }
-
-                double x = outer.getMinX() + e.getX() + 20;
-                double y = outer.getMinY() + e.getY() - 15;
-
-                if (popuped) {
-                    tooltip.setX(x);
-                    tooltip.setY(y);
-                } else {
-                    popuped = true;
-                    tooltip.show(ui, x, y);
-                }
-            } else {
-                if (popuped) {
-                    popuped = false;
-                    tooltip.hide();
+                    Node node = data.getNode();
+                    node.setVisible(true);
+                    hovers.add(node);
+                    continue root;
                 }
             }
-        });
-        return this;
+        }
+
+        return super.showTooltip(e);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void hideTooltip(MouseEvent e) {
+        super.hideTooltip(e);
+        hideLinePoint();
+    }
+
+    private void hideLinePoint() {
+        for (Node hover : hovers) {
+            hover.setVisible(false);
+        }
+        hovers.clear();
     }
 }
