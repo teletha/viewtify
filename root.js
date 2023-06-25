@@ -25,6 +25,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AbstractChart",
+			"packageName": "viewtify.ui",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "AbstractPane",
 			"packageName": "viewtify.ui",
 			"type": "AbstractClass"
@@ -677,6 +684,13 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UIPane",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UIPieChart",
 			"packageName": "viewtify.ui",
 			"type": "Class"
 		},

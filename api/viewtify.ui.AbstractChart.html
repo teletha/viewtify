@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="P">
+		<header class="Z">
+			<h1 class="a" date="2023-06-20" ver="2.10.0"><code>Viewtify</code></h1>
+			<nav class="N"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="f" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="j">
+			<nav class="U">
+				<div></div>
+			</nav>
+			<article class="m" id="Article">
+				<section class="e"><code class="g">viewtify.ui</code>
+					<h2 class="AbstractClass S"><code class="l">AbstractChart</code><code class="J">&#60;<code>Self</code>, <code>C</code>&#62;</code></h2>
+					<div class="d">
+						<ul class="C D">
+							<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.AbstractChart.html">AbstractChart</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></code></li>
+							<li><code>C</code><code class="extends"><code>javafx.scene.chart.Chart</code></code></li>
+						</ul>
+						<ul class="C E">
+							<li><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.ReferenceHolder.html">ReferenceHolder</a></code></li>
+						</ul>
+						<ul class="C F">
+							<li><code><a href="api/viewtify.ui.helper.AnimateHelper.html">AnimateHelper</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.DecorationHelper.html">DecorationHelper</a><code class="parameters"><code>Self</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.DisableHelper.html">DisableHelper</a><code class="parameters"><code>Self</code></code></code></li>
+							<li><code>kiss.Disposable</code></li>
+							<li><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.html">PropertyAccessHelper</a></code></li>
+							<li><code><a href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.TooltipHelper.html">TooltipHelper</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a><code class="parameters"><code>Self</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>C</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>Self</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.helper.VisibleHelper.html">VisibleHelper</a><code class="parameters"><code>Self</code></code></code></li>
+						</ul>
+						<ul class="C G">
+							<li><code><a href="api/viewtify.ui.UINumberLineChart.html">UINumberLineChart</a><code class="parameters"><code>X</code>, <code>Y</code></code></code></li>
+							<li><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></li>
+						</ul>
+					</div>
+				</section>
+				<section class="e" id="AbstractChart(java.lang.Object,viewtify.ui.View)">
+					<h2 class="h"><i class="PROTECTED"></i><code class="l">AbstractChart</code><code class="J">(<code>C</code> <code class="parameterName">chart</code>, <code><a href="api/viewtify.ui.View.html">View</a></code> <code class="parameterName">view</code>)</code></h2>
+					<table class="V">
+						<tr class="k">
+							<td><code>C</code> <code>chart</code></td>
+							<td></td>
+						</tr>
+						<tr class="k">
+							<td><code><a href="api/viewtify.ui.View.html">View</a></code> <code>view</code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="e" id="title(java.lang.String)">
+					<h2 class="h"><i class="PUBLIC"></i><code class="l">title</code><code class="J">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">title</code>)</code><i class="Y"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="k">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>title</code></td>
+							<td></td>
+						</tr>
+						<tr class="W">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Set title.</p>
+					</span></section>
+				<section class="e" id="title(javafx.geometry.Side)">
+					<h2 class="h"><i class="PUBLIC"></i><code class="l">title</code><code class="J">(<code>javafx.geometry.Side</code> <code class="parameterName">side</code>)</code><i class="Y"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="k">
+							<td><code>javafx.geometry.Side</code> <code>side</code></td>
+							<td></td>
+						</tr>
+						<tr class="W">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Set title location.</p>
+					</span></section>
+				<section class="e" id="legend(boolean)">
+					<h2 class="h"><i class="PUBLIC"></i><code class="l">legend</code><code class="J">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="Y"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="k">
+							<td><code>boolean</code> <code>enable</code></td>
+							<td></td>
+						</tr>
+						<tr class="W">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Set legends.</p>
+					</span></section>
+				<section class="e" id="legend(javafx.geometry.Side)">
+					<h2 class="h"><i class="PUBLIC"></i><code class="l">legend</code><code class="J">(<code>javafx.geometry.Side</code> <code class="parameterName">side</code>)</code><i class="Y"><code>Self</code></i></h2>
+					<table class="V">
+						<tr class="k">
+							<td><code>javafx.geometry.Side</code> <code>side</code></td>
+							<td></td>
+						</tr>
+						<tr class="W">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Set legends location.</p>
+					</span></section>
+			</article>
+			<aside class="K" id="SubNavi">
+				<div class="X">
+					<h5 class="i">Constructors</h5>
+					<ul>
+						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.AbstractChart.html#AbstractChart(java.lang.Object,viewtify.ui.View)">AbstractChart</a></code><code class="J">(<code>C</code> <code class="parameterName">chart</code>, <code><a href="api/viewtify.ui.View.html">View</a></code> <code class="parameterName">view</code>)</code></li>
+					</ul>
+					<h5 class="i">Methods</h5>
+					<ul>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#title(java.lang.String)">title</a></code><code class="J">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">title</code>)</code><i class="H"><code>Self</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#title(javafx.geometry.Side)">title</a></code><code class="J">(<code>javafx.geometry.Side</code> <code class="parameterName">side</code>)</code><i class="H"><code>Self</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#legend(boolean)">legend</a></code><code class="J">(<code>boolean</code> <code class="parameterName">enable</code>)</code><i class="H"><code>Self</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#legend(javafx.geometry.Side)">legend</a></code><code class="J">(<code>javafx.geometry.Side</code> <code class="parameterName">side</code>)</code><i class="H"><code>Self</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>
