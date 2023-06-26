@@ -73,4 +73,20 @@ public class UIPieChart extends AbstractChart<UIPieChart, PieChart, PieChart.Dat
         ui.setStartAngle(angle);
         return this;
     }
+
+    /**
+     * The length of the line from the outside of the pie to the slice labels.
+     * 
+     * @param length
+     * @return
+     */
+    public UIPieChart lineLength(double length) {
+        ui.setLabelLineLength(length);
+        return this;
+    }
+
+    public UIPieChart label(boolean enable) {
+        ui.setLabelsVisible(enable);
+        return this;
+    }
 }
