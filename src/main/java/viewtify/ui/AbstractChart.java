@@ -9,15 +9,17 @@
  */
 package viewtify.ui;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.chart.Chart;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import kiss.I;
 import kiss.Signal;
 import viewtify.ui.helper.User;
@@ -26,19 +28,32 @@ import viewtify.ui.helper.UserActionHelper;
 public abstract class AbstractChart<Self extends AbstractChart<Self, C, D>, C extends Chart, D> extends UserInterface<Self, C>
         implements UserActionHelper<Self> {
 
-    private VBox root;
+    /** The actual tooltip. */
+    private final Tooltip tooltip = new Tooltip();
 
-    private Tooltip tooltip;
+    /** The tooltip pane. */
+    protected final VBox root = new VBox();
 
-    private boolean popuped;
+    /** The tooltip showing state. */
+    private boolean shown;
 
-    private int legendLimit;
+    /** The number of tooltip labels that can be displayed. */
+    private int tooltipLabels = Integer.MAX_VALUE;
 
     /**
      * @param view
      */
     protected AbstractChart(C chart, View view) {
         super(chart, view);
+
+        tooltip.setGraphic(root);
+
+        when(User.MouseExit, this::hideTooltip);
+        when(User.MouseMove, e -> {
+            if (!showTooltip(e)) {
+                hideTooltip(e);
+            }
+        });
     }
 
     /**
@@ -85,8 +100,20 @@ public abstract class AbstractChart<Self extends AbstractChart<Self, C, D>, C ex
         return (Self) this;
     }
 
-    public Self limitLegend(int size) {
-        this.legendLimit = size;
+    /**
+     * Limit the number of tooltip labels.
+     * 
+     * @param size
+     * @return
+     */
+    public Self limitLabel(int size) {
+        this.tooltipLabels = size;
+
+        for (int i = 0; i < root.getChildren().size(); i++) {
+            Node node = root.getChildren().get(i);
+            node.setManaged(i < size);
+            node.setVisible(i < size);
+        }
         return (Self) this;
     }
 
@@ -148,48 +175,58 @@ public abstract class AbstractChart<Self extends AbstractChart<Self, C, D>, C ex
      */
     public abstract Self data(String name, Signal<D> data);
 
-    public Self popup() {
-        root = new VBox();
-        tooltip = new Tooltip();
-        tooltip.setGraphic(root);
-
-        when(User.MouseMove, e -> {
-            if (!showTooltip(e)) {
-                hideTooltip(e);
-            }
-        });
-        when(User.MouseExit, this::hideTooltip);
-        return (Self) this;
-    }
-
     /**
-     * Get the tooltip pane.
+     * Show tooltip.
      * 
+     * @param e
      * @return
      */
-    protected ObservableList<Node> tooltip() {
-        return root.getChildren();
-    }
-
     protected boolean showTooltip(MouseEvent e) {
         Bounds outer = ui.localToScreen(ui.getBoundsInLocal());
         double x = outer.getMinX() + e.getX() + 20;
         double y = outer.getMinY() + e.getY() - 15;
 
-        if (popuped) {
+        if (shown) {
             tooltip.setX(x);
             tooltip.setY(y);
         } else {
-            popuped = true;
+            shown = true;
             tooltip.show(ui, x, y);
         }
         return true;
     }
 
+    /**
+     * Hide tooltip.
+     * 
+     * @param e
+     */
     protected void hideTooltip(MouseEvent e) {
-        if (popuped) {
-            popuped = false;
+        if (shown) {
+            shown = false;
             tooltip.hide();
         }
+    }
+
+    /**
+     * Create tooltip label.
+     * 
+     * @param colorId
+     * @return
+     */
+    protected Label createTooltipLabel(int colorId) {
+        Circle mark = new Circle(3);
+        mark.setFill(Color.TRANSPARENT);
+        mark.setStrokeWidth(2);
+        mark.getStyleClass().addAll("default-color" + colorId, "chart-series-line");
+
+        Label label = new Label();
+        label.setGraphic(mark);
+        label.setGraphicTextGap(8);
+        label.setPadding(new Insets(5, 0, 2, 0));
+        label.setVisible(root.getChildren().size() < tooltipLabels);
+        label.setManaged(root.getChildren().size() < tooltipLabels);
+
+        return label;
     }
 }

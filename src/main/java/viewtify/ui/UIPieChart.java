@@ -12,19 +12,16 @@ package viewtify.ui;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import javafx.geometry.Insets;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-
 import kiss.Signal;
 import viewtify.Viewtify;
 import viewtify.ui.helper.TooltipHelper;
 
 public class UIPieChart extends AbstractChart<UIPieChart, PieChart, PieChart.Data> implements TooltipHelper<UIPieChart, PieChart> {
 
+    /** The tooltip label formatter. */
     private NumberFormat formatter = DecimalFormat.getInstance();
 
     /**
@@ -32,6 +29,8 @@ public class UIPieChart extends AbstractChart<UIPieChart, PieChart, PieChart.Dat
      */
     public UIPieChart(View view) {
         super(new PieChart(), view);
+
+        startAngle(90);
     }
 
     /**
@@ -42,18 +41,10 @@ public class UIPieChart extends AbstractChart<UIPieChart, PieChart, PieChart.Dat
         data.on(Viewtify.UIThread).to(x -> {
             ui.getData().add(x);
 
-            Circle mark = new Circle(4);
-            mark.setFill(Color.rgb(255, 255, 255));
-            mark.setStrokeWidth(2);
-            mark.getStyleClass().addAll("default-color" + ((tooltip().size() - 1)), "chart-series-line");
-
-            Label label = new Label();
-            label.setGraphic(mark);
-            label.setGraphicTextGap(8);
-            label.setPadding(new Insets(5, 0, 2, 0));
+            Label label = createTooltipLabel(root.getChildren().size());
             label.setText(x.getName() + " - " + formatter.format(x.getPieValue()));
 
-            tooltip().add(label);
+            root.getChildren().add(label);
         }, view);
         return this;
     }
@@ -65,13 +56,19 @@ public class UIPieChart extends AbstractChart<UIPieChart, PieChart, PieChart.Dat
      * @return
      * @see "https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/text/DecimalFormat.html"
      */
-    public UIPieChart dataFormat(String decimalFormat) {
+    public UIPieChart label(String decimalFormat) {
         if (decimalFormat != null) {
             this.formatter = new DecimalFormat(decimalFormat);
         }
         return this;
     }
 
+    /**
+     * Configure the starting angle.
+     * 
+     * @param angle
+     * @return
+     */
     public UIPieChart startAngle(double angle) {
         ui.setStartAngle(angle);
         return this;
