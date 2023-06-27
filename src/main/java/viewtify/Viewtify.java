@@ -834,7 +834,6 @@ public final class Viewtify {
         // are automatically detected and reapplied at any time.
         // ================================================================
         scene.getStylesheets().addAll(stylesheets);
-        System.out.println(stylesheets);
 
         // apply title and icon
         stage.setTitle(viewtify.title);
