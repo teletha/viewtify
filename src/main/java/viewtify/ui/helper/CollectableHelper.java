@@ -24,6 +24,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
@@ -37,6 +38,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -117,16 +119,6 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @param items All items to set.
      * @return Chainable API.
      */
-    default Self itemAll(Signal<List<E>> items) {
-        return dispose(items.to(list -> items(list)));
-    }
-
-    /**
-     * Sets all values as items.
-     * 
-     * @param items All items to set.
-     * @return Chainable API.
-     */
     default Self items(BaseStream<E, ?> items) {
         return items(items::iterator);
     }
@@ -193,6 +185,43 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      */
     default Self items(int start, int end, IntFunction<E> mapper) {
         return items(IntStream.range(start, end + 1).mapToObj(mapper).collect(Collectors.toList()));
+    }
+
+    /**
+     * Sets all values as items.
+     * 
+     * @param items All items to set.
+     * @return Chainable API.
+     */
+    default Self itemAll(Signal<List<E>> items) {
+        return dispose(items.to(list -> items(list)));
+    }
+
+    /**
+     * Sets all values as items.
+     * 
+     * @param items
+     * @return Chainable API.
+     */
+    default Self itemsWhen(Signal<?> reload, Supplier<List<E>> items) {
+        return dispose(reload.startWithNull().to(() -> {
+            List<E> list = items.get();
+            if (list instanceof ObservableList o) {
+                items(o);
+            } else {
+                items(list);
+            }
+        }));
+    }
+
+    /**
+     * Sets all values as items.
+     * 
+     * @param setter
+     * @return Chainable API.
+     */
+    default Self itemsWhen(Signal<?> reload, Consumer<Self> setter) {
+        return dispose(reload.startWithNull().to(() -> setter.accept((Self) this)));
     }
 
     /**
