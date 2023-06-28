@@ -190,16 +190,6 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     /**
      * Sets all values as items.
      * 
-     * @param items All items to set.
-     * @return Chainable API.
-     */
-    default Self itemAll(Signal<List<E>> items) {
-        return dispose(items.to(list -> items(list)));
-    }
-
-    /**
-     * Sets all values as items.
-     * 
      * @param items
      * @return Chainable API.
      */
