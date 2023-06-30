@@ -12,6 +12,14 @@ package viewtify.ui.focus;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
+
+import com.sun.javafx.scene.traversal.Direction;
+import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
+import com.sun.javafx.scene.traversal.TraversalMethod;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -23,14 +31,6 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-
-import org.controlsfx.control.PopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
-
-import com.sun.javafx.scene.traversal.Direction;
-import com.sun.javafx.scene.traversal.TopMostTraversalEngine;
-import com.sun.javafx.scene.traversal.TraversalMethod;
-
 import kiss.I;
 import viewtify.keys.Key;
 import viewtify.ui.UIButton;
@@ -271,7 +271,6 @@ public class KeyboardNavigation {
             List<UserInterface> nest = managed.get(0);
             if (!nest.isEmpty()) {
                 nest.get(0).focus();
-                System.out.println("focust " + nest.get(0).ui);
             }
         }
         return this;
@@ -498,7 +497,7 @@ public class KeyboardNavigation {
          * Support to focus the next input automatically.
          */
         private final ChangeListener<Object> autofocus = (v, o, n) -> {
-            if (focusable && !o.equals(n) && current.verifier().isValid()) {
+            if (focusable && !Objects.equals(o, n) && current.verifier().isValid()) {
                 int max = current.maximumInput();
                 if (0 < max && max <= current.length()) {
                     focusNext(current.ui);

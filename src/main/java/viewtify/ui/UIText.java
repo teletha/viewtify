@@ -15,7 +15,7 @@ import java.text.Normalizer.Form;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.UnaryOperator;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import org.controlsfx.control.textfield.AutoCompletionBinding.ISuggestionRequest;
@@ -32,8 +32,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
@@ -59,8 +57,8 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     /** The value sync state. */
     private final GuardedOperation updating = new GuardedOperation().ignoreError();
 
-    /** The inline formatter. */
-    private VerifiableFormatter formatter;
+    /** The value renderer. */
+    private Function<V, String> renderer = v -> I.transform(v, String.class);
 
     /**
      * Enchanced view.
@@ -72,7 +70,7 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
         // propagate value from model to ui
         Viewtify.observe(model).to(value -> {
             updating.guard(() -> {
-                ui.setText(I.transform(value, String.class));
+                ui.setText(renderer.apply(value));
             });
         });
 
@@ -222,6 +220,16 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     }
 
     /**
+     * Specify the character types that can be entered as regular expressions.
+     * 
+     * @return
+     */
+    public final UIText<V> rejectAnyInput() {
+        ((VerifiableTextField) ui).acceptInput("$^");
+        return this;
+    }
+
+    /**
      * Specifies how to normalize the input characters.
      * 
      * @param form
@@ -317,14 +325,14 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     }
 
     /**
-     * Set the text formatter.
+     * Set the value renderer.
      * 
-     * @param formatter Your formatter.
-     * @return Chainable API.
+     * @param renderer
+     * @return
      */
-    public final UIText<V> formatter(TextFormatter<V> formatter) {
-        if (formatter != null) {
-            ui.setTextFormatter(formatter);
+    public final UIText<V> renderer(Function<V, String> renderer) {
+        if (renderer != null) {
+            this.renderer = renderer;
         }
         return this;
     }
@@ -496,69 +504,6 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
             public ObjectProperty<Node> rightProperty() {
                 return VerifiableTextField.this.rightProperty();
             }
-        }
-    }
-
-    /**
-     * 
-     */
-    private class VerifiableFormatter implements UnaryOperator<Change> {
-
-        private String prefix = "";
-
-        private String suffix = "";
-
-        private TextFormatter<V> formatter = new TextFormatter<>(this);
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Change apply(Change c) {
-            try {
-                String oldText = c.getControlText();
-                String newText = c.getControlNewText();
-                int newLength = newText.length();
-
-                if (c.isContentChange()) {
-                    if (!newText.startsWith(prefix)) {
-                        c.setText(prefix + c.getText());
-                    }
-
-                    if (!newText.endsWith(suffix)) {
-                        c.setText(c.getText() + suffix);
-                    }
-
-                    if (c.isDeleted()) {
-                        if (oldText.length() - suffix.length() < c.getRangeEnd()) {
-                            return null;
-                        }
-                    }
-                } else {
-
-                }
-
-                int caretPrev = c.getControlCaretPosition();
-                int caretNext = c.getCaretPosition();
-                if (caretNext < caretPrev) {
-                    if (prefix != null) {
-                        if (caretNext < prefix.length()) {
-                            c.setCaretPosition(caretPrev);
-                        }
-                    }
-                }
-
-                if (caretPrev < caretNext) {
-                    if (suffix != null) {
-                        if (newLength < caretNext + suffix.length()) {
-                            c.setCaretPosition(caretPrev);
-                        }
-                    }
-                }
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-            return c;
         }
     }
 }
