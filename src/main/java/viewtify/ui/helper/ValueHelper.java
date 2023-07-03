@@ -213,7 +213,7 @@ public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
      * @param save
      * @return
      */
-    default <X extends UserInterface & ValueHelper<X, V>> Self historical(WiseConsumer<V> save, Edito context) {
+    default <X extends StyleHelper & ValueHelper<X, V>> Self historical(WiseConsumer<V> save, Edito context) {
         if (save != null) {
             if (context == null) context = Edito.Root;
             context.manageValue((X) this, save);

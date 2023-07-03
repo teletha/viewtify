@@ -29,6 +29,7 @@ import kiss.model.Model;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 import viewtify.ui.helper.CollectableHelper;
+import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.ValueHelper;
 
 /**
@@ -46,7 +47,7 @@ public class Edito {
     private final Signaling<Map> edit = new Signaling();
 
     /** The edited user interface. */
-    private final Map<UserInterface, Snapshot> edited = new ConcurrentHashMap();
+    private final Map<StyleHelper, Snapshot> edited = new ConcurrentHashMap();
 
     /** The edited event. */
     public final Signal<Boolean> editing = edit.expose.map(x -> !x.isEmpty());
@@ -57,7 +58,7 @@ public class Edito {
      * @param <V>
      * @param ui
      */
-    public <V extends UserInterface & ValueHelper<V, X>, X> void manageValue(V ui, WiseConsumer<X> save) {
+    public <V extends StyleHelper & ValueHelper<V, X>, X> void manageValue(V ui, WiseConsumer<X> save) {
         ui.observing()
                 .scan(value -> snapshot(value, x -> ui.value(x), save), Snapshot::update)
                 .takeUntil(stop.expose)
@@ -77,7 +78,7 @@ public class Edito {
                 .to(snapshot -> edited(ui, snapshot));
     }
 
-    private void edited(UserInterface ui, Snapshot snapshot) {
+    private void edited(StyleHelper ui, Snapshot snapshot) {
         if (snapshot.match()) {
             Object removed = edited.remove(ui);
             if (removed != null) {
@@ -115,8 +116,8 @@ public class Edito {
      * Save all changes.
      */
     public void save() {
-        for (Entry<UserInterface, Snapshot> entry : edited.entrySet()) {
-            UserInterface ui = entry.getKey();
+        for (Entry<StyleHelper, Snapshot> entry : edited.entrySet()) {
+            StyleHelper ui = entry.getKey();
             Snapshot snap = entry.getValue();
 
             snap.save();
@@ -132,7 +133,7 @@ public class Edito {
      * Revert all changes.
      */
     public void revert() {
-        for (Entry<UserInterface, Snapshot> entry : edited.entrySet()) {
+        for (Entry<StyleHelper, Snapshot> entry : edited.entrySet()) {
             entry.getValue().revert();
         }
     }
