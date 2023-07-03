@@ -1,5 +1,40 @@
 # Changelog
 
+## [2.11.0](https://github.com/teletha/viewtify/compare/v2.10.0...v2.11.0) (2023-07-03)
+
+
+### Features
+
+* Add CollectableHelper#itemsWhen. ([58a9b68](https://github.com/teletha/viewtify/commit/58a9b6824ce719388394ee9a8ed2ad18597a6999))
+* Add line chart widget. ([58d5643](https://github.com/teletha/viewtify/commit/58d56430c66703514ffa82b210a4a1204a8c2902))
+* Add new light theme. ([d2b7d1f](https://github.com/teletha/viewtify/commit/d2b7d1f969188db0e8861a408ecf0b82cca115eb))
+* Add new theme 'GreenTea'. ([b7b06ac](https://github.com/teletha/viewtify/commit/b7b06acf949115cdc34de56910d11259b302ca53))
+* Add UIPieChart. ([b3e1d8d](https://github.com/teletha/viewtify/commit/b3e1d8d225b6cc9f0b647b9d754eb834f389d255))
+* Add ValueHelper#historicalValue. ([fd23c31](https://github.com/teletha/viewtify/commit/fd23c31473af034e46ac6e780a847cd62624574c))
+* Enhance chart. ([231e773](https://github.com/teletha/viewtify/commit/231e773e7076ba9e0b336c8fd5e57d4a74bb2aaa))
+* LabelHelper can set image as icon. ([9055293](https://github.com/teletha/viewtify/commit/9055293dc81458041612650c44944908ab990d9c))
+* Provide enhanced LineChart. ([90ee0d7](https://github.com/teletha/viewtify/commit/90ee0d7deb0c2216868be625b38d1510e1c99269))
+* Provide new theme 'CaffeLatte'. ([dbb924f](https://github.com/teletha/viewtify/commit/dbb924fb7fc09a4ee09ea66684983e9b2e77a890))
+* Remove LabelHelper#icon(Glyph, Color). ([e95b2da](https://github.com/teletha/viewtify/commit/e95b2da26c9edae011322706b6905bc488a3cc14))
+* Support built-in high contrast and old caspian theme. ([586a98f](https://github.com/teletha/viewtify/commit/586a98f05c6d863ab0b979c176b8d099d8dbb3b8))
+
+
+### Bug Fixes
+
+* Apply current theme to the separated docking window. ([93a004f](https://github.com/teletha/viewtify/commit/93a004f22c5752c8b0cb5181aa6617eb18b7a3c7))
+* default button is broken on dark theme ([a67e4a0](https://github.com/teletha/viewtify/commit/a67e4a0556ca9a42e28d874762fa9516111748e1))
+* default button is dirty in dark theme ([bab8904](https://github.com/teletha/viewtify/commit/bab890418c047db70450e47cacd912a18d37a2c1))
+* default button style is broken on light theme ([c2dae4b](https://github.com/teletha/viewtify/commit/c2dae4bdc1b5c54abba9c1f8821ed60e1e295445))
+* Edito requires Styleable instead of UserInterface. ([c451e29](https://github.com/teletha/viewtify/commit/c451e29dddf1874f8c4f5b141c3a13d6e38983ff))
+* Enhance various charts. ([fc84a10](https://github.com/teletha/viewtify/commit/fc84a108af6c6c74dd0bd0c1ded23d80c02b7629))
+* HideAnime can't fire the complete action. ([d63cd24](https://github.com/teletha/viewtify/commit/d63cd245e11af4393c0cc0c699b85c3ada0c65d6))
+* remove caspian theme ([0ad649b](https://github.com/teletha/viewtify/commit/0ad649b61414270db44b13384d2d94ffd485a9cb))
+* Remove CollectableHelper#itemAll. ([dcb98d8](https://github.com/teletha/viewtify/commit/dcb98d8650562e5d664e4d3daf7a32764069c1b6))
+* remove high contrast theme because character corruption ([fd5d6c0](https://github.com/teletha/viewtify/commit/fd5d6c0b37dab2916aa49c9cfdf0baf8c7f111cc))
+* rename theme from Light to Gray ([6e987ae](https://github.com/teletha/viewtify/commit/6e987ae66ae33903dc1d9bffa43f0a8e05f741f9))
+* update dark theme ([806892b](https://github.com/teletha/viewtify/commit/806892b828216df38deb7c6bee7bcd374fb44dc7))
+* update focus color on dark theme ([e67ff79](https://github.com/teletha/viewtify/commit/e67ff79d72cf6ce946f19f8a285346be473f44c7))
+
 ## [2.10.0](https://github.com/teletha/viewtify/compare/v2.9.0...v2.10.0) (2023-06-20)
 
 
