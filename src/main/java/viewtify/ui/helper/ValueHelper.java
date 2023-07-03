@@ -19,6 +19,7 @@ import java.util.function.Supplier;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -195,6 +196,40 @@ public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
             initialValue.first().to(this::initialize);
         }
         return (Self) this;
+    }
+
+    /**
+     * Update and maintain an edit history of this value with default context.
+     * 
+     * @param value
+     * @return
+     */
+    default Self historicalValue(Variable<V> value) {
+        return historicalValue(value, (WiseConsumer<V>) null);
+    }
+
+    /**
+     * Update and maintain an edit history of this value with default context.
+     * 
+     * @param value
+     * @return
+     */
+    default Self historicalValue(Variable<V> value, WiseRunnable save) {
+        return historicalValue(value, I.wiseC(save));
+    }
+
+    /**
+     * Update and maintain an edit history of this value with default context.
+     * 
+     * @param value
+     * @return
+     */
+    default Self historicalValue(Variable<V> value, WiseConsumer<V> save) {
+        value(value);
+        return historical(v -> {
+            value.set(v);
+            if (save != null) save.accept(v);
+        });
     }
 
     /**
