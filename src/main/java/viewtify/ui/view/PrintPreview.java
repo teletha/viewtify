@@ -42,6 +42,7 @@ import viewtify.Viewtify;
 import viewtify.ViewtyDialog.DialogView;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIComboBox;
+import viewtify.ui.UIHBox;
 import viewtify.ui.UIImage;
 import viewtify.ui.UILabel;
 import viewtify.ui.UISpinner;
@@ -58,6 +59,9 @@ public class PrintPreview extends DialogView<PrintInfo> {
     private static final List<Paper> JP = List.of(Paper.A3, Paper.A4, Paper.A5, Paper.JIS_B5, Paper.JIS_B6, Paper.JAPANESE_POSTCARD);
 
     private static final Map<String, List<Paper>> PaperSet = Map.of("jp", JP);
+
+    /** The root pane. */
+    private UIHBox rootBox;
 
     /** The main image view. */
     private UIImage view;
@@ -116,6 +120,8 @@ public class PrintPreview extends DialogView<PrintInfo> {
     /** The navigation UI. */
     private SegmentedButton navi = new SegmentedButton();
 
+    private boolean naviShowing;
+
     /**
      * {@inheritDoc}
      */
@@ -123,7 +129,7 @@ public class PrintPreview extends DialogView<PrintInfo> {
     protected ViewDSL declareUI() {
         return new ViewDSL() {
             {
-                $(hbox, () -> {
+                $(rootBox, () -> {
                     $(sbox, () -> {
                         $(view);
                         $(() -> navi, style.navi);
@@ -226,6 +232,8 @@ public class PrintPreview extends DialogView<PrintInfo> {
         next.text(">").focusable(false).when(User.MousePress, e -> drawPage(currentPage + 1, e));
         end.text(">>").focusable(false).when(User.MousePress, e -> drawPage(maxPage - 1, e));
         navi.getButtons().addAll(start.ui, prev.ui, location.ui, next.ui, end.ui);
+        navi.setVisible(false);
+        navi.setOpacity(0);
 
         // bind configuration
         copies.observing().to(v -> value.copies = v);
@@ -243,11 +251,19 @@ public class PrintPreview extends DialogView<PrintInfo> {
             } else {
                 drawPage(currentPage + 1);
             }
-        }).when(User.MouseEnter, e -> {
-            Animatable.play(250, navi.opacityProperty(), 1);
-        }).when(User.MouseExit, e -> {
-            if (!view.ui.getLayoutBounds().contains(e.getX(), e.getY())) {
-                Animatable.play(250, navi.opacityProperty(), 0);
+        });
+
+        rootBox.when(User.MouseMove, e -> {
+            if (view.ui.getLayoutBounds().contains(e.getX() - 10, e.getY() - 23)) {
+                if (!naviShowing) {
+                    naviShowing = true;
+                    Animatable.play(250, navi.opacityProperty(), 1);
+                }
+            } else {
+                if (naviShowing) {
+                    naviShowing = false;
+                    Animatable.play(250, navi.opacityProperty(), 0);
+                }
             }
         });
     }
@@ -259,6 +275,8 @@ public class PrintPreview extends DialogView<PrintInfo> {
         Viewtify.inUI(() -> {
             this.maxPage = images.length;
             this.images = images;
+
+            navi.setVisible(maxPage > 1);
             pageSize.text(en("{0} pages", images.length));
 
             value.pageSize = images.length;
