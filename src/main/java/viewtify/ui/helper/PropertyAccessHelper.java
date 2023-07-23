@@ -9,8 +9,6 @@
  */
 package viewtify.ui.helper;
 
-import org.controlsfx.control.IndexedCheckModel;
-
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -24,6 +22,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+
+import org.controlsfx.control.IndexedCheckModel;
+
 import kiss.I;
 
 public interface PropertyAccessHelper {
@@ -142,7 +143,7 @@ public interface PropertyAccessHelper {
         private static int counter;
 
         /** The property name. */
-        private final String name;
+        public final String name;
 
         /** The property id. */
         public final int id;

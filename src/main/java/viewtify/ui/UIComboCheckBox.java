@@ -12,20 +12,25 @@ package viewtify.ui;
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.Pane;
 
 import org.controlsfx.control.CheckComboBox;
 
+import kiss.I;
 import viewtify.property.SmartProperty;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.SelectableHelper;
 
-public class UIComboCheckBox<T> extends UserInterface<UIComboCheckBox<T>, CheckComboBox<T>>
+public class UIComboCheckBox<T> extends UserInterface<UIComboCheckBox<T>, Pane>
         implements CollectableHelper<UIComboCheckBox<T>, T>, SelectableHelper<UIComboCheckBox<T>, T>,
         ContextMenuHelper<UIComboCheckBox<T>> {
 
     /** The item property. */
     private final Property<ObservableList<T>> itemProperty = new SmartProperty();
+
+    /** The actual combo box. */
+    private final CheckComboBox combo = new CheckComboBox();
 
     /**
      * Builde {@link ComboBox}.
@@ -33,9 +38,25 @@ public class UIComboCheckBox<T> extends UserInterface<UIComboCheckBox<T>, CheckC
      * @param view A {@link View} to which the widget belongs.
      */
     public UIComboCheckBox(View view) {
-        super(new CheckComboBox(), view);
+        super(new Pane(), view);
+        ui.getChildren().add(combo);
 
-        itemProperty.setValue(ui.getItems());
+        itemProperty.setValue(combo.getItems());
+    }
+
+    /**
+     * Retrieve the property.
+     * 
+     * @param type A property type.
+     * @return A property.
+     */
+    @Override
+    public <X> Property<X> property(Type<X> type) {
+        try {
+            return (Property<X>) combo.getClass().getMethod(type.name).invoke(combo);
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
     }
 
     /**
@@ -54,8 +75,8 @@ public class UIComboCheckBox<T> extends UserInterface<UIComboCheckBox<T>, CheckC
      */
     public UIComboCheckBox<T> title(CharSequence title) {
         if (title != null) {
-            ui.setTitle(title.toString());
-            ui.setShowCheckedCount(true);
+            combo.setTitle(title.toString());
+            combo.setShowCheckedCount(true);
         }
         return this;
     }
