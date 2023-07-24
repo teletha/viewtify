@@ -9,13 +9,10 @@
  */
 package viewtify.ui.helper;
 
-import org.controlsfx.control.decoration.Decoration;
-import org.controlsfx.control.decoration.Decorator;
-import org.controlsfx.control.decoration.GraphicDecoration;
-
-import javafx.beans.value.ChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
+
+import org.controlsfx.control.decoration.Decorator;
+
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.util.Icon;
@@ -47,12 +44,12 @@ public interface DecorationHelper<Self extends DecorationHelper<Self>> {
     default Self decorateBy(Icon icon, String message) {
         Node node = ui();
 
-        Viewtify.inUI(() -> {
-            ObservableList<Decoration> decorations = Decorator.getDecorations(node);
-            if (decorations == null || decorations.isEmpty()) {
-                DecorationTooltip deco = DecorationTooltip.create(node, icon);
-            }
-        });
+        I.signal(Decorator.getDecorations(node))
+                .as(ValidatableDecoration.class)
+                .take(1)
+                .on(Viewtify.UIThread)
+                .or(() -> ValidatableDecoration.create(node, icon))
+                .to(deco -> deco.message(message));
 
         return (Self) this;
     }
@@ -61,14 +58,7 @@ public interface DecorationHelper<Self extends DecorationHelper<Self>> {
      * Undecorate all icons.
      */
     default Self undecorate() {
-        I.signal(Decorator.getDecorations(ui())).take(GraphicDecoration.class::isInstance).take(1).on(Viewtify.UIThread).to(deco -> {
-            Decorator.removeDecoration(ui(), deco);
-
-            Object object = deco.getProperties().get("validation");
-            if (object instanceof ChangeListener listener) {
-                ui().focusedProperty().removeListener(listener);
-            }
-        });
+        I.signal(Decorator.getDecorations(ui())).as(ValidatableDecoration.class).take(1).on(Viewtify.UIThread).to(ValidatableDecoration::dispose);
 
         return (Self) this;
     }
