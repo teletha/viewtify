@@ -21,6 +21,7 @@ import javafx.beans.property.ReadOnlyProperty;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;

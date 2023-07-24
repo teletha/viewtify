@@ -17,11 +17,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.stage.PopupWindow.AnchorLocation;
+import javafx.stage.Window;
 
 import org.controlsfx.control.decoration.Decorator;
 import org.controlsfx.control.decoration.GraphicDecoration;
 
 import kiss.Disposable;
+import kiss.WiseRunnable;
 import viewtify.Viewtify;
 import viewtify.style.FormStyles;
 import viewtify.ui.anime.HideAnime;
@@ -39,6 +41,9 @@ class ValidatableDecoration extends GraphicDecoration implements Disposable {
     /** The tooltip. */
     private final Tooltip tooltip;
 
+    /** The tooltip state. */
+    private Disposable showing;
+
     /**
      * Create new decoration.
      * 
@@ -49,8 +54,8 @@ class ValidatableDecoration extends GraphicDecoration implements Disposable {
     static ValidatableDecoration create(Node node, Icon icon) {
         Label label = new Label();
         label.setGraphic(icon.image());
-        label.setScaleX(0.7);
-        label.setScaleY(0.7);
+        label.setScaleX(0.8);
+        label.setScaleY(0.8);
         label.setAlignment(Pos.CENTER);
 
         return new ValidatableDecoration(node, icon, label);
@@ -60,13 +65,15 @@ class ValidatableDecoration extends GraphicDecoration implements Disposable {
      * @param icon
      */
     ValidatableDecoration(Node node, Icon icon, Label decoration) {
-        super(decoration, Pos.TOP_LEFT, 0, 1);
+        super(decoration, Pos.TOP_LEFT, 1, 1);
         this.node = node;
         this.decoration = decoration;
-        this.tooltip = new Tooltip();
-        this.tooltip.setAutoFix(true);
-        this.tooltip.setAnchorLocation(AnchorLocation.CONTENT_BOTTOM_LEFT);
+
+        Tooltip tooltip = new Tooltip();
+        tooltip.setAutoFix(true);
+        tooltip.setAnchorLocation(AnchorLocation.CONTENT_BOTTOM_LEFT);
         StyleHelper.of(tooltip).style(FormStyles.ValidationToolTip);
+        this.tooltip = tooltip;
 
         // show decoration
         Decorator.addDecoration(node, this);
@@ -86,7 +93,7 @@ class ValidatableDecoration extends GraphicDecoration implements Disposable {
      */
     @Override
     public void vandalize() {
-        Decorator.removeDecoration(node, this);
+        hide(() -> Decorator.removeDecoration(node, this));
     }
 
     /**
@@ -97,13 +104,24 @@ class ValidatableDecoration extends GraphicDecoration implements Disposable {
         tooltip.show(decoration, bounds.getCenterX(), bounds.getMinY() - 7);
 
         ShowAnime.FadeIn(1).play(tooltip.getScene().getRoot());
+
+        Window w = node.getScene().getWindow();
+        showing = Viewtify.observe(w.xProperty(), w.yProperty(), w.widthProperty(), w.heightProperty()).take(1).to(() -> {
+            hide();
+            show();
+        });
     }
 
     /**
      * Hide tooltip.
      */
-    public void hide() {
-        HideAnime.FadeOut.play(tooltip.getScene().getRoot());
+    public void hide(WiseRunnable... complete) {
+        HideAnime.FadeOut.play(tooltip.getScene().getRoot(), complete == null || complete.length != 1 ? null : complete[0]);
+
+        if (showing != null) {
+            showing.dispose();
+            showing = null;
+        }
     }
 
     /**
