@@ -24,8 +24,17 @@ import viewtify.ui.helper.SelectionModelWrappers.SingleSelectionModelWrapper;
 
 public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> extends PropertyAccessHelper {
 
+    /**
+     * Retrieve the {@link SelectionModel}.
+     * 
+     * @return
+     */
     default SelectionModel<E> selectionModelProperty() {
-        return property(Type.SelectionModel).getValue();
+        try {
+            return property(Type.SelectionModel).getValue();
+        } catch (Exception e) {
+            return new IndexedCheckModelWrapper(property(Type.CheckModel).getValue());
+        }
     }
 
     /**
@@ -62,6 +71,24 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      */
     default boolean isNotSelected() {
         return selectionModelProperty().isEmpty();
+    }
+
+    /**
+     * Check the current selection by index.
+     * 
+     * @return
+     */
+    default boolean isSelectedAt(int index) {
+        return selectionModelProperty().isSelected(index);
+    }
+
+    /**
+     * Check the current selection by index.
+     * 
+     * @return
+     */
+    default boolean isNotSelectedAt(int index) {
+        return !isSelectedAt(index);
     }
 
     /**
@@ -144,6 +171,24 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     default Self selectAt(int index) {
         if (0 <= index) {
             selectionModelProperty().select(index);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Select the item by index.
+     * 
+     * @param index An item index.
+     * @return Chainable API.
+     */
+    default Self toggleAt(int index) {
+        if (0 <= index) {
+            SelectionModel<E> model = selectionModelProperty();
+            if (model.isSelected(index)) {
+                model.clearSelection(index);
+            } else {
+                model.select(index);
+            }
         }
         return (Self) this;
     }

@@ -16,7 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import viewtify.property.SmartProperty;
 
-public class UIComboCheckBox<T> extends AbstractComboBox<T, UIComboCheckBox<T>, CheckComboBox> {
+public class UIComboCheckBox<T> extends AbstractComboBox<T, UIComboCheckBox<T>, CheckComboBox<T>> {
 
     /** The item property. */
     private final Property<ObservableList<T>> itemProperty = new SmartProperty();

@@ -36,6 +36,7 @@ import viewtify.keys.Key;
 import viewtify.ui.AbstractComboBox;
 import viewtify.ui.UIButton;
 import viewtify.ui.UICheckBox;
+import viewtify.ui.UIComboCheckBox;
 import viewtify.ui.UISpinner;
 import viewtify.ui.UITableView;
 import viewtify.ui.UIText;
@@ -514,39 +515,44 @@ public class KeyboardNavigation {
         /** For combo box. */
         private final EventHandler<KeyEvent> operation = e -> {
             Node node = (Node) e.getSource();
-            System.out.println(e);
 
             if (Key.Space.match(e)) {
                 current.toggle();
             } else if (Key.Numpad1.match(e) || Key.Digit1.match(e)) {
-                current.selectAt(0);
-                if (focusable) focusNext(node);
+                select(node, 0);
             } else if (Key.Numpad2.match(e) || Key.Digit2.match(e)) {
-                current.selectAt(1);
-                if (focusable) focusNext(node);
+                select(node, 1);
             } else if (Key.Numpad3.match(e) || Key.Digit3.match(e)) {
-                current.selectAt(2);
-                if (focusable) focusNext(node);
+                select(node, 2);
             } else if (Key.Numpad4.match(e) || Key.Digit4.match(e)) {
-                current.selectAt(3);
-                if (focusable) focusNext(node);
+                select(node, 3);
             } else if (Key.Numpad5.match(e) || Key.Digit5.match(e)) {
-                current.selectAt(4);
-                if (focusable) focusNext(node);
+                select(node, 4);
             } else if (Key.Numpad6.match(e) || Key.Digit6.match(e)) {
-                current.selectAt(5);
-                if (focusable) focusNext(node);
+                select(node, 5);
             } else if (Key.Numpad7.match(e) || Key.Digit7.match(e)) {
-                current.selectAt(6);
-                if (focusable) focusNext(node);
+                select(node, 6);
             } else if (Key.Numpad8.match(e) || Key.Digit8.match(e)) {
-                current.selectAt(7);
-                if (focusable) focusNext(node);
+                select(node, 7);
             } else if (Key.Numpad9.match(e) || Key.Digit9.match(e)) {
-                current.selectAt(8);
-                if (focusable) focusNext(node);
+                select(node, 8);
             }
         };
+
+        /**
+         * Select the specified items by index.
+         * 
+         * @param node
+         * @param index
+         */
+        private void select(Node node, int index) {
+            if (current instanceof UIComboCheckBox check) {
+                check.toggleAt(index);
+            } else {
+                current.selectAt(index);
+                if (focusable) focusNext(node);
+            }
+        }
 
         /** For popup list view. */
         private final EventHandler<KeyEvent> popupOperation = e -> {
