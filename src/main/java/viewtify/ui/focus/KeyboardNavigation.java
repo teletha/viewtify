@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
@@ -37,7 +36,6 @@ import viewtify.keys.Key;
 import viewtify.ui.AbstractComboBox;
 import viewtify.ui.UIButton;
 import viewtify.ui.UICheckBox;
-import viewtify.ui.UIComboCheckBox;
 import viewtify.ui.UISpinner;
 import viewtify.ui.UITableView;
 import viewtify.ui.UIText;
@@ -516,6 +514,7 @@ public class KeyboardNavigation {
         /** For combo box. */
         private final EventHandler<KeyEvent> operation = e -> {
             Node node = (Node) e.getSource();
+            System.out.println(e);
 
             if (Key.Space.match(e)) {
                 current.toggle();
@@ -552,6 +551,7 @@ public class KeyboardNavigation {
         /** For popup list view. */
         private final EventHandler<KeyEvent> popupOperation = e -> {
             if (Key.Enter.match(e)) {
+                current.hide();
                 engine.trav(current.ui, Direction.NEXT, TraversalMethod.DEFAULT);
             }
         };
