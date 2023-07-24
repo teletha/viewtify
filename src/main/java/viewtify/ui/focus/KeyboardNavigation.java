@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
@@ -33,9 +34,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import kiss.I;
 import viewtify.keys.Key;
+import viewtify.ui.AbstractComboBox;
 import viewtify.ui.UIButton;
 import viewtify.ui.UICheckBox;
-import viewtify.ui.UIComboBox;
+import viewtify.ui.UIComboCheckBox;
 import viewtify.ui.UISpinner;
 import viewtify.ui.UITableView;
 import viewtify.ui.UIText;
@@ -150,7 +152,7 @@ public class KeyboardNavigation {
         for (UserInterface node : ui) {
             if (node instanceof UIText x) {
                 text.register(x);
-            } else if (node instanceof UIComboBox x) {
+            } else if (node instanceof AbstractComboBox x) {
                 combo.register(x);
             } else if (node instanceof UICheckBox x) {
                 checkbox.register(x);
@@ -509,7 +511,7 @@ public class KeyboardNavigation {
     /**
      * Special Navigator for {@link ComboBox}.
      */
-    private class ComboBoxNavigator extends Navigator<UIComboBox<?>> {
+    private class ComboBoxNavigator extends Navigator<AbstractComboBox> {
 
         /** For combo box. */
         private final EventHandler<KeyEvent> operation = e -> {
@@ -558,7 +560,7 @@ public class KeyboardNavigation {
          * {@inheritDoc}
          */
         @Override
-        protected void register(UIComboBox<?> node) {
+        protected void register(AbstractComboBox node) {
             node.ui.focusedProperty().addListener((v, o, n) -> {
 
                 if (n) {
@@ -574,7 +576,6 @@ public class KeyboardNavigation {
                 }
             });
         }
-
     }
 
     /**

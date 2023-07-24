@@ -9,20 +9,14 @@
  */
 package viewtify.ui;
 
+import org.controlsfx.control.CheckComboBox;
+
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-
-import org.controlsfx.control.CheckComboBox;
-
 import viewtify.property.SmartProperty;
-import viewtify.ui.helper.CollectableHelper;
-import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.SelectableHelper;
 
-public class UIComboCheckBox<T> extends UserInterface<UIComboCheckBox<T>, CheckComboBox>
-        implements CollectableHelper<UIComboCheckBox<T>, T>, SelectableHelper<UIComboCheckBox<T>, T>,
-        ContextMenuHelper<UIComboCheckBox<T>> {
+public class UIComboCheckBox<T> extends AbstractComboBox<T, UIComboCheckBox<T>, CheckComboBox> {
 
     /** The item property. */
     private final Property<ObservableList<T>> itemProperty = new SmartProperty();
@@ -58,5 +52,13 @@ public class UIComboCheckBox<T> extends UserInterface<UIComboCheckBox<T>, CheckC
             ui.setShowCheckedCount(true);
         }
         return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ComboBox<T> comboBox() {
+        return (ComboBox) ui.getChildrenUnmodifiable().get(0);
     }
 }

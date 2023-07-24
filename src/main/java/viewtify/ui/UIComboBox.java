@@ -9,7 +9,6 @@
  */
 package viewtify.ui;
 
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -18,8 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.skin.ComboBoxListViewSkin;
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -27,16 +24,11 @@ import kiss.Signaling;
 import kiss.WiseTriFunction;
 import viewtify.Viewtify;
 import viewtify.ui.helper.Actions;
-import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.CollectableValuedItemRenderingHelper;
-import viewtify.ui.helper.ContextMenuHelper;
-import viewtify.ui.helper.PlaceholderHelper;
-import viewtify.ui.helper.SelectableHelper;
 import viewtify.ui.helper.User;
 
-public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
-        implements CollectableHelper<UIComboBox<T>, T>, CollectableValuedItemRenderingHelper<UIComboBox<T>, T>,
-        ContextMenuHelper<UIComboBox<T>>, SelectableHelper<UIComboBox<T>, T>, PlaceholderHelper<UIComboBox<T>> {
+public class UIComboBox<T> extends AbstractComboBox<T, UIComboBox<T>, ComboBox<T>>
+        implements CollectableValuedItemRenderingHelper<UIComboBox<T>, T> {
 
     /**
      * Builde {@link ComboBox}.
@@ -86,46 +78,11 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
     }
 
     /**
-     * Get the popup control.
-     * 
-     * @return
+     * {@inheritDoc}
      */
-    public final ListView listView() {
-        return (ListView) ((ComboBoxListViewSkin) ui.getSkin()).getPopupContent();
-    }
-
-    /**
-     * Show popup.
-     * 
-     * @return
-     */
-    public final UIComboBox<T> show() {
-        ui.show();
-        return this;
-    }
-
-    /**
-     * Hide popup.
-     * 
-     * @return
-     */
-    public final UIComboBox<T> hide() {
-        ui.hide();
-        return this;
-    }
-
-    /**
-     * Toggle popup.
-     * 
-     * @return
-     */
-    public final UIComboBox<T> toggle() {
-        if (ui.isShowing()) {
-            ui.hide();
-        } else {
-            ui.show();
-        }
-        return this;
+    @Override
+    protected ComboBox<T> comboBox() {
+        return ui;
     }
 
     /**
@@ -135,44 +92,10 @@ public class UIComboBox<T> extends UserInterface<UIComboBox<T>, ComboBox<T>>
      */
     public final UIComboBox<T> nullable() {
         addItemAtFirst(null);
-        if (ui.getPlaceholder() == null) {
+        if (comboBox().getPlaceholder() == null) {
             placeholder(I.translate("No Selection"));
         }
         return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UIComboBox<T> placeholder(Object text) {
-        ui.setPromptText(Objects.toString(text));
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UIComboBox<T> placeholder(Property text) {
-        ui.promptTextProperty().bind(text);
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UIComboBox<T> placeholder(UserInterfaceProvider text) {
-        throw new UnsupportedOperationException("Text field doesn't support the placeholder by node.");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UIComboBox<T> placeholder(Node node) {
-        throw new UnsupportedOperationException("Text field doesn't support the placeholder by node.");
     }
 
     /**
