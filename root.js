@@ -32,6 +32,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AbstractComboBox",
+			"packageName": "viewtify.ui",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "AbstractPane",
 			"packageName": "viewtify.ui",
 			"type": "AbstractClass"
