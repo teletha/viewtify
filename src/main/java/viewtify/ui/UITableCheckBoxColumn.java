@@ -40,18 +40,11 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
             // sync from model to ui
             ListChangeListener<RowV> listener = change -> {
                 while (change.next()) {
-                    for (RowV removed : change.getRemoved()) {
-                        if (v == removed) {
-                            checkbox.value(false);
-                            break;
-                        }
+                    if (change.getRemoved().contains(v)) {
+                        checkbox.value(false);
                     }
-
-                    for (RowV added : change.getAddedSubList()) {
-                        if (v == added) {
-                            checkbox.value(true);
-                            break;
-                        }
+                    if (change.getAddedSubList().contains(v)) {
+                        checkbox.value(true);
                     }
                 }
             };
@@ -88,9 +81,11 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
      * @param value
      */
     public void select(RowV value) {
-        if (!selected.contains(value)) {
-            Viewtify.inUI(() -> selected.add(value));
-        }
+        Viewtify.inUI(() -> {
+            if (!selected.contains(value)) {
+                selected.add(value);
+            }
+        });
     }
 
     /**
