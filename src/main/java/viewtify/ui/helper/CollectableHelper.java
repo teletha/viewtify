@@ -38,7 +38,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -81,7 +80,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return A live item list.
      */
     default ObservableList<E> artifacts() {
-        return itemsProperty().getValue();
+        return refer().sorted.getValue();
     }
 
     /**
@@ -874,7 +873,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return
      */
     default Signal<ObservableList<E>> observeItems() {
-        return Viewtify.observe(items());
+        return Viewtify.observe(refer().items).switchMap(Viewtify::observing);
     }
 
     /**
@@ -887,12 +886,30 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
     }
 
     /**
+     * Observe the modification of items.
+     * 
+     * @return
+     */
+    default Signal<ObservableList<E>> observingItems() {
+        return Viewtify.observing(refer().items).switchMap(Viewtify::observing);
+    }
+
+    /**
+     * Observe the modification of items.
+     * 
+     * @return
+     */
+    default Self observingItems(WiseConsumer<ObservableList<E>> listener) {
+        return dispose(observingItems().to(listener));
+    }
+
+    /**
      * Observe the modification of artifacts.
      * 
      * @return
      */
     default Signal<ObservableList<E>> observeArtifacts() {
-        return Viewtify.observe(artifacts());
+        return Viewtify.observe(refer().sorted).switchMap(Viewtify::observing);
     }
 
     /**
@@ -902,6 +919,24 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      */
     default Self observeArtifacts(WiseConsumer<ObservableList<E>> listener) {
         return dispose(observeArtifacts().to(listener));
+    }
+
+    /**
+     * Observe the modification of artifacts.
+     * 
+     * @return
+     */
+    default Signal<ObservableList<E>> observingArtifacts() {
+        return Viewtify.observing(refer().sorted).switchMap(Viewtify::observing);
+    }
+
+    /**
+     * Observe the modification of artifacts.
+     * 
+     * @return
+     */
+    default Self observingArtifacts(WiseConsumer<ObservableList<E>> listener) {
+        return dispose(observingArtifacts().to(listener));
     }
 
     /**
@@ -964,9 +999,11 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
         /** The item holder. */
         private final Property<ObservableList<E>> items = new SmartProperty();
 
+        /** The intermediate product. */
         private FilteredList<E> filtered;
 
-        private SortedList<E> sorted;
+        /** The artifact holder. */
+        private final Property<SortedList<E>> sorted = new SmartProperty();
 
         /** The filtered state. */
         private final Signaling<Boolean> filtering = new Signaling();
@@ -1004,9 +1041,9 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
             Viewtify.observing(items).skipNull().to(v -> {
                 updating.guard(() -> {
                     filtered = new FilteredList(v, filter.v);
-                    sorted = new SortedList(filtered, sorter.v);
+                    sorted.setValue(new SortedList(filtered, sorter.v));
 
-                    helper.itemsProperty().setValue(sorted);
+                    helper.itemsProperty().setValue(sorted.getValue());
                 });
             });
 
@@ -1014,7 +1051,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 if (filtered != null) filtered.setPredicate(v);
             });
             sorter.observe().to(v -> {
-                if (sorted != null) sorted.setComparator(v);
+                if (sorted.getValue() != null) sorted.getValue().setComparator(v);
             });
         }
 
