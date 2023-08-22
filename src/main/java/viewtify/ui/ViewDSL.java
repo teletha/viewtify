@@ -17,7 +17,6 @@ import java.util.function.Consumer;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.HiddenSidesPane;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.geometry.Orientation;
@@ -72,14 +71,14 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
         super(ViewDSL.UINode::new, null, (follower, current) -> {
             if (follower instanceof Style css) {
                 if (current.node instanceof CheckComboBox check) {
-                    // Why use Platform#runLater to delay the application of style classes?
+                    // Why use Viewtify#observe to delay the application of style classes?
                     //
                     // Because CheckComboBoxSkin uses Bindings#bindContent to link the external and
                     // internal UI style classes, all class names previously set for the external UI
                     // will be unintentionally deleted. To avoid this, class settings are delayed.
                     // This is a very dirty solution and we are looking for a better solution.
-                    Platform.runLater(() -> {
-                        StyleHelper.of(check.getChildrenUnmodifiable().get(0)).style(css);
+                    Viewtify.observe(check.getChildrenUnmodifiable()).flatIterable(list -> list).first().to(node -> {
+                        StyleHelper.of(node).style(css);
                     });
                 } else {
                     StyleHelper.of(current.node).style(css);
