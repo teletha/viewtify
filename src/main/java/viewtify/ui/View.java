@@ -25,12 +25,13 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
+import kiss.Model;
 import kiss.Signal;
 import kiss.Variable;
-import kiss.model.Model;
 import viewtify.Viewtify;
 
 public abstract class View implements Extensible, UserInterfaceProvider<Node>, Disposable {

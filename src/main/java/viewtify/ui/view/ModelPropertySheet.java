@@ -11,7 +11,7 @@ package viewtify.ui.view;
 
 import javafx.beans.property.Property;
 
-import kiss.model.Model;
+import kiss.Model;
 import viewtify.property.SmartProperty;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
@@ -59,5 +59,5 @@ public abstract class ModelPropertySheet<M> extends View implements ValueHelper<
      * 
      * @return
      */
-    protected abstract Iterable<kiss.model.Property> selectVisualizer(Model<M> model);
+    protected abstract Iterable<kiss.Property> selectVisualizer(Model<M> model);
 }

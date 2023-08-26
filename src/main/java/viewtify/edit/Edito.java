@@ -22,10 +22,10 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import kiss.I;
+import kiss.Model;
 import kiss.Signal;
 import kiss.Signaling;
 import kiss.WiseConsumer;
-import kiss.model.Model;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterface;
 import viewtify.ui.helper.CollectableHelper;

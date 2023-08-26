@@ -12,10 +12,11 @@ package viewtify.model;
 import java.util.ArrayList;
 
 import javafx.collections.ModifiableObservableListBase;
+
 import kiss.Managed;
+import kiss.Model;
 import kiss.Singleton;
 import kiss.Storable;
-import kiss.model.Model;
 import viewtify.Viewtify;
 
 @Managed(Singleton.class)

@@ -19,12 +19,12 @@ import java.util.function.Function;
 
 import kiss.I;
 import kiss.Managed;
+import kiss.Model;
+import kiss.Property;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseFunction;
-import kiss.model.Model;
-import kiss.model.Property;
 import viewtify.Viewtify;
 
 @Managed(Singleton.class)

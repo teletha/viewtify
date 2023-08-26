@@ -9,11 +9,10 @@
  */
 package viewtify.ui;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import javafx.beans.property.Property;
@@ -25,11 +24,11 @@ import javafx.stage.Stage;
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
+import kiss.Model;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.WiseConsumer;
 import kiss.WiseRunnable;
-import kiss.model.Model;
 import viewtify.Viewtify;
 import viewtify.keys.Key;
 import viewtify.ui.helper.AnimateHelper;
@@ -279,7 +278,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
         setter.accept(value);
 
         // prepare for storing
-        Viewtify.observe(getterAndObserver).debounce(1000, MILLISECONDS).to(change -> {
+        Viewtify.observe(getterAndObserver).debounce(1000, TimeUnit.MILLISECONDS).to(change -> {
             preference.put(id, I.transform(change, String.class));
             preference.store();
         });

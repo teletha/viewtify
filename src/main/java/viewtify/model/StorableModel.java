@@ -10,7 +10,7 @@
 package viewtify.model;
 
 import kiss.I;
-import kiss.model.Model;
+import kiss.Model;
 
 public interface StorableModel<C extends StorableList> {
 
