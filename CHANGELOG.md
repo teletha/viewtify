@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.12.0](https://github.com/teletha/viewtify/compare/v2.11.0...v2.12.0) (2023-08-26)
+
+
+### Features
+
+* Add SelectableHelper#isSelectedAt, #isNotSelectedAt and #toggleAt. ([1a52ac4](https://github.com/teletha/viewtify/commit/1a52ac4725a4bf31bc51a8c0426ae4cd61df0e94))
+* CollectableHelper can handle artifacts. ([d82a939](https://github.com/teletha/viewtify/commit/d82a939aaf150562a1d0c2f6bf6d8bd4b37caff8))
+* Enhance ComboBox related UI. ([3762bbc](https://github.com/teletha/viewtify/commit/3762bbc08e60989f9d716d9b79c3f03bf753fdc7))
+* Enhance validation tooltip. ([9406706](https://github.com/teletha/viewtify/commit/9406706121b9cf1e707142f5b9a5cccdfb12ece9))
+
+
+### Bug Fixes
+
+* Initializing CheckComboBox throws IndexOutOfBoundException. ([18be79c](https://github.com/teletha/viewtify/commit/18be79cc08d7736cc119723a9863e562c2e71fb5))
+* Showing and Hiding navigation with good behavior. ([43b47c9](https://github.com/teletha/viewtify/commit/43b47c9472fc6b91dc2e2d7ecfbd2b03ede5e692))
+* ui-model sync ([c2529f5](https://github.com/teletha/viewtify/commit/c2529f53d8495ba9c250920af83c84db424af4cd))
+* UIComboCheckBox is stylable now. ([83376e6](https://github.com/teletha/viewtify/commit/83376e6b57c1a090207ec4e728987405d4a4af02))
+* update sinobu ([f63d2aa](https://github.com/teletha/viewtify/commit/f63d2aa7f561dd860aaa555a734d7e7f3cae6ecc))
+
 ## [2.11.0](https://github.com/teletha/viewtify/compare/v2.10.0...v2.11.0) (2023-07-03)
 
 
