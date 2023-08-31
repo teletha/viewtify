@@ -13,7 +13,7 @@
 }
  
 /* ==========================================================================
-  Edited Mode
+  Hyperlink
 ===========================================================================*/
 .hyperlink {
 		-fx-text-fill: -fx-link;
@@ -113,16 +113,8 @@
 		-fx-indent: 0;
 }
 
-.table-view .table-cell {
-		-fx-table-cell-border-color: derive(-fx-color,5%);
-}
-
-.table-view .table-cell:filled {
-		-fx-table-cell-border-color: derive(-fx-color,20%);
-}
-
 .table-row-cell{
-    -fx-table-cell-border-color:transparent;
+    -fx-table-cell-border-color: transparent;
 }
 
 .simple.table-view,
@@ -175,13 +167,13 @@
 ===========================================================================*/
 .scroll-bar {
     -fx-background-color: -fx-background;
-    -fx-padding: 0.5;
+    -fx-padding: 1px;
 }
 .scroll-bar:vertical {
-    -fx-pref-width: 12;
+    -fx-pref-width: 9;
 }
 .scroll-bar:horizontal {
-    -fx-pref-height: 12;
+    -fx-pref-height: 9;
 }
 .scroll-bar .track {
     -fx-background-insets: 1;
@@ -191,10 +183,10 @@
     -fx-background-radius: 0;
 }
 .scroll-bar:vertical .thumb {
-    -fx-background-insets: 1 1 1 2;
+    -fx-background-insets: 0 1;
 }
 .scroll-bar:horizontal .thumb {
-    -fx-background-insets: 2 1 1 1;
+    -fx-background-insets: 1 0;
 }
 
 /* DON'T combine horizontal and vertical declarations. It will hide the scrollbar on Table. */
@@ -229,8 +221,8 @@
   Combined TextField
 ===========================================================================*/
 .text-field.noborder {
-	-fx-background-insets: 0;
-	-fx-background-color: transparent;
+		-fx-background-insets: 0;
+		-fx-background-color: transparent;
 }
 
 .text-input.focused {
@@ -253,4 +245,40 @@
     -fx-background: rgba(30,30,30);
     -fx-background-color: rgba(30,30,30,0.7);
     -fx-font-size: 1em;
+}
+
+/* ==========================================================================
+  Expanded Padding
+===========================================================================*/
+.text-input,
+.text-field,
+.button {
+    -fx-padding: 6px 4px;
+}
+
+.text-area {
+    -fx-padding: 0px;
+}
+
+.text-area .content {
+    -fx-padding: 6px 8px;
+}
+
+.text-field.noborder {
+    -fx-padding: 6px 0px;
+}
+
+.combo-box {
+    -fx-padding: 2px 0px;
+}
+.combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
+    -fx-padding: 8px 8px;
+}
+
+.table-row-cell {
+    -fx-padding: 3px 0;
+}
+
+.column-header .label {
+    -fx-padding: 5px 1px;
 }
