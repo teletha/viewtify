@@ -557,6 +557,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "ThemeType",
+			"packageName": "viewtify",
+			"type": "Enum"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Toast",
 			"packageName": "viewtify.util",
 			"type": "Class"
