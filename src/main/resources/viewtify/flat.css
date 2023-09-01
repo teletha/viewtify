@@ -1,0 +1,71 @@
+.root {
+    -fx-body-color: ladder(-fx-color, derive(-fx-color,8%) 75%, derive(-fx-color,10%) 80%);
+    -fx-body-color-bottomup: -fx-body-color;
+    -fx-body-color-to-right: -fx-body-color;
+    
+		-fx-shadow-highlight-color: transparent;
+		-fx-inner-border: -fx-body-color;
+		-fx-inner-border-horizontal: -fx-inner-border;
+    -fx-inner-border-bottomup: -fx-inner-border;
+
+    -fx-outer-border: derive(-fx-text-box-border, 25%);
+    -fx-box-border: -fx-outer-border;
+}
+
+/* ==========================================================================
+  Text
+===========================================================================*/
+.text-input {
+    -fx-background-color: -fx-outer-border, -fx-control-inner-background;
+}
+
+.text-input:focused {
+    -fx-background-color:
+        -fx-focus-color,
+        -fx-control-inner-background,
+        -fx-faint-focus-color,
+        -fx-control-inner-background;
+}
+
+.text-area {
+    -fx-background-color: -fx-outer-border, -fx-control-inner-background;
+}
+
+.text-area .content {
+    -fx-background-color: transparent;
+}
+
+/* ==========================================================================
+  Scroll
+===========================================================================*/
+.scroll-bar {
+    -fx-background-color: -fx-background;
+}
+
+/* ==========================================================================
+  Spinner
+===========================================================================*/
+.spinner {
+    -fx-background-color: -fx-outer-border, -fx-control-inner-background;
+}
+.spinner:focused,
+.spinner:contains-focus {
+    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
+}
+.spinner > .text-field {
+    -fx-background-color: -fx-outer-border, -fx-control-inner-background;
+}
+.spinner:focused > .text-field,
+.spinner:contains-focus > .text-field {
+    -fx-background-color:
+        -fx-control-inner-background,
+        -fx-faint-focus-color,
+        -fx-control-inner-background;
+}
+.spinner .increment-arrow-button {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+}
+.spinner .decrement-arrow-button {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+}
+

@@ -23,6 +23,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+
 import kiss.I;
 import kiss.Signal;
 import viewtify.keys.Key;
@@ -211,6 +212,9 @@ public final class User<E extends Event> {
     /** The action post processor. */
     final BiFunction<UserActionHelper, Signal<?>, Signal<E>> hook;
 
+    /** The hook timing. */
+    final boolean before;
+
     /**
      * Hide constructor.
      * 
@@ -226,8 +230,27 @@ public final class User<E extends Event> {
      * @param type
      */
     private <T extends Event> User(EventType<T> type, BiFunction<UserActionHelper<?>, Signal<T>, Signal<E>> hook) {
+        this(type, hook, false);
+    }
+
+    /**
+     * Hide constructor.
+     * 
+     * @param type
+     */
+    private <T extends Event> User(EventType<T> type, BiFunction<UserActionHelper<?>, Signal<T>, Signal<E>> hook, boolean before) {
         this.type = type;
         this.hook = (BiFunction) hook;
+        this.before = before;
+    }
+
+    /**
+     * Create filterable event type.
+     * 
+     * @return
+     */
+    public User<E> preliminarily() {
+        return new User(type, hook, true);
     }
 
     /**

@@ -9,12 +9,14 @@
  */
 package viewtify.ui;
 
-import org.controlsfx.control.CheckComboBox;
-
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+
+import org.controlsfx.control.CheckComboBox;
+
 import viewtify.property.SmartProperty;
+import viewtify.ui.helper.User;
 
 public class UIComboCheckBox<T> extends AbstractComboBox<T, UIComboCheckBox<T>, CheckComboBox<T>> {
 
@@ -30,6 +32,10 @@ public class UIComboCheckBox<T> extends AbstractComboBox<T, UIComboCheckBox<T>, 
         super(new CheckComboBox(), view);
 
         itemProperty.setValue(ui.getItems());
+
+        // Fix ComboCheckBox because the style change on Focus and focus request on click is wrong.
+        whenFocus(focused -> style(focused, "focused-combo-check-box"));
+        when(User.LeftClick.preliminarily(), this::focus);
     }
 
     /**

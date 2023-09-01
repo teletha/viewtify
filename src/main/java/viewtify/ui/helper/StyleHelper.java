@@ -14,6 +14,7 @@ import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -40,13 +41,27 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     }
 
     /**
-     * Assign style class name to user interface.
+     * Apply style class name to user interface.
      * 
      * @param classNames A list of class names to assign.
      * @return Chainable API.
      */
     default Self style(String... classNames) {
         return style(List.of(classNames));
+    }
+
+    /**
+     * Apply or unapply style class name to user interface.
+     * 
+     * @param classNames A list of class names to apply or unapply.
+     * @return Chainable API.
+     */
+    default Self style(boolean add, String... classNames) {
+        if (add) {
+            return style(classNames);
+        } else {
+            return unstyle(classNames);
+        }
     }
 
     /**
@@ -57,6 +72,20 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
      */
     default Self style(Style... styles) {
         return style(I.signal(styles).flatArray(Style::className).toList());
+    }
+
+    /**
+     * Apply or unapply style class name to user interface.
+     * 
+     * @param styles A list of class names to apply or unapply.
+     * @return Chainable API.
+     */
+    default Self style(boolean add, Style... styles) {
+        if (add) {
+            return style(styles);
+        } else {
+            return unstyle(styles);
+        }
     }
 
     /**

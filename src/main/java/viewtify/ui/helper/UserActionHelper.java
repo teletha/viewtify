@@ -77,10 +77,10 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
         return actionType.hook.apply(this, new Signal<E>((observer, disposer) -> {
             EventHandler<E> listener = observer::accept;
 
-            invoke("addEventHandler", ui(), actionType.type, listener);
+            invoke(actionType.before ? "addEventFilter" : "addEventHandler", ui(), actionType.type, listener);
 
             return disposer.add(() -> {
-                invoke("removeEventHandler", ui(), actionType.type, listener);
+                invoke(actionType.before ? "removeEventFilter" : "removeEventHandler", ui(), actionType.type, listener);
             });
         }));
     }

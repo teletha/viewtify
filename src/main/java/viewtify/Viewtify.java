@@ -174,6 +174,9 @@ public final class Viewtify {
     private Theme theme = Theme.Light;
 
     /** The configurable setting. */
+    private ThemeType themeType = ThemeType.Gradient;
+
+    /** The configurable setting. */
     private Class<? extends DesignScheme> scheme;
 
     /** The configurable setting. */
@@ -317,6 +320,19 @@ public final class Viewtify {
     public Viewtify use(Theme theme) {
         if (theme != null) {
             this.theme = theme;
+        }
+        return this;
+    }
+
+    /**
+     * Configure application {@link ThemeType}.
+     * 
+     * @param themeType
+     * @return
+     */
+    public Viewtify use(ThemeType themeType) {
+        if (themeType != null) {
+            this.themeType = themeType;
         }
         return this;
     }
@@ -781,6 +797,33 @@ public final class Viewtify {
 
                 // clear previous theme
                 for (Theme old : Theme.values()) {
+                    stylesheets.remove(old.location);
+                    sheets.remove(old.location);
+                    classes.remove(old.name().toLowerCase());
+                }
+
+                // add new theme
+                stylesheets.add(theme.location);
+                sheets.add(theme.location);
+                classes.add(theme.name().toLowerCase());
+            }
+        });
+    }
+
+    /**
+     * Manage the viewtify applicaiton theme.
+     * 
+     * @param theme
+     */
+    public static void manage(ThemeType theme) {
+        inUI(() -> {
+            for (Window window : Window.getWindows()) {
+                Scene scene = window.getScene();
+                ObservableList<String> classes = scene.getRoot().getStyleClass();
+                ObservableList<String> sheets = scene.getStylesheets();
+
+                // clear previous theme
+                for (ThemeType old : ThemeType.values()) {
                     stylesheets.remove(old.location);
                     sheets.remove(old.location);
                     classes.remove(old.name().toLowerCase());

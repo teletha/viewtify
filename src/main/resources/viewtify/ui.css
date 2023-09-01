@@ -11,6 +11,15 @@
 		-fx-edit-color: #ffa431;
 		-fx-faint-edit-color: #ffa43150;
 }
+
+/* ==========================================================================
+  CheckComboBox  -  bug fix for focused style
+===========================================================================*/
+.focused-combo-check-box .combo-box-base {
+    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
+    -fx-background-insets: -0.2, 1, 2, -1.4, 2.6;
+    -fx-background-radius: 3, 2, 1, 4, 1;
+}
  
 /* ==========================================================================
   Hyperlink
@@ -166,14 +175,13 @@
   ScrollBar
 ===========================================================================*/
 .scroll-bar {
-    -fx-background-color: -fx-background;
-    -fx-padding: 1px;
+    -fx-padding: 0 -1 0 0;
 }
 .scroll-bar:vertical {
-    -fx-pref-width: 9;
+    -fx-pref-width: 7;
 }
 .scroll-bar:horizontal {
-    -fx-pref-height: 9;
+    -fx-pref-height: 7;
 }
 .scroll-bar .track {
     -fx-background-insets: 1;
@@ -215,6 +223,13 @@
 ===========================================================================*/
 .spinner .text-field {
 	-fx-alignment: center;	
+}
+
+.spinner .increment-arrow-button {
+    -fx-background-insets: 1 1 -1 0;
+}
+.spinner .decrement-arrow-button {
+    -fx-background-insets: -1 1 1 0;
 }
 
 /* ==========================================================================
@@ -272,13 +287,14 @@
     -fx-padding: 2px 0px;
 }
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
-    -fx-padding: 8px 8px;
+    -fx-padding: 7px 8px;
 }
 
 .table-row-cell {
-    -fx-padding: 3px 0;
+    -fx-padding: 2px 0;
 }
 
 .column-header .label {
     -fx-padding: 5px 1px;
 }
+
