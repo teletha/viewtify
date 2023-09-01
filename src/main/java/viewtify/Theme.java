@@ -16,7 +16,7 @@ import psychopath.Locator;
 
 public enum Theme {
 
-    Light, Dark, Bellini, CaffeLatte, GreenTea;
+    Light, Dark, CaffeLatte, GreenTea, PeachFizz;
 
     /** The location. */
     public final String location;
