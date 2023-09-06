@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.controlsfx.control.SegmentedButton;
+
 import javafx.event.Event;
 import javafx.geometry.Bounds;
 import javafx.print.PageOrientation;
@@ -30,9 +32,6 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-import org.controlsfx.control.SegmentedButton;
-
 import kiss.I;
 import kiss.WiseSupplier;
 import stylist.Style;
@@ -291,10 +290,8 @@ public class PrintPreview extends DialogView<PrintInfo> {
     /**
      * @param builder
      */
-    public void loadImageLazy(Paper paper, PageOrientation orientation, float scale, String placeholder, WiseSupplier<List<WritableImage>> builder) {
-        int w = (int) (paper.getWidth() * scale);
-        int h = (int) (paper.getHeight() * scale);
-        view.value(orientation == PORTRAIT ? spacer(w, h, placeholder) : spacer(h, w, placeholder));
+    public void loadImageLazy(int width, int height, PageOrientation orientation, String placeholder, WiseSupplier<List<WritableImage>> builder) {
+        view.value(orientation == PORTRAIT ? spacer(width, height, placeholder) : spacer(height, width, placeholder));
 
         Viewtify.inWorker(() -> {
             loadImage(builder.get().toArray(WritableImage[]::new));
