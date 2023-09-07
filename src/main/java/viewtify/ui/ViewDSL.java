@@ -14,9 +14,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import org.controlsfx.control.CheckComboBox;
-import org.controlsfx.control.HiddenSidesPane;
-
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.geometry.Orientation;
@@ -28,12 +25,18 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import org.controlsfx.control.CheckComboBox;
+import org.controlsfx.control.HiddenSidesPane;
+import org.controlsfx.control.SegmentedButton;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -296,22 +299,24 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
          */
         @Override
         public void accept(UINode context) {
-            if (context.node instanceof TableView) {
-                ((TableView) context.node).getColumns().add(node);
-            } else if (context.node instanceof TreeTableView) {
-                ((TreeTableView) context.node).getColumns().add(node);
-            } else if (context.node instanceof ScrollPane) {
-                ((ScrollPane) context.node).setContent((Node) node);
-            } else if (context.node instanceof SplitPane) {
-                ((SplitPane) context.node).getItems().add((Node) node);
-            } else if (context.node instanceof HiddenSidesPane) {
-                ((HiddenSidesPane) context.node).setContent((Node) node);
-            } else if (context.node instanceof ToolBar) {
-                ((ToolBar) context.node).getItems().add((Node) node);
-            } else if (context.node instanceof Group) {
-                ((Group) context.node).getChildren().add((Node) node);
-            } else if (context.node instanceof Pane) {
-                ((Pane) context.node).getChildren().add((Node) node);
+            if (context.node instanceof TableView table) {
+                table.getColumns().add(node);
+            } else if (context.node instanceof TreeTableView table) {
+                table.getColumns().add(node);
+            } else if (context.node instanceof ScrollPane pane) {
+                pane.setContent((Node) node);
+            } else if (context.node instanceof SplitPane pane) {
+                pane.getItems().add((Node) node);
+            } else if (context.node instanceof HiddenSidesPane pane) {
+                pane.setContent((Node) node);
+            } else if (context.node instanceof SegmentedButton segmented && node instanceof ToggleButton button) {
+                segmented.getButtons().add(button);
+            } else if (context.node instanceof ToolBar bar) {
+                bar.getItems().add((Node) node);
+            } else if (context.node instanceof Group group) {
+                group.getChildren().add((Node) node);
+            } else if (context.node instanceof Pane pane) {
+                pane.getChildren().add((Node) node);
             }
         }
     }
