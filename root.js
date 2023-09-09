@@ -256,6 +256,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "FontSelectView",
+			"packageName": "viewtify.ui.view",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "FormStyles",
 			"packageName": "viewtify.style",
 			"type": "Interface"
