@@ -134,10 +134,6 @@ public final class Viewtify {
         // System.setProperty("prism.lcdtext", "false");
         // System.setProperty("prism.subpixeltext", "on native");
 
-        for (String string : Font.getFamilies()) {
-            System.out.println(string);
-        }
-
         // For Test
         inTest = I.signal(new Error().getStackTrace())
                 .take(e -> e.getClassName().startsWith("org.junit."))
