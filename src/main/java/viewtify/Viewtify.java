@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.WeakHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
@@ -56,6 +57,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -132,6 +134,10 @@ public final class Viewtify {
         // System.setProperty("prism.lcdtext", "false");
         // System.setProperty("prism.subpixeltext", "on native");
 
+        for (String string : Font.getFamilies()) {
+            System.out.println(string);
+        }
+
         // For Test
         inTest = I.signal(new Error().getStackTrace())
                 .take(e -> e.getClassName().startsWith("org.junit."))
@@ -175,6 +181,9 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private ThemeType themeType = ThemeType.Gradient;
+
+    /** The configurable setting. */
+    private Font font;
 
     /** The configurable setting. */
     private Class<? extends DesignScheme> scheme;
@@ -333,6 +342,19 @@ public final class Viewtify {
     public Viewtify use(ThemeType themeType) {
         if (themeType != null) {
             this.themeType = themeType;
+        }
+        return this;
+    }
+
+    /**
+     * Configure application {@link Font}.
+     * 
+     * @param font
+     * @return
+     */
+    public Viewtify use(Font font) {
+        if (font != null) {
+            this.font = font;
         }
         return this;
     }
@@ -542,6 +564,7 @@ public final class Viewtify {
             stylesheets.add(Theme.locate("ui"));
             stylesheets.add(viewtify.theme.location);
             stylesheets.add(Locator.file(CSSProcessor.pretty().scheme(scheme).formatTo(prefs + "/application.css")).externalForm());
+            stylesheets.add(writeFontStylesheet(null));
 
             // observe stylesheet's modification
             I.signal(stylesheets)
@@ -602,6 +625,24 @@ public final class Viewtify {
                 }
             });
         }
+    }
+
+    /**
+     * Write the special stylesheet for font definition.
+     * 
+     * @param fontName
+     * @return
+     */
+    private String writeFontStylesheet(Font font) {
+        font = Objects.requireNonNullElse(font, Font.getDefault());
+
+        String prefs = I.env("PreferenceDirectory");
+        File css = Locator.file(prefs + "/font.css");
+
+        // write font rule
+        css.text(".root { -fx-font-family : \"" + font.getName() + "\"; -fx-font-size : " + font.getSize() + "px;}");
+
+        return css.externalForm();
     }
 
     /**
@@ -835,6 +876,15 @@ public final class Viewtify {
                 classes.add(theme.name().toLowerCase());
             }
         });
+    }
+
+    /**
+     * Manage the viewtify application font.
+     * 
+     * @param font
+     */
+    public static void manage(Font font) {
+        application().writeFontStylesheet(font);
     }
 
     /**

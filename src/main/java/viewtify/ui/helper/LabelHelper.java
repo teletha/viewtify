@@ -101,7 +101,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     default Self text(INamedCharacter text, Style... iconStyle) {
         if (text != null) {
             Glyph glyph = new Glyph("FontAwesome", text);
-            // StyleHelper.of(glyph).style(iconStyle);
+            StyleHelper.of(glyph).style(iconStyle);
             text(glyph);
         }
         return (Self) this;
