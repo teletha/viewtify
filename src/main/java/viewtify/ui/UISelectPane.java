@@ -18,6 +18,7 @@ import javafx.scene.control.SelectionModel;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.ui.anime.SwapAnime;

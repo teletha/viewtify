@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import kiss.Extensible;
 import kiss.I;
 import kiss.Managed;
 import kiss.Model;
@@ -28,7 +29,7 @@ import kiss.WiseFunction;
 import viewtify.Viewtify;
 
 @Managed(Singleton.class)
-public abstract class PreferenceModel<Self extends PreferenceModel> implements Storable<Self> {
+public abstract class PreferenceModel<Self extends PreferenceModel> implements Storable<Self>, Extensible {
 
     /**
      * Create {@link Preference} with the default value.

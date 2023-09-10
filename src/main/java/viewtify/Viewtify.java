@@ -82,6 +82,7 @@ import psychopath.File;
 import psychopath.Locator;
 import stylist.design.DesignScheme;
 import viewtify.keys.ShortcutManager;
+import viewtify.model.PreferenceModel;
 import viewtify.ui.UIWeb;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
@@ -145,6 +146,10 @@ public final class Viewtify {
 
         CSS.enhance();
 
+        // user settings are reloadable
+        UserPreference.observe().to(() -> I.find(PreferenceModel.class));
+
+        // automatic gc
         I.schedule(5, 30, TimeUnit.MINUTES, true).to(System::gc);
     }
 
@@ -176,10 +181,10 @@ public final class Viewtify {
     private Theme theme = Theme.Light;
 
     /** The configurable setting. */
-    private ThemeType themeType = ThemeType.Gradient;
+    private ThemeType themeType = ThemeType.Flat;
 
     /** The configurable setting. */
-    private Font font;
+    private Font font = Font.getDefault();
 
     /** The configurable setting. */
     private Class<? extends DesignScheme> scheme;
@@ -559,6 +564,7 @@ public final class Viewtify {
             // collect stylesheets for application
             stylesheets.add(Theme.locate("ui"));
             stylesheets.add(viewtify.theme.location);
+            stylesheets.add(viewtify.themeType.location);
             stylesheets.add(Locator.file(CSSProcessor.pretty().scheme(scheme).formatTo(prefs + "/application.css")).externalForm());
             stylesheets.add(writeFontStylesheet(null));
 
@@ -630,7 +636,7 @@ public final class Viewtify {
      * @return
      */
     private String writeFontStylesheet(Font font) {
-        font = Objects.requireNonNullElse(font, Font.getDefault());
+        font = Objects.requireNonNullElse(font, this.font);
 
         String prefs = I.env("PreferenceDirectory");
         File css = Locator.file(prefs + "/font.css");

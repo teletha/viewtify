@@ -23,7 +23,7 @@ import viewtify.ui.anime.SwapAnime;
 
 public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
 
-    final UIVBox box = new UIVBox(null);
+    final UIVBox box;
 
     /**
      * @param view
@@ -31,8 +31,9 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
     public UIScrollPane(View view) {
         super(new SmoothScrollPane(), view);
 
+        box = new UIVBox(view);
+
         ui.setContent(box.ui());
-        ui.setFitToWidth(true);
         HBox.setHgrow(ui, Priority.ALWAYS);
     }
 
