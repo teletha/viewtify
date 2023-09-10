@@ -81,6 +81,20 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AppearanceSettingView",
+			"packageName": "viewtify.ui.view",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AppearanceSettingView.Setting",
+			"packageName": "viewtify.ui.view",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Blueprint",
 			"packageName": "viewtify.update",
 			"type": "AbstractClass"
@@ -251,13 +265,6 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "FXUtils",
 			"packageName": "viewtify.util",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "FontSelectView",
-			"packageName": "viewtify.ui.view",
 			"type": "Class"
 		},
 		{
