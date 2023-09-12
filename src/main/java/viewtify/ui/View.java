@@ -258,62 +258,67 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
 
     private void buildUI() {
         try {
-            // Inject various types
-            for (Field field : getClass().getDeclaredFields()) {
-                Class<?> type = field.getType();
-                field.setAccessible(true);
+            Class targetClass = getClass();
 
-                if (Modifier.isAbstract(type.getModifiers())) {
-                    continue;
-                }
+            while (targetClass != View.class) {
+                // Inject various types
+                for (Field field : targetClass.getDeclaredFields()) {
+                    Class<?> type = field.getType();
+                    field.setAccessible(true);
 
-                Object assigned = field.get(this);
-
-                if (View.class.isAssignableFrom(type)) {
-                    if (assigned != null) {
-                        ((View) assigned).initializeLazy(this);
-                    } else {
-                        Class<View> viewType = (Class<View>) type;
-                        field.set(this, findAncestorView(viewType).or(() -> {
-                            View sub = I.make(viewType);
-                            sub.initializeLazy(this);
-                            return sub;
-                        }));
+                    if (Modifier.isAbstract(type.getModifiers())) {
+                        continue;
                     }
-                } else if (Node.class.isAssignableFrom(type)) {
-                    if (assigned == null) {
-                        Constructor constructor = Model.collectConstructors(type)[0];
-                        constructor.setAccessible(true);
 
-                        Node node = (Node) constructor.newInstance(this);
+                    Object assigned = field.get(this);
 
-                        assignId(node, field.getName());
-                        field.set(this, node);
-                    }
-                } else if (UserInterfaceProvider.class.isAssignableFrom(type)) {
-                    if (assigned == null) {
-                        Constructor constructor = Model.collectConstructors(type)[0];
-                        constructor.setAccessible(true);
-
-                        Parameter[] params = constructor.getParameters();
-                        UserInterfaceProvider provider = null;
-
-                        if (params.length == 1) {
-                            provider = (UserInterfaceProvider) constructor.newInstance(this);
-                        } else if (params.length == 2 && params[1].getType() == Class.class) {
-                            provider = (UserInterfaceProvider) constructor
-                                    .newInstance(this, Model.collectParameters(field.getGenericType(), field.getType())[0]);
-                        } else if (params.length == 3 && params[1].getType() == Class.class && params[2].getType() == Class.class) {
-                            Type[] types = Model.collectParameters(field.getGenericType(), field.getType());
-                            provider = (UserInterfaceProvider) constructor.newInstance(this, types[0], types[1]);
+                    if (View.class.isAssignableFrom(type)) {
+                        if (assigned != null) {
+                            ((View) assigned).initializeLazy(this);
                         } else {
-                            throw new UnsupportedOperationException("Unknown constructor type. [" + constructor + "]");
+                            Class<View> viewType = (Class<View>) type;
+                            field.set(this, findAncestorView(viewType).or(() -> {
+                                View sub = I.make(viewType);
+                                sub.initializeLazy(this);
+                                return sub;
+                            }));
                         }
+                    } else if (Node.class.isAssignableFrom(type)) {
+                        if (assigned == null) {
+                            Constructor constructor = Model.collectConstructors(type)[0];
+                            constructor.setAccessible(true);
 
-                        assignId(provider.ui(), field.getName());
-                        field.set(this, provider);
+                            Node node = (Node) constructor.newInstance(this);
+
+                            assignId(node, field.getName());
+                            field.set(this, node);
+                        }
+                    } else if (UserInterfaceProvider.class.isAssignableFrom(type)) {
+                        if (assigned == null) {
+                            Constructor constructor = Model.collectConstructors(type)[0];
+                            constructor.setAccessible(true);
+
+                            Parameter[] params = constructor.getParameters();
+                            UserInterfaceProvider provider = null;
+
+                            if (params.length == 1) {
+                                provider = (UserInterfaceProvider) constructor.newInstance(this);
+                            } else if (params.length == 2 && params[1].getType() == Class.class) {
+                                provider = (UserInterfaceProvider) constructor
+                                        .newInstance(this, Model.collectParameters(field.getGenericType(), field.getType())[0]);
+                            } else if (params.length == 3 && params[1].getType() == Class.class && params[2].getType() == Class.class) {
+                                Type[] types = Model.collectParameters(field.getGenericType(), field.getType());
+                                provider = (UserInterfaceProvider) constructor.newInstance(this, types[0], types[1]);
+                            } else {
+                                throw new UnsupportedOperationException("Unknown constructor type. [" + constructor + "]");
+                            }
+
+                            assignId(provider.ui(), field.getName());
+                            field.set(this, provider);
+                        }
                     }
                 }
+                targetClass = targetClass.getSuperclass();
             }
 
             Platform.runLater(this::initialize);
