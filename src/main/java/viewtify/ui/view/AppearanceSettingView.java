@@ -99,7 +99,7 @@ public class AppearanceSettingView extends View {
      */
     public static class Setting extends PreferenceModel<Setting> {
 
-        public final Preference<Locale> lang = initialize(Locale.JAPANESE).syncTo(Locale::getLanguage, I.Lang);
+        public final Preference<Locale> lang = initialize(Locale.getDefault()).syncTo(Locale::getLanguage, I.Lang);
 
         public final Preference<Theme> theme = initialize(Theme.Light).syncTo(Viewtify::manage);
 
