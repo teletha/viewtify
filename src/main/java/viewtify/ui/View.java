@@ -263,6 +263,10 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
                 Class<?> type = field.getType();
                 field.setAccessible(true);
 
+                if (Modifier.isAbstract(type.getModifiers())) {
+                    continue;
+                }
+
                 Object assigned = field.get(this);
 
                 if (View.class.isAssignableFrom(type)) {
