@@ -10,7 +10,6 @@
 package viewtify.ui;
 
 import javafx.scene.control.Button;
-
 import kiss.I;
 import viewtify.keys.Command;
 import viewtify.ui.helper.ContextMenuHelper;
@@ -82,17 +81,6 @@ public class UIButton extends UserInterface<UIButton, Button> implements LabelHe
      */
     public UIButton fire() {
         ui.fire();
-        return this;
-    }
-
-    /**
-     * Apply border-less style.
-     * 
-     * @return
-     */
-    public UIButton borderless() {
-        style("border-less").focusable(false);
-
         return this;
     }
 }
