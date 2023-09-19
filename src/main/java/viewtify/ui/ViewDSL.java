@@ -110,6 +110,16 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
         return () -> node;
     }
 
+    protected final <E extends UserInterfaceProvider<Node>> void $(UIGridView<E> view, int rowSize, int columnSize, E[] children, Consumer<UINode>... containerAttributes) {
+        $(view, I.array(containerAttributes, node -> {
+            foŕ(rowSize, row -> {
+                foŕ(columnSize, column -> {
+                    view.ui.add(children[row * column].ui(), row, column);
+                });
+            });
+        }));
+    }
+
     /**
      * Declare the dynamic child {@link UserInterfaceProvider}.
      * 

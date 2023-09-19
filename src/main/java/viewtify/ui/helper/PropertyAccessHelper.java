@@ -86,6 +86,9 @@ public interface PropertyAccessHelper {
         public static final Type<Double> GraphicTextGap = new Type("graphicTextGap");
 
         /** The defined property type. */
+        public static final Type<Double> HGap = new Type("hgap");
+
+        /** The defined property type. */
         public static final Type<String> Id = new Type("id");
 
         /** The defined property type. */
@@ -105,6 +108,9 @@ public interface PropertyAccessHelper {
 
         /** The defined property type. */
         public static final Type<Double> Opacity = new Type("opacity");
+
+        /** The defined property type. */
+        public static final Type Orientation = new Type("orientation");;
 
         /** The defined property type. */
         public static final Type<Node> Placeholder = new Type("placeholder");
@@ -129,6 +135,9 @@ public interface PropertyAccessHelper {
 
         /** The defined property type. */
         public static final Type<Boolean> Underline = new Type("underline");
+
+        /** The defined property type. */
+        public static final Type<Double> VGap = new Type("vgap");
 
         /** The defined property type. */
         public static final Type<Boolean> Visible = new Type("visible");

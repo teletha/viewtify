@@ -11,12 +11,16 @@ package viewtify.ui;
 
 import javafx.scene.layout.TilePane;
 
-public class UITileView<E> extends AbstractPane<E, TilePane, UITileView<E>> {
+import viewtify.ui.helper.AlignmentHelper;
+
+public class UITileView<E> extends AbstractPane<E, TilePane, UITileView<E>> implements AlignmentHelper<UITileView<E>> {
 
     /**
      * @param view
      */
     public UITileView(View view) {
         super(new TilePane(), view);
+
+        ui.setPrefColumns(4);
     }
 }

@@ -31,7 +31,7 @@ class CSSProcessor implements Consumer<Properties> {
 
     /** The property name mapping. */
     private static final Map<String, String> propertyNames = Map
-            .of("color", "text-fill", "stroke-dasharray", "stroke-dash-array", "text-decoration", "underline");
+            .of("color", "text-fill", "stroke-dasharray", "stroke-dash-array", "text-decoration", "underline", "row-gap", "vgap", "column-gap", "hgap");
 
     /** The property value mapping. */
     private static final Map<String, String> cursorProperties = Map.of("pointer", "hand");

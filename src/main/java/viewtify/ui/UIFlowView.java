@@ -11,7 +11,9 @@ package viewtify.ui;
 
 import javafx.scene.layout.FlowPane;
 
-public class UIFlowView<E> extends AbstractPane<E, FlowPane, UIFlowView<E>> {
+import viewtify.ui.helper.AlignmentHelper;
+
+public class UIFlowView<E> extends AbstractPane<E, FlowPane, UIFlowView<E>> implements AlignmentHelper<UIFlowView<E>> {
 
     /**
      * @param view
