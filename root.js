@@ -60,6 +60,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AlignmentHelper",
+			"packageName": "viewtify.ui.helper",
+			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Animatable",
 			"packageName": "viewtify.ui.anime",
 			"type": "Functional"
@@ -663,6 +670,13 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UIFontPicker",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UIGridView",
 			"packageName": "viewtify.ui",
 			"type": "Class"
 		},
