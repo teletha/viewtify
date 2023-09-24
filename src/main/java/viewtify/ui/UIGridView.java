@@ -16,8 +16,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-
-import kiss.WiseSupplier;
 import viewtify.ui.helper.AlignmentHelper;
 
 public class UIGridView<E extends UserInterfaceProvider<Node>> extends AbstractPane<E, GridPane, UIGridView<E>>
@@ -28,19 +26,6 @@ public class UIGridView<E extends UserInterfaceProvider<Node>> extends AbstractP
      */
     public UIGridView(View view) {
         super(new GridPane(), view);
-    }
-
-    public UIGridView<E> fill(int row, int column, WiseSupplier<E> columnBuilder) {
-        System.out.println("FILL");
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < column; j++) {
-                E item = columnBuilder.get();
-                addItemAtLast(item);
-                ui.add(item.ui(), j, i);
-            }
-        }
-
-        return this;
     }
 
     /**

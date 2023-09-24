@@ -11,7 +11,6 @@ package viewtify.ui;
 
 import javafx.beans.property.Property;
 import javafx.scene.control.ToggleButton;
-
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.ValueHelper;
@@ -34,5 +33,25 @@ public class UIToggleButton extends UserInterface<UIToggleButton, ToggleButton>
     @Override
     public Property<Boolean> valueProperty() {
         return ui.selectedProperty();
+    }
+
+    /**
+     * Select this button.
+     * 
+     * @return
+     */
+    public UIToggleButton select() {
+        ui.setSelected(true);
+        return this;
+    }
+
+    /**
+     * Unselect this button.
+     * 
+     * @return
+     */
+    public UIToggleButton unselect() {
+        ui.setSelected(false);
+        return this;
     }
 }
