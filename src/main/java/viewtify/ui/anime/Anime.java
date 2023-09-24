@@ -17,8 +17,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.value.WritableValue;
 import javafx.util.Duration;
-
 import kiss.WiseRunnable;
+import viewtify.Viewtify;
 
 public class Anime {
 
@@ -181,6 +181,7 @@ public class Anime {
         if (initializer != null) {
             initializer.run();
         }
-        initial.play();
+
+        Viewtify.inUI(initial::play);
     }
 }
