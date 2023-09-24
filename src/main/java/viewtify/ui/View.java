@@ -9,6 +9,7 @@
  */
 package viewtify.ui;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -18,14 +19,12 @@ import java.util.function.Predicate;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.css.Styleable;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
@@ -239,6 +238,26 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
     /**
      * Initialize myself.
      */
+    synchronized void initialize(View parent) {
+        if (initialized == false) {
+            initialized = true;
+            this.parent = parent;
+
+            // initialize user system lazily
+            try {
+                buildUI();
+
+                this.root = declareUI().ui();
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw I.quiet(e);
+            }
+        }
+    }
+
+    /**
+     * Initialize myself.
+     */
     synchronized void initializeLazy(View parent) {
         if (initialized == false) {
             initialized = true;
@@ -265,56 +284,26 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
                 for (Field field : targetClass.getDeclaredFields()) {
                     Class<?> type = field.getType();
                     field.setAccessible(true);
-
-                    if (Modifier.isAbstract(type.getModifiers())) {
-                        continue;
-                    }
-
                     Object assigned = field.get(this);
 
-                    if (View.class.isAssignableFrom(type)) {
-                        if (assigned != null) {
-                            ((View) assigned).initializeLazy(this);
-                        } else {
-                            Class<View> viewType = (Class<View>) type;
-                            field.set(this, findAncestorView(viewType).or(() -> {
-                                View sub = I.make(viewType);
-                                sub.initializeLazy(this);
-                                return sub;
-                            }));
+                    if (assigned != null) {
+                        if (assigned instanceof View view) {
+                            view.initializeLazy(this);
+                        } else if (type.isArray()) {
+                            buildArray(type, assigned, field);
                         }
-                    } else if (Node.class.isAssignableFrom(type)) {
-                        if (assigned == null) {
-                            Constructor constructor = Model.collectConstructors(type)[0];
-                            constructor.setAccessible(true);
+                    } else if (!Modifier.isAbstract(type.getModifiers())) {
+                        if (View.class.isAssignableFrom(type)) {
+                            Class<View> viewType = (Class<View>) type;
+                            View view = findAncestorView(viewType).or(() -> I.make(viewType));
+                            view.initializeLazy(this);
 
-                            Node node = (Node) constructor.newInstance(this);
+                            field.set(this, view);
+                        } else if (Node.class.isAssignableFrom(type) || UserInterfaceProvider.class.isAssignableFrom(type)) {
+                            Object node = createUI(type, field);
 
                             assignId(node, field.getName());
                             field.set(this, node);
-                        }
-                    } else if (UserInterfaceProvider.class.isAssignableFrom(type)) {
-                        if (assigned == null) {
-                            Constructor constructor = Model.collectConstructors(type)[0];
-                            constructor.setAccessible(true);
-
-                            Parameter[] params = constructor.getParameters();
-                            UserInterfaceProvider provider = null;
-
-                            if (params.length == 1) {
-                                provider = (UserInterfaceProvider) constructor.newInstance(this);
-                            } else if (params.length == 2 && params[1].getType() == Class.class) {
-                                provider = (UserInterfaceProvider) constructor
-                                        .newInstance(this, Model.collectParameters(field.getGenericType(), field.getType())[0]);
-                            } else if (params.length == 3 && params[1].getType() == Class.class && params[2].getType() == Class.class) {
-                                Type[] types = Model.collectParameters(field.getGenericType(), field.getType());
-                                provider = (UserInterfaceProvider) constructor.newInstance(this, types[0], types[1]);
-                            } else {
-                                throw new UnsupportedOperationException("Unknown constructor type. [" + constructor + "]");
-                            }
-
-                            assignId(provider.ui(), field.getName());
-                            field.set(this, provider);
                         }
                     }
                 }
@@ -327,17 +316,79 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
         }
     }
 
+    private void buildArray(Class type, Object array, Field field) {
+        Class arrayType = type.getComponentType();
+        int length = Array.getLength(array);
+
+        for (int i = 0; i < length; i++) {
+            if (arrayType.isArray()) {
+                buildArray(arrayType, Array.get(array, i), field);
+            } else {
+                Array.set(array, i, createUI(arrayType, field));
+            }
+        }
+    }
+
     /**
-     * Assign id to {@link Styleable}.
+     * Create various user interface types.
      * 
-     * @param ui
-     * @param id
+     * @param <T>
+     * @param type
+     * @param field
+     * @return
+     */
+    private <T> T createUI(Class<T> type, Field field) {
+        if (View.class.isAssignableFrom(type)) {
+            Class<View> viewType = (Class<View>) type;
+            View view = findAncestorView(viewType).or(() -> I.make(viewType));
+            view.initializeLazy(this);
+            return (T) view;
+        } else {
+            Constructor<T> constructor = Model.collectConstructors(type)[0];
+            constructor.setAccessible(true);
+
+            Parameter[] parameterTypes = constructor.getParameters();
+            Object[] parameters = new Object[parameterTypes.length];
+            Type[] specializedTypes = null;
+
+            for (int i = 0; i < parameters.length; i++) {
+                Class<?> parameterType = parameterTypes[i].getType();
+
+                if (parameterType == View.class || parameterType == getClass()) {
+                    parameters[i] = this;
+                } else if (View.class.isAssignableFrom(parameterType)) {
+                    parameters[i] = findAncestorView((Class<View>) parameterType);
+                } else if (parameterType == Class.class) {
+                    if (specializedTypes == null) specializedTypes = Model.collectParameters(field.getGenericType(), field.getType());
+                    parameters[i] = specializedTypes[i - 1];
+                } else {
+                    parameters[i] = I.make(parameterType);
+                }
+            }
+
+            try {
+                return constructor.newInstance(parameters);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException("Non supported constructor [" + constructor + "] on view [" + this + "]", e);
+            }
+        }
+    }
+
+    /**
+     * Assign id to {@link Node}.
+     * 
+     * @param ui The target widget.
+     * @param id The widget id.
      */
     private void assignId(Object ui, String id) {
-        if (ui instanceof Node) {
-            ((Node) ui).setId(id);
-        } else if (ui instanceof TableColumnBase) {
-            ((TableColumnBase) ui).setId(id);
+        if (ui instanceof UserInterfaceProvider provider) {
+            ui = provider.ui();
+        }
+
+        if (ui instanceof Node node) {
+            node.setId(id);
+        } else if (ui instanceof TableColumnBase column) {
+            column.setId(id);
         }
     }
 
