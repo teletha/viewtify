@@ -9,4 +9,8 @@
  */
 .root {
 		-fx-default-button: #ececec;
+		
+    /* A bright blue for highlighting/accenting objects.  For example: selected
+     * text; selected items in menus, lists, trees, and tables; progress bars */
+    -fx-accent: hsb(200, 20%, 94%);
 }
