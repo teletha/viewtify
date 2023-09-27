@@ -71,7 +71,7 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
      * @return Chainable API.
      */
     default Self style(Style... styles) {
-        return style(I.signal(styles).flatArray(Style::className).toList());
+        return style(I.signal(styles).skipNull().flatArray(Style::className).toList());
     }
 
     /**
