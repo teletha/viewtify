@@ -18,7 +18,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import viewtify.ui.helper.AlignmentHelper;
 
-public class UIGridView<E extends UserInterfaceProvider<Node>> extends AbstractPane<E, GridPane, UIGridView<E>>
+public class UIGridView<E extends UserInterfaceProvider<? extends Node>> extends AbstractPane<E, GridPane, UIGridView<E>>
         implements AlignmentHelper<UIGridView<E>> {
 
     /**

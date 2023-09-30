@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+import org.controlsfx.control.CheckComboBox;
+import org.controlsfx.control.HiddenSidesPane;
+import org.controlsfx.control.SegmentedButton;
+
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.geometry.Orientation;
@@ -32,11 +36,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
-import org.controlsfx.control.CheckComboBox;
-import org.controlsfx.control.HiddenSidesPane;
-import org.controlsfx.control.SegmentedButton;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -110,7 +109,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
         return () -> node;
     }
 
-    protected final <E extends UserInterfaceProvider<Node>> void $(UIGridView<E> view, int rowSize, int columnSize, E[] children, Consumer<UINode>... containerAttributes) {
+    protected final <E extends UserInterfaceProvider<? extends Node>> void $(UIGridView<E> view, int rowSize, int columnSize, E[] children, Consumer<UINode>... containerAttributes) {
         $(view, I.array(containerAttributes, node -> {
             foŕ(rowSize, row -> {
                 foŕ(columnSize, column -> {
