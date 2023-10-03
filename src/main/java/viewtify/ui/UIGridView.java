@@ -9,6 +9,7 @@
  */
 package viewtify.ui;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
@@ -73,10 +74,22 @@ public class UIGridView<E extends UserInterfaceProvider<? extends Node>> extends
      * @return
      */
     public UIGridView<E> constrain(ColumnConstraints constraint) {
-        if (constraint != null) {
-            ui.getColumnConstraints().add(constraint);
-        }
+        return constrain(constraint, 1);
+    }
 
+    /**
+     * Add constraint for column.
+     * 
+     * @param constraint
+     * @return
+     */
+    public UIGridView<E> constrain(ColumnConstraints constraint, int sequence) {
+        if (constraint != null) {
+            ObservableList<ColumnConstraints> list = ui.getColumnConstraints();
+            for (int i = 0; i < sequence; i++) {
+                list.add(constraint);
+            }
+        }
         return this;
     }
 
@@ -125,10 +138,22 @@ public class UIGridView<E extends UserInterfaceProvider<? extends Node>> extends
      * @return
      */
     public UIGridView<E> constrain(RowConstraints constraint) {
-        if (constraint != null) {
-            ui.getRowConstraints().add(constraint);
-        }
+        return constrain(constraint, 1);
+    }
 
+    /**
+     * Add constraint for row.
+     * 
+     * @param constraint
+     * @return
+     */
+    public UIGridView<E> constrain(RowConstraints constraint, int sequence) {
+        if (constraint != null) {
+            ObservableList<RowConstraints> list = ui.getRowConstraints();
+            for (int i = 0; i < sequence; i++) {
+                list.add(constraint);
+            }
+        }
         return this;
     }
 }
