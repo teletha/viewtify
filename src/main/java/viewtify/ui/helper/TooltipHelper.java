@@ -18,6 +18,7 @@ import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
@@ -99,7 +100,8 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      */
     default Self popup(Supplier<UserInterfaceProvider<Node>> builder) {
         if (builder != null) {
-            UserActionHelper.of(ui()).when(User.LeftClick, () -> {
+            UserActionHelper<?> helper = UserActionHelper.of(ui());
+            helper.when(User.LeftClick, event -> {
                 PopOver p = ReferenceHolder.popover();
 
                 if (p.isShowing()) {
@@ -107,10 +109,10 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
                         p.hide();
                         p.setUserData(null);
                     } else {
-                        p.setOnHidden(e -> show(builder, p));
+                        p.setOnHidden(e -> show(builder, p, event));
                     }
                 } else {
-                    show(builder, p);
+                    show(builder, p, event);
                 }
             });
         }
@@ -123,10 +125,10 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param builder Create the contents. This callback will be invoked every showing the popup.
      * @param popup A singleton popup widget.
      */
-    private void show(Supplier<UserInterfaceProvider<Node>> builder, PopOver popup) {
+    private void show(Supplier<UserInterfaceProvider<Node>> builder, PopOver popup, MouseEvent event) {
         Platform.runLater(() -> {
             popup.setContentNode(builder.get().ui());
-            popup.show(ui());
+            popup.show(ui(), event.getScreenX() + 25, event.getScreenY());
             popup.setUserData(ui());
             popup.setOnHidden(x -> popup.setContentNode(null));
         });

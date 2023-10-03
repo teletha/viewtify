@@ -20,6 +20,7 @@ public abstract class ReferenceHolder {
     static final synchronized PopOver popover() {
         if (popover == null) {
             popover = new PopOver();
+            popover.setArrowSize(0);
             popover.setDetachable(false);
         }
         return popover;
