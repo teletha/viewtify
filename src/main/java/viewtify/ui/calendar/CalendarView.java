@@ -1,0 +1,172 @@
+/*
+ * Copyright (C) 2023 Nameless Production Committee
+ *
+ * Licensed under the MIT License (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *          http://opensource.org/licenses/mit-license.php
+ */
+package viewtify.ui.calendar;
+
+import java.time.LocalDate;
+
+import org.controlsfx.glyphfont.FontAwesome;
+
+import kiss.I;
+import kiss.Managed;
+import kiss.Singleton;
+import stylist.Style;
+import stylist.StyleDSL;
+import viewtify.style.FormStyles;
+import viewtify.ui.UIButton;
+import viewtify.ui.UIHBox;
+import viewtify.ui.UILabel;
+import viewtify.ui.UISegmentedButton;
+import viewtify.ui.UIToggleButton;
+import viewtify.ui.View;
+import viewtify.ui.ViewDSL;
+import viewtify.ui.anime.SwapAnime;
+
+@Managed(Singleton.class)
+public class CalendarView extends View {
+
+    private UISegmentedButton switchRange;
+
+    private UIToggleButton switchToDay;
+
+    private UIToggleButton switchToWeek;
+
+    private UIToggleButton switchToMonth;
+
+    private UIToggleButton switchToYear;
+
+    UILabel current;
+
+    private UIButton selectNext;
+
+    private UIButton selectPrevious;
+
+    private UIButton selectToday;
+
+    private UIHBox main;
+
+    private TemporalView currentView;
+
+    LocalDate currentDate;
+
+    @Override
+    protected ViewDSL declareUI() {
+        return new ViewDSL() {
+            {
+                $(vbox, () -> {
+                    $(hbox, FormStyles.FormRow, Styles.header, () -> {
+                        $(selectToday, FormStyles.FormButton, Styles.today);
+
+                        $(hbox, Styles.headerCenter, () -> {
+                            $(selectPrevious);
+                            $(current, Styles.current);
+                            $(selectNext);
+                        });
+
+                        $(hbox, Styles.headerRight, () -> {
+                            $(switchRange, () -> {
+                                $(switchToDay);
+                                $(switchToWeek);
+                                $(switchToMonth);
+                                $(switchToYear);
+                            });
+                        });
+                    });
+
+                    $(main, Styles.main);
+                });
+            }
+        };
+    }
+
+    interface Styles extends StyleDSL {
+        Style today = () -> {
+            margin.horizontal(15, px);
+        };
+
+        Style selector = () -> {
+            font.size(20, px).color("-fx-mid-text-color").family("FontAwesome");
+            padding.horizontal(6, px).top(-4, px);
+        };
+
+        Style current = () -> {
+            display.minWidth(125, px);
+            font.size(20, px).smooth.grayscale();
+            padding.horizontal(25, px);
+            text.align.center();
+        };
+
+        Style header = () -> {
+            margin.top(8, px).bottom(15, px);
+        };
+
+        Style headerCenter = () -> {
+            display.width.fill();
+            text.align.center();
+        };
+
+        Style headerRight = () -> {
+            display.width.fitContent();
+            text.align.right();
+            margin.horizontal(15, px);
+        };
+
+        Style year = () -> {
+            display.width(80, px);
+        };
+
+        Style month = () -> {
+            display.width(80, px);
+        };
+
+        Style main = () -> {
+            display.width.fill().height.fill();
+        };
+    }
+
+    @Override
+    protected void initialize() {
+        selectNext.text(FontAwesome.Glyph.ANGLE_RIGHT, Styles.selector).action(() -> currentView.next());
+        selectPrevious.text(FontAwesome.Glyph.ANGLE_LEFT, Styles.selector).action(() -> currentView.previous());
+        selectToday.text(I.translate("Today")).action(() -> currentView.today());
+
+        switchToDay.text(I.translate("Day")).action(() -> show(DayView.class, currentDate));
+        switchToWeek.text(I.translate("Week")).action(() -> show(WeekView.class, currentDate));
+        switchToMonth.text(I.translate("Month")).action(() -> show(MonthView.class, currentDate));
+        switchToYear.text(I.translate("Year")).action(() -> show(YearView.class, currentDate));
+
+        show(MonthView.class, LocalDate.now());
+    }
+
+    protected <V extends TemporalView> void show(Class<V> viewType, LocalDate date) {
+        // avoid re-rendering
+        if (viewType.isInstance(currentView) && date.isEqual(currentDate)) {
+            return;
+        }
+
+        V view = I.make(viewType);
+        view.ui();
+
+        currentDate = date;
+        currentView = view;
+        currentView.set(date);
+
+        main.content(view, SwapAnime.FadeOutIn);
+
+        if (viewType == DayView.class) {
+            switchToDay.select();
+        } else if (viewType == WeekView.class) {
+            switchToWeek.select();
+        } else if (viewType == MonthView.class) {
+            switchToMonth.select();
+        } else if (viewType == YearView.class) {
+            switchToYear.select();
+        }
+    }
+}
