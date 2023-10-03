@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 
 import org.controlsfx.control.PopOver;
 
+import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
@@ -102,14 +103,33 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
                 PopOver p = ReferenceHolder.popover();
 
                 if (p.isShowing()) {
-                    p.hide();
+                    if (p.getUserData() == ui()) {
+                        p.hide();
+                        p.setUserData(null);
+                    } else {
+                        p.setOnHidden(e -> show(builder, p));
+                    }
                 } else {
-                    p.setContentNode(builder.get().ui());
-                    p.show(ui());
+                    show(builder, p);
                 }
             });
         }
         return (Self) this;
+    }
+
+    /**
+     * Show popup.
+     * 
+     * @param builder Create the contents. This callback will be invoked every showing the popup.
+     * @param popup A singleton popup widget.
+     */
+    private void show(Supplier<UserInterfaceProvider<Node>> builder, PopOver popup) {
+        Platform.runLater(() -> {
+            popup.setContentNode(builder.get().ui());
+            popup.show(ui());
+            popup.setUserData(ui());
+            popup.setOnHidden(x -> popup.setContentNode(null));
+        });
     }
 
     /**

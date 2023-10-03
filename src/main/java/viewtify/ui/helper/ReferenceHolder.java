@@ -21,7 +21,6 @@ public abstract class ReferenceHolder {
         if (popover == null) {
             popover = new PopOver();
             popover.setDetachable(false);
-            popover.setOnHidden(e -> popover.setContentNode(null));
         }
         return popover;
     }
