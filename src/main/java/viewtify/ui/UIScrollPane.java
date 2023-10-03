@@ -78,6 +78,26 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
     }
 
     /**
+     * Set the scroll bar width to slim (5px).
+     * 
+     * @return
+     */
+    public UIScrollPane slim() {
+        style("slim");
+        return this;
+    }
+
+    /**
+     * Set the scroll bar width to thin (3px).
+     * 
+     * @return
+     */
+    public UIScrollPane thin() {
+        style("thin");
+        return this;
+    }
+
+    /**
      * {@link ScrollPane} with kinda smooth transition scrolling.
      */
     private static class SmoothScrollPane extends ScrollPane {

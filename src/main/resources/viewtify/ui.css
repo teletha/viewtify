@@ -190,11 +190,20 @@
 .scroll-bar {
     -fx-padding: 0 -1 0 0;
 }
-.scroll-bar:vertical {
-    -fx-pref-width: 7;
-}
+.scroll-bar:vertical,
 .scroll-bar:horizontal {
+    -fx-pref-width: 7;
     -fx-pref-height: 7;
+}
+.scroll-pane.slim .scroll-bar:vertical,
+.scroll-pane.slim .scroll-bar:horizontal {
+    -fx-pref-width: 5;
+    -fx-pref-height: 5;
+}
+.scroll-pane.thin .scroll-bar:vertical,
+.scroll-pane.thin .scroll-bar:horizontal {
+    -fx-pref-width: 3;
+    -fx-pref-height: 3;
 }
 .scroll-bar .track {
     -fx-background-insets: 1;

@@ -11,11 +11,15 @@ package viewtify.ui.calendar;
 
 import java.time.LocalDate;
 
+import javafx.geometry.Bounds;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.skin.ScrollPaneSkin;
 import kiss.Extensible;
 import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
+import viewtify.Viewtify;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIScrollPane;
 import viewtify.ui.UIVBox;
@@ -50,7 +54,7 @@ public class DayCell extends View {
                             $(hbox, Styles.row, () -> {
                                 $(day, Styles.num);
                             });
-                            $(scroll, () -> {
+                            $(scroll, Styles.entries, () -> {
                                 $(pane);
                             });
                         });
@@ -89,6 +93,9 @@ public class DayCell extends View {
             text.align.center();
         };
 
+        Style entries = () -> {
+        };
+
         Style num = () -> {
             display.width(50, px);
             padding.vertical(3, px);
@@ -103,7 +110,15 @@ public class DayCell extends View {
 
     @Override
     protected void initialize() {
-        scroll.policy(ScrollBarPolicy.NEVER, ScrollBarPolicy.NEVER).fit(true, true);
+        scroll.policy(ScrollBarPolicy.NEVER, ScrollBarPolicy.AS_NEEDED).fit(true, true).thin();
+
+        Bounds bounds = scroll.ui.getViewportBounds();
+        Bounds local = scroll.ui.getBoundsInLocal();
+
+        Viewtify.observe(scroll.ui.skinProperty()).as(ScrollPaneSkin.class).to(skin -> {
+            ScrollBar bar = skin.getVerticalScrollBar();
+            System.out.println(bar.getValue() + "  " + bar.getVisibleAmount() + "   ");
+        });
     }
 
     void set(LocalDate date, int month, CalendarView calendar) {
