@@ -18,7 +18,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-
 import viewtify.ui.anime.SwapAnime;
 
 public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
@@ -51,6 +50,19 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
         if (vertical != null) {
             ui.setVbarPolicy(vertical);
         }
+        return this;
+    }
+
+    /**
+     * Set box fitting policy.
+     * 
+     * @param width
+     * @param height
+     */
+    public UIScrollPane fit(boolean width, boolean height) {
+        ui.setFitToWidth(width);
+        ui.setFitToHeight(height);
+
         return this;
     }
 
