@@ -21,6 +21,8 @@ public class CalendarSettingView extends View {
 
     private UIComboBox<DayOfWeek> firstDoW;
 
+    private UIComboBox<Class> initialView;
+
     /**
      * {@inheritDoc}
      */
@@ -28,9 +30,15 @@ public class CalendarSettingView extends View {
     protected ViewDSL declareUI() {
         return new ViewDSL() {
             {
-                $(hbox, FormStyles.FormRow, () -> {
-                    label((en("First day of week")), FormStyles.FormLabel);
-                    $(firstDoW, FormStyles.FormInput);
+                $(vbox, () -> {
+                    $(hbox, FormStyles.FormRow, () -> {
+                        label((en("First day of week")), FormStyles.FormLabel);
+                        $(firstDoW, FormStyles.FormInput);
+                    });
+                    $(hbox, FormStyles.FormRow, () -> {
+                        label((en("Initial page")), FormStyles.FormLabel);
+                        $(initialView, FormStyles.FormInput);
+                    });
                 });
             }
         };
@@ -42,6 +50,9 @@ public class CalendarSettingView extends View {
     @Override
     protected void initialize() {
         firstDoW.items(DayOfWeek.values()).sync(Calendars.setting.firstDoW).renderByVariable(x -> en(x.name()));
+        initialView.items(YearView.class, MonthView.class, WeekView.class, DayView.class)
+                .sync(Calendars.setting.initialView)
+                .renderByVariable(x -> en(x.getSimpleName().replace("View", "")));
     }
 
     /**
@@ -51,6 +62,9 @@ public class CalendarSettingView extends View {
 
         /** The first day of week. */
         public final Preference<DayOfWeek> firstDoW = initialize(DayOfWeek.SUNDAY);
+
+        /** The initial view. */
+        public final Preference<Class> initialView = initialize(MonthView.class);
 
         /**
          * Hide constructor.
