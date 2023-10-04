@@ -138,7 +138,7 @@ public class YearMonthView extends View {
             row.setVgrow(Priority.ALWAYS);
             grid.ui.getRowConstraints().add(row);
 
-            days[i].style(TemporalStyles.outOfRange);
+            days[i].style(TemporalStyles.outOfMonth);
         }
 
         monthText.when(User.LeftClick, () -> {

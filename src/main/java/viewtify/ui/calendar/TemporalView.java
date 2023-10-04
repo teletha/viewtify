@@ -114,7 +114,7 @@ public abstract class TemporalView extends View {
             display.width.fill().height.fill();
         };
 
-        Style outOfRange = () -> {
+        Style outOfMonth = () -> {
             display.opacity(0.66);
         };
 

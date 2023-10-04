@@ -98,6 +98,7 @@ public class MonthView extends TemporalView {
         this.currentDate = date.withDayOfMonth(1);
 
         LocalDate start = Calendars.calculateStartingMonthDay(currentDate);
+        LocalDate end = start.plusDays(41);
 
         LocalDate processing = start;
         for (DayCell[] weeks : cells) {
@@ -120,7 +121,7 @@ public class MonthView extends TemporalView {
         }
 
         I.signal(I.find(TimeEventSource.class))
-                .flatMap(source -> source.queryByMonth(date.getYear(), date.getMonthValue()))
+                .flatMap(source -> source.query(start, end))
                 .sort(Comparator.naturalOrder())
                 .on(Viewtify.UIThread)
                 .to(event -> {

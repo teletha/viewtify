@@ -109,7 +109,8 @@ public class DayCell extends View {
     }
 
     void set(LocalDate date, int month, CalendarView calendar) {
-        day.text(date.getDayOfMonth()).style(date.getMonthValue() != month, TemporalStyles.outOfRange);
+        box.style(date.getMonthValue() != month, TemporalStyles.outOfMonth);
+        day.text(date.getDayOfMonth());
 
         day.when(User.LeftClick, () -> {
             calendar.show(DayView.class, date);
