@@ -14,7 +14,6 @@ import java.util.stream.IntStream;
 
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
-
 import kiss.I;
 import viewtify.Theme;
 import viewtify.ThemeType;

@@ -11,6 +11,7 @@ package viewtify.model;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -50,6 +51,15 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
      */
     protected final <C extends Comparable<? super C>> ComparablePreference<C> initialize(C defaultValue) {
         return new ComparablePreference(defaultValue);
+    }
+
+    /**
+     * Create {@link Preference} with the default value.
+     * 
+     * @return A created new {@link Preference}.
+     */
+    protected final <V> PreferenceMap<String, V> initializeMap(V defaultValue) {
+        return new PreferenceMap(defaultValue);
     }
 
     /**
@@ -113,7 +123,7 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
      * Reset all values to default.
      */
     public final void reset() {
-        I.signal(Model.of(this).properties()).flatVariable(this::findBy).to(Preference::reset);
+        I.signal(Model.of(this).properties()).flatVariable(this::findBy).skipNull().to(Preference::reset);
     }
 
     /**
@@ -519,5 +529,21 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
             requirements.add(v -> min.compareTo(v) > 0 ? min : max.compareTo(v) < 0 ? max : v);
             return this;
         }
+    }
+
+    /**
+     * Preference value for {@link Comparable}.
+     */
+    public class PreferenceMap<K, V> extends HashMap<K, V> {
+
+        private final V defaultValue;
+
+        /**
+         * @param defaultValue
+         */
+        public PreferenceMap(V defaultValue) {
+            this.defaultValue = defaultValue;
+        }
+
     }
 }

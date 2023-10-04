@@ -28,6 +28,10 @@ public interface TimeEventSource extends Extensible {
      */
     String name();
 
+    default boolean isEnabled() {
+        return true;
+    }
+
     /**
      * Query events by starting and ending date.
      * 

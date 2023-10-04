@@ -10,10 +10,14 @@
 package viewtify.ui.calendar;
 
 import java.time.DayOfWeek;
+import java.util.HashMap;
+import java.util.Map;
 
+import kiss.I;
 import viewtify.model.PreferenceModel;
 import viewtify.style.FormStyles;
 import viewtify.ui.UICheckBox;
+import viewtify.ui.UIColorPicker;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
@@ -46,9 +50,19 @@ public class CalendarSettingView extends View {
                         label((en("Emphsize today")), FormStyles.FormLabel);
                         $(emphsizeToday, FormStyles.FormInput);
                     });
+
+                    $(hbox, FormStyles.FormRow, () -> {
+                        label((en("Event sources")), FormStyles.FormLabel);
+                        $(vbox, () -> {
+                            I.find(TimeEventSource.class).forEach(source -> {
+                                $(new TimeEventSourceView(source));
+                            });
+                        });
+                    });
                 });
             }
         };
+
     }
 
     /**
@@ -64,6 +78,49 @@ public class CalendarSettingView extends View {
     }
 
     /**
+     * Setting view for {@link TimeEventSource}.
+     */
+    private static class TimeEventSourceView extends View {
+
+        private final TimeEventSource source;
+
+        private UICheckBox enable;
+
+        private UIColorPicker color;
+
+        /**
+         * 
+         */
+        private TimeEventSourceView(TimeEventSource source) {
+            this.source = source;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected ViewDSL declareUI() {
+            return new ViewDSL() {
+                {
+                    $(hbox, FormStyles.FormRow, () -> {
+                        $(enable, FormStyles.FormInputMin);
+                        $(color, FormStyles.FormInputMin);
+                    });
+                }
+            };
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void initialize() {
+            enable.text(source.name()).initialize(true);
+            color.disableWhen(enable.isNotSelected());
+        }
+    }
+
+    /**
      * Preference for calendar.
      */
     public static class Setting extends PreferenceModel<Setting> {
@@ -76,6 +133,8 @@ public class CalendarSettingView extends View {
 
         /** The today's style. */
         public final Preference<Boolean> emphsizeToday = initialize(true);
+
+        public Map<String, Boolean> sourceAvailabilities = new HashMap();
 
         /**
          * Hide constructor.
