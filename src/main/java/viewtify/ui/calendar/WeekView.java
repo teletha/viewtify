@@ -109,6 +109,13 @@ public class WeekView extends TemporalView {
             processing = processing.plusDays(1);
         }
 
+        if (Calendars.setting.emphsizeToday.is(true)) {
+            int diff = (int) (LocalDate.now().toEpochDay() - start.toEpochDay());
+            if (0 <= diff && diff <= 6) {
+                cells[diff].markAsToday();
+            }
+        }
+
         I.signal(I.find(TimeEventSource.class))
                 .flatMap(source -> source.query(start, end))
                 .sort(Comparator.naturalOrder())

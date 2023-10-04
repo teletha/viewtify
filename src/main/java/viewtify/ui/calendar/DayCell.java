@@ -30,6 +30,8 @@ public class DayCell extends View {
 
     private int dayId;
 
+    private UIVBox box;
+
     private UIScrollPane scroll;
 
     private UIVBox pane;
@@ -45,7 +47,7 @@ public class DayCell extends View {
     protected ViewDSL declareUI() {
         return new ViewDSL() {
             {
-                $(vbox, weekId == 0 ? dayId % 7 == 0 ? Styles.firstDay : Styles.firstWeek
+                $(box, weekId == 0 ? dayId % 7 == 0 ? Styles.firstDay : Styles.firstWeek
                         : dayId % 7 == 0 ? Styles.firstDayOfWeek : Styles.day, () -> {
                             $(hbox, Styles.row, () -> {
                                 $(day, Styles.num);
@@ -118,5 +120,12 @@ public class DayCell extends View {
         T visualizer = I.find(visualizerType, event.getClass());
 
         pane.ui.getChildren().add(visualizer.visualize(event).ui());
+    }
+
+    /**
+     * 
+     */
+    void markAsToday() {
+        box.style(TemporalStyles.today);
     }
 }

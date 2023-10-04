@@ -179,6 +179,14 @@ public class YearMonthView extends View {
 
             processing = processing.plusDays(1);
         }
+
+        if (Calendars.setting.emphsizeToday.is(true)) {
+            LocalDate today = LocalDate.now();
+            if (today.getMonth() == month) {
+                int diff = (int) (today.toEpochDay() - today.withDayOfMonth(1).toEpochDay());
+                days[7 + diff].style(TemporalStyles.today);
+            }
+        }
     }
 
     protected void set(Locale locale) {

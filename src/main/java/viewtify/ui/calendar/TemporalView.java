@@ -117,5 +117,9 @@ public abstract class TemporalView extends View {
         Style outOfRange = () -> {
             display.opacity(0.66);
         };
+
+        Style today = () -> {
+            border.color("-fx-focus-color");
+        };
     }
 }

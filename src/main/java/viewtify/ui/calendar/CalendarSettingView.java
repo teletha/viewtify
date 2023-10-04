@@ -13,6 +13,7 @@ import java.time.DayOfWeek;
 
 import viewtify.model.PreferenceModel;
 import viewtify.style.FormStyles;
+import viewtify.ui.UICheckBox;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
@@ -22,6 +23,8 @@ public class CalendarSettingView extends View {
     private UIComboBox<DayOfWeek> firstDoW;
 
     private UIComboBox<Class> initialView;
+
+    private UICheckBox emphsizeToday;
 
     /**
      * {@inheritDoc}
@@ -39,6 +42,10 @@ public class CalendarSettingView extends View {
                         label((en("Initial page")), FormStyles.FormLabel);
                         $(initialView, FormStyles.FormInput);
                     });
+                    $(hbox, FormStyles.FormRow, () -> {
+                        label((en("Emphsize today")), FormStyles.FormLabel);
+                        $(emphsizeToday, FormStyles.FormInput);
+                    });
                 });
             }
         };
@@ -53,6 +60,7 @@ public class CalendarSettingView extends View {
         initialView.items(YearView.class, MonthView.class, WeekView.class, DayView.class)
                 .sync(Calendars.setting.initialView)
                 .renderByVariable(x -> en(x.getSimpleName().replace("View", "")));
+        emphsizeToday.sync(Calendars.setting.emphsizeToday);
     }
 
     /**
@@ -65,6 +73,9 @@ public class CalendarSettingView extends View {
 
         /** The initial view. */
         public final Preference<Class> initialView = initialize(MonthView.class);
+
+        /** The today's style. */
+        public final Preference<Boolean> emphsizeToday = initialize(true);
 
         /**
          * Hide constructor.
