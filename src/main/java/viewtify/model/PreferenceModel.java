@@ -58,8 +58,8 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
      * 
      * @return A created new {@link Preference}.
      */
-    protected final <V> PreferenceMap<String, V> initializeMap(V defaultValue) {
-        return new PreferenceMap(defaultValue);
+    protected final <V> SubPreference<V> sub(Class<V> type) {
+        return new SubPreference(type);
     }
 
     /**
@@ -528,6 +528,23 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
 
             requirements.add(v -> min.compareTo(v) > 0 ? min : max.compareTo(v) < 0 ? max : v);
             return this;
+        }
+    }
+
+    /**
+     * 
+     */
+    @SuppressWarnings("serial")
+    public class SubPreference<V> extends HashMap<String, V> {
+
+        private final Class<V> type;
+
+        private SubPreference(Class<V> type) {
+            this.type = type;
+        }
+
+        public V by(String key) {
+            return computeIfAbsent(key, k -> I.make(type));
         }
     }
 
