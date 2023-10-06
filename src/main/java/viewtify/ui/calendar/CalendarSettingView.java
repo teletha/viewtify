@@ -114,7 +114,7 @@ public class CalendarSettingView extends View {
         protected void initialize() {
             TimeEventSourceSetting setting = PreferenceModel.by(source);
 
-            enable.text(setting.name).sync(setting.enable);
+            enable.text(setting.name.or(source.id())).sync(setting.enable);
             color.disableWhen(enable.isNotSelected());
         }
     }
@@ -144,17 +144,10 @@ public class CalendarSettingView extends View {
     /**
      * Preference for calendar.
      */
-    public static class TimeEventSourceSetting extends KeyedPreferenceModel<TimeEventSourceSetting, TimeEventSource> {
+    public static class TimeEventSourceSetting extends KeyedPreferenceModel<TimeEventSourceSetting> {
 
         public final Preference<String> name = initialize("");
 
         public final Preference<Boolean> enable = initialize(true);
-
-        /**
-         * @param key
-         */
-        public TimeEventSourceSetting(TimeEventSource key) {
-            super(key);
-        }
     }
 }

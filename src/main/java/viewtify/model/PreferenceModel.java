@@ -9,10 +9,8 @@
  */
 package viewtify.model;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -161,36 +159,17 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
         return Model.of(this).type.getName();
     }
 
-    private static final Map<PreferenceKey, KeyedPreferenceModel> models = new ConcurrentHashMap();
+    private static final Map<PreferenceAware, KeyedPreferenceModel> models = new ConcurrentHashMap();
 
-    public static <P extends KeyedPreferenceModel, K extends PreferenceKey<P>> P by(K key) {
+    public static <P extends KeyedPreferenceModel, K extends PreferenceAware<P>> P by(K key) {
         return (P) models.computeIfAbsent(key, k -> {
-            try {
-                Class<P> type = (Class) Model.collectParameters(key.getClass(), PreferenceKey.class)[0];
-                Constructor<P> constructor = Model.collectConstructors(type)[0];
+            Class<P> type = (Class) Model.collectParameters(key.getClass(), PreferenceAware.class)[0];
+            P pref = I.make(type);
+            pref.assign(key);
+            pref.sync();
 
-                return constructor.newInstance(key);
-            } catch (Exception e) {
-                throw I.quiet(e);
-            }
+            return pref;
         });
-    }
-
-    @SuppressWarnings("serial")
-    @Managed(Singleton.class)
-    private static class Global<P extends PreferenceModel> extends HashMap<String, P> implements Storable<Global> {
-
-        private Global() {
-            restore();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String locate() {
-            return Viewtify.UserPreference.exact().file("pref.json").path();
-        }
     }
 
     /**

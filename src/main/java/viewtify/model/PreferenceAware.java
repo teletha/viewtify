@@ -9,11 +9,11 @@
  */
 package viewtify.model;
 
-public interface PreferenceKey<P extends KeyedPreferenceModel> {
+public interface PreferenceAware<P extends KeyedPreferenceModel> {
 
     String id();
 
-    default P model() {
+    default P preference() {
         return PreferenceModel.by(this);
     }
 }

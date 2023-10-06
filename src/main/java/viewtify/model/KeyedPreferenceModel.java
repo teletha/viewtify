@@ -13,15 +13,12 @@ import kiss.Managed;
 import viewtify.Viewtify;
 
 @Managed
-public abstract class KeyedPreferenceModel<Self extends KeyedPreferenceModel, K extends PreferenceKey<Self>> extends PreferenceModel<Self> {
+public abstract class KeyedPreferenceModel<Self extends KeyedPreferenceModel> extends PreferenceModel<Self> {
 
-    protected final K key;
+    private PreferenceAware preferenceable;
 
-    /**
-     * @param key
-     */
-    public KeyedPreferenceModel(K key) {
-        this.key = key;
+    final void assign(PreferenceAware preferenceable) {
+        this.preferenceable = preferenceable;
     }
 
     /**
@@ -29,6 +26,6 @@ public abstract class KeyedPreferenceModel<Self extends KeyedPreferenceModel, K 
      */
     @Override
     public String locate() {
-        return Viewtify.UserPreference.exact().file(getModelName() + "@" + key.id() + ".json").path();
+        return Viewtify.UserPreference.exact().file(getModelName() + "@" + preferenceable.id() + ".json").path();
     }
 }
