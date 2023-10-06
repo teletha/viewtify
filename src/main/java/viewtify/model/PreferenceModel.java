@@ -9,11 +9,14 @@
  */
 package viewtify.model;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -51,15 +54,6 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
      */
     protected final <C extends Comparable<? super C>> ComparablePreference<C> initialize(C defaultValue) {
         return new ComparablePreference(defaultValue);
-    }
-
-    /**
-     * Create {@link Preference} with the default value.
-     * 
-     * @return A created new {@link Preference}.
-     */
-    protected final <V> SubPreference<V> sub(Class<V> type) {
-        return new SubPreference(type);
     }
 
     /**
@@ -154,7 +148,7 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
      * {@inheritDoc}
      */
     @Override
-    public final String locate() {
+    public String locate() {
         return Viewtify.UserPreference.exact().file(getModelName() + ".json").path();
     }
 
@@ -165,6 +159,38 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
      */
     protected String getModelName() {
         return Model.of(this).type.getName();
+    }
+
+    private static final Map<PreferenceKey, KeyedPreferenceModel> models = new ConcurrentHashMap();
+
+    public static <P extends KeyedPreferenceModel, K extends PreferenceKey<P>> P by(K key) {
+        return (P) models.computeIfAbsent(key, k -> {
+            try {
+                Class<P> type = (Class) Model.collectParameters(key.getClass(), PreferenceKey.class)[0];
+                Constructor<P> constructor = Model.collectConstructors(type)[0];
+
+                return constructor.newInstance(key);
+            } catch (Exception e) {
+                throw I.quiet(e);
+            }
+        });
+    }
+
+    @SuppressWarnings("serial")
+    @Managed(Singleton.class)
+    private static class Global<P extends PreferenceModel> extends HashMap<String, P> implements Storable<Global> {
+
+        private Global() {
+            restore();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String locate() {
+            return Viewtify.UserPreference.exact().file("pref.json").path();
+        }
     }
 
     /**
@@ -529,38 +555,5 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
             requirements.add(v -> min.compareTo(v) > 0 ? min : max.compareTo(v) < 0 ? max : v);
             return this;
         }
-    }
-
-    /**
-     * 
-     */
-    @SuppressWarnings("serial")
-    public class SubPreference<V> extends HashMap<String, V> {
-
-        private final Class<V> type;
-
-        private SubPreference(Class<V> type) {
-            this.type = type;
-        }
-
-        public V by(String key) {
-            return computeIfAbsent(key, k -> I.make(type));
-        }
-    }
-
-    /**
-     * Preference value for {@link Comparable}.
-     */
-    public class PreferenceMap<K, V> extends HashMap<K, V> {
-
-        private final V defaultValue;
-
-        /**
-         * @param defaultValue
-         */
-        public PreferenceMap(V defaultValue) {
-            this.defaultValue = defaultValue;
-        }
-
     }
 }

@@ -18,15 +18,10 @@ import java.util.Map;
 import kiss.Extensible;
 import kiss.I;
 import kiss.Signal;
+import viewtify.model.PreferenceKey;
+import viewtify.ui.calendar.CalendarSettingView.TimeEventSourceSetting;
 
-public interface TimeEventSource extends Extensible {
-
-    /**
-     * The name of source.
-     * 
-     * @return
-     */
-    String name();
+public interface TimeEventSource extends Extensible, PreferenceKey<TimeEventSourceSetting> {
 
     default boolean isEnabled() {
         return true;

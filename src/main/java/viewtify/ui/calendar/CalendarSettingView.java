@@ -12,6 +12,7 @@ package viewtify.ui.calendar;
 import java.time.DayOfWeek;
 
 import kiss.I;
+import viewtify.model.KeyedPreferenceModel;
 import viewtify.model.PreferenceModel;
 import viewtify.style.FormStyles;
 import viewtify.ui.UICheckBox;
@@ -111,7 +112,9 @@ public class CalendarSettingView extends View {
          */
         @Override
         protected void initialize() {
-            enable.text(source.name()).sync(Calendars.setting.sources.by(source.name()).avilable);
+            TimeEventSourceSetting setting = PreferenceModel.by(source);
+
+            enable.text(setting.name).sync(setting.enable);
             color.disableWhen(enable.isNotSelected());
         }
     }
@@ -130,8 +133,6 @@ public class CalendarSettingView extends View {
         /** The today's style. */
         public final Preference<Boolean> emphsizeToday = initialize(true);
 
-        public SubPreference<TimeEventSourceSetting> sources = sub(TimeEventSourceSetting.class);
-
         /**
          * Hide constructor.
          */
@@ -143,8 +144,17 @@ public class CalendarSettingView extends View {
     /**
      * Preference for calendar.
      */
-    private static class TimeEventSourceSetting extends PreferenceModel<TimeEventSourceSetting> {
+    public static class TimeEventSourceSetting extends KeyedPreferenceModel<TimeEventSourceSetting, TimeEventSource> {
 
-        public final Preference<Boolean> avilable = initialize(true);
+        public final Preference<String> name = initialize("");
+
+        public final Preference<Boolean> enable = initialize(true);
+
+        /**
+         * @param key
+         */
+        public TimeEventSourceSetting(TimeEventSource key) {
+            super(key);
+        }
     }
 }
