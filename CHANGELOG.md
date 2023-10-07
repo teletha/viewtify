@@ -1,5 +1,39 @@
 # Changelog
 
+## [2.13.0](https://github.com/teletha/viewtify/compare/v2.12.0...v2.13.0) (2023-10-03)
+
+
+### Features
+
+* Add -fx-error and -fx-warning color. ([292193b](https://github.com/teletha/viewtify/commit/292193b0bc94266ebeaf8509b765a3f1be5cf532))
+* Add AppearanceSettingView ([db4b87c](https://github.com/teletha/viewtify/commit/db4b87c0246e8fd6f3a813ddba595825170cbb81))
+* Add new theme (Bellini). ([7d30e8b](https://github.com/teletha/viewtify/commit/7d30e8b7cfc809d7afb1192b9875da57240624b0))
+* Add new theme (Blue Hawaii). ([4831b7c](https://github.com/teletha/viewtify/commit/4831b7c0b6c6a8c19999549204ddc266a5b0d020))
+* Add theme type (flat and gradient). ([a3f5724](https://github.com/teletha/viewtify/commit/a3f5724feb903f17c54f4eaee7e9ef0a7eefccc0))
+* Add TooltipHelper#unpopup. ([38a1f07](https://github.com/teletha/viewtify/commit/38a1f073ca1ed8e7787cdd4676d2c57c93510071))
+* Add UIScrollPane#fit. ([4b0ce35](https://github.com/teletha/viewtify/commit/4b0ce353d6a34ca945f216e0ecb213cadc884e95))
+* Add UISegmentedButton. ([d9fbf4a](https://github.com/teletha/viewtify/commit/d9fbf4a91872594476583bbfd0b36f75a63d650c))
+* Support injection of array type. ([c5c2cc4](https://github.com/teletha/viewtify/commit/c5c2cc42060c655c8d526e88cf9c4417fe29d9d0))
+* Support sequencial constraints on UIGridView. ([cad1e3d](https://github.com/teletha/viewtify/commit/cad1e3d623823d8d72466356c1c63821ed6794e3))
+* Support some grid related styles. ([b85c77f](https://github.com/teletha/viewtify/commit/b85c77f638e6bead25f17c47c62442cceafb4380))
+* UIToggleButton is selectable. ([60540a6](https://github.com/teletha/viewtify/commit/60540a61c176982dbd29a88a5c3530c4530d2cf4))
+* Viewtify can manage its font. ([fe9cbc2](https://github.com/teletha/viewtify/commit/fe9cbc2123ada8ad4f8442bb9aaa3c07eabddefb))
+
+
+### Bug Fixes
+
+* Avoid NPE. ([7aa6a17](https://github.com/teletha/viewtify/commit/7aa6a17cfa92134738c00f540293a826f550972a))
+* change genric type ([a238955](https://github.com/teletha/viewtify/commit/a23895521938ca514fdc68d490eb532d8f59847d))
+* drop borderless button ([278a32a](https://github.com/teletha/viewtify/commit/278a32aa46284937db9973d2b760de83fa62b4ce))
+* Execute animetion on UI thread. ([0f11232](https://github.com/teletha/viewtify/commit/0f112327ac1de164196c014dc3bb4fed1cef2d63))
+* expand UI padding ([fb5c191](https://github.com/teletha/viewtify/commit/fb5c191c88320f2b7f831670e362a675ef69e085))
+* Ignore the abstract type on widget DI ([f753525](https://github.com/teletha/viewtify/commit/f753525be896cdf91371cfc34bfc46f146a0f6b2))
+* Popup can switch more flexible. ([356dbce](https://github.com/teletha/viewtify/commit/356dbce1afaed891d585d61195f78fcad2160e95))
+* rename theme from bellini to peach fizz ([ddd303b](https://github.com/teletha/viewtify/commit/ddd303bcb8771b800f1fed84f1b3cd84797d765c))
+* Show popup on mouse location. ([d4190fb](https://github.com/teletha/viewtify/commit/d4190fbba18a72d42dd76e4bf2e5ab7d39ee6b15))
+* Use system default locale. ([c392d16](https://github.com/teletha/viewtify/commit/c392d1651891f5e26f068cb174196ff0ebf48e44))
+* View can inject widget to super class. ([daab68a](https://github.com/teletha/viewtify/commit/daab68a7f4d47f37a9ff43bd080c293519cfb5b1))
+
 ## [2.12.0](https://github.com/teletha/viewtify/compare/v2.11.0...v2.12.0) (2023-08-26)
 
 
