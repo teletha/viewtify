@@ -21,8 +21,6 @@ import viewtify.ui.ViewDSL;
 
 public class DayView extends TemporalView {
 
-    private CalendarView calendar;
-
     private DayCell cell;
 
     @Override

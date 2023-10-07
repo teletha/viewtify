@@ -19,6 +19,7 @@ import kiss.Managed;
 import kiss.Singleton;
 import stylist.Style;
 import stylist.StyleDSL;
+import viewtify.Viewtify;
 import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
@@ -163,19 +164,32 @@ public class CalendarView extends View {
                 .flatMap(source -> Preferences.of(TimeEventSourceSetting.class, source.name()).observe())
                 .merge(setting.observe())
                 .debounce(500, TimeUnit.MILLISECONDS)
-                .to(() -> show(currentView.getClass(), currentDate, true));
+                .on(Viewtify.UIThread)
+                .to(() -> draw(currentView.getClass(), currentDate));
     }
 
+    /**
+     * Show the specified widget on calendar.
+     * 
+     * @param <V>
+     * @param viewType
+     * @param date
+     */
     protected <V extends TemporalView> void show(Class<V> viewType, LocalDate date) {
-        show(viewType, date, false);
+        // avoid re-rendering
+        if (!viewType.isInstance(currentView) || !date.isEqual(currentDate)) {
+            draw(viewType, date);
+        }
     }
 
-    protected <V extends TemporalView> void show(Class<V> viewType, LocalDate date, boolean force) {
-        // avoid re-rendering
-        if (viewType.isInstance(currentView) && date.isEqual(currentDate) && !force) {
-            return;
-        }
-
+    /**
+     * Draw the calendar widget.
+     * 
+     * @param <V>
+     * @param viewType
+     * @param date
+     */
+    private <V extends TemporalView> void draw(Class<V> viewType, LocalDate date) {
         if (currentView != null) {
             currentView.dispose();
         }
