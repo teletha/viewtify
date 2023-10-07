@@ -31,6 +31,13 @@ public interface TimeEvent extends Comparable<TimeEvent> {
     }
 
     /**
+     * The event source.
+     * 
+     * @return
+     */
+    TimeEventSource source();
+
+    /**
      * Get the starting date .
      * 
      * @return

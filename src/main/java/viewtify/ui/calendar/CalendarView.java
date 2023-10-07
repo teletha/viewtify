@@ -163,7 +163,7 @@ public class CalendarView extends View {
         I.signal(I.find(TimeEventSource.class))
                 .flatMap(source -> Preferences.of(TimeEventSourceSetting.class, source.name()).observe())
                 .merge(setting.observe())
-                .debounce(500, TimeUnit.MILLISECONDS)
+                .debounce(200, TimeUnit.MILLISECONDS)
                 .on(Viewtify.UIThread)
                 .to(() -> draw(currentView.getClass(), currentDate));
     }

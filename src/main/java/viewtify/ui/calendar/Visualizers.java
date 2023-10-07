@@ -9,13 +9,15 @@
  */
 package viewtify.ui.calendar;
 
+import javafx.scene.Node;
+
 import org.controlsfx.glyphfont.FontAwesome;
 
-import javafx.scene.Node;
 import kiss.Managed;
 import kiss.Singleton;
 import stylist.Style;
 import stylist.StyleDSL;
+import stylist.value.Color;
 import viewtify.ui.UIHBox;
 import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
@@ -109,7 +111,7 @@ class Visualizers {
                     $(box, Styles.box, () -> {
                         $(time, Styles.time);
                         $(vbox, () -> {
-                            $(title);
+                            $(title, Styles.title);
                             if (view != MONTH) $(description);
                         });
                     });
@@ -133,6 +135,10 @@ class Visualizers {
                 display.minWidth(3.1, em);
                 padding.right(2, px);
             };
+
+            Style title = () -> {
+                font.color(Color.Inherit);
+            };
         }
 
         /**
@@ -145,6 +151,11 @@ class Visualizers {
             description.text(event.description());
 
             box.popup(Detail::new);
+
+            javafx.scene.paint.Color color = event.source().color();
+            if (color != javafx.scene.paint.Color.TRANSPARENT) {
+                title.ui.setTextFill(color);
+            }
         }
 
         private class Detail extends View {
