@@ -15,16 +15,40 @@ import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
 import kiss.Extensible;
 import kiss.I;
 import kiss.Signal;
-import viewtify.model.PreferenceAware;
+import viewtify.model.Preferences;
 import viewtify.ui.calendar.CalendarSettingView.TimeEventSourceSetting;
 
-public interface TimeEventSource extends Extensible, PreferenceAware<TimeEventSourceSetting> {
+public interface TimeEventSource extends Extensible {
 
+    /**
+     * The name of this event source.
+     * 
+     * @return
+     */
+    default String name() {
+        return getClass().getSimpleName();
+    }
+
+    /**
+     * The availability of this event source.
+     * 
+     * @return
+     */
     default boolean isEnabled() {
-        return preference().enable.v;
+        return Preferences.of(TimeEventSourceSetting.class, name()).enable.v;
+    }
+
+    /**
+     * The color type.
+     * 
+     * @return
+     */
+    default Color color() {
+        return Preferences.of(TimeEventSourceSetting.class, name()).color.v;
     }
 
     /**

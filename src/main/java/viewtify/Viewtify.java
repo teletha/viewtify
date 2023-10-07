@@ -82,7 +82,7 @@ import psychopath.File;
 import psychopath.Locator;
 import stylist.design.DesignScheme;
 import viewtify.keys.ShortcutManager;
-import viewtify.model.PreferenceModel;
+import viewtify.model.Preferences;
 import viewtify.ui.UIWeb;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
@@ -147,7 +147,7 @@ public final class Viewtify {
         CSS.enhance();
 
         // user settings are reloadable
-        UserPreference.observe().to(() -> I.find(PreferenceModel.class));
+        UserPreference.observe().to(() -> I.find(Preferences.class));
 
         // automatic gc
         I.schedule(5, 30, TimeUnit.MINUTES, true).to(System::gc);

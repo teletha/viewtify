@@ -21,17 +21,26 @@ import java.util.function.Function;
 
 import kiss.Extensible;
 import kiss.I;
-import kiss.Managed;
 import kiss.Model;
 import kiss.Property;
-import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseFunction;
 import viewtify.Viewtify;
 
-@Managed(Singleton.class)
-public abstract class PreferenceModel implements Storable<PreferenceModel>, Extensible {
+public abstract class Preferences implements Storable<Preferences>, Extensible {
+
+    /** The cache for preferences. */
+    private static final Map<String, Preferences> cache = new ConcurrentHashMap();
+
+    /** The preference id. */
+    private String id;
+
+    /**
+     * Hide constructor.
+     */
+    protected Preferences() {
+    }
 
     /**
      * Create {@link Preference} with the default value.
@@ -100,7 +109,7 @@ public abstract class PreferenceModel implements Storable<PreferenceModel>, Exte
     /**
      * Synchronize data from/to source.
      */
-    protected final void sync() {
+    void sync() {
         Viewtify.UserPreference.observing().to(x -> {
             // Not all property values are preserved in the restore source, so they must always be
             // reset before restoring. If not reset, some properties may continue to apply the
@@ -147,28 +156,39 @@ public abstract class PreferenceModel implements Storable<PreferenceModel>, Exte
      */
     @Override
     public String locate() {
-        return Viewtify.UserPreference.exact().file(getModelName() + ".json").path();
+        return Viewtify.UserPreference.exact().file(id + ".json").path();
     }
 
     /**
-     * Get the identical model name.
+     * Get the user preferences by type.
      * 
+     * @param <P>
+     * @param type
      * @return
      */
-    protected String getModelName() {
-        return Model.of(this).type.getName();
+    public static <P extends Preferences> P of(Class<P> type) {
+        return of(type, null);
     }
 
-    private static final Map<PreferenceAware, KeyedPreferenceModel> models = new ConcurrentHashMap();
+    /**
+     * Get the user preferences by type and key.
+     * 
+     * @param <P>
+     * @param type
+     * @param key
+     * @return
+     */
+    public static <P extends Preferences> P of(Class<P> type, String key) {
+        String id = type.getName();
+        if (key != null) {
+            id = id + "@" + key;
+        }
 
-    public static <P extends KeyedPreferenceModel, K extends PreferenceAware<P>> P by(K key) {
-        return (P) models.computeIfAbsent(key, k -> {
-            Class<P> type = (Class) Model.collectParameters(key.getClass(), PreferenceAware.class)[0];
-            P pref = I.make(type);
-            pref.assign(key);
-            // pref.sync();
-
-            return pref;
+        return (P) cache.computeIfAbsent(id, x -> {
+            Preferences prefs = I.make(type);
+            prefs.id = x;
+            prefs.sync();
+            return prefs;
         });
     }
 

@@ -18,7 +18,7 @@ import kiss.I;
 import viewtify.Theme;
 import viewtify.ThemeType;
 import viewtify.Viewtify;
-import viewtify.model.PreferenceModel;
+import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UISpinner;
@@ -68,7 +68,7 @@ public class AppearanceSettingView extends View {
 
     @Override
     protected void initialize() {
-        Setting setting = I.make(Setting.class);
+        Setting setting = Preferences.of(Setting.class);
 
         theme.items(Theme.values()).sync(setting.theme);
         themeType.items(ThemeType.values()).sync(setting.themeType);
@@ -96,7 +96,7 @@ public class AppearanceSettingView extends View {
     /**
      * Preference for appearance.
      */
-    public static class Setting extends PreferenceModel {
+    public static class Setting extends Preferences {
 
         public final Preference<Locale> lang = initialize(Locale.getDefault()).syncTo(Locale::getLanguage, I.Lang);
 
@@ -107,9 +107,5 @@ public class AppearanceSettingView extends View {
         public final Preference<String> font = initialize(Font.getDefault().getName()).syncTo(x -> Viewtify.manage(Font.font(x)));
 
         public final Preference<Integer> fontSize = initialize(12).syncTo(x -> Viewtify.manage(Font.font(font.v, x.doubleValue())));
-
-        private Setting() {
-            sync();
-        }
     }
 }

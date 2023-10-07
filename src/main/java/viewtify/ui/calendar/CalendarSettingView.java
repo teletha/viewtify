@@ -11,9 +11,9 @@ package viewtify.ui.calendar;
 
 import java.time.DayOfWeek;
 
+import javafx.scene.paint.Color;
 import kiss.I;
-import viewtify.model.KeyedPreferenceModel;
-import viewtify.model.PreferenceModel;
+import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UICheckBox;
 import viewtify.ui.UIColorPicker;
@@ -112,17 +112,17 @@ public class CalendarSettingView extends View {
          */
         @Override
         protected void initialize() {
-            TimeEventSourceSetting setting = PreferenceModel.by(source);
+            TimeEventSourceSetting setting = Preferences.of(TimeEventSourceSetting.class, source.name());
 
-            enable.text(setting.name.or(source.id())).sync(setting.enable);
-            color.disableWhen(enable.isNotSelected());
+            enable.text(source.name()).sync(setting.enable);
+            color.initialize(setting.color.v).disableWhen(enable.isNotSelected());
         }
     }
 
     /**
      * Preference for calendar.
      */
-    public static class Setting extends PreferenceModel {
+    public static class Setting extends Preferences {
 
         /** The first day of week. */
         public final Preference<DayOfWeek> firstDoW = initialize(DayOfWeek.SUNDAY);
@@ -132,22 +132,17 @@ public class CalendarSettingView extends View {
 
         /** The today's style. */
         public final Preference<Boolean> emphsizeToday = initialize(true);
-
-        /**
-         * Hide constructor.
-         */
-        private Setting() {
-            sync();
-        }
     }
 
     /**
      * Preference for calendar.
      */
-    public static class TimeEventSourceSetting extends KeyedPreferenceModel {
+    public static class TimeEventSourceSetting extends Preferences {
 
         public final Preference<String> name = initialize("");
 
         public final Preference<Boolean> enable = initialize(true);
+
+        public final Preference<Color> color = initialize(Color.BLACK);
     }
 }

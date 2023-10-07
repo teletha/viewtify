@@ -27,13 +27,13 @@ import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
-import viewtify.model.PreferenceModel;
+import viewtify.model.Preferences;
 import viewtify.ui.anime.Animatable;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 
-public class Toast extends PreferenceModel {
+public class Toast extends Preferences {
 
     /** The margin for each notifications. */
     private static final int MARGIN = 12;
@@ -41,7 +41,7 @@ public class Toast extends PreferenceModel {
     /** The base transparent window. */
     private static final LinkedList<Notification> notifications = new LinkedList();
 
-    public static final Toast setting = I.make(Toast.class);
+    public static final Toast setting = Preferences.of(Toast.class);
 
     /** The maximum size of notifications. */
     public final Preference<Integer> max = initialize(7).requireMin(1);
@@ -63,13 +63,6 @@ public class Toast extends PreferenceModel {
 
     /** The width of notification area. */
     public final Preference<Integer> width = initialize(250).requireMin(50);
-
-    /**
-     * Hide constructor.
-     */
-    private Toast() {
-        sync();
-    }
 
     /**
      * Show the specified node.
