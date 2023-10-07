@@ -23,6 +23,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 * Application updater
 * Docking UI like Eclipse
 * Notification UI like Toast
+* Calendar UI
 * Print preview
 * Monitorable task
 * Undo/Redo management
@@ -68,7 +69,7 @@ Add it into in the dependencies element like so:
 <dependency>
     <groupId>com.github.teletha</groupId>
     <artifactId>viewtify</artifactId>
-    <version>2.9.0</version>
+    <version>2.12.0</version>
 </dependency>
 ```
 #### [Gradle](https://gradle.org/)
@@ -81,7 +82,7 @@ repositories {
 Add it into the dependencies section like so:
 ```gradle
 dependencies {
-    implementation 'com.github.teletha:viewtify:2.9.0'
+    implementation 'com.github.teletha:viewtify:2.12.0'
 }
 ```
 #### [SBT](https://www.scala-sbt.org/)
@@ -91,7 +92,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add it into the libraryDependencies section like so:
 ```scala
-libraryDependencies += "com.github.teletha" % "viewtify" % "2.9.0"
+libraryDependencies += "com.github.teletha" % "viewtify" % "2.12.0"
 ```
 #### [Leiningen](https://leiningen.org/)
 Add JitPack repository at the end of repositories in your project.clj:
@@ -100,12 +101,12 @@ Add JitPack repository at the end of repositories in your project.clj:
 ```
 Add it into the dependencies section like so:
 ```clj
-:dependencies [[com.github.teletha/viewtify "2.9.0"]]
+:dependencies [[com.github.teletha/viewtify "2.12.0"]]
 ```
 #### [Bee](https://teletha.github.io/bee)
 Add it into your project definition class like so:
 ```java
-require("com.github.teletha", "viewtify", "2.9.0");
+require("com.github.teletha", "viewtify", "2.12.0");
 ```
 <p align="right"><a href="#top">back to top</a></p>
 
@@ -136,21 +137,21 @@ Viewtify depends on the following products on runtime.
 * [altfx-1.2.0](https://mvnrepository.com/artifact/com.github.teletha/altfx/1.2.0)
 * [conjure-1.1.0](https://mvnrepository.com/artifact/com.github.teletha/conjure/1.1.0)
 * [controlsfx-11.1.2](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.1.2)
-* [javafx-base-21-ea+21](https://mvnrepository.com/artifact/org.openjfx/javafx-base/21-ea+21)
-* [javafx-base-21-ea+21-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/21-ea+21)
-* [javafx-controls-21-ea+21](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/21-ea+21)
-* [javafx-controls-21-ea+21-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/21-ea+21)
-* [javafx-graphics-21-ea+21](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/21-ea+21)
-* [javafx-graphics-21-ea+21-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/21-ea+21)
-* [javafx-media-21-ea+21](https://mvnrepository.com/artifact/org.openjfx/javafx-media/21-ea+21)
-* [javafx-media-21-ea+21-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/21-ea+21)
-* [javafx-web-21-ea+21](https://mvnrepository.com/artifact/org.openjfx/javafx-web/21-ea+21)
-* [javafx-web-21-ea+21-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/21-ea+21)
+* [javafx-base-22-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-base/22-ea+11)
+* [javafx-base-22-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/22-ea+11)
+* [javafx-controls-22-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/22-ea+11)
+* [javafx-controls-22-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/22-ea+11)
+* [javafx-graphics-22-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/22-ea+11)
+* [javafx-graphics-22-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/22-ea+11)
+* [javafx-media-22-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-media/22-ea+11)
+* [javafx-media-22-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/22-ea+11)
+* [javafx-web-22-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-web/22-ea+11)
+* [javafx-web-22-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/22-ea+11)
 * [lycoris-1.0.0](https://mvnrepository.com/artifact/com.github.teletha/lycoris/1.0.0)
 * [openjfx-monocle-jdk-12.0.1+2](https://mvnrepository.com/artifact/org.testfx/openjfx-monocle/jdk-12.0.1+2)
 * [psychopath-1.12.1](https://mvnrepository.com/artifact/com.github.teletha/psychopath/1.12.1)
-* [sinobu-3.5.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/3.5.0)
-* [stylist-1.7.3](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.7.3)
+* [sinobu-3.7.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/3.7.0)
+* [stylist-1.8.1](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.8.1)
 <p align="right"><a href="#top">back to top</a></p>
 
 

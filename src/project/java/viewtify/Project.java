@@ -31,6 +31,7 @@ public class Project extends bee.api.Project {
                 * Application updater
                 * Docking UI like Eclipse
                 * Notification UI like Toast
+                * Calendar UI
                 * Print preview
                 * Monitorable task
                 * Undo/Redo management
