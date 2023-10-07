@@ -10,6 +10,7 @@
 package viewtify.ui.calendar;
 
 import java.time.LocalDate;
+import java.util.concurrent.TimeUnit;
 
 import org.controlsfx.glyphfont.FontAwesome;
 
@@ -161,6 +162,7 @@ public class CalendarView extends View {
         I.signal(I.find(TimeEventSource.class))
                 .flatMap(source -> Preferences.of(TimeEventSourceSetting.class, source.name()).observe())
                 .merge(setting.observe())
+                .debounce(500, TimeUnit.MILLISECONDS)
                 .to(() -> show(currentView.getClass(), currentDate, true));
     }
 
@@ -172,6 +174,10 @@ public class CalendarView extends View {
         // avoid re-rendering
         if (viewType.isInstance(currentView) && date.isEqual(currentDate) && !force) {
             return;
+        }
+
+        if (currentView != null) {
+            currentView.dispose();
         }
 
         V view = I.make(viewType);
