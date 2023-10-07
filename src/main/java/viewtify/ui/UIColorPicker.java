@@ -14,7 +14,6 @@ import javafx.beans.property.Property;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Color;
-
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.DnDAssistant;
 import viewtify.ui.helper.EditableHelper;

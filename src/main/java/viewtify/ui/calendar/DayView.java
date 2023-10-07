@@ -66,6 +66,7 @@ public class DayView extends TemporalView {
         });
 
         I.signal(I.find(TimeEventSource.class))
+                .take(TimeEventSource::isEnabled)
                 .flatMap(source -> source.queryBy(date))
                 .sort(Comparator.naturalOrder())
                 .on(Viewtify.UIThread)

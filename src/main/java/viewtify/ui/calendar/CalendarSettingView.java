@@ -115,14 +115,14 @@ public class CalendarSettingView extends View {
             TimeEventSourceSetting setting = Preferences.of(TimeEventSourceSetting.class, source.name());
 
             enable.text(source.name()).sync(setting.enable);
-            color.initialize(setting.color.v).disableWhen(enable.isNotSelected());
+            color.disableWhen(enable.isNotSelected()).sync(setting.color);
         }
     }
 
     /**
      * Preference for calendar.
      */
-    public static class Setting extends Preferences {
+    public static class CalendarSetting extends Preferences {
 
         /** The first day of week. */
         public final Preference<DayOfWeek> firstDoW = initialize(DayOfWeek.SUNDAY);
@@ -139,10 +139,13 @@ public class CalendarSettingView extends View {
      */
     public static class TimeEventSourceSetting extends Preferences {
 
+        /** The user defined name. */
         public final Preference<String> name = initialize("");
 
+        /** The availability. */
         public final Preference<Boolean> enable = initialize(true);
 
+        /** The user defined color. */
         public final Preference<Color> color = initialize(Color.BLACK);
     }
 }

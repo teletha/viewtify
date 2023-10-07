@@ -24,7 +24,7 @@ import java.util.function.IntConsumer;
 
 import kiss.I;
 import viewtify.ui.calendar.CalendarMarker.Mark;
-import viewtify.ui.calendar.CalendarSettingView.Setting;
+import viewtify.ui.calendar.CalendarSettingView.CalendarSetting;
 
 public class Calendars {
 
@@ -35,7 +35,7 @@ public class Calendars {
     private static final List<TimeEventSource> sources = I.find(TimeEventSource.class);
 
     /** The singleton accessor. */
-    static final Setting setting = I.make(Setting.class);
+    static final CalendarSetting setting = I.make(CalendarSetting.class);
 
     /**
      * Calculate the marked day.
@@ -57,6 +57,7 @@ public class Calendars {
      */
     public static void calculateEvents(LocalDate date, IntConsumer process) {
         I.signal(sources)
+                .take(TimeEventSource::isEnabled)
                 .flatMap(source -> source.countOn(date))
                 .map(() -> new int[] {0}, (counter, value) -> counter[0] += value)
                 .last()

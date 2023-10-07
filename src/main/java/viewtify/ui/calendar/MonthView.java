@@ -121,6 +121,7 @@ public class MonthView extends TemporalView {
         }
 
         I.signal(I.find(TimeEventSource.class))
+                .take(TimeEventSource::isEnabled)
                 .flatMap(source -> source.query(start, end))
                 .sort(Comparator.naturalOrder())
                 .on(Viewtify.UIThread)

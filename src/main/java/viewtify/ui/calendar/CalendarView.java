@@ -27,7 +27,7 @@ import viewtify.ui.UIToggleButton;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.SwapAnime;
-import viewtify.ui.calendar.CalendarSettingView.Setting;
+import viewtify.ui.calendar.CalendarSettingView.CalendarSetting;
 
 @Managed(Singleton.class)
 public class CalendarView extends View {
@@ -133,7 +133,7 @@ public class CalendarView extends View {
 
     @Override
     protected void initialize() {
-        Setting setting = I.make(Setting.class);
+        CalendarSetting setting = I.make(CalendarSetting.class);
 
         selectNext.text(FontAwesome.Glyph.ANGLE_RIGHT, Styles.selector).action(() -> currentView.next());
         selectPrevious.text(FontAwesome.Glyph.ANGLE_LEFT, Styles.selector).action(() -> currentView.previous());
