@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="i">
+		<header class="Z">
+			<h1 class="Y" date="Use saved searches to filter your results more quickly" ver="2.13.0"><code>Viewtify</code></h1>
+			<nav class="m"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="c" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="U">
+			<nav class="O">
+				<div></div>
+			</nav>
+			<article class="K" id="Article">
+				<section class="a"><code class="R">viewtify.ui.calendar</code>
+					<h2 class="Class l"><code class="M">Calendars</code></h2>
+					<div class="N"></div>
+				</section>
+				<section class="a" id="Calendars()">
+					<h2 class="f"><i class="PUBLIC"></i><code class="M">Calendars</code><code class="g">()</code></h2>
+				</section>
+				<section class="a" id="calculateMark(java.time.LocalDate,java.util.function.Consumer)">
+					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="M">calculateMark</code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code class="parameterName">date</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></code></code> <code class="parameterName">process</code>)</code><i class="j"><code>void</code></i></h2>
+					<table class="V">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code>date</code></td>
+							<td></td>
+						</tr>
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></code></code> <code>process</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Calculate the marked day.</p>
+					</span></section>
+				<section class="a" id="calculateEvents(java.time.LocalDate,java.util.function.IntConsumer)">
+					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="M">calculateEvents</code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code class="parameterName">date</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/IntConsumer.html">IntConsumer</a></code> <code class="parameterName">process</code>)</code><i class="j"><code>void</code></i></h2>
+					<table class="V">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code>date</code></td>
+							<td></td>
+						</tr>
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/IntConsumer.html">IntConsumer</a></code> <code>process</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Calculate the event size on the specified day.</p>
+					</span></section>
+				<section class="a" id="calculateStartingMonthDay(java.time.LocalDate)">
+					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="M">calculateStartingMonthDay</code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code class="parameterName">date</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></i></h2>
+					<table class="V">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code>date</code></td>
+							<td></td>
+						</tr>
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Calculate the starting day.</p>
+					</span></section>
+				<section class="a" id="calculateStartingWeekDay(java.time.LocalDate)">
+					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="M">calculateStartingWeekDay</code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code class="parameterName">date</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></i></h2>
+					<table class="V">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code>date</code></td>
+							<td></td>
+						</tr>
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Calculate the starting day.</p>
+					</span></section>
+				<section class="a" id="calculateDoW(int)">
+					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="M">calculateDoW</code><code class="g">(<code>int</code> <code class="parameterName">index</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/DayOfWeek.html">DayOfWeek</a></code></i></h2>
+					<table class="V">
+						<tr class="T">
+							<td><code>int</code> <code>index</code></td>
+							<td></td>
+						</tr>
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/DayOfWeek.html">DayOfWeek</a></code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="a" id="formatYearMonthDay(java.util.Locale)">
+					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="M">formatYearMonthDay</code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code class="parameterName">locale</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></h2>
+					<table class="V">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code>locale</code></td>
+							<td><span><p>A target locale.</p>
+								</span></td>
+						</tr>
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Create the localized <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code>.</p>
+					</span></section>
+				<section class="a" id="formatYearMonth(java.util.Locale)">
+					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="M">formatYearMonth</code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code class="parameterName">locale</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></h2>
+					<table class="V">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code>locale</code></td>
+							<td><span><p>A target locale.</p>
+								</span></td>
+						</tr>
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Create the localized <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code>.</p>
+					</span></section>
+				<section class="a" id="formatYear(java.util.Locale)">
+					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="M">formatYear</code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code class="parameterName">locale</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></h2>
+					<table class="V">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code>locale</code></td>
+							<td><span><p>A target locale.</p>
+								</span></td>
+						</tr>
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Create the localized <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code>.</p>
+					</span></section>
+			</article>
+			<aside class="X" id="SubNavi">
+				<div class="L">
+					<h5 class="h">Constructors</h5>
+					<ul>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.calendar.Calendars.html#Calendars()">Calendars</a></code><code class="g">()</code></li>
+					</ul>
+					<h5 class="h">Static Methods</h5>
+					<ul>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.calendar.Calendars.html#calculateMark(java.time.LocalDate,java.util.function.Consumer)">calculateMark</a></code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code class="parameterName">date</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></code></code> <code class="parameterName">process</code>)</code><i class="d"><code>void</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.calendar.Calendars.html#calculateEvents(java.time.LocalDate,java.util.function.IntConsumer)">calculateEvents</a></code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code class="parameterName">date</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/IntConsumer.html">IntConsumer</a></code> <code class="parameterName">process</code>)</code><i class="d"><code>void</code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.calendar.Calendars.html#calculateStartingMonthDay(java.time.LocalDate)">calculateStartingMonthDay</a></code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code class="parameterName">date</code>)</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.calendar.Calendars.html#calculateStartingWeekDay(java.time.LocalDate)">calculateStartingWeekDay</a></code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code class="parameterName">date</code>)</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.calendar.Calendars.html#calculateDoW(int)">calculateDoW</a></code><code class="g">(<code>int</code> <code class="parameterName">index</code>)</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/DayOfWeek.html">DayOfWeek</a></code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.calendar.Calendars.html#formatYearMonthDay(java.util.Locale)">formatYearMonthDay</a></code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code class="parameterName">locale</code>)</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.calendar.Calendars.html#formatYearMonth(java.util.Locale)">formatYearMonth</a></code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code class="parameterName">locale</code>)</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></li>
+						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.calendar.Calendars.html#formatYear(java.util.Locale)">formatYear</a></code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code class="parameterName">locale</code>)</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>

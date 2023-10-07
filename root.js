@@ -12,6 +12,7 @@ const root = {
 		"viewtify.task",
 		"viewtify.ui",
 		"viewtify.ui.anime",
+		"viewtify.ui.calendar",
 		"viewtify.ui.canvas",
 		"viewtify.ui.dock",
 		"viewtify.ui.focus",
@@ -109,6 +110,55 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "CalendarMarker",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "CalendarMarker.Mark",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "CalendarSettingView",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "CalendarSettingView.CalendarSetting",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "CalendarSettingView.TimeEventSourceSetting",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "CalendarView",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Calendars",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "CollectableHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
@@ -189,6 +239,27 @@ const root = {
 			"name": "Corner",
 			"packageName": "viewtify.util",
 			"type": "Enum"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "DayCell",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "DayEventVisualizer",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "DayView",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
 		},
 		{
 			"modifiers": {
@@ -361,13 +432,6 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "ModelPropertySheet",
-			"packageName": "viewtify.ui.view",
-			"type": "AbstractClass"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Monitor",
 			"packageName": "viewtify.task",
 			"type": "Class"
@@ -389,6 +453,20 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "MonthEventVisualizer",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "MonthView",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "PlaceholderHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
@@ -396,42 +474,42 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "PreferenceModel",
+			"name": "Preferences",
 			"packageName": "viewtify.model",
 			"type": "AbstractClass"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "PreferenceModel",
+			"name": "Preferences.ComparablePreference",
 			"packageName": "viewtify.model",
 			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "PreferenceModel",
+			"name": "Preferences.DoublePreference",
 			"packageName": "viewtify.model",
 			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "PreferenceModel.DoublePreference",
+			"name": "Preferences.IntPreference",
 			"packageName": "viewtify.model",
 			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "PreferenceModel.IntPreference",
+			"name": "Preferences.LongPreference",
 			"packageName": "viewtify.model",
 			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "PreferenceModel.LongPreference",
+			"name": "Preferences.Preference",
 			"packageName": "viewtify.model",
 			"type": "Class"
 		},
@@ -564,6 +642,20 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TemporalView",
+			"packageName": "viewtify.ui.calendar",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TemporalView.TemporalStyles",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "TextNotation",
 			"packageName": "viewtify.util",
 			"type": "Class"
@@ -581,6 +673,27 @@ const root = {
 			"name": "ThemeType",
 			"packageName": "viewtify",
 			"type": "Enum"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TimeEvent",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TimeEventSource",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TimeEventVisualizer",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Functional"
 		},
 		{
 			"modifiers": {
@@ -1043,6 +1156,34 @@ const root = {
 			"name": "VisibleHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "WeekEventVisualizer",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "WeekView",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "YearMonthView",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "YearView",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
 		}
 	]
 }

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="i">
+		<header class="Z">
+			<h1 class="Y" date="Use saved searches to filter your results more quickly" ver="2.13.0"><code>Viewtify</code></h1>
+			<nav class="m"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="c" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="U">
+			<nav class="O">
+				<div></div>
+			</nav>
+			<article class="K" id="Article">
+				<section class="a"><code class="R">viewtify.ui.calendar</code>
+					<h2 class="Class l"><code class="M">MonthView</code></h2>
+					<div class="N">
+						<ul class="C E">
+							<li><code><a href="api/viewtify.ui.calendar.TemporalView.html">TemporalView</a></code></li>
+							<li><code><a href="api/viewtify.ui.View.html">View</a></code></li>
+						</ul>
+						<ul class="C F">
+							<li><code>kiss.Disposable</code></li>
+							<li><code>kiss.Extensible</code></li>
+							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
+						</ul>
+					</div>
+				</section>
+				<section class="a" id="MonthView()">
+					<h2 class="f"><i class="PUBLIC"></i><code class="M">MonthView</code><code class="g">()</code></h2>
+				</section>
+				<section class="a" id="declareUI()">
+					<h2 class="f"><i class="OVERRIDE PROTECTED"></i><code class="M">declareUI</code><code class="g">()</code><i class="j"><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></h2>
+					<table class="V">
+						<tr class="H">
+							<td><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="a" id="initialize()">
+					<h2 class="f"><i class="OVERRIDE PROTECTED"></i><code class="M">initialize</code><code class="g">()</code><i class="j"><code>void</code></i></h2>
+				</section>
+				<section class="a" id="temporalUnit()">
+					<h2 class="f"><i class="OVERRIDE PROTECTED"></i><code class="M">temporalUnit</code><code class="g">()</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code></i></h2>
+					<table class="V">
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="a" id="formatter(java.util.Locale)">
+					<h2 class="f"><i class="OVERRIDE PROTECTED"></i><code class="M">formatter</code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code class="parameterName">locale</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></h2>
+					<table class="V">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code>locale</code></td>
+							<td></td>
+						</tr>
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="a" id="set(java.time.LocalDate)">
+					<h2 class="f"><i class="OVERRIDE PROTECTED"></i><code class="M">set</code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code class="parameterName">date</code>)</code><i class="j"><code>void</code></i></h2>
+					<table class="V">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code>date</code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section class="a" id="set(java.util.Locale)">
+					<h2 class="f"><i class="OVERRIDE PROTECTED"></i><code class="M">set</code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code class="parameterName">locale</code>)</code><i class="j"><code>void</code></i></h2>
+					<table class="V">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code>locale</code></td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+			</article>
+			<aside class="X" id="SubNavi">
+				<div class="L">
+					<h5 class="h">Constructors</h5>
+					<ul>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.calendar.MonthView.html#MonthView()">MonthView</a></code><code class="g">()</code></li>
+					</ul>
+					<h5 class="h">Methods</h5>
+					<ul>
+						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.ui.calendar.MonthView.html#declareUI()">declareUI</a></code><code class="g">()</code><i class="d"><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></li>
+						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.ui.calendar.MonthView.html#initialize()">initialize</a></code><code class="g">()</code><i class="d"><code>void</code></i></li>
+						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.ui.calendar.MonthView.html#temporalUnit()">temporalUnit</a></code><code class="g">()</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code></i></li>
+						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.ui.calendar.MonthView.html#formatter(java.util.Locale)">formatter</a></code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code class="parameterName">locale</code>)</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></li>
+						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.ui.calendar.MonthView.html#set(java.time.LocalDate)">set</a></code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code> <code class="parameterName">date</code>)</code><i class="d"><code>void</code></i></li>
+						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.ui.calendar.MonthView.html#set(java.util.Locale)">set</a></code><code class="g">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code> <code class="parameterName">locale</code>)</code><i class="d"><code>void</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>
