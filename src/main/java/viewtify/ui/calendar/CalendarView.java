@@ -18,6 +18,7 @@ import kiss.Managed;
 import kiss.Singleton;
 import stylist.Style;
 import stylist.StyleDSL;
+import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
 import viewtify.ui.UIHBox;
@@ -28,6 +29,7 @@ import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.SwapAnime;
 import viewtify.ui.calendar.CalendarSettingView.CalendarSetting;
+import viewtify.ui.calendar.CalendarSettingView.TimeEventSourceSetting;
 
 @Managed(Singleton.class)
 public class CalendarView extends View {
@@ -41,6 +43,8 @@ public class CalendarView extends View {
     private UIToggleButton switchToMonth;
 
     private UIToggleButton switchToYear;
+
+    private UIButton preference;
 
     UILabel current;
 
@@ -77,6 +81,7 @@ public class CalendarView extends View {
                                 $(switchToMonth);
                                 $(switchToYear);
                             });
+                            $(preference, Styles.config);
                         });
                     });
 
@@ -129,11 +134,16 @@ public class CalendarView extends View {
         Style main = () -> {
             display.width.fill().height.fill();
         };
+
+        Style config = () -> {
+            display.width(30, px);
+            margin.left(20, px);
+        };
     }
 
     @Override
     protected void initialize() {
-        CalendarSetting setting = I.make(CalendarSetting.class);
+        CalendarSetting setting = Preferences.of(CalendarSetting.class);
 
         selectNext.text(FontAwesome.Glyph.ANGLE_RIGHT, Styles.selector).action(() -> currentView.next());
         selectPrevious.text(FontAwesome.Glyph.ANGLE_LEFT, Styles.selector).action(() -> currentView.previous());
@@ -144,12 +154,23 @@ public class CalendarView extends View {
         switchToMonth.text(I.translate("Month")).action(() -> show(MonthView.class, currentDate));
         switchToYear.text(I.translate("Year")).action(() -> show(YearView.class, currentDate));
 
+        preference.text(FontAwesome.Glyph.GEAR).popup(CalendarSettingView::new);
+
         show(setting.initialView.v, LocalDate.now());
+
+        I.signal(I.find(TimeEventSource.class))
+                .flatMap(source -> Preferences.of(TimeEventSourceSetting.class, source.name()).observe())
+                .merge(setting.observe())
+                .to(() -> show(currentView.getClass(), currentDate, true));
     }
 
     protected <V extends TemporalView> void show(Class<V> viewType, LocalDate date) {
+        show(viewType, date, false);
+    }
+
+    protected <V extends TemporalView> void show(Class<V> viewType, LocalDate date, boolean force) {
         // avoid re-rendering
-        if (viewType.isInstance(currentView) && date.isEqual(currentDate)) {
+        if (viewType.isInstance(currentView) && date.isEqual(currentDate) && !force) {
             return;
         }
 

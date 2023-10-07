@@ -23,6 +23,7 @@ import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 
 import kiss.I;
+import viewtify.model.Preferences;
 import viewtify.ui.calendar.CalendarMarker.Mark;
 import viewtify.ui.calendar.CalendarSettingView.CalendarSetting;
 
@@ -35,7 +36,7 @@ public class Calendars {
     private static final List<TimeEventSource> sources = I.find(TimeEventSource.class);
 
     /** The singleton accessor. */
-    static final CalendarSetting setting = I.make(CalendarSetting.class);
+    static final CalendarSetting setting = Preferences.of(CalendarSetting.class);
 
     /**
      * Calculate the marked day.

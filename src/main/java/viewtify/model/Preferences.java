@@ -23,6 +23,7 @@ import kiss.Extensible;
 import kiss.I;
 import kiss.Model;
 import kiss.Property;
+import kiss.Signal;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseFunction;
@@ -118,6 +119,16 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
             restore();
         });
         auto();
+    }
+
+    /**
+     * Observe the value change events.
+     * 
+     * @return
+     */
+    public final Signal<Object> observe() {
+        Model<Preferences> model = Model.of(this);
+        return I.signal(model.properties()).flatMap(property -> model.observe(this, property));
     }
 
     /**

@@ -35,6 +35,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -63,9 +65,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -88,6 +87,7 @@ import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
+import viewtify.ui.view.AppearanceSettingView;
 import viewtify.update.Blueprint;
 import viewtify.update.Update;
 
@@ -147,7 +147,9 @@ public final class Viewtify {
         CSS.enhance();
 
         // user settings are reloadable
-        UserPreference.observe().to(() -> I.find(Preferences.class));
+        UserPreference.observe().to(() -> {
+            Preferences.of(AppearanceSettingView.Setting.class);
+        });
 
         // automatic gc
         I.schedule(5, 30, TimeUnit.MINUTES, true).to(System::gc);
