@@ -33,7 +33,7 @@ import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 
-public class Toast extends PreferenceModel<Toast> {
+public class Toast extends PreferenceModel {
 
     /** The margin for each notifications. */
     private static final int MARGIN = 12;

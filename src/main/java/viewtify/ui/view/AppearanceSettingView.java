@@ -96,7 +96,7 @@ public class AppearanceSettingView extends View {
     /**
      * Preference for appearance.
      */
-    public static class Setting extends PreferenceModel<Setting> {
+    public static class Setting extends PreferenceModel {
 
         public final Preference<Locale> lang = initialize(Locale.getDefault()).syncTo(Locale::getLanguage, I.Lang);
 

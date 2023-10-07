@@ -13,7 +13,7 @@ import kiss.Managed;
 import viewtify.Viewtify;
 
 @Managed
-public abstract class KeyedPreferenceModel<Self extends KeyedPreferenceModel> extends PreferenceModel<Self> {
+public abstract class KeyedPreferenceModel extends PreferenceModel {
 
     private PreferenceAware preferenceable;
 

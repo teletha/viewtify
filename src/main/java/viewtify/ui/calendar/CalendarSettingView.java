@@ -122,7 +122,7 @@ public class CalendarSettingView extends View {
     /**
      * Preference for calendar.
      */
-    public static class Setting extends PreferenceModel<Setting> {
+    public static class Setting extends PreferenceModel {
 
         /** The first day of week. */
         public final Preference<DayOfWeek> firstDoW = initialize(DayOfWeek.SUNDAY);
@@ -144,7 +144,7 @@ public class CalendarSettingView extends View {
     /**
      * Preference for calendar.
      */
-    public static class TimeEventSourceSetting extends KeyedPreferenceModel<TimeEventSourceSetting> {
+    public static class TimeEventSourceSetting extends KeyedPreferenceModel {
 
         public final Preference<String> name = initialize("");
 

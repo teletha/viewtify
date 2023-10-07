@@ -31,7 +31,7 @@ import kiss.WiseFunction;
 import viewtify.Viewtify;
 
 @Managed(Singleton.class)
-public abstract class PreferenceModel<Self extends PreferenceModel> implements Storable<Self>, Extensible {
+public abstract class PreferenceModel implements Storable<PreferenceModel>, Extensible {
 
     /**
      * Create {@link Preference} with the default value.
@@ -166,7 +166,7 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
             Class<P> type = (Class) Model.collectParameters(key.getClass(), PreferenceAware.class)[0];
             P pref = I.make(type);
             pref.assign(key);
-            pref.sync();
+            // pref.sync();
 
             return pref;
         });
@@ -237,26 +237,12 @@ public abstract class PreferenceModel<Self extends PreferenceModel> implements S
         }
 
         /**
-         * Chainable value setter.
-         * 
-         * @param value A new value to set on this preference.
-         * @return A base model.
-         */
-        public Self with(V value) {
-            set(value);
-            return (Self) PreferenceModel.this;
-        }
-
-        /**
          * Reset to the default value.
-         * 
-         * @return
          */
-        public Self reset() {
+        public final void reset() {
             if (defaultValue != get()) {
                 set(defaultValue);
             }
-            return (Self) PreferenceModel.this;
         }
     }
 
