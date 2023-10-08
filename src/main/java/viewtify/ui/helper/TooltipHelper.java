@@ -18,7 +18,6 @@ import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
@@ -109,10 +108,10 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
                         p.hide();
                         p.setUserData(null);
                     } else {
-                        p.setOnHidden(e -> show(builder, p, event));
+                        p.setOnHidden(e -> show(builder, p, event.getScreenX() + 25, event.getScreenY()));
                     }
                 } else {
-                    show(builder, p, event);
+                    show(builder, p, event.getScreenX() + 25, event.getScreenY());
                 }
             });
         }
@@ -125,12 +124,15 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param builder Create the contents. This callback will be invoked every showing the popup.
      * @param popup A singleton popup widget.
      */
-    private void show(Supplier<UserInterfaceProvider<Node>> builder, PopOver popup, MouseEvent event) {
+    private void show(Supplier<UserInterfaceProvider<Node>> builder, PopOver popup, double x, double y) {
         Platform.runLater(() -> {
-            popup.setContentNode(builder.get().ui());
-            popup.show(ui(), event.getScreenX() + 25, event.getScreenY());
+            Node ui = builder.get().ui();
+
+            popup.setContentNode(ui);
+            popup.show(ui(), x, y);
+            System.out.println(ui.localToScreen(ui.getBoundsInLocal()));
             popup.setUserData(ui());
-            popup.setOnHidden(x -> popup.setContentNode(null));
+            popup.setOnHidden(e -> popup.setContentNode(null));
         });
     }
 
@@ -139,5 +141,32 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      */
     static void unpopup() {
         ReferenceHolder.popover().hide();
+    }
+
+    /**
+     * Set the content to be displayed on popup.
+     * 
+     * @param builder Create the contents. This callback will be invoked every showing the popup.
+     * @return Chainable API.
+     */
+    default Self overlay(Supplier<UserInterfaceProvider<Node>> builder) {
+        if (builder != null) {
+            PopOver p = ReferenceHolder.popover();
+            W node = ui();
+            Bounds local = node.getBoundsInLocal();
+            Bounds bounds = node.localToScreen(local);
+
+            if (p.isShowing()) {
+                if (p.getUserData() == ui()) {
+                    p.hide();
+                    p.setUserData(null);
+                } else {
+                    p.setOnHidden(e -> show(builder, p, bounds.getMinX(), bounds.getMinY()));
+                }
+            } else {
+                show(builder, p, bounds.getMinX(), bounds.getMinY());
+            }
+        }
+        return (Self) this;
     }
 }
