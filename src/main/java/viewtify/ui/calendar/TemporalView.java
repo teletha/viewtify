@@ -119,7 +119,7 @@ public abstract class TemporalView extends View {
         };
 
         Style today = () -> {
-            border.color("-fx-focus-color");
+            border.color("-fx-focus-color").width(2, px);
         };
     }
 }

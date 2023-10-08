@@ -31,6 +31,15 @@ public interface TimeEvent extends Comparable<TimeEvent> {
     }
 
     /**
+     * Test whether this event is editable or not.
+     * 
+     * @return
+     */
+    default boolean isEditable() {
+        return false;
+    }
+
+    /**
      * The event source.
      * 
      * @return

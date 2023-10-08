@@ -9,10 +9,9 @@
  */
 package viewtify.ui.calendar;
 
-import javafx.scene.Node;
-
 import org.controlsfx.glyphfont.FontAwesome;
 
+import javafx.scene.Node;
 import kiss.Managed;
 import kiss.Singleton;
 import stylist.Style;
@@ -111,7 +110,7 @@ class Visualizers {
                     $(box, Styles.box, () -> {
                         $(time, Styles.time);
                         $(vbox, () -> {
-                            $(title, Styles.title);
+                            $(title);
                             if (view != MONTH) $(description);
                         });
                     });
@@ -132,12 +131,8 @@ class Visualizers {
             };
 
             Style time = () -> {
-                display.minWidth(3.1, em);
+                display.minWidth(3.5, em);
                 padding.right(2, px);
-            };
-
-            Style title = () -> {
-                font.color(Color.Inherit);
             };
         }
 
@@ -152,9 +147,9 @@ class Visualizers {
 
             box.popup(Detail::new);
 
-            javafx.scene.paint.Color color = event.source().color();
-            if (color != javafx.scene.paint.Color.TRANSPARENT) {
-                title.ui.setTextFill(color);
+            Color color = event.source().color();
+            if (!Color.Transparent.equals(color)) {
+                title.ui.setStyle("-fx-text-fill: " + color.toRGB() + ";");
             }
         }
 
@@ -230,8 +225,8 @@ class Visualizers {
              */
             @Override
             protected void initialize() {
-                edit.text(FontAwesome.Glyph.PENCIL).tooltip(en("Edit"));
-                delete.text(FontAwesome.Glyph.TRASH).tooltip(en("Delete"));
+                edit.text(FontAwesome.Glyph.PENCIL).tooltip(en("Edit")).enable(event.isEditable());
+                delete.text(FontAwesome.Glyph.TRASH).tooltip(en("Delete")).enable(event.isEditable());
                 close.text(FontAwesome.Glyph.CLOSE).tooltip(en("Close")).when(User.LeftClick, TooltipHelper::unpopup);
             }
         }

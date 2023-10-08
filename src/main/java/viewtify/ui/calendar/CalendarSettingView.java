@@ -11,7 +11,6 @@ package viewtify.ui.calendar;
 
 import java.time.DayOfWeek;
 
-import javafx.scene.paint.Color;
 import kiss.I;
 import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
@@ -20,6 +19,7 @@ import viewtify.ui.UIColorPicker;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.util.FXUtils;
 
 public class CalendarSettingView extends View {
 
@@ -115,7 +115,7 @@ public class CalendarSettingView extends View {
             TimeEventSourceSetting setting = Preferences.of(TimeEventSourceSetting.class, source.name());
 
             enable.text(source.name()).sync(setting.enable);
-            color.disableWhen(enable.isNotSelected()).sync(setting.color);
+            color.disableWhen(enable.isNotSelected()).sync(setting.color, FXUtils::color, FXUtils::color);
         }
     }
 
@@ -146,6 +146,6 @@ public class CalendarSettingView extends View {
         public final Preference<Boolean> enable = initialize(true);
 
         /** The user defined color. */
-        public final Preference<Color> color = initialize(Color.BLACK);
+        public final Preference<stylist.value.Color> color = initialize(stylist.value.Color.Transparent);
     }
 }
