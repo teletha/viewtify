@@ -9,9 +9,10 @@
  */
 package viewtify.ui.calendar;
 
+import javafx.scene.Node;
+
 import org.controlsfx.glyphfont.FontAwesome;
 
-import javafx.scene.Node;
 import kiss.Managed;
 import kiss.Singleton;
 import stylist.Style;
