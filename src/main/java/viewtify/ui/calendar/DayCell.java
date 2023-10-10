@@ -10,25 +10,25 @@
 package viewtify.ui.calendar;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import kiss.Extensible;
 import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
+import viewtify.model.Preferences;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIScrollPane;
 import viewtify.ui.UIVBox;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.ui.calendar.CalendarSettingView.CalendarSetting;
 import viewtify.ui.calendar.TemporalView.TemporalStyles;
 import viewtify.ui.helper.User;
 
 public class DayCell extends View {
-
-    private int weekId;
-
-    private int dayId;
 
     private UIVBox box;
 
@@ -38,53 +38,31 @@ public class DayCell extends View {
 
     UILabel day;
 
-    DayCell(int weekId, int dayId) {
-        this.weekId = weekId;
-        this.dayId = dayId;
-    }
+    private LocalTime startTime = Preferences.of(CalendarSetting.class).startTime.or(LocalTime.MIN);
+
+    private long latestStartTime = startTime.toSecondOfDay();
 
     @Override
     protected ViewDSL declareUI() {
         return new ViewDSL() {
             {
-                $(box, weekId == 0 ? dayId % 7 == 0 ? Styles.firstDay : Styles.firstWeek
-                        : dayId % 7 == 0 ? Styles.firstDayOfWeek : Styles.day, () -> {
-                            $(hbox, Styles.row, () -> {
-                                $(day, Styles.num);
-                            });
-                            $(scroll, () -> {
-                                $(pane);
-                            });
-                        });
+                $(box, Styles.day, () -> {
+                    $(hbox, Styles.row, () -> {
+                        $(day, Styles.num);
+                    });
+                    $(scroll, () -> {
+                        $(pane);
+                    });
+                });
             }
         };
     }
 
     interface Styles extends StyleDSL {
-        Style base = () -> {
+        Style day = () -> {
             display.width.fill();
-        };
-
-        Style day = base.with(() -> {
-            border.right.width(1, px).color("-fx-outer-border").solid();
-            border.bottom.width(1, px).color("-fx-outer-border").solid();
-        });
-
-        Style firstDay = base.with(() -> {
             border.width(1, px).color("-fx-outer-border").solid();
-        });
-
-        Style firstWeek = base.with(() -> {
-            border.right.width(1, px).color("-fx-outer-border").solid();
-            border.bottom.width(1, px).color("-fx-outer-border").solid();
-            border.top.width(1, px).color("-fx-outer-border").solid();
-        });
-
-        Style firstDayOfWeek = base.with(() -> {
-            border.right.width(1, px).color("-fx-outer-border").solid();
-            border.bottom.width(1, px).color("-fx-outer-border").solid();
-            border.left.width(1, px).color("-fx-outer-border").solid();
-        });
+        };
 
         Style row = () -> {
             display.width.fill();
@@ -117,10 +95,29 @@ public class DayCell extends View {
         });
     }
 
-    <T extends TimeEventVisualizer<TimeEvent> & Extensible> void add(TimeEvent event, Class<T> visualizerType) {
-        T visualizer = I.find(visualizerType, event.getClass());
+    /**
+     * Add new time event.
+     * 
+     * @param <T>
+     * @param event
+     * @param visualizerType
+     * @param enableTimeGap
+     */
+    <T extends TimeEventVisualizer<TimeEvent> & Extensible> void add(TimeEvent event, Class<T> visualizerType, boolean enableTimeGap) {
+        LocalTime startTime = event.startTime();
+        if (Calendars.isAcceptable(startTime)) {
+            T visualizer = I.find(visualizerType, event.getClass());
+            Node ui = visualizer.visualize(event).ui();
 
-        pane.ui.getChildren().add(visualizer.visualize(event).ui());
+            if (enableTimeGap) {
+                int minHeight = 40;
+                long interval = Math.max(0, (startTime.toSecondOfDay() - latestStartTime) / 60 * minHeight / 60 * 2);
+                ui.setStyle("-fx-margin: " + interval + " 0 0 0; -fx-min-height: " + minHeight + ";");
+                latestStartTime = event.endTime().toSecondOfDay();
+            }
+
+            pane.ui.getChildren().add(ui);
+        }
     }
 
     /**

@@ -102,5 +102,4 @@ public class YearView extends TemporalView {
             month.set(locale);
         }
     }
-
 }

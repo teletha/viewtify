@@ -209,7 +209,7 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     public class Preference<V> extends Variable<V> {
 
         /** The default value. */
-        private final V defaultValue;
+        private V defaultValue;
 
         /** Requirements. */
         protected final List<Function<V, V>> requirements = new ArrayList();
@@ -227,7 +227,7 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
                 return n;
             });
 
-            require(v -> Objects.requireNonNullElse(v, defaultValue));
+            require(v -> Objects.requireNonNullElse(v, this.defaultValue));
             this.defaultValue = defaultValue;
         }
 
@@ -274,6 +274,21 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
             if (defaultValue != get()) {
                 set(defaultValue);
             }
+        }
+
+        /**
+         * Change the default value.
+         * 
+         * @param defaultValue
+         */
+        public final void setDefault(V defaultValue) {
+            // update the current value by new default value if needed
+            if (get() == this.defaultValue) {
+                set(defaultValue);
+            }
+
+            // update the default value
+            this.defaultValue = defaultValue;
         }
     }
 

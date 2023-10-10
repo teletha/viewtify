@@ -11,6 +11,7 @@ package viewtify.ui.calendar;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.chrono.Chronology;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -91,6 +92,19 @@ public class Calendars {
      */
     public static DayOfWeek calculateDoW(int index) {
         return setting.firstDoW.v.plus(index);
+    }
+
+    /**
+     * Test whethrer the given time is acceptable or not.
+     * 
+     * @param time
+     * @return
+     */
+    public static boolean isAcceptable(LocalTime time) {
+        LocalTime start = setting.startTime.or(LocalTime.MIN);
+        LocalTime end = setting.endTime.or(LocalTime.MAX);
+
+        return !time.isBefore(start) && !time.isAfter(end);
     }
 
     /** The localized formatter. */

@@ -119,11 +119,12 @@ public class WeekView extends TemporalView {
         I.signal(I.find(TimeEventSource.class))
                 .take(TimeEventSource::isEnabled)
                 .flatMap(source -> source.query(start, end))
+                .take(event -> Calendars.isAcceptable(event.startTime()))
                 .sort(Comparator.naturalOrder())
                 .on(Viewtify.UIThread)
                 .to(event -> {
                     long index = event.startDate().toEpochDay() - start.toEpochDay();
-                    cells[(int) index].add(event, WeekEventVisualizer.class);
+                    cells[(int) index].add(event, WeekEventVisualizer.class, true);
                 });
     }
 

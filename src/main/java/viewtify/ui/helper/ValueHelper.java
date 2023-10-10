@@ -19,7 +19,6 @@ import java.util.function.Supplier;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;

@@ -68,7 +68,7 @@ public class DayView extends TemporalView {
                 .flatMap(source -> source.queryBy(date))
                 .sort(Comparator.naturalOrder())
                 .on(Viewtify.UIThread)
-                .to(event -> cell.add(event, WeekEventVisualizer.class));
+                .to(event -> cell.add(event, WeekEventVisualizer.class, true));
     }
 
     /**

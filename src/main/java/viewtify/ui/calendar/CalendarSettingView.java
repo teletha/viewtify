@@ -10,6 +10,8 @@
 package viewtify.ui.calendar;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.stream.IntStream;
 
 import kiss.I;
 import viewtify.model.Preferences;
@@ -24,6 +26,10 @@ import viewtify.util.FXUtils;
 public class CalendarSettingView extends View {
 
     private UIComboBox<DayOfWeek> firstDoW;
+
+    private UIComboBox<LocalTime> startTime;
+
+    private UIComboBox<LocalTime> endTime;
 
     private UIComboBox<Class> initialView;
 
@@ -40,6 +46,14 @@ public class CalendarSettingView extends View {
                     $(hbox, FormStyles.FormRow, () -> {
                         label((en("First day of week")), FormStyles.FormLabel);
                         $(firstDoW, FormStyles.FormInput);
+                    });
+                    $(hbox, FormStyles.FormRow, () -> {
+                        label((en("Start time")), FormStyles.FormLabel);
+                        $(startTime, FormStyles.FormInput);
+                    });
+                    $(hbox, FormStyles.FormRow, () -> {
+                        label((en("End time")), FormStyles.FormLabel);
+                        $(endTime, FormStyles.FormInput);
                     });
                     $(hbox, FormStyles.FormRow, () -> {
                         label((en("Initial page")), FormStyles.FormLabel);
@@ -70,6 +84,8 @@ public class CalendarSettingView extends View {
     @Override
     protected void initialize() {
         firstDoW.items(DayOfWeek.values()).sync(Calendars.setting.firstDoW).renderByVariable(x -> en(x.name()));
+        startTime.items(IntStream.range(0, 19).mapToObj(hour -> LocalTime.of(hour, 0))).sync(Calendars.setting.startTime);
+        endTime.items(IntStream.range(5, 24).mapToObj(hour -> LocalTime.of(hour, 59))).sync(Calendars.setting.endTime);
         initialView.items(YearView.class, MonthView.class, WeekView.class, DayView.class)
                 .sync(Calendars.setting.initialView)
                 .renderByVariable(x -> en(x.getSimpleName().replace("View", "")));
@@ -126,6 +142,12 @@ public class CalendarSettingView extends View {
 
         /** The first day of week. */
         public final Preference<DayOfWeek> firstDoW = initialize(DayOfWeek.SUNDAY);
+
+        /** The start time of day. */
+        public final Preference<LocalTime> startTime = initialize(LocalTime.MIN);
+
+        /** The end time of day. */
+        public final Preference<LocalTime> endTime = initialize(LocalTime.MAX);
 
         /** The initial view. */
         public final Preference<Class> initialView = initialize(MonthView.class);
