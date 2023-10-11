@@ -7,10 +7,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="l">
-		<header class="e">
-			<h1 class="W" date="Use saved searches to filter your results more quickly" ver="2.13.0"><code>Viewtify</code></h1>
-			<nav class="g"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="T">
+		<header class="X">
+			<h1 class="R" date="Use saved searches to filter your results more quickly" ver="2.13.0"><code>Viewtify</code></h1>
+			<nav class="K"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -19,7 +19,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="L" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="g" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -27,14 +27,14 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="c">
-			<nav class="X">
+		<main class="i">
+			<nav class="Z">
 				<div></div>
 			</nav>
-			<article class="Y" id="Article">
-				<section class="k"><code class="I">viewtify.ui.helper</code>
-					<h2 class="Functional h"><code class="N">VisibleHelper</code><code class="f">&#60;<code>Self</code>&#62;</code></h2>
-					<div class="M">
+			<article class="c" id="Article">
+				<section class="a"><code class="W">viewtify.ui.helper</code>
+					<h2 class="Functional d"><code class="P">VisibleHelper</code><code class="h">&#60;<code>Self</code>&#62;</code></h2>
+					<div class="Y">
 						<ul class="C D">
 							<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.helper.VisibleHelper.html">VisibleHelper</a></code></code></li>
 						</ul>
@@ -86,339 +86,363 @@
 						</ul>
 					</div>
 				</section>
-				<section class="k" id="isVisible()">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">isVisible</code><code class="f">()</code><i class="b"><code>boolean</code></i></h2>
-					<table class="m">
-						<tr class="H">
+				<section class="a" id="isManaged()">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">isManaged</code><code class="h">()</code><i class="k"><code>boolean</code></i></h2>
+					<table class="U">
+						<tr class="I">
+							<td><code>boolean</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Gets wheterh it is managed.</p>
+					</span></section>
+				<section class="a" id="managed(boolean)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">managed</code><code class="h">(<code>boolean</code> <code class="parameterName">state</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
+							<td><code>boolean</code> <code>state</code></td>
+							<td></td>
+						</tr>
+						<tr class="I">
+							<td><code>Self</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Manage itself.</p>
+					</span></section>
+				<section class="a" id="isVisible()">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">isVisible</code><code class="h">()</code><i class="k"><code>boolean</code></i></h2>
+					<table class="U">
+						<tr class="I">
 							<td><code>boolean</code></td>
 							<td><span><p>A result.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Gets whether it is visible.</p>
 					</span></section>
-				<section class="k" id="visible(boolean)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">visible</code><code class="f">(<code>boolean</code> <code class="parameterName">state</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="visible(boolean)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">visible</code><code class="h">(<code>boolean</code> <code class="parameterName">state</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>boolean</code> <code>state</code></td>
 							<td><span><p>A visible state.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Show itself.</p>
 					</span></section>
-				<section class="k" id="visibleWhen(viewtify.ui.helper.ValueHelper,java.util.function.Predicate)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">visibleWhen</code><code class="f">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>V</code></code></code> <code class="parameterName">context</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">condition</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="P">
+				<section class="a" id="visibleWhen(viewtify.ui.helper.ValueHelper,java.util.function.Predicate)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">visibleWhen</code><code class="h">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>V</code></code></code> <code class="parameterName">context</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">condition</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="e">
 							<td><code>V</code></td>
 							<td></td>
 						</tr>
-						<tr class="K">
+						<tr class="f">
 							<td><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>V</code></code></code> <code>context</code></td>
 							<td></td>
 						</tr>
-						<tr class="K">
+						<tr class="f">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>V</code></code></code> <code>condition</code></td>
 							<td><span><p>A timing condition.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Show itself when the specified condition is True, and hide it when False.</p>
 					</span></section>
-				<section class="k" id="visibleWhen(kiss.Signal,kiss.Signal...)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">visibleWhen</code><code class="f">(<code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>, <code array="var">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">conditions</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="visibleWhen(kiss.Signal,kiss.Signal...)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">visibleWhen</code><code class="h">(<code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>, <code array="var">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">conditions</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code>condition</code></td>
 							<td><span><p>A timing condition.</p>
 								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="f">
 							<td><code array="var">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code>conditions</code></td>
 							<td><span><p>Additional timing conditions.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Show itself when the specified condition is True, and hide it when False.</p>
 					</span></section>
-				<section class="k" id="visibleWhen(kiss.Variable)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">visibleWhen</code><code class="f">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="visibleWhen(kiss.Variable)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">visibleWhen</code><code class="h">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code>condition</code></td>
 							<td><span><p>A timing condition.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Show itself when the specified condition is True, and hide it when False.</p>
 					</span></section>
-				<section class="k" id="visibleWhen(javafx.beans.value.ObservableValue)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">visibleWhen</code><code class="f">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="visibleWhen(javafx.beans.value.ObservableValue)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">visibleWhen</code><code class="h">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>javafx.beans.value.ObservableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code>condition</code></td>
 							<td><span><p>A timing condition.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Show itself when the specified condition is True, and hide it when False.</p>
 					</span></section>
-				<section class="k" id="visibleDuring(long,java.util.concurrent.TimeUnit)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">visibleDuring</code><code class="f">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/TimeUnit.html">TimeUnit</a></code> <code class="parameterName">unit</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="visibleDuring(long,java.util.concurrent.TimeUnit)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">visibleDuring</code><code class="h">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/TimeUnit.html">TimeUnit</a></code> <code class="parameterName">unit</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>long</code> <code>time</code></td>
 							<td><span><p>A time value.</p>
 								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="f">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/TimeUnit.html">TimeUnit</a></code> <code>unit</code></td>
 							<td><span><p>A time unit.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Show itself for a specified time.</p>
 					</span></section>
-				<section class="k" id="visibleDuring(long,java.time.temporal.ChronoUnit)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">visibleDuring</code><code class="f">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code> <code class="parameterName">unit</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="visibleDuring(long,java.time.temporal.ChronoUnit)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">visibleDuring</code><code class="h">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code> <code class="parameterName">unit</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>long</code> <code>time</code></td>
 							<td><span><p>A time value.</p>
 								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="f">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code> <code>unit</code></td>
 							<td><span><p>A time unit.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Show itself for a specified time.</p>
 					</span></section>
-				<section class="k" id="visibleBriefly()">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">visibleBriefly</code><code class="f">()</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="H">
+				<section class="a" id="visibleBriefly()">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">visibleBriefly</code><code class="h">()</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Show itself for a bit.</p>
 					</span></section>
-				<section class="k" id="isInvisible()">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">isInvisible</code><code class="f">()</code><i class="b"><code>boolean</code></i></h2>
-					<table class="m">
-						<tr class="H">
+				<section class="a" id="isInvisible()">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">isInvisible</code><code class="h">()</code><i class="k"><code>boolean</code></i></h2>
+					<table class="U">
+						<tr class="I">
 							<td><code>boolean</code></td>
 							<td><span><p>A result.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Gets whether it is invisible.</p>
 					</span></section>
-				<section class="k" id="invisible(boolean)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">invisible</code><code class="f">(<code>boolean</code> <code class="parameterName">state</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="invisible(boolean)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">invisible</code><code class="h">(<code>boolean</code> <code class="parameterName">state</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>boolean</code> <code>state</code></td>
 							<td><span><p>A invisible state.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Hide itself.</p>
 					</span></section>
-				<section class="k" id="invisibleWhen(viewtify.ui.helper.ValueHelper,java.util.function.Predicate)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">invisibleWhen</code><code class="f">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>V</code></code></code> <code class="parameterName">context</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">condition</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="P">
+				<section class="a" id="invisibleWhen(viewtify.ui.helper.ValueHelper,java.util.function.Predicate)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">invisibleWhen</code><code class="h">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>V</code></code></code> <code class="parameterName">context</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">condition</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="e">
 							<td><code>V</code></td>
 							<td></td>
 						</tr>
-						<tr class="K">
+						<tr class="f">
 							<td><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>V</code></code></code> <code>context</code></td>
 							<td></td>
 						</tr>
-						<tr class="K">
+						<tr class="f">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>V</code></code></code> <code>condition</code></td>
 							<td><span><p>A timing condition.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Hide itself when the specified condition is True, and show it when False.</p>
 					</span></section>
-				<section class="k" id="invisibleWhen(kiss.Signal,kiss.Signal...)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">invisibleWhen</code><code class="f">(<code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>, <code array="var">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">conditions</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="invisibleWhen(kiss.Signal,kiss.Signal...)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">invisibleWhen</code><code class="h">(<code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>, <code array="var">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">conditions</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code>condition</code></td>
 							<td><span><p>A timing condition.</p>
 								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="f">
 							<td><code array="var">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code>conditions</code></td>
 							<td><span><p>Additional timing conditions.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Hide itself when the specified condition is True, and show it when False.</p>
 					</span></section>
-				<section class="k" id="invisibleWhen(kiss.Variable)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">invisibleWhen</code><code class="f">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="invisibleWhen(kiss.Variable)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">invisibleWhen</code><code class="h">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code>condition</code></td>
 							<td><span><p>A timing condition.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Hide itself when the specified condition is True, and show it when False.</p>
 					</span></section>
-				<section class="k" id="invisibleWhen(javafx.beans.value.ObservableValue)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">invisibleWhen</code><code class="f">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="invisibleWhen(javafx.beans.value.ObservableValue)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">invisibleWhen</code><code class="h">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>javafx.beans.value.ObservableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code>condition</code></td>
 							<td><span><p>A timing condition.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Hide itself when the specified condition is True, and show it when False.</p>
 					</span></section>
-				<section class="k" id="invisibleDuring(long,java.util.concurrent.TimeUnit)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">invisibleDuring</code><code class="f">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/TimeUnit.html">TimeUnit</a></code> <code class="parameterName">unit</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="invisibleDuring(long,java.util.concurrent.TimeUnit)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">invisibleDuring</code><code class="h">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/TimeUnit.html">TimeUnit</a></code> <code class="parameterName">unit</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>long</code> <code>time</code></td>
 							<td><span><p>A time value.</p>
 								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="f">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/TimeUnit.html">TimeUnit</a></code> <code>unit</code></td>
 							<td><span><p>A time unit.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Hide itself for a specified time.</p>
 					</span></section>
-				<section class="k" id="invisibleDuring(long,java.time.temporal.ChronoUnit)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">invisibleDuring</code><code class="f">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code> <code class="parameterName">unit</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="invisibleDuring(long,java.time.temporal.ChronoUnit)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">invisibleDuring</code><code class="h">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code> <code class="parameterName">unit</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>long</code> <code>time</code></td>
 							<td><span><p>A time value.</p>
 								</span></td>
 						</tr>
-						<tr class="K">
+						<tr class="f">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code> <code>unit</code></td>
 							<td><span><p>A time unit.</p>
 								</span></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Hide itself for a specified time.</p>
 					</span></section>
-				<section class="k" id="invisibleBriefly()">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">invisibleBriefly</code><code class="f">()</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="H">
+				<section class="a" id="invisibleBriefly()">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">invisibleBriefly</code><code class="h">()</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td><span><p>Chainable API.</p>
 								</span></td>
 						</tr>
 					</table><span class="B"><p>Hide itself for a bit.</p>
 					</span></section>
-				<section class="k" id="opacity(double)">
-					<h2 class="Z"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="N">opacity</code><code class="f">(<code>double</code> <code class="parameterName">value</code>)</code><i class="b"><code>Self</code></i></h2>
-					<table class="m">
-						<tr class="K">
+				<section class="a" id="opacity(double)">
+					<h2 class="b"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="P">opacity</code><code class="h">(<code>double</code> <code class="parameterName">value</code>)</code><i class="k"><code>Self</code></i></h2>
+					<table class="U">
+						<tr class="f">
 							<td><code>double</code> <code>value</code></td>
 							<td></td>
 						</tr>
-						<tr class="H">
+						<tr class="I">
 							<td><code>Self</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Set the opacity of this UI.</p>
 					</span></section>
 			</article>
-			<aside class="S" id="SubNavi">
-				<div class="O">
-					<h5 class="i">Methods</h5>
+			<aside class="N" id="SubNavi">
+				<div class="V">
+					<h5 class="S">Methods</h5>
 					<ul>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#isVisible()">isVisible</a></code><code class="f">()</code><i class="j"><code>boolean</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visible(boolean)">visible</a></code><code class="f">(<code>boolean</code> <code class="parameterName">state</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleWhen(viewtify.ui.helper.ValueHelper,java.util.function.Predicate)">visibleWhen</a></code><code class="f">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>V</code></code></code> <code class="parameterName">context</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">condition</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleWhen(kiss.Signal,kiss.Signal...)">visibleWhen</a></code><code class="f">(<code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>, <code array="var">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">conditions</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleWhen(kiss.Variable)">visibleWhen</a></code><code class="f">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleWhen(javafx.beans.value.ObservableValue)">visibleWhen</a></code><code class="f">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleDuring(long,java.util.concurrent.TimeUnit)">visibleDuring</a></code><code class="f">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/TimeUnit.html">TimeUnit</a></code> <code class="parameterName">unit</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleDuring(long,java.time.temporal.ChronoUnit)">visibleDuring</a></code><code class="f">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code> <code class="parameterName">unit</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleBriefly()">visibleBriefly</a></code><code class="f">()</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#isInvisible()">isInvisible</a></code><code class="f">()</code><i class="j"><code>boolean</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisible(boolean)">invisible</a></code><code class="f">(<code>boolean</code> <code class="parameterName">state</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleWhen(viewtify.ui.helper.ValueHelper,java.util.function.Predicate)">invisibleWhen</a></code><code class="f">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>V</code></code></code> <code class="parameterName">context</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">condition</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleWhen(kiss.Signal,kiss.Signal...)">invisibleWhen</a></code><code class="f">(<code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>, <code array="var">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">conditions</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleWhen(kiss.Variable)">invisibleWhen</a></code><code class="f">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleWhen(javafx.beans.value.ObservableValue)">invisibleWhen</a></code><code class="f">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleDuring(long,java.util.concurrent.TimeUnit)">invisibleDuring</a></code><code class="f">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/TimeUnit.html">TimeUnit</a></code> <code class="parameterName">unit</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleDuring(long,java.time.temporal.ChronoUnit)">invisibleDuring</a></code><code class="f">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code> <code class="parameterName">unit</code>)</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleBriefly()">invisibleBriefly</a></code><code class="f">()</code><i class="j"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#opacity(double)">opacity</a></code><code class="f">(<code>double</code> <code class="parameterName">value</code>)</code><i class="j"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#isManaged()">isManaged</a></code><code class="h">()</code><i class="m"><code>boolean</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#managed(boolean)">managed</a></code><code class="h">(<code>boolean</code> <code class="parameterName">state</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#isVisible()">isVisible</a></code><code class="h">()</code><i class="m"><code>boolean</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visible(boolean)">visible</a></code><code class="h">(<code>boolean</code> <code class="parameterName">state</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleWhen(viewtify.ui.helper.ValueHelper,java.util.function.Predicate)">visibleWhen</a></code><code class="h">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>V</code></code></code> <code class="parameterName">context</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">condition</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleWhen(kiss.Signal,kiss.Signal...)">visibleWhen</a></code><code class="h">(<code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>, <code array="var">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">conditions</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleWhen(kiss.Variable)">visibleWhen</a></code><code class="h">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleWhen(javafx.beans.value.ObservableValue)">visibleWhen</a></code><code class="h">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleDuring(long,java.util.concurrent.TimeUnit)">visibleDuring</a></code><code class="h">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/TimeUnit.html">TimeUnit</a></code> <code class="parameterName">unit</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleDuring(long,java.time.temporal.ChronoUnit)">visibleDuring</a></code><code class="h">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code> <code class="parameterName">unit</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#visibleBriefly()">visibleBriefly</a></code><code class="h">()</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#isInvisible()">isInvisible</a></code><code class="h">()</code><i class="m"><code>boolean</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisible(boolean)">invisible</a></code><code class="h">(<code>boolean</code> <code class="parameterName">state</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleWhen(viewtify.ui.helper.ValueHelper,java.util.function.Predicate)">invisibleWhen</a></code><code class="h">(<code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>V</code></code></code> <code class="parameterName">context</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">condition</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleWhen(kiss.Signal,kiss.Signal...)">invisibleWhen</a></code><code class="h">(<code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>, <code array="var">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">conditions</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleWhen(kiss.Variable)">invisibleWhen</a></code><code class="h">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleWhen(javafx.beans.value.ObservableValue)">invisibleWhen</a></code><code class="h">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code> <code class="parameterName">condition</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleDuring(long,java.util.concurrent.TimeUnit)">invisibleDuring</a></code><code class="h">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/concurrent/TimeUnit.html">TimeUnit</a></code> <code class="parameterName">unit</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleDuring(long,java.time.temporal.ChronoUnit)">invisibleDuring</a></code><code class="h">(<code>long</code> <code class="parameterName">time</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code> <code class="parameterName">unit</code>)</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#invisibleBriefly()">invisibleBriefly</a></code><code class="h">()</code><i class="m"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.VisibleHelper.html#opacity(double)">opacity</a></code><code class="h">(<code>double</code> <code class="parameterName">value</code>)</code><i class="m"><code>Self</code></i></li>
 					</ul>
 				</div>
 			</aside>

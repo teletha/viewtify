@@ -124,21 +124,14 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "CalendarSetting",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "CalendarSettingView",
-			"packageName": "viewtify.ui.calendar",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "CalendarSettingView.CalendarSetting",
-			"packageName": "viewtify.ui.calendar",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "CalendarSettingView.TimeEventSourceSetting",
 			"packageName": "viewtify.ui.calendar",
 			"type": "Class"
 		},
@@ -687,6 +680,13 @@ const root = {
 			"name": "TimeEventSource",
 			"packageName": "viewtify.ui.calendar",
 			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TimeEventSourceSetting",
+			"packageName": "viewtify.ui.calendar",
+			"type": "Class"
 		},
 		{
 			"modifiers": {
