@@ -9,10 +9,9 @@
  */
 package viewtify.ui.calendar;
 
-import javafx.scene.Node;
-
 import org.controlsfx.glyphfont.FontAwesome;
 
+import javafx.scene.Node;
 import kiss.Managed;
 import kiss.Singleton;
 import stylist.Style;
@@ -132,7 +131,7 @@ class Visualizers {
             };
 
             Style time = () -> {
-                display.minWidth(3.5, em);
+                display.minWidth(2.8, em);
                 padding.right(2, px);
             };
         }

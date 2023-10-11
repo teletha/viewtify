@@ -20,7 +20,6 @@ import kiss.I;
 import kiss.Signal;
 import stylist.value.Color;
 import viewtify.model.Preferences;
-import viewtify.ui.calendar.CalendarSettingView.TimeEventSourceSetting;
 
 public interface TimeEventSource extends Extensible {
 

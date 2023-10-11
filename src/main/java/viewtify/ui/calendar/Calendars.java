@@ -26,7 +26,6 @@ import java.util.function.IntConsumer;
 import kiss.I;
 import viewtify.model.Preferences;
 import viewtify.ui.calendar.CalendarMarker.Mark;
-import viewtify.ui.calendar.CalendarSettingView.CalendarSetting;
 
 public class Calendars {
 

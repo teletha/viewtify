@@ -30,8 +30,6 @@ import viewtify.ui.UIToggleButton;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.SwapAnime;
-import viewtify.ui.calendar.CalendarSettingView.CalendarSetting;
-import viewtify.ui.calendar.CalendarSettingView.TimeEventSourceSetting;
 
 @Managed(Singleton.class)
 public class CalendarView extends View {

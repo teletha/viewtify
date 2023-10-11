@@ -9,6 +9,8 @@
  */
 package viewtify.ui.helper;
 
+import org.controlsfx.control.IndexedCheckModel;
+
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -22,9 +24,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-
-import org.controlsfx.control.IndexedCheckModel;
-
 import kiss.I;
 
 public interface PropertyAccessHelper {
@@ -96,6 +95,9 @@ public interface PropertyAccessHelper {
 
         /** The defined property type. */
         public static final Type<Double> LineSpacing = new Type("lineSpacing");
+
+        /** The defined property type. */
+        public static final Type<Boolean> Managed = new Type("managed");
 
         /** The defined property type. */
         public static final Type<Double> MaxWidth = new Type("maxWidth");

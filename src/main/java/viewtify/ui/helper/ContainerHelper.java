@@ -12,7 +12,7 @@ package viewtify.ui.helper;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-
+import kiss.Variable;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.anime.SwapAnime;
 
@@ -41,5 +41,25 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
             }
         }
         return (Self) this;
+    }
+
+    /**
+     * Find the first child node.
+     * 
+     * @return
+     */
+    default Variable<Node> first() {
+        ObservableList<Node> children = ui().getChildren();
+        return children.isEmpty() ? Variable.empty() : Variable.of(children.get(0));
+    }
+
+    /**
+     * Find the last child node.
+     * 
+     * @return
+     */
+    default Variable<Node> last() {
+        ObservableList<Node> children = ui().getChildren();
+        return children.isEmpty() ? Variable.empty() : Variable.of(children.get(children.size() - 1));
     }
 }

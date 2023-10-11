@@ -18,13 +18,11 @@ import kiss.Extensible;
 import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
-import viewtify.model.Preferences;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIScrollPane;
 import viewtify.ui.UIVBox;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.calendar.CalendarSettingView.CalendarSetting;
 import viewtify.ui.calendar.TemporalView.TemporalStyles;
 import viewtify.ui.helper.User;
 
@@ -38,9 +36,9 @@ public class DayCell extends View {
 
     UILabel day;
 
-    private LocalTime startTime = Preferences.of(CalendarSetting.class).startTime.or(LocalTime.MIN);
+    private LocalTime startTime = Calendars.setting.startTime.or(LocalTime.MIN);
 
-    private long latestStartTime = startTime.toSecondOfDay();
+    private long latestUsedTime = startTime.toSecondOfDay();
 
     @Override
     protected ViewDSL declareUI() {
@@ -110,10 +108,10 @@ public class DayCell extends View {
             Node ui = visualizer.visualize(event).ui();
 
             if (enableTimeGap) {
-                int minHeight = 40;
-                long interval = Math.max(0, (startTime.toSecondOfDay() - latestStartTime) / 60 * minHeight / 60 * 2);
+                int minHeight = Calendars.setting.eventHeight.v;
+                long interval = Math.max(0, (startTime.toSecondOfDay() - latestUsedTime) / 60 * minHeight / 60 * 2);
                 ui.setStyle("-fx-margin: " + interval + " 0 0 0; -fx-min-height: " + minHeight + ";");
-                latestStartTime = event.endTime().toSecondOfDay();
+                latestUsedTime = event.endTime().toSecondOfDay();
             }
 
             pane.ui.getChildren().add(ui);

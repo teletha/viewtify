@@ -134,40 +134,4 @@ public class CalendarSettingView extends View {
             color.disableWhen(enable.isNotSelected()).sync(setting.color, FXUtils::color, FXUtils::color);
         }
     }
-
-    /**
-     * Preference for calendar.
-     */
-    public static class CalendarSetting extends Preferences {
-
-        /** The first day of week. */
-        public final Preference<DayOfWeek> firstDoW = initialize(DayOfWeek.SUNDAY);
-
-        /** The start time of day. */
-        public final Preference<LocalTime> startTime = initialize(LocalTime.MIN);
-
-        /** The end time of day. */
-        public final Preference<LocalTime> endTime = initialize(LocalTime.MAX);
-
-        /** The initial view. */
-        public final Preference<Class> initialView = initialize(MonthView.class);
-
-        /** The today's style. */
-        public final Preference<Boolean> emphsizeToday = initialize(true);
-    }
-
-    /**
-     * Preference for calendar.
-     */
-    public static class TimeEventSourceSetting extends Preferences {
-
-        /** The user defined name. */
-        public final Preference<String> name = initialize("");
-
-        /** The availability. */
-        public final Preference<Boolean> enable = initialize(true);
-
-        /** The user defined color. */
-        public final Preference<stylist.value.Color> color = initialize(stylist.value.Color.Transparent);
-    }
 }
