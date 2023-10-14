@@ -10,6 +10,7 @@
 package viewtify.ui.calendar;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import org.controlsfx.glyphfont.FontAwesome;
@@ -163,7 +164,7 @@ public class CalendarView extends View {
                 .merge(setting.observe())
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .on(Viewtify.UIThread)
-                .to(() -> draw(currentView.getClass(), currentDate));
+                .to(() -> draw(currentView.getClass(), currentDate, null));
     }
 
     /**
@@ -174,9 +175,20 @@ public class CalendarView extends View {
      * @param date
      */
     protected <V extends TemporalView> void show(Class<V> viewType, LocalDate date) {
+        show(viewType, date, null);
+    }
+
+    /**
+     * Show the specified widget on calendar.
+     * 
+     * @param <V>
+     * @param viewType
+     * @param date
+     */
+    protected <V extends TemporalView> void show(Class<V> viewType, LocalDate date, SwapAnime anime) {
         // avoid re-rendering
         if (!viewType.isInstance(currentView) || !date.isEqual(currentDate)) {
-            draw(viewType, date);
+            draw(viewType, date, anime);
         }
     }
 
@@ -187,7 +199,9 @@ public class CalendarView extends View {
      * @param viewType
      * @param date
      */
-    private <V extends TemporalView> void draw(Class<V> viewType, LocalDate date) {
+    private <V extends TemporalView> void draw(Class<V> viewType, LocalDate date, SwapAnime anime) {
+        anime = Objects.requireNonNullElse(anime, SwapAnime.FadeOutIn);
+
         if (currentView != null) {
             currentView.dispose();
         }
@@ -199,7 +213,7 @@ public class CalendarView extends View {
         currentView = view;
         currentView.set(date);
 
-        main.content(view, SwapAnime.FadeOutIn);
+        main.content(view, anime);
 
         if (viewType == DayView.class) {
             switchToDay.select();

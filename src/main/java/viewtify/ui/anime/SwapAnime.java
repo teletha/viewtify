@@ -13,7 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-
 import kiss.WiseRunnable;
 
 public interface SwapAnime {
@@ -21,7 +20,7 @@ public interface SwapAnime {
     /** Built-in swap animation. */
     SwapAnime FadeOutIn = (parent, before, after, action) -> {
         Anime.define(() -> after.setOpacity(0))
-                .effect(before.opacityProperty(), 0, 0.15)
+                .effect(before.opacityProperty(), 0, 1.5)
                 .then(action)
                 .effect(after.opacityProperty(), 1, 0.15)
                 .run();
@@ -32,6 +31,14 @@ public interface SwapAnime {
 
     /** Built-in animation. */
     SwapAnime ZoomOut = (parent, before, after, action) -> zoom(parent, before, after, action, 0.15);
+
+    /** Built-in animation. */
+    SwapAnime SlideLeft = (parent, before, after, action) -> {
+        // Timeline timeline = new Timeline();
+        // timeline.getKeyFrames().add(new KeyFrame(Duration.ONE, new
+        // KeyValue(before.translateXProperty(), 100)));
+        // timeline.play();
+    };
 
     /**
      * Run zoom animation.

@@ -19,6 +19,7 @@ import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
 import viewtify.ui.View;
+import viewtify.ui.anime.SwapAnime;
 
 public abstract class TemporalView extends View {
 
@@ -46,7 +47,7 @@ public abstract class TemporalView extends View {
      * Select next temporal location.
      */
     public final void next() {
-        calendar.show(getClass(), currentDate.plus(1, temporalUnit()));
+        calendar.show(getClass(), currentDate.plus(1, temporalUnit()), SwapAnime.SlideLeft);
     }
 
     /**

@@ -34,10 +34,10 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
             if (children.isEmpty()) {
                 children.add(after);
             } else {
-                Node before = children.get(0);
-                if (before != after && anime != null && 0 < anime.length) {
-                    anime[0].run(parent, before, after, () -> children.set(0, after));
-                }
+                // Node before = children.get(0);
+                // if (before != after && anime != null && 0 < anime.length) {
+                // // anime[0].run(parent, before, after, () -> children.set(0, after));
+                // }
             }
         }
         return (Self) this;
