@@ -9,6 +9,8 @@
  */
 package viewtify.ui.anime;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javafx.animation.Interpolator;
@@ -25,8 +27,8 @@ public class Anime {
     /** The standard effect time. */
     public static final Duration BASE_DURATION = Duration.seconds(0.2);
 
-    /** The initialization. */
-    private final WiseRunnable initializer;
+    /** The registered init task. */
+    private final List<WiseRunnable> initializers = new ArrayList();
 
     /** The initial timeline. */
     private final Timeline initial = new Timeline();
@@ -62,7 +64,9 @@ public class Anime {
      * Hide constructor.
      */
     private Anime(WiseRunnable init) {
-        this.initializer = init;
+        if (init != null) {
+            initializers.add(init);
+        }
     }
 
     /**
@@ -95,6 +99,14 @@ public class Anime {
      */
     public final Anime duration(Duration duration) {
         this.defaultDuration = duration;
+        return this;
+    }
+
+    /**
+     * Shorthand to declare animation effect.
+     */
+    public final Anime init(WritableValue<Number> value, Number num) {
+        initializers.add(() -> value.setValue(num));
         return this;
     }
 
@@ -178,7 +190,8 @@ public class Anime {
                 }
             });
         }
-        if (initializer != null) {
+
+        for (Runnable initializer : initializers) {
             initializer.run();
         }
 

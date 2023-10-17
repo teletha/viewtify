@@ -54,7 +54,7 @@ public abstract class TemporalView extends View {
      * Select previous temporal location.
      */
     public final void previous() {
-        calendar.show(getClass(), currentDate.minus(1, temporalUnit()));
+        calendar.show(getClass(), currentDate.minus(1, temporalUnit()), SwapAnime.SlideRight);
     }
 
     /**

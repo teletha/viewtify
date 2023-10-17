@@ -12,9 +12,11 @@ package viewtify.ui.helper;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import kiss.Disposable;
 import kiss.Variable;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.anime.SwapAnime;
+import viewtify.util.FXUtils;
 
 public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> extends UserInterfaceProvider<P> {
 
@@ -27,6 +29,7 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
     default Self content(UserInterfaceProvider<Node> provider, SwapAnime... anime) {
         if (provider != null) {
             Node after = provider.ui();
+            FXUtils.associate(after, Disposable.class, provider);
 
             P parent = ui();
             ObservableList<Node> children = parent.getChildren();
@@ -36,7 +39,11 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
             } else {
                 Node before = children.get(0);
                 if (before != after && anime != null && 0 < anime.length) {
-                    anime[0].run(parent, before, after, () -> children.set(0, after));
+                    anime[0].run(parent, before, after, () -> {
+                        children.set(0, after);
+
+                        FXUtils.associate(before, Disposable.class).to(Disposable::dispose);
+                    });
                 }
             }
         }

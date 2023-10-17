@@ -11,15 +11,17 @@ package viewtify.util;
 
 import static java.lang.Double.parseDouble;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-
 import kiss.Decoder;
 import kiss.Encoder;
 import kiss.Variable;
@@ -369,6 +371,47 @@ public class FXUtils {
 
                 nextListener.changed(next, null, next.getValue());
             }
+        }
+    }
+
+    /**
+     * User data associasion.
+     * 
+     * @param <T>
+     * @param node
+     * @param key
+     * @param value
+     */
+    public static <T> void associate(Node node, Class<T> key, Object value) {
+        if (node != null && key != null && value != null && key.isInstance(value)) {
+            Object data = node.getUserData();
+            if (data == null) {
+                data = new HashMap();
+            }
+
+            if (data instanceof Map map) {
+                map.put(key, value);
+            }
+        }
+    }
+
+    /**
+     * User data associasion.
+     * 
+     * @param <T>
+     * @param node
+     * @param key
+     */
+    public static <T> Variable<T> associate(Node node, Class<T> key) {
+        if (node == null || key == null) {
+            return Variable.empty();
+        }
+
+        Object data = node.getUserData();
+        if (data instanceof Map map) {
+            return Variable.of((T) map.get(key));
+        } else {
+            return Variable.empty();
         }
     }
 }

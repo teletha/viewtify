@@ -20,7 +20,7 @@ public interface SwapAnime {
     /** Built-in swap animation. */
     SwapAnime FadeOutIn = (parent, before, after, action) -> {
         Anime.define(() -> after.setOpacity(0))
-                .effect(before.opacityProperty(), 0, 1.5)
+                .effect(before.opacityProperty(), 0, 0.15)
                 .then(action)
                 .effect(after.opacityProperty(), 1, 0.15)
                 .run();
@@ -34,10 +34,30 @@ public interface SwapAnime {
 
     /** Built-in animation. */
     SwapAnime SlideLeft = (parent, before, after, action) -> {
-        // Timeline timeline = new Timeline();
-        // timeline.getKeyFrames().add(new KeyFrame(Duration.ONE, new
-        // KeyValue(before.translateXProperty(), 100)));
-        // timeline.play();
+        Anime.define()
+                .init(after.translateXProperty(), 400)
+                .init(after.opacityProperty(), 0)
+                .duration(0.12)
+                .effect(before.translateXProperty(), -400)
+                .effect(before.opacityProperty(), 0)
+                .then(action)
+                .effect(after.translateXProperty(), 0)
+                .effect(after.opacityProperty(), 1)
+                .run();
+    };
+
+    /** Built-in animation. */
+    SwapAnime SlideRight = (parent, before, after, action) -> {
+        Anime.define()
+                .init(after.translateXProperty(), -400)
+                .init(after.opacityProperty(), 0)
+                .duration(0.12)
+                .effect(before.translateXProperty(), 400)
+                .effect(before.opacityProperty(), 0)
+                .then(action)
+                .effect(after.translateXProperty(), 0)
+                .effect(after.opacityProperty(), 1)
+                .run();
     };
 
     /**
