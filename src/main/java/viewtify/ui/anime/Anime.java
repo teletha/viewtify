@@ -48,25 +48,13 @@ public class Anime {
      * @return
      */
     public static Anime define() {
-        return define(null);
-    }
-
-    /**
-     * Create new {@link Anime}.
-     * 
-     * @return
-     */
-    public static Anime define(WiseRunnable init) {
-        return new Anime(init);
+        return new Anime();
     }
 
     /**
      * Hide constructor.
      */
-    private Anime(WiseRunnable init) {
-        if (init != null) {
-            initializers.add(init);
-        }
+    private Anime() {
     }
 
     /**
@@ -106,7 +94,19 @@ public class Anime {
      * Shorthand to declare animation effect.
      */
     public final Anime init(WritableValue<Number> value, Number num) {
-        initializers.add(() -> value.setValue(num));
+        if (value != null && num != null) {
+            initializers.add(() -> value.setValue(num));
+        }
+        return this;
+    }
+
+    /**
+     * Shorthand to declare animation effect.
+     */
+    public final Anime init(WiseRunnable init) {
+        if (init != null) {
+            initializers.add(init);
+        }
         return this;
     }
 

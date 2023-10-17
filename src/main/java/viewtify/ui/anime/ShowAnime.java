@@ -19,7 +19,7 @@ public interface ShowAnime extends Animatable {
     /** Built-in animation. */
     static ShowAnime FadeIn(double opacity) {
         return (parent, before, action) -> {
-            Anime.define(() -> before.setOpacity(0)).effect(before.opacityProperty(), opacity, 0.3).run(action);
+            Anime.define().init(before.opacityProperty(), 0).effect(before.opacityProperty(), opacity, 0.3).run(action);
         };
     }
 
@@ -39,7 +39,8 @@ public interface ShowAnime extends Animatable {
      */
     private static void zoom(Pane parent, Node before, WiseRunnable action, double diff) {
         Node clip = parent.getClip();
-        Anime.define(() -> parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight())))
+        Anime.define()
+                .init(() -> parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight())))
                 .effect(before.opacityProperty(), 1)
                 .effect(before.scaleXProperty(), 1 + diff)
                 .effect(before.scaleYProperty(), 1 + diff)

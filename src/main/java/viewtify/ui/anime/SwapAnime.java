@@ -19,10 +19,12 @@ public interface SwapAnime {
 
     /** Built-in swap animation. */
     SwapAnime FadeOutIn = (parent, before, after, action) -> {
-        Anime.define(() -> after.setOpacity(0))
-                .effect(before.opacityProperty(), 0, 0.15)
+        Anime.define()
+                .init(after.opacityProperty(), 0)
+                .duration(Anime.BASE_DURATION.divide(2))
+                .effect(before.opacityProperty(), 0)
                 .then(action)
-                .effect(after.opacityProperty(), 1, 0.15)
+                .effect(after.opacityProperty(), 1)
                 .run();
     };
 
@@ -35,13 +37,10 @@ public interface SwapAnime {
     /** Built-in animation. */
     SwapAnime SlideLeft = (parent, before, after, action) -> {
         Anime.define()
-                .init(after.translateXProperty(), 400)
-                .init(after.opacityProperty(), 0)
-                .duration(0.12)
-                .effect(before.translateXProperty(), -400)
-                .effect(before.opacityProperty(), 0)
+                .init(after.translateXProperty(), after.getBoundsInLocal().getWidth())
+                .duration(Anime.BASE_DURATION.divide(2))
+                .effect(before.translateXProperty(), -before.getBoundsInLocal().getWidth())
                 .then(action)
-                .effect(after.translateXProperty(), 0)
                 .effect(after.opacityProperty(), 1)
                 .run();
     };
@@ -49,13 +48,10 @@ public interface SwapAnime {
     /** Built-in animation. */
     SwapAnime SlideRight = (parent, before, after, action) -> {
         Anime.define()
-                .init(after.translateXProperty(), -400)
-                .init(after.opacityProperty(), 0)
-                .duration(0.12)
-                .effect(before.translateXProperty(), 400)
-                .effect(before.opacityProperty(), 0)
+                .init(after.translateXProperty(), -after.getBoundsInLocal().getWidth())
+                .duration(Anime.BASE_DURATION.divide(2))
+                .effect(before.translateXProperty(), before.getBoundsInLocal().getWidth())
                 .then(action)
-                .effect(after.translateXProperty(), 0)
                 .effect(after.opacityProperty(), 1)
                 .run();
     };

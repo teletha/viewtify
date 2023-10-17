@@ -35,7 +35,8 @@ public interface HideAnime extends Animatable {
      */
     private static void zoom(Pane parent, Node before, WiseRunnable action, double diff) {
         Node clip = parent.getClip();
-        Anime.define(() -> parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight())))
+        Anime.define()
+                .init(() -> parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight())))
                 .duration(Anime.BASE_DURATION.multiply(2))
                 .interpolator(Interpolate.EASE_IN_CUBIC)
                 .effect(before.opacityProperty(), 0)
@@ -60,7 +61,8 @@ public interface HideAnime extends Animatable {
      */
     private static void pop(Pane parent, Node before, WiseRunnable action, double diff) {
         Node clip = parent.getClip();
-        Anime.define(() -> parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight())))
+        Anime.define()
+                .init(() -> parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight())))
                 .duration(Anime.BASE_DURATION.multiply(2))
                 .interpolator(Interpolate.EASE_IN_OUT_BACK.enhance(v -> v * 2))
                 .effect(before.opacityProperty(), 0)
