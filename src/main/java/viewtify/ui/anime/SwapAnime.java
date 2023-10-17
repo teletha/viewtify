@@ -21,7 +21,7 @@ public interface SwapAnime {
     SwapAnime FadeOutIn = (parent, before, after, action) -> {
         Anime.define()
                 .init(after.opacityProperty(), 0)
-                .duration(Anime.BASE_DURATION.divide(2))
+                .duration(Anime.BASE_DURATION.multiply(0.7))
                 .effect(before.opacityProperty(), 0)
                 .then(action)
                 .effect(after.opacityProperty(), 1)
@@ -38,7 +38,7 @@ public interface SwapAnime {
     SwapAnime SlideLeft = (parent, before, after, action) -> {
         Anime.define()
                 .init(after.translateXProperty(), after.getBoundsInLocal().getWidth())
-                .duration(Anime.BASE_DURATION.divide(2))
+                .duration(Anime.BASE_DURATION.multiply(0.7))
                 .effect(before.translateXProperty(), -before.getBoundsInLocal().getWidth())
                 .then(action)
                 .effect(after.opacityProperty(), 1)
@@ -49,7 +49,7 @@ public interface SwapAnime {
     SwapAnime SlideRight = (parent, before, after, action) -> {
         Anime.define()
                 .init(after.translateXProperty(), -after.getBoundsInLocal().getWidth())
-                .duration(Anime.BASE_DURATION.divide(2))
+                .duration(Anime.BASE_DURATION.multiply(0.7))
                 .effect(before.translateXProperty(), before.getBoundsInLocal().getWidth())
                 .then(action)
                 .effect(after.opacityProperty(), 1)
