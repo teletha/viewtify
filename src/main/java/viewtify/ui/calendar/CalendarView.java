@@ -160,6 +160,7 @@ public class CalendarView extends View {
         show(setting.initialView.v, LocalDate.now());
 
         I.signal(I.find(TimeEventSource.class))
+                .subscribeOn(Viewtify.WorkerThread)
                 .flatMap(source -> Preferences.of(TimeEventSourceSetting.class, source.name()).observe())
                 .merge(setting.observe())
                 .debounce(200, TimeUnit.MILLISECONDS)
