@@ -9,8 +9,6 @@
  */
 package viewtify.ui.helper;
 
-import org.controlsfx.control.IndexedCheckModel;
-
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -24,6 +22,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+
+import org.controlsfx.control.IndexedCheckModel;
+
 import kiss.I;
 
 public interface PropertyAccessHelper {
@@ -71,6 +72,9 @@ public interface PropertyAccessHelper {
 
         /** The defined property type. */
         public static final Type<Boolean> Disable = new Type("disable");
+
+        /** The defined property type. */
+        public static final Type<javafx.scene.effect.Effect> Effect = new Type("effect");
 
         /** The defined property type. */
         public static final Type<String> EllipsisString = new Type("ellipsisString");

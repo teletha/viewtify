@@ -13,9 +13,15 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.Effect;
+import javafx.util.Duration;
 
 import kiss.I;
 import kiss.Signal;
@@ -312,5 +318,36 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      */
     default Self enableBriefly() {
         return enableDuring(400, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Show progress indicator.
+     * 
+     * @return
+     */
+    default Self showIndicator() {
+        BoxBlur effect = new BoxBlur(3, 3, 2);
+
+        Property<Effect> property = property(Type.Effect);
+        property.setValue(effect);
+
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.ONE, new KeyValue(effect.iterationsProperty(), 10)));
+        timeline.setAutoReverse(true);
+        timeline.setCycleCount(10);
+        timeline.play();
+
+        return disableNow();
+    }
+
+    /**
+     * Hide progress indicator.
+     * 
+     * @return
+     */
+    default Self hideIndicator() {
+        Property<Effect> property = property(Type.Effect);
+        property.setValue(null);
+        return enableNow();
     }
 }
