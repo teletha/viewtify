@@ -29,7 +29,7 @@ public class Project extends bee.api.Project {
                 Additional useful functions and widgets that do not exist in JavaFX.
                 * Application launcher
                 * Application updater
-                * Docking UI like Eclipse
+                * Docking Tab
                 * Notification UI like Toast
                 * Calendar UI
                 * Print preview
@@ -38,7 +38,7 @@ public class Project extends bee.api.Project {
                 * Focus management
                 * Shortcut management
                 * User preference
-                * Dark theme
+                * Various theme
                 * Automatic translation in real time
                 * Tooltip and Popup
                 * Headless UI

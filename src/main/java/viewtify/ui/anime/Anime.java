@@ -197,4 +197,13 @@ public class Anime {
 
         Viewtify.inUI(initial::play);
     }
+
+    /**
+     * Play animation with loop.
+     */
+    public void runInfinitely() {
+        current.setAutoReverse(true);
+        current.setCycleCount(Integer.MAX_VALUE);
+        run();
+    }
 }
