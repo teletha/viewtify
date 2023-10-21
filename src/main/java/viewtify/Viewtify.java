@@ -125,6 +125,9 @@ public final class Viewtify {
     /** The directory of user's preference. */
     public static final Variable<Directory> UserPreference = Variable.empty();
 
+    /** The current theme. */
+    public static final Variable<Theme> CurrentTheme = Variable.of(Theme.Light);
+
     static {
         JUL.replace();
 
@@ -834,6 +837,8 @@ public final class Viewtify {
      * @param theme
      */
     public static void manage(Theme theme) {
+        CurrentTheme.set(theme);
+
         inUI(() -> {
             for (Window window : Window.getWindows()) {
                 Scene scene = window.getScene();

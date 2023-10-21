@@ -23,8 +23,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import kiss.Decoder;
+import kiss.Disposable;
 import kiss.Encoder;
 import kiss.Variable;
+import kiss.WiseSupplier;
 import stylist.Style;
 import stylist.value.CSSValue;
 
@@ -375,34 +377,13 @@ public class FXUtils {
     }
 
     /**
-     * User data associasion.
-     * 
-     * @param <T>
-     * @param node
-     * @param key
-     * @param value
-     */
-    public static <T> void associate(Node node, Class<T> key, Object value) {
-        if (node != null && key != null && value != null && key.isInstance(value)) {
-            Object data = node.getUserData();
-            if (data == null) {
-                data = new HashMap();
-            }
-
-            if (data instanceof Map map) {
-                map.put(key, value);
-            }
-        }
-    }
-
-    /**
-     * User data associasion.
+     * Get the user data.
      * 
      * @param <T>
      * @param node
      * @param key
      */
-    public static <T> Variable<T> associate(Node node, Class<T> key) {
+    public static synchronized <T> Variable<T> getAssociation(Node node, Class<T> key) {
         if (node == null || key == null) {
             return Variable.empty();
         }
@@ -413,5 +394,80 @@ public class FXUtils {
         } else {
             return Variable.empty();
         }
+    }
+
+    /**
+     * Dispose the user data.
+     * 
+     * @param <T>
+     * @param node
+     * @param key
+     */
+    public static synchronized <T> void disposeAssociation(Node node, Class<T> key) {
+        if (node != null && key != null) {
+            Object data = node.getUserData();
+            if (data instanceof Map map) {
+                Object value = map.remove(key);
+                if (value instanceof Disposable disposable) {
+                    disposable.dispose();
+                }
+            }
+        }
+    }
+
+    /**
+     * Store the user data.
+     * 
+     * @param <T>
+     * @param node
+     * @param key
+     * @param value
+     */
+    public static synchronized <T> void setAssociation(Node node, Class<T> key, Object value) {
+        if (key.isInstance(value)) {
+            ensureAssociation(node, key, () -> (T) value, true);
+        }
+    }
+
+    /**
+     * Store the user data.
+     * 
+     * @param <T>
+     * @param node
+     * @param key
+     * @param supplier
+     */
+    public static synchronized <T> T ensureAssociation(Node node, Class<T> key, WiseSupplier<T> supplier) {
+        return ensureAssociation(node, key, supplier, false);
+    }
+
+    /**
+     * Store the user data.
+     * 
+     * @param <T>
+     * @param node
+     * @param key
+     * @param supplier
+     * @param override
+     * @return
+     */
+    private static <T> T ensureAssociation(Node node, Class<T> key, WiseSupplier<T> supplier, boolean override) {
+        if (node != null && key != null && supplier != null) {
+            Object data = node.getUserData();
+            if (data == null) {
+                data = new HashMap();
+                node.setUserData(data);
+            }
+
+            if (data instanceof Map map) {
+                Object value = map.get(key);
+                if (value == null || override) {
+                    value = supplier.get();
+                    map.put(key, value);
+                }
+                return (T) value;
+            }
+        }
+        return null;
     }
 }

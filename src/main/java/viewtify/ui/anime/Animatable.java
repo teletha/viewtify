@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import kiss.WiseRunnable;
+import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 
 public interface Animatable {
@@ -120,6 +121,7 @@ public interface Animatable {
                 }
             });
         }
-        timeline.play();
+
+        Viewtify.inUI(timeline::play);
     }
 }

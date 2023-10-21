@@ -16,16 +16,13 @@ import java.util.function.Predicate;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.ImageInput;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
+import javafx.scene.Node;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.util.FXUtils;
 
 public interface DisableHelper<Self extends DisableHelper> extends PropertyAccessHelper {
 
@@ -325,83 +322,13 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * @return
      */
     default Self showIndicator() {
-        Region ui = (Region) ui();
+        Region pane = (Region) ui();
 
-        Property<Effect> property = property(Type.Effect);
-        property.setValue(createCircularProgressImage(ui.getWidth(), ui.getHeight()));
-
-        // Anime.define()
-        // .duration(2)
-        // .effect(box.widthProperty(), 5)
-        // .effect(box.heightProperty(), 5)
-        // .effect(box.iterationsProperty(), 5)
-        // .runInfinitely();
+        FXUtils.ensureAssociation(pane, ProgressIndicatorEffect.class, () -> {
+            return new ProgressIndicatorEffect(pane);
+        }).start();
 
         return disableNow();
-    }
-
-    private Effect createCircularProgressImage(double width, double height) {
-        WritableImage writableImage = new WritableImage((int) width, (int) height);
-        PixelWriter pixelWriter = writableImage.getPixelWriter();
-
-        int circleRadius = 25;
-        int circleDiameter = 5;
-        int numCircles = 16;
-        double centerX = width / 2;
-        double centerY = height / 2;
-        double radius = Math.min(width, height) / 2 - 10; // 10は余白
-
-        for (int i = 0; i < numCircles; i++) {
-            double angle = 360.0 / numCircles * i;
-            double x = centerX + circleRadius * Math.cos(Math.toRadians(angle));
-            double y = centerY + circleRadius * Math.sin(Math.toRadians(angle));
-
-            // 丸を描画
-            for (int j = 0; j < 360; j++) {
-                double radian = Math.toRadians(j);
-                int pixelX = (int) (x + circleDiameter / 2 * Math.cos(radian)); // 半径の半分が直径の半分
-                int pixelY = (int) (y + circleDiameter / 2 * Math.sin(radian));
-
-                if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
-                    // 丸を塗りつぶしで描画
-                    pixelWriter.setColor(pixelX, pixelY, Color.BLUE);
-                }
-            }
-        }
-
-        // // ブラーを追加して効果を強調
-        // GaussianBlur blur = new GaussianBlur(5);
-        // blur.setInput(writableImage);
-        //
-        // WritableImage finalImage = new WritableImage(width, height);
-        // PixelWriter finalPixelWriter = finalImage.getPixelWriter();
-        // for (int x = 0; x < width; x++) {
-        // for (int y = 0; y < height; y++) {
-        // finalPixelWriter.setColor(x, y, pixelWriter.getColor(x, y));
-        // }
-        // }
-
-        return new ImageInput(writableImage);
-    }
-
-    private Effect createStripedPatternEffect(double width, double height) {
-        WritableImage writableImage = new WritableImage((int) width, (int) height);
-        PixelWriter pixelWriter = writableImage.getPixelWriter();
-
-        Color stripeColor1 = Color.RED;
-        Color stripeColor2 = Color.TRANSPARENT;
-
-        // 斜め45度のストライプを描画
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                int stripePosition = x + y; // 斜めの位置
-                int stripeIndex = stripePosition / 3;
-                Color stripeColor = stripeIndex % 2 == 0 ? stripeColor1 : stripeColor2;
-                pixelWriter.setColor(x, y, stripeColor);
-            }
-        }
-
-        return new ImageInput(writableImage);
     }
 
     /**
@@ -410,8 +337,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * @return
      */
     default Self hideIndicator() {
-        Property<Effect> property = property(Type.Effect);
-        property.setValue(null);
+        FXUtils.getAssociation((Node) ui(), ProgressIndicatorEffect.class).to(ProgressIndicatorEffect::stop);
 
         return enableNow();
     }

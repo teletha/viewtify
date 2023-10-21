@@ -9,8 +9,16 @@
  */
 package viewtify;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import javafx.scene.paint.Color;
+import kiss.I;
 import psychopath.File;
 import psychopath.Locator;
 
@@ -21,11 +29,74 @@ public enum Theme {
     /** The location. */
     public final String location;
 
+    /** The managed variable colors. */
+    private final Map<String, Color> variables = new HashMap();
+
     /**
      * @param path
      */
     private Theme() {
         this.location = locate(Character.toLowerCase(name().charAt(0)) + name().substring(1));
+
+        try {
+            URL url = new URL(location);
+            try (InputStream inputStream = url.openStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    line = line.strip();
+                    if (line.startsWith("-fx-")) {
+                        int index = line.indexOf(":");
+                        String key = line.substring(0, index).strip();
+                        String value = line.substring(index + 1, line.length() - 1).strip();
+
+                        variables.put(key, color(value));
+                    }
+                }
+            } catch (IOException e) {
+                throw I.quiet(e);
+            }
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
+    }
+
+    /**
+     * Parse color code.
+     * 
+     * @param code
+     * @return
+     */
+    private Color color(String code) {
+        if (code.startsWith("-fx-")) {
+            return color(Modena.colors.get(code));
+        }
+
+        if (code.startsWith("derive")) {
+            int start = code.indexOf('(');
+            int end = code.indexOf(',');
+            return color(code.substring(start + 1, end).strip());
+        }
+
+        if (code.startsWith("hsb(")) {
+            String[] values = code.replaceAll("[hsb\\(%\\)]", "").split(",");
+            double hue = Double.parseDouble(values[0]);
+            double saturation = Double.parseDouble(values[1]) / 100.0;
+            double brightness = Double.parseDouble(values[2]) / 100.0;
+            return Color.hsb(hue, saturation, brightness);
+        }
+
+        if (code.startsWith("hsba(")) {
+            String[] values = code.replaceAll("[hsba\\(%\\)]", "").split(",");
+            double hue = Double.parseDouble(values[0]);
+            double saturation = Double.parseDouble(values[1]) / 100.0;
+            double brightness = Double.parseDouble(values[2]) / 100.0;
+            double opacity = Double.parseDouble(values[3]);
+            return Color.hsb(hue, saturation, brightness, opacity);
+        }
+
+        return Color.web(code);
     }
 
     /**
@@ -46,5 +117,23 @@ public enum Theme {
         }
 
         throw new Error("Theme [" + name + "] is not found.");
+    }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
+    public Color accent() {
+        return variables.getOrDefault("-fx-accent", Color.BLACK);
+    }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
+    public Color focus() {
+        return variables.getOrDefault("-fx-focus-color", Color.BLACK);
     }
 }

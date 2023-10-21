@@ -11,11 +11,11 @@ package viewtify.ui.helper;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.Test;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.SingleSelectionModel;
-
-import org.junit.jupiter.api.Test;
 
 class ActionsTest {
 

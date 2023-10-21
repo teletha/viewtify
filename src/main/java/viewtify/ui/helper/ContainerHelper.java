@@ -29,7 +29,7 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
     default Self content(UserInterfaceProvider<Node> provider, SwapAnime... anime) {
         if (provider != null) {
             Node after = provider.ui();
-            FXUtils.associate(after, Disposable.class, provider);
+            FXUtils.setAssociation(after, Disposable.class, provider);
 
             P parent = ui();
             ObservableList<Node> children = parent.getChildren();
@@ -42,7 +42,7 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
                     anime[0].run(parent, before, after, () -> {
                         children.set(0, after);
 
-                        FXUtils.associate(before, Disposable.class).to(Disposable::dispose);
+                        FXUtils.getAssociation(before, Disposable.class).to(Disposable::dispose);
                     });
                 }
             }
