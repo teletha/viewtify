@@ -425,6 +425,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Modena",
+			"packageName": "viewtify",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Monitor",
 			"packageName": "viewtify.task",
 			"type": "Class"
