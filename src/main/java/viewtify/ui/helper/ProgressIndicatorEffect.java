@@ -18,7 +18,6 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-
 import kiss.Disposable;
 import kiss.I;
 import viewtify.Viewtify;
@@ -29,6 +28,8 @@ class ProgressIndicatorEffect extends Blend {
 
     private static final int stripeWidthTransparent = 10;
 
+    private static final int initialDelay = 200;
+
     /** The duretion of fade out. (millis) */
     private static final int fadeTime = 800;
 
@@ -37,59 +38,87 @@ class ProgressIndicatorEffect extends Blend {
 
     private final ImageInput input = new ImageInput();
 
-    private final Region region;
-
-    private boolean disposing;
-
-    private Disposable disposable;
-
-    private long start;
+    private long startTime;
 
     private double opacity = 1;
 
-    /**
-     * 
-     */
-    ProgressIndicatorEffect(Region region) {
-        this.region = region;
+    // 0 : none
+    // 1 : starting
+    // 2 : stopping
+    private int state = 0;
 
+    private Disposable startingTask;
+
+    private Disposable stoppingTask;
+
+    ProgressIndicatorEffect() {
         setTopInput(input);
         setMode(BlendMode.SRC_OVER);
     }
 
-    public synchronized void start() {
-        if (disposable == null) {
-            start = System.currentTimeMillis();
+    public synchronized void start(Region region) {
+        switch (state) {
+        case 0: // none
+            state = 1;
+            startTime = System.currentTimeMillis();
             region.setEffect(this);
-            opacity = 1;
+            startingTask = I.schedule(initialDelay, 50, TimeUnit.MILLISECONDS, true)
+                    .on(Viewtify.UIThread)
+                    .effectOnDispose(() -> region.setEffect(null))
+                    .to(x -> {
+                        input.setSource(createDiagonalStripesImage((int) region.getWidth(), (int) region.getHeight(), x.intValue()));
+                    });
+            break;
 
-            disposable = I.schedule(150, 50, TimeUnit.MILLISECONDS, true).on(Viewtify.UIThread).to(x -> {
-                input.setSource(createDiagonalStripesImage((int) region.getWidth(), (int) region.getHeight(), x.intValue()));
-            });
+        case 1: // starting
+            break;
+
+        case 2: // stopping
+            state = 1;
+            if (stoppingTask != null) {
+                stoppingTask.dispose();
+                stoppingTask = null;
+                opacity = 1;
+            }
+            break;
         }
     }
 
     public synchronized void stop() {
-        if (!disposing) {
-            disposing = true;
-            if (System.currentTimeMillis() - start < 200) {
+        switch (state) {
+        case 0: // none
+            break;
+
+        case 1: // starting
+            state = 2;
+            if (System.currentTimeMillis() - startTime <= initialDelay) {
                 reset();
             } else {
-                I.schedule(0, fadeTime / fadeStep, TimeUnit.MILLISECONDS, true).take(fadeStep).on(Viewtify.UIThread).to(x -> {
-                    opacity = Math.max(0, opacity - (1d / fadeStep));
-                }, e -> {
-
-                }, this::reset);
+                stoppingTask = I.schedule(0, fadeTime / fadeStep, TimeUnit.MILLISECONDS, true)
+                        .take(fadeStep)
+                        .on(Viewtify.UIThread)
+                        .effectOnComplete(this::reset)
+                        .to(x -> opacity = Math.max(0, opacity - (1d / fadeStep)));
             }
+            break;
+
+        case 2: // stopping
+            break;
         }
     }
 
     private void reset() {
-        region.setEffect(null);
-        disposable.dispose();
-        disposable = null;
-        disposing = false;
+        if (startingTask != null) {
+            startingTask.dispose();
+            startingTask = null;
+        }
+        if (stoppingTask != null) {
+            stoppingTask.dispose();
+            stoppingTask = null;
+        }
         opacity = 1;
+        startTime = 0;
+        state = 0;
     }
 
     private WritableImage createDiagonalStripesImage(int width, int height, int frame) {

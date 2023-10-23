@@ -324,9 +324,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     default Self showIndicator() {
         Region pane = (Region) ui();
 
-        FXUtils.ensureAssociation(pane, ProgressIndicatorEffect.class, () -> {
-            return new ProgressIndicatorEffect(pane);
-        }).start();
+        FXUtils.ensureAssociation(pane, ProgressIndicatorEffect.class, ProgressIndicatorEffect::new).start(pane);
 
         return disableNow();
     }
