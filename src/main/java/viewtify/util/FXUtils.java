@@ -11,9 +11,9 @@ package viewtify.util;
 
 import static java.lang.Double.parseDouble;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 import javafx.beans.value.ChangeListener;
@@ -22,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -452,22 +453,32 @@ public class FXUtils {
      * @return
      */
     private static <T> T ensureAssociation(Node node, Class<T> key, WiseSupplier<T> supplier, boolean override) {
-        if (node != null && key != null && supplier != null) {
-            Object data = node.getUserData();
-            if (data == null) {
-                data = new HashMap();
-                node.setUserData(data);
-            }
+        Objects.requireNonNull(node, "Target node is required.");
+        Objects.requireNonNull(key, "Key type is required.");
+        Objects.requireNonNull(supplier, "Value supplier is required.");
 
-            if (data instanceof Map map) {
-                Object value = map.get(key);
-                if (value == null || override) {
-                    value = supplier.get();
-                    map.put(key, value);
-                }
-                return (T) value;
-            }
+        Object object = node.getUserData();
+        if (object == null) {
+            object = new UserData();
+            node.setUserData(object);
         }
-        return null;
+
+        if (object instanceof UserData data) {
+            Object value = data.get(key);
+            if (value == null || override) {
+                value = supplier.get();
+                if (!key.isInstance(value)) {
+                    throw new IllegalStateException("Assigned value [" + value + "] is not instance of " + key + ".");
+                }
+                data.put(key, value);
+            }
+            return (T) value;
+        } else {
+            throw new IllegalStateException("Other user data is already assigned. [" + object + "]");
+        }
+    }
+
+    @SuppressWarnings("serial")
+    private static class UserData extends ConcurrentHashMap<Class, Object> {
     }
 }

@@ -18,19 +18,34 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+
 import kiss.Disposable;
 import kiss.I;
 import viewtify.Viewtify;
 
 class ProgressIndicatorEffect extends Blend {
 
+    private static final int stripeWidthColor = 5;
+
+    private static final int stripeWidthTransparent = 10;
+
+    /** The duretion of fade out. (millis) */
+    private static final int fadeTime = 800;
+
+    /** The step of fade out. */
+    private static final int fadeStep = 60;
+
     private final ImageInput input = new ImageInput();
 
     private final Region region;
 
+    private boolean disposing;
+
     private Disposable disposable;
 
     private long start;
+
+    private double opacity = 1;
 
     /**
      * 
@@ -46,54 +61,53 @@ class ProgressIndicatorEffect extends Blend {
         if (disposable == null) {
             start = System.currentTimeMillis();
             region.setEffect(this);
+            opacity = 1;
 
             disposable = I.schedule(150, 50, TimeUnit.MILLISECONDS, true).on(Viewtify.UIThread).to(x -> {
-                input.setSource(createDiagonalStripesImage((int) region.getWidth(), (int) region.getHeight(), x.intValue(), 10, 5, 1));
+                input.setSource(createDiagonalStripesImage((int) region.getWidth(), (int) region.getHeight(), x.intValue()));
             });
         }
     }
 
     public synchronized void stop() {
-        if (disposable != null) {
-            if (System.currentTimeMillis() - start < 100) {
-                region.setEffect(null);
-                disposable.dispose();
-
-                disposable = null;
+        if (!disposing) {
+            disposing = true;
+            if (System.currentTimeMillis() - start < 200) {
+                reset();
             } else {
-                // I.schedule(0, 50, TimeUnit.MILLISECONDS, true).on(Viewtify.UIThread).to(x -> {
-                // input.setSource(createDiagonalStripesImage((int) region.getWidth(), (int)
-                // region.getHeight(), x.intValue(), 10, 5, 1));
-                // });
+                I.schedule(0, fadeTime / fadeStep, TimeUnit.MILLISECONDS, true).take(fadeStep).on(Viewtify.UIThread).to(x -> {
+                    opacity = Math.max(0, opacity - (1d / fadeStep));
+                }, e -> {
+
+                }, this::reset);
             }
         }
     }
 
-    private void fadeOut() {
-
+    private void reset() {
+        region.setEffect(null);
+        disposable.dispose();
+        disposable = null;
+        disposing = false;
+        opacity = 1;
     }
 
-    private WritableImage createDiagonalStripesImage(int width, int height, int frame, int firstWidth, int secondWidth, double opacity) {
+    private WritableImage createDiagonalStripesImage(int width, int height, int frame) {
         WritableImage writableImage = new WritableImage(width, height);
         PixelWriter pixelWriter = writableImage.getPixelWriter();
 
-        int w = firstWidth + secondWidth;
-        int offset = frame % w;
+        int stripeWidth = stripeWidthColor + stripeWidthTransparent;
+        int offset = frame % stripeWidth;
         Color stripeColor = Viewtify.CurrentTheme.v.accent();
-        stripeColor = new Color(stripeColor.getRed(), stripeColor.getGreen(), stripeColor.getBlue(), opacity);
-        Color transparentColor = Color.TRANSPARENT;
+        Color color = new Color(stripeColor.getRed(), stripeColor.getGreen(), stripeColor.getBlue(), opacity);
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                // ストライプの開始位置をオフセットによって調整
                 int diagonalPosition = x - offset + y;
-                if (diagonalPosition < 0) {
-                    // オフセットでずらした分は透明色で始まる
-                    pixelWriter.setColor(x, y, transparentColor);
-                } else if (diagonalPosition % w < secondWidth) { // 2pxの水色ストライプ
-                    pixelWriter.setColor(x, y, stripeColor);
-                } else { // 4pxの透明ストライプ
-                    pixelWriter.setColor(x, y, transparentColor);
+                if (diagonalPosition < 0 || diagonalPosition % stripeWidth >= stripeWidthColor) {
+                    pixelWriter.setColor(x, y, Color.TRANSPARENT);
+                } else {
+                    pixelWriter.setColor(x, y, color);
                 }
             }
         }
