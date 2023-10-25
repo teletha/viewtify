@@ -18,45 +18,63 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+
 import kiss.Disposable;
 import kiss.I;
 import viewtify.Viewtify;
 
-class ProgressIndicatorEffect extends Blend {
+class LoaderEffect extends Blend {
 
-    private static final int stripeWidthColor = 5;
+    /** The width of colored stripe. */
+    private static final int stripeWidthColor = 3;
 
-    private static final int stripeWidthTransparent = 10;
+    /** The width of transparen striped. */
+    private static final int stripeWidthTransparent = 9;
 
+    /** The waiting time before showing stripe. */
     private static final int initialDelay = 200;
 
     /** The duretion of fade out. (millis) */
-    private static final int fadeTime = 800;
+    private static final int fadeTime = 500;
 
     /** The step of fade out. */
-    private static final int fadeStep = 60;
+    private static final int fadeStep = 50;
 
+    /** The image effect. */
     private final ImageInput input = new ImageInput();
 
+    /** The latest start time. */
     private long startTime;
 
+    /** The current opacity of stripe. */
     private double opacity = 1;
 
+    /** The state of effect. */
     // 0 : none
     // 1 : starting
     // 2 : stopping
     private int state = 0;
 
+    /** The stripe showing task, */
     private Disposable startingTask;
 
+    /** The stripe hiding task. */
     private Disposable stoppingTask;
 
-    ProgressIndicatorEffect() {
+    /**
+     * Hide construction.
+     */
+    LoaderEffect() {
         setTopInput(input);
         setMode(BlendMode.SRC_OVER);
     }
 
-    public synchronized void start(Region region) {
+    /**
+     * Show the progress indicator.
+     * 
+     * @param region
+     */
+    public synchronized void show(Region region) {
         switch (state) {
         case 0: // none
             state = 1;
@@ -66,7 +84,7 @@ class ProgressIndicatorEffect extends Blend {
                     .on(Viewtify.UIThread)
                     .effectOnDispose(() -> region.setEffect(null))
                     .to(x -> {
-                        input.setSource(createDiagonalStripesImage((int) region.getWidth(), (int) region.getHeight(), x.intValue()));
+                        input.setSource(drawStripe((int) region.getWidth(), (int) region.getHeight(), x.intValue()));
                     });
             break;
 
@@ -84,7 +102,10 @@ class ProgressIndicatorEffect extends Blend {
         }
     }
 
-    public synchronized void stop() {
+    /**
+     * Hide the progress indicator.
+     */
+    public synchronized void hide() {
         switch (state) {
         case 0: // none
             break;
@@ -107,6 +128,9 @@ class ProgressIndicatorEffect extends Blend {
         }
     }
 
+    /**
+     * Reset state.
+     */
     private void reset() {
         if (startingTask != null) {
             startingTask.dispose();
@@ -121,7 +145,15 @@ class ProgressIndicatorEffect extends Blend {
         state = 0;
     }
 
-    private WritableImage createDiagonalStripesImage(int width, int height, int frame) {
+    /**
+     * Draw the stripe image
+     * 
+     * @param width
+     * @param height
+     * @param frame
+     * @return
+     */
+    private WritableImage drawStripe(int width, int height, int frame) {
         WritableImage writableImage = new WritableImage(width, height);
         PixelWriter pixelWriter = writableImage.getPixelWriter();
 

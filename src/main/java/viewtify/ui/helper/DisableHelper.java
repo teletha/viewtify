@@ -18,6 +18,7 @@ import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -324,10 +325,9 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * 
      * @return
      */
-    default Self showIndicator() {
+    default Self showLoader() {
         Region pane = (Region) ui();
-        System.out.println("show");
-        FXUtils.ensureAssociation(pane, ProgressIndicatorEffect.class, ProgressIndicatorEffect::new).start(pane);
+        FXUtils.ensureAssociation(pane, LoaderEffect.class).show(pane);
 
         return disableNow();
     }
@@ -337,24 +337,22 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * 
      * @return
      */
-    default Self hideIndicator() {
-        System.out.println("hide");
-        new Error().printStackTrace();
-        FXUtils.getAssociation((Node) ui(), ProgressIndicatorEffect.class).to(ProgressIndicatorEffect::stop);
+    default Self hideLoader() {
+        FXUtils.getAssociation((Node) ui(), LoaderEffect.class).to(LoaderEffect::hide);
 
         return enableNow();
     }
 
-    default <T> WiseFunction<Disposable, WiseConsumer<T>> enableProgressIndicator(boolean a) {
+    /**
+     * Enable progress indicator with {@link Signal#effectOnLifecycle(WiseFunction)}.
+     * 
+     * @param <T>
+     * @return
+     */
+    default <T> WiseFunction<Disposable, WiseConsumer<T>> enableLoader() {
         return disposer -> {
-            return null;
-        };
-    }
-
-    default <T> WiseFunction<Disposable, WiseConsumer<T>> enableProgressIndicator() {
-        return disposer -> {
-            showIndicator();
-            disposer.add(this::hideIndicator);
+            showLoader();
+            disposer.add(this::hideLoader);
             return null;
         };
     }

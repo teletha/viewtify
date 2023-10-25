@@ -26,6 +26,7 @@ import javafx.util.Duration;
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
+import kiss.I;
 import kiss.Variable;
 import kiss.WiseSupplier;
 import stylist.Style;
@@ -428,6 +429,17 @@ public class FXUtils {
         if (key.isInstance(value)) {
             ensureAssociation(node, key, () -> (T) value, true);
         }
+    }
+
+    /**
+     * Store the user data.
+     * 
+     * @param <T>
+     * @param node
+     * @param key
+     */
+    public static synchronized <T> T ensureAssociation(Node node, Class<T> key) {
+        return ensureAssociation(node, key, () -> I.make(key), false);
     }
 
     /**
