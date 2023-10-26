@@ -18,7 +18,6 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-
 import kiss.Disposable;
 import kiss.I;
 import viewtify.Viewtify;
@@ -29,7 +28,7 @@ class LoaderEffect extends Blend {
     private static final int stripeWidthColor = 3;
 
     /** The width of transparen striped. */
-    private static final int stripeWidthTransparent = 9;
+    private static final int stripeWidthTransparent = 6;
 
     /** The waiting time before showing stripe. */
     private static final int initialDelay = 200;
