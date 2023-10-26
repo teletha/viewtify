@@ -28,6 +28,8 @@ import javafx.stage.Window;
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
+import kiss.Lifestyle;
+import kiss.Managed;
 import kiss.Model;
 import kiss.Signal;
 import kiss.Variable;
@@ -407,6 +409,11 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
      */
     @Override
     public void vandalize() {
+        Managed managed = getClass().getAnnotation(Managed.class);
+        if (managed != null && managed.value() != Lifestyle.class) {
+            return;
+        }
+
         findUI(Disposable.class).to(Disposable::dispose);
 
         if (root instanceof Pane pane) {
