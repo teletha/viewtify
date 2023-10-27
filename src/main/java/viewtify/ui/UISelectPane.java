@@ -25,7 +25,7 @@ import viewtify.ui.anime.SwapAnime;
 import viewtify.ui.helper.SelectableHelper;
 import viewtify.ui.helper.User;
 
-public class UISelectablePane extends UserInterface<UISelectablePane, HBox> implements SelectableHelper<UISelectablePane, View> {
+public class UISelectPane extends UserInterface<UISelectPane, HBox> implements SelectableHelper<UISelectPane, View> {
 
     /** The label manager. */
     private final List<UILabel> labels = new ArrayList();
@@ -67,7 +67,7 @@ public class UISelectablePane extends UserInterface<UISelectablePane, HBox> impl
      * 
      * @param view
      */
-    UISelectablePane(View view) {
+    UISelectPane(View view) {
         super(new HBox(), view);
 
         menus.getStyleClass().add("select-buttons");
@@ -100,7 +100,7 @@ public class UISelectablePane extends UserInterface<UISelectablePane, HBox> impl
      * @param view
      * @return
      */
-    public UISelectablePane add(Consumer<UILabel> labelBuilder, Class<? extends View> view) {
+    public UISelectPane add(Consumer<UILabel> labelBuilder, Class<? extends View> view) {
         return add(labelBuilder, () -> I.make(view));
     }
 
@@ -111,7 +111,7 @@ public class UISelectablePane extends UserInterface<UISelectablePane, HBox> impl
      * @param provider
      * @return
      */
-    public UISelectablePane add(Consumer<UILabel> labelBuilder, WiseSupplier<View> provider) {
+    public UISelectPane add(Consumer<UILabel> labelBuilder, WiseSupplier<View> provider) {
         if (labelBuilder != null && provider != null) {
             UILabel label = new UILabel(this.view);
             label.style("select-button").when(User.LeftClick, () -> selectAt(labels.indexOf(label)));
@@ -130,7 +130,7 @@ public class UISelectablePane extends UserInterface<UISelectablePane, HBox> impl
      * @param selectable
      * @return
      */
-    public UISelectablePane selectable(IntPredicate selectable) {
+    public UISelectPane selectable(IntPredicate selectable) {
         this.selectable = selectable;
         return this;
     }
