@@ -35,7 +35,7 @@
 
     /* A bright blue for highlighting/accenting objects.  For example: selected
      * text; selected items in menus, lists, trees, and tables; progress bars */
-    -fx-accent: #4d729880;
+    -fx-accent: #4d6288;
     -fx-link: rgb(72, 186, 234);
     
     /* Default buttons color, this is similar to accent but more subtle */

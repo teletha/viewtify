@@ -11,13 +11,19 @@ package viewtify.ui.helper;
 
 import java.util.concurrent.TimeUnit;
 
+import javafx.scene.SnapshotParameters;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontSmoothingType;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import kiss.Disposable;
 import kiss.I;
 import viewtify.Viewtify;
@@ -34,13 +40,22 @@ class LoaderEffect extends Blend {
     private static final int initialDelay = 200;
 
     /** The duretion of fade out. (millis) */
-    private static final int fadeTime = 500;
+    private static final int fadeTime = 600;
 
     /** The step of fade out. */
     private static final int fadeStep = 50;
 
+    /** The reusable text. */
+    private static WritableImage textImage;
+
     /** The image effect. */
-    private final ImageInput input = new ImageInput();
+    private final ImageInput image = new ImageInput();
+
+    /** The text effect. */
+    private final ImageInput text = new ImageInput();
+
+    /** The image and text. */
+    private final Blend overlay = new Blend(BlendMode.SRC_OVER);
 
     /** The latest start time. */
     private long startTime;
@@ -64,7 +79,11 @@ class LoaderEffect extends Blend {
      * Hide construction.
      */
     LoaderEffect() {
-        setTopInput(input);
+        overlay.setTopInput(text);
+        overlay.setBottomInput(image);
+
+        setTopInput(overlay);
+        setBottomInput(new BoxBlur(2, 2, 1));
         setMode(BlendMode.SRC_OVER);
     }
 
@@ -83,7 +102,15 @@ class LoaderEffect extends Blend {
                     .on(Viewtify.UIThread)
                     .effectOnDispose(() -> region.setEffect(null))
                     .to(x -> {
-                        input.setSource(drawStripe((int) region.getWidth(), (int) region.getHeight(), x.intValue()));
+                        int width = (int) region.getWidth();
+                        int height = (int) region.getHeight();
+
+                        image.setSource(drawStripe(width, height, x.intValue()));
+
+                        WritableImage textImage = drawText();
+                        text.setSource(state == 2 ? null : textImage);
+                        text.setX((width - textImage.getWidth()) / 2);
+                        text.setY((height - textImage.getHeight()) / 2);
                     });
             break;
 
@@ -173,5 +200,24 @@ class LoaderEffect extends Blend {
         }
 
         return writableImage;
+    }
+
+    /**
+     * Draw the stripe image
+     * 
+     * @return
+     */
+    private static synchronized WritableImage drawText() {
+        if (textImage == null) {
+            Text text = new Text("Loading...");
+            text.setFont(Font.font("System", FontWeight.LIGHT, 14));
+            text.setFill(Viewtify.CurrentTheme.v.text());
+            text.setFontSmoothingType(FontSmoothingType.GRAY);
+
+            SnapshotParameters params = new SnapshotParameters();
+            params.setFill(Color.TRANSPARENT);
+            textImage = text.snapshot(params, null);
+        }
+        return textImage;
     }
 }

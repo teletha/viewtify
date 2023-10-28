@@ -136,4 +136,31 @@ public enum Theme {
     public Color focus() {
         return variables.getOrDefault("-fx-focus-color", Color.BLACK);
     }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
+    public Color error() {
+        return variables.getOrDefault("-fx-error", Color.DARKRED);
+    }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
+    public Color warning() {
+        return variables.getOrDefault("-fx-warning", Color.YELLOW);
+    }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
+    public Color text() {
+        return variables.getOrDefault("-fx-color", Color.BLACK);
+    }
 }

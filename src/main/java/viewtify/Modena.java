@@ -25,6 +25,8 @@ public class Modena {
         colors.put("-fx-dark-text-color", "black");
         colors.put("-fx-accent", "#0096C9");
         colors.put("-fx-background", "-fx-base");
+        colors.put("-fx-error", "hsb(0, 72%, 75%)");
+        colors.put("-fx-warning", "hsb(60, 92%, 95%)");
     }
 
 }
