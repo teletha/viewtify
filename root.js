@@ -18,6 +18,7 @@ const root = {
 		"viewtify.ui.focus",
 		"viewtify.ui.helper",
 		"viewtify.ui.query",
+		"viewtify.ui.toast",
 		"viewtify.ui.view",
 		"viewtify.update",
 		"viewtify.util"
@@ -176,13 +177,6 @@ const root = {
 			"name": "CollectableValuedItemRenderingHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Interface"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Combi",
-			"packageName": "viewtify.util",
-			"type": "Class"
 		},
 		{
 			"modifiers": {
@@ -706,7 +700,21 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Toast",
-			"packageName": "viewtify.util",
+			"packageName": "viewtify.ui.toast",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "ToastSetting",
+			"packageName": "viewtify.ui.toast",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "ToastSettingView",
+			"packageName": "viewtify.ui.toast",
 			"type": "Class"
 		},
 		{
@@ -734,6 +742,13 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UICheckBox",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UICheckSwitch",
 			"packageName": "viewtify.ui",
 			"type": "Class"
 		},
