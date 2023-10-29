@@ -19,6 +19,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.value.WritableValue;
 import javafx.util.Duration;
+
+import kiss.Disposable;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
 
@@ -180,7 +182,7 @@ public class Anime {
     /**
      * Play animation.
      */
-    public final void run(WiseRunnable... finisher) {
+    public final Disposable run(WiseRunnable... finisher) {
         if (finisher != null && finisher.length != 0) {
             current.setOnFinished(e -> {
                 for (WiseRunnable runner : finisher) {
@@ -196,14 +198,17 @@ public class Anime {
         }
 
         Viewtify.inUI(initial::play);
+
+        return current::stop;
     }
 
     /**
      * Play animation with loop.
      */
-    public void runInfinitely() {
+    public Disposable runInfinitely() {
         current.setAutoReverse(true);
         current.setCycleCount(Integer.MAX_VALUE);
-        run();
+        return run();
     }
+
 }

@@ -24,6 +24,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+
 import kiss.Disposable;
 import kiss.I;
 import viewtify.Viewtify;
@@ -43,7 +44,7 @@ class LoaderEffect extends Blend {
     private static final int fadeTime = 600;
 
     /** The step of fade out. */
-    private static final int fadeStep = 50;
+    private static final int fadeStep = 20;
 
     /** The reusable text. */
     private static WritableImage textImage;
@@ -59,9 +60,6 @@ class LoaderEffect extends Blend {
 
     /** The latest start time. */
     private long startTime;
-
-    /** The current opacity of stripe. */
-    private double opacity = 1;
 
     /** The state of effect. */
     // 0 : none
@@ -108,7 +106,7 @@ class LoaderEffect extends Blend {
                         image.setSource(drawStripe(width, height, x.intValue()));
 
                         WritableImage textImage = drawText();
-                        text.setSource(state == 2 ? null : textImage);
+                        text.setSource(textImage);
                         text.setX((width - textImage.getWidth()) / 2);
                         text.setY((height - textImage.getHeight()) / 2);
                     });
@@ -122,7 +120,7 @@ class LoaderEffect extends Blend {
             if (stoppingTask != null) {
                 stoppingTask.dispose();
                 stoppingTask = null;
-                opacity = 1;
+                setOpacity(1);
             }
             break;
         }
@@ -143,9 +141,8 @@ class LoaderEffect extends Blend {
             } else {
                 stoppingTask = I.schedule(0, fadeTime / fadeStep, TimeUnit.MILLISECONDS, true)
                         .take(fadeStep)
-                        .on(Viewtify.UIThread)
                         .effectOnComplete(this::reset)
-                        .to(x -> opacity = Math.max(0, opacity - (1d / fadeStep)));
+                        .to(x -> setOpacity(Math.max(0, getOpacity() - (1d / fadeStep))));
             }
             break;
 
@@ -166,7 +163,7 @@ class LoaderEffect extends Blend {
             stoppingTask.dispose();
             stoppingTask = null;
         }
-        opacity = 1;
+        setOpacity(1);
         startTime = 0;
         state = 0;
     }
@@ -185,8 +182,7 @@ class LoaderEffect extends Blend {
 
         int stripeWidth = stripeWidthColor + stripeWidthTransparent;
         int offset = frame % stripeWidth;
-        Color stripeColor = Viewtify.CurrentTheme.v.accent();
-        Color color = new Color(stripeColor.getRed(), stripeColor.getGreen(), stripeColor.getBlue(), opacity);
+        Color color = Viewtify.CurrentTheme.v.accent();
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
