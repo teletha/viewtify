@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify.util;
+package viewtify.ui.toast;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -21,7 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
-import javafx.util.Duration;
+
 import kiss.Disposable;
 import kiss.I;
 import stylist.Style;
@@ -41,28 +41,7 @@ public class Toast extends Preferences {
     /** The base transparent window. */
     private static final LinkedList<Notification> notifications = new LinkedList();
 
-    public static final Toast setting = Preferences.of(Toast.class);
-
-    /** The maximum size of notifications. */
-    public final Preference<Integer> max = initialize(7).requireMin(1);
-
-    /** The animation time. */
-    public final Preference<Duration> animation = initialize(Duration.millis(333)).requireMin(Duration.ONE);
-
-    /** The automatic hiding time. */
-    public final Preference<Duration> autoHide = initialize(Duration.seconds(60)).requireMin(Duration.ZERO);
-
-    /** The notification area. */
-    public final Preference<Corner> area = initialize(Corner.TopRight);
-
-    /** The notification screen. */
-    public final Preference<ScreenSelector> screen = initialize(ScreenSelector.Application);
-
-    /** The opacity of notification area. */
-    public final Preference<Double> opacity = initialize(0.85).requireBetween(0, 1);
-
-    /** The width of notification area. */
-    public final Preference<Integer> width = initialize(250).requireMin(50);
+    public static final ToastSetting setting = Preferences.of(ToastSetting.class);
 
     /**
      * Show the specified node.

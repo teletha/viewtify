@@ -19,6 +19,7 @@ import viewtify.style.FormStyles;
 import viewtify.ui.UICheckBox;
 import viewtify.ui.UIColorPicker;
 import viewtify.ui.UIComboBox;
+import viewtify.ui.UICheckSwitch;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.util.FXUtils;
@@ -33,7 +34,7 @@ public class CalendarSettingView extends View {
 
     private UIComboBox<Class> initialView;
 
-    private UICheckBox emphsizeToday;
+    private UICheckSwitch emphsizeToday;
 
     /**
      * {@inheritDoc}
@@ -43,35 +44,12 @@ public class CalendarSettingView extends View {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
-                    $(hbox, FormStyles.FormRow, () -> {
-                        label((en("First day of week")), FormStyles.FormLabel);
-                        $(firstDoW, FormStyles.FormInput);
-                    });
-                    $(hbox, FormStyles.FormRow, () -> {
-                        label((en("Start time")), FormStyles.FormLabel);
-                        $(startTime, FormStyles.FormInput);
-                    });
-                    $(hbox, FormStyles.FormRow, () -> {
-                        label((en("End time")), FormStyles.FormLabel);
-                        $(endTime, FormStyles.FormInput);
-                    });
-                    $(hbox, FormStyles.FormRow, () -> {
-                        label((en("Initial page")), FormStyles.FormLabel);
-                        $(initialView, FormStyles.FormInput);
-                    });
-                    $(hbox, FormStyles.FormRow, () -> {
-                        label((en("Emphsize today")), FormStyles.FormLabel);
-                        $(emphsizeToday, FormStyles.FormInput);
-                    });
-
-                    $(hbox, FormStyles.FormRow, () -> {
-                        label((en("Event sources")), FormStyles.FormLabel);
-                        $(vbox, () -> {
-                            I.find(TimeEventSource.class).forEach(source -> {
-                                $(new TimeEventSourceView(source));
-                            });
-                        });
-                    });
+                    form(en("First day of week"), firstDoW);
+                    form(en("Start time"), startTime);
+                    form(en("End time"), endTime);
+                    form(en("Initial page"), initialView);
+                    form(en("Emphsize today"), emphsizeToday);
+                    form(en("Event sources"), I.find(TimeEventSource.class).stream().map(TimeEventSourceView::new).toList());
                 });
             }
         };
@@ -117,7 +95,7 @@ public class CalendarSettingView extends View {
                 {
                     $(hbox, FormStyles.FormRow, () -> {
                         $(enable, FormStyles.FormInputMin);
-                        $(color, FormStyles.FormInputMin);
+                        $(color, FormStyles.FormInput);
                     });
                 }
             };

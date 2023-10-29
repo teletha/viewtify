@@ -14,10 +14,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import org.controlsfx.control.CheckComboBox;
-import org.controlsfx.control.HiddenSidesPane;
-import org.controlsfx.control.SegmentedButton;
-
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.geometry.Orientation;
@@ -36,6 +32,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import org.controlsfx.control.CheckComboBox;
+import org.controlsfx.control.HiddenSidesPane;
+import org.controlsfx.control.SegmentedButton;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -242,6 +243,27 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
     /**
      * Declare Form UI simply.
      * 
+     * @param label A form label.
+     * @param userInterfaces A list of form controls.
+     */
+    protected final void form(Variable label, List<? extends UserInterfaceProvider> userInterfaces) {
+        form(label, null, userInterfaces);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     * @param style Additional style for controls.
+     * @param userInterfaces A list of form controls.
+     */
+    protected final void form(Variable label, Style style, List<? extends UserInterfaceProvider> userInterfaces) {
+        form(() -> TextNotation.parse(label), style, userInterfaces);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
      * @param style Additional style for controls.
      * @param userInterfaces A list of form controls.
      */
@@ -257,10 +279,14 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param userInterfaces A list of form controls.
      */
     private void form(UserInterfaceProvider label, Style style, UserInterface... userInterfaces) {
-        $(hbox, FormStyles.FormRow, () -> {
-            if (label != null) $(label, FormStyles.FormLabel);
+        $(hbox, FormStyles.Column, () -> {
+            if (label != null) {
+                $(vbox, FormStyles.Description, () -> {
+                    $(label);
+                });
+            }
             for (UserInterface userInterface : userInterfaces) {
-                $(userInterface, style == null ? new Style[] {FormStyles.FormInput} : new Style[] {FormStyles.FormInput, style});
+                $(userInterface, style == null ? new Style[] {FormStyles.Value} : new Style[] {FormStyles.Value, style});
             }
         });
     }
@@ -278,6 +304,28 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
             for (UserInterfaceProvider userInterface : userInterfaces) {
                 $(userInterface, style == null ? new Style[] {} : new Style[] {style});
             }
+        });
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     * @param style Additional style for controls.
+     * @param userInterfaces A list of form controls.
+     */
+    private void form(UserInterfaceProvider label, Style style, List<? extends UserInterfaceProvider> userInterfaces) {
+        $(hbox, FormStyles.Column, () -> {
+            if (label != null) {
+                $(vbox, FormStyles.Description, () -> {
+                    $(label);
+                });
+            }
+            $(vbox, () -> {
+                for (UserInterfaceProvider userInterface : userInterfaces) {
+                    $(userInterface, style == null ? new Style[] {FormStyles.Value} : new Style[] {FormStyles.Value, style});
+                }
+            });
         });
     }
 

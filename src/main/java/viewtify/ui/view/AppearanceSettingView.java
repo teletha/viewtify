@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
+
 import kiss.I;
 import viewtify.Theme;
 import viewtify.ThemeType;
@@ -47,20 +48,9 @@ public class AppearanceSettingView extends View {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
-                    $(hbox, FormStyles.FormRow, () -> {
-                        label(en("Color Scheme"), FormStyles.FormLabel);
-                        $(theme, FormStyles.FormInput);
-                        $(themeType, FormStyles.FormInput);
-                    });
-                    $(hbox, FormStyles.FormRow, () -> {
-                        label(en("Language"), FormStyles.FormLabel);
-                        $(lang, FormStyles.FormInput);
-                    });
-                    $(hbox, FormStyles.FormRow, () -> {
-                        label(en("Font"), FormStyles.FormLabel);
-                        $(family, FormStyles.FormInput);
-                        $(size, FormStyles.FormInputMin);
-                    });
+                    form(en("Color Scheme"), theme, themeType);
+                    form(en("Language"), lang);
+                    form(en("Font"), family, size);
                 });
             }
         };

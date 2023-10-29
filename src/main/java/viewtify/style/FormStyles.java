@@ -9,22 +9,13 @@
  */
 package viewtify.style;
 
-import static stylist.StyleDSL.$;
-import static stylist.StyleDSL.background;
-import static stylist.StyleDSL.display;
-import static stylist.StyleDSL.font;
-import static stylist.StyleDSL.margin;
-import static stylist.StyleDSL.padding;
-import static stylist.StyleDSL.px;
-import static stylist.StyleDSL.text;
-
 import stylist.Style;
-import stylist.StyleDeclarable;
+import stylist.StyleDSL;
 
 /**
  * Built-in form CSS
  */
-public interface FormStyles extends StyleDeclarable {
+public interface FormStyles extends StyleDSL {
 
     Style FormRow = () -> {
         margin.vertical(4, px);
@@ -59,5 +50,26 @@ public interface FormStyles extends StyleDeclarable {
         font.size(12, px).color("-fx-light-text-color");
         background.color($.rgba(60, 60, 60, 0.8));
         padding.vertical(8, px).horizontal(12, px);
+    };
+
+    Style Column = () -> {
+        border.radius(2, px);
+        background.color("-fx-control-inner-background");
+        margin.bottom(1, px);
+        padding.size(10, px);
+
+        $.hover(() -> {
+            background.color("-fx-control-inner-background-alt");
+        });
+    };
+
+    Style Description = () -> {
+        text.verticalAlign.middle();
+        margin.right(20, px);
+        display.width.fill();
+    };
+
+    Style Value = () -> {
+        display.width(160, px);
     };
 }
