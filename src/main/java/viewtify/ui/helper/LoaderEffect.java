@@ -83,6 +83,7 @@ class LoaderEffect extends Blend {
         setTopInput(overlay);
         setBottomInput(new BoxBlur(2, 2, 1));
         setMode(BlendMode.SRC_OVER);
+        setOpacity(0.65);
     }
 
     /**
@@ -120,7 +121,7 @@ class LoaderEffect extends Blend {
             if (stoppingTask != null) {
                 stoppingTask.dispose();
                 stoppingTask = null;
-                setOpacity(1);
+                setOpacity(0.65);
             }
             break;
         }
@@ -163,7 +164,7 @@ class LoaderEffect extends Blend {
             stoppingTask.dispose();
             stoppingTask = null;
         }
-        setOpacity(1);
+        setOpacity(0.65);
         startTime = 0;
         state = 0;
     }

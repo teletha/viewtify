@@ -17,6 +17,7 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.Region;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -326,9 +327,6 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     default Self showLoader() {
         Region pane = (Region) ui();
         FXUtils.ensureAssociation(pane, LoaderEffect.class).show(pane);
-        Viewtify.inUI(() -> {
-            pane.getStyleClass().add("loader");
-        });
 
         return disableNow();
     }
@@ -341,9 +339,6 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     default Self hideLoader() {
         Region pane = (Region) ui();
         FXUtils.getAssociation(pane, LoaderEffect.class).to(LoaderEffect::hide);
-        Viewtify.inUI(() -> {
-            pane.getStyleClass().remove("loader");
-        });
 
         return enableNow();
     }
