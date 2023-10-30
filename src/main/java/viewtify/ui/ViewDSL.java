@@ -242,27 +242,6 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
     /**
      * Declare Form UI simply.
      * 
-     * @param label A form label.
-     * @param userInterfaces A list of form controls.
-     */
-    protected final void form(Variable label, List<? extends UserInterfaceProvider> userInterfaces) {
-        form(label, null, userInterfaces);
-    }
-
-    /**
-     * Declare Form UI simply.
-     * 
-     * @param label A form label.
-     * @param style Additional style for controls.
-     * @param userInterfaces A list of form controls.
-     */
-    protected final void form(Variable label, Style style, List<? extends UserInterfaceProvider> userInterfaces) {
-        form(() -> TextNotation.parse(label), style, userInterfaces);
-    }
-
-    /**
-     * Declare Form UI simply.
-     * 
      * @param style Additional style for controls.
      * @param userInterfaces A list of form controls.
      */
@@ -278,14 +257,10 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param userInterfaces A list of form controls.
      */
     private void form(UserInterfaceProvider label, Style style, UserInterface... userInterfaces) {
-        $(hbox, FormStyles.Column, () -> {
-            if (label != null) {
-                $(vbox, FormStyles.Description, () -> {
-                    $(label);
-                });
-            }
+        $(hbox, FormStyles.FormRow, () -> {
+            if (label != null) $(label, FormStyles.FormLabel);
             for (UserInterface userInterface : userInterfaces) {
-                $(userInterface, style == null ? new Style[] {FormStyles.Value} : new Style[] {FormStyles.Value, style});
+                $(userInterface, style == null ? new Style[] {FormStyles.FormInput} : new Style[] {FormStyles.FormInput, style});
             }
         });
     }
@@ -310,10 +285,52 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * Declare Form UI simply.
      * 
      * @param label A form label.
+     * @param userInterfaces A list of form controls.
+     */
+    protected final void config(Variable label, UserInterface... userInterfaces) {
+        config(label, null, userInterfaces);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
      * @param style Additional style for controls.
      * @param userInterfaces A list of form controls.
      */
-    private void form(UserInterfaceProvider label, Style style, List<? extends UserInterfaceProvider> userInterfaces) {
+    protected final void config(Variable label, Style style, UserInterface... userInterfaces) {
+        config(() -> TextNotation.parse(label), style, List.of(userInterfaces));
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     * @param userInterfaces A list of form controls.
+     */
+    protected final void config(Variable label, List<? extends UserInterfaceProvider> userInterfaces) {
+        config(label, null, userInterfaces);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     * @param style Additional style for controls.
+     * @param userInterfaces A list of form controls.
+     */
+    protected final void config(Variable label, Style style, List<? extends UserInterfaceProvider> userInterfaces) {
+        config(() -> TextNotation.parse(label), style, userInterfaces);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     * @param style Additional style for controls.
+     * @param userInterfaces A list of form controls.
+     */
+    private void config(UserInterfaceProvider label, Style style, List<? extends UserInterfaceProvider> userInterfaces) {
         $(hbox, FormStyles.Column, () -> {
             if (label != null) {
                 $(vbox, FormStyles.Description, () -> {
