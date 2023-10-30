@@ -12,7 +12,6 @@ package viewtify.ui.toast;
 import java.util.stream.IntStream;
 
 import javafx.util.Duration;
-
 import viewtify.model.Preferences;
 import viewtify.ui.UICheckBox;
 import viewtify.ui.UIComboBox;
@@ -47,10 +46,10 @@ public class ToastSettingView extends View {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
-                    form(en("Monitor"), notificationMonitor);
-                    form(en("Location"), notificationArea);
-                    form(en("Duration"), notificationDuration);
-                    form(en("Max number"), notificationMax);
+                    form(en("Notification Monitor"), notificationMonitor);
+                    form(en("Notification Location"), notificationArea);
+                    form(en("Notification Duration"), notificationDuration);
+                    form(en("Max number of Notifications"), notificationMax);
                 });
             }
         };

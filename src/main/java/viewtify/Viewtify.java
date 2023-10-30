@@ -87,7 +87,7 @@ import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
-import viewtify.ui.view.AppearanceSettingView;
+import viewtify.ui.view.AppearanceSetting;
 import viewtify.update.Blueprint;
 import viewtify.update.Update;
 
@@ -151,7 +151,7 @@ public final class Viewtify {
 
         // user settings are reloadable
         UserPreference.observe().to(() -> {
-            Preferences.of(AppearanceSettingView.Setting.class);
+            Preferences.of(AppearanceSetting.class);
         });
 
         // automatic gc

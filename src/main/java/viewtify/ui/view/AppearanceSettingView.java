@@ -14,11 +14,8 @@ import java.util.stream.IntStream;
 
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
-
-import kiss.I;
 import viewtify.Theme;
 import viewtify.ThemeType;
-import viewtify.Viewtify;
 import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIComboBox;
@@ -48,9 +45,11 @@ public class AppearanceSettingView extends View {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
-                    form(en("Color Scheme"), theme, themeType);
+                    form(en("Color Scheme"), theme);
+                    form(en("Theme Kind"), themeType);
                     form(en("Language"), lang);
-                    form(en("Font"), family, size);
+                    form(en("Font Family"), family);
+                    form(en("Font Size"), size);
                 });
             }
         };
@@ -58,14 +57,18 @@ public class AppearanceSettingView extends View {
 
     @Override
     protected void initialize() {
-        Setting setting = Preferences.of(Setting.class);
+        AppearanceSetting setting = Preferences.of(AppearanceSetting.class);
 
         theme.items(Theme.values()).sync(setting.theme);
         themeType.items(ThemeType.values()).sync(setting.themeType);
 
-        lang.items(Locale.JAPANESE, Locale.ENGLISH).render(x -> x.getDisplayLanguage()).sync(setting.lang);
+        lang.items(Locale.ENGLISH, Locale.CHINESE, Locale.forLanguageTag("hi"), Locale.forLanguageTag("es"), Locale.FRENCH, Locale
+                .forLanguageTag("pt"), Locale.forLanguageTag("id"), Locale.GERMAN, Locale.ITALIAN, Locale.JAPANESE, Locale.KOREAN)
+                .initialize(Locale.getDefault())
+                .render(x -> x.getDisplayLanguage(x))
+                .sync(setting.lang);
 
-        family.items(Font.getFamilies()).sync(setting.font);
+        family.items(Font.getFamilies()).sync(setting.font).style(FormStyles.FormInput);
         size.items(IntStream.range(8, 18)).format(x -> x + "px").sync(setting.fontSize);
     }
 
@@ -81,21 +84,5 @@ public class AppearanceSettingView extends View {
             return label;
         });
         return this;
-    }
-
-    /**
-     * Preference for appearance.
-     */
-    public static class Setting extends Preferences {
-
-        public final Preference<Locale> lang = initialize(Locale.getDefault()).syncTo(Locale::getLanguage, I.Lang);
-
-        public final Preference<Theme> theme = initialize(Theme.Light).syncTo(Viewtify::manage);
-
-        public final Preference<ThemeType> themeType = initialize(ThemeType.Flat).syncTo(Viewtify::manage);
-
-        public final Preference<String> font = initialize(Font.getDefault().getName()).syncTo(x -> Viewtify.manage(Font.font(x)));
-
-        public final Preference<Integer> fontSize = initialize(12).syncTo(x -> Viewtify.manage(Font.font(font.v, x.doubleValue())));
     }
 }

@@ -17,9 +17,9 @@ import kiss.I;
 import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UICheckBox;
+import viewtify.ui.UICheckSwitch;
 import viewtify.ui.UIColorPicker;
 import viewtify.ui.UIComboBox;
-import viewtify.ui.UICheckSwitch;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.util.FXUtils;
@@ -65,6 +65,7 @@ public class CalendarSettingView extends View {
         startTime.items(IntStream.range(0, 19).mapToObj(hour -> LocalTime.of(hour, 0))).sync(Calendars.setting.startTime);
         endTime.items(IntStream.range(5, 24).mapToObj(hour -> LocalTime.of(hour, 59))).sync(Calendars.setting.endTime);
         initialView.items(YearView.class, MonthView.class, WeekView.class, DayView.class)
+                .style(FormStyles.FormInput)
                 .sync(Calendars.setting.initialView)
                 .renderByVariable(x -> en(x.getSimpleName().replace("View", "")));
         emphsizeToday.sync(Calendars.setting.emphsizeToday);

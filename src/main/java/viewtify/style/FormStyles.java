@@ -34,12 +34,10 @@ public interface FormStyles extends StyleDSL {
 
     Style FormInput = () -> {
         display.width(160, px);
-        margin.right(5, px);
     };
 
     Style FormInputMin = () -> {
         display.width(80, px);
-        margin.right(5, px);
     };
 
     Style FormButton = () -> {
@@ -56,7 +54,7 @@ public interface FormStyles extends StyleDSL {
         border.radius(2, px);
         background.color("-fx-control-inner-background");
         margin.bottom(1, px);
-        padding.size(10, px);
+        padding.horizontal(10, px).vertical(10, px);
 
         $.hover(() -> {
             background.color("-fx-control-inner-background-alt");
@@ -66,10 +64,10 @@ public interface FormStyles extends StyleDSL {
     Style Description = () -> {
         text.verticalAlign.middle();
         margin.right(20, px);
-        display.width.fill();
+        display.width.fill().minWidth(200, px).maxWidth(400, px);
     };
 
     Style Value = () -> {
-        display.width(160, px);
+        display.minWidth(160, px);
     };
 }
