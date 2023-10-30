@@ -90,14 +90,14 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "AppearanceSettingView",
+			"name": "AppearanceSetting",
 			"packageName": "viewtify.ui.view",
 			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "AppearanceSettingView.Setting",
+			"name": "AppearanceSettingView",
 			"packageName": "viewtify.ui.view",
 			"type": "Class"
 		},
