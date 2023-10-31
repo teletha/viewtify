@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.14.0](https://github.com/teletha/viewtify/compare/v2.13.0...v2.14.0) (2023-10-31)
+
+
+### Features
+
+* Add new swap animations. (SlideLeft and SlideRight) ([9292c43](https://github.com/teletha/viewtify/commit/9292c434ed9acc5d13bc4a2b18a11586a025e06a))
+* Add toast setting view. ([809a822](https://github.com/teletha/viewtify/commit/809a822156cf560b59cca547687aec5264b96e75))
+* Enable the time interval margin. ([3e1a7a5](https://github.com/teletha/viewtify/commit/3e1a7a5fea034cb9a5ad402effd9741094010ca5))
+* enhance theme ([5bda4d4](https://github.com/teletha/viewtify/commit/5bda4d4d592f05cf7e019f5aed636ededf71caf7))
+* rewrite UISelectablePane ([119d194](https://github.com/teletha/viewtify/commit/119d194c5a8bbddcff38e0634c35bc24719b1db3))
+* Support custom color for each time event sources. ([b0de559](https://github.com/teletha/viewtify/commit/b0de5591ca031a0dd9d15525a6cffe988bb09f66))
+* Support loading effect. ([64a23bd](https://github.com/teletha/viewtify/commit/64a23bd6191c87f66bbe0fcff9d83d87c85aebf2))
+* Theme can find the variable color. ([4025ad8](https://github.com/teletha/viewtify/commit/4025ad8448a0f733233d0c9fd58d91069464459d))
+
+
+### Bug Fixes
+
+* Calendar can load events asynchronously. ([162214e](https://github.com/teletha/viewtify/commit/162214ef1be6ab80e5edaecb63c1e54b13a078ec))
+* enahnce progress indicator ([13d74f4](https://github.com/teletha/viewtify/commit/13d74f4b363e82a0f1aa71e8498712a40e3e6167))
+* enhance loading effect ([1240df1](https://github.com/teletha/viewtify/commit/1240df187562173d5e4d880b870b82f64febe982))
+* Never dispose the non-prototyped view. ([f410920](https://github.com/teletha/viewtify/commit/f410920f05d56512560d986166b6b373fe77a0c3))
+* suppress listener registration bug ([00cbb2a](https://github.com/teletha/viewtify/commit/00cbb2a42e0e942ee0fdc331d4a488f2a53d4ff1))
+
 ## [2.13.0](https://github.com/teletha/viewtify/compare/v2.12.0...v2.13.0) (2023-10-03)
 
 
