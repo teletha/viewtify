@@ -9,16 +9,24 @@
  */
 package viewtify.ui;
 
-import org.controlsfx.control.ToggleSwitch;
-
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableBooleanValue;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.text.TextAlignment;
+
+import org.controlsfx.control.ToggleSwitch;
+
+import viewtify.Viewtify;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.ValueHelper;
 
 public class UICheckSwitch extends UserInterface<UICheckSwitch, ToggleSwitch>
         implements ValueHelper<UICheckSwitch, Boolean>, ContextMenuHelper<UICheckSwitch>, LabelHelper<UICheckSwitch> {
+
+    /** The default label */
+    private final String[] labels = {"ON", "OFF"};
 
     /**
      * Enchanced view.
@@ -28,7 +36,14 @@ public class UICheckSwitch extends UserInterface<UICheckSwitch, ToggleSwitch>
     public UICheckSwitch(View view) {
         super(new ToggleSwitch(), view);
 
-        text("On");
+        Viewtify.observing(valueProperty()).to(x -> {
+            text(x ? labels[0] : labels[1]);
+        }, this);
+
+        Viewtify.observe(ui.skinProperty()).map(skin -> skin.getNode().lookup(".label")).as(Label.class).to(skin -> {
+            skin.setAlignment(Pos.CENTER_RIGHT);
+            skin.setTextAlignment(TextAlignment.RIGHT);
+        });
     }
 
     /**
@@ -55,5 +70,18 @@ public class UICheckSwitch extends UserInterface<UICheckSwitch, ToggleSwitch>
      */
     public ObservableBooleanValue isNotSelected() {
         return ui.selectedProperty().not();
+    }
+
+    /**
+     * Set the state labels.
+     * 
+     * @param on
+     * @param off
+     * @return
+     */
+    public UICheckSwitch labels(String on, String off) {
+        labels[0] = on;
+        labels[1] = off;
+        return this;
     }
 }
