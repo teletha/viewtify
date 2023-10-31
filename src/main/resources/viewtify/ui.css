@@ -8,6 +8,7 @@
  *          https://opensource.org/licenses/MIT
  */
 .root {
+    -fx-body-color: -fx-color;
 		-fx-edit-color: #ffa431;
 		-fx-faint-edit-color: #ffa43150;
 		
@@ -38,10 +39,6 @@
 /* ==========================================================================
   ToggleSwitch
 ===========================================================================*/
-.toggle-switch {
-	-fx-max-width: fit;
-}
-
 .toggle-switch .thumb-area {
     -fx-background-color: -fx-outer-border, derive(-fx-control-inner-background, 40%);
 }

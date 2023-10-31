@@ -62,12 +62,16 @@ public interface FormStyles extends StyleDSL {
             $.hover(() -> {
                 background.color("-fx-control-inner-background-alt");
             });
+
+            $.descendant(FormRow, () -> {
+                padding.vertical(5, px);
+            });
         });
 
         $.descendant(FormLabel, () -> {
             text.verticalAlign.baseline().align.right();
             margin.right(20, px);
-            display.minWidth(200, px).maxWidth(400, px).width.fill();
+            display.minWidth(180, px).maxWidth(360, px).width.fill();
         });
     };
 }
