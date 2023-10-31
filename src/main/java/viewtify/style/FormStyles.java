@@ -19,7 +19,7 @@ public interface FormStyles extends StyleDSL {
 
     Style FormRow = () -> {
         margin.vertical(4, px);
-        text.verticalAlign.middle();
+        text.verticalAlign.baseline();
     };
 
     Style FormLabel = () -> {
@@ -50,24 +50,24 @@ public interface FormStyles extends StyleDSL {
         padding.vertical(8, px).horizontal(12, px);
     };
 
-    Style Column = () -> {
-        border.radius(2, px);
-        background.color("-fx-control-inner-background");
-        margin.bottom(1, px);
-        padding.horizontal(10, px).vertical(10, px);
+    Style Preferences = () -> {
+        // marker class
 
-        $.hover(() -> {
-            background.color("-fx-control-inner-background-alt");
+        $.descendant(FormRow, () -> {
+            border.radius(2, px);
+            background.color("-fx-control-inner-background");
+            margin.bottom(1, px);
+            padding.horizontal(10, px).vertical(10, px);
+
+            $.hover(() -> {
+                background.color("-fx-control-inner-background-alt");
+            });
         });
-    };
 
-    Style Description = () -> {
-        text.verticalAlign.middle();
-        margin.right(20, px);
-        display.width.fill().minWidth(200, px).maxWidth(400, px);
-    };
-
-    Style Value = () -> {
-        display.minWidth(160, px);
+        $.descendant(FormLabel, () -> {
+            text.verticalAlign.baseline().align.right();
+            margin.right(20, px);
+            display.minWidth(200, px).maxWidth(400, px).width.fill();
+        });
     };
 }

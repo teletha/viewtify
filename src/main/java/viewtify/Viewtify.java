@@ -1039,7 +1039,12 @@ public final class Viewtify {
                 } catch (ArrayIndexOutOfBoundsException e) {
                     // FIXME I think it's a bug on Javafx side, but I'll try to re-register only
                     // once, because sometimes an error occurs at the time of listener registration.
-                    value.addListener(listener);
+                    try {
+                        Thread.sleep(100);
+                        value.addListener(listener);
+                    } catch (InterruptedException e1) {
+                        throw I.quiet(e);
+                    }
                 }
             }
 

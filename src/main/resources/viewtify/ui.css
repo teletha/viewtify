@@ -38,6 +38,10 @@
 /* ==========================================================================
   ToggleSwitch
 ===========================================================================*/
+.toggle-switch {
+	-fx-max-width: fit;
+}
+
 .toggle-switch .thumb-area {
     -fx-background-color: -fx-outer-border, derive(-fx-control-inner-background, 40%);
 }

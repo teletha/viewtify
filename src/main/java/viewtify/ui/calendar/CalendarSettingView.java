@@ -44,12 +44,18 @@ public class CalendarSettingView extends View {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
-                    config(en("First day of week"), firstDoW);
-                    config(en("Start time"), startTime);
-                    config(en("End time"), endTime);
-                    config(en("Initial page"), initialView);
-                    config(en("Emphsize today"), emphsizeToday);
-                    config(en("Event sources"), I.find(TimeEventSource.class).stream().map(TimeEventSourceView::new).toList());
+                    form(en("First day of week"), firstDoW);
+                    form(en("Start time"), startTime);
+                    form(en("End time"), endTime);
+                    form(en("Initial page"), initialView);
+                    form(en("Emphsize today"), emphsizeToday);
+                    formD(en("Event sources"), () -> {
+                        $(vbox, () -> {
+                            for (TimeEventSource source : I.find(TimeEventSource.class)) {
+                                $(new TimeEventSourceView(source));
+                            }
+                        });
+                    });
                 });
             }
         };

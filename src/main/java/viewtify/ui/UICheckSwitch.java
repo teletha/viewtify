@@ -9,11 +9,10 @@
  */
 package viewtify.ui;
 
-import javafx.beans.property.Property;
-import javafx.beans.value.ObservableBooleanValue;
-
 import org.controlsfx.control.ToggleSwitch;
 
+import javafx.beans.property.Property;
+import javafx.beans.value.ObservableBooleanValue;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.ValueHelper;
@@ -28,6 +27,8 @@ public class UICheckSwitch extends UserInterface<UICheckSwitch, ToggleSwitch>
      */
     public UICheckSwitch(View view) {
         super(new ToggleSwitch(), view);
+
+        text("On");
     }
 
     /**
