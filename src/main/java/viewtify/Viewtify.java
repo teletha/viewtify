@@ -1034,7 +1034,13 @@ public final class Viewtify {
             };
 
             for (ObservableValue<T> value : values) {
-                value.addListener(listener);
+                try {
+                    value.addListener(listener);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    // FIXME I think it's a bug on Javafx side, but I'll try to re-register only
+                    // once, because sometimes an error occurs at the time of listener registration.
+                    value.addListener(listener);
+                }
             }
 
             return disposer.add(() -> {
