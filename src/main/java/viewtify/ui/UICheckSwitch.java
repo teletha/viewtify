@@ -9,15 +9,10 @@
  */
 package viewtify.ui;
 
-import javafx.beans.property.Property;
-import javafx.beans.value.ObservableBooleanValue;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.text.TextAlignment;
-
 import org.controlsfx.control.ToggleSwitch;
 
-import viewtify.Viewtify;
+import javafx.beans.property.Property;
+import javafx.beans.value.ObservableBooleanValue;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.ValueHelper;
@@ -36,14 +31,7 @@ public class UICheckSwitch extends UserInterface<UICheckSwitch, ToggleSwitch>
     public UICheckSwitch(View view) {
         super(new ToggleSwitch(), view);
 
-        Viewtify.observing(valueProperty()).to(x -> {
-            text(x ? labels[0] : labels[1]);
-        }, this);
-
-        Viewtify.observe(ui.skinProperty()).map(skin -> skin.getNode().lookup(".label")).as(Label.class).to(skin -> {
-            skin.setAlignment(Pos.CENTER_RIGHT);
-            skin.setTextAlignment(TextAlignment.RIGHT);
-        });
+        observing().to(x -> text(x ? labels[0] : labels[1]), this);
     }
 
     /**

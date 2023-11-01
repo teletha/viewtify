@@ -240,7 +240,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
     private void form(UserInterfaceProvider label, Style style, UserInterfaceProvider... userInterfaces) {
         formD(label, style, () -> {
             for (UserInterfaceProvider userInterface : userInterfaces) {
-                $(userInterface, style == null ? new Style[] {FormStyles.FormInput} : new Style[] {FormStyles.FormInput, style});
+                $(userInterface, style == null ? new Style[] {FormStyles.Input} : new Style[] {FormStyles.Input, style});
             }
         });
     }
@@ -261,9 +261,9 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param style Additional style for controls.
      */
     protected void formD(UserInterfaceProvider label, Style style, WiseRunnable process) {
-        $(hbox, FormStyles.FormRow, () -> {
+        $(hbox, FormStyles.Row, () -> {
             if (label != null) {
-                $(label, FormStyles.FormLabel);
+                $(label, FormStyles.Label);
             }
             process.run();
         });

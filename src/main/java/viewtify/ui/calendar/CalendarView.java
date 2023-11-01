@@ -66,8 +66,8 @@ public class CalendarView extends View {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
-                    $(hbox, FormStyles.FormRow, Styles.header, () -> {
-                        $(selectToday, FormStyles.FormButton, Styles.today);
+                    $(hbox, FormStyles.Row, Styles.header, () -> {
+                        $(selectToday, FormStyles.Button, Styles.today);
 
                         $(hbox, Styles.headerCenter, () -> {
                             $(selectPrevious);

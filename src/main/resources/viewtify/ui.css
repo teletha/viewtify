@@ -39,15 +39,6 @@
 /* ==========================================================================
   ToggleSwitch
 ===========================================================================*/
-.toggle-switch .label {
-		-fx-fill-width:true;
-		-fx-width: fill;
-		-fx-background-color:red;
-		-fx-text-alignment: right;
-		-fx-alignment: center;
-		
-}
-
 .toggle-switch .thumb-area {
     -fx-background-color: -fx-outer-border, derive(-fx-control-inner-background, 40%);
 }

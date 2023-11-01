@@ -134,47 +134,47 @@ public class PrintPreview extends DialogView<PrintInfo> {
                         $(() -> navi, style.navi);
                     });
                     $(vbox, style.side, () -> {
-                        $(hbox, FormStyles.FormRow, style.title, () -> {
-                            label(en("Settings"), FormStyles.FormLabelMin);
+                        $(hbox, FormStyles.Row, style.title, () -> {
+                            label(en("Settings"), FormStyles.LabelMin);
 
-                            $(pageSize, FormStyles.FormInput, style.pageSize);
-                        });
-
-                        $(hbox, FormStyles.FormRow, () -> {
-                            label(en("Number of copies"), FormStyles.FormLabelMin);
-                            $(copies, FormStyles.FormInput);
-                        });
-                        $(hbox, FormStyles.FormRow, () -> {
-                            label(en("Page"), FormStyles.FormLabelMin);
-                            $(pager, FormStyles.FormInput);
-                        });
-                        $(hbox, FormStyles.FormRow, () -> {
-                            label(en("Printer"), FormStyles.FormLabelMin);
-                            $(printer, FormStyles.FormInput);
+                            $(pageSize, FormStyles.Input, style.pageSize);
                         });
 
-                        $(hbox, FormStyles.FormRow, style.advanced, () -> {
-                            label(en("Advanced Settings"), FormStyles.FormLabelMin);
+                        $(hbox, FormStyles.Row, () -> {
+                            label(en("Number of copies"), FormStyles.LabelMin);
+                            $(copies, FormStyles.Input);
                         });
-                        $(hbox, FormStyles.FormRow, () -> {
-                            label(en("Paper"), FormStyles.FormLabelMin);
-                            $(paper, FormStyles.FormInput);
+                        $(hbox, FormStyles.Row, () -> {
+                            label(en("Page"), FormStyles.LabelMin);
+                            $(pager, FormStyles.Input);
                         });
-                        $(hbox, FormStyles.FormRow, () -> {
-                            label(en("Color mode"), FormStyles.FormLabelMin);
-                            $(color, FormStyles.FormInput);
+                        $(hbox, FormStyles.Row, () -> {
+                            label(en("Printer"), FormStyles.LabelMin);
+                            $(printer, FormStyles.Input);
                         });
-                        $(hbox, FormStyles.FormRow, () -> {
-                            label(en("Print orientation"), FormStyles.FormLabelMin);
-                            $(orientation, FormStyles.FormInput);
+
+                        $(hbox, FormStyles.Row, style.advanced, () -> {
+                            label(en("Advanced Settings"), FormStyles.LabelMin);
                         });
-                        $(hbox, FormStyles.FormRow, () -> {
-                            label(en("Print side"), FormStyles.FormLabelMin);
-                            $(side, FormStyles.FormInput);
+                        $(hbox, FormStyles.Row, () -> {
+                            label(en("Paper"), FormStyles.LabelMin);
+                            $(paper, FormStyles.Input);
                         });
-                        $(hbox, FormStyles.FormRow, () -> {
-                            label(en("Quality"), FormStyles.FormLabelMin);
-                            $(quality, FormStyles.FormInput);
+                        $(hbox, FormStyles.Row, () -> {
+                            label(en("Color mode"), FormStyles.LabelMin);
+                            $(color, FormStyles.Input);
+                        });
+                        $(hbox, FormStyles.Row, () -> {
+                            label(en("Print orientation"), FormStyles.LabelMin);
+                            $(orientation, FormStyles.Input);
+                        });
+                        $(hbox, FormStyles.Row, () -> {
+                            label(en("Print side"), FormStyles.LabelMin);
+                            $(side, FormStyles.Input);
+                        });
+                        $(hbox, FormStyles.Row, () -> {
+                            label(en("Quality"), FormStyles.LabelMin);
+                            $(quality, FormStyles.Input);
                         });
                     });
                 });

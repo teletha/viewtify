@@ -464,8 +464,8 @@ public final class ViewtyDialog<T> {
             return new ViewDSL() {
                 {
                     $(vbox, () -> {
-                        $(label, FormStyles.FormRow);
-                        $(input, FormStyles.FormRow);
+                        $(label, FormStyles.Row);
+                        $(input, FormStyles.Row);
                     });
                 }
             };

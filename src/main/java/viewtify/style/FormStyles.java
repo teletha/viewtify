@@ -17,30 +17,28 @@ import stylist.StyleDSL;
  */
 public interface FormStyles extends StyleDSL {
 
-    Style FormRow = () -> {
+    Style Row = () -> {
         margin.vertical(4, px);
         text.verticalAlign.baseline();
     };
 
-    Style FormLabel = () -> {
+    Style Label = () -> {
         display.width(120, px);
-        padding.top(3, px);
     };
 
-    Style FormLabelMin = () -> {
+    Style LabelMin = () -> {
         display.width(80, px);
-        padding.top(3, px);
     };
 
-    Style FormInput = () -> {
+    Style Input = () -> {
         display.width(160, px);
     };
 
-    Style FormInputMin = () -> {
+    Style InputMin = () -> {
         display.width(80, px);
     };
 
-    Style FormButton = () -> {
+    Style Button = () -> {
         display.width(62, px);
     };
 
@@ -53,7 +51,7 @@ public interface FormStyles extends StyleDSL {
     Style Preferences = () -> {
         // marker class
 
-        $.descendant(FormRow, () -> {
+        $.descendant(Row, () -> {
             border.radius(2, px);
             background.color("-fx-control-inner-background");
             margin.bottom(1, px);
@@ -63,12 +61,12 @@ public interface FormStyles extends StyleDSL {
                 background.color("-fx-control-inner-background-alt");
             });
 
-            $.descendant(FormRow, () -> {
+            $.descendant(Row, () -> {
                 padding.vertical(5, px);
             });
         });
 
-        $.descendant(FormLabel, () -> {
+        $.descendant(Label, () -> {
             text.verticalAlign.baseline().align.right();
             margin.right(20, px);
             display.minWidth(180, px).maxWidth(360, px).width.fill();

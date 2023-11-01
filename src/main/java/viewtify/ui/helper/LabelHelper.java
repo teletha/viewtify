@@ -26,6 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -64,9 +65,12 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Variable text) {
-        text.observing().on(Viewtify.UIThread).to(v -> {
+        Disposable disposable = text.observing().on(Viewtify.UIThread).to(v -> {
             property(Type.Text).setValue(I.transform(v, String.class));
         });
+
+        FXUtils.replaceAssociation(ui(), Disposable.class, disposable);
+
         return (Self) this;
     }
 

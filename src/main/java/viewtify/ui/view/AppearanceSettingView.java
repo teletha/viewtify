@@ -68,7 +68,7 @@ public class AppearanceSettingView extends View {
                 .render(x -> x.getDisplayLanguage(x))
                 .sync(setting.lang);
 
-        family.items(Font.getFamilies()).sync(setting.font).style(FormStyles.FormInput);
+        family.items(Font.getFamilies()).sync(setting.font).style(FormStyles.Input);
         size.items(IntStream.range(8, 18)).format(x -> x + "px").sync(setting.fontSize);
     }
 

@@ -48,7 +48,7 @@ public class CalendarSettingView extends View {
                     form(en("Start time"), startTime);
                     form(en("End time"), endTime);
                     form(en("Initial page"), initialView);
-                    form(en("Emphsize today"), emphsizeToday);
+                    form(en("Emphsize today"), FormStyles.InputMin, emphsizeToday);
                     formD(en("Event sources"), () -> {
                         $(vbox, () -> {
                             for (TimeEventSource source : I.find(TimeEventSource.class)) {
@@ -71,7 +71,7 @@ public class CalendarSettingView extends View {
         startTime.items(IntStream.range(0, 19).mapToObj(hour -> LocalTime.of(hour, 0))).sync(Calendars.setting.startTime);
         endTime.items(IntStream.range(5, 24).mapToObj(hour -> LocalTime.of(hour, 59))).sync(Calendars.setting.endTime);
         initialView.items(YearView.class, MonthView.class, WeekView.class, DayView.class)
-                .style(FormStyles.FormInput)
+                .style(FormStyles.Input)
                 .sync(Calendars.setting.initialView)
                 .renderByVariable(x -> en(x.getSimpleName().replace("View", "")));
         emphsizeToday.sync(Calendars.setting.emphsizeToday);
@@ -100,9 +100,9 @@ public class CalendarSettingView extends View {
         protected ViewDSL declareUI() {
             return new ViewDSL() {
                 {
-                    $(hbox, FormStyles.FormRow, () -> {
-                        $(enable, FormStyles.FormInputMin);
-                        $(color, FormStyles.FormInput);
+                    $(hbox, FormStyles.Row, () -> {
+                        $(enable, FormStyles.InputMin);
+                        $(color, FormStyles.Input);
                     });
                 }
             };

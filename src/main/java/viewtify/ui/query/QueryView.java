@@ -42,7 +42,7 @@ public class QueryView<M> extends View {
     class view extends ViewDSL {
         {
             $(vbox, () -> {
-                $(title, FormStyles.FormLabelMin);
+                $(title, FormStyles.LabelMin);
                 for (Query q : compound.queries()) {
                     $(new Editor(q));
                 }
@@ -109,9 +109,9 @@ public class QueryView<M> extends View {
          */
         class view extends ViewDSL {
             {
-                $(hbox, FormStyles.FormRow, () -> {
-                    $(extractor, FormStyles.FormLabelMin);
-                    $(input, FormStyles.FormInput);
+                $(hbox, FormStyles.Row, () -> {
+                    $(extractor, FormStyles.LabelMin);
+                    $(input, FormStyles.Input);
                     $(tester);
                 });
             }
