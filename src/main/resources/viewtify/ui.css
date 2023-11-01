@@ -39,6 +39,10 @@
 /* ==========================================================================
   ToggleSwitch
 ===========================================================================*/
+.toggle-switch .label {
+    -fx-padding: 0 0 0 10px;
+}
+
 .toggle-switch .thumb-area {
     -fx-background-color: -fx-outer-border, derive(-fx-control-inner-background, 40%);
 }
