@@ -64,7 +64,7 @@
      * -fx-hover-base (see below) and the "armed" pseudoclass will typically
      * set -fx-color to -fx-pressed-base.
      */
-    -fx-color: hsb(45, 29%, 91%);
+    -fx-color: hsb(40, 26%, 78%);
     -fx-hover-base: hsb(45, 29%, 81%);
     -fx-pressed-base: hsb(45, 29%, 86%);
 }
