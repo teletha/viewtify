@@ -43,6 +43,10 @@
     -fx-padding: 0 0 0 10px;
 }
 
+.toggle-switch .thumb {
+    -fx-background-color: -fx-outer-border, derive(-fx-body-color, 5%);
+}
+
 .toggle-switch .thumb-area {
     -fx-background-color: -fx-outer-border, derive(-fx-control-inner-background, 40%);
 }

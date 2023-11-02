@@ -1,5 +1,5 @@
 .root {
-    -fx-body-color: derive(-fx-color,20%)
+    -fx-body-color: derive(-fx-color, 8%);
     -fx-body-color-bottomup: -fx-body-color;
     -fx-body-color-to-right: -fx-body-color;
     
