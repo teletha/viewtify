@@ -78,7 +78,4 @@ public interface FormStyles extends StyleDSL {
     Style Sequencial = () -> {
         margin.left(GAP, px);
     };
-
-    Style None = () -> {
-    };
 }
