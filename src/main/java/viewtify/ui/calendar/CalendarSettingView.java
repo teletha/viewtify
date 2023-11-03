@@ -49,7 +49,7 @@ public class CalendarSettingView extends View {
                     form(en("End time"), endTime);
                     form(en("Initial page"), initialView);
                     form(en("Emphsize today"), FormStyles.InputMin, emphsizeToday);
-                    formD(en("Event sources"), () -> {
+                    form(en("Event sources"), () -> {
                         $(vbox, () -> {
                             for (TimeEventSource source : I.find(TimeEventSource.class)) {
                                 $(new TimeEventSourceView(source));

@@ -48,8 +48,7 @@ public class AppearanceSettingView extends View {
                     form(en("Color Scheme"), theme);
                     form(en("Theme Kind"), themeType);
                     form(en("Language"), lang);
-                    form(en("Font Family"), family);
-                    form(en("Font Size"), size);
+                    form(en("Font"), family, size.style(FormStyles.InputMin, FormStyles.Sequencial));
                 });
             }
         };

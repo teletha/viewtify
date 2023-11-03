@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+import org.controlsfx.control.CheckComboBox;
+import org.controlsfx.control.HiddenSidesPane;
+import org.controlsfx.control.SegmentedButton;
+
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.geometry.Orientation;
@@ -32,11 +36,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
-import org.controlsfx.control.CheckComboBox;
-import org.controlsfx.control.HiddenSidesPane;
-import org.controlsfx.control.SegmentedButton;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -238,7 +237,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param userInterfaces A list of form controls.
      */
     private void form(UserInterfaceProvider label, Style style, UserInterfaceProvider... userInterfaces) {
-        formD(label, style, () -> {
+        form(label, () -> {
             for (UserInterfaceProvider userInterface : userInterfaces) {
                 $(userInterface, style == null ? new Style[] {FormStyles.Input} : new Style[] {FormStyles.Input, style});
             }
@@ -250,17 +249,16 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * 
      * @param label A form label.
      */
-    protected void formD(Variable<String> label, WiseRunnable process) {
-        formD(() -> TextNotation.parse(label), null, process);
+    protected final void form(Variable<String> label, WiseRunnable process) {
+        form(() -> TextNotation.parse(label), process);
     }
 
     /**
      * Declare Form UI simply.
      * 
      * @param label A form label.
-     * @param style Additional style for controls.
      */
-    protected void formD(UserInterfaceProvider label, Style style, WiseRunnable process) {
+    protected final void form(UserInterfaceProvider label, WiseRunnable process) {
         $(hbox, FormStyles.Row, () -> {
             if (label != null) {
                 $(label, FormStyles.Label);

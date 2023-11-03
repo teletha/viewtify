@@ -17,8 +17,10 @@ import stylist.StyleDSL;
  */
 public interface FormStyles extends StyleDSL {
 
+    int GAP = 4;
+
     Style Row = () -> {
-        margin.vertical(4, px);
+        margin.vertical(GAP, px);
         text.verticalAlign.baseline();
     };
 
@@ -71,5 +73,12 @@ public interface FormStyles extends StyleDSL {
             margin.right(20, px);
             display.minWidth(180, px).maxWidth(360, px).width.fill();
         });
+    };
+
+    Style Sequencial = () -> {
+        margin.left(GAP, px);
+    };
+
+    Style None = () -> {
     };
 }
