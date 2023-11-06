@@ -26,7 +26,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -37,6 +36,7 @@ import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.ui.wizard.Wizardly;
 
 /**
  * The specialized dialog builder.
@@ -346,6 +346,11 @@ public final class ViewtyDialog<T> {
         });
     }
 
+    public Variable<?> showWizard(Class<? extends DialogView>... views) {
+        return button(ButtonType.PREVIOUS, ButtonType.NEXT, ButtonType.CANCEL, ButtonType.FINISH).disableSystemButtonOrder()
+                .show(new Wizardly(views));
+    }
+
     /**
      * Initialize the dialog.
      * 
@@ -431,6 +436,11 @@ public final class ViewtyDialog<T> {
 
         /** The button for OK. */
         public UIButton buttonOK;
+
+        /** The page title. */
+        public Variable<String> title() {
+            return Variable.of(getClass().getSimpleName());
+        }
 
         /**
          * Inject dialog's buttons.
