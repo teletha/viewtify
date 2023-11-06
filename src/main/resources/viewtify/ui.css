@@ -87,14 +87,17 @@
 .check-box.edited > .box {
     -fx-background-color: -fx-edit-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: -1.4, 0, 1, 2;
-    -fx-background-radius: 3.4, 2, 1, 1;
+}
+
+.combo-box.edited {
+    -fx-background-color: -fx-edit-color, -fx-inner-border, -fx-body-color, -fx-faint-edit-color, -fx-body-color;
+    -fx-background-insets: -0.2, 1, 2, -1.4, 2.6;
 }
 
 .table-view.edited,
 .tree-table-view.edited {
     -fx-background-color: -fx-faint-edit-color, -fx-edit-color, -fx-control-inner-background;
     -fx-background-insets: -1.4, -0.3, 1;
-    -fx-background-radius: 2, 0, 0;
 }
 
 /* ==========================================================================
