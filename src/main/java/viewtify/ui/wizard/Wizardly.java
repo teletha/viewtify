@@ -10,11 +10,10 @@
 package viewtify.ui.wizard;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.ColumnConstraints;
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -22,6 +21,7 @@ import stylist.StyleDSL;
 import stylist.value.Numeric;
 import viewtify.ViewtyDialog.DialogView;
 import viewtify.ui.UIGridView;
+import viewtify.ui.UIHBox;
 import viewtify.ui.UIScrollPane;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
@@ -34,8 +34,6 @@ public class Wizardly extends DialogView<Object> {
 
     private final List<? extends DialogView> views;
 
-    private final List<Navi> navis;
-
     private IntegerProperty step = new SimpleIntegerProperty();
 
     /**
@@ -43,7 +41,6 @@ public class Wizardly extends DialogView<Object> {
      */
     public Wizardly(Class<? extends DialogView>[] views) {
         this.views = I.signal(views).map(x -> I.make(x)).toList();
-        this.navis = IntStream.range(0, views.length).mapToObj(i -> new Navi(i, this.views.get(i).title())).toList();
     }
 
     /**
@@ -54,7 +51,7 @@ public class Wizardly extends DialogView<Object> {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
-                    $(navi, styles.navigations);
+                    $(navi);
                     $(main);
                 });
             }
@@ -66,11 +63,16 @@ public class Wizardly extends DialogView<Object> {
      */
     @Override
     protected void initialize() {
-        main.content(views.get(0));
+        ColumnConstraints constraints = new ColumnConstraints();
+        constraints.setPercentWidth(100d / views.size());
+        constraints.setFillWidth(true);
 
         for (int i = 0; i < views.size(); i++) {
-            navi.constrainColumn(Priority.ALWAYS);
-            navi.ui.add(navis.get(i).ui(), i, 0);
+            DialogView view = views.get(i);
+            Navi n = new Navi(i + 1, view.title());
+
+            navi.constrain(constraints);
+            navi.ui.add(n.ui(), i, 0);
         }
     }
 
@@ -80,27 +82,27 @@ public class Wizardly extends DialogView<Object> {
 
     interface styles extends StyleDSL {
 
-        Numeric circle = Numeric.of(26, px);
+        Numeric circle = Numeric.of(40, px);
 
         String strokeColor = "-fx-light-text-color";
 
-        Style navigations = () -> {
+        Style root = () -> {
             display.width.fill();
-            background.color("-fx-accent");
+            padding.vertical(10, px);
         };
 
         Style navi = () -> {
-            padding.horizontal(5, px).vertical(5, px);
+            display.width.fill();
             text.align.center();
         };
 
         Style step = () -> {
-            display.width(circle).height(circle);
+            display.maxWidth(circle).minWidth(circle).width(circle).height(circle);
             border.radius(circle.divide(2)).color(strokeColor);
             text.align.center();
-            font.size(12, px);
             padding.top(4, px);
-            margin.right(5, px);
+            font.size(20, px).color(strokeColor).weight.bold();
+            background.color("-fx-background");
         };
 
         Style title = () -> {
@@ -110,18 +112,30 @@ public class Wizardly extends DialogView<Object> {
 
         Style line = () -> {
             display.width.fill();
-            border.bottom.color(strokeColor);
+            border.top.color(strokeColor);
+        };
+
+        Style none = () -> {
+            display.width.fill();
+        };
+
+        Style backline = () -> {
+            position.absolute().top(circle.divide(2));
         };
     }
 
     /**
      * 
      */
-    private static class Navi extends View {
+    private class Navi extends View {
 
         private final int step;
 
         private final Variable<String> title;
+
+        private UIHBox left;
+
+        private UIHBox right;
 
         /**
          * @param step
@@ -140,8 +154,14 @@ public class Wizardly extends DialogView<Object> {
         protected ViewDSL declareUI() {
             return new ViewDSL() {
                 {
-                    $(hbox, styles.navi, () -> {
-                        label(step, styles.step);
+                    $(vbox, styles.navi, () -> {
+                        $(sbox, () -> {
+                            $(hbox, styles.backline, () -> {
+                                $(left, step == 1 ? styles.none : styles.line);
+                                $(right, step == views.size() ? styles.none : styles.line);
+                            });
+                            label(step, styles.step);
+                        });
                         label(title, styles.title);
                     });
                 }
@@ -153,6 +173,7 @@ public class Wizardly extends DialogView<Object> {
          */
         @Override
         protected void initialize() {
+
         }
     }
 }
