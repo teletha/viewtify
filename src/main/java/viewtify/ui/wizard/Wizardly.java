@@ -14,6 +14,7 @@ import java.util.List;
 
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.ColumnConstraints;
+
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -25,6 +26,7 @@ import viewtify.ui.UIGridView;
 import viewtify.ui.UIHBox;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIScrollPane;
+import viewtify.ui.UIVBox;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.SwapAnime;
@@ -112,17 +114,11 @@ public class Wizardly extends DialogView<Object> {
         for (int i = 0; i < navis.size(); i++) {
             Navi n = navis.get(i);
             if (i < index) {
-                if (i != 0) n.left.style(styles.complete).unstyle(styles.current);;
-                n.right.style(styles.complete).unstyle(styles.current);
-                n.num.style(styles.complete).unstyle(styles.current);;
+                n.box.style(styles.complete).unstyle(styles.current);
             } else if (i == index) {
-                if (i != 0) n.left.style(styles.complete, styles.current);
-                n.right.unstyle(styles.complete).style(styles.current);
-                n.num.unstyle(styles.complete).style(styles.current);
+                n.box.style(styles.current).unstyle(styles.complete);
             } else {
-                n.left.unstyle(styles.complete, styles.current);
-                n.right.unstyle(styles.complete, styles.current);
-                n.num.unstyle(styles.complete, styles.current);
+                n.box.unstyle(styles.complete, styles.current);
             }
         }
 
@@ -131,15 +127,11 @@ public class Wizardly extends DialogView<Object> {
 
     interface styles extends StyleDSL {
 
+        String normal = "-fx-default-button";
+
+        String figure = "-fx-mid-text-color";
+
         Numeric circle = Numeric.of(28, px);
-
-        String strokeColor = "-fx-mid-text-color";
-
-        String completeColor = "-fx-success";
-
-        String unselectedColor = "-fx-focus-color";
-
-        String selectedColor = "-fx-default-button";
 
         Style root = () -> {
             padding.size(0, px);
@@ -155,26 +147,31 @@ public class Wizardly extends DialogView<Object> {
             padding.vertical(8, px);
         };
 
+        Style step = () -> {
+            display.maxWidth(circle).minWidth(circle).width(circle).height(circle);
+            border.radius(circle.divide(2)).color(normal);
+            background.color("derive(" + normal + ", 50%)");
+            text.align.center();
+            font.size(16, px).color(normal).family("League Gothic");
+        };
+
         Style current = () -> {
+            String c = "-fx-edit-color";
+
+            $.descendant(step, () -> {
+                border.color("derive(" + c + ", 20%)");
+                background.color("derive(" + c + ", 50%)");
+                font.color(figure);
+            });
         };
 
         Style complete = () -> {
-        };
+            String c = "-fx-success";
 
-        Style step = () -> {
-            display.maxWidth(circle).minWidth(circle).width(circle).height(circle);
-            border.radius(circle.divide(2)).color(strokeColor).width(1, px);
-            text.align.center();
-            font.size(16, px).color(strokeColor).family("League Gothic");
-            background.color(selectedColor);
-
-            $.with(complete, () -> {
-                border.color(strokeColor).width(1, px);
-                background.color(completeColor);
-            });
-
-            $.with(current, () -> {
-                border.color(strokeColor).width(2, px);
+            $.descendant(step, () -> {
+                border.color(c);
+                background.color("derive(" + c + ", 50%)");
+                font.color(figure);
             });
         };
 
@@ -185,7 +182,7 @@ public class Wizardly extends DialogView<Object> {
 
         Style line = () -> {
             display.width.fill();
-            border.top.color(strokeColor);
+            border.top.color(normal);
         };
 
         Style none = () -> {
@@ -205,6 +202,8 @@ public class Wizardly extends DialogView<Object> {
         private final int step;
 
         private final Variable<String> title;
+
+        private UIVBox box;
 
         private UILabel num;
 
@@ -229,7 +228,7 @@ public class Wizardly extends DialogView<Object> {
         protected ViewDSL declareUI() {
             return new ViewDSL() {
                 {
-                    $(vbox, styles.navi, () -> {
+                    $(box, styles.navi, () -> {
                         $(sbox, () -> {
                             $(hbox, styles.backline, () -> {
                                 $(left, step == 1 ? styles.none : styles.line);
