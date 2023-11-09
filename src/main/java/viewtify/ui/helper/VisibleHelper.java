@@ -43,6 +43,17 @@ public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAcces
     }
 
     /**
+     * Manage itself.
+     * 
+     * @param state
+     * @return
+     */
+    default Self show(boolean state) {
+        managed(state);
+        return visible(state);
+    }
+
+    /**
      * Gets whether it is visible.
      * 
      * @return A result.
