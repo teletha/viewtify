@@ -14,7 +14,6 @@ import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
 import javafx.scene.Node;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.WiseBiConsumer;
@@ -75,7 +74,10 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
      */
     default <E extends Event> Signal<E> when(User<E> actionType) {
         return actionType.hook.apply(this, new Signal<E>((observer, disposer) -> {
-            EventHandler<E> listener = observer::accept;
+            EventHandler<E> listener = actionType.consumable == false ? observer::accept : e -> {
+                observer.accept(e);
+                e.consume();
+            };
 
             invoke(actionType.before ? "addEventFilter" : "addEventHandler", ui(), actionType.type, listener);
 

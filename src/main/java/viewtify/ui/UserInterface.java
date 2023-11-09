@@ -148,6 +148,19 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
     }
 
     /**
+     * Specifies whether this {@code Node} and any subnodes should be rendered as part of the scene
+     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it
+     * is off the screen or obscured by another Node. Invisible nodes never receive mouse events or
+     * keyboard focus and never maintain keyboard focus when they become invisible.
+     *
+     * @defaultValue true
+     */
+    public Self manage(boolean visible) {
+        ui.setVisible(visible);
+        return (Self) this;
+    }
+
+    /**
      * Requests that this {@code Node} get the input focus, and that this {@code Node}'s top-level
      * ancestor become the focused window. To be eligible to receive the focus, the node must be
      * part of a scene, it and all of its ancestors must be visible, and it must not be disabled. If

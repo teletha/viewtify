@@ -23,7 +23,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-
 import kiss.I;
 import kiss.Signal;
 import viewtify.keys.Key;
@@ -215,6 +214,9 @@ public final class User<E extends Event> {
     /** The hook timing. */
     final boolean before;
 
+    /** The consume event. */
+    final boolean consumable;
+
     /**
      * Hide constructor.
      * 
@@ -230,7 +232,7 @@ public final class User<E extends Event> {
      * @param type
      */
     private <T extends Event> User(EventType<T> type, BiFunction<UserActionHelper<?>, Signal<T>, Signal<E>> hook) {
-        this(type, hook, false);
+        this(type, hook, false, false);
     }
 
     /**
@@ -238,10 +240,11 @@ public final class User<E extends Event> {
      * 
      * @param type
      */
-    private <T extends Event> User(EventType<T> type, BiFunction<UserActionHelper<?>, Signal<T>, Signal<E>> hook, boolean before) {
+    private <T extends Event> User(EventType<T> type, BiFunction<UserActionHelper<?>, Signal<T>, Signal<E>> hook, boolean before, boolean consumable) {
         this.type = type;
         this.hook = (BiFunction) hook;
         this.before = before;
+        this.consumable = consumable;
     }
 
     /**
@@ -250,7 +253,25 @@ public final class User<E extends Event> {
      * @return
      */
     public User<E> preliminarily() {
-        return new User(type, hook, true);
+        return new User(type, hook, true, consumable);
+    }
+
+    /**
+     * Create filterable event type.
+     * 
+     * @return
+     */
+    public User<E> consumably() {
+        return new User(type, hook, before, true);
+    }
+
+    /**
+     * Create filterable event type.
+     * 
+     * @return
+     */
+    public User<E> interruptively() {
+        return new User(type, hook, true, true);
     }
 
     /**
