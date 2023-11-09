@@ -147,6 +147,10 @@ public final class Viewtify {
                 .to()
                 .get();
 
+        // load additional fonts
+        Font.loadFont(ClassLoader.getSystemResourceAsStream("viewtify/font/LeagueGothic.ttf"), 14);
+        Font.loadFont(ClassLoader.getSystemResourceAsStream("viewtify/font/Oswald.ttf"), 14);
+
         CSS.enhance();
 
         // user settings are reloadable
