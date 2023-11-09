@@ -420,6 +420,18 @@ public final class ViewtyDialog<T> {
      */
     private <V> Variable<V> showAndTell(Dialog<V> dialog, Supplier<V> defaultValue) {
         try {
+            // TODO The JVM throws an error when exiting an application with a dialog open. Even if
+            // I try to close the dialog before exiting the application, it throws an exception due
+            // to a NestedLoop problem. I have no idea how to deal with this, so I just ignore the
+            // error. This is a wall of grief.
+            disposer.add(() -> {
+                try {
+                    dialog.close();
+                } catch (IllegalArgumentException e) {
+                    // wall of grief
+                }
+            });
+
             return Variable.of(dialog.showAndWait().orElseGet(defaultValue));
         } finally {
             disposer.dispose();
