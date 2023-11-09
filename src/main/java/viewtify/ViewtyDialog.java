@@ -261,7 +261,7 @@ public final class ViewtyDialog<T> {
         dialog.setResultConverter(x -> x.getButtonData() == ButtonData.OK_DONE ? view.value : null);
 
         DialogPane dialogPane = dialog.getDialogPane();
-        view.injectButtons(dialogPane);
+        view.pane = dialogPane;
 
         Node ui = view.ui();
         if (initializer != null) {
@@ -347,7 +347,7 @@ public final class ViewtyDialog<T> {
     }
 
     public Variable<?> showWizard(Class<? extends DialogView>... views) {
-        return button(ButtonType.PREVIOUS, ButtonType.NEXT, ButtonType.CANCEL, ButtonType.FINISH).disableSystemButtonOrder()
+        return button(ButtonType.PREVIOUS, ButtonType.NEXT, ButtonType.FINISH, ButtonType.CANCEL).disableSystemButtonOrder()
                 .show(new Wizardly(views));
     }
 
@@ -446,8 +446,8 @@ public final class ViewtyDialog<T> {
         /** The value holder. */
         public V value;
 
-        /** The button for OK. */
-        public UIButton buttonOK;
+        /** The associated dialog pane. */
+        DialogPane pane;
 
         /** The page title. */
         public Variable<String> title() {
@@ -455,17 +455,37 @@ public final class ViewtyDialog<T> {
         }
 
         /**
-         * Inject dialog's buttons.
+         * Find the dialog button.
          * 
-         * @param pane The actual dialog pane.
+         * @param type
+         * @return
          */
-        void injectButtons(DialogPane pane) {
-            I.signal(pane.getButtonTypes())
-                    .take(x -> x.getButtonData() == ButtonData.OK_DONE)
+        protected final UIButton find(ButtonType type) {
+            return find(type.getButtonData());
+        }
+
+        /**
+         * Find the dialog button.
+         * 
+         * @param data
+         * @return
+         */
+        protected final UIButton find(ButtonData data) {
+            return I.signal(pane.getButtonTypes())
+                    .take(x -> x.getButtonData() == data)
                     .map(x -> pane.lookupButton(x))
                     .as(Button.class)
                     .first()
-                    .to(x -> buttonOK = new UIButton(x, this));
+                    .map(x -> new UIButton(x, this))
+                    .to()
+                    .exact();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void dispose() {
         }
     }
 
