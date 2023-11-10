@@ -14,7 +14,6 @@ import java.util.List;
 
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.ColumnConstraints;
-
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -127,9 +126,9 @@ public class Wizardly extends DialogView<Object> {
 
     interface styles extends StyleDSL {
 
-        String normal = "-fx-default-button";
+        String passive = "-fx-mid-text-color";
 
-        String figure = "-fx-mid-text-color";
+        String active = "-fx-edit-color";
 
         Numeric circle = Numeric.of(28, px);
 
@@ -149,40 +148,36 @@ public class Wizardly extends DialogView<Object> {
 
         Style step = () -> {
             display.maxWidth(circle).minWidth(circle).width(circle).height(circle);
-            border.radius(circle.divide(2)).color(normal);
-            background.color("derive(" + normal + ", 50%)");
+            border.radius(circle.divide(2));
+            background.color(passive);
             text.align.center();
-            font.size(16, px).color(normal).family("League Gothic");
-        };
-
-        Style current = () -> {
-            String c = "-fx-edit-color";
-
-            $.descendant(step, () -> {
-                border.color("derive(" + c + ", 20%)");
-                background.color("derive(" + c + ", 50%)");
-                font.color(figure);
-            });
-        };
-
-        Style complete = () -> {
-            String c = "-fx-success";
-
-            $.descendant(step, () -> {
-                border.color(c);
-                background.color("derive(" + c + ", 50%)");
-                font.color(figure);
-            });
+            font.size(16, px).color("white").family("League Gothic");
         };
 
         Style title = () -> {
             text.align.center();
             padding.top(8, px);
+            font.color(passive);
+        };
+
+        Style current = () -> {
+            $.descendant(step, () -> {
+                background.color(active);
+            });
+
+            $.descendant(title, () -> {
+                font.color(active);
+            });
+        };
+
+        Style complete = () -> {
+            $.descendant(step, () -> {
+            });
         };
 
         Style line = () -> {
             display.width.fill();
-            border.top.color(normal);
+            border.top.color(passive);
         };
 
         Style none = () -> {
@@ -206,6 +201,8 @@ public class Wizardly extends DialogView<Object> {
         private UIVBox box;
 
         private UILabel num;
+
+        private UILabel text;
 
         private UIHBox left;
 
@@ -236,7 +233,7 @@ public class Wizardly extends DialogView<Object> {
                             });
                             $(num, styles.step);
                         });
-                        label(title, styles.title);
+                        $(text, styles.title);
                     });
                 }
             };
@@ -248,6 +245,22 @@ public class Wizardly extends DialogView<Object> {
         @Override
         protected void initialize() {
             num.text(step);
+            text.text(title);
+        }
+
+        private void update() {
+            // current selected
+            if (step == current) {
+
+            } else {
+
+            }
+
+            if (step < current) {
+
+            } else {
+
+            }
         }
     }
 }
