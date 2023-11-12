@@ -19,6 +19,8 @@ import kiss.Variable;
 import stylist.Style;
 import stylist.StyleDSL;
 import stylist.value.Numeric;
+import viewtify.Theme;
+import viewtify.Viewtify;
 import viewtify.ViewtyDialog.DialogView;
 import viewtify.ui.UIButton;
 import viewtify.ui.UIGridView;
@@ -28,6 +30,7 @@ import viewtify.ui.UIScrollPane;
 import viewtify.ui.UIVBox;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.ui.anime.Anime;
 import viewtify.ui.anime.SwapAnime;
 import viewtify.ui.helper.User;
 
@@ -112,13 +115,14 @@ public class Wizardly extends DialogView<Object> {
 
         for (int i = 0; i < navis.size(); i++) {
             Navi n = navis.get(i);
-            if (i < index) {
-                n.box.style(styles.complete).unstyle(styles.current);
-            } else if (i == index) {
-                n.box.style(styles.current).unstyle(styles.complete);
-            } else {
-                n.box.unstyle(styles.complete, styles.current);
-            }
+            n.update(old, index);
+            // if (i < index) {
+            // n.box.style(styles.complete).unstyle(styles.current);
+            // } else if (i == index) {
+            // n.box.style(styles.current).unstyle(styles.complete);
+            // } else {
+            // n.box.unstyle(styles.complete, styles.current);
+            // }
         }
 
         this.main.content(views.get(index), SwapAnime.FadeOutIn);
@@ -141,7 +145,7 @@ public class Wizardly extends DialogView<Object> {
         };
 
         Style navi = () -> {
-            display.width.fill();
+            display.width.fill().opacity(0.6);
             text.align.center();
             padding.vertical(8, px);
         };
@@ -168,24 +172,35 @@ public class Wizardly extends DialogView<Object> {
             $.descendant(title, () -> {
                 font.color(active);
             });
+
+            $.with(navi, () -> {
+                display.opacity(1);
+            });
         };
 
         Style complete = () -> {
             $.descendant(step, () -> {
             });
+
+            $.with(navi, () -> {
+                display.opacity(1);
+            });
         };
 
-        Style line = () -> {
+        Style lineRight = () -> {
             display.width.fill();
-            border.top.color(passive);
+            border.top.color(passive).width(2, px);
+            margin.top(circle.divide(2)).left(2, px);
+        };
+
+        Style lineLeft = () -> {
+            display.width.fill();
+            border.top.color(passive).width(2, px);
+            margin.top(circle.divide(2)).right(2, px);
         };
 
         Style none = () -> {
             display.width.fill();
-        };
-
-        Style backline = () -> {
-            position.absolute().top(circle.divide(2));
         };
     }
 
@@ -226,12 +241,10 @@ public class Wizardly extends DialogView<Object> {
             return new ViewDSL() {
                 {
                     $(box, styles.navi, () -> {
-                        $(sbox, () -> {
-                            $(hbox, styles.backline, () -> {
-                                $(left, step == 1 ? styles.none : styles.line);
-                                $(right, step == max ? styles.none : styles.line);
-                            });
+                        $(hbox, () -> {
+                            $(left, step == 1 ? styles.none : styles.lineLeft);
                             $(num, styles.step);
+                            $(right, step == max ? styles.none : styles.lineRight);
                         });
                         $(text, styles.title);
                     });
@@ -248,15 +261,14 @@ public class Wizardly extends DialogView<Object> {
             text.text(title);
         }
 
-        private void update() {
+        private void update(int prev, int next) {
             // current selected
-            if (step == current) {
+            Theme theme = Viewtify.CurrentTheme.exact();
 
-            } else {
-
-            }
-
-            if (step < current) {
+            if (step == next) {
+                Anime.define().effect(left.ui.borderProperty(), theme.edit()).run();
+                System.out.println("OK");
+            } else if (step < next) {
 
             } else {
 

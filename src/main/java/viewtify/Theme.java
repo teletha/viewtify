@@ -142,6 +142,15 @@ public enum Theme {
      * 
      * @return
      */
+    public Color edit() {
+        return variables.getOrDefault("-fx-edit-color", Color.BLACK);
+    }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
     public Color error() {
         return variables.getOrDefault("-fx-error", Color.DARKRED);
     }

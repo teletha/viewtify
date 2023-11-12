@@ -17,9 +17,18 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.WritableValue;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
-
 import kiss.Disposable;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
@@ -109,6 +118,26 @@ public class Anime {
         if (init != null) {
             initializers.add(init);
         }
+        return this;
+    }
+
+    public final Anime effect(Property<Border> value, Color color) {
+        return effect(value, color, (Duration) null);
+    }
+
+    public final Anime effect(Property<Border> value, Color color, Duration duration) {
+        return effect(value, color, duration, (Interpolator) null);
+    }
+
+    public final Anime effect(Property<Border> value, Color color, Duration duration, Interpolator interpolator) {
+        duration = Objects.requireNonNullElse(duration, defaultDuration);
+        interpolator = Objects.requireNonNullElse(interpolator, defaultInterpolator);
+
+        ObjectProperty<Color> property = new SimpleObjectProperty(Color.TRANSPARENT);
+        BorderBinding bind = new BorderBinding(value.getValue(), property);
+        value.bind(bind);
+
+        current.getKeyFrames().add(new KeyFrame(duration, new KeyValue(property, color, interpolator)));
         return this;
     }
 
@@ -211,4 +240,33 @@ public class Anime {
         return run();
     }
 
+    private static final class BorderBinding extends ObjectBinding<Border> {
+
+        private final Border border;
+
+        private final ObjectProperty<Color> colorProperty;
+
+        /**
+         * @param colorProperty
+         */
+        private BorderBinding(Border border, ObjectProperty<Color> colorProperty) {
+            this.border = Objects.requireNonNullElse(border, Border.EMPTY);
+            this.colorProperty = colorProperty;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected Border computeValue() {
+            Color c = colorProperty.getValue();
+            Color color = new Color(c.getRed(), c.getGreen(), c.getBlue(), c.getOpacity());
+
+            BorderStroke stroke = border.getStrokes().isEmpty()
+                    ? new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.FULL)
+                    : border.getStrokes().get(0);
+
+            return new Border(new BorderStroke(color, stroke.getTopStyle(), stroke.getRadii(), stroke.getWidths()));
+        }
+    }
 }
