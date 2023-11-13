@@ -172,4 +172,13 @@ public enum Theme {
     public Color text() {
         return variables.getOrDefault("-fx-color", Color.BLACK);
     }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
+    public Color textMid() {
+        return variables.getOrDefault("-fx-mid-text-color", Color.BLACK);
+    }
 }

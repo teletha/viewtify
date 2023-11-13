@@ -61,7 +61,7 @@ public class Wizardly extends DialogView<Object> {
      */
     public Wizardly(Class<? extends DialogView>[] views) {
         this.views = I.signal(views).map(x -> I.make(x)).toList();
-        this.max = this.views.size();
+        this.max = this.views.size() - 1;
     }
 
     /**
@@ -90,7 +90,7 @@ public class Wizardly extends DialogView<Object> {
 
         for (int i = 0; i < views.size(); i++) {
             DialogView view = views.get(i);
-            Navi n = new Navi(i + 1, view.title());
+            Navi n = new Navi(i, view.title());
             navis.add(n);
 
             navi.constrain(constraints);
@@ -110,12 +110,11 @@ public class Wizardly extends DialogView<Object> {
         this.current = index;
 
         this.prev.show(index != 0);
-        this.next.show(index != max - 1);
-        this.complete.show(index == max - 1);
+        this.next.show(index != max);
+        this.complete.show(index == max);
 
         for (int i = 0; i < navis.size(); i++) {
             Navi n = navis.get(i);
-            n.update(old, index);
             // if (i < index) {
             // n.box.style(styles.complete).unstyle(styles.current);
             // } else if (i == index) {
@@ -123,6 +122,7 @@ public class Wizardly extends DialogView<Object> {
             // } else {
             // n.box.unstyle(styles.complete, styles.current);
             // }
+            n.update(old, index);
         }
 
         this.main.content(views.get(index), SwapAnime.FadeOutIn);
@@ -145,7 +145,7 @@ public class Wizardly extends DialogView<Object> {
         };
 
         Style navi = () -> {
-            display.width.fill().opacity(0.6);
+            display.width.fill();
             text.align.center();
             padding.vertical(8, px);
         };
@@ -165,42 +165,31 @@ public class Wizardly extends DialogView<Object> {
         };
 
         Style current = () -> {
-            $.descendant(step, () -> {
-                background.color(active);
-            });
-
-            $.descendant(title, () -> {
-                font.color(active);
-            });
-
             $.with(navi, () -> {
                 display.opacity(1);
             });
         };
 
         Style complete = () -> {
-            $.descendant(step, () -> {
-            });
-
             $.with(navi, () -> {
                 display.opacity(1);
             });
         };
 
         Style lineRight = () -> {
-            display.width.fill();
-            border.top.color(passive).width(2, px);
+            display.width.fill().maxHeight(2, px);
+            background.color(passive);
             margin.top(circle.divide(2)).left(2, px);
         };
 
         Style lineLeft = () -> {
-            display.width.fill();
-            border.top.color(passive).width(2, px);
+            display.width.fill().maxHeight(2, px);
             margin.top(circle.divide(2)).right(2, px);
+            background.color(passive);
         };
 
         Style none = () -> {
-            display.width.fill();
+            display.width.fill().maxHeight(0, px);
         };
     }
 
@@ -242,7 +231,7 @@ public class Wizardly extends DialogView<Object> {
                 {
                     $(box, styles.navi, () -> {
                         $(hbox, () -> {
-                            $(left, step == 1 ? styles.none : styles.lineLeft);
+                            $(left, step == 0 ? styles.none : styles.lineLeft);
                             $(num, styles.step);
                             $(right, step == max ? styles.none : styles.lineRight);
                         });
@@ -257,22 +246,31 @@ public class Wizardly extends DialogView<Object> {
          */
         @Override
         protected void initialize() {
-            num.text(step);
+            num.text(step + 1);
             text.text(title);
         }
 
         private void update(int prev, int next) {
             // current selected
             Theme theme = Viewtify.CurrentTheme.exact();
+            Anime anime = Anime.define();
 
             if (step == next) {
-                Anime.define().effect(left.ui.borderProperty(), theme.edit()).run();
-                System.out.println("OK");
-            } else if (step < next) {
-
+                anime.backgroundColor(num, theme.edit()).opacity(num, 1);
+                // if (step != 0) anime.backgroundColor(left, theme.textMid()).opacity(left, 1);
+                // if (step != max) anime.backgroundColor(right, theme.textMid()).opacity(right,
+                // 0.6);
+                // } else if (step < next) {
+                // anime.backgroundColor(num, theme.textMid()).opacity(num, 1);
+                // if (step != 0) anime.backgroundColor(left, theme.textMid()).opacity(left, 1);
+                // if (step != max) anime.backgroundColor(right, theme.textMid()).opacity(right, 1);
             } else {
-
+                anime.backgroundColor(num, theme.textMid()).opacity(num, 0.75);
+                // if (step != 0) anime.backgroundColor(left, theme.textMid()).opacity(left, 0.6);
+                // if (step != max) anime.backgroundColor(right, theme.textMid()).opacity(right,
+                // 0.6);
             }
+            anime.run();
         }
     }
 }
