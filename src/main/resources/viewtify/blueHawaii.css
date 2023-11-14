@@ -44,7 +44,7 @@
      * text; selected items in menus, lists, trees, and tables; progress bars */
     -fx-accent: hsb(200, 15%, 92%);
     
-		-fx-warning: hsb(90, 72%, 82%);
+		-fx-success: hsb(90, 72%, 72%);
     
     /* Default buttons color, this is similar to accent but more subtle */
     -fx-default-button: -fx-accent;

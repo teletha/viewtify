@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
+
 import kiss.I;
 import psychopath.File;
 import psychopath.Locator;
@@ -162,6 +163,15 @@ public enum Theme {
      */
     public Color warning() {
         return variables.getOrDefault("-fx-warning", Color.YELLOW);
+    }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
+    public Color success() {
+        return variables.getOrDefault("-fx-success", Color.GREEN);
     }
 
     /**

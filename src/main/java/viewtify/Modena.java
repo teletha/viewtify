@@ -27,6 +27,7 @@ public class Modena {
         colors.put("-fx-background", "-fx-base");
         colors.put("-fx-error", "hsb(0, 72%, 75%)");
         colors.put("-fx-warning", "hsb(60, 92%, 95%)");
+        colors.put("-fx-success", "hsb(90, 45%, 86%)");
         colors.put("-fx-edit-color", "#ffa431");
     }
 

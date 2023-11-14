@@ -12,7 +12,11 @@ package viewtify.ui.anime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongUnaryOperator;
+import java.util.function.UnaryOperator;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -20,6 +24,9 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.WritableDoubleValue;
+import javafx.beans.value.WritableIntegerValue;
+import javafx.beans.value.WritableLongValue;
 import javafx.beans.value.WritableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -55,6 +62,9 @@ public class Anime {
 
     /** The default interpolation. */
     private Interpolator defaultInterpolator = Interpolator.LINEAR;
+
+    /** The side effect manager. */
+    private final List<WiseRunnable> effects = new ArrayList();
 
     /**
      * Create new {@link Anime}.
@@ -209,6 +219,34 @@ public class Anime {
     /**
      * Shorthand to declare animation effect.
      */
+    public final <V> Anime effect(WritableValue<V> value, UnaryOperator<V> num) {
+        return effect(value, num.apply(value.getValue()));
+    }
+
+    /**
+     * Shorthand to declare animation effect.
+     */
+    public final Anime effect(WritableIntegerValue value, IntUnaryOperator num) {
+        return effect(value, num.applyAsInt(value.get()));
+    }
+
+    /**
+     * Shorthand to declare animation effect.
+     */
+    public final Anime effect(WritableLongValue value, LongUnaryOperator num) {
+        return effect(value, num.applyAsLong(value.get()));
+    }
+
+    /**
+     * Shorthand to declare animation effect.
+     */
+    public final Anime effect(WritableDoubleValue value, DoubleUnaryOperator num) {
+        return effect(value, num.applyAsDouble(value.get()));
+    }
+
+    /**
+     * Shorthand to declare animation effect.
+     */
     public final <V> Anime effect(WritableValue<V> value, V num, Interpolator interpolator) {
         return effect(value, num, null, interpolator);
     }
@@ -246,21 +284,32 @@ public class Anime {
     }
 
     /**
+     * Register post action.
+     * 
+     * @param effect
+     * @return
+     */
+    public final Anime effect(WiseRunnable effect) {
+        if (effect != null) {
+            effects.add(effect);
+        }
+        return this;
+    }
+
+    /**
      * Define the next action.
      * 
      * @return
      */
     public final Anime then(WiseRunnable... finisher) {
+        effects.addAll(List.of(finisher));
+
         Timeline before = current;
         Timeline after = current = new Timeline();
         before.setOnFinished(e -> {
-            if (finisher != null && finisher.length != 0) {
-                for (WiseRunnable runner : finisher) {
-                    if (runner != null) {
-                        runner.run();
-                    }
-                }
-            }
+            effects.forEach(WiseRunnable::run);
+            effects.clear();
+
             after.play();
         });
         return this;
@@ -270,15 +319,12 @@ public class Anime {
      * Play animation.
      */
     public final Disposable run(WiseRunnable... finisher) {
-        if (finisher != null && finisher.length != 0) {
-            current.setOnFinished(e -> {
-                for (WiseRunnable runner : finisher) {
-                    if (runner != null) {
-                        runner.run();
-                    }
-                }
-            });
-        }
+        effects.addAll(List.of(finisher));
+
+        current.setOnFinished(e -> {
+            effects.forEach(WiseRunnable::run);
+            effects.clear();
+        });
 
         for (Runnable initializer : initializers) {
             initializer.run();

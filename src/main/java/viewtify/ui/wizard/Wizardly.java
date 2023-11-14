@@ -170,13 +170,13 @@ public class Wizardly extends DialogView<Object> {
         };
 
         Style lineRight = () -> {
-            display.width.fill().maxHeight(2, px);
+            display.width.fill().maxHeight(2, px).opacity(0.5);
             background.color(passive);
             margin.top(circle.divide(2)).left(2, px);
         };
 
         Style lineLeft = () -> {
-            display.width.fill().maxHeight(2, px);
+            display.width.fill().maxHeight(2, px).opacity(0.5);
             margin.top(circle.divide(2)).right(2, px);
             background.color(passive);
         };
@@ -249,16 +249,16 @@ public class Wizardly extends DialogView<Object> {
             Anime anime = Anime.define();
 
             if (step == next) {
-                anime.backgroundColor(num, theme.edit()).opacity(num, 1);
+                anime.backgroundColor(num, theme.edit()).opacity(num, 1).opacity(text, 1).effect(() -> num.text(step + 1));
                 // if (step != 0) anime.backgroundColor(left, theme.textMid()).opacity(left, 1);
                 // if (step != max) anime.backgroundColor(right, theme.textMid()).opacity(right,
                 // 0.6);
-                // } else if (step < next) {
-                // anime.backgroundColor(num, theme.textMid()).opacity(num, 1);
+            } else if (step < next) {
+                anime.backgroundColor(num, theme.success()).opacity(num, 1).opacity(text, 0.5).effect(() -> num.text("✔"));
                 // if (step != 0) anime.backgroundColor(left, theme.textMid()).opacity(left, 1);
                 // if (step != max) anime.backgroundColor(right, theme.textMid()).opacity(right, 1);
             } else {
-                anime.backgroundColor(num, theme.textMid()).opacity(num, 0.75);
+                anime.backgroundColor(num, theme.textMid()).opacity(num, 0.5).opacity(text, 0.5).effect(() -> num.text(step + 1));
                 // if (step != 0) anime.backgroundColor(left, theme.textMid()).opacity(left, 0.6);
                 // if (step != max) anime.backgroundColor(right, theme.textMid()).opacity(right,
                 // 0.6);
