@@ -12,12 +12,12 @@ package viewtify.ui.anime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.WritableValue;
@@ -30,6 +30,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+
 import kiss.Disposable;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
@@ -147,6 +148,58 @@ public class Anime {
     }
 
     /**
+     * Animate location.
+     * 
+     * @param node
+     * @param x
+     * @param y
+     * @return
+     */
+    public final Anime move(UserInterfaceProvider<? extends Node> node, double x, double y) {
+        return moveX(node, x).moveY(node, y);
+    }
+
+    /**
+     * Animate location.
+     * 
+     * @param node
+     * @param x
+     * @return
+     */
+    public final Anime moveX(UserInterfaceProvider<? extends Node> node, double x) {
+        return effect(node.ui().translateXProperty(), x);
+    }
+
+    /**
+     * Animate location.
+     * 
+     * @param node
+     * @param y
+     * @return
+     */
+    public final Anime moveY(UserInterfaceProvider<? extends Node> node, double y) {
+        return effect(node.ui().translateYProperty(), y);
+    }
+
+    /**
+     * Extract the user defined style.
+     * 
+     * @param <N>
+     * @param <T>
+     * @param node
+     * @param extractor
+     * @return
+     */
+    private static <N extends Node, T> T extractStyle(N node, Function<N, T> extractor) {
+        T style = extractor.apply(node);
+        if (style == null) {
+            node.applyCss();
+            style = extractor.apply(node);
+        }
+        return style;
+    }
+
+    /**
      * Shorthand to declare animation effect.
      */
     public final <V> Anime effect(WritableValue<V> value, V num) {
@@ -245,7 +298,7 @@ public class Anime {
         return run();
     }
 
-    private static final class BackgroundBinding extends ObjectBinding<Background> {
+    private static final class BackgroundBinding {
 
         /** The color holder. */
         private final ObjectProperty<Color> color = new SimpleObjectProperty();
@@ -263,33 +316,20 @@ public class Anime {
          * @param colorProperty
          */
         private BackgroundBinding(Region region) {
-            region.applyCss();
-
-            Background background = Objects.requireNonNullElse(region.getBackground(), Background.EMPTY);
+            Background background = extractStyle(region, Region::getBackground);
             List<BackgroundFill> fills = background.getFills();
             if (!fills.isEmpty()) {
                 BackgroundFill fill = fills.get(0);
-                if (fill.getFill() instanceof Color color) {
-                    this.color.set(color);
-                }
 
-                this.corner = fill.getRadii();
-                this.inset = fill.getInsets();
+                if (fill.getFill() instanceof Color c) color.set(c);
+                corner = fill.getRadii();
+                inset = fill.getInsets();
             }
-            this.images = background.getImages();
+            images = background.getImages();
 
-            bind(color);
-            region.backgroundProperty().bind(this);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected Background computeValue() {
-            Color color = this.color.get();
-
-            return new Background(List.of(new BackgroundFill(color == null ? null : color, corner, inset)), images);
+            Viewtify.observe(color).to(x -> {
+                region.setBackground(new Background(List.of(new BackgroundFill(color.get(), corner, inset)), images));
+            });
         }
     }
 }

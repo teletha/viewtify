@@ -14,6 +14,7 @@ import java.util.List;
 
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.ColumnConstraints;
+
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -113,16 +114,8 @@ public class Wizardly extends DialogView<Object> {
         this.next.show(index != max);
         this.complete.show(index == max);
 
-        for (int i = 0; i < navis.size(); i++) {
-            Navi n = navis.get(i);
-            // if (i < index) {
-            // n.box.style(styles.complete).unstyle(styles.current);
-            // } else if (i == index) {
-            // n.box.style(styles.current).unstyle(styles.complete);
-            // } else {
-            // n.box.unstyle(styles.complete, styles.current);
-            // }
-            n.update(old, index);
+        for (Navi navi : navis) {
+            navi.update(old, index);
         }
 
         this.main.content(views.get(index), SwapAnime.FadeOutIn);
