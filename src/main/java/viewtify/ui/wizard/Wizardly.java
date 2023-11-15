@@ -14,7 +14,6 @@ import java.util.List;
 
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.ColumnConstraints;
-
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -144,7 +143,7 @@ public class Wizardly extends DialogView<Object> {
         };
 
         Style step = () -> {
-            display.maxWidth(circle).minWidth(circle).width(circle).height(circle);
+            display.maxWidth(circle).minWidth(circle).width(circle).height(circle).opacity(0.5);
             border.radius(circle.divide(2));
             background.color(passive);
             text.align.center();
@@ -170,13 +169,13 @@ public class Wizardly extends DialogView<Object> {
         };
 
         Style lineRight = () -> {
-            display.width.fill().maxHeight(2, px).opacity(0.5);
+            display.width.fill().maxHeight(2, px).opacity(0.7);
             background.color(passive);
             margin.top(circle.divide(2)).left(2, px);
         };
 
         Style lineLeft = () -> {
-            display.width.fill().maxHeight(2, px).opacity(0.5);
+            display.width.fill().maxHeight(2, px).opacity(0.7);
             margin.top(circle.divide(2)).right(2, px);
             background.color(passive);
         };

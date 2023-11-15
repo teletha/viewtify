@@ -37,7 +37,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-
 import kiss.Disposable;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
@@ -302,13 +301,14 @@ public class Anime {
      * @return
      */
     public final Anime then(WiseRunnable... finisher) {
-        effects.addAll(List.of(finisher));
-
         Timeline before = current;
         Timeline after = current = new Timeline();
         before.setOnFinished(e -> {
             effects.forEach(WiseRunnable::run);
             effects.clear();
+            for (WiseRunnable fin : finisher) {
+                if (fin != null) fin.run();
+            }
 
             after.play();
         });
@@ -319,11 +319,12 @@ public class Anime {
      * Play animation.
      */
     public final Disposable run(WiseRunnable... finisher) {
-        effects.addAll(List.of(finisher));
-
         current.setOnFinished(e -> {
             effects.forEach(WiseRunnable::run);
             effects.clear();
+            for (WiseRunnable fin : finisher) {
+                if (fin != null) fin.run();
+            }
         });
 
         for (Runnable initializer : initializers) {
