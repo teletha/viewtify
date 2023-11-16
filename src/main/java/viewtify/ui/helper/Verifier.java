@@ -145,7 +145,6 @@ public class Verifier implements Disposable {
             if (message == null || message.isEmpty()) {
                 message = I.translate("This is invalid value, please correct.").toString();
             }
-
             this.message.set(message);
         }
     }

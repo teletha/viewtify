@@ -9,9 +9,10 @@
  */
 package viewtify.ui.helper;
 
+import javafx.scene.Node;
+
 import org.controlsfx.control.decoration.Decorator;
 
-import javafx.scene.Node;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.util.Icon;
@@ -57,11 +58,7 @@ public interface DecorationHelper<Self extends DecorationHelper<Self>> {
      * Undecorate all icons.
      */
     default Self undecorate() {
-        I.signal(Decorator.getDecorations(ui()))
-                .as(ValidatableDecoration.class)
-                .take(1)
-                .on(Viewtify.UIThread)
-                .to(ValidatableDecoration::dispose);
+        I.signal(Decorator.getDecorations(ui())).as(ValidatableDecoration.class).take(1).on(Viewtify.UIThread).to(ValidatableDecoration::dispose);
 
         return (Self) this;
     }

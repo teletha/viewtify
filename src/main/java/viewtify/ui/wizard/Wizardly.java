@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
 import javafx.scene.layout.ColumnConstraints;
+
+import kiss.I;
 import kiss.Variable;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -58,10 +59,10 @@ public class Wizardly<V> extends DialogView<V> {
     /**
      * @param views
      */
-    public Wizardly(V value, List<DialogView<V>> views) {
+    public Wizardly(V value, Class<? extends DialogView>[] views) {
         this.value = value;
-        this.views = views;
-        this.max = views.size() - 1;
+        this.views = I.signal(views).map(x -> I.make(x)).toList();
+        this.max = this.views.size() - 1;
     }
 
     /**
@@ -77,18 +78,6 @@ public class Wizardly<V> extends DialogView<V> {
                 });
             }
         };
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setPane(DialogPane pane) {
-        super.setPane(pane);
-
-        for (DialogView view : views) {
-            view.setPane(pane);
-        }
     }
 
     /**
@@ -260,7 +249,6 @@ public class Wizardly<V> extends DialogView<V> {
                         .opacity(titleBox, styles.initialOpacity)
                         .run();
             } else {
-                System.out.println("Change");
                 Anime.define()
                         .init(() -> stepBox.text(step + 1))
                         .backgroundColor(stepBox, theme.textMid())

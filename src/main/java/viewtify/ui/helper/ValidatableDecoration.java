@@ -18,6 +18,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.stage.Window;
+
+import org.controlsfx.control.decoration.Decorator;
+import org.controlsfx.control.decoration.GraphicDecoration;
+
 import kiss.Disposable;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
@@ -26,13 +30,13 @@ import viewtify.ui.anime.HideAnime;
 import viewtify.ui.anime.ShowAnime;
 import viewtify.util.Icon;
 
-class ValidatableDecoration implements Disposable {
+class ValidatableDecoration extends GraphicDecoration implements Disposable {
 
     /** The decoration target. */
     private final Node node;
 
-    // /** The decration. */
-    // private final Label decoration;
+    /** The decration. */
+    private final Label decoration;
 
     /** The tooltip. */
     private final Tooltip tooltip;
@@ -61,8 +65,9 @@ class ValidatableDecoration implements Disposable {
      * @param icon
      */
     ValidatableDecoration(Node node, Icon icon, Label decoration) {
+        super(decoration, Pos.TOP_LEFT, 1, 1);
         this.node = node;
-        // this.decoration = decoration;
+        this.decoration = decoration;
 
         Tooltip tooltip = new Tooltip();
         tooltip.setAutoFix(true);
@@ -71,8 +76,7 @@ class ValidatableDecoration implements Disposable {
         this.tooltip = tooltip;
 
         // show decoration
-        // Decorator.addDecoration(node, this);
-        node.getStyleClass().add("required");
+        Decorator.addDecoration(node, this);
 
         // focus management
         Viewtify.observing(node.focusedProperty()).debounce(250, TimeUnit.MILLISECONDS).on(Viewtify.UIThread).to(focused -> {
@@ -89,19 +93,15 @@ class ValidatableDecoration implements Disposable {
      */
     @Override
     public void vandalize() {
-        hide(() -> {
-            // Decorator.removeDecoration(node, this);
-            System.out.println(node.getStyleClass());
-            node.getStyleClass().removeIf(x -> x.equals("required"));
-        });
+        hide(() -> Decorator.removeDecoration(node, this));
     }
 
     /**
      * Show tooltip.
      */
     public void show() {
-        Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-        tooltip.show(node, bounds.getMinX(), bounds.getMinY() - 7);
+        Bounds bounds = decoration.localToScreen(decoration.getBoundsInLocal());
+        tooltip.show(decoration, bounds.getCenterX(), bounds.getMinY() - 7);
 
         ShowAnime.FadeIn(1).play(tooltip.getScene().getRoot());
 

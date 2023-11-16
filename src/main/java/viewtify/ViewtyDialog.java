@@ -26,8 +26,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
 import kiss.Disposable;
 import kiss.I;
+import kiss.Model;
 import kiss.Variable;
 import kiss.WiseConsumer;
 import viewtify.style.FormStyles;
@@ -258,11 +260,20 @@ public final class ViewtyDialog<T> {
      */
     public <V, D extends DialogView<V>> Variable<V> show(D view, WiseConsumer<D> initializer) {
         Dialog<V> dialog = initialize(new Dialog());
-        dialog.setResultConverter(x -> x.getButtonData() == ButtonData.OK_DONE || x.getButtonData() == ButtonData.APPLY || x
-                .getButtonData() == ButtonData.FINISH ? view.value : null);
+        dialog.setResultConverter(x -> {
+            switch (x.getButtonData()) {
+            case APPLY:
+            case OK_DONE:
+            case FINISH:
+                return view.value;
+
+            default:
+                return null;
+            }
+        });
 
         DialogPane dialogPane = dialog.getDialogPane();
-        view.setPane(dialogPane);
+        view.pane = dialogPane;
 
         Node ui = view.ui();
         if (initializer != null) {
@@ -347,9 +358,11 @@ public final class ViewtyDialog<T> {
         });
     }
 
-    public <V> Variable<V> showWizard(V value, Class<? extends DialogView<V>>... views) {
+    public <V> Variable<V> showWizard(Class<? extends DialogView<V>>... views) {
+        Class<V> type = (Class<V>) Model.collectParameters(views[0], DialogView.class)[0];
+
         return button(ButtonType.PREVIOUS, ButtonType.NEXT, ButtonType.FINISH, ButtonType.CANCEL).disableSystemButtonOrder()
-                .show(new Wizardly(value, I.signal(views).map(x -> I.make(x)).toList()));
+                .show(new Wizardly(I.make(type), views));
     }
 
     /**
@@ -448,11 +461,7 @@ public final class ViewtyDialog<T> {
         public V value;
 
         /** The associated dialog pane. */
-        private DialogPane pane;
-
-        public void setPane(DialogPane pane) {
-            this.pane = pane;
-        }
+        DialogPane pane;
 
         /** The page title. */
         public Variable<String> title() {
