@@ -27,7 +27,6 @@ import viewtify.ui.UIGridView;
 import viewtify.ui.UIHBox;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIScrollPane;
-import viewtify.ui.UIVBox;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
@@ -71,9 +70,9 @@ public class Wizardly extends DialogView<Object> {
     protected ViewDSL declareUI() {
         return new ViewDSL() {
             {
-                $(vbox, styles.root, () -> {
+                $(vbox, () -> {
                     $(navi);
-                    $(main, styles.main);
+                    $(main);
                 });
             }
         };
@@ -106,7 +105,6 @@ public class Wizardly extends DialogView<Object> {
     }
 
     private void assign(int index) {
-        int old = current;
         this.current = index;
 
         this.prev.show(index != 0);
@@ -114,7 +112,7 @@ public class Wizardly extends DialogView<Object> {
         this.complete.show(index == max);
 
         for (Navi navi : navis) {
-            navi.update(old, index);
+            navi.update(index);
         }
 
         this.main.content(views.get(index), SwapAnime.FadeOutIn);
@@ -122,65 +120,47 @@ public class Wizardly extends DialogView<Object> {
 
     interface styles extends StyleDSL {
 
+        double initialOpacity = 0.5;
+
         String passive = "-fx-mid-text-color";
 
         String active = "-fx-edit-color";
 
         Numeric circle = Numeric.of(28, px);
 
-        Style root = () -> {
-            padding.size(0, px);
-        };
-
-        Style main = () -> {
-            padding.size(10, px);
-        };
-
         Style navi = () -> {
-            display.width.fill();
             text.align.center();
-            padding.vertical(8, px);
+            padding.vertical(10, px);
         };
 
-        Style step = () -> {
-            display.maxWidth(circle).minWidth(circle).width(circle).height(circle).opacity(0.5);
+        Style stepNumber = () -> {
+            display.maxWidth(circle).minWidth(circle).width(circle).height(circle).opacity(initialOpacity);
             border.radius(circle.divide(2));
             background.color(passive);
             text.align.center();
             font.size(16, px).color("white").family("League Gothic");
         };
 
-        Style title = () -> {
+        Style stepTitle = () -> {
+            display.opacity(initialOpacity);
             text.align.center();
             padding.top(8, px);
             font.color(passive);
         };
 
-        Style current = () -> {
-            $.with(navi, () -> {
-                display.opacity(1);
-            });
-        };
-
-        Style complete = () -> {
-            $.with(navi, () -> {
-                display.opacity(1);
-            });
-        };
-
         Style lineRight = () -> {
-            display.width.fill().maxHeight(2, px).opacity(0.7);
+            display.width.fill().maxHeight(2, px).opacity(initialOpacity + 0.2);
             background.color(passive);
             margin.top(circle.divide(2)).left(2, px);
         };
 
         Style lineLeft = () -> {
-            display.width.fill().maxHeight(2, px).opacity(0.7);
+            display.width.fill().maxHeight(2, px).opacity(initialOpacity + 0.2);
             margin.top(circle.divide(2)).right(2, px);
             background.color(passive);
         };
 
-        Style none = () -> {
+        Style lineNone = () -> {
             display.width.fill().maxHeight(0, px);
         };
     }
@@ -194,11 +174,9 @@ public class Wizardly extends DialogView<Object> {
 
         private final Variable<String> title;
 
-        private UIVBox box;
+        private UILabel stepBox;
 
-        private UILabel num;
-
-        private UILabel text;
+        private UILabel titleBox;
 
         private UIHBox left;
 
@@ -221,13 +199,13 @@ public class Wizardly extends DialogView<Object> {
         protected ViewDSL declareUI() {
             return new ViewDSL() {
                 {
-                    $(box, styles.navi, () -> {
+                    $(vbox, styles.navi, () -> {
                         $(hbox, () -> {
-                            $(left, step == 0 ? styles.none : styles.lineLeft);
-                            $(num, styles.step);
-                            $(right, step == max ? styles.none : styles.lineRight);
+                            $(left, step == 0 ? styles.lineNone : styles.lineLeft);
+                            $(stepBox, styles.stepNumber);
+                            $(right, step == max ? styles.lineNone : styles.lineRight);
                         });
-                        $(text, styles.title);
+                        $(titleBox, styles.stepTitle);
                     });
                 }
             };
@@ -238,31 +216,42 @@ public class Wizardly extends DialogView<Object> {
          */
         @Override
         protected void initialize() {
-            num.text(step + 1);
-            text.text(title);
+            stepBox.text(step + 1);
+            titleBox.text(title);
         }
 
-        private void update(int prev, int next) {
+        /**
+         * Update step navigator.
+         * 
+         * @param prev
+         * @param next
+         */
+        private void update(int next) {
             // current selected
             Theme theme = Viewtify.CurrentTheme.exact();
-            Anime anime = Anime.define();
 
             if (step == next) {
-                anime.backgroundColor(num, theme.edit()).opacity(num, 1).opacity(text, 1).effect(() -> num.text(step + 1));
-                // if (step != 0) anime.backgroundColor(left, theme.textMid()).opacity(left, 1);
-                // if (step != max) anime.backgroundColor(right, theme.textMid()).opacity(right,
-                // 0.6);
+                Anime.define()
+                        .init(() -> stepBox.text(step + 1))
+                        .backgroundColor(stepBox, theme.edit())
+                        .opacity(stepBox, 1)
+                        .opacity(titleBox, 1)
+                        .run();
             } else if (step < next) {
-                anime.backgroundColor(num, theme.success()).opacity(num, 1).opacity(text, 0.5).effect(() -> num.text("✔"));
-                // if (step != 0) anime.backgroundColor(left, theme.textMid()).opacity(left, 1);
-                // if (step != max) anime.backgroundColor(right, theme.textMid()).opacity(right, 1);
+                Anime.define()
+                        .init(() -> stepBox.text("✔"))
+                        .backgroundColor(stepBox, theme.success())
+                        .opacity(stepBox, 1)
+                        .opacity(titleBox, styles.initialOpacity)
+                        .run();
             } else {
-                anime.backgroundColor(num, theme.textMid()).opacity(num, 0.5).opacity(text, 0.5).effect(() -> num.text(step + 1));
-                // if (step != 0) anime.backgroundColor(left, theme.textMid()).opacity(left, 0.6);
-                // if (step != max) anime.backgroundColor(right, theme.textMid()).opacity(right,
-                // 0.6);
+                Anime.define()
+                        .init(() -> stepBox.text(step + 1))
+                        .backgroundColor(stepBox, theme.textMid())
+                        .opacity(stepBox, styles.initialOpacity)
+                        .opacity(titleBox, styles.initialOpacity)
+                        .run();
             }
-            anime.run();
         }
     }
 }
