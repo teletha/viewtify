@@ -12,6 +12,9 @@
 		-fx-edit-color: #ffa431;
 		-fx-faint-edit-color: #ffa43150;
 		
+	  -fx-require-color: #ffa431;
+		-fx-faint-require-color: #ffa43150;
+		
 		-fx-error: hsb(0, 72%, 75%);
 		-fx-warning: hsb(60, 92%, 95%);
 		-fx-success: hsb(90, 45%, 86%);
@@ -66,6 +69,38 @@
 
 .hyperlink:hover {
 		-fx-underline: true;
+}
+
+/* ==========================================================================
+  Required Mode
+===========================================================================*/
+.text-input.required {
+    -fx-background-color:
+        -fx-require-color,
+        -fx-control-inner-background,
+        -fx-faint-edit-color,
+        linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+}
+
+.check-box.required {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.check-box.required > .box {
+    -fx-background-color: -fx-require-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box.required {
+    -fx-background-color: -fx-require-color, -fx-inner-border, -fx-body-color, -fx-faint-require-color, -fx-body-color;
+    -fx-background-insets: -0.2, 1, 2, -1.4, 2.6;
+}
+
+.table-view.required,
+.tree-table-view.edited {
+    -fx-background-color: -fx-faint-require-color, -fx-require-color, -fx-control-inner-background;
+    -fx-background-insets: -1.4, -0.3, 1;
 }
 
 /* ==========================================================================

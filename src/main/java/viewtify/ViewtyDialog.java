@@ -258,10 +258,11 @@ public final class ViewtyDialog<T> {
      */
     public <V, D extends DialogView<V>> Variable<V> show(D view, WiseConsumer<D> initializer) {
         Dialog<V> dialog = initialize(new Dialog());
-        dialog.setResultConverter(x -> x.getButtonData() == ButtonData.OK_DONE ? view.value : null);
+        dialog.setResultConverter(x -> x.getButtonData() == ButtonData.OK_DONE || x.getButtonData() == ButtonData.APPLY || x
+                .getButtonData() == ButtonData.FINISH ? view.value : null);
 
         DialogPane dialogPane = dialog.getDialogPane();
-        view.pane = dialogPane;
+        view.setPane(dialogPane);
 
         Node ui = view.ui();
         if (initializer != null) {
@@ -346,9 +347,9 @@ public final class ViewtyDialog<T> {
         });
     }
 
-    public Variable<?> showWizard(Class<? extends DialogView>... views) {
+    public <V> Variable<V> showWizard(V value, Class<? extends DialogView<V>>... views) {
         return button(ButtonType.PREVIOUS, ButtonType.NEXT, ButtonType.FINISH, ButtonType.CANCEL).disableSystemButtonOrder()
-                .show(new Wizardly(views));
+                .show(new Wizardly(value, I.signal(views).map(x -> I.make(x)).toList()));
     }
 
     /**
@@ -447,7 +448,11 @@ public final class ViewtyDialog<T> {
         public V value;
 
         /** The associated dialog pane. */
-        DialogPane pane;
+        private DialogPane pane;
+
+        public void setPane(DialogPane pane) {
+            this.pane = pane;
+        }
 
         /** The page title. */
         public Variable<String> title() {

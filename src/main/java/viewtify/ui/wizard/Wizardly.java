@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.layout.ColumnConstraints;
-import kiss.I;
 import kiss.Variable;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -33,7 +33,7 @@ import viewtify.ui.anime.Anime;
 import viewtify.ui.anime.SwapAnime;
 import viewtify.ui.helper.User;
 
-public class Wizardly extends DialogView<Object> {
+public class Wizardly<V> extends DialogView<V> {
 
     private UIScrollPane main;
 
@@ -58,9 +58,10 @@ public class Wizardly extends DialogView<Object> {
     /**
      * @param views
      */
-    public Wizardly(Class<? extends DialogView>[] views) {
-        this.views = I.signal(views).map(x -> I.make(x)).toList();
-        this.max = this.views.size() - 1;
+    public Wizardly(V value, List<DialogView<V>> views) {
+        this.value = value;
+        this.views = views;
+        this.max = views.size() - 1;
     }
 
     /**
@@ -82,6 +83,18 @@ public class Wizardly extends DialogView<Object> {
      * {@inheritDoc}
      */
     @Override
+    public void setPane(DialogPane pane) {
+        super.setPane(pane);
+
+        for (DialogView view : views) {
+            view.setPane(pane);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void initialize() {
         ColumnConstraints constraints = new ColumnConstraints();
         constraints.setPercentWidth(100d / views.size());
@@ -89,6 +102,8 @@ public class Wizardly extends DialogView<Object> {
 
         for (int i = 0; i < views.size(); i++) {
             DialogView view = views.get(i);
+            view.value = value;
+
             Navi n = new Navi(i, view.title());
             navis.add(n);
 
@@ -245,6 +260,7 @@ public class Wizardly extends DialogView<Object> {
                         .opacity(titleBox, styles.initialOpacity)
                         .run();
             } else {
+                System.out.println("Change");
                 Anime.define()
                         .init(() -> stepBox.text(step + 1))
                         .backgroundColor(stepBox, theme.textMid())
