@@ -16,6 +16,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.ColumnConstraints;
 
 import kiss.I;
+import kiss.Signal;
 import kiss.Variable;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -28,6 +29,7 @@ import viewtify.ui.UIGridView;
 import viewtify.ui.UIHBox;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIScrollPane;
+import viewtify.ui.UserInterface;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
@@ -114,12 +116,19 @@ public class Wizardly<V> extends DialogView<V> {
         this.prev.show(index != 0);
         this.next.show(index != max);
         this.complete.show(index == max);
+        this.cancel.show(true);
 
         for (Navi navi : navis) {
             navi.update(index);
         }
 
-        this.main.content(views.get(index), SwapAnime.FadeOutIn);
+        DialogView view = views.get(index);
+
+        this.main.content(view, SwapAnime.FadeOutIn);
+
+        view.findUI(UserInterface.class).map(ui -> (Signal<Boolean>) ui.isInvalid()).buffer().to(invalids -> {
+            this.next.disableWhen(invalids);
+        });
     }
 
     interface styles extends StyleDSL {

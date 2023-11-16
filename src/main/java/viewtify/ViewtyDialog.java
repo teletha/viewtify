@@ -36,6 +36,7 @@ import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
+import viewtify.ui.UserInterface;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.wizard.Wizardly;
@@ -59,6 +60,9 @@ public final class ViewtyDialog<T> {
 
     /** The translation mode. */
     private boolean needTranslate;
+
+    /** The button's visibility. */
+    private boolean hideButtons;
 
     /** The button's visibility. */
     private boolean disableButtons;
@@ -359,6 +363,7 @@ public final class ViewtyDialog<T> {
     }
 
     public <V> Variable<V> showWizard(Class<? extends DialogView<V>>... views) {
+        hideButtons = true;
         Class<V> type = (Class<V>) Model.collectParameters(views[0], DialogView.class)[0];
 
         return button(ButtonType.PREVIOUS, ButtonType.NEXT, ButtonType.FINISH, ButtonType.CANCEL).disableSystemButtonOrder()
@@ -383,16 +388,6 @@ public final class ViewtyDialog<T> {
         ButtonBar buttonBar = (ButtonBar) dialogPane.lookup(".button-bar");
         buttonBar.setPadding(new Insets(12, 3, 12, 3));
 
-        if (disableSystemButtonOrder) {
-            buttonBar.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
-        }
-
-        if (disableButtons) {
-            for (ButtonType type : dialogPane.getButtonTypes()) {
-                dialogPane.lookupButton(type).setDisable(true);
-            }
-        }
-
         if (buttons != null) {
             dialogPane.getButtonTypes().clear();
             dialogPane.getButtonTypes().addAll(buttons);
@@ -409,6 +404,22 @@ public final class ViewtyDialog<T> {
 
         if (disableCloseButton) {
             ((Stage) dialogPane.getScene().getWindow()).setOnCloseRequest(WindowEvent::consume);
+        }
+
+        if (disableSystemButtonOrder) {
+            buttonBar.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
+        }
+
+        if (disableButtons) {
+            for (ButtonType type : dialogPane.getButtonTypes()) {
+                dialogPane.lookupButton(type).setDisable(true);
+            }
+        }
+
+        if (hideButtons) {
+            for (ButtonType type : dialogPane.getButtonTypes()) {
+                dialogPane.lookupButton(type).setVisible(false);
+            }
         }
 
         if (0 < width) {
@@ -500,6 +511,10 @@ public final class ViewtyDialog<T> {
          */
         @Override
         public void dispose() {
+        }
+
+        public boolean isInvalid() {
+            return findUI(UserInterface.class).any(ui -> ui.verifier().isInvalid()).to().exact();
         }
     }
 

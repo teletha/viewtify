@@ -10,6 +10,7 @@
 package viewtify.ui.helper;
 
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
@@ -83,6 +84,30 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     /**
      * Disables itself when the specified condition is True, and enables it when False.
      * 
+     * @param conditions A list of timing conditions.
+     * @return Chainable API.
+     */
+    default Self disableWhen(List<Signal<Boolean>> conditions) {
+        if (conditions != null) {
+            switch (conditions.size()) {
+            case 0:
+                break;
+
+            case 1:
+                disableWhen(conditions.get(0));
+                break;
+
+            default:
+                disableWhen(conditions.get(0), conditions.subList(1, conditions.size()).toArray(Signal[]::new));
+                break;
+            }
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Disables itself when the specified condition is True, and enables it when False.
+     * 
      * @param condition A timing condition.
      * @param conditions Additional timing conditions.
      * @return Chainable API.
@@ -90,6 +115,30 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     default Self disableWhen(Signal<Boolean> condition, Signal<Boolean>... conditions) {
         if (condition != null) {
             condition.combineLatest(conditions, (one, other) -> one || other).to(disableProperty()::setValue);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Disables itself when any specified condition is True, and enables it when False.
+     * 
+     * @param conditions A list of timing conditions.
+     * @return Chainable API.
+     */
+    default Self disableWhenAny(List<Signal<Boolean>> conditions) {
+        if (conditions != null) {
+            switch (conditions.size()) {
+            case 0:
+                break;
+
+            case 1:
+                disableWhenAny(conditions.get(0));
+                break;
+
+            default:
+                disableWhenAny(conditions.get(0), conditions.subList(1, conditions.size()).toArray(Signal[]::new));
+                break;
+            }
         }
         return (Self) this;
     }
@@ -230,6 +279,30 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     /**
      * Enables itself when the specified condition is True, and enables it when False.
      * 
+     * @param conditions A list of timing conditions.
+     * @return Chainable API.
+     */
+    default Self enableWhen(List<Signal<Boolean>> conditions) {
+        if (conditions != null) {
+            switch (conditions.size()) {
+            case 0:
+                break;
+
+            case 1:
+                enableWhen(conditions.get(0));
+                break;
+
+            default:
+                enableWhen(conditions.get(0), conditions.subList(1, conditions.size()).toArray(Signal[]::new));
+                break;
+            }
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Enables itself when the specified condition is True, and enables it when False.
+     * 
      * @param condition A timing condition.
      * @param conditions Additional timing conditions.
      * @return Chainable API.
@@ -237,6 +310,30 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     default Self enableWhen(Signal<Boolean> condition, Signal<Boolean>... conditions) {
         if (condition != null) {
             condition.combineLatest(conditions, (one, other) -> one || other).to(this::enable);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Enables itself when any specified condition is True, and enables it when False.
+     * 
+     * @param conditions A list of timing conditions.
+     * @return Chainable API.
+     */
+    default Self enableWhenAny(List<Signal<Boolean>> conditions) {
+        if (conditions != null) {
+            switch (conditions.size()) {
+            case 0:
+                break;
+
+            case 1:
+                enableWhenAny(conditions.get(0));
+                break;
+
+            default:
+                enableWhenAny(conditions.get(0), conditions.subList(1, conditions.size()).toArray(Signal[]::new));
+                break;
+            }
         }
         return (Self) this;
     }
