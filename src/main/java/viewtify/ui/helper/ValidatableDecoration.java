@@ -73,6 +73,8 @@ class ValidatableDecoration extends GraphicDecoration implements Disposable {
         tooltip.setAutoFix(true);
         tooltip.setAnchorLocation(AnchorLocation.CONTENT_BOTTOM_LEFT);
         StyleHelper.of(tooltip).style(FormStyles.ValidationToolTip);
+        Viewtify.observe(tooltip.skinProperty()).first().to(n -> n.getNode().setOnMouseEntered(e -> hide()));
+
         this.tooltip = tooltip;
 
         // show decoration

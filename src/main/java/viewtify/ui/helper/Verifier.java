@@ -202,6 +202,35 @@ public class Verifier implements Disposable {
         throw error("Please input a positive number.");
     };
 
+    /**
+     * Builtin verifier.
+     */
+    public static final WiseConsumer<ValueHelper<?, String>> Text = ui -> {
+        String value = ui.value();
+
+        if (value != null) {
+            value = value.strip();
+            if (value.length() != 0) {
+                return;
+            }
+        }
+        throw error("Please input some text.");
+    };
+
+    public static final WiseConsumer<ValueHelper<?, Integer>> Integer(int start, int end) {
+        return ui -> {
+            Integer integer = ui.value();
+
+            if (integer != null) {
+                int i = integer.intValue();
+                if (start <= i && i <= end) {
+                    return;
+                }
+            }
+            throw error("Please input integral number. [" + start + " - " + end + "]");
+        };
+    }
+
     private static Throwable error(String message) {
         return new IllegalArgumentException(I.translate(message).toString());
     }
