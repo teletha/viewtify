@@ -23,7 +23,9 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,8 +36,6 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -65,6 +65,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -170,6 +173,9 @@ public final class Viewtify {
 
     /** The managed application stylesheets. */
     private static final CopyOnWriteArrayList<String> stylesheets = new CopyOnWriteArrayList();
+
+    /** Queue to store UI actions as they are requested before launching the UI. */
+    private static Queue<Runnable> waitingActions = new ConcurrentLinkedQueue();
 
     /** The estimated application class. */
     private static volatile Class applicationLaunchingClass;
@@ -529,6 +535,10 @@ public final class Viewtify {
             mainStage.setScene(scene);
             mainStage.show();
 
+            // process the unexecuted UI action
+            waitingActions.forEach(Runnable::run);
+            waitingActions = null;
+
             if (!isHeadless()) {
                 // release resources for splash screen
                 SplashScreen screen = SplashScreen.getSplashScreen();
@@ -788,14 +798,7 @@ public final class Viewtify {
      * @param process
      */
     public final static void inWorker(Supplier<Disposable> process) {
-        if (Platform.isFxApplicationThread()) {
-            pool.submit(() -> {
-                Terminator.add(process.get());
-            });
-        } else {
-            Terminator.add(process.get());
-        }
-
+        inWorker(() -> Terminator.add(process.get()));
     }
 
     /**
@@ -807,7 +810,15 @@ public final class Viewtify {
         if (Platform.isFxApplicationThread() || inTest) {
             process.run();
         } else {
-            Platform.runLater(process::run);
+            try {
+                Platform.runLater(process::run);
+            } catch (IllegalStateException e) {
+                if (waitingActions == null) {
+                    throw e;
+                } else {
+                    waitingActions.add(process);
+                }
+            }
         }
     }
 
@@ -817,13 +828,7 @@ public final class Viewtify {
      * @param process
      */
     public final static void inUI(Supplier<Disposable> process) {
-        if (Platform.isFxApplicationThread()) {
-            Terminator.add(process.get());
-        } else {
-            Platform.runLater(() -> {
-                Terminator.add(process.get());
-            });
-        }
+        inUI(() -> Terminator.add(process.get()));
     }
 
     /**
