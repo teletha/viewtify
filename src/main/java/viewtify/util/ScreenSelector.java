@@ -9,16 +9,19 @@
  */
 package viewtify.util;
 
+import javafx.geometry.Bounds;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.robot.Robot;
 import javafx.stage.Screen;
 import javafx.stage.Window;
-
 import kiss.I;
 import kiss.Variable;
 
 public enum ScreenSelector implements Translatable {
 
-    Application(I.translate("Application")), Mouse(I.translate("Mouse")), Primary(I.translate("Primary"));
+    Application(I.translate("Application")), Mouse(I.translate("Mouse")), Primary(I.translate("Primary")), InWindow(
+            I.translate("In Window"));
 
     private final Variable<String> text;
 
@@ -34,19 +37,24 @@ public enum ScreenSelector implements Translatable {
      * 
      * @return
      */
-    public Screen select() {
+    public Rectangle2D select() {
         switch (this) {
         case Application:
             Window w = Window.getWindows().get(0);
             // correct 10 pixel for maximized window
-            return Screen.getScreensForRectangle(w.getX() + 10, w.getY(), w.getWidth(), w.getHeight()).get(0);
+            return Screen.getScreensForRectangle(w.getX() + 10, w.getY(), w.getWidth(), w.getHeight()).get(0).getBounds();
 
         case Mouse:
             Robot robot = new Robot();
-            return Screen.getScreensForRectangle(robot.getMouseX(), robot.getMouseY(), 1, 1).get(0);
+            return Screen.getScreensForRectangle(robot.getMouseX(), robot.getMouseY(), 1, 1).get(0).getBounds();
+
+        case Primary:
+            return Screen.getPrimary().getBounds();
 
         default:
-            return Screen.getPrimary();
+            Parent root = Window.getWindows().get(0).getScene().getRoot();
+            Bounds bound = root.localToScreen(root.getBoundsInLocal());
+            return new Rectangle2D(bound.getMinX(), bound.getMinY() + 10, bound.getWidth(), bound.getHeight());
         }
     }
 

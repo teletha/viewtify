@@ -21,7 +21,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
-
 import kiss.Disposable;
 import kiss.I;
 import stylist.Style;
@@ -36,7 +35,7 @@ import viewtify.ui.helper.UserActionHelper;
 public class Toast extends Preferences {
 
     /** The margin for each notifications. */
-    private static final int MARGIN = 12;
+    private static final int MARGIN = 15;
 
     /** The base transparent window. */
     private static final LinkedList<Notification> notifications = new LinkedList();
@@ -116,10 +115,10 @@ public class Toast extends Preferences {
      */
     private static void layoutNotifications() {
         Viewtify.inUI(() -> {
-            Rectangle2D rect = setting.screen.v.select().getBounds();
+            Rectangle2D rect = setting.screen.v.select();
             boolean isTopSide = setting.area.v.isTopSide();
             double x = setting.area.v.isLeftSide() ? rect.getMinX() + MARGIN : rect.getMaxX() - setting.width.v - MARGIN;
-            double y = isTopSide ? MARGIN : rect.getMaxY() - MARGIN;
+            double y = isTopSide ? rect.getMinY() + MARGIN : rect.getMaxY() - MARGIN;
 
             Iterator<Notification> iterator = isTopSide ? notifications.descendingIterator() : notifications.iterator();
             while (iterator.hasNext()) {
