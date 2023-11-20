@@ -116,6 +116,8 @@ public class Toast extends Preferences {
     private static void layoutNotifications() {
         Viewtify.inUI(() -> {
             Rectangle2D rect = setting.screen.v.select();
+
+            // use viewtify notification
             boolean isTopSide = setting.area.v.isTopSide();
             double x = setting.area.v.isLeftSide() ? rect.getMinX() + MARGIN : rect.getMaxX() - setting.width.v - MARGIN;
             double y = isTopSide ? rect.getMinY() + MARGIN : rect.getMaxY() - MARGIN;
@@ -222,8 +224,8 @@ public class Toast extends Preferences {
 
         Style popup = () -> {
             padding.vertical(MARGIN, px).horizontal(MARGIN, px);
-            background.color("-fx-background");
-            border.radius(7, px).color("-fx-mid-text-color");
+            background.color("derive(-fx-control-inner-background, 10%)");
+            border.radius(5, px).color("-fx-light-text-color");
         };
     }
 }

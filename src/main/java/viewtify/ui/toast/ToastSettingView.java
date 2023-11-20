@@ -66,7 +66,7 @@ public class ToastSettingView extends View {
         notificationMonitor.items(ScreenSelector.values()).sync(setting.screen);
         notificationMax.items(0, 1, 2, 3, 4, 5, 6, 7, 8).sync(setting.max).disableWhen(enableNotification.isNotSelected());
         notificationArea.items(Corner.values()).sync(setting.area).disableWhen(enableNotification.isNotSelected());
-        notificationDuration.items(IntStream.range(0, 21).mapToObj(x -> Duration.seconds(x * 15)).toList())
+        notificationDuration.items(IntStream.range(0, 31).mapToObj(x -> Duration.seconds(x * 10)).toList())
                 .sync(setting.autoHide)
                 .format(d -> String.valueOf((int) d.toSeconds()) + en("sec"))
                 .disableWhen(enableNotification.isNotSelected());

@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
-
 import kiss.I;
 import psychopath.File;
 import psychopath.Locator;
@@ -190,5 +189,14 @@ public enum Theme {
      */
     public Color textMid() {
         return variables.getOrDefault("-fx-mid-text-color", Color.BLACK);
+    }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
+    public Color background() {
+        return variables.getOrDefault("-fx-background-color", Color.BLACK);
     }
 }

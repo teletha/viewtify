@@ -32,13 +32,13 @@ public class ToastSetting extends Preferences {
     public final Preference<Duration> autoHide = initialize(Duration.seconds(15)).requireMin(Duration.ZERO);
 
     /** The notification area. */
-    public final Preference<Corner> area = initialize(Corner.TopRight);
+    public final Preference<Corner> area = initialize(Corner.BottomRight);
 
     /** The notification screen. */
-    public final Preference<ScreenSelector> screen = initialize(ScreenSelector.Application);
+    public final Preference<ScreenSelector> screen = initialize(ScreenSelector.InWindow);
 
     /** The opacity of notification area. */
-    public final Preference<Double> opacity = initialize(0.85).requireBetween(0, 1);
+    public final Preference<Double> opacity = initialize(0.9).requireBetween(0, 1);
 
     /** The width of notification area. */
     public final Preference<Integer> width = initialize(250).requireMin(50);
