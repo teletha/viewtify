@@ -1112,7 +1112,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
          */
         private void invokeResort() {
             try {
-                resort.invoke(sorted);
+                resort.invoke(sorted.getValue());
             } catch (Exception e) {
                 throw I.quiet(e);
             }
