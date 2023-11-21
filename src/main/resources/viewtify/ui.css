@@ -13,7 +13,7 @@
 		-fx-faint-edit-color: #ffa43150;
 		
 		-fx-error: hsb(0, 72%, 75%);
-		-fx-warning: hsb(60, 92%, 95%);
+		-fx-warning: hsb(44, 92%, 95%);
 		-fx-success: hsb(90, 45%, 86%);
 		
 		-fx-accent1: derive(-fx-accent, -5%);
