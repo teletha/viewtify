@@ -26,7 +26,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
@@ -363,11 +362,15 @@ public final class ViewtyDialog<T> {
     }
 
     public <V> Variable<V> showWizard(Class<? extends DialogView<V>>... views) {
-        hideButtons = true;
         Class<V> type = (Class<V>) Model.collectParameters(views[0], DialogView.class)[0];
+        return showWizard(I.make(type), views);
+    }
+
+    public <V> Variable<V> showWizard(V value, Class<? extends DialogView<V>>... views) {
+        hideButtons = true;
 
         return button(ButtonType.PREVIOUS, ButtonType.NEXT, ButtonType.FINISH, ButtonType.CANCEL).disableSystemButtonOrder()
-                .show(new Wizardly(I.make(type), views));
+                .show(new Wizardly(value, views));
     }
 
     /**
