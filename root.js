@@ -20,7 +20,6 @@ const root = {
 		"viewtify.ui.query",
 		"viewtify.ui.toast",
 		"viewtify.ui.view",
-		"viewtify.ui.wizard",
 		"viewtify.update",
 		"viewtify.util"
 	],
@@ -1192,13 +1191,6 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "WeekView",
 			"packageName": "viewtify.ui.calendar",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Wizardly",
-			"packageName": "viewtify.ui.wizard",
 			"type": "Class"
 		},
 		{
