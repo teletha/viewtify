@@ -7,22 +7,19 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.ui.wizard;
+package viewtify;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.ColumnConstraints;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import stylist.Style;
 import stylist.StyleDSL;
 import stylist.value.Numeric;
-import viewtify.Theme;
-import viewtify.Viewtify;
 import viewtify.ViewtyDialog.DialogView;
 import viewtify.ui.UIButton;
 import viewtify.ui.UIGridView;
@@ -36,7 +33,7 @@ import viewtify.ui.anime.Anime;
 import viewtify.ui.anime.SwapAnime;
 import viewtify.ui.helper.User;
 
-public class Wizardly<V> extends DialogView<V> {
+class WizardDialog<V> extends DialogView<V> {
 
     private UIScrollPane main;
 
@@ -61,7 +58,7 @@ public class Wizardly<V> extends DialogView<V> {
     /**
      * @param views
      */
-    public Wizardly(V value, Class<? extends DialogView>[] views) {
+    WizardDialog(V value, Class<? extends DialogView>[] views) {
         this.value = value;
         this.views = I.signal(views).map(x -> I.make(x)).toList();
         this.max = this.views.size() - 1;
@@ -94,6 +91,7 @@ public class Wizardly<V> extends DialogView<V> {
         for (int i = 0; i < views.size(); i++) {
             DialogView view = views.get(i);
             view.value = value;
+            view.pane = pane;
 
             Navi n = new Navi(i, view.title());
             navis.add(n);

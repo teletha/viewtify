@@ -12,6 +12,7 @@ package viewtify.ui;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -25,10 +26,11 @@ import kiss.WiseTriFunction;
 import viewtify.Viewtify;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableValuedItemRenderingHelper;
+import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.User;
 
 public class UIComboBox<T> extends AbstractComboBox<T, UIComboBox<T>, ComboBox<T>>
-        implements CollectableValuedItemRenderingHelper<UIComboBox<T>, T> {
+        implements CollectableValuedItemRenderingHelper<UIComboBox<T>, T>, EditableHelper<UIComboBox<T>> {
 
     /**
      * Builde {@link ComboBox}.
@@ -56,6 +58,14 @@ public class UIComboBox<T> extends AbstractComboBox<T, UIComboBox<T>, ComboBox<T
     @Override
     public Property<ObservableList<T>> itemsProperty() {
         return ui.itemsProperty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BooleanProperty edit() {
+        return ui.editableProperty();
     }
 
     /**

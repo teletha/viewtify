@@ -38,7 +38,6 @@ import viewtify.ui.UIText;
 import viewtify.ui.UserInterface;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.wizard.Wizardly;
 
 /**
  * The specialized dialog builder.
@@ -370,7 +369,7 @@ public final class ViewtyDialog<T> {
         hideButtons = true;
 
         return button(ButtonType.PREVIOUS, ButtonType.NEXT, ButtonType.FINISH, ButtonType.CANCEL).disableSystemButtonOrder()
-                .show(new Wizardly(value, views));
+                .show(new WizardDialog(value, views));
     }
 
     /**
