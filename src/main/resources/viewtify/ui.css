@@ -15,6 +15,7 @@
 		-fx-error: hsb(0, 72%, 75%);
 		-fx-warning: hsb(44, 92%, 95%);
 		-fx-success: hsb(90, 45%, 86%);
+		-fx-link: hsb(225, 90%, 75%);
 		
 		-fx-accent1: derive(-fx-accent, -5%);
 		-fx-accent2: derive(-fx-accent, -10%);
@@ -60,12 +61,7 @@
 ===========================================================================*/
 .hyperlink {
 		-fx-text-fill: -fx-link;
-		-fx-underline: false;
 		-fx-border-width: 0;
-}
-
-.hyperlink:hover {
-		-fx-underline: true;
 }
 
 /* ==========================================================================

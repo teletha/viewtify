@@ -17,12 +17,12 @@ import java.util.function.Supplier;
 import javafx.beans.value.WritableDoubleValue;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import kiss.Disposable;
 import kiss.I;
+import kiss.WiseConsumer;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
@@ -31,6 +31,7 @@ import viewtify.ui.anime.Animatable;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
+import viewtify.util.TextNotation;
 
 public class Toast extends Preferences {
 
@@ -45,12 +46,12 @@ public class Toast extends Preferences {
     /**
      * Show the specified node.
      */
-    public static void show(String message) {
-        show(() -> {
-            Label label = new Label(message);
-            label.setWrapText(true);
-            return label;
-        });
+    public static void show(String message, WiseConsumer<Runnable>... actions) {
+        Notification notification = new Notification();
+        Runnable hide = () -> remove(notification);
+        notification.builder = () -> TextNotation.parse(message, I.signal(actions).map(x -> x.bindLast(hide)).toList());
+
+        add(notification);
     }
 
     /**
@@ -68,7 +69,10 @@ public class Toast extends Preferences {
      * @param node
      */
     public static void show(Supplier<Node> node) {
-        add(new Notification(node));
+        Notification notification = new Notification();
+        notification.builder = node;
+
+        add(notification);
     }
 
     /**
@@ -151,7 +155,7 @@ public class Toast extends Preferences {
      */
     private static class Notification {
 
-        private final Supplier<Node> builder;
+        private Supplier<Node> builder;
 
         /** The base transparent window. */
         private Popup ui;
@@ -181,13 +185,6 @@ public class Toast extends Preferences {
         };
 
         private Disposable disposer;
-
-        /**
-         * @param node
-         */
-        private Notification(Supplier<Node> builder) {
-            this.builder = builder;
-        }
 
         /**
          * Generate UI lazy.

@@ -11,6 +11,7 @@ package viewtify.util;
 
 import java.awt.Desktop;
 import java.net.URI;
+import java.util.List;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -18,10 +19,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.text.TextFlow;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
+import kiss.WiseRunnable;
 import viewtify.Viewtify;
 
 public class TextNotation {
@@ -75,9 +76,19 @@ public class TextNotation {
      * @param message A wiki-like notation text.
      * @return
      */
-    public static TextFlow parse(String message) {
+    public static TextFlow parse(String message, WiseRunnable... actions) {
+        return parse(message, List.of(actions));
+    }
+
+    /**
+     * Parse as {@link TextFlow}.
+     * 
+     * @param message A wiki-like notation text.
+     * @return
+     */
+    public static TextFlow parse(String message, List<WiseRunnable> actions) {
         TextFlow flow = new TextFlow();
-        parse(flow.getChildren(), message);
+        parse(flow.getChildren(), message, actions);
         return flow;
     }
 
@@ -87,18 +98,28 @@ public class TextNotation {
      * @param message A wiki-like notation text.
      * @return
      */
-    public static TextFlow parse(Variable message) {
+    public static TextFlow parse(Variable message, WiseRunnable... actions) {
+        return parse(message, List.of(actions));
+    }
+
+    /**
+     * Parse as {@link TextFlow}.
+     * 
+     * @param message A wiki-like notation text.
+     * @return
+     */
+    public static TextFlow parse(Variable message, List<WiseRunnable> actions) {
         TextFlow flow = new TextFlow();
         ObservableList<Node> children = flow.getChildren();
 
         message.observing().on(Viewtify.UIThread).to(text -> {
             children.clear();
-            parse(children, I.transform(text, String.class));
+            parse(children, I.transform(text, String.class), actions);
         });
         return flow;
     }
 
-    private static void parse(ObservableList<Node> children, String message) {
+    private static void parse(ObservableList<Node> children, String message, List<WiseRunnable> actions) {
         if (message == null) {
             return;
         }
@@ -143,9 +164,13 @@ public class TextNotation {
                     Hyperlink link = (Hyperlink) children.get(children.size() - 1);
                     link.setOnAction(e -> {
                         try {
-                            Desktop.getDesktop().browse(new URI(uri));
-                        } catch (Throwable error) {
-                            throw I.quiet(error);
+                            actions.get(Integer.parseInt(uri)).run();
+                        } catch (NumberFormatException notNumber) {
+                            try {
+                                Desktop.getDesktop().browse(new URI(uri));
+                            } catch (Throwable error) {
+                                throw I.quiet(error);
+                            }
                         }
                     });
                     builder = new StringBuilder();
