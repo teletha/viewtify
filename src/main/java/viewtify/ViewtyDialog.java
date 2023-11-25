@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -22,7 +23,9 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.DialogPane;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -81,6 +84,9 @@ public final class ViewtyDialog<T> {
 
     /** The dialog effect. */
     private boolean fadable;
+
+    /** The dialog effect. */
+    private boolean blurable;
 
     /** The diposer. */
     private final Disposable disposer = Disposable.empty();
@@ -205,6 +211,16 @@ public final class ViewtyDialog<T> {
     }
 
     /**
+     * Congifure the loading effect.
+     * 
+     * @return
+     */
+    public ViewtyDialog<T> blurable() {
+        blurable = true;
+        return this;
+    }
+
+    /**
      * Configure the size of dialog.
      * 
      * @return
@@ -303,11 +319,19 @@ public final class ViewtyDialog<T> {
             dialog.setOnShowing(e -> {
                 Anime.define().init(opacity, 0).effect(opacity, 1, 0.3).run();
             });
-            dialog.setOnCloseRequest(e -> {
+            dialog.addEventHandler(DialogEvent.DIALOG_CLOSE_REQUEST, e -> {
                 if (opacity.doubleValue() != 0) {
                     e.consume();
                     Anime.define().effect(opacity, 0, 0.3).run(dialog::close);
                 }
+            });
+        }
+
+        if (blurable) {
+            Parent owner = dialog.getOwner().getScene().getRoot();
+            owner.setEffect(new BoxBlur(5, 5, 8));
+            dialog.addEventHandler(DialogEvent.DIALOG_CLOSE_REQUEST, e -> {
+                owner.setEffect(null);
             });
         }
 
