@@ -12,6 +12,7 @@ package viewtify;
 import java.util.List;
 import java.util.function.Supplier;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -38,6 +39,7 @@ import viewtify.ui.UIText;
 import viewtify.ui.UserInterface;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.ui.anime.Anime;
 
 /**
  * The specialized dialog builder.
@@ -76,6 +78,9 @@ public final class ViewtyDialog<T> {
 
     /** The height of this dialog. */
     private int height;
+
+    /** The dialog effect. */
+    private boolean fadable;
 
     /** The diposer. */
     private final Disposable disposer = Disposable.empty();
@@ -190,6 +195,16 @@ public final class ViewtyDialog<T> {
     }
 
     /**
+     * Congifure the loading effect.
+     * 
+     * @return
+     */
+    public ViewtyDialog<T> fadable() {
+        fadable = true;
+        return this;
+    }
+
+    /**
      * Configure the size of dialog.
      * 
      * @return
@@ -280,6 +295,20 @@ public final class ViewtyDialog<T> {
         Node ui = view.ui();
         if (initializer != null) {
             initializer.accept(view);
+        }
+
+        if (fadable) {
+            DoubleProperty opacity = dialogPane.getScene().getWindow().opacityProperty();
+
+            dialog.setOnShowing(e -> {
+                Anime.define().init(opacity, 0).effect(opacity, 1, 0.3).run();
+            });
+            dialog.setOnCloseRequest(e -> {
+                if (opacity.doubleValue() != 0) {
+                    e.consume();
+                    Anime.define().effect(opacity, 0, 0.3).run(dialog::close);
+                }
+            });
         }
 
         dialogPane.setContent(ui);
