@@ -60,6 +60,7 @@
   Hyperlink
 ===========================================================================*/
 .hyperlink {
+    -fx-padding: 0;
 		-fx-text-fill: -fx-link;
 		-fx-border-width: 0;
 }
