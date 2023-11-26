@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.text.TextFlow;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -88,6 +89,7 @@ public class TextNotation {
      */
     public static TextFlow parse(String message, List<WiseRunnable> actions) {
         TextFlow flow = new TextFlow();
+        flow.setLineSpacing(2);
         parse(flow.getChildren(), message, actions);
         return flow;
     }
@@ -110,6 +112,7 @@ public class TextNotation {
      */
     public static TextFlow parse(Variable message, List<WiseRunnable> actions) {
         TextFlow flow = new TextFlow();
+        flow.setLineSpacing(2);
         ObservableList<Node> children = flow.getChildren();
 
         message.observing().on(Viewtify.UIThread).to(text -> {
