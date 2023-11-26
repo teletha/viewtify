@@ -36,13 +36,21 @@ import viewtify.util.TextNotation;
 
 public class Toast extends Preferences {
 
-    /** The margin for each notifications. */
-    private static final int MARGIN = 15;
-
     /** The base transparent window. */
     private static final LinkedList<Notification> notifications = new LinkedList();
 
     public static final ToastSetting setting = Preferences.of(ToastSetting.class);
+
+    static {
+        setting.gap.observe().to(Toast::layoutNotifications);
+        setting.area.observe().to(Toast::layoutNotifications);
+        setting.screen.observe().to(Toast::layoutNotifications);
+        setting.opacity.observe().to(v -> {
+            for (Notification notification : notifications) {
+                notification.ui().getContent().get(0).setOpacity(v / 100d);
+            }
+        });
+    }
 
     /**
      * Show the specified node.
@@ -120,12 +128,13 @@ public class Toast extends Preferences {
      */
     private static void layoutNotifications() {
         Viewtify.inUI(() -> {
+            int gap = setting.gap.exact();
             Rectangle2D rect = setting.screen.v.select();
 
             // use viewtify notification
             boolean isTopSide = setting.area.v.isTopSide();
-            double x = setting.area.v.isLeftSide() ? rect.getMinX() + MARGIN : rect.getMaxX() - setting.width.v - MARGIN;
-            double y = isTopSide ? rect.getMinY() + MARGIN : rect.getMaxY();
+            double x = setting.area.v.isLeftSide() ? rect.getMinX() + gap : rect.getMaxX() - setting.width.v - gap;
+            double y = isTopSide ? rect.getMinY() + gap : rect.getMaxY();
 
             Iterator<Notification> iterator = isTopSide ? notifications.descendingIterator() : notifications.iterator();
             while (iterator.hasNext()) {
@@ -133,20 +142,20 @@ public class Toast extends Preferences {
                 Popup popup = notify.ui();
 
                 if (popup.isShowing()) {
-                    if (!isTopSide) y -= popup.getHeight() + MARGIN;
+                    if (!isTopSide) y -= popup.getHeight() + gap;
                     popup.setX(x);
                     Animatable.play(setting.animation.v, notify.y, y);
                 } else {
                     popup.setOpacity(0);
                     popup.show(Window.getWindows().get(0));
-                    if (!isTopSide) y -= popup.getHeight() + MARGIN;
+                    if (!isTopSide) y -= popup.getHeight() + gap;
                     popup.setX(x);
                     popup.setY(y);
 
                     Animatable.play(setting.animation.v, popup.opacityProperty(), 1);
                 }
 
-                if (isTopSide) y += popup.getHeight() + MARGIN;
+                if (isTopSide) y += popup.getHeight() + gap;
             }
         });
     }
@@ -199,7 +208,7 @@ public class Toast extends Preferences {
                 StyleHelper.of(box).style(Styles.popup);
                 box.setMaxWidth(setting.width.v);
                 box.setMinWidth(setting.width.v);
-                box.setOpacity(setting.opacity.v);
+                box.setOpacity(setting.opacity.v / 100d);
 
                 ui.setX(0);
                 ui.getContent().add(box);
@@ -221,7 +230,7 @@ public class Toast extends Preferences {
     private static interface Styles extends StyleDSL {
 
         Style popup = () -> {
-            padding.vertical(MARGIN, px).horizontal(MARGIN, px);
+            padding.vertical(15, px).horizontal(15, px);
             background.color("derive(-fx-control-inner-background, 10%)");
             border.radius(5, px).color("-fx-light-text-color");
         };

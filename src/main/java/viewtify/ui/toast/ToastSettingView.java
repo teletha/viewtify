@@ -12,7 +12,9 @@ package viewtify.ui.toast;
 import java.util.stream.IntStream;
 
 import javafx.util.Duration;
+
 import viewtify.model.Preferences;
+import viewtify.ui.UIButton;
 import viewtify.ui.UICheckBox;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UISpinner;
@@ -38,6 +40,15 @@ public class ToastSettingView extends View {
     /** The desktop configuration UI. */
     private UISpinner<Integer> notificationMax;
 
+    /** The desktop configuration UI. */
+    private UISpinner<Integer> notificationGap;
+
+    /** The desktop configuration UI. */
+    private UISpinner<Integer> notificationOpacity;
+
+    /** Execute notification for test. */
+    private UIButton notificationTest;
+
     /**
      * {@inheritDoc}
      */
@@ -50,6 +61,9 @@ public class ToastSettingView extends View {
                     form(en("Notification Location"), notificationArea);
                     form(en("Notification Duration"), notificationDuration);
                     form(en("Max number of Notifications"), notificationMax);
+                    form(en("Notification area spacing"), notificationGap);
+                    form(en("Notification area opacity"), notificationOpacity);
+                    form(en("Test notification"), notificationTest);
                 });
             }
         };
@@ -70,5 +84,8 @@ public class ToastSettingView extends View {
                 .sync(setting.autoHide)
                 .format(d -> String.valueOf((int) d.toSeconds()) + en("sec"))
                 .disableWhen(enableNotification.isNotSelected());
+        notificationGap.items(IntStream.range(0, 31)).sync(setting.gap).format(x -> x + "px");
+        notificationOpacity.items(IntStream.range(0, 101)).sync(setting.opacity).format(x -> x + "%");
+        notificationTest.text(en("Notify")).action(() -> Toast.show("Test"));
     }
 }

@@ -10,6 +10,7 @@
 package viewtify.ui.toast;
 
 import javafx.util.Duration;
+
 import viewtify.model.Preferences;
 import viewtify.util.Corner;
 import viewtify.util.ScreenSelector;
@@ -29,7 +30,7 @@ public class ToastSetting extends Preferences {
     public final Preference<Duration> animation = initialize(Duration.millis(333)).requireMin(Duration.ONE);
 
     /** The automatic hiding time. */
-    public final Preference<Duration> autoHide = initialize(Duration.seconds(15)).requireMin(Duration.ZERO);
+    public final Preference<Duration> autoHide = initialize(Duration.seconds(20)).requireMin(Duration.ZERO);
 
     /** The notification area. */
     public final Preference<Corner> area = initialize(Corner.BottomRight);
@@ -38,8 +39,11 @@ public class ToastSetting extends Preferences {
     public final Preference<ScreenSelector> screen = initialize(ScreenSelector.InWindow);
 
     /** The opacity of notification area. */
-    public final Preference<Double> opacity = initialize(0.9).requireBetween(0, 1);
+    public final Preference<Integer> opacity = initialize(90).requireBetween(0, 100);
 
     /** The width of notification area. */
     public final Preference<Integer> width = initialize(250).requireMin(50);
+
+    /** The gap of notification area. */
+    public final Preference<Integer> gap = initialize(15).requireBetween(0, 30);
 }
