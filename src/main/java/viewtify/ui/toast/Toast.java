@@ -20,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.WiseConsumer;
@@ -124,7 +125,7 @@ public class Toast extends Preferences {
             // use viewtify notification
             boolean isTopSide = setting.area.v.isTopSide();
             double x = setting.area.v.isLeftSide() ? rect.getMinX() + MARGIN : rect.getMaxX() - setting.width.v - MARGIN;
-            double y = isTopSide ? rect.getMinY() + MARGIN : rect.getMaxY() - MARGIN;
+            double y = isTopSide ? rect.getMinY() + MARGIN : rect.getMaxY();
 
             Iterator<Notification> iterator = isTopSide ? notifications.descendingIterator() : notifications.iterator();
             while (iterator.hasNext()) {
