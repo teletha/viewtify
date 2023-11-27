@@ -56,11 +56,13 @@ public class Toast extends Preferences {
      * Show the specified node.
      */
     public static void show(String message, WiseConsumer<Runnable>... actions) {
-        Notification notification = new Notification();
-        Runnable hide = () -> remove(notification);
-        notification.builder = () -> TextNotation.parse(message, I.signal(actions).map(x -> x.bindLast(hide)).toList());
+        if (setting.enable.is(true)) {
+            Notification notification = new Notification();
+            Runnable hide = () -> remove(notification);
+            notification.builder = () -> TextNotation.parse(message, I.signal(actions).map(x -> x.bindLast(hide)).toList());
 
-        add(notification);
+            add(notification);
+        }
     }
 
     /**
@@ -78,10 +80,12 @@ public class Toast extends Preferences {
      * @param node
      */
     public static void show(Supplier<Node> node) {
-        Notification notification = new Notification();
-        notification.builder = node;
+        if (setting.enable.is(true)) {
+            Notification notification = new Notification();
+            notification.builder = node;
 
-        add(notification);
+            add(notification);
+        }
     }
 
     /**

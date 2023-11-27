@@ -14,8 +14,9 @@ import java.util.stream.IntStream;
 import javafx.util.Duration;
 
 import viewtify.model.Preferences;
+import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
-import viewtify.ui.UICheckBox;
+import viewtify.ui.UICheckSwitch;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UISpinner;
 import viewtify.ui.View;
@@ -26,7 +27,7 @@ import viewtify.util.ScreenSelector;
 public class ToastSettingView extends View {
 
     /** The desktop configuration UI. */
-    private UICheckBox enableNotification;
+    private UICheckSwitch enableNotification;
 
     /** The desktop configuration UI. */
     private UISpinner<Duration> notificationDuration;
@@ -57,6 +58,7 @@ public class ToastSettingView extends View {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
+                    form(en("Enable Notification"), FormStyles.InputMin, enableNotification);
                     form(en("Notification Monitor"), notificationMonitor);
                     form(en("Notification Location"), notificationArea);
                     form(en("Notification Duration"), notificationDuration);
@@ -76,16 +78,16 @@ public class ToastSettingView extends View {
     protected void initialize() {
         ToastSetting setting = Preferences.of(ToastSetting.class);
 
-        enableNotification.text(en("Enable notification")).sync(setting.enable);
-        notificationMonitor.items(ScreenSelector.values()).sync(setting.screen);
+        enableNotification.sync(setting.enable);
+        notificationMonitor.items(ScreenSelector.values()).sync(setting.screen).disableWhen(enableNotification.isNotSelected());
         notificationMax.items(0, 1, 2, 3, 4, 5, 6, 7, 8).sync(setting.max).disableWhen(enableNotification.isNotSelected());
         notificationArea.items(Corner.values()).sync(setting.area).disableWhen(enableNotification.isNotSelected());
         notificationDuration.items(IntStream.range(0, 31).mapToObj(x -> Duration.seconds(x * 10)).toList())
                 .sync(setting.autoHide)
                 .format(d -> String.valueOf((int) d.toSeconds()) + en("sec"))
                 .disableWhen(enableNotification.isNotSelected());
-        notificationGap.items(IntStream.range(0, 31)).sync(setting.gap).format(x -> x + "px");
-        notificationOpacity.items(IntStream.range(0, 101)).sync(setting.opacity).format(x -> x + "%");
+        notificationGap.items(IntStream.range(0, 31)).sync(setting.gap).format(x -> x + "px").disableWhen(enableNotification.isNotSelected());
+        notificationOpacity.items(IntStream.range(0, 101)).sync(setting.opacity).format(x -> x + "%").disableWhen(enableNotification.isNotSelected());
         notificationTest.text(en("Notify")).action(() -> Toast.show("Test"));
     }
 }
