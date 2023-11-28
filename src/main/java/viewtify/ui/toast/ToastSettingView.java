@@ -12,19 +12,19 @@ package viewtify.ui.toast;
 import java.util.stream.IntStream;
 
 import javafx.util.Duration;
-
+import kiss.Variable;
 import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
 import viewtify.ui.UICheckSwitch;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UISpinner;
-import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.ui.view.PreferenceViewBase;
 import viewtify.util.Corner;
 import viewtify.util.ScreenSelector;
 
-public class ToastSettingView extends View {
+public class ToastSettingView extends PreferenceViewBase {
 
     /** The desktop configuration UI. */
     private UICheckSwitch enableNotification;
@@ -49,6 +49,14 @@ public class ToastSettingView extends View {
 
     /** Execute notification for test. */
     private UIButton notificationTest;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Variable<String> category() {
+        return en("Notification");
+    }
 
     /**
      * {@inheritDoc}
@@ -86,8 +94,14 @@ public class ToastSettingView extends View {
                 .sync(setting.autoHide)
                 .format(d -> String.valueOf((int) d.toSeconds()) + en("sec"))
                 .disableWhen(enableNotification.isNotSelected());
-        notificationGap.items(IntStream.range(0, 31)).sync(setting.gap).format(x -> x + "px").disableWhen(enableNotification.isNotSelected());
-        notificationOpacity.items(IntStream.range(0, 101)).sync(setting.opacity).format(x -> x + "%").disableWhen(enableNotification.isNotSelected());
+        notificationGap.items(IntStream.range(0, 31))
+                .sync(setting.gap)
+                .format(x -> x + "px")
+                .disableWhen(enableNotification.isNotSelected());
+        notificationOpacity.items(IntStream.range(0, 101))
+                .sync(setting.opacity)
+                .format(x -> x + "%")
+                .disableWhen(enableNotification.isNotSelected());
         notificationTest.text(en("Notify")).action(() -> Toast.show("Test"));
     }
 }

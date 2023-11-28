@@ -10,6 +10,7 @@
 package viewtify.keys;
 
 import kiss.I;
+import kiss.Variable;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
@@ -18,11 +19,11 @@ import viewtify.style.FormStyles;
 import viewtify.ui.UITableColumn;
 import viewtify.ui.UITableView;
 import viewtify.ui.UIText;
-import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
+import viewtify.ui.view.PreferenceViewBase;
 
-public class KeyBindingView extends View {
+public class KeyBindingSettingView extends PreferenceViewBase {
 
     private UIText<String> filter;
 
@@ -31,6 +32,14 @@ public class KeyBindingView extends View {
     private UITableColumn<Command, String> name;
 
     private UITableColumn<Command, Key> key;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Variable<String> category() {
+        return en("Keyborad Operation");
+    }
 
     /**
      * {@inheritDoc}
@@ -52,7 +61,7 @@ public class KeyBindingView extends View {
 
     interface style extends StyleDSL {
         Style root = () -> {
-            display.maxWidth(380, px).minHeight(250, px).maxHeight(250, px);
+            display.minHeight(250, px).maxHeight(250, px);
             margin.top(5, px);
         };
 
@@ -61,13 +70,13 @@ public class KeyBindingView extends View {
         };
 
         Style name = () -> {
-            display.width(240, px);
+            display.width(280, px);
             text.align.left();
             padding.left(10, px);
         };
 
         Style key = () -> {
-            display.width(120, px);
+            display.width(170, px);
         };
     }
 

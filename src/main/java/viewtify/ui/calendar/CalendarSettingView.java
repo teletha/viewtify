@@ -14,6 +14,7 @@ import java.time.LocalTime;
 import java.util.stream.IntStream;
 
 import kiss.I;
+import kiss.Variable;
 import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UICheckBox;
@@ -22,9 +23,10 @@ import viewtify.ui.UIColorPicker;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.ui.view.PreferenceViewBase;
 import viewtify.util.FXUtils;
 
-public class CalendarSettingView extends View {
+public class CalendarSettingView extends PreferenceViewBase {
 
     private UIComboBox<DayOfWeek> firstDoW;
 
@@ -35,6 +37,14 @@ public class CalendarSettingView extends View {
     private UIComboBox<Class> initialView;
 
     private UICheckSwitch emphsizeToday;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Variable<String> category() {
+        return en("Calendar");
+    }
 
     /**
      * {@inheritDoc}

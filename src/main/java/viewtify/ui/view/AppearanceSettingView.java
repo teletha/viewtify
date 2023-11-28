@@ -14,16 +14,16 @@ import java.util.stream.IntStream;
 
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
+import kiss.Variable;
 import viewtify.Theme;
 import viewtify.ThemeType;
 import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UISpinner;
-import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 
-public class AppearanceSettingView extends View {
+public class AppearanceSettingView extends PreferenceViewBase {
 
     /** The theme selector. */
     public UIComboBox<Theme> theme;
@@ -39,6 +39,14 @@ public class AppearanceSettingView extends View {
 
     /** The size selector. */
     public UISpinner<Integer> size;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Variable<String> category() {
+        return en("Appearance and Language");
+    }
 
     @Override
     protected ViewDSL declareUI() {
