@@ -44,6 +44,27 @@ public interface FormStyles extends StyleDSL {
         display.width(62, px);
     };
 
+    Style Title = () -> {
+        margin.bottom(8, px);
+        font.size(18, px).weight.bold();
+
+        $.descendant(() -> {
+            font.smooth.grayscale();
+        });
+    };
+
+    Style SubTitle = () -> {
+        margin.bottom(8, px).top(15, px);
+        font.size(15, px).weight.bold();
+
+        $.descendant(() -> {
+            font.smooth.grayscale();
+        });
+    };
+
+    Style DescriptionDetail = () -> {
+    };
+
     Style ValidationToolTip = () -> {
         font.size(12, px).color("-fx-light-text-color");
         background.color($.rgba(60, 60, 60, 0.8));

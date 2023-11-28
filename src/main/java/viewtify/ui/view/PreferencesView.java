@@ -46,7 +46,7 @@ public class PreferencesView extends View {
                         $(vbox, style.root, () -> {
                             I.signal(bases).sort(Comparator.naturalOrder()).to(view -> {
                                 $(vbox, style.box, () -> {
-                                    label(view.category(), style.title);
+                                    label(view.category(), FormStyles.Title);
                                     $(view);
                                 });
                             });
@@ -72,15 +72,6 @@ public class PreferencesView extends View {
 
         Style box = () -> {
             padding.bottom(35, px);
-        };
-
-        Style title = () -> {
-            margin.bottom(8, px);
-            font.size(18, px).weight.bold();
-
-            $.descendant(() -> {
-                font.smooth.grayscale();
-            });
         };
     }
 
