@@ -32,11 +32,10 @@
 				<div></div>
 			</nav>
 			<article class="j" id="Article">
-				<section class="U"><code class="e">viewtify.ui.toast</code>
-					<h2 class="Class M"><code class="m">ToastSettingView</code></h2>
+				<section class="U"><code class="e">viewtify.ui.view</code>
+					<h2 class="AbstractClass M"><code class="m">PreferenceViewBase</code></h2>
 					<div class="V">
 						<ul class="C E">
-							<li><code><a href="api/viewtify.ui.view.PreferenceViewBase.html">PreferenceViewBase</a></code></li>
 							<li><code><a href="api/viewtify.ui.View.html">View</a></code></li>
 						</ul>
 						<ul class="C F">
@@ -45,44 +44,50 @@
 							<li><code>kiss.Extensible</code></li>
 							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
 						</ul>
+						<ul class="C G">
+							<li><code><a href="api/viewtify.ui.view.AppearanceSettingView.html">AppearanceSettingView</a></code></li>
+							<li><code><a href="api/viewtify.ui.calendar.CalendarSettingView.html">CalendarSettingView</a></code></li>
+							<li><code><a href="api/viewtify.keys.KeyBindingSettingView.html">KeyBindingSettingView</a></code></li>
+							<li><code><a href="api/viewtify.ui.toast.ToastSettingView.html">ToastSettingView</a></code></li>
+						</ul>
 					</div>
 				</section>
-				<section class="U" id="ToastSettingView()">
-					<h2 class="k"><i class="PUBLIC"></i><code class="m">ToastSettingView</code><code class="N">()</code></h2>
+				<section class="U" id="PreferenceViewBase()">
+					<h2 class="k"><i class="PUBLIC"></i><code class="m">PreferenceViewBase</code><code class="N">()</code></h2>
 				</section>
 				<section class="U" id="category()">
-					<h2 class="k"><i class="OVERRIDE PUBLIC"></i><code class="m">category</code><code class="N">()</code><i class="c"><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+					<h2 class="k"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="m">category</code><code class="N">()</code><i class="c"><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
 					<table class="J">
 						<tr class="O">
 							<td><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
 							<td></td>
 						</tr>
-					</table>
-				</section>
-				<section class="U" id="declareUI()">
-					<h2 class="k"><i class="OVERRIDE PROTECTED"></i><code class="m">declareUI</code><code class="N">()</code><i class="c"><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></h2>
+					</table><span class="B"><p>Define the category of preferences.</p>
+					</span></section>
+				<section class="U" id="compareTo(viewtify.ui.view.PreferenceViewBase)">
+					<h2 class="k"><i class="OVERRIDE PUBLIC"></i><code class="m">compareTo</code><code class="N">(<code><a href="api/viewtify.ui.view.PreferenceViewBase.html">PreferenceViewBase</a></code> <code class="parameterName">o</code>)</code><i class="c"><code>int</code></i></h2>
 					<table class="J">
+						<tr class="L">
+							<td><code><a href="api/viewtify.ui.view.PreferenceViewBase.html">PreferenceViewBase</a></code> <code>o</code></td>
+							<td></td>
+						</tr>
 						<tr class="O">
-							<td><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></td>
+							<td><code>int</code></td>
 							<td></td>
 						</tr>
 					</table>
-				</section>
-				<section class="U" id="initialize()">
-					<h2 class="k"><i class="OVERRIDE PROTECTED"></i><code class="m">initialize</code><code class="N">()</code><i class="c"><code>void</code></i></h2>
 				</section>
 			</article>
 			<aside class="K" id="SubNavi">
 				<div class="b">
 					<h5 class="Y">Constructors</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.ToastSettingView.html#ToastSettingView()">ToastSettingView</a></code><code class="N">()</code></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.view.PreferenceViewBase.html#PreferenceViewBase()">PreferenceViewBase</a></code><code class="N">()</code></li>
 					</ul>
 					<h5 class="Y">Methods</h5>
 					<ul>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.toast.ToastSettingView.html#category()">category</a></code><code class="N">()</code><i class="Z"><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.ui.toast.ToastSettingView.html#declareUI()">declareUI</a></code><code class="N">()</code><i class="Z"><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></li>
-						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.ui.toast.ToastSettingView.html#initialize()">initialize</a></code><code class="N">()</code><i class="Z"><code>void</code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.PreferenceViewBase.html#category()">category</a></code><code class="N">()</code><i class="Z"><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.view.PreferenceViewBase.html#compareTo(viewtify.ui.view.PreferenceViewBase)">compareTo</a></code><code class="N">(<code><a href="api/viewtify.ui.view.PreferenceViewBase.html">PreferenceViewBase</a></code> <code class="parameterName">o</code>)</code><i class="Z"><code>int</code></i></li>
 					</ul>
 				</div>
 			</aside>

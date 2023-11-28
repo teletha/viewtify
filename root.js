@@ -384,7 +384,7 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "KeyBindingView",
+			"name": "KeyBindingSettingView",
 			"packageName": "viewtify.keys",
 			"type": "Class"
 		},
@@ -468,6 +468,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "PreferenceViewBase",
+			"packageName": "viewtify.ui.view",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Preferences",
 			"packageName": "viewtify.model",
 			"type": "AbstractClass"
@@ -505,6 +512,13 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Preferences.Preference",
 			"packageName": "viewtify.model",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "PreferencesView",
+			"packageName": "viewtify.ui.view",
 			"type": "Class"
 		},
 		{
