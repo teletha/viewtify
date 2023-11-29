@@ -14,9 +14,11 @@ import java.util.Set;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
+
 import kiss.Extensible;
 import kiss.Variable;
 import viewtify.style.FormStyles;
@@ -109,13 +111,19 @@ public abstract class PreferenceViewBase extends View implements Extensible {
     }
 
     private Variable<Node> findDescription(Node row) {
-        ObservableList<Node> children = row.getParent().getChildrenUnmodifiable();
-        for (int i = children.indexOf(row) - 1; 0 <= i; i--) {
-            Node child = children.get(i);
-            ObservableList<String> classes = child.getStyleClass();
-            if (classes.contains(FormStyles.Description.className()[0])) {
-                return Variable.of(child);
+        Node target = row;
+        Parent node = target.getParent();
+        while (node != null && !node.getStyleClass().contains(FormStyles.Preferences.className()[0])) {
+            ObservableList<Node> children = node.getChildrenUnmodifiable();
+            for (int i = children.indexOf(target) - 1; 0 <= i; i--) {
+                Node child = children.get(i);
+                ObservableList<String> classes = child.getStyleClass();
+                if (classes.contains(FormStyles.Description.className()[0])) {
+                    return Variable.of(child);
+                }
             }
+            target = node;
+            node = node.getParent();
         }
         return Variable.empty();
     }
