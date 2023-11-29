@@ -79,7 +79,7 @@ public class PreferencesView extends View {
     interface style extends StyleDSL {
         Style search = () -> {
             display.maxWidth(220, px);
-            margin.top(15, px).left(295, px).bottom(15, px);
+            margin.top(15, px).left(310, px).bottom(15, px);
         };
 
         Style root = () -> {

@@ -37,7 +37,7 @@ public abstract class PreferenceViewBase extends View implements Extensible {
      * @param text
      */
     void searchPreferenceBy(String text) {
-        String[] classes = {".label", ".button", ".check-box", ".hyperlink", " .toggle-button"};
+        String[] classes = {".label", ".button", ".check-box", ".hyperlink", " .toggle-button", ".cell"};
         boolean precondition = text == null || text.isBlank() || category().exact().contains(text);
 
         int shown = 0;
@@ -74,7 +74,7 @@ public abstract class PreferenceViewBase extends View implements Extensible {
     private boolean searchLabel(Node row, String text, String... classes) {
         for (String clazz : classes) {
             for (Node node : row.lookupAll(clazz)) {
-                if (node instanceof Labeled labeled && labeled.getText().toLowerCase().contains(text)) {
+                if (node instanceof Labeled labeled && labeled.getText() != null && labeled.getText().toLowerCase().contains(text)) {
                     return true;
                 }
             }
