@@ -172,6 +172,16 @@ public class UITableView<RowV> extends UITableBase<RowV, TableView<RowV>, UITabl
     }
 
     /**
+     * Configure the height of cell.
+     * 
+     * @return
+     */
+    public UITableView<RowV> fixRowHeight(double height) {
+        ui.setFixedCellSize(height);
+        return this;
+    }
+
+    /**
      * 
      */
     private class EnhancedRow extends TableRow {

@@ -9,7 +9,9 @@
  */
 package viewtify.ui.view;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
@@ -43,7 +45,11 @@ public abstract class PreferenceViewBase extends View implements Extensible {
         int shown = 0;
         Set<Node> shownDescriptions = new HashSet();
 
-        for (Node row : ui().lookupAll(FormStyles.Row.selector())) {
+        List<Node> rows = new ArrayList();
+        rows.addAll(ui().lookupAll(FormStyles.Row.selector()));
+        rows.addAll(ui().lookupAll(".table-view"));
+
+        for (Node row : rows) {
             Variable<Node> description = findDescription(row);
             if (precondition || searchLabel(row, text, classes) || searchCombo(row, text) || searchDescription(description, text, classes)) {
                 shown++;

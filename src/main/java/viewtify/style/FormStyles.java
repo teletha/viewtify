@@ -98,7 +98,7 @@ public interface FormStyles extends StyleDSL {
         });
 
         $.descendant(Label, () -> {
-            text.verticalAlign.baseline().align.right();
+            text.verticalAlign.baseline();
             margin.right(20, px);
             display.minWidth(180, px).maxWidth(360, px).width.fill();
         });

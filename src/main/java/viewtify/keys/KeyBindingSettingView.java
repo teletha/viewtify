@@ -61,7 +61,7 @@ public class KeyBindingSettingView extends PreferenceViewBase {
 
     interface style extends StyleDSL {
         Style root = () -> {
-            display.minHeight(250, px).maxHeight(250, px);
+            display.maxHeight(250, px);
             margin.top(5, px);
         };
 
@@ -91,7 +91,7 @@ public class KeyBindingSettingView extends PreferenceViewBase {
         name.text(en("Command")).render(x -> x.ⅰ.name());
         key.text(en("Key Setting")).modelByVar(x -> manager.detectKey(x)).render(x -> x.ⅱ.toString());
 
-        table.items(I.find(Command.class)).take(filter.observing().map(text -> {
+        table.items(I.find(Command.class)).fixRowHeight(36).take(filter.observing().map(text -> {
             if (text == null || text.isEmpty()) {
                 return I::accept;
             } else {
