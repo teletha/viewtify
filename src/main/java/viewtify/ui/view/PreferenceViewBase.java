@@ -19,7 +19,7 @@ import kiss.Variable;
 import viewtify.style.FormStyles;
 import viewtify.ui.View;
 
-public abstract class PreferenceViewBase extends View implements Extensible, Comparable<PreferenceViewBase> {
+public abstract class PreferenceViewBase extends View implements Extensible {
 
     /**
      * Define the category of preferences.
@@ -27,14 +27,6 @@ public abstract class PreferenceViewBase extends View implements Extensible, Com
      * @return
      */
     public abstract Variable<String> category();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int compareTo(PreferenceViewBase o) {
-        return category().v.compareTo(o.category().v);
-    }
 
     /**
      * @param text

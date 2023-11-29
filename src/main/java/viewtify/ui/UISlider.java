@@ -9,17 +9,35 @@
  */
 package viewtify.ui;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import javafx.beans.property.Property;
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.HBox;
 import viewtify.ui.helper.ValueHelper;
 
-public class UISlider extends UserInterface<UISlider, Slider> implements ValueHelper<UISlider, Double> {
+public class UISlider extends UserInterface<UISlider, HBox> implements ValueHelper<UISlider, Double> {
+
+    private final Label input = new Label();
+
+    private final Slider slider = new Slider();
 
     /**
      * @param view
      */
     public UISlider(View view) {
-        super(new Slider(), view);
+        super(new HBox(), view);
+
+        input.setStyle("-fx-pref-width: 60px; -fx-alignment: center; -fx-padding: -2px 0 0 0;");
+        input.textProperty()
+                .bind(slider.valueProperty()
+                        .map(x -> BigDecimal.valueOf(x.doubleValue()).setScale(0, RoundingMode.HALF_DOWN).toPlainString()));
+
+        ui.setPadding(new Insets(2, 0, -2, 0));
+        ui.getChildren().addAll(input, slider);
     }
 
     /**
@@ -27,7 +45,7 @@ public class UISlider extends UserInterface<UISlider, Slider> implements ValueHe
      */
     @Override
     public Property<Double> valueProperty() {
-        return (Property) ui.valueProperty();
+        return (Property) slider.valueProperty();
     }
 
     /**
@@ -37,43 +55,9 @@ public class UISlider extends UserInterface<UISlider, Slider> implements ValueHe
      * @param max A maximum value.
      * @return Chainable API.
      */
-    public UISlider range(double min, double max) {
-        ui.setMin(min);
-        ui.setMax(max);
-        return this;
-    }
-
-    /**
-     * Indicates that the labels for tick marks should be shown.
-     * 
-     * @param show True shows it, False hides it.
-     * @return Chainable API.
-     */
-    public UISlider showTickLabels(boolean show) {
-        ui.setShowTickLabels(show);
-        return this;
-    }
-
-    /**
-     * Indicates that the tick marks should be shown.
-     * 
-     * @param show True shows it, False hides it.
-     * @return Chainable API.
-     */
-    public UISlider showTickMarks(boolean show) {
-        ui.setShowTickMarks(show);
-        return this;
-    }
-
-    /**
-     * Indicates whether the {@code Slider} should always be aligned with the tick marks. This is
-     * honored even if the tick marks are not shown.
-     * 
-     * @param snap True enable snap mode.
-     * @return Chaianble API.
-     */
-    public UISlider snapToTicks(boolean snap) {
-        ui.setSnapToTicks(snap);
+    public UISlider range(int min, int max) {
+        slider.setMin(min);
+        slider.setMax(max);
         return this;
     }
 }

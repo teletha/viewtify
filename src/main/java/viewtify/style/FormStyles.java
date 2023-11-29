@@ -32,6 +32,10 @@ public interface FormStyles extends StyleDSL {
         display.width(80, px);
     };
 
+    Style LabelMax = () -> {
+        display.width(360, px);
+    };
+
     Style Input = () -> {
         display.width(160, px);
     };
@@ -45,7 +49,7 @@ public interface FormStyles extends StyleDSL {
     };
 
     Style Title = () -> {
-        margin.bottom(8, px);
+        margin.bottom(6, px);
         font.size(18, px).weight.bold();
 
         $.descendant(() -> {
@@ -53,9 +57,13 @@ public interface FormStyles extends StyleDSL {
         });
     };
 
-    Style SubTitle = () -> {
-        margin.bottom(8, px).top(15, px);
-        font.size(15, px).weight.bold();
+    Style Description = () -> {
+        margin.vertical(4, px);
+    };
+
+    Style DescriptionTitle = () -> {
+        margin.bottom(0, px).top(10, px);
+        font.size(14, px).weight.bold().color("-fx-light-text-color");
 
         $.descendant(() -> {
             font.smooth.grayscale();
@@ -63,6 +71,9 @@ public interface FormStyles extends StyleDSL {
     };
 
     Style DescriptionDetail = () -> {
+        $.descendant(".label", () -> {
+            font.size(11, px).color("-fx-mid-text-color");
+        });
     };
 
     Style ValidationToolTip = () -> {

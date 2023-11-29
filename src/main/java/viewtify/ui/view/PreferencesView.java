@@ -9,7 +9,7 @@
  */
 package viewtify.ui.view;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.controlsfx.glyphfont.FontAwesome;
@@ -31,7 +31,23 @@ public class PreferencesView extends View {
     /** The search box. */
     private UIText<String> search;
 
-    private List<PreferenceViewBase> bases = I.find(PreferenceViewBase.class);
+    /** The list of preference views. */
+    private final List<PreferenceViewBase> bases = new ArrayList();
+
+    /**
+     * Normal constructor.
+     */
+    public PreferencesView() {
+    }
+
+    /**
+     * With initial views.
+     * 
+     * @param views
+     */
+    public PreferencesView(Class<? extends PreferenceViewBase>... views) {
+        add(views);
+    }
 
     /**
      * {@inheritDoc}
@@ -44,12 +60,12 @@ public class PreferencesView extends View {
                     $(search, FormStyles.Input, style.search);
                     $(scroll, FormStyles.Preferences, () -> {
                         $(vbox, style.root, () -> {
-                            I.signal(bases).sort(Comparator.naturalOrder()).to(view -> {
+                            for (PreferenceViewBase view : bases) {
                                 $(vbox, style.box, () -> {
                                     label(view.category(), FormStyles.Title);
                                     $(view);
                                 });
-                            });
+                            }
                         });
                     });
                 });
@@ -71,7 +87,7 @@ public class PreferencesView extends View {
         };
 
         Style box = () -> {
-            padding.bottom(35, px);
+            padding.bottom(65, px);
         };
     }
 
@@ -87,5 +103,39 @@ public class PreferencesView extends View {
                 base.searchPreferenceBy(text);
             }
         });
+    }
+
+    /**
+     * Add preference views.
+     * 
+     * @param views
+     * @return
+     */
+    public PreferencesView add(Class<? extends PreferenceViewBase>... views) {
+        for (Class<? extends PreferenceViewBase> view : views) {
+            bases.add(I.make(view));
+        }
+        return this;
+    }
+
+    /**
+     * Add preference views.
+     * 
+     * @param views
+     * @return
+     */
+    public PreferencesView add(PreferenceViewBase... views) {
+        return add(List.of(views));
+    }
+
+    /**
+     * Add preference views.
+     * 
+     * @param views
+     * @return
+     */
+    public PreferencesView add(List<PreferenceViewBase> views) {
+        bases.addAll(views);
+        return this;
     }
 }
