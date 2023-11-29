@@ -32,10 +32,6 @@ public interface FormStyles extends StyleDSL {
         display.width(80, px);
     };
 
-    Style LabelMax = () -> {
-        display.width(360, px);
-    };
-
     Style Input = () -> {
         display.width(160, px);
     };
@@ -50,7 +46,7 @@ public interface FormStyles extends StyleDSL {
 
     Style Title = () -> {
         margin.bottom(6, px);
-        font.size(18, px).weight.bold();
+        font.size(20, px).weight.bold();
 
         $.descendant(() -> {
             font.smooth.grayscale();
@@ -58,7 +54,7 @@ public interface FormStyles extends StyleDSL {
     };
 
     Style Description = () -> {
-        margin.vertical(4, px);
+        margin.vertical(GAP, px);
     };
 
     Style DescriptionTitle = () -> {
