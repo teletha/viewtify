@@ -35,6 +35,7 @@ public abstract class PreferenceViewBase extends View implements Extensible {
      * @param text
      */
     void searchPreferenceBy(String text) {
+        String[] classes = {".label", ".button", ".check-box", ".hyperlink", " .toggle-button"};
         boolean precondition = text == null || text.isBlank() || category().exact().contains(text);
 
         int shown = 0;
@@ -42,7 +43,7 @@ public abstract class PreferenceViewBase extends View implements Extensible {
 
         for (Node row : ui().lookupAll(FormStyles.Row.selector())) {
             Variable<Node> description = findDescription(row);
-            if (precondition || searchLabel(row, text, ".label", ".button", ".check-box", ".hyperlink", " .toggle-button") || searchCombo(row, text) || searchDescription(description, text)) {
+            if (precondition || searchLabel(row, text, classes) || searchCombo(row, text) || searchDescription(description, text, classes)) {
                 shown++;
                 row.setManaged(true);
                 row.setVisible(true);
@@ -92,14 +93,16 @@ public abstract class PreferenceViewBase extends View implements Extensible {
         return false;
     }
 
-    private boolean searchDescription(Variable<Node> description, String text) {
+    private boolean searchDescription(Variable<Node> description, String text, String... classes) {
         if (description.isAbsent()) {
             return false;
         }
 
-        for (Node node : description.v.lookupAll(".label")) {
-            if (node instanceof Label label && label.getText().toLowerCase().contains(text)) {
-                return true;
+        for (String clazz : classes) {
+            for (Node node : description.v.lookupAll(clazz)) {
+                if (node instanceof Label label && label.getText().toLowerCase().contains(text)) {
+                    return true;
+                }
             }
         }
         return false;
