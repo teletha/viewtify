@@ -50,12 +50,6 @@ public class PreferencesView extends View {
     private final List<View> bases = new ArrayList();
 
     /**
-     * Normal constructor.
-     */
-    public PreferencesView() {
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -147,7 +141,7 @@ public class PreferencesView extends View {
      * @param views
      * @return
      */
-    public PreferencesView add(Class<? extends View>... views) {
+    public final PreferencesView add(Class<? extends View>... views) {
         for (Class<? extends View> view : views) {
             bases.add(I.make(view));
         }
@@ -160,7 +154,7 @@ public class PreferencesView extends View {
      * @param views
      * @return
      */
-    public PreferencesView add(View... views) {
+    public final PreferencesView add(View... views) {
         return add(List.of(views));
     }
 
@@ -170,7 +164,7 @@ public class PreferencesView extends View {
      * @param views
      * @return
      */
-    public PreferencesView add(List<View> views) {
+    public final PreferencesView add(List<View> views) {
         bases.addAll(views);
         return this;
     }
