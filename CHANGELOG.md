@@ -1,5 +1,47 @@
 # Changelog
 
+## [2.15.0](https://github.com/teletha/viewtify/compare/v2.14.0...v2.15.0) (2023-12-01)
+
+
+### Features
+
+* Add InWindow option for toast's location. ([22ace24](https://github.com/teletha/viewtify/commit/22ace24db6d5502a8384f491ba143f7993f10838))
+* Add VisibleHelper#show(boolean). ([f7d01f6](https://github.com/teletha/viewtify/commit/f7d01f6b7038215be3683bc8550212e0bff88c61))
+* Additional fonts. ([8fad39a](https://github.com/teletha/viewtify/commit/8fad39ac3dc7d62dfe135974832bcded0c64e2d0))
+* Automatic dialog's button disabler. ([7b663a0](https://github.com/teletha/viewtify/commit/7b663a0ead56f8ce3c53aff056df5e10d99fa98e))
+* ComboBox supports edit color. ([6114f55](https://github.com/teletha/viewtify/commit/6114f5557c735826d984dc0d54ae10e130891430))
+* Config notification more. ([4dcb2bc](https://github.com/teletha/viewtify/commit/4dcb2bc36978786d5528f253a833f92e654889f8))
+* Provide PreferencesView. ([e122555](https://github.com/teletha/viewtify/commit/e1225557d2027f30255965f6fc01f70865f8b2fc))
+* Support consumable user action. ([033385b](https://github.com/teletha/viewtify/commit/033385bed7aaeb5eabf0934f0e4890d520847b38))
+* Support fadable dialog. ([412b0ae](https://github.com/teletha/viewtify/commit/412b0ae01046378cdcd7b33e2148effa7d00357a))
+* support form title ([6a7c45d](https://github.com/teletha/viewtify/commit/6a7c45df4d42eecae45b168cfe7922050127bb55))
+* Support owner node blur when dialog showing. ([2e07ec4](https://github.com/teletha/viewtify/commit/2e07ec42c443916b43c435c3efc2637367a3c3d5))
+* Support scroll method on scroll pane. ([ac8d8d5](https://github.com/teletha/viewtify/commit/ac8d8d5cc9485264601bf4c7ddb3cb29f3d4bbe9))
+* Support simple actionable link in text notation. ([ddb7496](https://github.com/teletha/viewtify/commit/ddb7496b96eba6ba9dd07bc68df9bbb02f367825))
+* support table of contents on preferences view ([6639b05](https://github.com/teletha/viewtify/commit/6639b05e9c498bbdfd8c073410b1cfe16d243e02))
+
+
+### Bug Fixes
+
+* add line spaace on text notation ([21391e7](https://github.com/teletha/viewtify/commit/21391e7c1a277c604f07ce2f6a827d4209c3a67b))
+* can search table's cell ([c9634d6](https://github.com/teletha/viewtify/commit/c9634d66ac3a5b7c5bfd0407a0f97a6ef87abe9b))
+* correct location of notifications ([7121fd6](https://github.com/teletha/viewtify/commit/7121fd689254977c9c94d9d8ff62f265b242f804))
+* enhance notification setting ([8b03b9c](https://github.com/teletha/viewtify/commit/8b03b9c5e8b04a7272665a85670eb513d014f685))
+* Hide validation text on hover. ([ada3f07](https://github.com/teletha/viewtify/commit/ada3f079f8063759f4df4540d1f479bd2aa4a3bb))
+* preference style ([345c7d4](https://github.com/teletha/viewtify/commit/345c7d4a0911ae7472052b1fbf773571a0b5b290))
+* Queue UI actions before launching UI. ([afc9845](https://github.com/teletha/viewtify/commit/afc98453fbbbcc18e2bd4668b4660d22d89d1308))
+* reflection error ([4d15c98](https://github.com/teletha/viewtify/commit/4d15c98a2ed0c85f66ca3c6184168c2506c9fd6c))
+* remove padding on hyperlink ([16d3023](https://github.com/teletha/viewtify/commit/16d302342634a27dcb60526b8de16de7fea3b832))
+* remove PreferenceViewBase ([5fa859b](https://github.com/teletha/viewtify/commit/5fa859b278799069c0381920c3f86833498624e6))
+* search prefeerences from description ([6672273](https://github.com/teletha/viewtify/commit/66722734b30e4cd5f6825b296bb7e9d1c317b3ab))
+* search well on preferences view ([bc57fe2](https://github.com/teletha/viewtify/commit/bc57fe2aa112bc1e8be106008efc6dc5c85477f8))
+* style ([0ae30fb](https://github.com/teletha/viewtify/commit/0ae30fbb37fceb6d550632e5bb950bf4cdf1b3f3))
+* Suppress JVM error when closing application with shown dialog. ([7d16bda](https://github.com/teletha/viewtify/commit/7d16bdafffbaf664efc28cfc6f8fce4167baea9f))
+* today style on calendar ([d574522](https://github.com/teletha/viewtify/commit/d574522715c23ad4134abd73b6f88cf51f7aaa50))
+* update dialog button ([123589f](https://github.com/teletha/viewtify/commit/123589feec124518311aea8ef5884efefe1cb4e8))
+* update toast style ([1b6b809](https://github.com/teletha/viewtify/commit/1b6b8099ceaa40f563fba68f5475a4ee09693281))
+* ViewDSL API ([3c21c88](https://github.com/teletha/viewtify/commit/3c21c885123eb858355d16670d0cdf4df262e27b))
+
 ## [2.14.0](https://github.com/teletha/viewtify/compare/v2.13.0...v2.14.0) (2023-10-31)
 
 
