@@ -28,7 +28,7 @@ import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
 import viewtify.model.Preferences;
-import viewtify.ui.anime.Animatable;
+import viewtify.ui.anime.Anime;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
@@ -117,7 +117,7 @@ public class Toast extends Preferences {
             }
 
             // UI effect
-            Animatable.play(setting.animation.v, notification.ui().opacityProperty(), 0, () -> {
+            Anime.define().effect(notification.ui().opacityProperty(), 0, setting.animation.v).run(() -> {
                 notification.ui().hide();
                 notification.ui().getContent().clear();
             });
@@ -148,7 +148,7 @@ public class Toast extends Preferences {
                 if (popup.isShowing()) {
                     if (!isTopSide) y -= popup.getHeight() + gap;
                     popup.setX(x);
-                    Animatable.play(setting.animation.v, notify.y, y);
+                    Anime.define().effect(notify.y, y, setting.animation.v).run();
                 } else {
                     popup.setOpacity(0);
                     popup.show(Window.getWindows().get(0));
@@ -156,7 +156,7 @@ public class Toast extends Preferences {
                     popup.setX(x);
                     popup.setY(y);
 
-                    Animatable.play(setting.animation.v, popup.opacityProperty(), 1);
+                    Anime.define().effect(popup.opacityProperty(), 1, setting.animation.v).run();
                 }
 
                 if (isTopSide) y += popup.getHeight() + gap;

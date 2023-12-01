@@ -12,6 +12,7 @@ package viewtify.ui.view;
 import java.util.Locale;
 
 import javafx.scene.text.Font;
+
 import kiss.I;
 import viewtify.Theme;
 import viewtify.ThemeType;

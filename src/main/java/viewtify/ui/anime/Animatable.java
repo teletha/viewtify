@@ -85,43 +85,4 @@ public interface Animatable {
      * @param action
      */
     void run(Pane parent, Node before, WiseRunnable action);
-
-    /**
-     * Animate the specified property.
-     * 
-     * @param <T>
-     * @param durationMills Animation time.
-     * @param property A target property to animate.
-     * @param endValue A end value of animated property.
-     * @param endEffect An optional end effect.
-     */
-    static <T> void play(int durationMills, WritableValue<T> property, T endValue, Runnable... endEffect) {
-        play(Duration.millis(durationMills), property, endValue, endEffect);
-    }
-
-    /**
-     * Animate the specified property.
-     * 
-     * @param <T>
-     * @param duration Animation time.
-     * @param property A target property to animate.
-     * @param endValue A end value of animated property.
-     * @param endEffect An optional end effect.
-     */
-    static <T> void play(Duration duration, WritableValue<T> property, T endValue, Runnable... endEffect) {
-        Objects.requireNonNull(duration);
-        Objects.requireNonNull(property);
-        Objects.requireNonNull(endEffect);
-
-        Timeline timeline = new Timeline(new KeyFrame(duration, new KeyValue(property, endValue)));
-        if (0 < endEffect.length) {
-            timeline.setOnFinished(e -> {
-                for (Runnable effect : endEffect) {
-                    effect.run();
-                }
-            });
-        }
-
-        Viewtify.inUI(timeline::play);
-    }
 }

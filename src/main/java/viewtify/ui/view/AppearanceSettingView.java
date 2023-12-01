@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
+
 import kiss.Variable;
 import viewtify.Theme;
 import viewtify.ThemeType;
@@ -84,7 +85,7 @@ public class AppearanceSettingView extends PreferenceViewBase {
      * 
      * @return
      */
-    public AppearanceSettingView applySelfFont() {
+    public final AppearanceSettingView applySelfFont() {
         family.renderByNode(() -> new Label(), (label, value, disposer) -> {
             label.setText(value);
             label.setFont(Font.font(value));

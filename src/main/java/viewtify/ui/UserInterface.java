@@ -20,6 +20,7 @@ import javafx.beans.property.ReadOnlyProperty;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -143,19 +144,6 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
      */
     @Override
     public Self visible(boolean visible) {
-        ui.setVisible(visible);
-        return (Self) this;
-    }
-
-    /**
-     * Specifies whether this {@code Node} and any subnodes should be rendered as part of the scene
-     * graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it
-     * is off the screen or obscured by another Node. Invisible nodes never receive mouse events or
-     * keyboard focus and never maintain keyboard focus when they become invisible.
-     *
-     * @defaultValue true
-     */
-    public Self manage(boolean visible) {
         ui.setVisible(visible);
         return (Self) this;
     }

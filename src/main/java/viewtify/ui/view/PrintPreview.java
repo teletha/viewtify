@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.controlsfx.control.SegmentedButton;
-
 import javafx.event.Event;
 import javafx.geometry.Bounds;
 import javafx.print.PageOrientation;
@@ -32,6 +30,9 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import org.controlsfx.control.SegmentedButton;
+
 import kiss.I;
 import kiss.WiseSupplier;
 import stylist.Style;
@@ -48,7 +49,7 @@ import viewtify.ui.UISpinner;
 import viewtify.ui.UIText;
 import viewtify.ui.UIToggleButton;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.anime.Animatable;
+import viewtify.ui.anime.Anime;
 import viewtify.ui.helper.User;
 import viewtify.ui.view.PrintPreview.PrintInfo;
 import viewtify.util.FXUtils;
@@ -256,12 +257,12 @@ public class PrintPreview extends DialogView<PrintInfo> {
             if (view.ui.getLayoutBounds().contains(e.getX() - 10, e.getY() - 23)) {
                 if (!naviShowing) {
                     naviShowing = true;
-                    Animatable.play(250, navi.opacityProperty(), 1);
+                    Anime.define().opacity(navi, 1).run();
                 }
             } else {
                 if (naviShowing) {
                     naviShowing = false;
-                    Animatable.play(250, navi.opacityProperty(), 0);
+                    Anime.define().opacity(navi, 0).run();
                 }
             }
         });
@@ -358,9 +359,9 @@ public class PrintPreview extends DialogView<PrintInfo> {
         view.ui.setFitWidth(image.getWidth());
         view.ui.setFitHeight(image.getHeight());
 
-        Animatable.play(150, view.ui.opacityProperty(), 0.1, () -> {
+        Anime.define().opacity(view, 0.1).run(() -> {
             view.value(image);
-            Animatable.play(300, view.ui.opacityProperty(), 1);
+            Anime.define().opacity(view, 1).run();
         });
     }
 

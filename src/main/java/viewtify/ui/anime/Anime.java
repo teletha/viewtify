@@ -37,6 +37,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+
 import kiss.Disposable;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
@@ -153,7 +154,18 @@ public class Anime {
      * @return
      */
     public final Anime opacity(UserInterfaceProvider<? extends Node> node, double num) {
-        return effect(node.ui().opacityProperty(), num);
+        return opacity(node.ui(), num);
+    }
+
+    /**
+     * Animate background color
+     * 
+     * @param node
+     * @param num
+     * @return
+     */
+    public final Anime opacity(Node node, double num) {
+        return effect(node.opacityProperty(), num);
     }
 
     /**
