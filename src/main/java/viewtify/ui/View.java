@@ -25,6 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
@@ -102,6 +103,24 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
      */
     public String id() {
         return parent == null ? name() : parent.name() + IDSeparator + name();
+    }
+
+    /**
+     * The title of this {@link View}.
+     * 
+     * @return
+     */
+    public Variable<String> title() {
+        return Variable.empty();
+    }
+
+    /**
+     * The icon of this {@link View}.
+     * 
+     * @return
+     */
+    public Variable<String> icon() {
+        return Variable.empty();
     }
 
     /**

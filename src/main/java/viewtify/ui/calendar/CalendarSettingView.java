@@ -23,10 +23,9 @@ import viewtify.ui.UIColorPicker;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.view.PreferenceViewBase;
 import viewtify.util.FXUtils;
 
-public class CalendarSettingView extends PreferenceViewBase {
+public class CalendarSettingView extends View {
 
     private UIComboBox<DayOfWeek> firstDoW;
 
@@ -42,7 +41,7 @@ public class CalendarSettingView extends PreferenceViewBase {
      * {@inheritDoc}
      */
     @Override
-    public Variable<String> category() {
+    public Variable<String> title() {
         return en("Calendar");
     }
 

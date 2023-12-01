@@ -22,9 +22,10 @@ import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UISpinner;
+import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 
-public class AppearanceSettingView extends PreferenceViewBase {
+public class AppearanceSettingView extends View {
 
     /** The theme selector. */
     public UIComboBox<Theme> theme;
@@ -45,7 +46,7 @@ public class AppearanceSettingView extends PreferenceViewBase {
      * {@inheritDoc}
      */
     @Override
-    public Variable<String> category() {
+    public Variable<String> title() {
         return en("Appearance and Language");
     }
 

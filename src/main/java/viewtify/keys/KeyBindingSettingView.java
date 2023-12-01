@@ -19,11 +19,11 @@ import viewtify.style.FormStyles;
 import viewtify.ui.UITableColumn;
 import viewtify.ui.UITableView;
 import viewtify.ui.UIText;
+import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
-import viewtify.ui.view.PreferenceViewBase;
 
-public class KeyBindingSettingView extends PreferenceViewBase {
+public class KeyBindingSettingView extends View {
 
     private UIText<String> filter;
 
@@ -37,7 +37,7 @@ public class KeyBindingSettingView extends PreferenceViewBase {
      * {@inheritDoc}
      */
     @Override
-    public Variable<String> category() {
+    public Variable<String> title() {
         return en("Keyborad Operation");
     }
 

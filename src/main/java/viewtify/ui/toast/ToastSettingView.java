@@ -12,6 +12,7 @@ package viewtify.ui.toast;
 import java.util.stream.IntStream;
 
 import javafx.util.Duration;
+
 import kiss.Variable;
 import viewtify.model.Preferences;
 import viewtify.style.FormStyles;
@@ -19,12 +20,12 @@ import viewtify.ui.UIButton;
 import viewtify.ui.UICheckSwitch;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UISpinner;
+import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.view.PreferenceViewBase;
 import viewtify.util.Corner;
 import viewtify.util.ScreenSelector;
 
-public class ToastSettingView extends PreferenceViewBase {
+public class ToastSettingView extends View {
 
     /** The desktop configuration UI. */
     private UICheckSwitch enableNotification;
@@ -54,7 +55,7 @@ public class ToastSettingView extends PreferenceViewBase {
      * {@inheritDoc}
      */
     @Override
-    public Variable<String> category() {
+    public Variable<String> title() {
         return en("Notification");
     }
 

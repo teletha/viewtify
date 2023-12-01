@@ -10,11 +10,20 @@
 package viewtify.ui.view;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Labeled;
 
 import org.controlsfx.glyphfont.FontAwesome;
 
 import kiss.I;
+import kiss.Variable;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.style.FormStyles;
@@ -38,7 +47,7 @@ public class PreferencesView extends View {
     private UIText<String> search;
 
     /** The list of preference views. */
-    private final List<PreferenceViewBase> bases = new ArrayList();
+    private final List<View> bases = new ArrayList();
 
     /**
      * Normal constructor.
@@ -55,8 +64,8 @@ public class PreferencesView extends View {
             {
                 $(hbox, () -> {
                     $(navi, style.left, () -> {
-                        for (PreferenceViewBase view : bases) {
-                            $(new UILabel(null).text(view.category()).style(style.navi).when(User.LeftClick, () -> {
+                        for (View view : bases) {
+                            $(new UILabel(null).text(view.title()).style(style.navi).when(User.LeftClick, () -> {
                                 scroll.scrollTo(view.ui().getParent(), true);
                             }));
                         }
@@ -65,9 +74,9 @@ public class PreferencesView extends View {
                         $(search, FormStyles.Input, style.search);
                         $(scroll, FormStyles.Preferences, () -> {
                             $(vbox, style.root, () -> {
-                                for (PreferenceViewBase view : bases) {
+                                for (View view : bases) {
                                     $(vbox, style.box, () -> {
-                                        label(view.category(), FormStyles.Title);
+                                        label(view.title(), FormStyles.Title);
                                         $(view);
                                     });
                                 }
@@ -126,8 +135,8 @@ public class PreferencesView extends View {
         search.placeholder(en("Search from preferences")).clearable().prefix(FontAwesome.Glyph.SEARCH).observe().to(text -> {
             text = text.strip().toLowerCase();
 
-            for (PreferenceViewBase base : bases) {
-                base.searchPreferenceBy(text);
+            for (View base : bases) {
+                searchPreferenceBy(base, text);
             }
         });
     }
@@ -138,8 +147,8 @@ public class PreferencesView extends View {
      * @param views
      * @return
      */
-    public PreferencesView add(Class<? extends PreferenceViewBase>... views) {
-        for (Class<? extends PreferenceViewBase> view : views) {
+    public PreferencesView add(Class<? extends View>... views) {
+        for (Class<? extends View> view : views) {
             bases.add(I.make(view));
         }
         return this;
@@ -151,7 +160,7 @@ public class PreferencesView extends View {
      * @param views
      * @return
      */
-    public PreferencesView add(PreferenceViewBase... views) {
+    public PreferencesView add(View... views) {
         return add(List.of(views));
     }
 
@@ -161,7 +170,7 @@ public class PreferencesView extends View {
      * @param views
      * @return
      */
-    public PreferencesView add(List<PreferenceViewBase> views) {
+    public PreferencesView add(List<View> views) {
         bases.addAll(views);
         return this;
     }
@@ -184,5 +193,104 @@ public class PreferencesView extends View {
     public final PreferencesView disableToC() {
         navi.show(false);
         return this;
+    }
+
+    /**
+     * @param text
+     */
+    private static void searchPreferenceBy(View view, String text) {
+        String[] classes = {".label", ".button", ".check-box", ".hyperlink", " .toggle-button", ".cell"};
+        boolean precondition = text == null || text.isBlank() || view.title().exact().contains(text);
+
+        int shown = 0;
+        Set<Node> shownDescriptions = new HashSet();
+
+        List<Node> rows = new ArrayList();
+        rows.addAll(view.ui().lookupAll(FormStyles.Row.selector()));
+        rows.addAll(view.ui().lookupAll(".table-view"));
+
+        for (Node row : rows) {
+            Variable<Node> description = findDescription(row);
+            if (precondition || searchLabel(row, text, classes) || searchCombo(row, text) || searchDescription(description, text, classes)) {
+                shown++;
+                row.setManaged(true);
+                row.setVisible(true);
+                description.to(x -> {
+                    x.setManaged(true);
+                    x.setVisible(true);
+                    shownDescriptions.add(x);
+                });
+            } else {
+                row.setManaged(false);
+                row.setVisible(false);
+                description.to(x -> {
+                    if (!shownDescriptions.contains(x)) {
+                        x.setManaged(false);
+                        x.setVisible(false);
+                    }
+                });
+            }
+        }
+
+        Node title = view.ui().getParent();
+        title.setVisible(precondition || shown != 0);
+        title.setManaged(precondition || shown != 0);
+    }
+
+    private static boolean searchLabel(Node row, String text, String... classes) {
+        for (String clazz : classes) {
+            for (Node node : row.lookupAll(clazz)) {
+                if (node instanceof Labeled labeled && labeled.getText() != null && labeled.getText().toLowerCase().contains(text)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean searchCombo(Node row, String text) {
+        for (Node node : row.lookupAll(".combo-box")) {
+            if (node instanceof ComboBox combo) {
+                for (Object object : combo.getItems()) {
+                    if (object.toString().toLowerCase().contains(text)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean searchDescription(Variable<Node> description, String text, String... classes) {
+        if (description.isAbsent()) {
+            return false;
+        }
+
+        for (String clazz : classes) {
+            for (Node node : description.v.lookupAll(clazz)) {
+                if (node instanceof Labeled labeled && labeled.getText().toLowerCase().contains(text)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static Variable<Node> findDescription(Node row) {
+        Node target = row;
+        Parent node = target.getParent();
+        while (node != null && !node.getStyleClass().contains(FormStyles.Preferences.className()[0])) {
+            ObservableList<Node> children = node.getChildrenUnmodifiable();
+            for (int i = children.indexOf(target) - 1; 0 <= i; i--) {
+                Node child = children.get(i);
+                ObservableList<String> classes = child.getStyleClass();
+                if (classes.contains(FormStyles.Description.className()[0])) {
+                    return Variable.of(child);
+                }
+            }
+            target = node;
+            node = node.getParent();
+        }
+        return Variable.empty();
     }
 }
