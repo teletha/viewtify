@@ -11,6 +11,7 @@ package viewtify.ui;
 
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -19,6 +20,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import viewtify.ui.anime.Anime;
+import viewtify.ui.anime.Interpolate;
 import viewtify.ui.anime.SwapAnime;
 
 public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
@@ -44,7 +47,7 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
      * @param vertical
      * @return
      */
-    public UIScrollPane policy(ScrollBarPolicy horizontal, ScrollBarPolicy vertical) {
+    public final UIScrollPane policy(ScrollBarPolicy horizontal, ScrollBarPolicy vertical) {
         if (horizontal != null) {
             ui.setHbarPolicy(horizontal);
         }
@@ -60,7 +63,7 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
      * @param width
      * @param height
      */
-    public UIScrollPane fit(boolean width, boolean height) {
+    public final UIScrollPane fit(boolean width, boolean height) {
         ui.setFitToWidth(width);
         ui.setFitToHeight(height);
 
@@ -73,7 +76,7 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
      * @param provider
      * @return
      */
-    public UIScrollPane content(UserInterfaceProvider<Node> provider, SwapAnime... anime) {
+    public final UIScrollPane content(UserInterfaceProvider<Node> provider, SwapAnime... anime) {
         box.content(provider, anime);
         return this;
     }
@@ -83,7 +86,7 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
      * 
      * @return
      */
-    public UIScrollPane slim() {
+    public final UIScrollPane slim() {
         style("slim");
         return this;
     }
@@ -93,8 +96,66 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
      * 
      * @return
      */
-    public UIScrollPane thin() {
+    public final UIScrollPane thin() {
         style("thin");
+        return this;
+    }
+
+    /**
+     * Scroll into the target UI.
+     * 
+     * @param target A target UI to show in this view.
+     * @return
+     */
+    public final UIScrollPane scrollTo(UserInterfaceProvider<? extends Node> target) {
+        return scrollTo(target, false);
+    }
+
+    /**
+     * Scroll into the target UI.
+     * 
+     * @param target A target UI to show in this view.
+     * @param animate Flag for scroll animation.
+     * @return
+     */
+    public final UIScrollPane scrollTo(UserInterfaceProvider<? extends Node> target, boolean animate) {
+        return scrollTo(target.ui(), animate);
+    }
+
+    /**
+     * Scroll into the target UI.
+     * 
+     * @param target A target UI to show in this view.
+     * @return
+     */
+    public final UIScrollPane scrollTo(Node target) {
+        return scrollTo(target, false);
+    }
+
+    /**
+     * Scroll into the target UI.
+     * 
+     * @param target A target UI to show in this view.
+     * @param animate Flag for scroll animation.
+     * @return
+     */
+    public final UIScrollPane scrollTo(Node target, boolean animate) {
+        Node node = target;
+        Bounds nodeBounds = target.getBoundsInLocal();
+        while (node != ui.getContent()) {
+            nodeBounds = node.localToParent(nodeBounds);
+            node = node.getParent();
+        }
+        Bounds scrollBounds = ui.getContent().localToScene(ui.getContent().getBoundsInLocal());
+        Bounds viewportBounds = ui.getViewportBounds();
+
+        double targetValue = nodeBounds.getMinY() / (scrollBounds.getHeight() - viewportBounds.getHeight());
+
+        if (animate) {
+            Anime.define().interpolator(Interpolate.EASE_OUT).effect(ui.vvalueProperty(), targetValue).run();
+        } else {
+            ui.setVvalue(targetValue);
+        }
         return this;
     }
 
