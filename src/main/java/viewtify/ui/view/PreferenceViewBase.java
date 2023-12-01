@@ -18,7 +18,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 
 import kiss.Extensible;
@@ -108,7 +107,7 @@ public abstract class PreferenceViewBase extends View implements Extensible {
 
         for (String clazz : classes) {
             for (Node node : description.v.lookupAll(clazz)) {
-                if (node instanceof Label label && label.getText().toLowerCase().contains(text)) {
+                if (node instanceof Labeled labeled && labeled.getText().toLowerCase().contains(text)) {
                     return true;
                 }
             }

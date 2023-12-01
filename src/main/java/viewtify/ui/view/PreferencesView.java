@@ -41,15 +41,6 @@ public class PreferencesView extends View {
     }
 
     /**
-     * With initial views.
-     * 
-     * @param views
-     */
-    public PreferencesView(Class<? extends PreferenceViewBase>... views) {
-        add(views);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
