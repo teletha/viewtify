@@ -34,9 +34,6 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     /** The cache for preferences. */
     private static final Map<String, Preferences> cache = new ConcurrentHashMap();
 
-    /** The preference id. */
-    private String id;
-
     /**
      * Hide constructor.
      */
@@ -167,7 +164,7 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
      */
     @Override
     public String locate() {
-        return Viewtify.UserPreference.exact().file(id + ".json").path();
+        return Viewtify.UserPreference.exact().file(getClass().getName() + ".json").path();
     }
 
     /**
@@ -197,7 +194,6 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
 
         return (P) cache.computeIfAbsent(id, x -> {
             Preferences prefs = I.make(type);
-            prefs.id = x;
             prefs.sync();
             return prefs;
         });
