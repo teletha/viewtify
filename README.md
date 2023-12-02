@@ -21,7 +21,7 @@ Declarative and Reactive API
 Additional useful functions and widgets that do not exist in JavaFX.
 * Application launcher
 * Application updater
-* Docking UI like Eclipse
+* Docking Tab
 * Notification UI like Toast
 * Calendar UI
 * Print preview
@@ -30,7 +30,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 * Focus management
 * Shortcut management
 * User preference
-* Dark theme
+* Various theme
 * Automatic translation in real time
 * Tooltip and Popup
 * Headless UI
@@ -69,7 +69,7 @@ Add it into in the dependencies element like so:
 <dependency>
     <groupId>com.github.teletha</groupId>
     <artifactId>viewtify</artifactId>
-    <version>2.12.0</version>
+    <version>2.15.0</version>
 </dependency>
 ```
 #### [Gradle](https://gradle.org/)
@@ -82,7 +82,7 @@ repositories {
 Add it into the dependencies section like so:
 ```gradle
 dependencies {
-    implementation 'com.github.teletha:viewtify:2.12.0'
+    implementation 'com.github.teletha:viewtify:2.15.0'
 }
 ```
 #### [SBT](https://www.scala-sbt.org/)
@@ -92,7 +92,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add it into the libraryDependencies section like so:
 ```scala
-libraryDependencies += "com.github.teletha" % "viewtify" % "2.12.0"
+libraryDependencies += "com.github.teletha" % "viewtify" % "2.15.0"
 ```
 #### [Leiningen](https://leiningen.org/)
 Add JitPack repository at the end of repositories in your project.clj:
@@ -101,12 +101,12 @@ Add JitPack repository at the end of repositories in your project.clj:
 ```
 Add it into the dependencies section like so:
 ```clj
-:dependencies [[com.github.teletha/viewtify "2.12.0"]]
+:dependencies [[com.github.teletha/viewtify "2.15.0"]]
 ```
 #### [Bee](https://teletha.github.io/bee)
 Add it into your project definition class like so:
 ```java
-require("com.github.teletha", "viewtify", "2.12.0");
+require("com.github.teletha", "viewtify", "2.15.0");
 ```
 <p align="right"><a href="#top">back to top</a></p>
 
@@ -134,24 +134,26 @@ If you think something might be a bug, but you're not sure, ask on StackOverflow
 
 ## Dependency
 Viewtify depends on the following products on runtime.
+* [AnimateFX-1.2.4](https://mvnrepository.com/artifact/io.github.typhon0/AnimateFX/1.2.4)
 * [altfx-1.2.0](https://mvnrepository.com/artifact/com.github.teletha/altfx/1.2.0)
+* [animated-1.3.0](https://mvnrepository.com/artifact/eu.iamgio/animated/1.3.0)
 * [conjure-1.1.0](https://mvnrepository.com/artifact/com.github.teletha/conjure/1.1.0)
-* [controlsfx-11.1.2](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.1.2)
-* [javafx-base-22-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-base/22-ea+11)
-* [javafx-base-22-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/22-ea+11)
-* [javafx-controls-22-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/22-ea+11)
-* [javafx-controls-22-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/22-ea+11)
-* [javafx-graphics-22-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/22-ea+11)
-* [javafx-graphics-22-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/22-ea+11)
-* [javafx-media-22-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-media/22-ea+11)
-* [javafx-media-22-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/22-ea+11)
-* [javafx-web-22-ea+11](https://mvnrepository.com/artifact/org.openjfx/javafx-web/22-ea+11)
-* [javafx-web-22-ea+11-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/22-ea+11)
+* [controlsfx-11.2.0](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.2.0)
+* [javafx-base-22-ea+16](https://mvnrepository.com/artifact/org.openjfx/javafx-base/22-ea+16)
+* [javafx-base-22-ea+16-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/22-ea+16)
+* [javafx-controls-22-ea+16](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/22-ea+16)
+* [javafx-controls-22-ea+16-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/22-ea+16)
+* [javafx-graphics-22-ea+16](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/22-ea+16)
+* [javafx-graphics-22-ea+16-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/22-ea+16)
+* [javafx-media-22-ea+16](https://mvnrepository.com/artifact/org.openjfx/javafx-media/22-ea+16)
+* [javafx-media-22-ea+16-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/22-ea+16)
+* [javafx-web-22-ea+16](https://mvnrepository.com/artifact/org.openjfx/javafx-web/22-ea+16)
+* [javafx-web-22-ea+16-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/22-ea+16)
 * [lycoris-1.0.0](https://mvnrepository.com/artifact/com.github.teletha/lycoris/1.0.0)
 * [openjfx-monocle-jdk-12.0.1+2](https://mvnrepository.com/artifact/org.testfx/openjfx-monocle/jdk-12.0.1+2)
 * [psychopath-1.12.1](https://mvnrepository.com/artifact/com.github.teletha/psychopath/1.12.1)
 * [sinobu-3.7.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/3.7.0)
-* [stylist-1.8.1](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.8.1)
+* [stylist-1.10.0](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.10.0)
 <p align="right"><a href="#top">back to top</a></p>
 
 
