@@ -86,7 +86,7 @@ public interface FormStyles extends StyleDSL {
             background.color("-fx-control-inner-background");
             margin.bottom(1, px);
             padding.horizontal(10, px).vertical(10, px);
-            display.width(480, px);
+            display.width.fill();
 
             $.hover(() -> {
                 background.color("-fx-control-inner-background-alt");
