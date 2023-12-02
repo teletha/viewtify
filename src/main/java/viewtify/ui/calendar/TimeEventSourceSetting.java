@@ -9,15 +9,12 @@
  */
 package viewtify.ui.calendar;
 
-import viewtify.model.Preferences;
+import viewtify.model.NamedPreferences;
 
 /**
  * Preference for calendar.
  */
-public class TimeEventSourceSetting extends Preferences {
-
-    /** The user defined name. */
-    public final Preference<String> name = initialize("");
+public class TimeEventSourceSetting extends NamedPreferences {
 
     /** The availability. */
     public final Preference<Boolean> enable = initialize(true);
