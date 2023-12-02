@@ -16,38 +16,38 @@ import javafx.animation.Interpolator;
 /**
  * Built-in enhanced interpolaters.
  */
-public class Interpolate extends Interpolator {
+public class Interpolators extends Interpolator {
 
     /** Built-in Interpolator */
-    public static final Interpolate SHAKE = new Interpolate(0.1, (t, amplitude) -> Math.sin(t * 10.0) * amplitude);
+    public static final Interpolators SHAKE = new Interpolators(0.1, (t, amplitude) -> Math.sin(t * 10.0) * amplitude);
 
     /** Built-in Interpolator */
-    public static final Interpolate SHAKE_INCREASE = new Interpolate(0.1, (t, amplitude) -> {
+    public static final Interpolators SHAKE_INCREASE = new Interpolators(0.1, (t, amplitude) -> {
         return Math.sin(t * 10.0) * amplitude * Math.pow(1.2, t);
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate SHAKE_DECREASE = new Interpolate(0.1, (t, amplitude) -> {
+    public static final Interpolators SHAKE_DECREASE = new Interpolators(0.1, (t, amplitude) -> {
         return Math.sin(t * 10.0) * amplitude * Math.pow(0.8, t);
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_SINE = new Interpolate(t -> 1 - Math.cos(t * Math.PI / 2));
+    public static final Interpolators EASE_IN_SINE = new Interpolators(t -> 1 - Math.cos(t * Math.PI / 2));
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_OUT_SINE = new Interpolate(t -> 1 - Math.sin(t * Math.PI / 2));
+    public static final Interpolators EASE_OUT_SINE = new Interpolators(t -> 1 - Math.sin(t * Math.PI / 2));
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_INOUT_SINE = new Interpolate(t -> -0.5 * (Math.cos(Math.PI * t) - 1));
+    public static final Interpolators EASE_INOUT_SINE = new Interpolators(t -> -0.5 * (Math.cos(Math.PI * t) - 1));
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_CIRC = new Interpolate(t -> 1 - Math.sqrt(1 - t * t));
+    public static final Interpolators EASE_IN_CIRC = new Interpolators(t -> 1 - Math.sqrt(1 - t * t));
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_OUT_CIRC = new Interpolate(t -> Math.sqrt(1 - (t - 1) * (t - 1)));
+    public static final Interpolators EASE_OUT_CIRC = new Interpolators(t -> Math.sqrt(1 - (t - 1) * (t - 1)));
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_OUT_CIRC = new Interpolate(t -> {
+    public static final Interpolators EASE_IN_OUT_CIRC = new Interpolators(t -> {
         t *= 2;
         if (t < 1) {
             return -0.5 * (Math.sqrt(1 - t * t) - 1);
@@ -58,16 +58,16 @@ public class Interpolate extends Interpolator {
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_CUBIC = new Interpolate(t -> t * t * t);
+    public static final Interpolators EASE_IN_CUBIC = new Interpolators(t -> t * t * t);
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_OUT_CUBIC = new Interpolate(t -> {
+    public static final Interpolators EASE_OUT_CUBIC = new Interpolators(t -> {
         double x = t - 1;
         return x * x * x + 1;
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_INOUT_CUBIC = new Interpolate(t -> {
+    public static final Interpolators EASE_INOUT_CUBIC = new Interpolators(t -> {
         t *= 2;
         if (t < 1) {
             return 0.5 * t * t * t;
@@ -78,13 +78,13 @@ public class Interpolate extends Interpolator {
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_QUINT = new Interpolate(t -> t * t * t * t * t);
+    public static final Interpolators EASE_IN_QUINT = new Interpolators(t -> t * t * t * t * t);
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_OUT_QUINT = new Interpolate(t -> 1 - Math.pow(1 - t, 5));
+    public static final Interpolators EASE_OUT_QUINT = new Interpolators(t -> 1 - Math.pow(1 - t, 5));
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_OUT_QUINT = new Interpolate(t -> {
+    public static final Interpolators EASE_IN_OUT_QUINT = new Interpolators(t -> {
         t *= 2;
         if (t < 1) {
             return 0.5 * t * t * t * t * t;
@@ -95,7 +95,7 @@ public class Interpolate extends Interpolator {
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_ELASTIC = new Interpolate(t -> {
+    public static final Interpolators EASE_IN_ELASTIC = new Interpolators(t -> {
         if (t == 0) {
             return 0;
         }
@@ -109,7 +109,7 @@ public class Interpolate extends Interpolator {
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_OUT_ELASTIC = new Interpolate(t -> {
+    public static final Interpolators EASE_OUT_ELASTIC = new Interpolators(t -> {
         if (t == 0) {
             return 0;
         }
@@ -122,7 +122,7 @@ public class Interpolate extends Interpolator {
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_OUT_ELASTIC = new Interpolate(t -> {
+    public static final Interpolators EASE_IN_OUT_ELASTIC = new Interpolators(t -> {
         if (t == 0) {
             return 0;
         }
@@ -141,13 +141,13 @@ public class Interpolate extends Interpolator {
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_QUAD = new Interpolate(t -> t * t);
+    public static final Interpolators EASE_IN_QUAD = new Interpolators(t -> t * t);
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_OUT_QUAD = new Interpolate(t -> 1 - (1 - t) * (1 - t));
+    public static final Interpolators EASE_OUT_QUAD = new Interpolators(t -> 1 - (1 - t) * (1 - t));
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_OUT_QUAD = new Interpolate(t -> {
+    public static final Interpolators EASE_IN_OUT_QUAD = new Interpolators(t -> {
         t *= 2;
         if (t < 1) {
             return 0.5 * t * t;
@@ -158,13 +158,13 @@ public class Interpolate extends Interpolator {
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_QUART = new Interpolate(t -> t * t * t * t);
+    public static final Interpolators EASE_IN_QUART = new Interpolators(t -> t * t * t * t);
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_OUT_QUART = new Interpolate(t -> 1 - Math.pow(1 - t, 4));
+    public static final Interpolators EASE_OUT_QUART = new Interpolators(t -> 1 - Math.pow(1 - t, 4));
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_OUT_QUART = new Interpolate(t -> {
+    public static final Interpolators EASE_IN_OUT_QUART = new Interpolators(t -> {
         t *= 2;
         if (t < 1) {
             return 0.5 * t * t * t * t;
@@ -175,13 +175,13 @@ public class Interpolate extends Interpolator {
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_EXPO = new Interpolate(t -> (t == 0) ? 0 : Math.pow(2, 10 * (t - 1)));
+    public static final Interpolators EASE_IN_EXPO = new Interpolators(t -> (t == 0) ? 0 : Math.pow(2, 10 * (t - 1)));
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_OUT_EXPO = new Interpolate(t -> (t == 1) ? 1 : 1 - Math.pow(2, -10 * t));
+    public static final Interpolators EASE_OUT_EXPO = new Interpolators(t -> (t == 1) ? 1 : 1 - Math.pow(2, -10 * t));
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_OUT_EXPO = new Interpolate(t -> {
+    public static final Interpolators EASE_IN_OUT_EXPO = new Interpolators(t -> {
         if (t == 0) {
             return 0;
         } else if (t == 1) {
@@ -194,16 +194,16 @@ public class Interpolate extends Interpolator {
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_BACK = new Interpolate(1.70158, (t, c) -> t * t * ((c + 1) * t - c));
+    public static final Interpolators EASE_IN_BACK = new Interpolators(1.70158, (t, c) -> t * t * ((c + 1) * t - c));
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_OUT_BACK = new Interpolate(1.70158, (t, c) -> {
+    public static final Interpolators EASE_OUT_BACK = new Interpolators(1.70158, (t, c) -> {
         t -= 1;
         return t * t * ((c + 1) * t + c) + 1;
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_OUT_BACK = new Interpolate(1.70158, (t, c) -> {
+    public static final Interpolators EASE_IN_OUT_BACK = new Interpolators(1.70158, (t, c) -> {
         t *= 2;
         if (t < 1) {
             c *= 1.525;
@@ -216,7 +216,7 @@ public class Interpolate extends Interpolator {
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_OUT_BOUNCE = new Interpolate(t -> {
+    public static final Interpolators EASE_OUT_BOUNCE = new Interpolators(t -> {
         if (t < 1 / 2.75) {
             return 7.5625 * t * t;
         } else if (t < 2 / 2.75) {
@@ -232,12 +232,12 @@ public class Interpolate extends Interpolator {
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_IN_BOUNCE = new Interpolate(t -> {
+    public static final Interpolators EASE_IN_BOUNCE = new Interpolators(t -> {
         return 1 - EASE_OUT_BOUNCE.curve(1 - t);
     });
 
     /** Built-in Interpolator */
-    public static final Interpolate EASE_INOUT_BOUNCE = new Interpolate(t -> {
+    public static final Interpolators EASE_INOUT_BOUNCE = new Interpolators(t -> {
         if (t < 0.5) {
             return 0.5 * EASE_IN_BOUNCE.curve(2 * t);
         } else {
@@ -252,7 +252,7 @@ public class Interpolate extends Interpolator {
     /**
      * @param operator
      */
-    Interpolate(DoubleUnaryOperator operator) {
+    Interpolators(DoubleUnaryOperator operator) {
         this.constants = 0;
         this.operator = (a, b) -> operator.applyAsDouble(a);
     }
@@ -260,7 +260,7 @@ public class Interpolate extends Interpolator {
     /**
      * @param operator
      */
-    Interpolate(double constants, DoubleBinaryOperator operator) {
+    Interpolators(double constants, DoubleBinaryOperator operator) {
         this.constants = constants;
         this.operator = operator;
     }
@@ -279,8 +279,8 @@ public class Interpolate extends Interpolator {
      * @param constants
      * @return
      */
-    public final Interpolate enhance(double constants) {
-        return new Interpolate(constants, operator);
+    public final Interpolators enhance(double constants) {
+        return new Interpolators(constants, operator);
     }
 
     /**
@@ -289,8 +289,8 @@ public class Interpolate extends Interpolator {
      * @param constants
      * @return
      */
-    public final Interpolate enhance(DoubleUnaryOperator constants) {
-        return new Interpolate(constants.applyAsDouble(this.constants), operator);
+    public final Interpolators enhance(DoubleUnaryOperator constants) {
+        return new Interpolators(constants.applyAsDouble(this.constants), operator);
     }
 
     /**

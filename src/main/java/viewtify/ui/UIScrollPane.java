@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import viewtify.ui.anime.Anime;
-import viewtify.ui.anime.Interpolate;
+import viewtify.ui.anime.Interpolators;
 import viewtify.ui.anime.SwapAnime;
 
 public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
@@ -152,7 +152,7 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
         double targetValue = nodeBounds.getMinY() / (scrollBounds.getHeight() - viewportBounds.getHeight());
 
         if (animate) {
-            Anime.define().interpolator(Interpolate.EASE_OUT).effect(ui.vvalueProperty(), targetValue).run();
+            Anime.define().interpolator(Interpolators.EASE_OUT).effect(ui.vvalueProperty(), targetValue).run();
         } else {
             ui.setVvalue(targetValue);
         }

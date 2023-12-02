@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import kiss.WiseRunnable;
 
-public interface ShowAnime extends Animatable {
+public interface ShowAnime extends AnimePattern {
 
     /** Built-in animation. */
     static ShowAnime FadeIn(double opacity) {

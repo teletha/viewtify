@@ -16,7 +16,7 @@ import javafx.scene.Node;
 import kiss.I;
 import kiss.WiseRunnable;
 import viewtify.ui.UserInterfaceProvider;
-import viewtify.ui.anime.Animatable;
+import viewtify.ui.anime.AnimePattern;
 
 public interface AnimateHelper<Self extends AnimateHelper<Self, N>, N extends Node> extends UserInterfaceProvider<N> {
 
@@ -26,7 +26,7 @@ public interface AnimateHelper<Self extends AnimateHelper<Self, N>, N extends No
      * @param animatable
      * @return
      */
-    default Self animate(Animatable animatable) {
+    default Self animate(AnimePattern animatable) {
         return animate(animatable, null);
     }
 
@@ -37,7 +37,7 @@ public interface AnimateHelper<Self extends AnimateHelper<Self, N>, N extends No
      * @param finisher
      * @return
      */
-    default Self animate(Animatable animatable, WiseRunnable finisher) {
+    default Self animate(AnimePattern animatable, WiseRunnable finisher) {
         if (animatable != null) {
             animatable.play(this, finisher);
         }
@@ -51,7 +51,7 @@ public interface AnimateHelper<Self extends AnimateHelper<Self, N>, N extends No
      * @param animatable
      * @return
      */
-    default Self animateLater(long delayMilliseconds, Animatable animatable) {
+    default Self animateLater(long delayMilliseconds, AnimePattern animatable) {
         return animateLater(delayMilliseconds, animatable, null);
     }
 
@@ -63,7 +63,7 @@ public interface AnimateHelper<Self extends AnimateHelper<Self, N>, N extends No
      * @param finisher
      * @return
      */
-    default Self animateLater(long delayMilliseconds, Animatable animatable, WiseRunnable finisher) {
+    default Self animateLater(long delayMilliseconds, AnimePattern animatable, WiseRunnable finisher) {
         if (delayMilliseconds <= 0) {
             animate(animatable, finisher);
         } else {

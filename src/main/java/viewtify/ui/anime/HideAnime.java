@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import kiss.WiseRunnable;
 
-public interface HideAnime extends Animatable {
+public interface HideAnime extends AnimePattern {
 
     /** Built-in animation. */
     HideAnime FadeOut = (parent, before, action) -> Anime.define().effect(before.opacityProperty(), 0, 0.3).run(action);
@@ -38,7 +38,7 @@ public interface HideAnime extends Animatable {
         Anime.define()
                 .init(() -> parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight())))
                 .duration(Anime.BASE_DURATION.multiply(2))
-                .interpolator(Interpolate.EASE_IN_CUBIC)
+                .interpolator(Interpolators.EASE_IN_CUBIC)
                 .effect(before.opacityProperty(), 0)
                 .effect(before.scaleXProperty(), 1 + diff)
                 .effect(before.scaleYProperty(), 1 + diff)
@@ -64,7 +64,7 @@ public interface HideAnime extends Animatable {
         Anime.define()
                 .init(() -> parent.setClip(new Rectangle(parent.getWidth(), parent.getHeight())))
                 .duration(Anime.BASE_DURATION.multiply(2))
-                .interpolator(Interpolate.EASE_IN_OUT_BACK.enhance(v -> v * 2))
+                .interpolator(Interpolators.EASE_IN_OUT_BACK.enhance(v -> v * 2))
                 .effect(before.opacityProperty(), 0)
                 .effect(before.scaleXProperty(), 1 + diff)
                 .effect(before.scaleYProperty(), 1 + diff)

@@ -23,7 +23,18 @@ import viewtify.Viewtify;
 public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAccessHelper {
 
     /**
-     * Gets wheterh it is managed.
+     * Manage itself.
+     * 
+     * @param state
+     * @return
+     */
+    default Self show(boolean state) {
+        managed(state);
+        return visible(state);
+    }
+
+    /**
+     * Gets whether it is managed.
      * 
      * @return
      */
@@ -40,17 +51,6 @@ public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAcces
     default Self managed(boolean state) {
         property(Type.Managed).setValue(state);
         return (Self) this;
-    }
-
-    /**
-     * Manage itself.
-     * 
-     * @param state
-     * @return
-     */
-    default Self show(boolean state) {
-        managed(state);
-        return visible(state);
     }
 
     /**

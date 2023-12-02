@@ -9,21 +9,13 @@
  */
 package viewtify.ui.anime;
 
-import java.util.Objects;
-
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.value.WritableValue;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 import kiss.WiseRunnable;
-import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 
-public interface Animatable {
+public interface AnimePattern {
 
     /**
      * Shorhand animation.
