@@ -468,6 +468,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "PreferenceView",
+			"packageName": "viewtify.ui.view",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Preferences",
 			"packageName": "viewtify.model",
 			"type": "AbstractClass"
@@ -505,13 +512,6 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Preferences.Preference",
 			"packageName": "viewtify.model",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "PreferencesView",
-			"packageName": "viewtify.ui.view",
 			"type": "Class"
 		},
 		{
