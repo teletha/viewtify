@@ -69,13 +69,6 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Animatable",
-			"packageName": "viewtify.ui.anime",
-			"type": "Functional"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "AnimateHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
@@ -86,6 +79,13 @@ const root = {
 			"name": "Anime",
 			"packageName": "viewtify.ui.anime",
 			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AnimePattern",
+			"packageName": "viewtify.ui.anime",
+			"type": "Functional"
 		},
 		{
 			"modifiers": {
@@ -363,7 +363,7 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Interpolate",
+			"name": "Interpolators",
 			"packageName": "viewtify.ui.anime",
 			"type": "Class"
 		},
