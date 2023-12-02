@@ -35,7 +35,7 @@ import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
 
-public class PreferencesView extends View {
+public class PreferenceView extends View {
 
     /** The navigation area. */
     private final UIVBox navi = new UIVBox(null);
@@ -141,7 +141,7 @@ public class PreferencesView extends View {
      * @param views
      * @return
      */
-    public final PreferencesView add(Class<? extends View>... views) {
+    public final PreferenceView add(Class<? extends View>... views) {
         for (Class<? extends View> view : views) {
             bases.add(I.make(view));
         }
@@ -154,7 +154,7 @@ public class PreferencesView extends View {
      * @param views
      * @return
      */
-    public final PreferencesView add(View... views) {
+    public final PreferenceView add(View... views) {
         return add(List.of(views));
     }
 
@@ -164,7 +164,7 @@ public class PreferencesView extends View {
      * @param views
      * @return
      */
-    public final PreferencesView add(List<View> views) {
+    public final PreferenceView add(List<View> views) {
         bases.addAll(views);
         return this;
     }
@@ -174,7 +174,7 @@ public class PreferencesView extends View {
      * 
      * @return
      */
-    public final PreferencesView enableToC() {
+    public final PreferenceView enableToC() {
         navi.show(true);
         return this;
     }
@@ -184,7 +184,7 @@ public class PreferencesView extends View {
      * 
      * @return
      */
-    public final PreferencesView disableToC() {
+    public final PreferenceView disableToC() {
         navi.show(false);
         return this;
     }
