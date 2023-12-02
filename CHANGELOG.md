@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.15.1](https://github.com/teletha/viewtify/compare/v2.15.0...v2.15.1) (2023-12-02)
+
+
+### Bug Fixes
+
+* rename view for preferences ([4448b8e](https://github.com/teletha/viewtify/commit/4448b8e6a3c4ffd39593647e4b87b35abb91eb2a))
+
 ## [2.15.0](https://github.com/teletha/viewtify/compare/v2.14.0...v2.15.0) (2023-12-01)
 
 
