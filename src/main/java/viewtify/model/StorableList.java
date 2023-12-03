@@ -10,17 +10,20 @@
 package viewtify.model;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.collections.ModifiableObservableListBase;
-
 import kiss.Managed;
-import kiss.Model;
 import kiss.Singleton;
 import kiss.Storable;
 import viewtify.Viewtify;
 
 @Managed(Singleton.class)
-public abstract class StorableList<E extends StorableModel> extends ModifiableObservableListBase<E> implements Storable<StorableList<E>> {
+public final class StorableList<E extends StorableModel> extends ModifiableObservableListBase<E> implements Storable<StorableList<E>> {
+
+    /** The model id. */
+    private final String id;
 
     /** The actual container. */
     private final ArrayList<E> list = new ArrayList();
@@ -28,7 +31,19 @@ public abstract class StorableList<E extends StorableModel> extends ModifiableOb
     /**
      * Hide constructor.
      */
-    protected StorableList() {
+    private StorableList(Class<E> type) {
+        Managed annotation = type.getAnnotation(Managed.class);
+        if (annotation == null) {
+            id = type.getName();
+        } else {
+            String name = annotation.name();
+            if (name == null || name.isBlank()) {
+                id = type.getName();
+            } else {
+                id = name;
+            }
+        }
+
         sync();
     }
 
@@ -90,15 +105,12 @@ public abstract class StorableList<E extends StorableModel> extends ModifiableOb
      */
     @Override
     public final String locate() {
-        return Viewtify.UserPreference.exact().file(getModelName() + ".json").path();
+        return Viewtify.UserPreference.exact().file(id + ".json").path();
     }
 
-    /**
-     * Get the identical model name.
-     * 
-     * @return
-     */
-    protected String getModelName() {
-        return Model.of(this).type.getName();
+    private static final Map<Class, StorableList> cache = new ConcurrentHashMap();
+
+    public static <M extends StorableModel> StorableList<M> of(Class<M> type) {
+        return cache.computeIfAbsent(type, StorableList::new);
     }
 }

@@ -9,25 +9,22 @@
  */
 package viewtify.model;
 
-import kiss.I;
-import kiss.Model;
-
-public interface StorableModel<C extends StorableList> {
+public interface StorableModel {
 
     /**
      * The associated contianer for this item.
      * 
      * @return
      */
-    private C container() {
-        return I.make((Class<C>) Model.collectParameters(getClass(), StorableModel.class)[0]);
+    private StorableList container() {
+        return StorableList.of(getClass());
     }
 
     /**
      * Save this item.
      */
     default void save() {
-        C container = container();
+        StorableList container = container();
         if (!container.contains(this)) container.add(this);
         container.store();
     }
@@ -36,7 +33,7 @@ public interface StorableModel<C extends StorableList> {
      * Remove this item.
      */
     default void delete() {
-        C container = container();
+        StorableList container = container();
         if (container.remove(this)) {
             container.store();
         }
