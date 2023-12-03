@@ -617,7 +617,7 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "StorableList",
 			"packageName": "viewtify.model",
-			"type": "AbstractClass"
+			"type": "Class"
 		},
 		{
 			"modifiers": {
