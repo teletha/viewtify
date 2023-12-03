@@ -10,10 +10,23 @@
 package viewtify.model;
 
 import kiss.Managed;
+import kiss.Storable;
 
 @Managed
-public abstract class NamedPreferences extends Preferences {
+public class NamedPreferences extends Preferences {
 
     /** The user defined name. */
     public final Preference<String> name = initialize("");
+
+    Storable container;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Preferences store() {
+        container.store();
+        System.out.println("Store " + this);
+        return this;
+    }
 }

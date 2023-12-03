@@ -122,6 +122,20 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     }
 
     /**
+     * Synchronize data from/to source.
+     */
+    void sync2() {
+        Viewtify.UserPreference.observing().to(x -> {
+            // Not all property values are preserved in the restore source, so they must always be
+            // reset before restoring. If not reset, some properties may continue to apply the
+            // previous user's values to the new user.
+            reset();
+            restore();
+        });
+        auto();
+    }
+
+    /**
      * Observe the value change events.
      * 
      * @return
@@ -201,6 +215,28 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
             prefs.sync();
             return prefs;
         });
+    }
+
+    private static final Map<Class, PreferencesList> CACHE = new ConcurrentHashMap();
+
+    public static <P extends NamedPreferences> P by(Class<P> type, String key) {
+        PreferencesList<P> list = list(type);
+        for (P preferences : list) {
+            if (preferences.name.is(key)) {
+                return preferences;
+            }
+        }
+
+        P named = I.make(type);
+        named.name.set(key);
+        named.container = list;
+        list.add(named);
+
+        return named;
+    }
+
+    public static <P extends Preferences> PreferencesList<P> list(Class<P> type) {
+        return CACHE.computeIfAbsent(type, PreferencesList::new);
     }
 
     /**
