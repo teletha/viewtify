@@ -9,7 +9,7 @@
  */
 package viewtify.ui.calendar;
 
-import viewtify.model.Preferences;
+import viewtify.prference.Preferences;
 
 /**
  * Preference for calendar.

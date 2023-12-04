@@ -19,7 +19,7 @@ import kiss.Extensible;
 import kiss.I;
 import kiss.Signal;
 import stylist.value.Color;
-import viewtify.model.Preferences;
+import viewtify.prference.Preferences;
 
 public interface TimeEventSource extends Extensible {
 

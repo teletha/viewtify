@@ -12,7 +12,7 @@ package viewtify.ui.calendar;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
-import viewtify.model.Preferences;
+import viewtify.prference.Preferences;
 
 /**
  * Preference for calendar.

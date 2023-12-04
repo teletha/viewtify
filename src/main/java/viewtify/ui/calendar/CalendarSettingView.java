@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 
 import kiss.I;
 import kiss.Variable;
-import viewtify.model.Preferences;
+import viewtify.prference.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UICheckBox;
 import viewtify.ui.UICheckSwitch;

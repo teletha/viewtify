@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 
 import kiss.I;
-import viewtify.model.Preferences;
+import viewtify.prference.Preferences;
 import viewtify.ui.calendar.CalendarMarker.Mark;
 
 public class Calendars {

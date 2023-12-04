@@ -10,8 +10,7 @@
 package viewtify.ui.toast;
 
 import javafx.util.Duration;
-
-import viewtify.model.Preferences;
+import viewtify.prference.Preferences;
 import viewtify.util.Corner;
 import viewtify.util.ScreenSelector;
 

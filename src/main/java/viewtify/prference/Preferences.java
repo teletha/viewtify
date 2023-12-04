@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify.model;
+package viewtify.prference;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

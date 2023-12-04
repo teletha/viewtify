@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
 import kiss.Variable;
 import viewtify.Theme;
 import viewtify.ThemeType;
-import viewtify.model.Preferences;
+import viewtify.prference.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UISpinner;

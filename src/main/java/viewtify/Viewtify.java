@@ -84,7 +84,7 @@ import psychopath.File;
 import psychopath.Locator;
 import stylist.design.DesignScheme;
 import viewtify.keys.ShortcutManager;
-import viewtify.model.Preferences;
+import viewtify.prference.Preferences;
 import viewtify.ui.UIWeb;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;

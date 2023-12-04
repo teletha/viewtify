@@ -21,7 +21,7 @@ import kiss.Singleton;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
-import viewtify.model.Preferences;
+import viewtify.prference.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
 import viewtify.ui.UIHBox;

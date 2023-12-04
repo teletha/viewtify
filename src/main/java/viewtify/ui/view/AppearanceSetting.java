@@ -17,7 +17,7 @@ import kiss.I;
 import viewtify.Theme;
 import viewtify.ThemeType;
 import viewtify.Viewtify;
-import viewtify.model.Preferences;
+import viewtify.prference.Preferences;
 
 /**
  * Preference for appearance.

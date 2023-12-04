@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package viewtify.model;
+package viewtify.prference;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;

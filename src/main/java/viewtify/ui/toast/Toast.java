@@ -27,7 +27,7 @@ import kiss.WiseConsumer;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
-import viewtify.model.Preferences;
+import viewtify.prference.Preferences;
 import viewtify.ui.anime.Anime;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
