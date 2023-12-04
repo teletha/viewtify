@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 import javafx.util.Duration;
 
 import kiss.Variable;
-import viewtify.prference.Preferences;
+import viewtify.preference.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
 import viewtify.ui.UICheckSwitch;

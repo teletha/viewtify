@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package viewtify.prference;
+package viewtify.preference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
