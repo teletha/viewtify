@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="Z">
+		<header class="V">
+			<h1 class="S" date="Use saved searches to filter your results more quickly" ver="2.16.0"><code>Viewtify</code></h1>
+			<nav class="W"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="i" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="K">
+			<nav class="M">
+				<div></div>
+			</nav>
+			<article class="Q" id="Article">
+				<section class="l"><code class="J">viewtify.preference</code>
+					<h2 class="Class L"><code class="f">Preferences.Preference</code><code class="e">&#60;<code>V</code>&#62;</code></h2>
+					<div class="k">
+						<ul class="C D">
+							<li><code>V</code></li>
+						</ul>
+						<ul class="C E">
+							<li><code>kiss.Variable<code class="parameters"><code>V</code></code></code></li>
+						</ul>
+						<ul class="C F">
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>V</code></code></code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code>V</code></code></code></li>
+						</ul>
+						<ul class="C G">
+							<li><code><a href="api/viewtify.preference.Preferences.ComparablePreference.html">ComparablePreference</a><code class="parameters"><code>V</code></code></code></li>
+							<li><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></li>
+							<li><code><a href="api/viewtify.preference.Preferences.IntPreference.html">IntPreference</a></code></li>
+							<li><code><a href="api/viewtify.preference.Preferences.LongPreference.html">LongPreference</a></code></li>
+						</ul>
+					</div><span class="B"><p>Preference value.</p>
+					</span></section>
+				<section class="l" id="requirements">
+					<h2 class="m"><i class="FINAL"><i class="PROTECTED"></i></i><code class="f">requirements</code><i class="a"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>V</code></code></code></code></code></i></h2><span class="B"><p>Requirements.</p>
+					</span></section>
+				<section class="l" id="Preference(java.lang.Object)">
+					<h2 class="m"><i class="PROTECTED"></i><code class="f">Preference</code><code class="e">(<code>V</code> <code class="parameterName">defaultValue</code>)</code></h2>
+					<table class="h">
+						<tr class="T">
+							<td><code>V</code> <code>defaultValue</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Hide constructor.</p>
+					</span></section>
+				<section class="l" id="require(java.util.function.Function)">
+					<h2 class="m"><i class="PUBLIC"></i><code class="f">require</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>V</code></code></code> <code class="parameterName">requirement</code>)</code><i class="a"><code><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code>V</code></code></code></i></h2>
+					<table class="h">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>V</code></code></code> <code>requirement</code></td>
+							<td></td>
+						</tr>
+						<tr class="c">
+							<td><code><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code>V</code></code></code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Add requirement on this preference.</p>
+					</span></section>
+				<section class="l" id="syncTo(java.util.function.Consumer)">
+					<h2 class="m"><i class="PUBLIC"></i><code class="f">syncTo</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">target</code>)</code><i class="a"><code><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code>V</code></code></code></i></h2>
+					<table class="h">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>V</code></code></code> <code>target</code></td>
+							<td></td>
+						</tr>
+						<tr class="c">
+							<td><code><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code>V</code></code></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Synchronize value to the target sink.</p>
+					</span></section>
+				<section class="l" id="syncTo(kiss.WiseFunction,java.util.function.Consumer)">
+					<h2 class="m"><i class="PUBLIC"></i><code class="f">syncTo</code><code class="e">(<code>kiss.WiseFunction<code class="parameters"><code>V</code>, <code>R</code></code></code> <code class="parameterName">converter</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>R</code></code></code> <code class="parameterName">target</code>)</code><i class="a"><code><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code>V</code></code></code></i></h2>
+					<table class="h">
+						<tr class="b">
+							<td><code>R</code></td>
+							<td></td>
+						</tr>
+						<tr class="T">
+							<td><code>kiss.WiseFunction<code class="parameters"><code>V</code>, <code>R</code></code></code> <code>converter</code></td>
+							<td></td>
+						</tr>
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>R</code></code></code> <code>target</code></td>
+							<td></td>
+						</tr>
+						<tr class="c">
+							<td><code><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code>V</code></code></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Synchronize value to the target sink.</p>
+					</span></section>
+				<section class="l" id="reset()">
+					<h2 class="m"><i class="FINAL"><i class="PUBLIC"></i></i><code class="f">reset</code><code class="e">()</code><i class="a"><code>void</code></i></h2><span class="B"><p>Reset to the default value.</p>
+					</span></section>
+				<section class="l" id="setDefault(java.lang.Object)">
+					<h2 class="m"><i class="FINAL"><i class="PUBLIC"></i></i><code class="f">setDefault</code><code class="e">(<code>V</code> <code class="parameterName">defaultValue</code>)</code><i class="a"><code>void</code></i></h2>
+					<table class="h">
+						<tr class="T">
+							<td><code>V</code> <code>defaultValue</code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Change the default value.</p>
+					</span></section>
+			</article>
+			<aside class="U" id="SubNavi">
+				<div class="N">
+					<h5 class="Y">Constructors</h5>
+					<ul>
+						<li><i class="PROTECTED"></i><code><a href="api/viewtify.preference.Preferences.Preference.html#Preference(java.lang.Object)">Preference</a></code><code class="e">(<code>V</code> <code class="parameterName">defaultValue</code>)</code></li>
+					</ul>
+					<h5 class="Y">Fields</h5>
+					<ul>
+						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.preference.Preferences.Preference.html#requirements">requirements</a></code><i class="I"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>V</code></code></code></code></code></i></li>
+					</ul>
+					<h5 class="Y">Methods</h5>
+					<ul>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.preference.Preferences.Preference.html#require(java.util.function.Function)">require</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>V</code></code></code> <code class="parameterName">requirement</code>)</code><i class="I"><code><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code>V</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.preference.Preferences.Preference.html#syncTo(java.util.function.Consumer)">syncTo</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>V</code></code></code> <code class="parameterName">target</code>)</code><i class="I"><code><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code>V</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.preference.Preferences.Preference.html#syncTo(kiss.WiseFunction,java.util.function.Consumer)">syncTo</a></code><code class="e">(<code>kiss.WiseFunction<code class="parameters"><code>V</code>, <code>R</code></code></code> <code class="parameterName">converter</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>R</code></code></code> <code class="parameterName">target</code>)</code><i class="I"><code><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code>V</code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.preference.Preferences.Preference.html#reset()">reset</a></code><code class="e">()</code><i class="I"><code>void</code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.preference.Preferences.Preference.html#setDefault(java.lang.Object)">setDefault</a></code><code class="e">(<code>V</code> <code class="parameterName">defaultValue</code>)</code><i class="I"><code>void</code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>

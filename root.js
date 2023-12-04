@@ -6,7 +6,7 @@ const root = {
 		"viewtify",
 		"viewtify.edit",
 		"viewtify.keys",
-		"viewtify.prference",
+		"viewtify.preference",
 		"viewtify.property",
 		"viewtify.style",
 		"viewtify.task",
@@ -469,49 +469,49 @@ const root = {
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "PreferenceView",
-			"packageName": "viewtify.prference",
+			"packageName": "viewtify.preference",
 			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Preferences",
-			"packageName": "viewtify.prference",
+			"packageName": "viewtify.preference",
 			"type": "AbstractClass"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Preferences.ComparablePreference",
-			"packageName": "viewtify.prference",
+			"packageName": "viewtify.preference",
 			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Preferences.DoublePreference",
-			"packageName": "viewtify.prference",
+			"packageName": "viewtify.preference",
 			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Preferences.IntPreference",
-			"packageName": "viewtify.prference",
+			"packageName": "viewtify.preference",
 			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Preferences.LongPreference",
-			"packageName": "viewtify.prference",
+			"packageName": "viewtify.preference",
 			"type": "Class"
 		},
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Preferences.Preference",
-			"packageName": "viewtify.prference",
+			"packageName": "viewtify.preference",
 			"type": "Class"
 		},
 		{

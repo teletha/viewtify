@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="Z">
+		<header class="V">
+			<h1 class="S" date="Use saved searches to filter your results more quickly" ver="2.16.0"><code>Viewtify</code></h1>
+			<nav class="W"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#package"/>
+					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>Repository</a></nav>
+			<div class="i" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg>
+				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<main class="K">
+			<nav class="M">
+				<div></div>
+			</nav>
+			<article class="Q" id="Article">
+				<section class="l"><code class="J">viewtify.preference</code>
+					<h2 class="Class L"><code class="f">Preferences.DoublePreference</code></h2>
+					<div class="k">
+						<ul class="C E">
+							<li><code><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></li>
+							<li><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></li>
+						</ul>
+						<ul class="C F">
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></li>
+							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></li>
+						</ul>
+					</div><span class="B"><p>Preference value for primitive double.</p>
+					</span></section>
+				<section class="l" id="require(java.util.function.Function)">
+					<h2 class="m"><i class="OVERRIDE PUBLIC"></i><code class="f">require</code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code> <code class="parameterName">requirement</code>)</code><i class="a"><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></i></h2>
+					<table class="h">
+						<tr class="T">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code> <code>requirement</code></td>
+							<td></td>
+						</tr>
+						<tr class="c">
+							<td><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>Add requirement on this preference.</p>
+					</span></section>
+				<section class="l" id="requireMax(double)">
+					<h2 class="m"><i class="PUBLIC"></i><code class="f">requireMax</code><code class="e">(<code>double</code> <code class="parameterName">max</code>)</code><i class="a"><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></i></h2>
+					<table class="h">
+						<tr class="T">
+							<td><code>double</code> <code>max</code></td>
+							<td><span><p>A maximum value.</p>
+								</span></td>
+						</tr>
+						<tr class="c">
+							<td><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>This is the maximum value that can be set. If it is greater than this value, this maximum
+ value will be set instead.</p>
+					</span></section>
+				<section class="l" id="requireMin(double)">
+					<h2 class="m"><i class="PUBLIC"></i><code class="f">requireMin</code><code class="e">(<code>double</code> <code class="parameterName">min</code>)</code><i class="a"><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></i></h2>
+					<table class="h">
+						<tr class="T">
+							<td><code>double</code> <code>min</code></td>
+							<td><span><p>A minimum value.</p>
+								</span></td>
+						</tr>
+						<tr class="c">
+							<td><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>This is the minimum value that can be set. If it is less than this value, this minimum
+ value will be set instead.</p>
+					</span></section>
+				<section class="l" id="requireBetween(double,double)">
+					<h2 class="m"><i class="PUBLIC"></i><code class="f">requireBetween</code><code class="e">(<code>double</code> <code class="parameterName">min</code>, <code>double</code> <code class="parameterName">max</code>)</code><i class="a"><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></i></h2>
+					<table class="h">
+						<tr class="T">
+							<td><code>double</code> <code>min</code></td>
+							<td><span><p>A minimum value.</p>
+								</span></td>
+						</tr>
+						<tr class="T">
+							<td><code>double</code> <code>max</code></td>
+							<td><span><p>A maximum value.</p>
+								</span></td>
+						</tr>
+						<tr class="c">
+							<td><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></td>
+							<td><span><p>Chainable API.</p>
+								</span></td>
+						</tr>
+					</table><span class="B"><p>The range of possible values. If a value outside this range is set, the closest value to
+ this range will be set instead.</p>
+					</span></section>
+			</article>
+			<aside class="U" id="SubNavi">
+				<div class="N">
+					<h5 class="Y">Methods</h5>
+					<ul>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.preference.Preferences.DoublePreference.html#require(java.util.function.Function)">require</a></code><code class="e">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code> <code class="parameterName">requirement</code>)</code><i class="I"><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.preference.Preferences.DoublePreference.html#requireMax(double)">requireMax</a></code><code class="e">(<code>double</code> <code class="parameterName">max</code>)</code><i class="I"><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.preference.Preferences.DoublePreference.html#requireMin(double)">requireMin</a></code><code class="e">(<code>double</code> <code class="parameterName">min</code>)</code><i class="I"><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.preference.Preferences.DoublePreference.html#requireBetween(double,double)">requireBetween</a></code><code class="e">(<code>double</code> <code class="parameterName">min</code>, <code>double</code> <code class="parameterName">max</code>)</code><i class="I"><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">DoublePreference</a></code></i></li>
+					</ul>
+				</div>
+			</aside>
+		</main>
+		<script src="root.js"></script>
+		<script src="main.js" type="module"></script>
+	</body>
+</html>
