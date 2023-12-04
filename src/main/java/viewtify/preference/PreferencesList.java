@@ -57,6 +57,8 @@ class PreferencesList<E extends Preferences> extends ObservableListWrapper<E> im
             clear();
             restore();
 
+            System.out.println("Reload " + id);
+
             for (E item : this) {
                 synchronize(item);
             }

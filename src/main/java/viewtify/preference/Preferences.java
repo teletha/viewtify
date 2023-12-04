@@ -27,11 +27,15 @@ import kiss.Signal;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseFunction;
+import viewtify.Viewtify;
 
 public abstract class Preferences implements Storable<Preferences>, Extensible {
 
     /** The cache for preferences. */
-    private static final Map<Class, PreferencesList> CACHE = new ConcurrentHashMap();
+    private static final Map<Class, Preferences> CACHE = new ConcurrentHashMap();
+
+    /** The cache for preferences. */
+    private static final Map<Class, PreferencesList> CACHE_LIST = new ConcurrentHashMap();
 
     /** The user defined name. */
     public final Preference<String> name = initialize("");
@@ -114,7 +118,11 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
      */
     @Override
     public Preferences store() {
-        container.store();
+        if (container == null) {
+            Storable.super.store();
+        } else {
+            container.store();
+        }
         return this;
     }
 
@@ -160,6 +168,28 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     }
 
     /**
+     * Synchronize data from/to source.
+     */
+    void sync() {
+        Viewtify.UserPreference.observing().to(x -> {
+            // Not all property values are preserved in the restore source, so they must always be
+            // reset before restoring. If not reset, some properties may continue to apply the
+            // previous user's values to the new user.
+            reset();
+            restore();
+        });
+        auto();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String locate() {
+        return Viewtify.UserPreference.exact().file(getClass().getName() + ".json").path();
+    }
+
+    /**
      * Search the user preference of the specified type.
      * 
      * @param <P>
@@ -167,7 +197,11 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
      * @return
      */
     public static <P extends Preferences> P of(Class<P> type) {
-        return of(type, null);
+        return (P) CACHE.computeIfAbsent(type, x -> {
+            P pref = I.make(type);
+            pref.sync();
+            return pref;
+        });
     }
 
     /**
@@ -180,7 +214,7 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     public static <P extends Preferences> P of(Class<P> type, String name) {
         name = Objects.requireNonNullElse(name, "");
 
-        PreferencesList<P> list = CACHE.computeIfAbsent(type, PreferencesList::new);
+        PreferencesList<P> list = CACHE_LIST.computeIfAbsent(type, PreferencesList::new);
         for (P preferences : list) {
             if (preferences.name.is(name)) {
                 return preferences;
@@ -205,14 +239,14 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
      * @return
      */
     public static <P extends Preferences> List<P> all(Class<P> type) {
-        return CACHE.computeIfAbsent(type, PreferencesList::new);
+        return CACHE_LIST.computeIfAbsent(type, PreferencesList::new);
     }
 
     /**
      * Save the specified user preferences.
      */
     public static <P extends Preferences> void save(Class<P> type) {
-        CACHE.computeIfPresent(type, (x, list) -> {
+        CACHE_LIST.computeIfPresent(type, (x, list) -> {
             list.store();
             return list;
         });
