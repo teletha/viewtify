@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.16.1](https://github.com/teletha/viewtify/compare/v2.16.0...v2.16.1) (2023-12-04)
+
+
+### Bug Fixes
+
+* correct package name ([8fb8f30](https://github.com/teletha/viewtify/commit/8fb8f301017476fb81827d2baa76a23444c6cf3c))
+
 ## [2.16.0](https://github.com/teletha/viewtify/compare/v2.15.1...v2.16.0) (2023-12-04)
 
 
