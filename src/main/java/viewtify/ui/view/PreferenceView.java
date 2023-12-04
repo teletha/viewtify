@@ -86,14 +86,13 @@ public class PreferenceView extends View {
      */
     interface style extends StyleDSL {
         Style left = () -> {
-            display.minWidth(180, px);
             padding.vertical(40, px).left(10, px);
         };
 
         Style navi = () -> {
             display.minWidth(160, px);
             font.size(14, px).smooth.grayscale();
-            padding.vertical(10, px).left(20, px);
+            padding.vertical(10, px).horizontal(15, px);
             cursor.pointer();
             border.radius(3, px);
 
@@ -108,11 +107,11 @@ public class PreferenceView extends View {
 
         Style search = () -> {
             display.maxWidth(220, px);
-            margin.top(15, px).left(296, px).bottom(15, px);
+            margin.top(15, px).left(286, px).bottom(15, px);
         };
 
         Style root = () -> {
-            padding.left(50, px).right(30, px).top(15, px);
+            padding.left(40, px).right(30, px).top(15, px);
         };
 
         Style box = () -> {
