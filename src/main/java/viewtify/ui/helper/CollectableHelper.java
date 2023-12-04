@@ -139,6 +139,10 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self items(List<E> items) {
+        if (items instanceof ObservableList) {
+            return items((ObservableList<E>) items);
+        }
+
         if (items == null || items.isEmpty()) {
             modifyItemUISafely(list -> {
                 list.clear();

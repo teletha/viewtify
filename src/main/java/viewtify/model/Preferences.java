@@ -37,7 +37,7 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     public final Preference<String> name = initialize("");
 
     /** The grouping container. */
-    Storable container;
+    protected Storable container;
 
     /**
      * Hide constructor.
@@ -206,6 +206,16 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
      */
     public static <P extends Preferences> List<P> all(Class<P> type) {
         return CACHE.computeIfAbsent(type, PreferencesList::new);
+    }
+
+    /**
+     * Save the specified user preferences.
+     */
+    public static <P extends Preferences> void store(Class<P> type) {
+        CACHE.computeIfPresent(type, (x, list) -> {
+            list.store();
+            return list;
+        });
     }
 
     /**
