@@ -211,7 +211,7 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     /**
      * Save the specified user preferences.
      */
-    public static <P extends Preferences> void store(Class<P> type) {
+    public static <P extends Preferences> void save(Class<P> type) {
         CACHE.computeIfPresent(type, (x, list) -> {
             list.store();
             return list;

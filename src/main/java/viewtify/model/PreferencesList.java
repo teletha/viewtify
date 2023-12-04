@@ -10,19 +10,26 @@
 package viewtify.model;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import com.sun.javafx.collections.ObservableListWrapper;
 
+import kiss.Disposable;
+import kiss.I;
 import kiss.Managed;
 import kiss.Storable;
 import viewtify.Viewtify;
 
-final class PreferencesList<E extends Preferences> extends ObservableListWrapper<E> implements Storable<PreferencesList<E>> {
+class PreferencesList<E extends Preferences> extends ObservableListWrapper<E> implements Storable<PreferencesList<E>> {
 
     /** The model id. */
     private final String id;
 
+    /** The state manager. */
     private boolean restoring;
+
+    /** The saving state. */
+    private Disposable request;
 
     /**
      * Hide constructor.
@@ -51,10 +58,21 @@ final class PreferencesList<E extends Preferences> extends ObservableListWrapper
             restore();
 
             for (E item : this) {
-                item.container = this;
-                item.auto();
+                synchronize(item);
             }
         });
+    }
+
+    /**
+     * Make the item synchronizable.
+     * 
+     * @param item
+     */
+    private void synchronize(E item) {
+        if (item != null) {
+            item.container = this;
+            item.auto();
+        }
     }
 
     /**
@@ -76,7 +94,10 @@ final class PreferencesList<E extends Preferences> extends ObservableListWrapper
     @Override
     public PreferencesList<E> store() {
         if (!restoring) {
-            Storable.super.store();
+            if (request != null) {
+                request.dispose();
+            }
+            request = I.schedule(1, TimeUnit.SECONDS).to(Storable.super::store, I::error, () -> request = null);
         }
         return this;
     }
@@ -95,11 +116,8 @@ final class PreferencesList<E extends Preferences> extends ObservableListWrapper
     @Override
     protected void doAdd(int index, E element) {
         super.doAdd(index, element);
+        synchronize(element);
         store();
-
-        if (element != null && element.name.is("") && element.getClass().getSimpleName().equals("Task")) {
-            new Error().printStackTrace();
-        }
     }
 
     /**
@@ -108,11 +126,8 @@ final class PreferencesList<E extends Preferences> extends ObservableListWrapper
     @Override
     protected E doSet(int index, E element) {
         E e = super.doSet(index, element);
+        synchronize(element);
         store();
-
-        if (element != null && element.name.is("") && element.getClass().getSimpleName().equals("Task")) {
-            new Error().printStackTrace();
-        }
 
         return e;
     }
