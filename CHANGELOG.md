@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.16.0](https://github.com/teletha/viewtify/compare/v2.15.1...v2.16.0) (2023-12-04)
+
+
+### Features
+
+* Generalized preference store. ([eaef37a](https://github.com/teletha/viewtify/commit/eaef37a43228601742cfc836435d71bb455a6baa))
+* provide preference package ([dc3d76f](https://github.com/teletha/viewtify/commit/dc3d76fc8a7322286ea65ff4c717417c2d701e24))
+* StorableList is reusable generic model collection. ([a473100](https://github.com/teletha/viewtify/commit/a47310094dccd676ccf11b9ae5e0410c99c7d3c9))
+
+
+### Bug Fixes
+
+* change preference view's style ([650c27c](https://github.com/teletha/viewtify/commit/650c27c218c172e6e389f04bbc179e05bf6d77c2))
+* preferences aggregate automatic saving ([5ea8968](https://github.com/teletha/viewtify/commit/5ea896803ed78dc5edf360c51e0354919cd72863))
+* remove id on preferences ([ec12e84](https://github.com/teletha/viewtify/commit/ec12e84e3e1c2a249472c9c3fa3928c8f465b8e0))
+* remove StorableList and StorableModel ([e1abc00](https://github.com/teletha/viewtify/commit/e1abc00dc05f8924d793123aada10465c5a6a441))
+
 ## [2.15.1](https://github.com/teletha/viewtify/compare/v2.15.0...v2.15.1) (2023-12-02)
 
 
