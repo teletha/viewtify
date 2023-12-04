@@ -608,20 +608,6 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "StorableList",
-			"packageName": "viewtify.model",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "StorableModel",
-			"packageName": "viewtify.model",
-			"type": "Interface"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "StyleHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
