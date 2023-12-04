@@ -27,15 +27,17 @@ import kiss.Signal;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseFunction;
-import viewtify.Viewtify;
 
 public abstract class Preferences implements Storable<Preferences>, Extensible {
 
     /** The cache for preferences. */
-    private static final Map<String, Preferences> cache = new ConcurrentHashMap();
+    private static final Map<Class, PreferencesList> CACHE = new ConcurrentHashMap();
 
-    /** The preference id. */
-    private String id;
+    /** The user defined name. */
+    public final Preference<String> name = initialize("");
+
+    /** The grouping container. */
+    Storable container;
 
     /**
      * Hide constructor.
@@ -108,31 +110,12 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     }
 
     /**
-     * Synchronize data from/to source.
+     * {@inheritDoc}
      */
-    void sync() {
-        Viewtify.UserPreference.observing().to(x -> {
-            // Not all property values are preserved in the restore source, so they must always be
-            // reset before restoring. If not reset, some properties may continue to apply the
-            // previous user's values to the new user.
-            reset();
-            restore();
-        });
-        auto();
-    }
-
-    /**
-     * Synchronize data from/to source.
-     */
-    void sync2() {
-        Viewtify.UserPreference.observing().to(x -> {
-            // Not all property values are preserved in the restore source, so they must always be
-            // reset before restoring. If not reset, some properties may continue to apply the
-            // previous user's values to the new user.
-            reset();
-            restore();
-        });
-        auto();
+    @Override
+    public Preferences store() {
+        container.store();
+        return this;
     }
 
     /**
@@ -177,15 +160,7 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String locate() {
-        return Viewtify.UserPreference.exact().file(id + ".json").path();
-    }
-
-    /**
-     * Get the user preferences by type.
+     * Search the user preference of the specified type.
      * 
      * @param <P>
      * @param type
@@ -196,46 +171,40 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     }
 
     /**
-     * Get the user preferences by type and key.
+     * Search the user preference of the specified type and name.
      * 
      * @param <P>
      * @param type
-     * @param key
      * @return
      */
-    public static <P extends Preferences> P of(Class<P> type, String key) {
-        String id = type.getName();
-        if (key != null) {
-            id = id + "@" + key;
-        }
+    public static <P extends Preferences> P of(Class<P> type, String name) {
+        name = Objects.requireNonNullElse(name, "");
 
-        return (P) cache.computeIfAbsent(id, x -> {
-            Preferences prefs = I.make(type);
-            prefs.id = x;
-            prefs.sync();
-            return prefs;
-        });
-    }
-
-    private static final Map<Class, PreferencesList> CACHE = new ConcurrentHashMap();
-
-    public static <P extends NamedPreferences> P by(Class<P> type, String key) {
-        PreferencesList<P> list = list(type);
+        PreferencesList<P> list = CACHE.computeIfAbsent(type, PreferencesList::new);
         for (P preferences : list) {
-            if (preferences.name.is(key)) {
+            if (preferences.name.is(name)) {
                 return preferences;
             }
         }
 
         P named = I.make(type);
-        named.name.set(key);
+        named.name.set(name);
         named.container = list;
+        named.auto();
+
         list.add(named);
 
         return named;
     }
 
-    public static <P extends Preferences> PreferencesList<P> list(Class<P> type) {
+    /**
+     * Search all user preferences of the specified type.
+     * 
+     * @param <P>
+     * @param type
+     * @return
+     */
+    public static <P extends Preferences> List<P> all(Class<P> type) {
         return CACHE.computeIfAbsent(type, PreferencesList::new);
     }
 

@@ -122,7 +122,7 @@ public class CalendarSettingView extends View {
          */
         @Override
         protected void initialize() {
-            TimeEventSourceSetting setting = Preferences.by(TimeEventSourceSetting.class, source.name());
+            TimeEventSourceSetting setting = Preferences.of(TimeEventSourceSetting.class, source.name());
 
             enable.text(source.name()).sync(setting.enable);
             color.disableWhen(enable.isNotSelected()).sync(setting.color, FXUtils::color, FXUtils::color);

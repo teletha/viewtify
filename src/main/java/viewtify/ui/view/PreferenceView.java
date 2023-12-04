@@ -86,12 +86,12 @@ public class PreferenceView extends View {
      */
     interface style extends StyleDSL {
         Style left = () -> {
-            display.width(200, px);
-            padding.vertical(40, px).horizontal(10, px);
+            display.minWidth(180, px);
+            padding.vertical(40, px).left(10, px);
         };
 
         Style navi = () -> {
-            display.width(180, px);
+            display.minWidth(160, px);
             font.size(14, px).smooth.grayscale();
             padding.vertical(10, px).left(20, px);
             cursor.pointer();
