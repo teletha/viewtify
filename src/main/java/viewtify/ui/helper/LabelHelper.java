@@ -315,6 +315,16 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @param iconPath
      * @return
      */
+    default Self icon(String iconPath, int size) {
+        return icon(iconPath, size, size);
+    }
+
+    /**
+     * Set icon.
+     * 
+     * @param iconPath
+     * @return
+     */
     default Self icon(String iconPath, int width, int height) {
         Image image = new Image(ClassLoader.getSystemResourceAsStream(iconPath));
         ImageView view = new ImageView(image);

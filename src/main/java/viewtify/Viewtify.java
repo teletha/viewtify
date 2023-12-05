@@ -37,6 +37,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -65,9 +67,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -151,8 +150,13 @@ public final class Viewtify {
                 .get();
 
         // load additional fonts
-        Font.loadFont(ClassLoader.getSystemResourceAsStream("viewtify/font/LeagueGothic.ttf"), 14);
-        Font.loadFont(ClassLoader.getSystemResourceAsStream("viewtify/font/Oswald.ttf"), 14);
+        Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/LeagueGothic.ttf"), 14);
+        Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/Oswald-Bold.ttf"), 14);
+        Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/Oswald-SemiBold.ttf"), 14);
+        Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/Oswald-Medium.ttf"), 14);
+        Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/Oswald-Regular.ttf"), 14);
+        Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/Oswald-Light.ttf"), 14);
+        Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/Oswald-ExtraLight.ttf"), 14);
 
         CSS.enhance();
 
@@ -203,6 +207,9 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private Class<? extends DesignScheme> scheme;
+
+    /** The configurable setting. */
+    private Class<? extends View> opener;
 
     /** The configurable setting. */
     private BooleanSupplier closer;
@@ -284,6 +291,17 @@ public final class Viewtify {
             applicationLaunchingClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).getCallerClass();
         }
         return viewtify;
+    }
+
+    /**
+     * Configure the closing request.
+     * 
+     * @param opener
+     * @return
+     */
+    public Viewtify onOpening(Class<? extends View> opener) {
+        this.opener = opener;
+        return this;
     }
 
     /**
@@ -497,54 +515,74 @@ public final class Viewtify {
         // the entire life cycle of the application. If you run it more than once, nothing happens.
         initializeOnlyOnce(application.getClass());
 
-        boolean canUpdate = I.env("UpdateOnStartup", updateArchive != null);
-        boolean needUpdate = canUpdate && Update.isValid(updateArchive);
-
         // launch application
         PlatformImpl.startup(() -> {
             toolkitInitialized = true;
 
-            View actual = needUpdate ? new Empty() : application;
-            mainStage = new Stage(stageStyle);
-            mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
-            mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
-            if (needUpdate) mainStage.setOpacity(0);
+            if (opener == null) {
+                activateApplication(application);
+            } else {
+                View o = I.make(opener);
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.TRANSPARENT);
+                Scene scene = new Scene((Parent) o.ui());
+                stage.setScene(scene);
 
-            Scene scene = new Scene((Parent) actual.ui());
-            manage(actual.getClass().getName(), scene, mainStage, false);
+                manage("opener", scene, stage, false);
 
-            // root stage management
-            views.add(application);
-            mainStage.showingProperty().addListener((observable, oldValue, newValue) -> {
-                if (oldValue == true && newValue == false) {
-                    views.remove(application);
-
-                    // If the last window has been closed, deactivate this application.
-                    if (views.isEmpty()) deactivate();
-                }
-            });
-
-            if (closer != null) {
-                mainStage.setOnCloseRequest(e -> {
-                    if (!closer.getAsBoolean()) {
-                        e.consume();
-                    }
+                inUI(() -> {
+                    stage.setOnHidden(e -> activateApplication(application));
+                    stage.show();
                 });
             }
 
-            mainStage.setScene(scene);
-            mainStage.show();
-
-            // process the unexecuted UI action
-            waitingActions.forEach(Runnable::run);
-            waitingActions = null;
-
-            if (!isHeadless()) {
-                // release resources for splash screen
-                SplashScreen screen = SplashScreen.getSplashScreen();
-                if (screen != null) screen.close();
-            }
         }, false);
+    }
+
+    private void activateApplication(View application) {
+        boolean canUpdate = I.env("UpdateOnStartup", updateArchive != null);
+        boolean needUpdate = canUpdate && Update.isValid(updateArchive);
+
+        View actual = needUpdate ? new Empty() : application;
+        mainStage = new Stage(stageStyle);
+        mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
+        mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
+        if (needUpdate) mainStage.setOpacity(0);
+
+        Scene scene = new Scene((Parent) actual.ui());
+        manage(actual.getClass().getName(), scene, mainStage, false);
+
+        // root stage management
+        views.add(application);
+        mainStage.showingProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue == true && newValue == false) {
+                views.remove(application);
+
+                // If the last window has been closed, deactivate this application.
+                if (views.isEmpty()) deactivate();
+            }
+        });
+
+        if (closer != null) {
+            mainStage.setOnCloseRequest(e -> {
+                if (!closer.getAsBoolean()) {
+                    e.consume();
+                }
+            });
+        }
+
+        mainStage.setScene(scene);
+        mainStage.show();
+
+        // process the unexecuted UI action
+        waitingActions.forEach(Runnable::run);
+        waitingActions = null;
+
+        if (!isHeadless()) {
+            // release resources for splash screen
+            SplashScreen screen = SplashScreen.getSplashScreen();
+            if (screen != null) screen.close();
+        }
     }
 
     /**
