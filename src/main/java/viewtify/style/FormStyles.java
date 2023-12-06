@@ -10,12 +10,11 @@
 package viewtify.style;
 
 import stylist.Style;
-import stylist.StyleDSL;
 
 /**
  * Built-in form CSS
  */
-public interface FormStyles extends StyleDSL {
+public interface FormStyles extends ViewtyStyle {
 
     int GAP = 4;
 

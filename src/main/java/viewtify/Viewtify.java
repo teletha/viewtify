@@ -37,8 +37,6 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -67,6 +65,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -138,6 +139,7 @@ public final class Viewtify {
         //
         // configure text anti-aliasing
         // System.setProperty("prism.lcdtext", "false");
+        // System.setProperty("prism.text", "t2k");
         // System.setProperty("prism.subpixeltext", "on native");
 
         // For Test
@@ -157,6 +159,9 @@ public final class Viewtify {
         Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/Oswald-Regular.ttf"), 14);
         Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/Oswald-Light.ttf"), 14);
         Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/Oswald-ExtraLight.ttf"), 14);
+
+        Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/RobotoSlab-Bold.ttf"), 14);
+        Font.loadFonts(ClassLoader.getSystemResourceAsStream("viewtify/font/RobotoSlab-Regular.ttf"), 14);
 
         CSS.enhance();
 
@@ -526,12 +531,17 @@ public final class Viewtify {
                 Stage stage = new Stage();
                 stage.initStyle(StageStyle.TRANSPARENT);
                 Scene scene = new Scene((Parent) o.ui());
+                scene.setFill(null);
                 stage.setScene(scene);
 
                 manage("opener", scene, stage, false);
 
                 inUI(() -> {
-                    stage.setOnHidden(e -> activateApplication(application));
+                    stage.setOnHidden(e -> {
+                        if (!Terminator.isDisposed()) {
+                            activateApplication(application);
+                        }
+                    });
                     stage.show();
                 });
             }

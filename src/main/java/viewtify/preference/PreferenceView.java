@@ -14,13 +14,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.controlsfx.glyphfont.FontAwesome;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Labeled;
+
+import org.controlsfx.glyphfont.FontAwesome;
+
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
@@ -91,7 +92,7 @@ public class PreferenceView extends View {
 
         Style navi = () -> {
             display.minWidth(160, px);
-            font.size(14, px).smooth.grayscale();
+            font.size(15, px);
             padding.vertical(10, px).horizontal(15, px);
             cursor.pointer();
             border.radius(3, px);
