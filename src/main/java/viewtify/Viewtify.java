@@ -37,8 +37,6 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -62,11 +60,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -223,12 +223,6 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private String title;
-
-    /** The configurable setting. */
-    private double width;
-
-    /** The configurable setting. */
-    private double height;
 
     /** We must continue to hold the lock object to avoid releasing by GC. */
     @SuppressWarnings("unused")
@@ -446,24 +440,6 @@ public final class Viewtify {
     }
 
     /**
-     * Configure application initial size
-     * 
-     * @param width
-     * @param height
-     * @return
-     */
-    public Viewtify size(double width, double height) {
-        if (0 < width) {
-            this.width = width;
-        }
-
-        if (0 < height) {
-            this.height = height;
-        }
-        return this;
-    }
-
-    /**
      * Configure application splash screen.
      * 
      * @param writer
@@ -532,20 +508,16 @@ public final class Viewtify {
      * 
      * @param application The application {@link View} to activate.
      */
-    private void activate(View application, boolean needOpener) {
+    private void activate(View application, boolean isOperner) {
         boolean canUpdate = I.env("UpdateOnStartup", updateArchive != null);
         boolean needUpdate = canUpdate && Update.isValid(updateArchive);
 
-        View actual = needUpdate ? new Empty() : needOpener ? I.make(opener) : application;
-        mainStage = new Stage(needOpener ? StageStyle.TRANSPARENT : stageStyle);
-        if (!needOpener) {
-            mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
-            mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
-        }
+        View actual = needUpdate ? new Empty() : isOperner ? I.make(opener) : application;
+        mainStage = new Stage(isOperner ? StageStyle.TRANSPARENT : stageStyle);
         if (needUpdate) mainStage.setOpacity(0);
 
         Scene scene = new Scene((Parent) actual.ui());
-        manage(actual.getClass().getName(), scene, mainStage, false);
+        manage(actual.getClass().getName(), scene, mainStage, true);
 
         // root stage management
         views.add(application);
@@ -558,7 +530,8 @@ public final class Viewtify {
             }
         });
 
-        if (needOpener) {
+        if (isOperner) {
+            scene.setFill(null);
             mainStage.setOnHidden(e -> {
                 if (!Terminator.isDisposed()) {
                     opener = null;
@@ -1015,7 +988,7 @@ public final class Viewtify {
         // ================================================================
         I.make(WindowLocator.class).locate(id, stage);
         if (untrackable) {
-            stage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, e -> {
+            stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> {
                 WindowLocator locator = I.make(WindowLocator.class);
                 if (locator.remove(id) != null) {
                     locator.store();
