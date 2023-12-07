@@ -517,7 +517,7 @@ public final class Viewtify {
         if (needUpdate) mainStage.setOpacity(0);
 
         Scene scene = new Scene((Parent) actual.ui());
-        manage(actual.getClass().getName(), scene, mainStage, true);
+        manage(actual.getClass().getName(), scene, mainStage, isOperner);
 
         // root stage management
         views.add(application);
