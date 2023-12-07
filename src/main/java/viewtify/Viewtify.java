@@ -37,6 +37,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -65,9 +67,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -524,39 +523,25 @@ public final class Viewtify {
         PlatformImpl.startup(() -> {
             toolkitInitialized = true;
 
-            if (opener == null) {
-                activateApplication(application);
-            } else {
-                View o = I.make(opener);
-                Stage stage = new Stage();
-                stage.initStyle(StageStyle.TRANSPARENT);
-                Scene scene = new Scene((Parent) o.ui());
-                scene.setFill(null);
-                stage.setScene(scene);
-
-                manage("opener", scene, stage, false);
-
-                inUI(() -> {
-                    stage.setOnHidden(e -> {
-                        if (!Terminator.isDisposed()) {
-                            activateApplication(application);
-                        }
-                    });
-                    stage.show();
-                });
-            }
-
+            activate(application, opener != null);
         }, false);
     }
 
-    private void activateApplication(View application) {
+    /**
+     * Activate the specified application.
+     * 
+     * @param application The application {@link View} to activate.
+     */
+    private void activate(View application, boolean needOpener) {
         boolean canUpdate = I.env("UpdateOnStartup", updateArchive != null);
         boolean needUpdate = canUpdate && Update.isValid(updateArchive);
 
-        View actual = needUpdate ? new Empty() : application;
-        mainStage = new Stage(stageStyle);
-        mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
-        mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
+        View actual = needUpdate ? new Empty() : needOpener ? I.make(opener) : application;
+        mainStage = new Stage(needOpener ? StageStyle.TRANSPARENT : stageStyle);
+        if (!needOpener) {
+            mainStage.setWidth(width != 0 ? width : Screen.getPrimary().getBounds().getWidth() / 2);
+            mainStage.setHeight(height != 0 ? height : Screen.getPrimary().getBounds().getHeight() / 2);
+        }
         if (needUpdate) mainStage.setOpacity(0);
 
         Scene scene = new Scene((Parent) actual.ui());
@@ -573,6 +558,15 @@ public final class Viewtify {
             }
         });
 
+        if (needOpener) {
+            mainStage.setOnHidden(e -> {
+                if (!Terminator.isDisposed()) {
+                    opener = null;
+                    activate(application, false);
+                }
+            });
+        }
+
         if (closer != null) {
             mainStage.setOnCloseRequest(e -> {
                 if (!closer.getAsBoolean()) {
@@ -585,8 +579,10 @@ public final class Viewtify {
         mainStage.show();
 
         // process the unexecuted UI action
-        waitingActions.forEach(Runnable::run);
-        waitingActions = null;
+        if (waitingActions != null) {
+            waitingActions.forEach(Runnable::run);
+            waitingActions = null;
+        }
 
         if (!isHeadless()) {
             // release resources for splash screen
