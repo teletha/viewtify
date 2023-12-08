@@ -106,6 +106,17 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
     /**
      * Listen all specified user actions.
      * 
+     * @param actionType The base user action to detect.
+     * @param actionTypes A list of additional user actions to detect.
+     * @return An event {@link Signal}.
+     */
+    default Signal<Event> when(User<? extends Event> actionType, User<? extends Event>... actionTypes) {
+        return when(actionType).as(Event.class).merge(when(actionTypes));
+    }
+
+    /**
+     * Listen all specified user actions.
+     * 
      * @param actionTypes A list of user actions to detect.
      * @return An event {@link Signal}.
      */
