@@ -512,7 +512,7 @@ public final class Viewtify {
         boolean isUpdate = canUpdate && Update.isValid(updateArchive);
 
         View actual = isUpdate ? new Empty() : isOperner ? I.make(opener) : application;
-        mainStage = new Stage(isOperner ? StageStyle.UNDECORATED : stageStyle);
+        mainStage = new Stage(isOperner ? StageStyle.UTILITY : stageStyle);
         if (isUpdate) mainStage.setOpacity(0);
 
         Scene scene = new Scene((Parent) actual.ui());
@@ -530,6 +530,12 @@ public final class Viewtify {
         });
 
         if (isOperner) {
+            mainStage.setOpacity(0);
+            mainStage.setWidth(1);
+            mainStage.setHeight(1);
+            mainStage.setX(-1000);
+            mainStage.setY(-1000);
+
             scene.setFill(null);
             mainStage.setOnHidden(e -> {
                 if (!Terminator.isDisposed()) {
