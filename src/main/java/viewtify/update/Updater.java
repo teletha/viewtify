@@ -9,9 +9,7 @@
  */
 package viewtify.update;
 
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.stage.WindowEvent;
-
 import kiss.I;
 import kiss.Variable;
 import psychopath.Progress;
@@ -21,7 +19,6 @@ import viewtify.Viewtify;
 import viewtify.ViewtyDialog.DialogView;
 import viewtify.task.Monitor;
 import viewtify.task.MonitorableTask;
-import viewtify.ui.UIButton;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIProgressBar;
 import viewtify.ui.ViewDSL;
@@ -95,13 +92,10 @@ public class Updater extends DialogView<MonitorableTask> {
             stage.setOnCloseRequest(WindowEvent::consume);
         });
 
-        UIButton ok = find(ButtonData.OK_DONE);
-
-        if (ok != null) ok.disableNow();
         value = task != null ? task : MonitorableTask.restore(System.getenv(Updater.class.getName()));
 
         Variable<String> mes = Variable.of("");
-        mes.observe().switchVariable(x -> I.translate(x)).on(Viewtify.UIThread).to(x -> message.text(x));
+        mes.observe().switchVariable(I::translate).on(Viewtify.UIThread).to(x -> message.text(x));
 
         Variable<Double> per = Variable.of(0d);
         per.observe().on(Viewtify.UIThread).to(x -> {
@@ -122,11 +116,6 @@ public class Updater extends DialogView<MonitorableTask> {
                     percentage.text("");
                     detail.text("");
                     bar.value(1d);
-
-                    if (ok != null) {
-                        ok.enableNow();
-                        if (forcibly) ok.fire();
-                    }
                 });
             } catch (Throwable e) {
                 mes.set(e.getMessage());

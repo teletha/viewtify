@@ -34,6 +34,7 @@ import java.util.function.BiConsumer;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 import com.sun.javafx.application.PlatformImpl;
@@ -434,6 +435,18 @@ public final class Viewtify {
     }
 
     /**
+     * Configure application title.
+     * 
+     * @return A title of this application.
+     */
+    public Viewtify title(UnaryOperator<String> title) {
+        if (title != null) {
+            this.title = title.apply(this.title);
+        }
+        return this;
+    }
+
+    /**
      * Configure application update strategy.
      * 
      * @return Chainable API.
@@ -519,6 +532,11 @@ public final class Viewtify {
             scene.setFill(null);
             mainStage.setOnHidden(e -> {
                 if (!Terminator.isDisposed()) {
+                    SplashScreen splash = SplashScreen.getSplashScreen();
+                    if (splash != null && splash.isVisible()) {
+                        splash.close();
+                    }
+
                     opener = null;
                     activate(application, false);
                 }
@@ -832,7 +850,9 @@ public final class Viewtify {
      * @param process
      */
     public final static void inUI(Supplier<Disposable> process) {
-        inUI(() -> Terminator.add(process.get()));
+        inUI(() -> {
+            Terminator.add(process.get());
+        });
     }
 
     /**
