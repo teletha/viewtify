@@ -19,13 +19,13 @@ import java.util.function.Predicate;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
@@ -33,6 +33,7 @@ import kiss.Model;
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.util.ScreenSelector;
 
 public abstract class View implements Extensible, UserInterfaceProvider<Node>, Disposable {
 
@@ -219,6 +220,14 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
         } else {
             return Variable.empty();
         }
+    }
+
+    public final void centerize(ScreenSelector screenSelector) {
+        stage().to(stage -> {
+            Rectangle2D bounds = screenSelector.select();
+            stage.setX((bounds.getWidth() - stage.getWidth()) / 2);
+            stage.setY((bounds.getHeight() - stage.getHeight()) / 2);
+        });
     }
 
     /**

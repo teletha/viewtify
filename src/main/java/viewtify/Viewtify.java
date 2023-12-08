@@ -9,8 +9,7 @@
  */
 package viewtify;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.Rectangle;
 import java.awt.SplashScreen;
 import java.io.InputStream;
 import java.lang.StackWalker.Option;
@@ -37,12 +36,15 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
 import javafx.beans.binding.FloatExpression;
 import javafx.beans.binding.IntegerExpression;
 import javafx.beans.binding.LongExpression;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
@@ -59,14 +61,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -77,7 +82,6 @@ import kiss.Signal;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
-import kiss.WiseConsumer;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -87,6 +91,7 @@ import viewtify.preference.Preferences;
 import viewtify.ui.UIWeb;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.ui.anime.Anime;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.view.AppearanceSetting;
@@ -440,26 +445,6 @@ public final class Viewtify {
     }
 
     /**
-     * Configure application splash screen.
-     * 
-     * @param writer
-     * @return
-     */
-    public Viewtify splash(WiseConsumer<Graphics2D> writer) {
-        if (writer != null) {
-            SplashScreen screen = SplashScreen.getSplashScreen();
-            if (screen != null) {
-                Graphics2D g = screen.createGraphics();
-                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                writer.accept(g);
-                screen.update();
-            }
-        }
-        return this;
-    }
-
-    /**
      * Configure error logging.
      * 
      * @param errorHandler
@@ -558,9 +543,11 @@ public final class Viewtify {
         }
 
         if (!isHeadless()) {
-            // release resources for splash screen
-            SplashScreen screen = SplashScreen.getSplashScreen();
-            if (screen != null) screen.close();
+            mainStage.addEventHandler(WindowEvent.WINDOW_SHOWN, e -> {
+                // release resources for splash screen
+                SplashScreen screen = SplashScreen.getSplashScreen();
+                if (screen != null) screen.close();
+            });
         }
     }
 
@@ -1283,6 +1270,31 @@ public final class Viewtify {
      */
     public static <T> Property<T> propertyForUI(Variable<T> variable) {
         return new PropertyVariable(variable, true);
+    }
+
+    /**
+     * Replace the splash screen by the specified view with fade-in effect.
+     * 
+     * @param view
+     */
+    public static void replaceSplashScreen(View view) {
+        SplashScreen splash = SplashScreen.getSplashScreen();
+        if (view != null && splash != null && splash.isVisible()) {
+            view.stage().to(stage -> {
+                Rectangle bounds = splash.getBounds();
+                stage.setX(bounds.getX());
+                stage.setY(bounds.getY());
+                stage.setWidth(bounds.getWidth());
+                stage.setHeight(bounds.getHeight());
+
+                Region region = (Region) view.ui();
+                region.setBackground(new Background(new BackgroundImage(new Image(splash.getImageURL()
+                        .toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+
+                DoubleProperty o = view.ui().opacityProperty();
+                Anime.define().init(o, 0).effect(o, 1, 0.4).run(splash::close);
+            });
+        }
     }
 
     /**
