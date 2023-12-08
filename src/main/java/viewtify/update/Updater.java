@@ -9,6 +9,7 @@
  */
 package viewtify.update;
 
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.stage.WindowEvent;
 import kiss.I;
 import kiss.Variable;
@@ -19,6 +20,7 @@ import viewtify.Viewtify;
 import viewtify.ViewtyDialog.DialogView;
 import viewtify.task.Monitor;
 import viewtify.task.MonitorableTask;
+import viewtify.ui.UIButton;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIProgressBar;
 import viewtify.ui.ViewDSL;
@@ -92,6 +94,9 @@ public class Updater extends DialogView<MonitorableTask> {
             stage.setOnCloseRequest(WindowEvent::consume);
         });
 
+        Variable<UIButton> ok = find(ButtonData.OK_DONE);
+
+        ok.to(button -> button.disableNow());
         value = task != null ? task : MonitorableTask.restore(System.getenv(Updater.class.getName()));
 
         Variable<String> mes = Variable.of("");
@@ -116,6 +121,11 @@ public class Updater extends DialogView<MonitorableTask> {
                     percentage.text("");
                     detail.text("");
                     bar.value(1d);
+
+                    ok.to(button -> {
+                        button.enableNow();
+                        if (forcibly) button.fire();
+                    });
                 });
             } catch (Throwable e) {
                 mes.set(e.getMessage());

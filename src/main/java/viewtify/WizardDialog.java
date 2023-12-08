@@ -100,10 +100,10 @@ class WizardDialog<V> extends DialogView<V> {
             navi.ui.add(n.ui(), i, 0);
         }
 
-        prev = find(ButtonType.PREVIOUS).when(User.Action.interruptively(), () -> assign(current - 1));
-        next = find(ButtonType.NEXT).when(User.Action.interruptively(), () -> assign(current + 1));
-        cancel = find(ButtonType.CANCEL);
-        complete = find(ButtonType.FINISH);
+        prev = find(ButtonType.PREVIOUS).exact().when(User.Action.interruptively(), () -> assign(current - 1));
+        next = find(ButtonType.NEXT).exact().when(User.Action.interruptively(), () -> assign(current + 1));
+        cancel = find(ButtonType.CANCEL).exact();
+        complete = find(ButtonType.FINISH).exact();
 
         assign(0);
     }

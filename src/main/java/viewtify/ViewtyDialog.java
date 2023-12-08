@@ -530,6 +530,7 @@ public final class ViewtyDialog<T> {
         DialogPane pane;
 
         /** The page title. */
+        @Override
         public Variable<String> title() {
             return Variable.of(getClass().getSimpleName());
         }
@@ -540,7 +541,7 @@ public final class ViewtyDialog<T> {
          * @param type
          * @return
          */
-        protected final UIButton find(ButtonType type) {
+        protected final Variable<UIButton> find(ButtonType type) {
             return find(type.getButtonData());
         }
 
@@ -550,15 +551,14 @@ public final class ViewtyDialog<T> {
          * @param data
          * @return
          */
-        protected final UIButton find(ButtonData data) {
+        protected final Variable<UIButton> find(ButtonData data) {
             return I.signal(pane.getButtonTypes())
                     .take(x -> x.getButtonData() == data)
                     .map(x -> pane.lookupButton(x))
                     .as(Button.class)
                     .first()
                     .map(x -> new UIButton(x, this))
-                    .to()
-                    .exact();
+                    .to();
         }
 
         /**

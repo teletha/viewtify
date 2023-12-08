@@ -13,6 +13,7 @@ import java.awt.Rectangle;
 import java.awt.SplashScreen;
 import java.io.InputStream;
 import java.lang.StackWalker.Option;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.StandardOpenOption;
@@ -508,11 +509,11 @@ public final class Viewtify {
      */
     private void activate(View application, boolean isOperner) {
         boolean canUpdate = I.env("UpdateOnStartup", updateArchive != null);
-        boolean needUpdate = canUpdate && Update.isValid(updateArchive);
+        boolean isUpdate = canUpdate && Update.isValid(updateArchive);
 
-        View actual = needUpdate ? new Empty() : isOperner ? I.make(opener) : application;
+        View actual = isUpdate ? new Empty() : isOperner ? I.make(opener) : application;
         mainStage = new Stage(isOperner ? StageStyle.TRANSPARENT : stageStyle);
-        if (needUpdate) mainStage.setOpacity(0);
+        if (isUpdate) mainStage.setOpacity(0);
 
         Scene scene = new Scene((Parent) actual.ui());
         manage(actual.getClass().getName(), scene, mainStage, isOperner);
@@ -1307,9 +1308,12 @@ public final class Viewtify {
                 stage.setWidth(bounds.getWidth());
                 stage.setHeight(bounds.getHeight());
 
-                Region region = (Region) view.ui();
-                region.setBackground(new Background(new BackgroundImage(new Image(splash.getImageURL()
-                        .toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+                URL image = splash.getImageURL();
+                if (image != null) {
+                    Region region = (Region) view.ui();
+                    region.setBackground(new Background(new BackgroundImage(new Image(image
+                            .toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+                }
 
                 DoubleProperty o = view.ui().opacityProperty();
                 Anime.define().init(o, 0).effect(o, 1, 0.4).run(splash::close);
