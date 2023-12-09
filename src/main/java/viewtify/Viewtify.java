@@ -35,10 +35,7 @@ import java.util.function.BiConsumer;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -74,6 +71,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -220,7 +220,7 @@ public final class Viewtify {
     private Class<? extends DesignScheme> scheme;
 
     /** The configurable setting. */
-    private Class<? extends View> opener;
+    private Variable<Class<? extends View>> opener;
 
     /** The configurable setting. */
     private BooleanSupplier closer;
@@ -293,7 +293,10 @@ public final class Viewtify {
      */
     public static synchronized Viewtify application() {
         if (applicationLaunchingClass == null) {
-            applicationLaunchingClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).getCallerClass();
+            applicationLaunchingClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE)
+                    .walk(stacks -> stacks.filter(stack -> stack.getMethodName().equals("main")).findAny())
+                    .get()
+                    .getDeclaringClass();
         }
         return viewtify;
     }
@@ -305,6 +308,16 @@ public final class Viewtify {
      * @return
      */
     public Viewtify onOpening(Class<? extends View> opener) {
+        return onOpening(Variable.of(opener));
+    }
+
+    /**
+     * Configure the closing request.
+     * 
+     * @param opener
+     * @return
+     */
+    public Viewtify onOpening(Variable<Class<? extends View>> opener) {
         this.opener = opener;
         return this;
     }
@@ -436,18 +449,6 @@ public final class Viewtify {
     }
 
     /**
-     * Configure application title.
-     * 
-     * @return A title of this application.
-     */
-    public Viewtify title(UnaryOperator<String> title) {
-        if (title != null) {
-            this.title = title.apply(this.title);
-        }
-        return this;
-    }
-
-    /**
      * Configure application update strategy.
      * 
      * @return Chainable API.
@@ -498,7 +499,7 @@ public final class Viewtify {
         PlatformImpl.startup(() -> {
             toolkitInitialized = true;
 
-            activate(application, opener != null);
+            activate(application, opener.isPresent());
         }, false);
     }
 
@@ -511,12 +512,11 @@ public final class Viewtify {
         boolean canUpdate = I.env("UpdateOnStartup", updateArchive != null);
         boolean isUpdate = canUpdate && Update.isValid(updateArchive);
 
-        View actual = isUpdate ? new Empty() : isOperner ? I.make(opener) : application;
-        mainStage = new Stage(isOperner ? StageStyle.UTILITY : stageStyle);
+        View actual = isUpdate ? new Empty() : isOperner ? I.make(opener.v) : application;
+        mainStage = new Stage(isOperner ? StageStyle.TRANSPARENT : stageStyle);
         if (isUpdate) mainStage.setOpacity(0);
 
         Scene scene = new Scene((Parent) actual.ui());
-        manage(actual.getClass().getName(), scene, mainStage, isOperner);
 
         // root stage management
         views.add(application);
@@ -530,12 +530,6 @@ public final class Viewtify {
         });
 
         if (isOperner) {
-            mainStage.setOpacity(0);
-            mainStage.setWidth(1);
-            mainStage.setHeight(1);
-            mainStage.setX(-1000);
-            mainStage.setY(-1000);
-
             scene.setFill(null);
             mainStage.setOnHidden(e -> {
                 if (!Terminator.isDisposed()) {
@@ -558,6 +552,7 @@ public final class Viewtify {
             });
         }
 
+        manage(actual.getClass().getName(), scene, mainStage, isOperner);
         mainStage.setScene(scene);
         mainStage.show();
 

@@ -9,6 +9,7 @@
  */
 package viewtify.ui.helper;
 
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
@@ -23,6 +24,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+
 import kiss.I;
 import kiss.Signal;
 import viewtify.keys.Key;
@@ -119,6 +121,11 @@ public final class User<E extends Event> {
 
     /** User Action */
     public static final User<KeyEvent> KeyType = new User(KeyEvent.KEY_TYPED);
+
+    /** Delayed Compound User Action ({@link #KeyType}, {@link #Input}) */
+    public static final User<Event> KeyInputed = new User<>(KeyEvent.KEY_TYPED, (helper, signal) -> signal.as(Event.class)
+            .merge(helper.when(User.Input))
+            .debounce(100, TimeUnit.MILLISECONDS));
 
     /** User Action */
     public static final User<MouseEvent> LeftClick = click(MouseButton.PRIMARY);

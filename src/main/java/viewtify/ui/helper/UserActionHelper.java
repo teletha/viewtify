@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
 import javafx.scene.Node;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.WiseBiConsumer;
@@ -101,17 +102,6 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
         } catch (Exception e) {
             throw I.quiet(e);
         }
-    }
-
-    /**
-     * Listen all specified user actions.
-     * 
-     * @param actionType The base user action to detect.
-     * @param actionTypes A list of additional user actions to detect.
-     * @return An event {@link Signal}.
-     */
-    default Signal<Event> when(User<? extends Event> actionType, User<? extends Event>... actionTypes) {
-        return when(actionType).as(Event.class).merge(when(actionTypes));
     }
 
     /**
