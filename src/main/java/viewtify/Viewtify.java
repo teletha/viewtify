@@ -220,7 +220,7 @@ public final class Viewtify {
     private Class<? extends DesignScheme> scheme;
 
     /** The configurable setting. */
-    private Variable<Class<? extends View>> opener;
+    private Variable<Class<? extends View>> opener = Variable.empty();
 
     /** The configurable setting. */
     private BooleanSupplier closer;
