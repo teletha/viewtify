@@ -1063,6 +1063,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UpdateSettingView",
+			"packageName": "viewtify.update",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Updater",
 			"packageName": "viewtify.update",
 			"type": "Class"
