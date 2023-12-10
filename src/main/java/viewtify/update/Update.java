@@ -63,6 +63,13 @@ public class Update {
 
     /**
      * Build the update task for the specified new version.
+     */
+    public static void apply() {
+        apply(Viewtify.application().updateSite(), false);
+    }
+
+    /**
+     * Build the update task for the specified new version.
      * 
      * @param archive A location of new version.
      * @param forcibly Force to update or not.

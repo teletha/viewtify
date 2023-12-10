@@ -231,6 +231,9 @@ public final class Viewtify {
     /** The configurable setting. */
     private String title;
 
+    /** The configurable setting. */
+    private String version = "1.0.0";
+
     /** We must continue to hold the lock object to avoid releasing by GC. */
     @SuppressWarnings("unused")
     private FileLock lock;
@@ -455,6 +458,26 @@ public final class Viewtify {
      */
     public Viewtify update(String archive) {
         this.updateArchive = archive;
+
+        return this;
+    }
+
+    /**
+     * Get applicaiton metadata.
+     * 
+     * @return
+     */
+    public String version() {
+        return version;
+    }
+
+    /**
+     * Configure application metadata.
+     * 
+     * @return Chainable API.
+     */
+    public Viewtify version(String version) {
+        this.version = version;
 
         return this;
     }
@@ -719,6 +742,15 @@ public final class Viewtify {
      */
     public Class launcher() {
         return applicationLaunchingClass;
+    }
+
+    /**
+     * Find the update site.
+     * 
+     * @return
+     */
+    public String updateSite() {
+        return updateArchive;
     }
 
     /**
@@ -1633,7 +1665,7 @@ public final class Viewtify {
          */
         @Override
         protected void initialize() {
-            Update.apply(updateArchive, true);
+            Update.apply(updateArchive, false);
         }
     }
 }
