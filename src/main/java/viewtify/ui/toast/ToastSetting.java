@@ -10,6 +10,7 @@
 package viewtify.ui.toast;
 
 import javafx.util.Duration;
+
 import viewtify.preference.Preferences;
 import viewtify.util.Corner;
 import viewtify.util.ScreenSelector;
@@ -23,13 +24,13 @@ public class ToastSetting extends Preferences {
     public final Preference<Boolean> enable = initialize(true);
 
     /** The maximum size of notifications. */
-    public final Preference<Integer> max = initialize(3).requireMin(0);
+    public final Preference<Double> max = initialize(3d).requireMin(0);
 
     /** The animation time. */
     public final Preference<Duration> animation = initialize(Duration.millis(333)).requireMin(Duration.ONE);
 
     /** The automatic hiding time. */
-    public final Preference<Duration> autoHide = initialize(Duration.seconds(20)).requireMin(Duration.ZERO);
+    public final Preference<Double> autoHide = initialize(20d).requireMin(0);
 
     /** The notification area. */
     public final Preference<Corner> area = initialize(Corner.BottomRight);
@@ -38,11 +39,11 @@ public class ToastSetting extends Preferences {
     public final Preference<ScreenSelector> screen = initialize(ScreenSelector.InWindow);
 
     /** The opacity of notification area. */
-    public final Preference<Integer> opacity = initialize(90).requireBetween(0, 100);
+    public final Preference<Double> opacity = initialize(90d).requireBetween(0, 100);
 
     /** The width of notification area. */
     public final Preference<Integer> width = initialize(250).requireMin(50);
 
     /** The gap of notification area. */
-    public final Preference<Integer> gap = initialize(15).requireBetween(0, 30);
+    public final Preference<Double> gap = initialize(15d).requireBetween(0, 30);
 }

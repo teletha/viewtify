@@ -148,7 +148,7 @@ public class Toast extends Preferences {
      */
     private static void layoutNotifications() {
         Viewtify.inUI(() -> {
-            int gap = setting.gap.exact();
+            double gap = setting.gap.exact();
             Rectangle2D rect = setting.screen.v.select();
 
             // use viewtify notification
@@ -233,8 +233,8 @@ public class Toast extends Preferences {
                 ui.setX(0);
                 ui.getContent().add(box);
                 UserActionHelper.of(ui).when(User.MouseClick).to(() -> remove(this));
-                if (0 < setting.autoHide.v.toMillis()) {
-                    disposer = I.schedule((long) setting.autoHide.v.toMillis(), TimeUnit.MILLISECONDS)
+                if (0 < setting.autoHide.v * 1000) {
+                    disposer = I.schedule(setting.autoHide.v.longValue(), TimeUnit.SECONDS)
                             .first()
                             .on(Viewtify.UIThread)
                             .to(() -> remove(this));
