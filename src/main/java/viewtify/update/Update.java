@@ -27,7 +27,7 @@ public class Update {
      * 
      * @return An error message.
      */
-    public static boolean isValid(String archive) {
+    public static boolean isAvailable(String archive) {
         return validate(archive) == null;
     }
 

@@ -9,22 +9,32 @@
  */
 package viewtify.update;
 
+import java.util.concurrent.TimeUnit;
+
+import kiss.I;
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.preference.Preferences;
+import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
+import viewtify.ui.UICheckSwitch;
 import viewtify.ui.UILabel;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 
 public class UpdateSettingView extends View {
 
-    private UILabel version;
+    private UICheckSwitch checkOnStartup;
+
+    private UICheckSwitch applyAuto;
+
+    private UILabel versionApp;
 
     private UIButton confirm;
 
-    private UILabel osVersion;
+    private UILabel versionOS;
 
-    private UILabel javaVersion;
+    private UILabel versionJava;
 
     /**
      * {@inheritDoc}
@@ -34,10 +44,12 @@ public class UpdateSettingView extends View {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
-                    form(en("Current version"), version);
+                    form(en("Confirm update on startup"), FormStyles.InputMin, checkOnStartup);
+                    form(en("Apply update automatically"), FormStyles.InputMin, applyAuto);
                     form(en("Confirm update"), confirm);
-                    form(en("OS Specification"), osVersion);
-                    form(en("Java Specification"), javaVersion);
+                    form(en("Application"), versionApp);
+                    form(en("Operating System"), versionOS);
+                    form(en("Java Runtime"), versionJava);
                 });
             }
         };
@@ -57,11 +69,22 @@ public class UpdateSettingView extends View {
     @Override
     protected void initialize() {
         Viewtify app = Viewtify.application();
+        UpdateSetting setting = Preferences.of(UpdateSetting.class);
 
-        version.text(app.version());
-        confirm.text(en("Confirm")).action(Update::apply);
+        checkOnStartup.sync(setting.checkOnStartup);
+        applyAuto.sync(setting.applyAuto);
+        confirm.action(Update::apply);
 
-        osVersion.text(System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version"));
-        javaVersion.text("Java " + Runtime.version());
+        I.schedule(0, 6, TimeUnit.HOURS, false).to(() -> {
+            if (Update.isAvailable(app.updateSite())) {
+                confirm.text(en("Update to new version")).enable(true);
+            } else {
+                confirm.text(en("This is latest version")).disable(true);
+            }
+        });
+
+        versionApp.text(app.launcher().getSimpleName() + " " + app.version());
+        versionOS.text(System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version"));
+        versionJava.text("Java " + Runtime.version());
     }
 }
