@@ -181,7 +181,6 @@ public class TextNotation {
                     Label label = new Label(builder.toString());
                     label.setWrapText(true);
                     label.setMaxWidth(width);
-                    System.out.println(builder + "  " + width);
                     children.add(label);
                     builder = new StringBuilder();
                 }
