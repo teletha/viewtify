@@ -88,6 +88,7 @@ public class ToastSettingView extends View {
         notificationMax.range(0, 10).sync(setting.max).disableWhen(enableNotification.isNotSelected());
         notificationArea.items(Corner.values()).sync(setting.area).disableWhen(enableNotification.isNotSelected());
         notificationDuration.range(0, 300)
+                .step(15)
                 .sync(setting.autoHide)
                 .format(sec -> sec + en("sec"))
                 .disableWhen(enableNotification.isNotSelected());

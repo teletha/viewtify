@@ -66,6 +66,20 @@ public class UISlider extends UserInterface<UISlider, HBox> implements ValueHelp
     }
 
     /**
+     * Set the step for each values.
+     * 
+     * @param step
+     * @return
+     */
+    public UISlider step(double step) {
+        slider.valueProperty().addListener((x, o, n) -> {
+            slider.adjustValue(Math.round(n.doubleValue() / step) * step);
+        });
+
+        return this;
+    }
+
+    /**
      * Format label.
      * 
      * @param formatter
