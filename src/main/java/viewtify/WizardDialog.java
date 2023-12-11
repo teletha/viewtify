@@ -21,6 +21,7 @@ import stylist.Style;
 import stylist.StyleDSL;
 import stylist.value.Numeric;
 import viewtify.ViewtyDialog.DialogView;
+import viewtify.preference.Preferences;
 import viewtify.ui.UIButton;
 import viewtify.ui.UIGridView;
 import viewtify.ui.UIHBox;
@@ -32,6 +33,7 @@ import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
 import viewtify.ui.anime.SwapAnime;
 import viewtify.ui.helper.User;
+import viewtify.ui.view.AppearanceSetting;
 
 class WizardDialog<V> extends DialogView<V> {
 
@@ -239,7 +241,7 @@ class WizardDialog<V> extends DialogView<V> {
          */
         private void update(int next) {
             // current selected
-            Theme theme = Viewtify.CurrentTheme.exact();
+            Theme theme = Preferences.of(AppearanceSetting.class).theme.exact();
 
             if (step == next) {
                 Anime.define()

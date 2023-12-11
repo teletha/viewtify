@@ -10,6 +10,7 @@
 package viewtify.update;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 import psychopath.Directory;
@@ -30,18 +31,21 @@ public abstract class Blueprint implements Serializable {
     /** The application classpath. */
     public String classPath = System.getProperty("java.class.path");
 
+    /** The environment variables. */
+    private Map<String, String> env = new HashMap();
+
     /**
      * Boot this application.
      */
     public final boolean boot() {
-        return boot(Map.of());
+        return boot(env);
     }
 
     /**
      * Boot this application.
      */
     public final boolean boot(MonitorableTask<Progress> task) {
-        return boot(Map.of(Updater.class.getName(), MonitorableTask.store(task)));
+        return env(Updater.class.getName(), MonitorableTask.store(task)).boot();
     }
 
     /**
@@ -53,25 +57,18 @@ public abstract class Blueprint implements Serializable {
      * Deactivate the current application and boot this application.
      */
     public final boolean reboot() {
-        return reboot(Map.of("UpdateOnStartup", "false"));
+        try {
+            return env("UpdateOnStartup", "false").boot();
+        } finally {
+            Viewtify.application().deactivate();
+        }
     }
 
     /**
      * Deactivate the current application and boot this application.
      */
     public final boolean reboot(MonitorableTask<Progress> task) {
-        return reboot(Map.of(Updater.class.getName(), MonitorableTask.store(task), "UpdateOnStartup", "false"));
-    }
-
-    /**
-     * Deactivate the current application and boot this application.
-     */
-    public final boolean reboot(Map<String, String> params) {
-        try {
-            return boot(params);
-        } finally {
-            Viewtify.application().deactivate();
-        }
+        return env(Updater.class.getName(), MonitorableTask.store(task)).reboot();
     }
 
     /**
@@ -80,6 +77,20 @@ public abstract class Blueprint implements Serializable {
      * @return
      */
     public abstract Blueprint updater();
+
+    /**
+     * Assign environment variable.
+     * 
+     * @param key A key.
+     * @param value A value.
+     * @return Chainable API
+     */
+    public final Blueprint env(String key, String value) {
+        if (key != null && value != null) {
+            env.put(key, value);
+        }
+        return this;
+    }
 
     /**
      * Detect the current site.

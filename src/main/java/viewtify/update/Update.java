@@ -11,10 +11,14 @@ package viewtify.update;
 
 import java.util.List;
 
+import javafx.geometry.Rectangle2D;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
 import viewtify.Viewtify;
+import viewtify.preference.Preferences;
+import viewtify.ui.view.AppearanceSetting;
+import viewtify.util.ScreenSelector;
 
 public class Update {
 
@@ -105,24 +109,35 @@ public class Update {
                 .disableCloseButton(forcibly)
                 .show(new Updater(forcibly))
                 .to(tasks -> {
-                    origin.updater().reboot(monitor -> {
-                        monitor.message("Installing the new version, please wait a minute.");
+                    Rectangle2D bounds = ScreenSelector.Application.select();
+                    AppearanceSetting appearance = Preferences.of(AppearanceSetting.class);
 
-                        // ====================================
-                        // copy resources
-                        // ====================================
-                        List<String> patterns = updateDir.children().map(c -> c.isFile() ? c.name() : c.name() + "/**").toList();
-                        patterns.add("!.preferences for */**");
-                        updateDir.trackCopyingTo(origin.root, o -> o.strip().glob(patterns).replaceDifferent().sync()).to(monitor);
+                    origin.updater()
+                            .env("Icon", Viewtify.application().icon())
+                            .env("Theme", appearance.theme.v.name())
+                            .env("ThemeType", appearance.themeType.v.name())
+                            .env("Font", appearance.font.v)
+                            .env("FontSize", appearance.fontSize.v.toString())
+                            .env("LocationX", String.valueOf(bounds.getMinX() + bounds.getWidth() / 2 - 190))
+                            .env("LocationY", String.valueOf(bounds.getMinY() + bounds.getHeight() / 2 - 60))
+                            .reboot(monitor -> {
+                                monitor.message("Installing the new version, please wait a minute.");
 
-                        // ====================================
-                        // update version
-                        // ====================================
-                        origin.root.lastModifiedTime(file.lastModifiedTime());
+                                // ====================================
+                                // copy resources
+                                // ====================================
+                                List<String> patterns = updateDir.children().map(c -> c.isFile() ? c.name() : c.name() + "/**").toList();
+                                patterns.add("!.preferences for */**");
+                                updateDir.trackCopyingTo(origin.root, o -> o.strip().glob(patterns).replaceDifferent().sync()).to(monitor);
 
-                        monitor.message("Update is completed, reboot.", 100);
-                        origin.reboot();
-                    });
+                                // ====================================
+                                // update version
+                                // ====================================
+                                origin.root.lastModifiedTime(file.lastModifiedTime());
+
+                                monitor.message("Update is completed, reboot.", 100);
+                                origin.reboot();
+                            });
                 });
     }
 }

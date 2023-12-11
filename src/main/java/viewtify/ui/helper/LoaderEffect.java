@@ -24,10 +24,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-
 import kiss.Disposable;
 import kiss.I;
 import viewtify.Viewtify;
+import viewtify.preference.Preferences;
+import viewtify.ui.view.AppearanceSetting;
 
 class LoaderEffect extends Blend {
 
@@ -183,7 +184,7 @@ class LoaderEffect extends Blend {
 
         int stripeWidth = stripeWidthColor + stripeWidthTransparent;
         int offset = frame % stripeWidth;
-        Color color = Viewtify.CurrentTheme.v.accent();
+        Color color = Preferences.of(AppearanceSetting.class).theme.exact().accent();
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -208,7 +209,7 @@ class LoaderEffect extends Blend {
         if (textImage == null) {
             Text text = new Text("Loading...");
             text.setFont(Font.font("System", FontWeight.LIGHT, 14));
-            text.setFill(Viewtify.CurrentTheme.v.text());
+            text.setFill(Preferences.of(AppearanceSetting.class).theme.exact().text());
             text.setFontSmoothingType(FontSmoothingType.GRAY);
 
             SnapshotParameters params = new SnapshotParameters();

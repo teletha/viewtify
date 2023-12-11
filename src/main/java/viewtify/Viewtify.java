@@ -97,7 +97,6 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.view.AppearanceSetting;
 import viewtify.update.Blueprint;
-import viewtify.update.Update;
 
 public final class Viewtify {
 
@@ -132,9 +131,6 @@ public final class Viewtify {
 
     /** The directory of user's preference. */
     public static final Variable<Directory> UserPreference = Variable.empty();
-
-    /** The current theme. */
-    public static final Variable<Theme> CurrentTheme = Variable.of(Theme.Light);
 
     static {
         JUL.replace();
@@ -207,15 +203,6 @@ public final class Viewtify {
     private StageStyle stageStyle = StageStyle.DECORATED;
 
     /** The configurable setting. */
-    private Theme theme = Theme.Light;
-
-    /** The configurable setting. */
-    private ThemeType themeType = ThemeType.Flat;
-
-    /** The configurable setting. */
-    private Font font = Font.getDefault();
-
-    /** The configurable setting. */
     private Class<? extends DesignScheme> scheme;
 
     /** The configurable setting. */
@@ -229,6 +216,12 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private String title;
+
+    /** The configurable setting. */
+    private double x;
+
+    /** The configurable setting. */
+    private double y;
 
     /** The configurable setting. */
     private String version = "1.0.0";
@@ -382,7 +375,7 @@ public final class Viewtify {
      */
     public Viewtify use(Theme theme) {
         if (theme != null) {
-            this.theme = theme;
+            Preferences.of(AppearanceSetting.class).theme.setDefault(theme);
         }
         return this;
     }
@@ -395,7 +388,7 @@ public final class Viewtify {
      */
     public Viewtify use(ThemeType themeType) {
         if (themeType != null) {
-            this.themeType = themeType;
+            Preferences.of(AppearanceSetting.class).themeType.setDefault(themeType);
         }
         return this;
     }
@@ -408,7 +401,9 @@ public final class Viewtify {
      */
     public Viewtify use(Font font) {
         if (font != null) {
-            this.font = font;
+            AppearanceSetting appearance = Preferences.of(AppearanceSetting.class);
+            appearance.font.setDefault(font.getFamily());
+            appearance.fontSize.setDefault((int) font.getSize());
         }
         return this;
     }
@@ -424,6 +419,15 @@ public final class Viewtify {
             this.scheme = scheme;
         }
         return this;
+    }
+
+    /**
+     * Get applicaiton metadata.
+     * 
+     * @return
+     */
+    public String icon() {
+        return icon;
     }
 
     /**
@@ -447,6 +451,19 @@ public final class Viewtify {
         if (title != null) {
             this.title = title;
         }
+        return this;
+    }
+
+    /**
+     * Configure application location.
+     * 
+     * @param x
+     * @param y
+     * @return
+     */
+    public Viewtify location(double x, double y) {
+        this.x = x;
+        this.y = y;
         return this;
     }
 
@@ -531,12 +548,10 @@ public final class Viewtify {
      * @param application The application {@link View} to activate.
      */
     private void activate(View application, boolean isOperner) {
-        boolean canUpdate = I.env("UpdateOnStartup", updateArchive != null);
-        boolean isUpdate = canUpdate && Update.isValid(updateArchive);
-
-        View actual = isUpdate ? new Empty() : isOperner ? I.make(opener.v) : application;
+        View actual = isOperner ? I.make(opener.v) : application;
         mainStage = new Stage(isOperner ? StageStyle.TRANSPARENT : stageStyle);
-        if (isUpdate) mainStage.setOpacity(0);
+        if (0 < x) mainStage.setX(x);
+        if (0 < y) mainStage.setY(y);
 
         Scene scene = new Scene((Parent) actual.ui());
 
@@ -627,9 +642,10 @@ public final class Viewtify {
             I.load(applicationClass);
 
             // collect stylesheets for application
+            AppearanceSetting appearance = Preferences.of(AppearanceSetting.class);
             stylesheets.add(Theme.locate("ui"));
-            stylesheets.add(viewtify.theme.location);
-            stylesheets.add(viewtify.themeType.location);
+            stylesheets.add(appearance.theme.v.location);
+            stylesheets.add(appearance.themeType.v.location);
             stylesheets.add(Locator.file(CSSProcessor.pretty().scheme(scheme).formatTo(prefs + "/application.css")).externalForm());
             stylesheets.add(writeFontStylesheet(null));
 
@@ -701,7 +717,7 @@ public final class Viewtify {
      * @return
      */
     private String writeFontStylesheet(Font font) {
-        font = Objects.requireNonNullElse(font, this.font);
+        font = Objects.requireNonNullElse(font, Font.getDefault());
 
         String prefs = I.env("PreferenceDirectory");
         File css = Locator.file(prefs + "/font.css");
@@ -903,8 +919,6 @@ public final class Viewtify {
      * @param theme
      */
     public static void manage(Theme theme) {
-        CurrentTheme.set(theme);
-
         inUI(() -> {
             for (Window window : Window.getWindows()) {
                 Scene scene = window.getScene();
@@ -1642,29 +1656,6 @@ public final class Viewtify {
             locator.state = Integer.parseInt(values[4]);
 
             return locator;
-        }
-    }
-
-    private class Empty extends View {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected ViewDSL declareUI() {
-            return new ViewDSL() {
-                {
-                    $(vbox);
-                }
-            };
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected void initialize() {
-            Update.apply(updateArchive, false);
         }
     }
 }

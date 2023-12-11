@@ -9,13 +9,17 @@
  */
 package viewtify.update;
 
+import java.text.DecimalFormat;
+
 import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.stage.WindowEvent;
+import javafx.scene.text.Font;
 import kiss.I;
 import kiss.Variable;
 import psychopath.Progress;
 import stylist.Style;
 import stylist.StyleDSL;
+import viewtify.Theme;
+import viewtify.ThemeType;
 import viewtify.Viewtify;
 import viewtify.ViewtyDialog.DialogView;
 import viewtify.task.Monitor;
@@ -73,7 +77,7 @@ public class Updater extends DialogView<MonitorableTask> {
      */
     interface style extends StyleDSL {
         Style root = () -> {
-            display.minWidth(380, px).width(380, px);
+            display.minWidth(380, px);
             padding.size(10, px);
         };
 
@@ -88,12 +92,6 @@ public class Updater extends DialogView<MonitorableTask> {
      */
     @Override
     protected void initialize() {
-        stage().to(stage -> {
-            stage.setMaximized(false);
-            stage.setResizable(false);
-            stage.setOnCloseRequest(WindowEvent::consume);
-        });
-
         Variable<UIButton> ok = find(ButtonData.OK_DONE);
 
         ok.to(button -> button.disableNow());
@@ -114,7 +112,7 @@ public class Updater extends DialogView<MonitorableTask> {
                     Thread.sleep(2);
 
                     monitor.complete(progress.rateByFiles());
-                    Viewtify.inUI(() -> detail.text(progress.location.name()));
+                    Viewtify.inUI(() -> detail.text(progress.location.name() + "  (" + formatFileSize(progress.location.size()) + ")"));
                 }));
 
                 Viewtify.inUI(() -> {
@@ -134,12 +132,29 @@ public class Updater extends DialogView<MonitorableTask> {
         });
     }
 
+    private static String formatFileSize(long sizeInBytes) {
+        if (sizeInBytes <= 0) {
+            return "0B";
+        }
+
+        final String[] units = {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
+        int digitGroups = (int) (Math.log10(sizeInBytes) / Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(sizeInBytes / Math.pow(1024, digitGroups)) + units[digitGroups];
+    }
+
     /**
      * Entry point for updater.
      * 
      * @param args
      */
     public static void main(String[] args) {
-        Viewtify.application().title("Updater").activate(Updater.class);
+        Viewtify.application()
+                .title("Updating")
+                .icon(I.env("Icon"))
+                .use(I.env("Theme", Theme.Light))
+                .use(I.env("ThemeType", ThemeType.Flat))
+                .use(Font.font(I.env("Font"), I.env("FontSize", 12)))
+                .location(I.env("LocationX", 0d), I.env("LocationY", 0d))
+                .activate(Updater.class);
     }
 }
