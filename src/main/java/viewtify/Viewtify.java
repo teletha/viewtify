@@ -611,7 +611,7 @@ public final class Viewtify {
         // check update
         UpdateSetting updater = Preferences.of(UpdateSetting.class);
         if (updater.checkOnStartup.is(true) && Update.isAvailable(updateArchive)) {
-            I.schedule(1, TimeUnit.SECONDS).to(() -> {
+            I.schedule(5, TimeUnit.SECONDS).to(() -> {
                 Toast.show(I
                         .translate(Terminator, "A newer version is available. Would you like to update? [Update](0)  [Don't now](1)"), hide -> {
                             hide.run();
