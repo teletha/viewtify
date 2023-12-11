@@ -36,8 +36,8 @@ public class UpdateSettingView extends View {
                 $(vbox, () -> {
                     form(en("Current version"), version);
                     form(en("Confirn update"), confirm);
-                    form(en("Java Specification"), javaVersion);
                     form(en("OS Specification"), osVersion);
+                    form(en("Java Specification"), javaVersion);
                 });
             }
         };
@@ -61,7 +61,7 @@ public class UpdateSettingView extends View {
         version.text(app.version());
         confirm.text(en("Confirm")).action(Update::apply);
 
-        javaVersion.text(System.getProperty("java.vm.name") + " " + System.getProperty("java.version"));
         osVersion.text(System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version"));
+        javaVersion.text("Java " + Runtime.version());
     }
 }
