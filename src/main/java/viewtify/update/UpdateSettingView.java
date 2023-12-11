@@ -35,7 +35,7 @@ public class UpdateSettingView extends View {
             {
                 $(vbox, () -> {
                     form(en("Current version"), version);
-                    form(en("Confirn update"), confirm);
+                    form(en("Confirm update"), confirm);
                     form(en("OS Specification"), osVersion);
                     form(en("Java Specification"), javaVersion);
                 });
