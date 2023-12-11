@@ -18,7 +18,4 @@ public class UpdateSetting extends Preferences {
 
     /** The enable status. */
     public final Preference<Boolean> checkOnStartup = initialize(true);
-
-    /** The enable status. */
-    public final Preference<Boolean> applyAuto = initialize(false);
 }

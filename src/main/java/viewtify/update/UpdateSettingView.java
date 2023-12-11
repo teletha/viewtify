@@ -26,8 +26,6 @@ public class UpdateSettingView extends View {
 
     private UICheckSwitch checkOnStartup;
 
-    private UICheckSwitch applyAuto;
-
     private UILabel versionApp;
 
     private UIButton confirm;
@@ -45,7 +43,6 @@ public class UpdateSettingView extends View {
             {
                 $(vbox, () -> {
                     form(en("Confirm update on startup"), FormStyles.InputMin, checkOnStartup);
-                    form(en("Apply update automatically"), FormStyles.InputMin, applyAuto);
                     form(en("Confirm update"), confirm);
                     form(en("Application"), versionApp);
                     form(en("Operating System"), versionOS);
@@ -72,7 +69,6 @@ public class UpdateSettingView extends View {
         UpdateSetting setting = Preferences.of(UpdateSetting.class);
 
         checkOnStartup.sync(setting.checkOnStartup);
-        applyAuto.sync(setting.applyAuto);
         confirm.action(Update::apply);
 
         I.schedule(0, 6, TimeUnit.HOURS, false).to(() -> {

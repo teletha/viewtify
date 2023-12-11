@@ -37,8 +37,6 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -73,6 +71,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -95,8 +96,11 @@ import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
+import viewtify.ui.toast.Toast;
 import viewtify.ui.view.AppearanceSetting;
 import viewtify.update.Blueprint;
+import viewtify.update.Update;
+import viewtify.update.UpdateSetting;
 
 public final class Viewtify {
 
@@ -206,6 +210,9 @@ public final class Viewtify {
     private Class<? extends DesignScheme> scheme;
 
     /** The configurable setting. */
+    private BiConsumer<Stage, Scene> initializer;
+
+    /** The configurable setting. */
     private Variable<Class<? extends View>> opener = Variable.empty();
 
     /** The configurable setting. */
@@ -216,12 +223,6 @@ public final class Viewtify {
 
     /** The configurable setting. */
     private String title;
-
-    /** The configurable setting. */
-    private double x;
-
-    /** The configurable setting. */
-    private double y;
 
     /** The configurable setting. */
     private String version = "1.0.0";
@@ -297,7 +298,18 @@ public final class Viewtify {
     }
 
     /**
-     * Configure the closing request.
+     * Configure the initialize phase.
+     * 
+     * @param initializer
+     * @return
+     */
+    public Viewtify onInitialize(BiConsumer<Stage, Scene> initializer) {
+        this.initializer = initializer;
+        return this;
+    }
+
+    /**
+     * Configure the opening request.
      * 
      * @param opener
      * @return
@@ -455,19 +467,6 @@ public final class Viewtify {
     }
 
     /**
-     * Configure application location.
-     * 
-     * @param x
-     * @param y
-     * @return
-     */
-    public Viewtify location(double x, double y) {
-        this.x = x;
-        this.y = y;
-        return this;
-    }
-
-    /**
      * Configure application update strategy.
      * 
      * @return Chainable API.
@@ -550,8 +549,6 @@ public final class Viewtify {
     private void activate(View application, boolean isOperner) {
         View actual = isOperner ? I.make(opener.v) : application;
         mainStage = new Stage(isOperner ? StageStyle.TRANSPARENT : stageStyle);
-        if (0 < x) mainStage.setX(x);
-        if (0 < y) mainStage.setY(y);
 
         Scene scene = new Scene((Parent) actual.ui());
 
@@ -565,6 +562,10 @@ public final class Viewtify {
                 if (views.isEmpty()) deactivate();
             }
         });
+
+        if (initializer != null) {
+            initializer.accept(mainStage, scene);
+        }
 
         if (isOperner) {
             scene.setFill(null);
@@ -604,6 +605,18 @@ public final class Viewtify {
                 // release resources for splash screen
                 SplashScreen screen = SplashScreen.getSplashScreen();
                 if (screen != null) screen.close();
+            });
+        }
+
+        // check update
+        UpdateSetting updater = Preferences.of(UpdateSetting.class);
+        if (updater.checkOnStartup.is(true) && Update.isAvailable(updateArchive)) {
+            I.schedule(1, TimeUnit.SECONDS).to(() -> {
+                Toast.show(I
+                        .translate(Terminator, "A newer version is available. Would you like to update? [Update](0)  [Don't now](1)"), hide -> {
+                            hide.run();
+                            Update.apply();
+                        }, Runnable::run);
             });
         }
     }

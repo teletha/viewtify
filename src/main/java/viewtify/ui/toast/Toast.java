@@ -23,6 +23,7 @@ import javafx.stage.Window;
 
 import kiss.Disposable;
 import kiss.I;
+import kiss.Variable;
 import kiss.WiseConsumer;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -59,7 +60,22 @@ public class Toast extends Preferences {
         if (setting.enable.is(true)) {
             Notification notification = new Notification();
             Runnable hide = () -> remove(notification);
-            notification.builder = () -> TextNotation.parse(message, I.signal(actions).map(x -> x.bindLast(hide)).toList());
+            notification.builder = () -> TextNotation
+                    .parse(message, setting.width.v - styles.pad * 2, I.signal(actions).map(x -> x.bindLast(hide)).toList());
+
+            add(notification);
+        }
+    }
+
+    /**
+     * Show the specified node.
+     */
+    public static void show(Variable<String> message, WiseConsumer<Runnable>... actions) {
+        if (setting.enable.is(true)) {
+            Notification notification = new Notification();
+            Runnable hide = () -> remove(notification);
+            notification.builder = () -> TextNotation
+                    .parse(message, setting.width.v - styles.pad * 2, I.signal(actions).map(x -> x.bindLast(hide)).toList());
 
             add(notification);
         }
@@ -209,7 +225,7 @@ public class Toast extends Preferences {
             if (ui == null) {
                 ui = new Popup();
                 VBox box = new VBox(builder.get());
-                StyleHelper.of(box).style(Styles.popup);
+                StyleHelper.of(box).style(styles.popup);
                 box.setMaxWidth(setting.width.v);
                 box.setMinWidth(setting.width.v);
                 box.setOpacity(setting.opacity.v / 100d);
@@ -231,10 +247,12 @@ public class Toast extends Preferences {
     /**
      * Notification style.
      */
-    private static interface Styles extends StyleDSL {
+    private static interface styles extends StyleDSL {
+
+        int pad = 15;
 
         Style popup = () -> {
-            padding.vertical(15, px).horizontal(15, px);
+            padding.size(pad, px);
             background.color("derive(-fx-control-inner-background, 10%)");
             border.radius(5, px).color("-fx-light-text-color");
         };

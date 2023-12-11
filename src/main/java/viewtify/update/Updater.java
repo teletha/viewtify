@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.text.Font;
+
 import kiss.I;
 import kiss.Variable;
 import psychopath.Progress;
@@ -154,7 +155,10 @@ public class Updater extends DialogView<MonitorableTask> {
                 .use(I.env("Theme", Theme.Light))
                 .use(I.env("ThemeType", ThemeType.Flat))
                 .use(Font.font(I.env("Font"), I.env("FontSize", 12)))
-                .location(I.env("LocationX", 0d), I.env("LocationY", 0d))
+                .onInitialize((stage, scene) -> {
+                    stage.setX(I.env("LocationX", 0d));
+                    stage.setY(I.env("LocationY", 0d));
+                })
                 .activate(Updater.class);
     }
 }

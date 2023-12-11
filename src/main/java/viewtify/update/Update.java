@@ -12,6 +12,7 @@ package viewtify.update;
 import java.util.List;
 
 import javafx.geometry.Rectangle2D;
+
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -58,7 +59,7 @@ public class Update {
         // ====================================
         Blueprint origin = Blueprint.detect();
         if (!file.isAfter(origin.root)) {
-            return "The latest version is used, no need to update.";
+            // return "The latest version is used, no need to update.";
         }
 
         // We can update

@@ -88,9 +88,29 @@ public class TextNotation {
      * @return
      */
     public static TextFlow parse(String message, List<WiseRunnable> actions) {
+        return parse(message, -1, actions);
+    }
+
+    /**
+     * Parse as {@link TextFlow}.
+     * 
+     * @param message A wiki-like notation text.
+     * @return
+     */
+    public static TextFlow parse(String message, int width, WiseRunnable... actions) {
+        return parse(message, width, List.of(actions));
+    }
+
+    /**
+     * Parse as {@link TextFlow}.
+     * 
+     * @param message A wiki-like notation text.
+     * @return
+     */
+    public static TextFlow parse(String message, int width, List<WiseRunnable> actions) {
         TextFlow flow = new TextFlow();
         flow.setLineSpacing(2);
-        parse(flow.getChildren(), message, actions);
+        parse(flow.getChildren(), width, message, actions);
         return flow;
     }
 
@@ -111,18 +131,38 @@ public class TextNotation {
      * @return
      */
     public static TextFlow parse(Variable message, List<WiseRunnable> actions) {
+        return parse(message, -1, actions);
+    }
+
+    /**
+     * Parse as {@link TextFlow}.
+     * 
+     * @param message A wiki-like notation text.
+     * @return
+     */
+    public static TextFlow parse(Variable message, int width, WiseRunnable... actions) {
+        return parse(message, width, List.of(actions));
+    }
+
+    /**
+     * Parse as {@link TextFlow}.
+     * 
+     * @param message A wiki-like notation text.
+     * @return
+     */
+    public static TextFlow parse(Variable message, int width, List<WiseRunnable> actions) {
         TextFlow flow = new TextFlow();
         flow.setLineSpacing(2);
         ObservableList<Node> children = flow.getChildren();
 
         message.observing().on(Viewtify.UIThread).to(text -> {
             children.clear();
-            parse(children, I.transform(text, String.class), actions);
+            parse(children, width, I.transform(text, String.class), actions);
         });
         return flow;
     }
 
-    private static void parse(ObservableList<Node> children, String message, List<WiseRunnable> actions) {
+    private static void parse(ObservableList<Node> children, int width, String message, List<WiseRunnable> actions) {
         if (message == null) {
             return;
         }
@@ -138,7 +178,11 @@ public class TextNotation {
             case '[':
                 inLink = true;
                 if (builder.length() != 0) {
-                    children.add(new Label(builder.toString()));
+                    Label label = new Label(builder.toString());
+                    label.setWrapText(true);
+                    label.setMaxWidth(width);
+                    System.out.println(builder + "  " + width);
+                    children.add(label);
                     builder = new StringBuilder();
                 }
                 break;
@@ -186,10 +230,11 @@ public class TextNotation {
             }
         }
 
-        if (children.isEmpty()) {
-            children.add(new Label(builder.toString()));
-        } else if (builder.length() != 0) {
-            children.add(new Label(builder.toString()));
+        if (children.isEmpty() || builder.length() != 0) {
+            Label label = new Label(builder.toString());
+            label.setWrapText(true);
+            label.setMaxWidth(width);
+            children.add(label);
         }
     }
 }
