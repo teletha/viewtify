@@ -253,6 +253,19 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     }
 
     /**
+     * Reload all preferences.
+     */
+    public static void reload() {
+        for (Preferences preferences : CACHE.values()) {
+            preferences.restore();
+        }
+
+        for (PreferencesList preferencesList : CACHE_LIST.values()) {
+            preferencesList.restore();
+        }
+    }
+
+    /**
      * Preference value.
      */
     public class Preference<V> extends Variable<V> {

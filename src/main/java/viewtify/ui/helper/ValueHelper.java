@@ -109,7 +109,7 @@ public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
      * @return Chainable API.
      */
     default Self value(V value) {
-        valueProperty().setValue(value);
+        Viewtify.inUI(() -> valueProperty().setValue(value));
         return (Self) this;
     }
 

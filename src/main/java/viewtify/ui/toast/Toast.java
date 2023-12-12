@@ -20,11 +20,10 @@ import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
-import kiss.WiseConsumer;
+import kiss.WiseRunnable;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
@@ -56,12 +55,12 @@ public class Toast extends Preferences {
     /**
      * Show the specified node.
      */
-    public static void show(String message, WiseConsumer<Runnable>... actions) {
+    public static void show(String message, WiseRunnable... actions) {
         if (setting.enable.is(true)) {
             Notification notification = new Notification();
-            Runnable hide = () -> remove(notification);
+            WiseRunnable hide = () -> remove(notification);
             notification.builder = () -> TextNotation
-                    .parse(message, setting.width.v - styles.pad * 2, I.signal(actions).map(x -> x.bindLast(hide)).toList());
+                    .parse(message, setting.width.v - styles.pad * 2, I.signal(actions).map(x -> I.bundle(hide, x)).toList());
 
             add(notification);
         }
@@ -70,12 +69,12 @@ public class Toast extends Preferences {
     /**
      * Show the specified node.
      */
-    public static void show(Variable<String> message, WiseConsumer<Runnable>... actions) {
+    public static void show(Variable<String> message, WiseRunnable... actions) {
         if (setting.enable.is(true)) {
             Notification notification = new Notification();
-            Runnable hide = () -> remove(notification);
+            WiseRunnable hide = () -> remove(notification);
             notification.builder = () -> TextNotation
-                    .parse(message, setting.width.v - styles.pad * 2, I.signal(actions).map(x -> x.bindLast(hide)).toList());
+                    .parse(message, setting.width.v - styles.pad * 2, I.signal(actions).map(x -> I.bundle(hide, x)).toList());
 
             add(notification);
         }

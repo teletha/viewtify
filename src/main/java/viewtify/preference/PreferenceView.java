@@ -9,23 +9,28 @@
  */
 package viewtify.preference;
 
+import java.awt.Desktop;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.controlsfx.glyphfont.FontAwesome;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Labeled;
-
-import org.controlsfx.glyphfont.FontAwesome;
-
+import javafx.stage.FileChooser.ExtensionFilter;
 import kiss.I;
 import kiss.Variable;
+import psychopath.File;
 import stylist.Style;
 import stylist.StyleDSL;
+import viewtify.Viewtify;
 import viewtify.style.FormStyles;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIScrollPane;
@@ -34,6 +39,7 @@ import viewtify.ui.UIVBox;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.helper.User;
+import viewtify.ui.toast.Toast;
 
 public class PreferenceView extends View {
 
@@ -42,6 +48,12 @@ public class PreferenceView extends View {
 
     /** The root scrollable box. */
     private UIScrollPane scroll;
+
+    /** The configuration manager. */
+    private UILabel importer;
+
+    /** The configuration manager. */
+    private UILabel exporter;
 
     /** The search box. */
     private UIText<String> search;
@@ -65,7 +77,11 @@ public class PreferenceView extends View {
                         }
                     });
                     $(vbox, style.right, () -> {
-                        $(search, FormStyles.Input, style.search);
+                        $(hbox, style.bar, () -> {
+                            $(importer);
+                            $(exporter);
+                            $(search, FormStyles.Input, style.search);
+                        });
                         $(scroll, FormStyles.Preferences, () -> {
                             $(vbox, style.root, () -> {
                                 for (View view : bases) {
@@ -108,7 +124,7 @@ public class PreferenceView extends View {
 
         Style search = () -> {
             display.maxWidth(220, px);
-            margin.top(15, px).left(286, px).bottom(15, px);
+            margin.top(15, px).left(15, px).bottom(15, px);
         };
 
         Style root = () -> {
@@ -118,6 +134,22 @@ public class PreferenceView extends View {
         Style box = () -> {
             padding.bottom(65, px);
         };
+
+        Style bar = () -> {
+            display.maxWidth(505, px);
+            text.align.right();
+        };
+
+        Style icon = () -> {
+            font.size(18, px).family("FontAwesome").color("-fx-mid-text-color");
+            padding.size(5, px);
+            margin.horizontal(3, px);
+            cursor.pointer();
+
+            $.hover(() -> {
+                font.color("-fx-focus-color");
+            });
+        };
     }
 
     /**
@@ -125,12 +157,49 @@ public class PreferenceView extends View {
      */
     @Override
     protected void initialize() {
+        importer.text(FontAwesome.Glyph.DOWNLOAD, style.icon)
+                .tooltip(en("Import preferences from file"))
+                .when(User.LeftClick, this::importPrefernces);
+        exporter.text(FontAwesome.Glyph.UPLOAD, style.icon)
+                .tooltip(en("Export the current preferences"))
+                .when(User.LeftClick, this::exportPreferences);
+
         search.placeholder(en("Search from preferences")).clearable().prefix(FontAwesome.Glyph.SEARCH).observe().to(text -> {
             text = text.strip().toLowerCase();
 
             for (View base : bases) {
                 searchPreferenceBy(base, text);
             }
+        });
+    }
+
+    /**
+     * Export user preferences.
+     */
+    private void exportPreferences() {
+        Viewtify.dialog().showDirectory().observing().on(Viewtify.WorkerThread).to(dir -> {
+            String name = Viewtify.application().launcher().getSimpleName().toLowerCase() + "-preferences-" + LocalDate.now()
+                    .format(DateTimeFormatter.BASIC_ISO_DATE) + ".zip";
+            File zip = dir.file(name);
+
+            Viewtify.UserPreference.exact().packTo(zip, o -> o.glob("**.json").strip());
+
+            Toast.show(en("Saved the current preferences to [file](0)."), () -> {
+                Desktop.getDesktop().open(zip.parent().asJavaFile());
+            });
+        });
+    }
+
+    /**
+     * Import user preferences.
+     */
+    private void importPrefernces() {
+        Viewtify.dialog().showFile(null, new ExtensionFilter("Archive", List.of("*.zip"))).observing().on(Viewtify.WorkerThread).to(zip -> {
+            zip.unpackTo(Viewtify.UserPreference.exact());
+
+            Preferences.reload();
+
+            Toast.show(en("Restored the archived preferences."));
         });
     }
 

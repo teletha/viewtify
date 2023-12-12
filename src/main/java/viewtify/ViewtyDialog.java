@@ -27,6 +27,9 @@ import javafx.scene.control.DialogEvent;
 import javafx.scene.control.DialogPane;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -35,6 +38,9 @@ import kiss.I;
 import kiss.Model;
 import kiss.Variable;
 import kiss.WiseConsumer;
+import psychopath.Directory;
+import psychopath.File;
+import psychopath.Locator;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
 import viewtify.ui.UILabel;
@@ -376,6 +382,57 @@ public final class ViewtyDialog<T> {
                 });
 
         return showAndTell(dialog, () -> ButtonType.CANCEL);
+    }
+
+    /**
+     * Show the directory chooser dialog.
+     */
+    public Variable<Directory> showDirectory() {
+        return showDirectory(null);
+    }
+
+    /**
+     * Show the directory chooser dialog.
+     */
+    public Variable<Directory> showDirectory(Directory initial) {
+        DirectoryChooser chooser = new DirectoryChooser();
+        if (title != null) {
+            chooser.setTitle(title.v);
+        }
+
+        if (initial != null) {
+            chooser.setInitialDirectory(initial.asJavaFile());
+        }
+
+        return Variable.of(chooser.showDialog(stage)).map(dir -> Locator.directory(dir.toPath()));
+    }
+
+    /**
+     * Show the file chooser dialog.
+     */
+    public Variable<File> showFile() {
+        return showFile(null, null);
+    }
+
+    /**
+     * Show the file chooser dialog.
+     */
+    public Variable<File> showFile(Directory initial, ExtensionFilter filter) {
+        FileChooser chooser = new FileChooser();
+        if (title != null) {
+            chooser.setTitle(title.v);
+        }
+
+        if (initial != null) {
+            chooser.setInitialDirectory(initial.asJavaFile());
+        }
+
+        if (filter != null) {
+            chooser.setSelectedExtensionFilter(filter);
+        }
+
+        java.io.File result = chooser.showOpenDialog(stage);
+        return Variable.of(result).map(x -> Locator.file(result.toPath()));
     }
 
     /**

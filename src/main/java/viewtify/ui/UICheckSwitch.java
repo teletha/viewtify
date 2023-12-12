@@ -13,6 +13,7 @@ import org.controlsfx.control.ToggleSwitch;
 
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableBooleanValue;
+import viewtify.Viewtify;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.ValueHelper;
@@ -31,7 +32,7 @@ public class UICheckSwitch extends UserInterface<UICheckSwitch, ToggleSwitch>
     public UICheckSwitch(View view) {
         super(new ToggleSwitch(), view);
 
-        observing().to(x -> text(x ? labels[0] : labels[1]), this);
+        observing().on(Viewtify.UIThread).to(x -> text(x ? labels[0] : labels[1]), this);
     }
 
     /**

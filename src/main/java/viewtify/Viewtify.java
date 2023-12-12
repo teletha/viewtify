@@ -589,10 +589,7 @@ public final class Viewtify {
             if (updater.checkOnStartup.is(true) && Update.isAvailable(updateArchive)) {
                 I.schedule(5, TimeUnit.SECONDS).to(() -> {
                     Toast.show(I
-                            .translate(Terminator, "A newer version is available. Would you like to update? [Update](0)  [Not now](1)"), hide -> {
-                                hide.run();
-                                Update.apply();
-                            }, Runnable::run);
+                            .translate(Terminator, "A newer version is available. Would you like to update? [Update](0)  [Not now](1)"), Update::apply, I.NoOP);
                 });
             }
         }
