@@ -27,7 +27,9 @@ import javafx.scene.control.Labeled;
 import javafx.stage.FileChooser.ExtensionFilter;
 import kiss.I;
 import kiss.Variable;
+import psychopath.Directory;
 import psychopath.File;
+import psychopath.Locator;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
@@ -173,27 +175,25 @@ public class PreferenceView extends View {
         });
     }
 
+    private Directory locateHome() {
+        return Locator.directory(System.getProperty("user.home")).directory(Viewtify.application().launcher().getSimpleName());
+    }
+
     /**
      * Export user preferences.
      */
     private void exportPreferences() {
-        Viewtify.dialog()
-                .title(en("Select the directory to store the current preferences"))
-                .showDirectory()
-                .observing()
-                .skipNull()
-                .on(Viewtify.WorkerThread)
-                .to(dir -> {
-                    String name = Viewtify.application().launcher().getSimpleName().toLowerCase() + "-preferences-" + LocalDate.now()
-                            .format(DateTimeFormatter.BASIC_ISO_DATE) + ".zip";
-                    File zip = dir.file(name);
+        Viewtify.inUI(() -> {
+            Directory directory = locateHome();
+            String name = "config-" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".zip";
+            File zip = directory.file(name);
 
-                    Viewtify.UserPreference.exact().packTo(zip, o -> o.glob("**.json").strip());
+            Viewtify.UserPreference.exact().packTo(zip, o -> o.glob("**.json").strip());
 
-                    Toast.show(en("Saved the current preferences to [file](0)."), () -> {
-                        Desktop.getDesktop().open(zip.parent().asJavaFile());
-                    });
-                });
+            Toast.show(en("Saved the current preferences to [file](0)."), () -> {
+                Desktop.getDesktop().open(zip.parent().asJavaFile());
+            });
+        });
     }
 
     /**
@@ -202,16 +202,15 @@ public class PreferenceView extends View {
     private void importPrefernces() {
         Viewtify.dialog()
                 .title(en("Select the archived preference file."))
-                .showFile(null, new ExtensionFilter("Archive", List.of("*.zip")))
-                .observing()
-                .skipNull()
-                .on(Viewtify.WorkerThread)
+                .showFile(locateHome(), new ExtensionFilter("Archive", List.of("config-*.zip")))
                 .to(zip -> {
-                    zip.unpackTo(Viewtify.UserPreference.exact());
+                    Viewtify.inWorker(() -> {
+                        zip.unpackTo(Viewtify.UserPreference.exact());
 
-                    Preferences.reload();
+                        Preferences.reload();
 
-                    Toast.show(en("Restored from the archived preferences."));
+                        Toast.show(en("Restored from the archived preferences."));
+                    });
                 });
     }
 

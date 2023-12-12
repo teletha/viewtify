@@ -428,7 +428,7 @@ public final class ViewtyDialog<T> {
         }
 
         if (filter != null) {
-            chooser.setSelectedExtensionFilter(filter);
+            chooser.getExtensionFilters().add(filter);
         }
 
         java.io.File result = chooser.showOpenDialog(stage);
