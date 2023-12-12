@@ -15,11 +15,11 @@ import java.util.Objects;
 import java.util.function.Function;
 
 import javafx.beans.property.Property;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
-
 import viewtify.ui.helper.ValueHelper;
 
 public class UISlider extends UserInterface<UISlider, HBox> implements ValueHelper<UISlider, Double> {
@@ -29,6 +29,8 @@ public class UISlider extends UserInterface<UISlider, HBox> implements ValueHelp
     private final Slider slider = new Slider();
 
     private Function<String, String> formatter = Function.identity();
+
+    private ChangeListener<? super Number> stepAdjuster;
 
     /**
      * @param view
@@ -72,10 +74,15 @@ public class UISlider extends UserInterface<UISlider, HBox> implements ValueHelp
      * @return
      */
     public UISlider step(double step) {
-        slider.valueProperty().addListener((x, o, n) -> {
-            slider.adjustValue(Math.round(n.doubleValue() / step) * step);
-        });
+        if (0 < step) {
+            if (stepAdjuster != null) {
+                slider.valueProperty().removeListener(stepAdjuster);
+            }
 
+            slider.valueProperty().addListener(stepAdjuster = (x, o, n) -> {
+                slider.adjustValue(Math.round(n.doubleValue() / step) * step);
+            });
+        }
         return this;
     }
 
