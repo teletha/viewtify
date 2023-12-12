@@ -211,7 +211,7 @@ public class PreferenceView extends View {
 
                     Preferences.reload();
 
-                    Toast.show(en("Restored the archived preferences."));
+                    Toast.show(en("Restored from the archived preferences."));
                 });
     }
 
