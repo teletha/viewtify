@@ -13,7 +13,6 @@ import java.text.DecimalFormat;
 
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.text.Font;
-
 import kiss.I;
 import kiss.Variable;
 import psychopath.Progress;
@@ -79,12 +78,12 @@ public class Updater extends DialogView<MonitorableTask> {
     interface style extends StyleDSL {
         Style root = () -> {
             display.minWidth(380, px);
-            padding.size(10, px);
+            padding.size(12, px);
         };
 
         Style bar = () -> {
             display.width.fill();
-            margin.vertical(5, px);
+            margin.top(12, px).bottom(8, px);
         };
     }
 

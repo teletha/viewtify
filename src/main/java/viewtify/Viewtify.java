@@ -37,6 +37,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -71,9 +73,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -547,13 +546,9 @@ public final class Viewtify {
      * @param application The application {@link View} to activate.
      */
     private void activate(View application, boolean isOperner) {
-        View actual = isOperner ? I.make(opener.v) : application;
-        mainStage = new Stage(isOperner ? StageStyle.TRANSPARENT : stageStyle);
-
-        Scene scene = new Scene((Parent) actual.ui());
-
         // root stage management
         views.add(application);
+        mainStage = new Stage();
         mainStage.showingProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue == true && newValue == false) {
                 views.remove(application);
@@ -563,12 +558,15 @@ public final class Viewtify {
             }
         });
 
-        if (initializer != null) {
-            initializer.accept(mainStage, scene);
-        }
+        View mainView = isOperner ? I.make(opener.v) : application;
+        Scene mainScene = new Scene((Parent) mainView.ui());
 
         if (isOperner) {
-            scene.setFill(null);
+            // ================================================
+            // Pre Application
+            // ================================================
+            mainScene.setFill(null);
+            mainStage.initStyle(StageStyle.TRANSPARENT);
             mainStage.setOnHidden(e -> {
                 if (!Terminator.isDisposed()) {
                     SplashScreen splash = SplashScreen.getSplashScreen();
@@ -580,25 +578,42 @@ public final class Viewtify {
                     activate(application, false);
                 }
             });
+        } else {
+            // ================================================
+            // Main Application
+            // ================================================
+            mainStage.initStyle(stageStyle);
+
+            // check update
+            UpdateSetting updater = Preferences.of(UpdateSetting.class);
+            if (updater.checkOnStartup.is(true) && Update.isAvailable(updateArchive)) {
+                I.schedule(5, TimeUnit.SECONDS).to(() -> {
+                    Toast.show(I
+                            .translate(Terminator, "A newer version is available. Would you like to update? [Update](0)  [Not now](1)"), hide -> {
+                                hide.run();
+                                Update.apply();
+                            }, Runnable::run);
+                });
+            }
         }
 
         if (closer != null) {
-            mainStage.setOnCloseRequest(e -> {
+            mainStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, e -> {
                 if (!closer.getAsBoolean()) {
                     e.consume();
                 }
             });
         }
 
-        manage(actual.getClass().getName(), scene, mainStage, isOperner);
-        mainStage.setScene(scene);
-        mainStage.show();
+        // window management
+        manage(mainView.getClass().getName(), mainScene, mainStage, isOperner);
 
-        // process the unexecuted UI action
-        if (waitingActions != null) {
-            waitingActions.forEach(Runnable::run);
-            waitingActions = null;
-        }
+        // the user initializer must be executed at last
+        if (initializer != null) initializer.accept(mainStage, mainScene);
+
+        // show window actually
+        mainStage.setScene(mainScene);
+        mainStage.show();
 
         if (!isHeadless()) {
             mainStage.addEventHandler(WindowEvent.WINDOW_SHOWN, e -> {
@@ -608,16 +623,10 @@ public final class Viewtify {
             });
         }
 
-        // check update
-        UpdateSetting updater = Preferences.of(UpdateSetting.class);
-        if (updater.checkOnStartup.is(true) && Update.isAvailable(updateArchive)) {
-            I.schedule(5, TimeUnit.SECONDS).to(() -> {
-                Toast.show(I
-                        .translate(Terminator, "A newer version is available. Would you like to update? [Update](0)  [Don't now](1)"), hide -> {
-                            hide.run();
-                            Update.apply();
-                        }, Runnable::run);
-            });
+        // process the unexecuted UI action
+        if (waitingActions != null) {
+            waitingActions.forEach(Runnable::run);
+            waitingActions = null;
         }
     }
 
