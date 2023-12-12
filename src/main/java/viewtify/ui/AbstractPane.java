@@ -21,7 +21,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-
 import kiss.WiseFunction;
 import viewtify.ui.anime.HideAnime;
 import viewtify.ui.anime.LayoutAnimator;

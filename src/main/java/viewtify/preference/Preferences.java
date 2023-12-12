@@ -257,11 +257,11 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
      */
     public static void reload() {
         for (Preferences preferences : CACHE.values()) {
-            preferences.restore();
+            Viewtify.inUI(preferences::restore);
         }
 
         for (PreferencesList preferencesList : CACHE_LIST.values()) {
-            preferencesList.restore();
+            Viewtify.inUI((Runnable) preferencesList::restore);
         }
     }
 
