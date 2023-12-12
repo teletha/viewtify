@@ -131,6 +131,7 @@ public class PreferenceView extends View {
 
         Style root = () -> {
             padding.left(40, px).right(30, px).top(15, px);
+            display.maxWidth(550, px);
         };
 
         Style box = () -> {
