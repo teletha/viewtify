@@ -397,7 +397,7 @@ public final class ViewtyDialog<T> {
     public Variable<Directory> showDirectory(Directory initial) {
         DirectoryChooser chooser = new DirectoryChooser();
         if (title != null) {
-            chooser.setTitle(title.v);
+            title.observing().to(chooser::setTitle);
         }
 
         if (initial != null) {
@@ -420,7 +420,7 @@ public final class ViewtyDialog<T> {
     public Variable<File> showFile(Directory initial, ExtensionFilter filter) {
         FileChooser chooser = new FileChooser();
         if (title != null) {
-            chooser.setTitle(title.v);
+            title.observing().to(chooser::setTitle);
         }
 
         if (initial != null) {

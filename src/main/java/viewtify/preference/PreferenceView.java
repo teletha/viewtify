@@ -177,30 +177,42 @@ public class PreferenceView extends View {
      * Export user preferences.
      */
     private void exportPreferences() {
-        Viewtify.dialog().showDirectory().observing().on(Viewtify.WorkerThread).to(dir -> {
-            String name = Viewtify.application().launcher().getSimpleName().toLowerCase() + "-preferences-" + LocalDate.now()
-                    .format(DateTimeFormatter.BASIC_ISO_DATE) + ".zip";
-            File zip = dir.file(name);
+        Viewtify.dialog()
+                .title(en("Select the directory to store the current preferences"))
+                .showDirectory()
+                .observing()
+                .skipNull()
+                .on(Viewtify.WorkerThread)
+                .to(dir -> {
+                    String name = Viewtify.application().launcher().getSimpleName().toLowerCase() + "-preferences-" + LocalDate.now()
+                            .format(DateTimeFormatter.BASIC_ISO_DATE) + ".zip";
+                    File zip = dir.file(name);
 
-            Viewtify.UserPreference.exact().packTo(zip, o -> o.glob("**.json").strip());
+                    Viewtify.UserPreference.exact().packTo(zip, o -> o.glob("**.json").strip());
 
-            Toast.show(en("Saved the current preferences to [file](0)."), () -> {
-                Desktop.getDesktop().open(zip.parent().asJavaFile());
-            });
-        });
+                    Toast.show(en("Saved the current preferences to [file](0)."), () -> {
+                        Desktop.getDesktop().open(zip.parent().asJavaFile());
+                    });
+                });
     }
 
     /**
      * Import user preferences.
      */
     private void importPrefernces() {
-        Viewtify.dialog().showFile(null, new ExtensionFilter("Archive", List.of("*.zip"))).observing().on(Viewtify.WorkerThread).to(zip -> {
-            zip.unpackTo(Viewtify.UserPreference.exact());
+        Viewtify.dialog()
+                .title(en("Select the archived preference file."))
+                .showFile(null, new ExtensionFilter("Archive", List.of("*.zip")))
+                .observing()
+                .skipNull()
+                .on(Viewtify.WorkerThread)
+                .to(zip -> {
+                    zip.unpackTo(Viewtify.UserPreference.exact());
 
-            Preferences.reload();
+                    Preferences.reload();
 
-            Toast.show(en("Restored the archived preferences."));
-        });
+                    Toast.show(en("Restored the archived preferences."));
+                });
     }
 
     /**
