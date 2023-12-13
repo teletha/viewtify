@@ -7,6 +7,8 @@
  *
  *          https://opensource.org/licenses/MIT
  */
+@import url('https://fonts.googleapis.com/css2?family=Ranchers&display=swap');
+
 .root {
     -fx-body-color: -fx-color;
 		-fx-edit-color: #ffa431;

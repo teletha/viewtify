@@ -14,11 +14,13 @@ import java.util.List;
 
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.ColumnConstraints;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import stylist.Style;
 import stylist.StyleDSL;
+import stylist.value.FontSet;
 import stylist.value.Numeric;
 import viewtify.ViewtyDialog.DialogView;
 import viewtify.preference.Preferences;
@@ -151,7 +153,7 @@ class WizardDialog<V> extends DialogView<V> {
             border.radius(circle.divide(2));
             background.color(passive);
             text.align.center();
-            font.size(16, px).color("white").family("League Gothic");
+            font.size(16, px).color("white").family(new FontSet().fromGoogle("League Gothic"));
         };
 
         Style stepTitle = () -> {
