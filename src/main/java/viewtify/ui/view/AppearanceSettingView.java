@@ -94,4 +94,15 @@ public class AppearanceSettingView extends View {
         });
         return this;
     }
+
+    /**
+     * List up all system fonts.
+     * 
+     * @return
+     */
+    public final AppearanceSettingView useSystemFonts() {
+        family.items(Font.getFamilies());
+
+        return this;
+    }
 }

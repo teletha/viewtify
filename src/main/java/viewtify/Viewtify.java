@@ -11,7 +11,6 @@ package viewtify;
 
 import java.awt.Rectangle;
 import java.awt.SplashScreen;
-import java.io.InputStream;
 import java.lang.StackWalker.Option;
 import java.net.URL;
 import java.nio.channels.FileChannel;
@@ -422,15 +421,6 @@ public final class Viewtify {
     }
 
     /**
-     * Get applicaiton metadata.
-     * 
-     * @return
-     */
-    public String icon() {
-        return icon;
-    }
-
-    /**
      * Configure application icon.
      * 
      * @return A relative path to icon.
@@ -794,32 +784,6 @@ public final class Viewtify {
     }
 
     /**
-     * Load the image resource which is located by the path.
-     * 
-     * @param path
-     * @return
-     */
-    public static Image loadImage(String path) {
-        return new Image(loadResource(path));
-    }
-
-    /**
-     * Load the resource which is located by the path.
-     * 
-     * @param path
-     * @return
-     */
-    private static InputStream loadResource(String path) {
-        File file = Locator.file(path);
-
-        if (file.isPresent()) {
-            return file.newInputStream();
-        } else {
-            return ClassLoader.getSystemResourceAsStream(path);
-        }
-    }
-
-    /**
      * Generates a separate window with only {@link UIWeb}. If the application is not running, it
      * will automatically launch an anonymous application.
      */
@@ -1028,7 +992,7 @@ public final class Viewtify {
         // apply title and icon
         stage.setTitle(viewtify.title);
         if (viewtify.icon.length() != 0) {
-            stage.getIcons().add(loadImage(viewtify.icon));
+            stage.getIcons().add(new Image(viewtify.icon));
         }
 
         // ================================================================
