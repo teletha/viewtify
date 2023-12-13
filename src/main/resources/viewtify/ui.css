@@ -38,25 +38,6 @@
 }
 
 /* ==========================================================================
-  ToggleSwitch
-===========================================================================*/
-.toggle-switch .label {
-    -fx-padding: 0 0 0 10px;
-}
-
-.toggle-switch .thumb {
-    -fx-background-color: -fx-outer-border, derive(-fx-body-color, 5%);
-}
-
-.toggle-switch .thumb-area {
-    -fx-background-color: -fx-outer-border, derive(-fx-control-inner-background, 40%);
-}
-
-.toggle-switch:selected .thumb-area {
-    -fx-background-color: -fx-outer-border, derive(-fx-body-color, -40%);
-}
- 
-/* ==========================================================================
   Hyperlink
 ===========================================================================*/
 .hyperlink {
@@ -276,6 +257,31 @@
 }
 
 /* ==========================================================================
+  Slider
+===========================================================================*/
+.slider-wrapper {
+		-fx-alignment: center;
+}
+
+.slider-wrapper .label {
+		-fx-pref-width: 80px;
+		-fx-alignment: center;
+}
+
+.slider .thumb {
+		-fx-text-box-border: -fx-light-text-color;
+    -fx-background-radius: 10px;
+    -fx-padding: 5px;
+}
+
+.slider .track {
+    -fx-background-color: -fx-outer-border;
+    -fx-background-insets: 0;
+    -fx-background-radius: 2px;
+    -fx-pref-height: 2px;
+}
+
+/* ==========================================================================
   Combined TextField
 ===========================================================================*/
 .text-field.noborder {
@@ -294,6 +300,25 @@
     -fx-background-insets: -0.2, 1, -1.4, 3;
     -fx-background-radius: 3, 2, 4, 0;
     -fx-prompt-text-fill: transparent;
+}
+
+/* ==========================================================================
+  ToggleSwitch
+===========================================================================*/
+.toggle-switch .label {
+    -fx-padding: 0 0 0 10px;
+}
+
+.toggle-switch .thumb {
+    -fx-background-color: -fx-outer-border, derive(-fx-body-color, 5%);
+}
+
+.toggle-switch .thumb-area {
+    -fx-background-color: -fx-outer-border, derive(-fx-control-inner-background, 40%);
+}
+
+.toggle-switch:selected .thumb-area {
+    -fx-background-color: -fx-outer-border, derive(-fx-body-color, -40%);
 }
 
 /* ==========================================================================
@@ -345,45 +370,3 @@
     -fx-padding: 5px 1px;
 }
 
-.slider .thumb {
-    -fx-background-color:
-        linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)),
-        -fx-inner-border,
-        -fx-body-color;
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 1.0em; /* makes sure this remains circular */
-    -fx-padding: 0.583333em;  /* 7 */
-    -fx-effect: dropshadow(two-pass-box , rgba(0, 0, 0, 0.1), 5, 0.0 , 0, 2);
-}
-.slider:focused .thumb {
-    -fx-background-radius: 1.0em; /* makes sure this remains circular */
-}
-.slider .track {
-      -fx-background-color:
-          -fx-shadow-highlight-color,
-          linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
-          linear-gradient(to bottom,
-            derive(-fx-control-inner-background, -9%),
-            derive(-fx-control-inner-background, 0%),
-            derive(-fx-control-inner-background, -5%),
-            derive(-fx-control-inner-background, -12%)
-          );
-    -fx-background-insets: 0 0 -1 0, 0, 1;
-    -fx-background-radius: 0.25em, 0.25em, 0.166667em; /* 3 3 2 */
-}
-.slider:vertical .track {
-    -fx-background-color:
-          -fx-shadow-highlight-color,
-          -fx-text-box-border,
-          linear-gradient(to right,
-            derive(-fx-control-inner-background, -9%),
-            -fx-control-inner-background,
-            derive(-fx-control-inner-background, -9%)
-          );
-}
-.slider .axis {
-    -fx-tick-label-fill: derive(-fx-text-background-color, 30%);
-    -fx-tick-length: 5px;
-    -fx-minor-tick-length: 3px;
-    -fx-border-color: null;
-}

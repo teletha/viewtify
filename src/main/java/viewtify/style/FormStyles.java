@@ -81,24 +81,26 @@ public interface FormStyles extends ViewtyStyle {
         // marker class
 
         $.descendant(Row, () -> {
+            display.width.fill().minHeight(48, px);
             border.radius(2, px);
             background.color("-fx-control-inner-background");
             margin.bottom(1, px);
             padding.horizontal(10, px).vertical(10, px);
-            display.width.fill();
+            text.verticalAlign.middle();
 
             $.hover(() -> {
                 background.color("-fx-control-inner-background-alt");
             });
 
             $.descendant(Row, () -> {
+                display.minHeight(36, px);
                 padding.vertical(5, px);
             });
         });
 
         $.descendant(Label, () -> {
             text.verticalAlign.baseline();
-            margin.right(20, px);
+            margin.right(20, px).top(4, px);
             display.minWidth(180, px).maxWidth(360, px).width.fill();
         });
     };

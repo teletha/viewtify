@@ -16,10 +16,10 @@ import java.util.function.Function;
 
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
+
 import viewtify.ui.helper.ValueHelper;
 
 public class UISlider extends UserInterface<UISlider, HBox> implements ValueHelper<UISlider, Double> {
@@ -37,13 +37,9 @@ public class UISlider extends UserInterface<UISlider, HBox> implements ValueHelp
      */
     public UISlider(View view) {
         super(new HBox(), view);
-
-        input.setStyle("-fx-pref-width: 60px; -fx-alignment: center; -fx-padding: -2px 0 0 0;");
-
-        bind();
-
-        ui.setPadding(new Insets(2, 0, -2, 0));
+        ui.getStyleClass().add("slider-wrapper");
         ui.getChildren().addAll(input, slider);
+        bind();
     }
 
     /**
