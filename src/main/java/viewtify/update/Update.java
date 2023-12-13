@@ -63,7 +63,7 @@ public class Update {
         // ====================================
         Blueprint origin = Blueprint.detect();
         if (!file.isAfter(origin.root)) {
-            // return "The latest version is used, no need to update.";
+            return "The latest version is used, no need to update.";
         }
 
         // We can update
