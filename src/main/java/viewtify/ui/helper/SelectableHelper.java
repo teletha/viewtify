@@ -16,18 +16,25 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.SingleSelectionModel;
+
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.helper.SelectionModelWrappers.IndexedCheckModelWrapper;
 import viewtify.ui.helper.SelectionModelWrappers.SingleSelectionModelWrapper;
 
+/**
+ * An interface providing methods for handling selection in UI elements.
+ *
+ * @param <Self> The type of the implementing class, enabling method chaining.
+ * @param <E> The type of the elements in the selection model.
+ */
 public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> extends PropertyAccessHelper {
 
     /**
-     * Retrieve the {@link SelectionModel}.
-     * 
-     * @return
+     * Retrieves the {@link SelectionModel}.
+     *
+     * @return The {@code SelectionModel} for the implementing class.
      */
     default SelectionModel<E> selectionModelProperty() {
         try {
@@ -38,9 +45,9 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Retrieve the {@link MultipleSelectionModel}.
-     * 
-     * @return
+     * Retrieves the {@link MultipleSelectionModel}.
+     *
+     * @return The {@code MultipleSelectionModel} for the implementing class.
      */
     private MultipleSelectionModel<E> model() {
         try {
@@ -56,64 +63,68 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Check the current selection.
-     * 
-     * @return
+     * Checks if there is any current selection.
+     *
+     * @return {@code true} if there is a selection, {@code false} otherwise.
      */
     default boolean isSelected() {
         return !selectionModelProperty().isEmpty();
     }
 
     /**
-     * Check the current selection.
-     * 
-     * @return
+     * Checks if there is no current selection.
+     *
+     * @return {@code true} if there is no selection, {@code false} otherwise.
      */
     default boolean isNotSelected() {
         return selectionModelProperty().isEmpty();
     }
 
     /**
-     * Check the current selection by index.
-     * 
-     * @return
+     * Checks if an item at the specified index is currently selected.
+     *
+     * @param index The index to check.
+     * @return {@code true} if the item at the index is selected, {@code false} otherwise.
      */
     default boolean isSelectedAt(int index) {
         return selectionModelProperty().isSelected(index);
     }
 
     /**
-     * Check the current selection by index.
-     * 
-     * @return
+     * Checks if an item at the specified index is not currently selected.
+     *
+     * @param index The index to check.
+     * @return {@code true} if the item at the index is not selected, {@code false} otherwise.
      */
     default boolean isNotSelectedAt(int index) {
         return !isSelectedAt(index);
     }
 
     /**
-     * Handle the selected state.
-     * 
-     * @return
+     * Provides a {@link Signal} that emits {@code true} when there is a selection, and
+     * {@code false} otherwise.
+     *
+     * @return A {@code Signal} indicating the presence of a selection.
      */
     default Signal<Boolean> hasSelection() {
         return Viewtify.observing(selectionModelProperty().selectedItemProperty()).map(v -> v != null);
     }
 
     /**
-     * Handle the selected state.
-     * 
-     * @return
+     * Provides a {@link Signal} that emits {@code true} when there is no selection, and
+     * {@code false} otherwise.
+     *
+     * @return A {@code Signal} indicating the absence of a selection.
      */
     default Signal<Boolean> hasNoSelection() {
         return hasSelection().map(v -> !v);
     }
 
     /**
-     * Config {@link SelectionMode}.
-     * 
-     * @param mode
-     * @return Chainable API.
+     * Configures the {@link SelectionMode}.
+     *
+     * @param mode The {@code SelectionMode} to set.
+     * @return The implementing class instance for method chaining.
      */
     default Self mode(SelectionMode mode) {
         if (mode != null) {
@@ -123,37 +134,37 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Get the latest selected item.
-     * 
-     * @return
+     * Gets the latest selected item as a {@link Variable}.
+     *
+     * @return A {@code Variable} containing the latest selected item.
      */
     default Variable<E> selectedItem() {
         return Variable.of(selectionModelProperty().getSelectedItem());
     }
 
     /**
-     * Get live-state list of the selected items.
-     * 
-     * @return
+     * Gets a live-state list of the selected items.
+     *
+     * @return An {@code ObservableList} containing the selected items.
      */
     default ObservableList<E> selectedItems() {
         return model().getSelectedItems();
     }
 
     /**
-     * Get live-state list of the selected items.
-     * 
-     * @return
+     * Gets a live-state list of the selected indices.
+     *
+     * @return An {@code ObservableList} containing the selected indices.
      */
     default ObservableList<Integer> selectedIndices() {
         return model().getSelectedIndices();
     }
 
     /**
-     * Select the specified item.
-     * 
-     * @param item
-     * @return Chainable API.
+     * Selects the specified item.
+     *
+     * @param item The item to select.
+     * @return The implementing class instance for method chaining.
      */
     default Self select(E item) {
         if (item != null) {
@@ -163,10 +174,10 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Select the item by index.
-     * 
-     * @param index An item index.
-     * @return Chainable API.
+     * Selects the item at the specified index.
+     *
+     * @param index The index of the item to select.
+     * @return The implementing class instance for method chaining.
      */
     default Self selectAt(int index) {
         if (0 <= index) {
@@ -176,10 +187,10 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Select the item by index.
-     * 
-     * @param index An item index.
-     * @return Chainable API.
+     * Toggles the selection state of the item at the specified index.
+     *
+     * @param index The index of the item to toggle.
+     * @return The implementing class instance for method chaining.
      */
     default Self toggleAt(int index) {
         if (0 <= index) {
@@ -194,9 +205,9 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Traverse selection.
-     * 
-     * @return Chainable API.
+     * Moves the selection to the next item.
+     *
+     * @return The implementing class instance for method chaining.
      */
     default Self selectNext() {
         selectionModelProperty().selectNext();
@@ -204,9 +215,9 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Traverse selection.
-     * 
-     * @return Chainable API.
+     * Moves the selection to the previous item.
+     *
+     * @return The implementing class instance for method chaining.
      */
     default Self selectPrevious() {
         selectionModelProperty().selectPrevious();
@@ -214,9 +225,9 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Traverse selection.
-     * 
-     * @return Chainable API.
+     * Selects the first item in the list.
+     *
+     * @return The implementing class instance for method chaining.
      */
     default Self selectFirst() {
         selectionModelProperty().selectFirst();
@@ -224,9 +235,9 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Traverse selection.
-     * 
-     * @return Chainable API.
+     * Selects the last item in the list.
+     *
+     * @return The implementing class instance for method chaining.
      */
     default Self selectLast() {
         selectionModelProperty().selectLast();
@@ -234,9 +245,9 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Clear selection.
-     * 
-     * @return Chainable API.
+     * Clears the selection.
+     *
+     * @return The implementing class instance for method chaining.
      */
     default Self unselect() {
         selectionModelProperty().clearSelection();
@@ -244,10 +255,10 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Clear selection.
-     * 
-     * @param item Item to unselect.
-     * @return Chainable API.
+     * Clears the selection of the specified item.
+     *
+     * @param item The item to unselect.
+     * @return The implementing class instance for method chaining.
      */
     default Self unselect(E item) {
         if (item != null) {
@@ -261,10 +272,10 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Clear selection.
-     * 
-     * @param index Item index to unselect.
-     * @return Chainable API.
+     * Clears the selection of the item at the specified index.
+     *
+     * @param index The index of the item to unselect.
+     * @return The implementing class instance for method chaining.
      */
     default Self unselectAt(int index) {
         selectionModelProperty().clearSelection(index);
@@ -272,19 +283,19 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
     }
 
     /**
-     * Handle the selected item.
-     * 
-     * @return
+     * Provides a {@link Signal} that emits the selected item.
+     *
+     * @return A {@code Signal} containing the selected item.
      */
     default Signal<E> selected() {
         return Viewtify.observing(selectionModelProperty().selectedItemProperty()).skipNull();
     }
 
     /**
-     * Handle the selected item.
-     * 
-     * @param selected
-     * @return
+     * Registers a consumer to be called when an item is selected.
+     *
+     * @param selected The consumer to be called with the selected item.
+     * @return The implementing class instance for method chaining.
      */
     default Self whenSelected(Consumer<E> selected) {
         if (selected != null) {

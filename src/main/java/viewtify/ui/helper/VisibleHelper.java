@@ -15,18 +15,24 @@ import java.util.function.Predicate;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ObservableValue;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
 
+/**
+ * An interface providing methods for managing the visibility and opacity of a UI element.
+ *
+ * @param <Self> The type of the implementing class, enabling method chaining.
+ */
 public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAccessHelper {
 
     /**
-     * Manage itself.
-     * 
-     * @param state
-     * @return
+     * Manages the visibility and opacity of the UI element.
+     *
+     * @param state The visibility state.
+     * @return The implementing class instance for method chaining.
      */
     default Self show(boolean state) {
         managed(state);
@@ -34,19 +40,19 @@ public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAcces
     }
 
     /**
-     * Gets whether it is managed.
-     * 
-     * @return
+     * Checks if the UI element is managed.
+     *
+     * @return True if managed, false otherwise.
      */
     default boolean isManaged() {
         return property(Type.Managed).getValue();
     }
 
     /**
-     * Manage itself.
-     * 
-     * @param state
-     * @return
+     * Manages the UI element.
+     *
+     * @param state The management state.
+     * @return The implementing class instance for method chaining.
      */
     default Self managed(boolean state) {
         property(Type.Managed).setValue(state);
@@ -54,19 +60,19 @@ public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAcces
     }
 
     /**
-     * Gets whether it is visible.
-     * 
-     * @return A result.
+     * Checks if the UI element is visible.
+     *
+     * @return True if visible, false otherwise.
      */
     default boolean isVisible() {
         return property(Type.Visible).getValue() == true;
     }
 
     /**
-     * Show itself.
-     * 
-     * @param state A visible state.
-     * @return Chainable API.
+     * Sets the visibility of the UI element.
+     *
+     * @param state The visibility state.
+     * @return The implementing class instance for method chaining.
      */
     default Self visible(boolean state) {
         property(Type.Visible).setValue(state);
@@ -74,10 +80,12 @@ public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAcces
     }
 
     /**
-     * Show itself when the specified condition is True, and hide it when False.
-     * 
-     * @param condition A timing condition.
-     * @return Chainable API.
+     * Sets the visibility of the UI element based on a condition.
+     *
+     * @param context The context for the condition.
+     * @param condition The condition to determine visibility.
+     * @param <V> The type of the condition.
+     * @return The implementing class instance for method chaining.
      */
     default <V> Self visibleWhen(ValueHelper<?, V> context, Predicate<V> condition) {
         if (context != null && condition != null) {
@@ -87,11 +95,11 @@ public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAcces
     }
 
     /**
-     * Show itself when the specified condition is True, and hide it when False.
-     * 
-     * @param condition A timing condition.
-     * @param conditions Additional timing conditions.
-     * @return Chainable API.
+     * Sets the visibility of the UI element based on a condition and additional conditions.
+     *
+     * @param condition The main condition.
+     * @param conditions Additional conditions.
+     * @return The implementing class instance for method chaining.
      */
     default Self visibleWhen(Signal<Boolean> condition, Signal<Boolean>... conditions) {
         if (condition != null) {

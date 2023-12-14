@@ -12,13 +12,19 @@ package viewtify.ui.helper;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 
+/**
+ * An interface providing methods to set alignment, orientation, horizontal gap, and vertical gap
+ * properties.
+ *
+ * @param <Self> The type of the implementing class, enabling method chaining.
+ */
 public interface AlignmentHelper<Self extends AlignmentHelper> extends PropertyAccessHelper {
 
     /**
-     * Set the alignment property.
-     * 
-     * @param position
-     * @return
+     * Sets the alignment property.
+     *
+     * @param position The position to set for alignment.
+     * @return The implementing class instance for method chaining.
      */
     default Self alignment(Pos position) {
         property(Type.Alignment).setValue(position);
@@ -27,22 +33,22 @@ public interface AlignmentHelper<Self extends AlignmentHelper> extends PropertyA
     }
 
     /**
-     * Set the oprientation property.
-     * 
-     * @param oprientation
-     * @return
+     * Sets the orientation property.
+     *
+     * @param orientation The orientation to set.
+     * @return The implementing class instance for method chaining.
      */
-    default Self orientation(Orientation oprientation) {
-        property(Type.Orientation).setValue(oprientation);
+    default Self orientation(Orientation orientation) {
+        property(Type.Orientation).setValue(orientation);
 
         return (Self) this;
     }
 
     /**
-     * Set the horizontal gap property.
-     * 
-     * @param gap
-     * @return
+     * Sets the horizontal gap property.
+     *
+     * @param gap The horizontal gap to set.
+     * @return The implementing class instance for method chaining.
      */
     default Self horizontalSpace(double gap) {
         property(Type.HGap).setValue(gap);
@@ -51,10 +57,10 @@ public interface AlignmentHelper<Self extends AlignmentHelper> extends PropertyA
     }
 
     /**
-     * Set the vertical gap property.
-     * 
-     * @param gap
-     * @return
+     * Sets the vertical gap property.
+     *
+     * @param gap The vertical gap to set.
+     * @return The implementing class instance for method chaining.
      */
     default Self verticalSpace(double gap) {
         property(Type.VGap).setValue(gap);

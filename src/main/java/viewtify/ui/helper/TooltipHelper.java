@@ -12,8 +12,6 @@ package viewtify.ui.helper;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import org.controlsfx.control.PopOver;
-
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -21,16 +19,25 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
+
+import org.controlsfx.control.PopOver;
+
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 
+/**
+ * An interface providing methods for managing tooltips and popups for a UI element.
+ *
+ * @param <Self> The type of the implementing class, enabling method chaining.
+ * @param <W> The type of the UI element to which the tooltip or popup is applied.
+ */
 public interface TooltipHelper<Self extends TooltipHelper, W extends Node> extends StyleHelper<Self, W>, UserInterfaceProvider<W> {
 
     /**
-     * Remove the tooltip from this user interface.
-     * 
-     * @return Chainable API.
+     * Removes the tooltip from this user interface.
+     *
+     * @return The implementing class instance for method chaining.
      */
     default Self untooltip() {
         Tooltip.uninstall(ui(), null);
@@ -38,10 +45,10 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
     }
 
     /**
-     * Set the text to be displayed as a tooltip.
-     * 
+     * Sets the text to be displayed as a tooltip.
+     *
      * @param text Tooltip text.
-     * @return Chainable API.
+     * @return The implementing class instance for method chaining.
      */
     default Self tooltip(Object text) {
         Tooltip tooltip = new Tooltip(Objects.toString(text));
@@ -68,10 +75,10 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
     }
 
     /**
-     * Set the text to be displayed as a tooltip.
-     * 
+     * Sets the text to be displayed as a tooltip using a {@link Variable}.
+     *
      * @param text A text {@link Variable} to set.
-     * @return Chainable API.
+     * @return The implementing class instance for method chaining.
      */
     default Self tooltip(Variable text) {
         text.observing().on(Viewtify.UIThread).to(this::tooltip);
@@ -144,10 +151,11 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
     }
 
     /**
-     * Set the content to be displayed on popup.
-     * 
-     * @param builder Create the contents. This callback will be invoked every showing the popup.
-     * @return Chainable API.
+     * Sets the content to be displayed on an overlay popup using a {@link Supplier}.
+     *
+     * @param builder Create the contents. This callback will be invoked every time the overlay is
+     *            shown.
+     * @return The implementing class instance for method chaining.
      */
     default Self overlay(Supplier<UserInterfaceProvider<Node>> builder) {
         if (builder != null) {
