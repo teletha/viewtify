@@ -101,7 +101,7 @@ public interface FormStyles extends ViewtyStyle {
         $.descendant(Label, () -> {
             text.verticalAlign.baseline();
             margin.right(20, px).top(4, px);
-            display.minWidth(180, px).maxWidth(360, px).width.fill();
+            display.minWidth(200, px).maxWidth(360, px).width.fill();
         });
     };
 

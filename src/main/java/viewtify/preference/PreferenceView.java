@@ -17,14 +17,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.controlsfx.glyphfont.FontAwesome;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Labeled;
 import javafx.stage.FileChooser.ExtensionFilter;
+
+import org.controlsfx.glyphfont.FontAwesome;
+
 import kiss.I;
 import kiss.Variable;
 import psychopath.Directory;
@@ -131,7 +132,6 @@ public class PreferenceView extends View {
 
         Style root = () -> {
             padding.left(40, px).right(30, px).top(15, px);
-            display.maxWidth(550, px);
         };
 
         Style box = () -> {
@@ -139,7 +139,7 @@ public class PreferenceView extends View {
         };
 
         Style bar = () -> {
-            display.maxWidth(505, px);
+            display.maxWidth(525, px);
             text.align.right();
         };
 
