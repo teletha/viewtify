@@ -220,7 +220,7 @@ public class PreferenceView extends View {
      * @param views
      * @return
      */
-    public final PreferenceView add(Class<? extends View>... views) {
+    public final PreferenceView manage(Class<? extends View>... views) {
         for (Class<? extends View> view : views) {
             bases.add(I.make(view));
         }
@@ -233,8 +233,8 @@ public class PreferenceView extends View {
      * @param views
      * @return
      */
-    public final PreferenceView add(View... views) {
-        return add(List.of(views));
+    public final PreferenceView manage(View... views) {
+        return manage(List.of(views));
     }
 
     /**
@@ -243,7 +243,7 @@ public class PreferenceView extends View {
      * @param views
      * @return
      */
-    public final PreferenceView add(List<View> views) {
+    public final PreferenceView manage(List<View> views) {
         bases.addAll(views);
         return this;
     }
@@ -253,18 +253,8 @@ public class PreferenceView extends View {
      * 
      * @return
      */
-    public final PreferenceView enableToC() {
-        navi.show(true);
-        return this;
-    }
-
-    /**
-     * Disable the table of contents on side panel.
-     * 
-     * @return
-     */
-    public final PreferenceView disableToC() {
-        navi.show(false);
+    public final PreferenceView tableOfContents(boolean show) {
+        navi.show(show);
         return this;
     }
 
