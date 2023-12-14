@@ -17,15 +17,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.controlsfx.glyphfont.FontAwesome;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Labeled;
 import javafx.stage.FileChooser.ExtensionFilter;
-
-import org.controlsfx.glyphfont.FontAwesome;
-
 import kiss.I;
 import kiss.Variable;
 import psychopath.Directory;
@@ -126,7 +125,7 @@ public class PreferenceView extends View {
         };
 
         Style search = () -> {
-            display.maxWidth(220, px);
+            display.minWidth(180, px);
             margin.top(15, px).left(15, px).bottom(15, px);
         };
 

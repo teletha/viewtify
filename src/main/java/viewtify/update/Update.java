@@ -12,11 +12,6 @@ package viewtify.update;
 import java.util.List;
 
 import javafx.geometry.Rectangle2D;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-
-import kiss.I;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -117,16 +112,8 @@ public class Update {
                     Rectangle2D bounds = ScreenSelector.Application.select();
                     AppearanceSetting appearance = Preferences.of(AppearanceSetting.class);
 
-                    String icon = I.signal(Window.getWindows())
-                            .as(Stage.class)
-                            .flatIterable(Stage::getIcons)
-                            .map(Image::getUrl)
-                            .first()
-                            .to()
-                            .or("");
-
                     origin.updater()
-                            .env("Icon", icon)
+                            .env("Icon", Viewtify.application().icon())
                             .env("Theme", appearance.theme.v.name())
                             .env("ThemeType", appearance.themeType.v.name())
                             .env("Font", appearance.font.v)

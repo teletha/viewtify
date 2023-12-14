@@ -19,7 +19,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-
 import viewtify.ui.anime.Anime;
 import viewtify.ui.anime.Interpolators;
 import viewtify.ui.anime.SwapAnime;
@@ -169,7 +168,7 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
         private SmoothScrollPane() {
             VBox inner = new VBox();
             inner.setOnScroll(e -> {
-                transition = new SmoothTransition(transition, e.getDeltaY(), getContent().getBoundsInLocal().getWidth(), getVvalue());
+                transition = new SmoothTransition(transition, e.getDeltaY(), getContent().getBoundsInLocal().getHeight() / 3, getVvalue());
                 transition.play();
             });
 
@@ -203,7 +202,7 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
                 // then increment the modifer. This will boost the distance, thus looking faster
                 // and seemingly consecutive.
                 if (old != null && old.getStatus() == Status.RUNNING && 0 < deltaY * old.deltaY) {
-                    modifier = old.modifier + 1;
+                    modifier = old.modifier + 1.3;
                 } else {
                     modifier = 1;
                 }
