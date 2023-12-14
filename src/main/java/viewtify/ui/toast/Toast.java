@@ -35,7 +35,11 @@ import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.util.TextNotation;
 
-public class Toast extends Preferences {
+/**
+ * Represents a Toast notification utility class that provides methods to show various types of
+ * notifications. Notifications are displayed as transient messages to the user.
+ */
+public class Toast {
 
     /** The base transparent window. */
     private static final LinkedList<Notification> notifications = new LinkedList();
@@ -54,7 +58,11 @@ public class Toast extends Preferences {
     }
 
     /**
-     * Show the specified node.
+     * Shows a Toast notification with the specified message and optional actions.
+     *
+     * @param message The message to be displayed in the notification.
+     * @param actions Optional actions (WiseRunnable) to be performed when the notification is
+     *            interacted with.
      */
     public static void show(String message, WiseRunnable... actions) {
         if (setting.enable.is(true)) {
@@ -68,7 +76,11 @@ public class Toast extends Preferences {
     }
 
     /**
-     * Show the specified node.
+     * Shows a Toast notification with the specified dynamic message variable and optional actions.
+     *
+     * @param message The dynamic message variable to be displayed in the notification.
+     * @param actions Optional actions (WiseRunnable) to be performed when the notification is
+     *            interacted with.
      */
     public static void show(Variable<String> message, WiseRunnable... actions) {
         if (setting.enable.is(true)) {
@@ -82,18 +94,18 @@ public class Toast extends Preferences {
     }
 
     /**
-     * Show the specified node.
-     * 
-     * @param node
+     * Shows a Toast notification with the specified Node.
+     *
+     * @param node The Node to be displayed in the notification.
      */
     public static void show(Node node) {
         show(() -> node);
     }
 
     /**
-     * Show the specified node.
-     * 
-     * @param node
+     * Shows a Toast notification with the specified Node supplier.
+     *
+     * @param node The Node supplier to provide the content for the notification.
      */
     public static void show(Supplier<Node> node) {
         if (setting.enable.is(true)) {
@@ -105,9 +117,9 @@ public class Toast extends Preferences {
     }
 
     /**
-     * Add notification.
-     * 
-     * @param notification
+     * Adds a new notification to the list of notifications. Handles maximum notification count.
+     *
+     * @param notification The Notification to be added.
      */
     private static void add(Notification notification) {
         notifications.add(notification);
@@ -121,9 +133,9 @@ public class Toast extends Preferences {
     }
 
     /**
-     * Remove notification.
-     * 
-     * @param notification
+     * Removes a notification from the list of notifications.
+     *
+     * @param notification The Notification to be removed.
      */
     private static void remove(Notification notification) {
         // model management
@@ -144,7 +156,7 @@ public class Toast extends Preferences {
     }
 
     /**
-     * Layout all notifications.
+     * Layouts all notifications on the screen according to the specified settings.
      */
     private static void layoutNotifications() {
         Viewtify.inUI(() -> {
@@ -181,7 +193,7 @@ public class Toast extends Preferences {
     }
 
     /**
-     * 
+     * Represents a single notification with its associated builder, UI, and disposer.
      */
     private static class Notification implements WritableDoubleValue {
 
@@ -213,9 +225,9 @@ public class Toast extends Preferences {
         }
 
         /**
-         * Generate UI lazy.
-         * 
-         * @return
+         * Generates UI lazily.
+         *
+         * @return The Popup UI for the notification.
          */
         private synchronized Popup ui() {
             if (ui == null) {
@@ -241,7 +253,8 @@ public class Toast extends Preferences {
     }
 
     /**
-     * Notification style.
+     * Represents the styles for Toast notifications, including padding, background, and border
+     * styles.
      */
     private static interface styles extends StyleDSL {
 
