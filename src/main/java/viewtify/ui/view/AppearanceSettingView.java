@@ -14,12 +14,12 @@ import java.util.stream.IntStream;
 
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
-
 import kiss.Variable;
 import viewtify.Theme;
 import viewtify.ThemeType;
 import viewtify.preference.Preferences;
 import viewtify.style.FormStyles;
+import viewtify.ui.UICheckSwitch;
 import viewtify.ui.UIComboBox;
 import viewtify.ui.UISpinner;
 import viewtify.ui.View;
@@ -42,6 +42,9 @@ public class AppearanceSettingView extends View {
     /** The size selector. */
     public UISpinner<Integer> size;
 
+    /** The scroll behavior. */
+    public UICheckSwitch smoothScroll;
+
     /**
      * {@inheritDoc}
      */
@@ -59,6 +62,7 @@ public class AppearanceSettingView extends View {
                     form(en("Theme Kind"), themeType);
                     form(en("Language"), lang);
                     form(en("Font"), family, size.style(FormStyles.InputMin, FormStyles.Sequencial));
+                    form(en("Enable smooth scroll"), FormStyles.InputMin, smoothScroll);
                 });
             }
         };
@@ -79,6 +83,7 @@ public class AppearanceSettingView extends View {
 
         family.items(Font.getFamilies()).sync(setting.font).style(FormStyles.Input);
         size.items(IntStream.range(8, 18)).format(x -> x + "px").sync(setting.fontSize);
+        smoothScroll.sync(setting.smoothScroll);
     }
 
     /**

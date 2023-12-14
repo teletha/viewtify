@@ -20,19 +20,26 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.util.Duration;
+import viewtify.preference.Preferences;
 import viewtify.ui.anime.Anime;
 import viewtify.ui.anime.Interpolators;
 import viewtify.ui.anime.SwapAnime;
+import viewtify.ui.view.AppearanceSetting;
 
 public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
+
+    private static final AppearanceSetting setting = Preferences.of(AppearanceSetting.class);
 
     final UIVBox box;
 
     private SmoothTransition transition;
 
     private EventHandler<ScrollEvent> smooth = e -> {
-        transition = new SmoothTransition(transition, e.getDeltaY(), ui.getContent().getBoundsInLocal().getHeight() / 3, ui.getVvalue());
-        transition.play();
+        if (setting.smoothScroll.is(true)) {
+            transition = new SmoothTransition(transition, e.getDeltaY(), ui.getContent().getBoundsInLocal().getHeight() / 3, ui
+                    .getVvalue());
+            transition.play();
+        }
     };
 
     /**
