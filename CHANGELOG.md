@@ -1,5 +1,41 @@
 # Changelog
 
+## [2.17.0](https://github.com/teletha/viewtify/compare/v2.16.1...v2.17.0) (2023-12-14)
+
+
+### Features
+
+* add UISlider#step ([9c114c6](https://github.com/teletha/viewtify/commit/9c114c60671b6a65f3d5775df8df5eb9077bd34a))
+* add UpdateSetting ([699a6c0](https://github.com/teletha/viewtify/commit/699a6c08a48dd7766824c45179f077cca003809b))
+* Add UpdateSettingView. ([87ede51](https://github.com/teletha/viewtify/commit/87ede51891c5f70b4488e5f012bdedb3abf4baa9))
+* Add Viewtify#replaceSplashScreen. ([0ca366e](https://github.com/teletha/viewtify/commit/0ca366e7e6435391a65dfb14999d0981fb980d90))
+* Additional fonts. ([699ed4f](https://github.com/teletha/viewtify/commit/699ed4fb52005f016d9eae672ccaa09465589e2a))
+* enahnce updater ([5ddb08e](https://github.com/teletha/viewtify/commit/5ddb08e5b7659f17c6c0046ebbf4005cc51f1ef1))
+* FileChooser and DirectoryChooser accept the translatable title. ([377f1dd](https://github.com/teletha/viewtify/commit/377f1dd2f62f2fc92bb47e00d0433e5fc6234194))
+* preference is importable and exportable ([d9021ae](https://github.com/teletha/viewtify/commit/d9021ae0a0c92285cc9a856d7c6b4ca7b7596fe4))
+* provide update notification ([06579d7](https://github.com/teletha/viewtify/commit/06579d7143e3d9c74c2728d304c9ffe5e61abce2))
+* remove Viewtify#icon ([24d0e9b](https://github.com/teletha/viewtify/commit/24d0e9b5f00d15196ad9a8ca7c142d7839550007))
+* Smooth scroll is configurable. ([5544324](https://github.com/teletha/viewtify/commit/5544324741f481e50c7b73323493579cf11f1173))
+* support smart preference import/export ([dc4085e](https://github.com/teletha/viewtify/commit/dc4085e6f1e9a31b2f04dcdde6878ca3562fb4a8))
+* UserActionHelper supports multiple action types. ([ae63545](https://github.com/teletha/viewtify/commit/ae63545456ddc66417cffea9bf088d9afb476d20))
+
+
+### Bug Fixes
+
+* add various version info to UpdateSettingView ([7dacfc0](https://github.com/teletha/viewtify/commit/7dacfc0c9479c7f18960277af2f0551364ea3c5c))
+* refactoring smooth scroll ([ec95121](https://github.com/teletha/viewtify/commit/ec9512154da51a4945caa7794c50222a7990d649))
+* remove animefx ([41953da](https://github.com/teletha/viewtify/commit/41953da9cc0c0fb89e094923ee4fe9b92ba68548))
+* remove bad signature method ([c5f0ba7](https://github.com/teletha/viewtify/commit/c5f0ba74d1d24ce8965a48a9daf013e3fdb4e269))
+* remove extra fonts ([f0a4b87](https://github.com/teletha/viewtify/commit/f0a4b8731366c0a947c7f74464865f590532fa59))
+* remove Viewtify#size ([ea0ea70](https://github.com/teletha/viewtify/commit/ea0ea70ffbc37db8fd05ed3ba9d2bdca9249256f))
+* styles ([fa118ae](https://github.com/teletha/viewtify/commit/fa118aeef9c399257818e0a1db2ee3f572b13574))
+* typo ([5be2534](https://github.com/teletha/viewtify/commit/5be25346dc504b427cb6bed4d518b75a82296e2b))
+* ui text ([8b4c950](https://github.com/teletha/viewtify/commit/8b4c95096393feb04ce2d9e4071767840d461dd2))
+* UISlide#step accepts the latest step only ([8722321](https://github.com/teletha/viewtify/commit/8722321348c163cc74c369896efa3f109e627cf6))
+* update smooth scroll ([b3d583b](https://github.com/teletha/viewtify/commit/b3d583b868fc93c3514df62a1267c73cce843552))
+* update toast setting view ([7b434f1](https://github.com/teletha/viewtify/commit/7b434f14bb552013fa4291320072f2408f4f9fe7))
+* updater is broken ([f66045a](https://github.com/teletha/viewtify/commit/f66045a53165485261fa7bb9206f44ab0741196f))
+
 ## [2.16.1](https://github.com/teletha/viewtify/compare/v2.16.0...v2.16.1) (2023-12-04)
 
 
