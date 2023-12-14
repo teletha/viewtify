@@ -20,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -163,7 +164,7 @@ public class Toast extends Preferences {
                 if (popup.isShowing()) {
                     if (!isTopSide) y -= popup.getHeight() + gap;
                     popup.setX(x);
-                    Anime.define().effect(notify.y, y, setting.animation.v).run();
+                    Anime.define().effect(notify, y, setting.animation.v).run();
                 } else {
                     popup.setOpacity(0);
                     popup.show(Window.getWindows().get(0));
@@ -182,38 +183,34 @@ public class Toast extends Preferences {
     /**
      * 
      */
-    private static class Notification {
+    private static class Notification implements WritableDoubleValue {
 
         private Supplier<Node> builder;
 
         /** The base transparent window. */
         private Popup ui;
 
-        /** Expose location y property. */
-        private final WritableDoubleValue y = new WritableDoubleValue() {
-
-            @Override
-            public Number getValue() {
-                return get();
-            }
-
-            @Override
-            public double get() {
-                return ui().getY();
-            }
-
-            @Override
-            public void setValue(Number value) {
-                set(value.doubleValue());
-            }
-
-            @Override
-            public void set(double value) {
-                ui().setY(value);
-            }
-        };
-
         private Disposable disposer;
+
+        @Override
+        public Number getValue() {
+            return get();
+        }
+
+        @Override
+        public double get() {
+            return ui().getY();
+        }
+
+        @Override
+        public void setValue(Number value) {
+            set(value.doubleValue());
+        }
+
+        @Override
+        public void set(double value) {
+            ui().setY(value);
+        }
 
         /**
          * Generate UI lazy.
