@@ -11,13 +11,14 @@ package viewtify.ui;
 
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
+import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import viewtify.ui.anime.Anime;
 import viewtify.ui.anime.Interpolators;
@@ -27,16 +28,28 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
 
     final UIVBox box;
 
+    private SmoothTransition transition;
+
+    private EventHandler<ScrollEvent> smooth = e -> {
+        transition = new SmoothTransition(transition, e.getDeltaY(), ui.getContent().getBoundsInLocal().getHeight() / 3, ui.getVvalue());
+        transition.play();
+    };
+
     /**
      * @param view
      */
     public UIScrollPane(View view) {
-        super(new SmoothScrollPane(), view);
+        super(new ScrollPane(), view);
 
         box = new UIVBox(view);
 
         ui.setContent(box.ui());
         HBox.setHgrow(ui, Priority.ALWAYS);
+
+        ui.contentProperty().addListener((bean, oldValue, newValue) -> {
+            if (oldValue != null) oldValue.removeEventHandler(ScrollEvent.SCROLL, smooth);
+            if (newValue != null) newValue.addEventHandler(ScrollEvent.SCROLL, smooth);
+        });
     }
 
     /**
@@ -159,80 +172,55 @@ public class UIScrollPane extends UserInterface<UIScrollPane, ScrollPane> {
     }
 
     /**
-     * {@link ScrollPane} with kinda smooth transition scrolling.
+     * Transition with varying speed based on previously existing transitions.
      */
-    private static class SmoothScrollPane extends ScrollPane {
+    private class SmoothTransition extends Transition {
 
-        private SmoothTransition transition;
+        private final double modifier;
 
-        private SmoothScrollPane() {
-            VBox inner = new VBox();
-            inner.setOnScroll(e -> {
-                transition = new SmoothTransition(transition, e.getDeltaY(), getContent().getBoundsInLocal().getHeight() / 3, getVvalue());
-                transition.play();
-            });
+        private final double deltaY;
 
-            contentProperty().addListener((bean, oldValue, newValue) -> {
-                if (newValue != inner) {
-                    inner.getChildren().clear();
-                    inner.getChildren().add(newValue);
+        private final double width;
 
-                    setContent(inner);
-                }
-            });
+        private final double vvalue;
+
+        private SmoothTransition(SmoothTransition old, double deltaY, double width, double vvalue) {
+            setCycleDuration(Duration.millis(200));
+            setCycleCount(0);
+            // if the last transition was moving in the same direction, and is still playing
+            // then increment the modifer. This will boost the distance, thus looking faster
+            // and seemingly consecutive.
+            if (old != null && old.getStatus() == Status.RUNNING && 0 < deltaY * old.deltaY) {
+                modifier = Math.min(old.modifier * 1.4, 8);
+            } else {
+                modifier = 1.5;
+            }
+            this.deltaY = deltaY;
+            this.width = width;
+            this.vvalue = vvalue;
         }
 
         /**
-         * Transition with varying speed based on previously existing transitions.
+         * {@inheritDoc}
          */
-        private class SmoothTransition extends Transition {
-
-            private final double modifier;
-
-            private final double deltaY;
-
-            private final double width;
-
-            private final double vvalue;
-
-            private SmoothTransition(SmoothTransition old, double deltaY, double width, double vvalue) {
-                setCycleDuration(Duration.millis(200));
-                setCycleCount(0);
-                // if the last transition was moving in the same direction, and is still playing
-                // then increment the modifer. This will boost the distance, thus looking faster
-                // and seemingly consecutive.
-                if (old != null && old.getStatus() == Status.RUNNING && 0 < deltaY * old.deltaY) {
-                    modifier = old.modifier + 1.3;
-                } else {
-                    modifier = 1;
-                }
-                this.deltaY = deltaY;
-                this.width = width;
-                this.vvalue = vvalue;
+        @Override
+        public void play() {
+            super.play();
+            // Even with a linear interpolation, startup is visibly slower than the middle.
+            // So skip a small bit of the animation to keep up with the speed of prior
+            // animation. The value of 10 works and isn't noticeable unless you really pay
+            // close attention. This works best on linear but also is decent for others.
+            if (modifier > 1) {
+                jumpTo(getCycleDuration().divide(10));
             }
+        }
 
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void play() {
-                super.play();
-                // Even with a linear interpolation, startup is visibly slower than the middle.
-                // So skip a small bit of the animation to keep up with the speed of prior
-                // animation. The value of 10 works and isn't noticeable unless you really pay
-                // close attention. This works best on linear but also is decent for others.
-                if (modifier > 1) {
-                    jumpTo(getCycleDuration().divide(10));
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected void interpolate(double frac) {
-                setVvalue(Interpolator.LINEAR.interpolate(vvalue, vvalue + -deltaY * modifier / width, frac));
-            }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void interpolate(double frac) {
+            ui.setVvalue(Interpolator.LINEAR.interpolate(vvalue, vvalue + -deltaY * modifier / width, frac));
         }
     }
 }
