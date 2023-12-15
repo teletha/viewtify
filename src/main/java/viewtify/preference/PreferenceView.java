@@ -139,7 +139,7 @@ public class PreferenceView extends View {
         };
 
         Style bar = () -> {
-            display.maxWidth(525, px);
+            display.maxWidth(550, px);
             text.align.right();
         };
 
