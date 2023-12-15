@@ -43,6 +43,57 @@ import kiss.WiseRunnable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 
+/**
+ * The {@code Anime} class provides a fluent API for defining and running animations in JavaFX.
+ * Animations can be applied to various properties of UI elements, such as opacity, background
+ * color, and location.
+ * <p>
+ * Usage example:
+ * </p>
+ * <pre>{@code
+ * Anime.define()
+ *     .duration(0.5) // Set default animation duration
+ *     .interpolator(Interpolator.EASE_OUT) // Set default interpolation
+ *     .opacity(nodeProvider, 0.0) // Animate opacity of a node
+ *     .backgroundColor(regionProvider, Color.RED) // Animate background color of a region
+ *     .moveX(nodeProvider, 100) // Animate horizontal movement of a node
+ *     .then(() -> System.out.println("Animation completed"))
+ *     .run();
+ * }</pre>
+ * <p>
+ * The class supports chaining of animation effects and provides shorthands for common animation
+ * scenarios.
+ * </p>
+ * <p>
+ * Key concepts:
+ * </p>
+ * <ul>
+ * <li>{@code WritableValue}: Represents a writable property that can be animated.</li>
+ * <li>{@code Interpolator}: Defines the rate of change of an animation over time.</li>
+ * <li>{@code Duration}: Represents the length of an animation.</li>
+ * </ul>
+ * <p>
+ * Animations are defined using a fluent API, and effects are applied to properties using the
+ * {@code effect} method. The {@code run} method is then called to execute the animation.
+ * </p>
+ * <p>
+ * Animations can also be configured to run infinitely with the {@code runInfinitely} method.
+ * </p>
+ * <p>
+ * The class also provides a set of predefined effects for common animation scenarios, such as
+ * changing opacity, background color, and location of UI elements.
+ * </p>
+ * <p>
+ * Additionally, post-action effects can be registered using the {@code effect} method, and
+ * subsequent actions can be defined using the {@code then} method.
+ * </p>
+ * <p>
+ * The {@code Anime} class is designed to be used in conjunction with JavaFX UI elements and
+ * supports smooth and flexible animation creation and execution.
+ * </p>
+ *
+ * @see javafx.animation.Interpolator
+ */
 public class Anime {
 
     /** The standard effect time. */
@@ -222,6 +273,11 @@ public class Anime {
 
     /**
      * Shorthand to declare animation effect.
+     *
+     * @param value The {@code WritableValue} to be animated.
+     * @param num The target value for the animation.
+     * @return This {@code Anime} instance for method chaining.
+     * @see javafx.beans.value.WritableValue
      */
     public final <V> Anime effect(WritableValue<V> value, V num) {
         return effect(value, num, (Duration) null);
@@ -236,6 +292,11 @@ public class Anime {
 
     /**
      * Shorthand to declare animation effect.
+     *
+     * @param value The {@code WritableIntegerValue} to be animated.
+     * @param num The target value for the animation.
+     * @return This {@code Anime} instance for method chaining.
+     * @see javafx.beans.value.WritableIntegerValue
      */
     public final Anime effect(WritableIntegerValue value, IntUnaryOperator num) {
         return effect(value, num.applyAsInt(value.get()));
@@ -243,6 +304,11 @@ public class Anime {
 
     /**
      * Shorthand to declare animation effect.
+     *
+     * @param value The {@code WritableLongValue} to be animated.
+     * @param num The target value for the animation.
+     * @return This {@code Anime} instance for method chaining.
+     * @see javafx.beans.value.WritableLongValue
      */
     public final Anime effect(WritableLongValue value, LongUnaryOperator num) {
         return effect(value, num.applyAsLong(value.get()));
@@ -250,6 +316,11 @@ public class Anime {
 
     /**
      * Shorthand to declare animation effect.
+     *
+     * @param value The {@code WritableDoubleValue} to be animated.
+     * @param num The target value for the animation.
+     * @return This {@code Anime} instance for method chaining.
+     * @see javafx.beans.value.WritableDoubleValue
      */
     public final Anime effect(WritableDoubleValue value, DoubleUnaryOperator num) {
         return effect(value, num.applyAsDouble(value.get()));
@@ -257,6 +328,13 @@ public class Anime {
 
     /**
      * Shorthand to declare animation effect.
+     *
+     * @param value The {@code WritableValue} to be animated.
+     * @param num The target value for the animation.
+     * @param interpolator The {@code Interpolator} for the animation.
+     * @return This {@code Anime} instance for method chaining.
+     * @see javafx.beans.value.WritableValue
+     * @see javafx.animation.Interpolator
      */
     public final <V> Anime effect(WritableValue<V> value, V num, Interpolator interpolator) {
         return effect(value, num, null, interpolator);
@@ -295,10 +373,10 @@ public class Anime {
     }
 
     /**
-     * Register post action.
-     * 
-     * @param effect
-     * @return
+     * Shorthand to declare animation effect.
+     *
+     * @param effect The post-action effect to be registered.
+     * @return This {@code Anime} instance for method chaining.
      */
     public final Anime effect(WiseRunnable effect) {
         if (effect != null) {
@@ -309,8 +387,9 @@ public class Anime {
 
     /**
      * Define the next action.
-     * 
-     * @return
+     *
+     * @param finisher The actions to be performed after the current animation.
+     * @return This {@code Anime} instance for method chaining.
      */
     public final Anime then(WiseRunnable... finisher) {
         Timeline before = current;
@@ -329,6 +408,9 @@ public class Anime {
 
     /**
      * Play animation.
+     *
+     * @param finisher The actions to be performed after the animation completes.
+     * @return A {@code Disposable} instance that can be used to stop the animation.
      */
     public final Disposable run(WiseRunnable... finisher) {
         current.setOnFinished(e -> {
@@ -350,6 +432,8 @@ public class Anime {
 
     /**
      * Play animation with loop.
+     *
+     * @return A {@code Disposable} instance that can be used to stop the animation loop.
      */
     public Disposable runInfinitely() {
         current.setAutoReverse(true);
