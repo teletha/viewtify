@@ -84,8 +84,11 @@
   Tab
 ===========================================================================*/
 .tab-pane:top *.tab-header-area {
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0em 0em 0.0em 0em;
+    -fx-padding: 0 30 0 0;
+}
+
+.control-buttons-tab {
+    -fx-padding: 0 18px 0 18px;
 }
 
 .tab-pane {
