@@ -37,7 +37,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-
 import kiss.Disposable;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
@@ -162,6 +161,27 @@ public class Anime {
      */
     public final Anime duration(Duration duration) {
         this.defaultDuration = duration;
+        return this;
+    }
+
+    /**
+     * Set default delay.
+     * 
+     * @param delay
+     * @return Chainable API.
+     */
+    public final Anime delay(double delay) {
+        return delay(Duration.seconds(delay));
+    }
+
+    /**
+     * Set default delay.
+     * 
+     * @param delay
+     * @return Chainable API.
+     */
+    public Anime delay(Duration delay) {
+        current.setDelay(delay);
         return this;
     }
 
