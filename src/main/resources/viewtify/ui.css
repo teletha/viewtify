@@ -83,14 +83,6 @@
 /* ==========================================================================
   Tab
 ===========================================================================*/
-.tab-pane:top *.tab-header-area {
-    -fx-padding: 0 30 0 0;
-}
-
-.control-buttons-tab {
-    -fx-padding: 0 18px 0 18px;
-}
-
 .tab-pane {
   	-fx-tab-min-width: 8.68em;
   	-fx-tab-max-width: 8.68em;
@@ -99,6 +91,10 @@
 .tab-pane.stop-anime {
 		-fx-open-tab-animation: NONE;
 		-fx-close-tab-animation: NONE
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0;
 }
 
 .tab {
@@ -126,9 +122,7 @@
 
 .tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button {
     -fx-background-color: transparent;
-    -fx-padding: 10px 3px 10px 0;
-    -fx-pref-width: 20px;
-    -fx-pref-height: 32px;
+    -fx-pref-height: 30px;
 }
 
 /* ==========================================================================

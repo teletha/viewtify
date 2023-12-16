@@ -11,20 +11,31 @@ package viewtify.ui;
 
 import java.util.function.Consumer;
 
+import javafx.application.Platform;
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
-import javafx.geometry.Side;
+import javafx.geometry.Pos;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TabPane.TabDragPolicy;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.INamedCharacter;
 
 import kiss.Disposable;
+import kiss.WiseRunnable;
+import stylist.Style;
+import stylist.StyleDSL;
 import viewtify.property.SmartProperty;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.SelectableHelper;
+import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
+import viewtify.ui.helper.UserActionHelper;
 
 public class UITabPane extends UserInterface<UITabPane, TabPane>
         implements ContextMenuHelper<UITabPane>, SelectableHelper<UITabPane, UITab>, CollectableHelper<UITabPane, UITab> {
@@ -144,33 +155,77 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
         return this;
     }
 
+    private HBox menus;
+
     /**
      * 
      */
-    public final UITabPane verticalize(int width, int height) {
-        ui.setSide(Side.LEFT);
-        // ui.setRotateGraphic(true);
-        //
-        // // ui.setTabMinHeight(width);
-        // // ui.setTabMaxHeight(width);
-        // // ui.setTabMinWidth(height);
-        // // ui.setTabMaxWidth(height);
-        // ui.getTabs().addListener((ListChangeListener<Tab>) c -> {
-        // if (c.next()) {
-        // for (Tab tab : c.getAddedSubList()) {
-        // tab.setClosable(false);
-        // tab.setGraphic(new Label(""));
-        //
-        // Parent tabContainer = tab.getGraphic().getParent().getParent();
-        // tabContainer.setRotate(90);
-        // // By default the display will originate from the center.
-        // // Applying a negative Y transformation will move it left.
-        // // Should be the 'TabMinHeight/2'
-        // tabContainer.setTranslateY(-100);
-        // }
-        // }
-        // });
+    public final UITabPane addMenu(INamedCharacter icon, WiseRunnable action) {
+        if (icon != null && action != null) {
+            if (menus == null) {
+                menus = new HBox();
 
+                StackPane back = (StackPane) ui.lookup(".tab-header-background");
+                back.setStyle("-fx-background-color: green;");
+
+                StackPane region = (StackPane) ui.lookup(".headers-region");
+                region.setStyle("-fx-background-color: blue;");
+
+                StackPane control = (StackPane) ui.lookup(".control-buttons-tab");
+                control.setStyle("-fx-background-color: yellow;");
+                control.setAlignment(Pos.CENTER_LEFT);
+
+                StackPane headerArea = (StackPane) ui.lookup(".tab-header-area");
+                headerArea.setStyle("-fx-background-color: red;");
+                headerArea.getChildren().add(menus);
+                headerArea.widthProperty().addListener((x, o, n) -> {
+                    menus.setLayoutX(n.doubleValue() - 30 * menus.getChildren().size());
+
+                    control.setPrefWidth(30 * menus.getChildren().size() + 30);
+
+                    double width = n.doubleValue() - 30 * menus.getChildren().size();
+                    width = 500;
+
+                    back.setMaxWidth(width);
+                    back.setPrefWidth(width);
+                    back.setMinWidth(width);
+
+                    // region.setMaxWidth(width);
+                    // region.setPrefWidth(width);
+                    // region.setMinWidth(width);
+
+                    headerArea.setMaxWidth(width);
+                    headerArea.setPrefWidth(width);
+                    headerArea.setMinWidth(width);
+
+                    System.out.println(back.getWidth() + "  " + region.getWidth() + "   " + headerArea.getWidth() + "       " + width);
+                });
+
+                ui.getStyleClass().add("additional-menu");
+            }
+
+            Glyph glyph = new Glyph("FontAwesome", icon);
+            StyleHelper.of(glyph).style(style.icon);
+            UserActionHelper.of(glyph).when(User.LeftClick, action);
+
+            menus.getChildren().add(glyph);
+
+            Platform.runLater(() -> {
+                System.out.println(menus.getBoundsInParent());
+            });
+        }
         return this;
+    }
+
+    private interface style extends StyleDSL {
+        Style icon = () -> {
+            display.minHeight(30, px).minWidth(30, px);
+            cursor.pointer();
+            text.align.center().verticalAlign.middle();
+
+            $.hover(() -> {
+                font.color("-fx-focus-color");
+            });
+        };
     }
 }

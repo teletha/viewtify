@@ -45,11 +45,16 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import org.controlsfx.glyphfont.INamedCharacter;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Signaling;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.WiseRunnable;
+import kiss.Ⅱ;
 import viewtify.Viewtify;
 import viewtify.ui.UIPane;
 import viewtify.ui.UITab;
@@ -242,6 +247,18 @@ public final class DockSystem {
         Viewtify.manage(area.name, scene, false);
 
         stage.show();
+    }
+
+    /** The registered menu builders. */
+    static final List<Ⅱ<INamedCharacter, WiseRunnable>> menuBuilders = new ArrayList();
+
+    /**
+     * Add menu on docking tab area.
+     */
+    public static void registerMenu(INamedCharacter icon, WiseRunnable action) {
+        if (icon != null && action != null) {
+            menuBuilders.add(I.pair(icon, action));
+        }
     }
 
     /**
