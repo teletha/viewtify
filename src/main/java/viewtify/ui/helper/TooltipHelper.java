@@ -12,16 +12,17 @@ package viewtify.ui.helper;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
-
-import org.controlsfx.control.PopOver;
-
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
@@ -104,25 +105,79 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param builder Create the contents. This callback will be invoked every showing the popup.
      * @return Chainable API.
      */
-    default Self popup(Supplier<UserInterfaceProvider<Node>> builder) {
+    default Self popup(Supplier<UserInterfaceProvider<? extends Node>> builder) {
+        return popup(null, builder);
+    }
+
+    /**
+     * Set the content to be displayed on popup.
+     * 
+     * @param builder Create the contents. This callback will be invoked every showing the popup.
+     * @return Chainable API.
+     */
+    default Self popup(ArrowLocation arrow, Supplier<UserInterfaceProvider<? extends Node>> builder) {
         if (builder != null) {
             UserActionHelper<?> helper = UserActionHelper.of(ui());
             helper.when(User.LeftClick, event -> {
                 PopOver p = ReferenceHolder.popover();
+                double x, y;
+                if (arrow == null) {
+                    x = event.getScreenX() + 25;
+                    y = event.getScreenY();
+                } else {
+                    p.setArrowSize(4);
+                    p.setArrowLocation(arrow);
+
+                    Bounds bound = ui().localToScreen(ui().getBoundsInLocal());
+                    x = arrowX(arrow, event, bound);
+                    y = arrowY(arrow, event, bound);
+                }
 
                 if (p.isShowing()) {
                     if (p.getUserData() == ui()) {
                         p.hide();
                         p.setUserData(null);
                     } else {
-                        p.setOnHidden(e -> show(builder, p, event.getScreenX() + 25, event.getScreenY()));
+                        p.setOnHidden(e -> show(builder, p, x, y));
                     }
                 } else {
-                    show(builder, p, event.getScreenX() + 25, event.getScreenY());
+                    show(builder, p, x, y);
                 }
             });
         }
         return (Self) this;
+    }
+
+    /**
+     * Build the arrow related configuration.
+     * 
+     * @param pop
+     * @param arrow
+     * @param bound
+     */
+    private double arrowX(ArrowLocation arrow, MouseEvent event, Bounds bound) {
+        return switch (arrow) {
+        case TOP_CENTER, BOTTOM_CENTER -> bound.getCenterX() - bound.getWidth() / 2;
+        case LEFT_CENTER -> bound.getMaxX();
+        case RIGHT_CENTER -> bound.getMinX();
+        default -> 0;
+        };
+    }
+
+    /**
+     * Build the arrow related configuration.
+     * 
+     * @param pop
+     * @param arrow
+     * @param bound
+     */
+    private double arrowY(ArrowLocation arrow, MouseEvent event, Bounds bound) {
+        return switch (arrow) {
+        case TOP_CENTER -> bound.getMaxY();
+        case BOTTOM_CENTER -> bound.getMinY();
+        case LEFT_CENTER, RIGHT_CENTER -> bound.getCenterY();
+        default -> 0;
+        };
     }
 
     /**
@@ -131,13 +186,12 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param builder Create the contents. This callback will be invoked every showing the popup.
      * @param popup A singleton popup widget.
      */
-    private void show(Supplier<UserInterfaceProvider<Node>> builder, PopOver popup, double x, double y) {
+    private void show(Supplier<UserInterfaceProvider<? extends Node>> builder, PopOver popup, double x, double y) {
         Platform.runLater(() -> {
             Node ui = builder.get().ui();
 
             popup.setContentNode(ui);
             popup.show(ui(), x, y);
-            System.out.println(ui.localToScreen(ui.getBoundsInLocal()));
             popup.setUserData(ui());
             popup.setOnHidden(e -> popup.setContentNode(null));
         });
@@ -157,7 +211,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      *            shown.
      * @return The implementing class instance for method chaining.
      */
-    default Self overlay(Supplier<UserInterfaceProvider<Node>> builder) {
+    default Self overlay(Supplier<UserInterfaceProvider<? extends Node>> builder) {
         if (builder != null) {
             PopOver p = ReferenceHolder.popover();
             W node = ui();
