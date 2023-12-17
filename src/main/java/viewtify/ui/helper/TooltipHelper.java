@@ -93,8 +93,18 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @return Chainable API.
      */
     default Self popup(UserInterfaceProvider<Node> contents) {
+        return popup(null, contents);
+    }
+
+    /**
+     * Set the content to be displayed on popup.
+     * 
+     * @param contents The contents to display in popup.
+     * @return Chainable API.
+     */
+    default Self popup(ArrowLocation arrow, UserInterfaceProvider<Node> contents) {
         if (contents != null) {
-            popup(() -> contents);
+            popup(arrow, () -> contents);
         }
         return (Self) this;
     }
