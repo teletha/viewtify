@@ -130,8 +130,20 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
                     p.setArrowLocation(arrow);
 
                     Bounds bound = ui().localToScreen(ui().getBoundsInLocal());
-                    x = arrowX(arrow, size, bound);
-                    y = arrowY(arrow, size, bound);
+                    x = switch (arrow) {
+                    case TOP_CENTER, BOTTOM_CENTER -> bound.getCenterX() - bound.getWidth() / 4;
+                    case TOP_LEFT, BOTTOM_LEFT -> bound.getCenterX();
+                    case TOP_RIGHT, BOTTOM_RIGHT -> bound.getMinX();
+                    case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> bound.getMinX() - size;
+                    case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> bound.getMaxX() + size;
+                    };
+                    y = switch (arrow) {
+                    case RIGHT_TOP, LEFT_TOP -> bound.getCenterY();
+                    case RIGHT_CENTER, LEFT_CENTER -> bound.getCenterY() - bound.getHeight() / 4;
+                    case RIGHT_BOTTOM, LEFT_BOTTOM -> bound.getMinY();
+                    case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> bound.getMaxY() + size;
+                    case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> bound.getMinY() - size;
+                    };
                 }
 
                 if (p.isShowing()) {
@@ -147,38 +159,6 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
             });
         }
         return (Self) this;
-    }
-
-    /**
-     * Build the arrow related configuration.
-     * 
-     * @param arrow
-     * @param bound
-     */
-    private double arrowX(ArrowLocation arrow, int arrowSize, Bounds bound) {
-        return switch (arrow) {
-        case TOP_CENTER, BOTTOM_CENTER -> bound.getCenterX() - bound.getWidth() / 4;
-        case TOP_LEFT, BOTTOM_LEFT -> bound.getCenterX();
-        case TOP_RIGHT, BOTTOM_RIGHT -> bound.getMinX();
-        case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> bound.getMinX() - arrowSize;
-        case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> bound.getMaxX() + arrowSize;
-        };
-    }
-
-    /**
-     * Build the arrow related configuration.
-     * 
-     * @param arrow
-     * @param bound
-     */
-    private double arrowY(ArrowLocation arrow, int arrowSize, Bounds bound) {
-        return switch (arrow) {
-        case RIGHT_TOP, LEFT_TOP -> bound.getCenterY();
-        case RIGHT_CENTER, LEFT_CENTER -> bound.getCenterY() - bound.getHeight() / 4;
-        case RIGHT_BOTTOM, LEFT_BOTTOM -> bound.getMinY();
-        case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> bound.getMaxY() + arrowSize;
-        case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> bound.getMinY() - arrowSize;
-        };
     }
 
     /**
