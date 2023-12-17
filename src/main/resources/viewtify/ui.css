@@ -105,6 +105,10 @@
     -fx-faint-focus-color: transparent;
 }
 
+.tab .tab-label {
+    -fx-graphic-text-gap: 0.5em;
+}
+
 .tab.multiline .tab-label {
     -fx-padding: 0 0 -5px 0;
     -fx-font-size: 11px;
@@ -118,9 +122,6 @@
 .tab-pane.hide-header .tab-header-area {
     visibility: hidden;
     -fx-padding: -20 0 0 0; /* Tab debris will be left behind right after the layout, so forcibly hide it. */
-}
-
-.tab-pane > .tab-header-area > .control-buttons-tab {
 }
 
 .tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button {

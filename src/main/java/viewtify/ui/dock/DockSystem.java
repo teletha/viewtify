@@ -181,7 +181,7 @@ public final class DockSystem {
         }
 
         UITab tab = new UITab(null);
-        tab.text(id);
+        tab.text(I.translate(id));
         tab.setId(id);
 
         DockRecommendedLocation o = option.apply(new DockRecommendedLocation());

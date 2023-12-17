@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.controlsfx.glyphfont.FontAwesome;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
@@ -103,6 +105,9 @@ class TabArea extends ViewArea<UITabPane> {
                 });
             }
         });
+
+        node.registerIcon(icon -> icon.text(FontAwesome.Glyph.PLUS).when(User.LeftClick, () -> {
+        }));
 
         if (DockSystem.menuBuilders.size() != 0) {
             for (WiseConsumer<UILabel> builder : DockSystem.menuBuilders) {
