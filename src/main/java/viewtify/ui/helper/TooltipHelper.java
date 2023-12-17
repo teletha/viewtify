@@ -12,17 +12,17 @@ package viewtify.ui.helper;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import org.controlsfx.control.PopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
+
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
@@ -125,12 +125,13 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
                     x = event.getScreenX() + 25;
                     y = event.getScreenY();
                 } else {
-                    p.setArrowSize(4);
+                    int size = 4;
+                    p.setArrowSize(size);
                     p.setArrowLocation(arrow);
 
                     Bounds bound = ui().localToScreen(ui().getBoundsInLocal());
-                    x = arrowX(arrow, event, bound);
-                    y = arrowY(arrow, event, bound);
+                    x = arrowX(arrow, size, bound);
+                    y = arrowY(arrow, size, bound);
                 }
 
                 if (p.isShowing()) {
@@ -151,32 +152,32 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
     /**
      * Build the arrow related configuration.
      * 
-     * @param pop
      * @param arrow
      * @param bound
      */
-    private double arrowX(ArrowLocation arrow, MouseEvent event, Bounds bound) {
+    private double arrowX(ArrowLocation arrow, int arrowSize, Bounds bound) {
         return switch (arrow) {
-        case TOP_CENTER, BOTTOM_CENTER -> bound.getCenterX() - bound.getWidth() / 2;
-        case LEFT_CENTER -> bound.getMaxX();
-        case RIGHT_CENTER -> bound.getMinX();
-        default -> 0;
+        case TOP_CENTER, BOTTOM_CENTER -> bound.getCenterX() - bound.getWidth() / 4;
+        case TOP_LEFT, BOTTOM_LEFT -> bound.getCenterX();
+        case TOP_RIGHT, BOTTOM_RIGHT -> bound.getMinX();
+        case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> bound.getMinX() - arrowSize;
+        case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> bound.getMaxX() + arrowSize;
         };
     }
 
     /**
      * Build the arrow related configuration.
      * 
-     * @param pop
      * @param arrow
      * @param bound
      */
-    private double arrowY(ArrowLocation arrow, MouseEvent event, Bounds bound) {
+    private double arrowY(ArrowLocation arrow, int arrowSize, Bounds bound) {
         return switch (arrow) {
-        case TOP_CENTER -> bound.getMaxY();
-        case BOTTOM_CENTER -> bound.getMinY();
-        case LEFT_CENTER, RIGHT_CENTER -> bound.getCenterY();
-        default -> 0;
+        case RIGHT_TOP, LEFT_TOP -> bound.getCenterY();
+        case RIGHT_CENTER, LEFT_CENTER -> bound.getCenterY() - bound.getHeight() / 4;
+        case RIGHT_BOTTOM, LEFT_BOTTOM -> bound.getMinY();
+        case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> bound.getMaxY() + arrowSize;
+        case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> bound.getMinY() - arrowSize;
         };
     }
 
