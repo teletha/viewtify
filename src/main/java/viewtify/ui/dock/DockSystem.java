@@ -45,17 +45,14 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import org.controlsfx.glyphfont.INamedCharacter;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Signaling;
 import kiss.Singleton;
 import kiss.Storable;
-import kiss.WiseRunnable;
-import kiss.Ⅱ;
+import kiss.WiseConsumer;
 import viewtify.Viewtify;
+import viewtify.ui.UILabel;
 import viewtify.ui.UIPane;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterfaceProvider;
@@ -250,14 +247,22 @@ public final class DockSystem {
     }
 
     /** The registered menu builders. */
-    static final List<Ⅱ<INamedCharacter, WiseRunnable>> menuBuilders = new ArrayList();
+    static final List<WiseConsumer<UILabel>> menuBuilders = new ArrayList();
 
     /**
-     * Add menu on docking tab area.
+     * Register the menu on tab header.
+     * 
+     * @param builder A menu builder.
      */
-    public static void registerMenu(INamedCharacter icon, WiseRunnable action) {
-        if (icon != null && action != null) {
-            menuBuilders.add(I.pair(icon, action));
+    public static void registerMenu(WiseConsumer<UILabel> builder) {
+        if (builder != null) {
+            menuBuilders.add(builder);
+
+            for (RootArea area : layout().roots) {
+                area.findAll(TabArea.class).to(x -> {
+                    x.node.registerIcon(builder);
+                });
+            }
         }
     }
 

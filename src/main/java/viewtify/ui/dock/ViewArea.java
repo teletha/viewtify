@@ -15,8 +15,9 @@ import java.util.Objects;
 
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
-
+import kiss.I;
 import kiss.Managed;
+import kiss.Signal;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterface;
 
@@ -77,6 +78,17 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
         for (int i = 0; i < children.size(); i++) {
             setChild(i, children.get(i));
         }
+    }
+
+    /**
+     * Collect all descendant {@link ViewArea} by type.
+     * 
+     * @param <A>
+     * @param type
+     * @return
+     */
+    protected final <A extends ViewArea> Signal<A> findAll(Class<A> type) {
+        return I.signal(children).recurseMap(x -> x.flatIterable(v -> v.children)).as(type);
     }
 
     /**

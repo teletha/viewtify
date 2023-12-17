@@ -21,14 +21,11 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
-
-import org.controlsfx.glyphfont.INamedCharacter;
-
 import kiss.I;
-import kiss.WiseRunnable;
-import kiss.Ⅱ;
+import kiss.WiseConsumer;
 import viewtify.Viewtify;
 import viewtify.keys.Key;
+import viewtify.ui.UILabel;
 import viewtify.ui.UITab;
 import viewtify.ui.UITabPane;
 import viewtify.ui.helper.User;
@@ -108,8 +105,8 @@ class TabArea extends ViewArea<UITabPane> {
         });
 
         if (DockSystem.menuBuilders.size() != 0) {
-            for (Ⅱ<INamedCharacter, WiseRunnable> builder : DockSystem.menuBuilders) {
-                node.addMenu(builder.ⅰ, builder.ⅱ);
+            for (WiseConsumer<UILabel> builder : DockSystem.menuBuilders) {
+                node.registerIcon(builder);
             }
         }
     }
