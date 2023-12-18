@@ -23,7 +23,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
+
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import viewtify.ui.UIContextMenu;
+import viewtify.ui.UserInterfaceProvider;
 
 public interface ContextMenuHelper<Self extends ContextMenuHelper> extends PropertyAccessHelper {
 
@@ -123,10 +127,49 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
      * 
      * @return
      */
-    default Self showContext(Node anchor) {
+    default Self showContext() {
+        if (this instanceof Node node) {
+            return showContextOn(node);
+        }
+
+        if (this instanceof UserInterfaceProvider provider && provider.ui() instanceof Node node) {
+            return showContextOn(node);
+        }
+
+        return (Self) this;
+    }
+
+    /**
+     * Show the associated context menu.
+     * 
+     * @return
+     */
+    default Self showContextOn(UserInterfaceProvider<? extends Node> anchor) {
+        return showContextOn(anchor.ui());
+    }
+
+    /**
+     * Show the associated context menu.
+     * 
+     * @return
+     */
+    default Self showContextOn(Node anchor) {
         ContextMenu context = property(Type.ContextMenu).getValue();
         if (context != null) {
-            context.show(anchor, Side.RIGHT, 0, 0);
+            context.show(anchor, Side.BOTTOM, -80, 5);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Show the associated context menu.
+     * 
+     * @return
+     */
+    default Self showContextOn(Node anchor, ArrowLocation location) {
+        ContextMenu context = property(Type.ContextMenu).getValue();
+        if (context != null) {
+            context.show(anchor, Side.BOTTOM, -75, 5);
         }
         return (Self) this;
     }
@@ -172,4 +215,5 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
         });
         return menu;
     }
+
 }

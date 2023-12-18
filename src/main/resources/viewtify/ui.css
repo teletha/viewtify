@@ -189,6 +189,25 @@
     -fx-fill: -fx-background !important;
 }
 
+
+/* ==========================================================================
+  Context Menu
+===========================================================================*/
+.context-menu {
+    -fx-background-radius: 3, 3;
+    -fx-padding: 5px;
+}
+
+.context-menu .menu, .context-menu .menu-item {
+    -fx-background-radius: 3, 3;
+    -fx-padding: 6px 12px;
+}
+
+.context-menu .label {
+		-fx-pref-width: 160px;
+}
+
+
 /* ==========================================================================
   ScrollBar
 ===========================================================================*/

@@ -135,7 +135,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
                     x = event.getScreenX() + 25;
                     y = event.getScreenY();
                 } else {
-                    int size = 4;
+                    int size = 6;
                     p.setArrowSize(size);
                     p.setArrowLocation(arrow);
 
@@ -144,15 +144,15 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
                     case TOP_CENTER, BOTTOM_CENTER -> bound.getCenterX() - bound.getWidth() / 4;
                     case TOP_LEFT, BOTTOM_LEFT -> bound.getCenterX();
                     case TOP_RIGHT, BOTTOM_RIGHT -> bound.getMinX();
-                    case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> bound.getMinX() - size;
-                    case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> bound.getMaxX() + size;
+                    case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> bound.getMinX();
+                    case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> bound.getMaxX();
                     };
                     y = switch (arrow) {
                     case RIGHT_TOP, LEFT_TOP -> bound.getCenterY();
                     case RIGHT_CENTER, LEFT_CENTER -> bound.getCenterY() - bound.getHeight() / 4;
                     case RIGHT_BOTTOM, LEFT_BOTTOM -> bound.getMinY();
-                    case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> bound.getMaxY() + size;
-                    case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> bound.getMinY() - size;
+                    case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> bound.getMaxY();
+                    case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> bound.getMinY();
                     };
                 }
 
