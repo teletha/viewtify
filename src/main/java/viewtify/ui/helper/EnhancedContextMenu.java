@@ -17,11 +17,17 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 
-final class EnhancedContextMenu extends ContextMenu implements EventHandler<ContextMenuEvent> {
+import viewtify.ui.anime.Anime;
+
+final class EnhancedContextMenu extends ContextMenu {
+
+    /** The reusable event consumer. */
+    static final EventHandler<ContextMenuEvent> NOOP = ContextMenuEvent::consume;
 
     /** The disable state. */
     boolean disable;
 
+    /** The last hidden time. */
     long lastHidden;
 
     /**
@@ -29,6 +35,7 @@ final class EnhancedContextMenu extends ContextMenu implements EventHandler<Cont
      */
     EnhancedContextMenu() {
         addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> lastHidden = System.currentTimeMillis());
+
         addEventHandler(WindowEvent.WINDOW_SHOWING, new EventHandler<>() {
 
             @Override
@@ -81,15 +88,13 @@ final class EnhancedContextMenu extends ContextMenu implements EventHandler<Cont
      * {@inheritDoc}
      */
     @Override
-    public void handle(ContextMenuEvent event) {
-        System.out.println("STOP");
-        event.consume();
-    }
+    protected void show() {
+        super.show();
 
-    /**
-     * @param anchor
-     */
-    void assign(Node anchor) {
-        anchor.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, this);
+        Node node = getStyleableNode();
+        node.setTranslateY(-10);
+        node.setOpacity(0);
+
+        Anime.define().opacity(node, 1).moveY(node, 0).run();
     }
 }

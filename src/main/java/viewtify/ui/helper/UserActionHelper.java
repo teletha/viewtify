@@ -259,7 +259,7 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
     }
 
     /**
-     * Create temporary {@link UserActionHelper}.
+     * Wrap by {@link UserActionHelper}.
      * 
      * @param eventTarget
      * @return

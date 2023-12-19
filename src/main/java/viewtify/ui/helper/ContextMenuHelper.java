@@ -22,6 +22,11 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+
+import kiss.Variable;
 import viewtify.ui.UIContextMenu;
 import viewtify.ui.UserInterfaceProvider;
 
@@ -177,7 +182,6 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
         EnhancedContextMenu context = context();
         if (context.canShow()) {
             context.show(anchor, location, dx, dy);
-            context.assign(anchor);
         }
         return (Self) this;
     }
@@ -233,29 +237,18 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
     }
 
     /**
-     * Change the control of showing and hiding the context menu from right-click to left-click.
+     * Change the control of showing and hiding the context menu from right-click to left-click and
+     * ignore native context requesting.
      * 
      * @return
      */
     default Self behaveLikeButton() {
-        if (this instanceof UserActionHelper action) {
-            behaveLikeButton(action);
-        } else if (this instanceof EventTarget target) {
-            behaveLikeButton(UserActionHelper.of(target));
-        } else if (this instanceof UserInterfaceProvider provider && provider.ui() instanceof EventTarget target) {
-            behaveLikeButton(UserActionHelper.of(target));
-        }
-        return (Self) this;
-    }
-
-    /**
-     * Change the control of showing and hiding the context menu from right-click to left-click.
-     * 
-     * @param action
-     */
-    private void behaveLikeButton(UserActionHelper<?> action) {
-        // action.when(User.ContextMenu.preliminarily(), ContextMenuEvent::consume);
-        action.when(User.LeftPress, ContextMenuHelper.this::toggleContext);
+        target(this).to(x -> x.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            if (e.getButton() == MouseButton.PRIMARY) {
+                toggleContext();
+            }
+        }));
+        return disableNativeContextRequest();
     }
 
     /**
@@ -278,5 +271,42 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
         context().disable = true;
 
         return (Self) this;
+    }
+
+    /**
+     * Enable the context menu.
+     * 
+     * @return
+     */
+    default Self enableNativeContextRequest() {
+        target(this).to(x -> x.removeEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, EnhancedContextMenu.NOOP));
+
+        return (Self) this;
+    }
+
+    /**
+     * Enable the context menu.
+     * 
+     * @return
+     */
+    default Self disableNativeContextRequest() {
+        target(this).to(x -> x.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, EnhancedContextMenu.NOOP));
+
+        return (Self) this;
+    }
+
+    /**
+     * Wrap by {@link UserActionHelper}.
+     * 
+     * @param o
+     * @return
+     */
+    private Variable<EventTarget> target(Object o) {
+        if (o instanceof EventTarget target) {
+            return Variable.of(target);
+        } else if (o instanceof UserInterfaceProvider provider && provider.ui() instanceof EventTarget target) {
+            return Variable.of(target);
+        }
+        return Variable.empty();
     }
 }

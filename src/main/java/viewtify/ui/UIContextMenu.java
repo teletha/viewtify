@@ -100,6 +100,9 @@ public class UIContextMenu {
     public void menu(Object text, Consumer<UIContextMenu> sub) {
         Menu menu = assignID(new Menu(String.valueOf(text)));
         menu.getProperties().put(id, null);
+        menu.setOnShowing(e -> {
+            System.out.println("SHOW " + e);
+        });
         menuProvider.get().add(menu);
 
         sub.accept(new UIContextMenu(text, menu::getItems));
