@@ -203,9 +203,14 @@
     -fx-padding: 6px 12px;
 }
 
+.context-menu > * > .separator {
+    -fx-padding: 3px 10px;
+}
+
 .context-menu .label {
 		-fx-pref-width: 160px;
 }
+
 
 
 /* ==========================================================================
