@@ -10,26 +10,37 @@
 package viewtify.ui.helper;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import javafx.event.EventHandler;
+import javafx.event.EventTarget;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.WindowEvent;
-
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import viewtify.ui.UIContextMenu;
 import viewtify.ui.UserInterfaceProvider;
 
 public interface ContextMenuHelper<Self extends ContextMenuHelper> extends PropertyAccessHelper {
+
+    /**
+     * Enahnce context menu's behavior.
+     * 
+     * @return menu The new created {@link ContextMenu}.
+     */
+    private EnhancedContextMenu context() {
+        Property<ContextMenu> property = property(Type.ContextMenu);
+        EnhancedContextMenu menu = (EnhancedContextMenu) property.getValue();
+        if (menu == null) {
+            menu = new EnhancedContextMenu();
+            property.setValue(menu);
+        }
+        return menu;
+    }
 
     /**
      * Create context menu.
@@ -52,12 +63,7 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
     default Self context(Object id, Consumer<UIContextMenu> builder) {
         removeContext(id);
 
-        Property<ContextMenu> holder = property(Type.ContextMenu);
-        ContextMenu menus = holder.getValue();
-        if (menus == null) {
-            menus = createEnhancedContextMenu();
-            holder.setValue(menus);
-        }
+        EnhancedContextMenu menus = context();
 
         // separate for each context assigners
         ObservableList<MenuItem> items = menus.getItems();
@@ -128,12 +134,33 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
      * @return
      */
     default Self showContext() {
+        return showContext(null, 0, 0);
+    }
+
+    /**
+     * Shows the {@code ContextMenu} relative to the side specified by the {@code side} parameter,
+     * and offset by the given {@code dx} and {@code dy} values for the x-axis and y-axis,
+     * respectively. If there is not enough room, the menu is moved to the opposite side and the
+     * offset is not applied.
+     * <p>
+     * To clarify the purpose of the {@code side} parameter, consider that it is relative to the
+     * anchor node. As such, a {@code side} of {@code TOP} would mean that the ContextMenu's bottom
+     * left corner is set to the top left corner of the anchor.
+     * <p>
+     * This function is useful for finely tuning the position of a menu, relative to the parent node
+     * to ensure close alignment.
+     * 
+     * @param location the side
+     * @param dx the dx value for the x-axis
+     * @param dy the dy value for the y-axis
+     */
+    default Self showContext(Side location, double dx, double dy) {
         if (this instanceof Node node) {
-            return showContextOn(node);
+            return showContextOn(node, location, dx, dy);
         }
 
         if (this instanceof UserInterfaceProvider provider && provider.ui() instanceof Node node) {
-            return showContextOn(node);
+            return showContextOn(node, location, dx, dy);
         }
 
         return (Self) this;
@@ -144,19 +171,26 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
      * 
      * @return
      */
-    default Self showContextOn(UserInterfaceProvider<? extends Node> anchor) {
-        return showContextOn(anchor.ui());
+    private Self showContextOn(Node anchor, Side location, double dx, double dy) {
+        location = Objects.requireNonNullElse(location, Side.BOTTOM);
+
+        EnhancedContextMenu context = context();
+        if (context.canShow()) {
+            context.show(anchor, location, dx, dy);
+            context.assign(anchor);
+        }
+        return (Self) this;
     }
 
     /**
-     * Show the associated context menu.
+     * Hide the associated context menu.
      * 
      * @return
      */
-    default Self showContextOn(Node anchor) {
+    default Self hideContext() {
         ContextMenu context = property(Type.ContextMenu).getValue();
         if (context != null) {
-            context.show(anchor, Side.BOTTOM, -80, 5);
+            context.hide();
         }
         return (Self) this;
     }
@@ -166,54 +200,83 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
      * 
      * @return
      */
-    default Self showContextOn(Node anchor, ArrowLocation location) {
+    default Self toggleContext() {
+        return toggleContext(null, 0, 0);
+    }
+
+    /**
+     * Toggle the context menu.
+     * 
+     * @param location the side
+     * @param dx the dx value for the x-axis
+     * @param dy the dy value for the y-axis
+     */
+    default Self toggleContext(Side location, double dx, double dy) {
+        if (isContextShowing()) {
+            return hideContext();
+        } else {
+            return showContext(location, dx, dy);
+        }
+    }
+
+    /**
+     * Whether or not the context menu is showing (that is, open on the user's system). The context
+     * menu might be "showing", yet the user might not be able to see it due to the context menu
+     * being rendered behind another context menu or due to the context menu being positioned off
+     * the monitor.
+     * 
+     * @return A result.
+     */
+    default boolean isContextShowing() {
         ContextMenu context = property(Type.ContextMenu).getValue();
-        if (context != null) {
-            context.show(anchor, Side.BOTTOM, -75, 5);
+        return context != null && context.isShowing();
+    }
+
+    /**
+     * Change the control of showing and hiding the context menu from right-click to left-click.
+     * 
+     * @return
+     */
+    default Self behaveLikeButton() {
+        if (this instanceof UserActionHelper action) {
+            behaveLikeButton(action);
+        } else if (this instanceof EventTarget target) {
+            behaveLikeButton(UserActionHelper.of(target));
+        } else if (this instanceof UserInterfaceProvider provider && provider.ui() instanceof EventTarget target) {
+            behaveLikeButton(UserActionHelper.of(target));
         }
         return (Self) this;
     }
 
     /**
-     * Enahnce context menu's behavior.
+     * Change the control of showing and hiding the context menu from right-click to left-click.
      * 
-     * @return menu The new created {@link ContextMenu}.
+     * @param action
      */
-    private ContextMenu createEnhancedContextMenu() {
-        ContextMenu menu = new ContextMenu();
-        menu.addEventHandler(WindowEvent.WINDOW_SHOWING, new EventHandler<>() {
-
-            @Override
-            public void handle(WindowEvent x) {
-                menu.removeEventHandler(WindowEvent.WINDOW_SHOWING, this);
-
-                for (MenuItem item : menu.getItems()) {
-                    Node node = item.getStyleableNode();
-                    if (node != null) {
-                        /**
-                         * When the mouse cursor moves outside the menu item, the focus is released
-                         * from the menu item by requesting focus to another node.
-                         */
-                        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
-                            menu.getStyleableNode().requestFocus();
-                        });
-
-                        /**
-                         * When the mouse button pressed on a new item is released, the mouse event
-                         * is consumed if the menu item is outside. This can prevent the menu item
-                         * from being triggered.
-                         */
-                        node.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
-                            if (!node.contains(e.getX(), e.getY())) {
-                                e.consume();
-                                menu.hide();
-                            }
-                        });
-                    }
-                }
-            }
-        });
-        return menu;
+    private void behaveLikeButton(UserActionHelper<?> action) {
+        // action.when(User.ContextMenu.preliminarily(), ContextMenuEvent::consume);
+        action.when(User.LeftPress, ContextMenuHelper.this::toggleContext);
     }
 
+    /**
+     * Enable the context menu.
+     * 
+     * @return
+     */
+    default Self enableContext() {
+        context().disable = false;
+
+        return (Self) this;
+    }
+
+    /**
+     * Enable the context menu.
+     * 
+     * @return
+     */
+    default Self disableContext() {
+        context().disable = true;
+
+        return (Self) this;
+    }
 }

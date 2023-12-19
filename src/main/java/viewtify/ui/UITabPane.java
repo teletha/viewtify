@@ -49,11 +49,22 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
         when(User.Scroll).take(Actions.inside(() -> ui.lookup(".tab-header-background"))).to(Actions.traverse(ui.getSelectionModel()));
     }
 
+    static class A {
+        static void run() {
+
+        }
+    }
+
+    static class B extends A {
+
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Property<ObservableList<UITab>> itemsProperty() {
+        B.run();
         return new SmartProperty(ui.getTabs());
     }
 

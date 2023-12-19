@@ -24,7 +24,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-
 import kiss.I;
 import kiss.Signal;
 import viewtify.keys.Key;
@@ -146,7 +145,7 @@ public final class User<E extends Event> {
      * @return A user action.
      */
     public static final User<MouseEvent> click(MouseButton button) {
-        return new User<>(MouseEvent.MOUSE_CLICKED, (helper, signal) -> signal.take(e -> e.getButton() == button));
+        return mouse(button, MouseEvent.MOUSE_CLICKED);
     }
 
     /**
@@ -159,6 +158,54 @@ public final class User<E extends Event> {
     public static final User<MouseEvent> click(MouseButton button, int count) {
         return new User<>(MouseEvent.MOUSE_CLICKED, (helper, signal) -> signal
                 .take(e -> e.getButton() == button && e.getClickCount() == count));
+    }
+
+    /** User Action */
+    public static final User<MouseEvent> LeftPress = press(MouseButton.PRIMARY);
+
+    /** User Action */
+    public static final User<MouseEvent> RightPress = press(MouseButton.SECONDARY);
+
+    /** User Action */
+    public static final User<MouseEvent> MiddlePress = press(MouseButton.MIDDLE);
+
+    /**
+     * Helper method to create {@link User} action for mouse input.
+     * 
+     * @param button A target mouse button.
+     * @return A user action.
+     */
+    public static final User<MouseEvent> press(MouseButton button) {
+        return mouse(button, MouseEvent.MOUSE_PRESSED);
+    }
+
+    /** User Action */
+    public static final User<MouseEvent> LeftRelease = release(MouseButton.PRIMARY);
+
+    /** User Action */
+    public static final User<MouseEvent> RightRelease = release(MouseButton.SECONDARY);
+
+    /** User Action */
+    public static final User<MouseEvent> MiddleRelease = release(MouseButton.MIDDLE);
+
+    /**
+     * Helper method to create {@link User} action for mouse input.
+     * 
+     * @param button A target mouse button.
+     * @return A user action.
+     */
+    public static final User<MouseEvent> release(MouseButton button) {
+        return mouse(button, MouseEvent.MOUSE_RELEASED);
+    }
+
+    /**
+     * Helper method to create {@link User} action for mouse input.
+     * 
+     * @param button A target mouse button.
+     * @return A user action.
+     */
+    private static User<MouseEvent> mouse(MouseButton button, EventType<MouseEvent> event) {
+        return new User<>(event, (helper, signal) -> signal.take(e -> e.getButton() == button));
     }
 
     /** User Action */
