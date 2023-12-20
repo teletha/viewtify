@@ -13,12 +13,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import viewtify.ui.anime.Anime;
+import viewtify.util.MonkeyPatch;
 
 public class EnhancedContextMenu extends ContextMenu {
 
@@ -42,30 +41,7 @@ public class EnhancedContextMenu extends ContextMenu {
             public void handle(WindowEvent x) {
                 removeEventHandler(WindowEvent.WINDOW_SHOWING, this);
 
-                for (MenuItem item : getItems()) {
-                    Node node = item.getStyleableNode();
-                    if (node != null) {
-                        /**
-                         * When the mouse cursor moves outside the menu item, the focus is released
-                         * from the menu item by requesting focus to another node.
-                         */
-                        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
-                            getStyleableNode().requestFocus();
-                        });
-
-                        /**
-                         * When the mouse button pressed on a new item is released, the mouse event
-                         * is consumed if the menu item is outside. This can prevent the menu item
-                         * from being triggered.
-                         */
-                        node.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
-                            if (!node.contains(e.getX(), e.getY())) {
-                                e.consume();
-                                hide();
-                            }
-                        });
-                    }
-                }
+                MonkeyPatch.fix(EnhancedContextMenu.this);
             }
         });
     }

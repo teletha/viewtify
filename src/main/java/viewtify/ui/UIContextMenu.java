@@ -9,12 +9,8 @@
  */
 package viewtify.ui;
 
-import java.lang.reflect.Field;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-
-import com.sun.javafx.scene.control.ContextMenuContent;
-import com.sun.javafx.scene.control.ContextMenuContent.MenuItemContainer;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -24,9 +20,9 @@ import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import kiss.I;
 import kiss.Variable;
 import viewtify.ui.anime.Anime;
+import viewtify.util.MonkeyPatch;
 
 public class UIContextMenu {
 
@@ -107,10 +103,11 @@ public class UIContextMenu {
         Menu menu = assignID(new Menu(String.valueOf(text)));
         menu.getProperties().put(id, null);
         menu.setOnShown(e -> {
-            ContextMenu context = findSubContextMenu(menu);
-            System.out.println(menu + "    " + menu.getParentPopup().getStyleableNode().lookup(".context-menu"));
+            ContextMenu context = MonkeyPatch.findContextMenu(menu.getStyleableNode(), "submenu");
+            MonkeyPatch.fix(context);
+
             int move = context.getAnchorX() < menu.getParentPopup().getAnchorX() ? 3 : -3;
-            Node node = findSubContextMenu(menu).getStyleableNode();
+            Node node = context.getStyleableNode();
             node.setOpacity(0);
             node.setTranslateX(move);
             node.setTranslateY(-5);
@@ -120,27 +117,6 @@ public class UIContextMenu {
         menuProvider.get().add(menu);
 
         sub.accept(new UIContextMenu(text, menu::getItems));
-    }
-
-    /**
-     * Dirty lookup.
-     * 
-     * @param menu
-     * @return
-     */
-    private ContextMenu findSubContextMenu(Menu menu) {
-        try {
-            MenuItemContainer container = (MenuItemContainer) menu.getStyleableNode();
-            Field fieldContent = MenuItemContainer.class.getDeclaredField("this$0");
-            fieldContent.setAccessible(true);
-            ContextMenuContent content = (ContextMenuContent) fieldContent.get(container);
-
-            Field fieldSub = ContextMenuContent.class.getDeclaredField("submenu");
-            fieldSub.setAccessible(true);
-            return (ContextMenu) fieldSub.get(content);
-        } catch (Exception e) {
-            throw I.quiet(e);
-        }
     }
 
     /**

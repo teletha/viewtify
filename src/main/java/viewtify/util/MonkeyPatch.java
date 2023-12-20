@@ -11,10 +11,14 @@ package viewtify.util;
 
 import java.lang.reflect.Field;
 
+import com.sun.javafx.scene.control.ContextMenuContent;
+import com.sun.javafx.scene.control.ContextMenuContent.MenuItemContainer;
 import com.sun.javafx.scene.control.behavior.TextInputControlBehavior;
 
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
@@ -22,10 +26,67 @@ import javafx.scene.control.skin.TextAreaSkin;
 import javafx.scene.control.skin.TextFieldSkin;
 import javafx.scene.control.skin.TextInputControlSkin;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.MouseEvent;
 import kiss.I;
 import viewtify.ui.helper.EnhancedContextMenu;
 
 public class MonkeyPatch {
+
+    /**
+     * Dirty lookup.
+     * 
+     * @return
+     */
+    public static ContextMenu findContextMenu(Node container, String fieldName) {
+        try {
+            Field fieldContent = MenuItemContainer.class.getDeclaredField("this$0");
+            fieldContent.setAccessible(true);
+            ContextMenuContent content = (ContextMenuContent) fieldContent.get(container);
+
+            Field fieldSub = ContextMenuContent.class.getDeclaredField(fieldName);
+            fieldSub.setAccessible(true);
+            return (ContextMenu) fieldSub.get(content);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Fix {@link ContextMenu}.
+     * 
+     * @param menu
+     */
+    public static void fix(ContextMenu menu) {
+        for (MenuItem item : menu.getItems()) {
+            Node node = item.getStyleableNode();
+            if (node != null) {
+                /**
+                 * When the mouse cursor moves outside the menu item, the focus is released from the
+                 * menu item by requesting focus to another node.
+                 */
+                node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
+                    menu.getStyleableNode().requestFocus();
+                });
+
+                /**
+                 * When the mouse button pressed on a new item is released, the mouse event is
+                 * consumed if the menu item is outside. This can prevent the menu item from being
+                 * triggered.
+                 */
+                node.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
+                    if (!node.contains(e.getX(), e.getY())) {
+                        e.consume();
+
+                        ContextMenu context = menu;
+                        while (context != null) {
+                            context.hide();
+                            context = findContextMenu(context.getOwnerNode(), "contextMenu");
+                        }
+                    }
+                });
+            }
+        }
+    }
 
     /**
      * Fix {@link TextArea}.
