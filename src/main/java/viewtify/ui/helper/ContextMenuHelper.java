@@ -25,7 +25,6 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-
 import kiss.Variable;
 import viewtify.ui.UIContextMenu;
 import viewtify.ui.UserInterfaceProvider;
@@ -178,11 +177,8 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
      */
     private Self showContextOn(Node anchor, Side location, double dx, double dy) {
         location = Objects.requireNonNullElse(location, Side.BOTTOM);
+        context().show(anchor, location, dx, dy);
 
-        EnhancedContextMenu context = context();
-        if (context.canShow()) {
-            context.show(anchor, location, dx, dy);
-        }
         return (Self) this;
     }
 

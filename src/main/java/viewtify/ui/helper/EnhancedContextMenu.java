@@ -10,11 +10,13 @@
 package viewtify.ui.helper;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import viewtify.ui.anime.Anime;
 
@@ -34,7 +36,6 @@ public class EnhancedContextMenu extends ContextMenu {
      */
     public EnhancedContextMenu() {
         addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> lastHidden = System.currentTimeMillis());
-
         addEventHandler(WindowEvent.WINDOW_SHOWING, new EventHandler<>() {
 
             @Override
@@ -69,7 +70,73 @@ public class EnhancedContextMenu extends ContextMenu {
         });
     }
 
-    boolean canShow() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void show() {
+        if (canShow()) {
+            super.show();
+
+            Node node = getStyleableNode();
+            node.setTranslateY(-10);
+            node.setOpacity(0);
+
+            Anime.define().opacity(node, 1).moveY(node, 0).run();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void show(Node anchor, double screenX, double screenY) {
+        if (canShow()) {
+            super.show(anchor, screenX, screenY);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void show(Node anchor, Side side, double dx, double dy) {
+        if (canShow()) {
+            super.show(anchor, side, dx, dy);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void show(Window owner) {
+        if (canShow()) {
+            super.show(owner);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void show(Window ownerWindow, double anchorX, double anchorY) {
+        if (canShow()) {
+            super.show(ownerWindow, anchorX, anchorY);
+        }
+    }
+
+    /**
+     * Check showing state.
+     * 
+     * @return
+     */
+    private boolean canShow() {
+        // check state
+        if (isShowing()) {
+            return false;
+        }
+
         // availability
         if (disable) {
             return false;
@@ -87,13 +154,9 @@ public class EnhancedContextMenu extends ContextMenu {
      * {@inheritDoc}
      */
     @Override
-    protected void show() {
-        super.show();
-
+    public void hide() {
         Node node = getStyleableNode();
-        node.setTranslateY(-10);
-        node.setOpacity(0);
 
-        Anime.define().opacity(node, 1).moveY(node, 0).run();
+        Anime.define().opacity(node, 0).moveY(node, 10).run(super::hide);
     }
 }
