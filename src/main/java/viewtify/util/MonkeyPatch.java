@@ -11,8 +11,10 @@ package viewtify.util;
 
 import java.lang.reflect.Field;
 
+import com.sun.javafx.scene.control.behavior.TextInputControlBehavior;
+
 import javafx.event.EventHandler;
-import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
@@ -20,20 +22,10 @@ import javafx.scene.control.skin.TextAreaSkin;
 import javafx.scene.control.skin.TextFieldSkin;
 import javafx.scene.control.skin.TextInputControlSkin;
 import javafx.scene.input.InputMethodEvent;
-
 import kiss.I;
+import viewtify.ui.helper.EnhancedContextMenu;
 
 public class MonkeyPatch {
-
-    /**
-     * Apply all patches to the specified {@link Node} and its children.
-     * 
-     * @param node
-     */
-    public static void applyAll(Node node) {
-        I.signal(node.lookupAll(".text-area")).startWith(node).as(TextArea.class).to(MonkeyPatch::fix);
-        I.signal(node.lookupAll(".text-field")).startWith(node).as(TextField.class).to(MonkeyPatch::fix);
-    }
 
     /**
      * Fix {@link TextArea}.
@@ -46,6 +38,7 @@ public class MonkeyPatch {
             node.setSkin(skin = new TextAreaSkin(node));
         }
         fixIMEBehavior(node, skin);
+        fixContextMenuBehavior(node, skin, TextAreaSkin.class);
     }
 
     /**
@@ -59,6 +52,7 @@ public class MonkeyPatch {
             node.setSkin(skin = new TextFieldSkin(node));
         }
         fixIMEBehavior(node, skin);
+        fixContextMenuBehavior(node, skin, TextFieldSkin.class);
     }
 
     /**
@@ -75,6 +69,30 @@ public class MonkeyPatch {
             EventHandler<InputMethodEvent> ime = (EventHandler<InputMethodEvent>) field.get(skin);
             node.setOnInputMethodTextChanged(ime);
             node.removeEventHandler(InputMethodEvent.INPUT_METHOD_TEXT_CHANGED, ime);
+        } catch (Exception e) {
+            throw I.quiet(e);
+        }
+    }
+
+    /**
+     * Fix context menu behavior on text node.
+     * 
+     * @param node
+     * @param skin
+     */
+    private static <T extends TextInputControlSkin> void fixContextMenuBehavior(TextInputControl node, T skin, Class<T> type) {
+        try {
+            Field behaviorField = type.getDeclaredField("behavior");
+            behaviorField.setAccessible(true);
+            TextInputControlBehavior behavior = (TextInputControlBehavior) behaviorField.get(skin);
+            Field contextField = TextInputControlBehavior.class.getDeclaredField("contextMenu");
+            contextField.setAccessible(true);
+            ContextMenu context = (ContextMenu) contextField.get(behavior);
+
+            EnhancedContextMenu enhanced = new EnhancedContextMenu();
+            enhanced.getItems().addAll(context.getItems());
+
+            contextField.set(behavior, enhanced);
         } catch (Exception e) {
             throw I.quiet(e);
         }

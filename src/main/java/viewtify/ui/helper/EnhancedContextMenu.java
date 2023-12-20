@@ -16,10 +16,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
-
 import viewtify.ui.anime.Anime;
 
-final class EnhancedContextMenu extends ContextMenu {
+public class EnhancedContextMenu extends ContextMenu {
 
     /** The reusable event consumer. */
     static final EventHandler<ContextMenuEvent> NOOP = ContextMenuEvent::consume;
@@ -33,7 +32,7 @@ final class EnhancedContextMenu extends ContextMenu {
     /**
      * 
      */
-    EnhancedContextMenu() {
+    public EnhancedContextMenu() {
         addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> lastHidden = System.currentTimeMillis());
 
         addEventHandler(WindowEvent.WINDOW_SHOWING, new EventHandler<>() {
