@@ -281,7 +281,7 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
     }
 
     /**
-     * Enable the context menu.
+     * Disable the context menu.
      * 
      * @return
      */
@@ -304,5 +304,14 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
             return Variable.of(target);
         }
         return Variable.empty();
+    }
+
+    /**
+     * Disable automatic expansion of the context menu.
+     * 
+     * @return
+     */
+    default Self disableAutomaticContextExpansion() {
+        return (Self) this;
     }
 }

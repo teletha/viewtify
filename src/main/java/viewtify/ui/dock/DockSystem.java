@@ -16,7 +16,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
@@ -47,6 +49,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import kiss.I;
 import kiss.Managed;
+import kiss.Signal;
 import kiss.Signaling;
 import kiss.Singleton;
 import kiss.Storable;
@@ -96,6 +99,9 @@ public final class DockSystem {
      */
     static final int PositionRestore = -6;
 
+    /** The dock system event. */
+    private static final ObservableSet<String> opened = FXCollections.observableSet();
+
     /**
      * Hide.
      */
@@ -130,6 +136,34 @@ public final class DockSystem {
      */
     public static void validate() {
         layout().roots.forEach(RootArea::validate);
+    }
+
+    /**
+     * Test whether the specified view has already opend or not.
+     * 
+     * @param id
+     * @return
+     */
+    public static boolean has(String id) {
+        DockLayout layout = layout();
+        return I.signal(layout.roots)
+                .as(ViewArea.class)
+                .recurseMap(s -> s.flatIterable(v -> (List<ViewArea>) v.children))
+                .take(v -> v.hasView(id))
+                .as(TabArea.class)
+                .first()
+                .to()
+                .isPresent();
+
+    }
+
+    /**
+     * Test whether the specified view has already opend or not.
+     * 
+     * @return
+     */
+    public static Signal<Boolean> isOpened(String id) {
+        return Viewtify.observing(opened).map(x -> x.contains(id));
     }
 
     /**
@@ -198,6 +232,7 @@ public final class DockSystem {
 
         if (area != null) {
             area.add(tab, PositionRestore);
+            opened.add(id);
             return tab;
         }
 
@@ -212,6 +247,7 @@ public final class DockSystem {
 
         if (area != null) {
             area.add(tab, PositionRestore);
+            opened.add(id);
             return tab;
         }
 
@@ -220,6 +256,7 @@ public final class DockSystem {
         area = layout.findRoot().add(tab, o.recommendedArea);
         area.location = o.recommendedArea;
         area.setViewportRatio(o.recommendedRatio);
+        opened.add(id);
         return tab;
     }
 
@@ -238,6 +275,7 @@ public final class DockSystem {
         stage.setY(bounds.getMinY());
         stage.setOnShown(shown);
         stage.setOnCloseRequest(e -> {
+            area.findAll(TabArea.class).flatIterable(tab -> tab.node.ui.getTabs()).to(tab -> opened.remove(tab.getId()));
             layout().roots.remove(area);
         });
 
@@ -276,7 +314,7 @@ public final class DockSystem {
         private RootArea main;
 
         /** Top level area. */
-        public List<RootArea> roots = new ArrayList();
+        public ObservableList<RootArea> roots = FXCollections.observableArrayList();
 
         /** The save event manager. */
         private final Signaling<Boolean> save = new Signaling();

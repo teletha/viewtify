@@ -9,10 +9,11 @@
  */
 package viewtify.ui.dock;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import kiss.I;
@@ -33,7 +34,7 @@ abstract class ViewArea<P extends UserInterface<P, ? extends Parent>> {
     protected ViewArea parent;
 
     /** The related area. */
-    List<ViewArea> children = new ArrayList();
+    ObservableList<ViewArea> children = FXCollections.observableArrayList();
 
     /** The area location kind. */
     @Managed
