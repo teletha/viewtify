@@ -328,6 +328,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "EnhancedContextMenu",
+			"packageName": "viewtify.ui.helper",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "FXUtils",
 			"packageName": "viewtify.util",
 			"type": "Class"
