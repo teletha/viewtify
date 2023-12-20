@@ -37,7 +37,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-
 import kiss.Disposable;
 import kiss.WiseRunnable;
 import viewtify.Viewtify;
@@ -260,7 +259,7 @@ public class Anime {
      * @return
      */
     public final Anime moveX(Node node, double x) {
-        return effect(node.translateYProperty(), x);
+        return effect(node.translateXProperty(), x);
     }
 
     /**
