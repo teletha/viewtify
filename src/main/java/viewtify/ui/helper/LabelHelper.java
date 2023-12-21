@@ -9,10 +9,8 @@
  */
 package viewtify.ui.helper;
 
+import java.io.InputStream;
 import java.util.Objects;
-
-import org.controlsfx.glyphfont.Glyph;
-import org.controlsfx.glyphfont.INamedCharacter;
 
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
@@ -26,6 +24,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.INamedCharacter;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -326,12 +328,15 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return
      */
     default Self icon(String iconPath, int width, int height) {
-        Image image = new Image(ClassLoader.getSystemResourceAsStream(iconPath));
-        ImageView view = new ImageView(image);
-        if (0 < width) view.setFitWidth(width);
-        if (0 < height) view.setFitHeight(height);
+        InputStream input = ClassLoader.getSystemResourceAsStream(iconPath);
+        if (input != null) {
+            Image image = new Image(input);
+            ImageView view = new ImageView(image);
+            if (0 < width) view.setFitWidth(width);
+            if (0 < height) view.setFitHeight(height);
 
-        property(Type.Graphic).setValue(view);
+            property(Type.Graphic).setValue(view);
+        }
         return (Self) this;
     }
 }

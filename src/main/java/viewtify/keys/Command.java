@@ -32,7 +32,7 @@ public interface Command<E extends Enum<E>> extends Extensible, WiseRunnable {
      * 
      * @return
      */
-    default String description() {
+    default Variable<String> description() {
         String name = name();
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < name.length(); i++) {
@@ -47,7 +47,7 @@ public interface Command<E extends Enum<E>> extends Extensible, WiseRunnable {
                 builder.append(c);
             }
         }
-        return builder.toString();
+        return I.translate(builder.toString());
     }
 
     /**

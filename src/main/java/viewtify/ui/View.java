@@ -26,6 +26,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
@@ -112,7 +113,7 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
      * @return
      */
     public Variable<String> title() {
-        return Variable.empty();
+        return en(getClass().getSimpleName().replaceAll("View$", "").replaceAll("(?<!^)(?=[A-Z])", " "));
     }
 
     /**
@@ -120,8 +121,8 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
      * 
      * @return
      */
-    public Variable<String> icon() {
-        return Variable.empty();
+    public String icon() {
+        return getClass().getSimpleName().replaceAll("View$", "").replaceAll("(?<!^)(?=[A-Z])", "-").toLowerCase() + ".png";
     }
 
     /**

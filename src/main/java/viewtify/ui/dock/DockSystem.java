@@ -47,6 +47,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -215,7 +216,6 @@ public final class DockSystem {
         }
 
         UITab tab = new UITab(null);
-        tab.text(I.translate(id));
         tab.setId(id);
 
         DockRecommendedLocation o = option.apply(new DockRecommendedLocation());
