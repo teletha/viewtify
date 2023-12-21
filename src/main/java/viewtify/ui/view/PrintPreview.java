@@ -185,6 +185,7 @@ public class PrintPreview extends DialogView<PrintInfo> {
 
     interface style extends StyleDSL {
         Style side = () -> {
+            display.minWidth(250, px);
             margin.left(22, px);
         };
 

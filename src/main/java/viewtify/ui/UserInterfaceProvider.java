@@ -17,6 +17,9 @@ import java.util.Objects;
 
 import javafx.css.Styleable;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
+
 import kiss.Variable;
 import viewtify.ui.helper.ValueHelper;
 
@@ -28,6 +31,15 @@ public interface UserInterfaceProvider<UI extends Styleable> {
      * @return A user interface.
      */
     UI ui();
+
+    /**
+     * Create the snapshot image of this UI.
+     * 
+     * @return
+     */
+    default WritableImage snapshot() {
+        return ui().getStyleableNode().snapshot(new SnapshotParameters(), null);
+    }
 
     /**
      * Create the new user input UI for the specified type.

@@ -54,6 +54,7 @@ import kiss.Signal;
 import kiss.Signaling;
 import kiss.Singleton;
 import kiss.Storable;
+import kiss.Variable;
 import kiss.WiseConsumer;
 import viewtify.Viewtify;
 import viewtify.ui.UILabel;
@@ -99,6 +100,9 @@ public final class DockSystem {
      * Place the view on the restored order.
      */
     static final int PositionRestore = -6;
+
+    /** The last selected tab. */
+    static final Variable<Tab> selected = Variable.empty();
 
     /** The dock system event. */
     private static final ObservableSet<String> opened = FXCollections.observableSet();
@@ -165,6 +169,10 @@ public final class DockSystem {
      */
     public static Signal<Boolean> isOpened(String id) {
         return Viewtify.observing(opened).map(x -> x.contains(id));
+    }
+
+    public static Tab selected() {
+        return selected.v;
     }
 
     /**

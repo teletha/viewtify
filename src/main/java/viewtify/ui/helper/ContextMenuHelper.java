@@ -25,6 +25,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+
 import kiss.Variable;
 import viewtify.ui.UIContextMenu;
 import viewtify.ui.UserInterfaceProvider;
@@ -241,7 +242,7 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
     default Self behaveLikeButton() {
         target(this).to(x -> x.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
-                toggleContext();
+                toggleContext(Side.BOTTOM, -85, 0);
             }
         }));
         return disableNativeContextRequest();
@@ -304,14 +305,5 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
             return Variable.of(target);
         }
         return Variable.empty();
-    }
-
-    /**
-     * Disable automatic expansion of the context menu.
-     * 
-     * @return
-     */
-    default Self disableAutomaticContextExpansion() {
-        return (Self) this;
     }
 }

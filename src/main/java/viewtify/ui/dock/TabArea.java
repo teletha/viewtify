@@ -21,6 +21,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
+
 import kiss.I;
 import kiss.WiseConsumer;
 import viewtify.Viewtify;
@@ -95,6 +96,7 @@ class TabArea extends ViewArea<UITabPane> {
         // of the window.
         node.ui.getSelectionModel().selectedItemProperty().addListener((p, o, n) -> {
             if (n != null) {
+                DockSystem.selected.set(n);
                 node.stage().ifPresent(stage -> {
                     String title = stage.getTitle();
                     if (title == null || title.isEmpty() || title.endsWith("\r")) {

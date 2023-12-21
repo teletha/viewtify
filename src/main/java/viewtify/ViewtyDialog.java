@@ -33,6 +33,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
@@ -468,6 +469,10 @@ public final class ViewtyDialog<T> {
                 setting.accept(view.input);
             }
         });
+    }
+
+    public void showPrintPreview() {
+
     }
 
     public <V> Variable<V> showWizard(Class<? extends DialogView<V>>... views) {
