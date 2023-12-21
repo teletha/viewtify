@@ -24,6 +24,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+
 import kiss.I;
 import kiss.Signal;
 import viewtify.keys.Key;
@@ -276,7 +277,7 @@ public final class User<E extends Event> {
      * 
      * @param type
      */
-    private User(EventType<E> type) {
+    User(EventType<E> type) {
         this(type, (h, s) -> s);
     }
 

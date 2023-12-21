@@ -58,10 +58,8 @@ public class UIContextMenu {
      * @param provider
      */
     public final void menu(UserInterfaceProvider<? extends Node> provider, boolean hideOnClick) {
-        CustomMenuItem item = assignID(new CustomMenuItem(provider.ui()));
-        item.setHideOnClick(hideOnClick);
-
-        menuProvider.get().add(item);
+        UIMenuItem<CustomMenuItem> menu = create(new CustomMenuItem(provider.ui()));
+        menu.ui.setHideOnClick(hideOnClick);
     }
 
     /**
@@ -69,12 +67,20 @@ public class UIContextMenu {
      * 
      * @return Chainable API.
      */
-    public UIMenuItem menu() {
-        MenuItem menu = assignID(new MenuItem());
+    public UIMenuItem<MenuItem> menu() {
+        return create(new MenuItem());
+    }
+
+    /**
+     * Declare simple menu.
+     * 
+     * @return Chainable API.
+     */
+    private <M extends MenuItem> UIMenuItem<M> create(M menu) {
         menu.getProperties().put(id, null);
         menuProvider.get().add(menu);
 
-        return new UIMenuItem(menu);
+        return new UIMenuItem<M>(menu);
     }
 
     /**
@@ -83,7 +89,7 @@ public class UIContextMenu {
      * @param text A label text.
      * @return Chainable API.
      */
-    public UIMenuItem menu(Object text) {
+    public UIMenuItem<MenuItem> menu(Object text) {
         return menu().text(text);
     }
 
@@ -93,7 +99,7 @@ public class UIContextMenu {
      * @param text A label text.
      * @return Chainable API.
      */
-    public UIMenuItem menu(Variable text) {
+    public UIMenuItem<MenuItem> menu(Variable text) {
         return menu().text(text);
     }
 
@@ -103,13 +109,21 @@ public class UIContextMenu {
      * @param text A label text.
      */
     public void menu(Object text, Consumer<UIContextMenu> sub) {
-        Menu menu = assignID(new Menu(String.valueOf(text)));
-        menu.getProperties().put(id, null);
-        menu.setOnShown(e -> {
-            ContextMenu context = MonkeyPatch.findContextMenu(menu.getStyleableNode(), "submenu");
+        menu(Variable.of(String.valueOf(text)), sub);
+    }
+
+    /**
+     * Declare simple menu with text.
+     * 
+     * @param text A label text.
+     */
+    public void menu(Variable<String> text, Consumer<UIContextMenu> sub) {
+        UIMenuItem<Menu> menu = create(new Menu()).text(text);
+        menu.when(Menu.ON_SHOWN, () -> {
+            ContextMenu context = MonkeyPatch.findContextMenu(menu.ui.getStyleableNode(), "submenu");
             MonkeyPatch.fix(context);
 
-            int move = context.getAnchorX() < menu.getParentPopup().getAnchorX() ? 3 : -3;
+            int move = context.getAnchorX() < menu.ui.getParentPopup().getAnchorX() ? 3 : -3;
             Node node = context.getStyleableNode();
             node.setOpacity(0);
             node.setTranslateX(move);
@@ -117,16 +131,15 @@ public class UIContextMenu {
             // When a sub menu is requested to be opened while the context menu is open, the Y-axis
             // positions of the main and sub menus are misaligned, which is being corrected
             // sequentially.
-            double initialY = menu.getParentPopup().getY();
-            Disposable stop = Viewtify.observing(menu.getParentPopup().yProperty()).to(currentY -> {
+            double initialY = menu.ui.getParentPopup().getY();
+            Disposable stop = Viewtify.observing(menu.ui.getParentPopup().yProperty()).to(currentY -> {
                 node.setTranslateY(-5 + currentY - initialY);
             });
 
             Anime.define().opacity(node, 1).moveX(node, -move).run(stop::dispose);
         });
-        menuProvider.get().add(menu);
 
-        sub.accept(new UIContextMenu(text, menu::getItems));
+        sub.accept(new UIContextMenu(text, menu.ui::getItems));
     }
 
     /**
@@ -135,10 +148,7 @@ public class UIContextMenu {
      * @return Chainable API.
      */
     public UIMenuItem checkMenu() {
-        CheckMenuItem menu = assignID(new CheckMenuItem());
-        menuProvider.get().add(menu);
-
-        return new UIMenuItem(menu);
+        return create(new CheckMenuItem());
     }
 
     /**
@@ -146,16 +156,5 @@ public class UIContextMenu {
      */
     public void separator() {
         menuProvider.get().add(new SeparatorMenuItem());
-    }
-
-    /**
-     * Assign ID to menu.
-     * 
-     * @param item
-     */
-    private <M extends MenuItem> M assignID(M item) {
-        item.getProperties().put(id, null);
-
-        return item;
     }
 }

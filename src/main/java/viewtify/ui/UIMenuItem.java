@@ -16,18 +16,19 @@ import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.UserActionHelper;
 
-public class UIMenuItem
-        implements StyleHelper<UIMenuItem, MenuItem>, DisableHelper<UIMenuItem>, LabelHelper<UIMenuItem>, UserActionHelper<UIMenuItem> {
+public class UIMenuItem<M extends MenuItem>
+        implements StyleHelper<UIMenuItem<M>, MenuItem>, DisableHelper<UIMenuItem<M>>, LabelHelper<UIMenuItem<M>>,
+        UserActionHelper<UIMenuItem<M>> {
 
     /** The actual ui. */
-    final MenuItem ui;
+    final M ui;
 
     /**
      * Enchanced view.
      * 
      * @param ui
      */
-    UIMenuItem(MenuItem ui) {
+    UIMenuItem(M ui) {
         this.ui = ui;
     }
 

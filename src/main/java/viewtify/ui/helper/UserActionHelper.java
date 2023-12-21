@@ -89,6 +89,16 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
     }
 
     /**
+     * Listen the specified user action.
+     * 
+     * @param actionType A user action to detect.
+     * @return An event {@link Signal}.
+     */
+    default <T extends EventType<E>, E extends Event> Signal<E> when(T actionType) {
+        return when(new User<E>(actionType));
+    }
+
+    /**
      * Invoke the event handler regstration methods.
      * 
      * @param name A method name.
@@ -131,6 +141,17 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
      * @param listener An event listener.
      * @return Chainable API.
      */
+    default <T extends EventType<E>, E extends Event> Self when(T actionType, WiseRunnable listener) {
+        return when(new User<E>(actionType), listener);
+    }
+
+    /**
+     * Listen the specified user action.
+     * 
+     * @param actionType A user action to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
+     */
     default <E extends Event> Self when(User<E> actionType, WiseRunnable listener) {
         WiseConsumer wise = I.wiseC(listener);
         return (Self) when(actionType, wise);
@@ -161,6 +182,17 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
     default <E1 extends Event, E2 extends Event, E3 extends Event> Self when(User<E1> actionType1, User<E2> actionType2, User<E3> actionType3, WiseRunnable listener) {
         WiseConsumer wise = I.wiseC(listener);
         return (Self) when(actionType1, wise).when(actionType2, wise).when(actionType3, wise);
+    }
+
+    /**
+     * Listen the specified user action.
+     * 
+     * @param actionType A user action to detect.
+     * @param listener An event listener.
+     * @return Chainable API.
+     */
+    default <T extends EventType<E>, E extends Event> Self when(T actionType, WiseConsumer<E> listener) {
+        return when(new User<E>(actionType), listener);
     }
 
     /**
