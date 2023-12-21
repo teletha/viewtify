@@ -20,7 +20,10 @@ import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+
+import kiss.Disposable;
 import kiss.Variable;
+import viewtify.Viewtify;
 import viewtify.ui.anime.Anime;
 import viewtify.util.MonkeyPatch;
 
@@ -110,9 +113,16 @@ public class UIContextMenu {
             Node node = context.getStyleableNode();
             node.setOpacity(0);
             node.setTranslateX(move);
-            node.setTranslateY(-5);
 
-            Anime.define().opacity(node, 1).moveX(node, -move).run();
+            // When a sub menu is requested to be opened while the context menu is open, the Y-axis
+            // positions of the main and sub menus are misaligned, which is being corrected
+            // sequentially.
+            double initialY = menu.getParentPopup().getY();
+            Disposable stop = Viewtify.observing(menu.getParentPopup().yProperty()).to(currentY -> {
+                node.setTranslateY(-5 + currentY - initialY);
+            });
+
+            Anime.define().opacity(node, 1).moveX(node, -move).run(stop::dispose);
         });
         menuProvider.get().add(menu);
 
