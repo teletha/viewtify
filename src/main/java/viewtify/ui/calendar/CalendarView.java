@@ -61,6 +61,12 @@ public class CalendarView extends View {
 
     LocalDate currentDate;
 
+    /**
+     * Hide constructor.
+     */
+    private CalendarView() {
+    }
+
     @Override
     protected ViewDSL declareUI() {
         return new ViewDSL() {
