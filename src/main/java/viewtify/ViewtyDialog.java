@@ -10,6 +10,7 @@
 package viewtify;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
@@ -27,6 +28,7 @@ import javafx.scene.control.DialogEvent;
 import javafx.scene.control.DialogPane;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -50,6 +52,8 @@ import viewtify.ui.UserInterface;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
+import viewtify.ui.view.PrintPreview;
+import viewtify.ui.view.PrintPreview.PrintInfo;
 
 /**
  * The specialized dialog builder.
@@ -68,9 +72,6 @@ public final class ViewtyDialog<T> {
     /** The button set. */
     private List<ButtonType> buttons;
 
-    /** The translation mode. */
-    private boolean needTranslate;
-
     /** The button's visibility. */
     private boolean hideButtons;
 
@@ -88,6 +89,9 @@ public final class ViewtyDialog<T> {
 
     /** The height of this dialog. */
     private int height;
+
+    /** The translation mode. */
+    private boolean translatable;
 
     /** The dialog effect. */
     private boolean fadable;
@@ -172,8 +176,8 @@ public final class ViewtyDialog<T> {
      * 
      * @return
      */
-    public ViewtyDialog<T> translateButtons() {
-        this.needTranslate = true;
+    public ViewtyDialog<T> translatable() {
+        this.translatable = true;
         return this;
     }
 
@@ -344,6 +348,23 @@ public final class ViewtyDialog<T> {
 
         dialogPane.setContent(ui);
 
+        // The size of the dialog is deftly adjusted so that all the UI inside is displayed.
+        Viewtify.observe(dialogPane.widthProperty()).debounce(10, TimeUnit.MILLISECONDS).skip(1).take(1).on(Viewtify.UIThread).to(w -> {
+            double currentW = dialog.getWidth();
+            double currentH = dialog.getHeight();
+            double currentX = dialog.getX();
+            double currentY = dialog.getY();
+            // TODO Additional widths and heights are added to account for the size of the buttons
+            // and overall padding of the dialog, but there is no basis for the values.
+            double width = w + 20;
+            double height = dialogPane.getHeight() + 40;
+
+            dialog.setWidth(width);
+            dialog.setHeight(height);
+            dialog.setX(currentX - (width - currentW) / 2);
+            dialog.setY(currentY - (height - currentH) / 2);
+        });
+
         return showAndTell(dialog, disableButtons ? () -> view.value : () -> null);
     }
 
@@ -471,8 +492,14 @@ public final class ViewtyDialog<T> {
         });
     }
 
-    public void showPrintPreview() {
-
+    /**
+     * Show the print preview dialog.
+     */
+    public Variable<PrintInfo> showPrintPreview(WritableImage... images) {
+        return fadable().blurable()
+                .button("Print", "Cancel")
+                .translatable()
+                .show(PrintPreview.class, preview -> preview.loadImage(images));
     }
 
     public <V> Variable<V> showWizard(Class<? extends DialogView<V>>... views) {
@@ -512,7 +539,7 @@ public final class ViewtyDialog<T> {
             dialogPane.getChildren().remove(buttonBar);
         }
 
-        if (needTranslate) {
+        if (translatable) {
             for (ButtonType type : dialogPane.getButtonTypes()) {
                 Button button = (Button) dialogPane.lookupButton(type);
                 I.translate(type.getText()).observing().on(Viewtify.UIThread).to(button::setText, disposer);

@@ -104,7 +104,7 @@ public class Update {
         Viewtify.dialog()
                 .title("Updater")
                 .button("Update", "Cancel")
-                .translateButtons()
+                .translatable()
                 .disableButtons(forcibly)
                 .disableCloseButton(forcibly)
                 .show(new Updater(forcibly))

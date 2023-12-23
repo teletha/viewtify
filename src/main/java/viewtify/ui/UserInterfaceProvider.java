@@ -16,9 +16,11 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 
 import javafx.css.Styleable;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.WritableImage;
+import javafx.scene.transform.Transform;
 
 import kiss.Variable;
 import viewtify.ui.helper.ValueHelper;
@@ -38,7 +40,37 @@ public interface UserInterfaceProvider<UI extends Styleable> {
      * @return
      */
     default WritableImage snapshot() {
-        return ui().getStyleableNode().snapshot(new SnapshotParameters(), null);
+        return snapshot(1);
+    }
+
+    /**
+     * Create the scaled snapshot image of this UI.
+     * 
+     * @return
+     */
+    default WritableImage snapshot(double scale) {
+        UI ui = ui();
+        Node node = ui instanceof Node x ? x : ui.getStyleableNode();
+        Bounds bounds = node.getBoundsInLocal();
+
+        int width = (int) (bounds.getWidth() * scale);
+        int height = (int) (bounds.getHeight() * scale);
+
+        SnapshotParameters parameters = new SnapshotParameters();
+        parameters.setTransform(Transform.scale(scale, scale));
+
+        return node.snapshot(parameters, new WritableImage(width, height));
+    }
+
+    /**
+     * Convenience method to wrap as {@link UserInterfaceProvider}.
+     * 
+     * @param <UI>
+     * @param ui
+     * @return
+     */
+    static <UI extends Styleable> UserInterfaceProvider<UI> of(UI ui) {
+        return () -> ui;
     }
 
     /**

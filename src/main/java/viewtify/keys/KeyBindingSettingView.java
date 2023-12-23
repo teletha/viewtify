@@ -102,7 +102,7 @@ public class KeyBindingSettingView extends View {
                     .title(en("Change shortcut key"))
                     .button("Modify", "Cancel")
                     .disableCloseButton(true)
-                    .translateButtons()
+                    .translatable()
                     .show(new Change());
         });
     }
