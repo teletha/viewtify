@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.geometry.Bounds;
 import javafx.print.PageOrientation;
@@ -273,7 +274,7 @@ public class PrintPreview extends DialogView<PrintInfo> {
      * @param images
      */
     public void loadImage(WritableImage... images) {
-        Viewtify.inUI(() -> {
+        Platform.runLater(() -> {
             this.maxPage = images.length;
             this.images = images;
 
