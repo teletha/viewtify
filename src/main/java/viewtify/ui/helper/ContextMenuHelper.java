@@ -9,7 +9,9 @@
  */
 package viewtify.ui.helper;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -20,6 +22,7 @@ import javafx.event.EventTarget;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.ContextMenuEvent;
@@ -84,7 +87,24 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
         }
 
         // build context menus
-        builder.accept(new UIContextMenu(id, menus::getItems));
+        menus.addEventFilter(Menu.ON_SHOWING, e -> {
+            ObservableList<MenuItem> children = menus.getItems();
+            for (int i = children.size() - 1; 0 <= i; i--) {
+                MenuItem child = children.get(i);
+                if (child.getProperties().containsKey(id + "@placeholder")) {
+                    children.remove(i);
+                    List<MenuItem> container = new ArrayList();
+                    builder.accept(new UIContextMenu(id, container));
+                    children.addAll(i, container);
+                    System.out.println("Build context " + menus);
+                }
+            }
+        });
+
+        // create dummy context
+        MenuItem menu = new MenuItem("");
+        menu.getProperties().put(id + "@placeholder", null);
+        menus.getItems().add(menu);
 
         // API definition
         return (Self) this;

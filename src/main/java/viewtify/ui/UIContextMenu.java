@@ -9,10 +9,9 @@
  */
 package viewtify.ui;
 
+import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
@@ -20,6 +19,7 @@ import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+
 import kiss.Disposable;
 import kiss.Variable;
 import viewtify.Viewtify;
@@ -29,7 +29,7 @@ import viewtify.util.MonkeyPatch;
 public class UIContextMenu {
 
     /** The actual ui. */
-    private final Supplier<ObservableList<MenuItem>> menuProvider;
+    private final List<MenuItem> menuProvider;
 
     /** The identifier of context menu. */
     private final Object id;
@@ -37,7 +37,7 @@ public class UIContextMenu {
     /**
      * Enchanced view.
      */
-    public UIContextMenu(Object id, Supplier<ObservableList<MenuItem>> menuProvider) {
+    public UIContextMenu(Object id, List<MenuItem> menuProvider) {
         this.id = id;
         this.menuProvider = menuProvider;
     }
@@ -155,14 +155,14 @@ public class UIContextMenu {
             Anime.define().opacity(node, 1).moveX(node, -move).run(stop::dispose);
         });
 
-        sub.accept(new UIContextMenu(text, menu.ui::getItems));
+        sub.accept(new UIContextMenu(text, menu.ui.getItems()));
     }
 
     /**
      * Declare menu separator.
      */
     public void separator() {
-        menuProvider.get().add(new SeparatorMenuItem());
+        menuProvider.add(new SeparatorMenuItem());
     }
 
     /**
@@ -172,7 +172,7 @@ public class UIContextMenu {
      */
     private <M extends MenuItem> M register(M menu) {
         menu.getProperties().put(id, null);
-        menuProvider.get().add(menu);
+        menuProvider.add(menu);
 
         return menu;
     }
