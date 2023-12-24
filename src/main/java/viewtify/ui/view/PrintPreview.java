@@ -15,25 +15,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.controlsfx.control.SegmentedButton;
+
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.geometry.Bounds;
+import javafx.print.JobSettings;
 import javafx.print.PageOrientation;
 import javafx.print.Paper;
 import javafx.print.PrintColor;
 import javafx.print.PrintQuality;
 import javafx.print.PrintSides;
 import javafx.print.Printer;
+import javafx.print.Printer.MarginType;
+import javafx.print.PrinterJob;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-import org.controlsfx.control.SegmentedButton;
-
 import kiss.I;
 import kiss.WiseSupplier;
 import stylist.Style;
@@ -400,6 +403,31 @@ public class PrintPreview extends DialogView<PrintInfo> {
         public PrintSides side;
 
         public PrintQuality quality;
+
+        /**
+         * Convenience method to print image.
+         */
+        public void print(WritableImage image) {
+            ImageView view = new ImageView(image);
+
+            PrinterJob printerJob = PrinterJob.createPrinterJob();
+            if (printerJob != null) {
+                JobSettings setting = printerJob.getJobSettings();
+                if (0 < copies) setting.setCopies(copies);
+                if (color != null) setting.setPrintColor(color);
+                if (quality != null) setting.setPrintQuality(quality);
+                if (side != null) setting.setPrintSides(side);
+                if (pages != null && orientation != null)
+                    setting.setPageLayout(printerJob.getPrinter().createPageLayout(paper, orientation, MarginType.DEFAULT));
+
+                view.setFitWidth(setting.getPageLayout().getPrintableWidth());
+                view.setFitHeight(setting.getPageLayout().getPrintableHeight());
+
+                if (printerJob.printPage(view)) {
+                    printerJob.endJob();
+                }
+            }
+        }
 
         /**
          * {@inheritDoc}
