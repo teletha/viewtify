@@ -748,6 +748,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "UICheckMenuItem",
+			"packageName": "viewtify.ui",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "UICheckSwitch",
 			"packageName": "viewtify.ui",
 			"type": "Class"
