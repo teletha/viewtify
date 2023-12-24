@@ -20,7 +20,6 @@ import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-
 import kiss.Disposable;
 import kiss.Variable;
 import viewtify.Viewtify;
@@ -44,6 +43,35 @@ public class UIContextMenu {
     }
 
     /**
+     * Declare checkbox menu.
+     * 
+     * @return Chainable API.
+     */
+    public UICheckMenuItem check() {
+        return new UICheckMenuItem(register(new CheckMenuItem()));
+    }
+
+    /**
+     * Declare checkbox menu with text.
+     * 
+     * @param text A label text.
+     * @return Chainable API.
+     */
+    public UICheckMenuItem check(Object text) {
+        return check().text(text);
+    }
+
+    /**
+     * Declare checkbox menu with text.
+     * 
+     * @param text A label text.
+     * @return Chainable API.
+     */
+    public UICheckMenuItem check(Variable text) {
+        return check().text(text);
+    }
+
+    /**
      * Declare menu ui.
      * 
      * @param provider
@@ -58,8 +86,8 @@ public class UIContextMenu {
      * @param provider
      */
     public final void menu(UserInterfaceProvider<? extends Node> provider, boolean hideOnClick) {
-        UIMenuItem<CustomMenuItem> menu = create(new CustomMenuItem(provider.ui()));
-        menu.ui.setHideOnClick(hideOnClick);
+        CustomMenuItem menu = register(new CustomMenuItem(provider.ui()));
+        menu.setHideOnClick(hideOnClick);
     }
 
     /**
@@ -68,19 +96,7 @@ public class UIContextMenu {
      * @return Chainable API.
      */
     public UIMenuItem<MenuItem> menu() {
-        return create(new MenuItem());
-    }
-
-    /**
-     * Declare simple menu.
-     * 
-     * @return Chainable API.
-     */
-    private <M extends MenuItem> UIMenuItem<M> create(M menu) {
-        menu.getProperties().put(id, null);
-        menuProvider.get().add(menu);
-
-        return new UIMenuItem<M>(menu);
+        return new UIMenuItem(register(new MenuItem()));
     }
 
     /**
@@ -118,7 +134,7 @@ public class UIContextMenu {
      * @param text A label text.
      */
     public void menu(Variable<String> text, Consumer<UIContextMenu> sub) {
-        UIMenuItem<Menu> menu = create(new Menu()).text(text);
+        UIMenuItem<Menu> menu = new UIMenuItem<>(register(new Menu())).text(text);
         menu.when(Menu.ON_SHOWN, () -> {
             ContextMenu context = MonkeyPatch.findContextMenu(menu.ui.getStyleableNode(), "submenu");
             MonkeyPatch.fix(context);
@@ -143,18 +159,21 @@ public class UIContextMenu {
     }
 
     /**
-     * Declare checkbox menu.
-     * 
-     * @return Chainable API.
-     */
-    public UIMenuItem checkMenu() {
-        return create(new CheckMenuItem());
-    }
-
-    /**
      * Declare menu separator.
      */
     public void separator() {
         menuProvider.get().add(new SeparatorMenuItem());
+    }
+
+    /**
+     * Register menu.
+     * 
+     * @return Chainable API.
+     */
+    private <M extends MenuItem> M register(M menu) {
+        menu.getProperties().put(id, null);
+        menuProvider.get().add(menu);
+
+        return menu;
     }
 }

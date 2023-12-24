@@ -9,25 +9,27 @@
  */
 package viewtify.ui;
 
-import javafx.scene.control.MenuItem;
+import javafx.beans.property.Property;
+import javafx.scene.control.CheckMenuItem;
 import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.UserActionHelper;
+import viewtify.ui.helper.ValueHelper;
 
-public class UIMenuItem<M extends MenuItem>
-        implements StyleHelper<UIMenuItem<M>, MenuItem>, DisableHelper<UIMenuItem<M>>, LabelHelper<UIMenuItem<M>>,
-        UserActionHelper<UIMenuItem<M>> {
+public class UICheckMenuItem
+        implements StyleHelper<UICheckMenuItem, CheckMenuItem>, DisableHelper<UICheckMenuItem>, LabelHelper<UICheckMenuItem>,
+        UserActionHelper<UICheckMenuItem>, ValueHelper<UICheckMenuItem, Boolean> {
 
     /** The actual ui. */
-    final M ui;
+    final CheckMenuItem ui;
 
     /**
      * Enchanced view.
      * 
      * @param ui
      */
-    UIMenuItem(M ui) {
+    UICheckMenuItem(CheckMenuItem ui) {
         this.ui = ui;
     }
 
@@ -35,7 +37,15 @@ public class UIMenuItem<M extends MenuItem>
      * {@inheritDoc}
      */
     @Override
-    public MenuItem ui() {
+    public CheckMenuItem ui() {
         return ui;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Property<Boolean> valueProperty() {
+        return ui.selectedProperty();
     }
 }

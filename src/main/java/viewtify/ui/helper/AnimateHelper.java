@@ -12,7 +12,6 @@ package viewtify.ui.helper;
 import java.util.concurrent.TimeUnit;
 
 import javafx.scene.Node;
-
 import kiss.I;
 import kiss.WiseRunnable;
 import viewtify.ui.UserInterfaceProvider;
@@ -115,5 +114,51 @@ public interface AnimateHelper<Self extends AnimateHelper<Self, N>, N extends No
         ui().setTranslateZ(value);
 
         return (Self) this;
+    }
+
+    /**
+     * Sets the x-axis scale of this UI element.
+     *
+     * @param scale The x-axis scale to set.
+     * @return The implementing class instance for method chaining.
+     */
+    default Self scaleX(double scale) {
+        ui().setScaleX(scale);
+
+        return (Self) this;
+    }
+
+    /**
+     * Sets the y-axis scale of this UI element.
+     *
+     * @param scale The y-axis scale to set.
+     * @return The implementing class instance for method chaining.
+     */
+    default Self scaleY(double scale) {
+        ui().setScaleY(scale);
+
+        return (Self) this;
+    }
+
+    /**
+     * Sets the z-axis scale of this UI element.
+     *
+     * @param scale The z-axis scale to set.
+     * @return The implementing class instance for method chaining.
+     */
+    default Self scaleZ(double scale) {
+        ui().setScaleZ(scale);
+
+        return (Self) this;
+    }
+
+    /**
+     * Sets the all-axis scale of this UI element.
+     *
+     * @param scale The all-axis scale to set.
+     * @return The implementing class instance for method chaining.
+     */
+    default Self scale(double scale) {
+        return scaleX(scale).scaleY(scale);
     }
 }
