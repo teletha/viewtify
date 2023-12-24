@@ -10,7 +10,6 @@
 package viewtify;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
@@ -35,7 +34,6 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
@@ -348,23 +346,6 @@ public final class ViewtyDialog<T> {
 
         dialogPane.setContent(ui);
 
-        // The size of the dialog is deftly adjusted so that all the UI inside is displayed.
-        Viewtify.observe(dialogPane.widthProperty()).debounce(10, TimeUnit.MILLISECONDS).skip(1).take(1).on(Viewtify.UIThread).to(w -> {
-            double currentW = dialog.getWidth();
-            double currentH = dialog.getHeight();
-            double currentX = dialog.getX();
-            double currentY = dialog.getY();
-            // TODO Additional widths and heights are added to account for the size of the buttons
-            // and overall padding of the dialog, but there is no basis for the values.
-            double width = w + 20;
-            double height = dialogPane.getHeight() + 40;
-
-            dialog.setWidth(width);
-            dialog.setHeight(height);
-            dialog.setX(currentX - (width - currentW) / 2);
-            dialog.setY(currentY - (height - currentH) / 2);
-        });
-
         return showAndTell(dialog, disableButtons ? () -> view.value : () -> null);
     }
 
@@ -496,10 +477,7 @@ public final class ViewtyDialog<T> {
      * Show the print preview dialog.
      */
     public Variable<PrintInfo> showPrintPreview(WritableImage... images) {
-        return fadable().blurable()
-                .button("Print", "Cancel")
-                .translatable()
-                .show(PrintPreview.class, preview -> preview.loadImage(images));
+        return fadable().blurable().button("Print", "Cancel").translatable().show(PrintPreview.class, preview -> preview.loadImage(images));
     }
 
     public <V> Variable<V> showWizard(Class<? extends DialogView<V>>... views) {

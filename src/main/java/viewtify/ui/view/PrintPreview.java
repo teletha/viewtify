@@ -17,7 +17,6 @@ import java.util.Map;
 
 import org.controlsfx.control.SegmentedButton;
 
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.geometry.Bounds;
 import javafx.print.JobSettings;
@@ -126,6 +125,10 @@ public class PrintPreview extends DialogView<PrintInfo> {
 
     private boolean naviShowing;
 
+    public PrintPreview() {
+        this.value = new PrintInfo();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -219,8 +222,6 @@ public class PrintPreview extends DialogView<PrintInfo> {
      */
     @Override
     protected void initialize() {
-        value = new PrintInfo();
-
         copies.ui.setValueFactory(new IntegerSpinnerValueFactory(1, 300));
 
         pager.placeholder(en("all pages")).disable(true);
@@ -277,20 +278,18 @@ public class PrintPreview extends DialogView<PrintInfo> {
      * @param images
      */
     public void loadImage(WritableImage... images) {
-        Platform.runLater(() -> {
-            this.maxPage = images.length;
-            this.images = images;
+        this.maxPage = images.length;
+        this.images = images;
 
-            navi.setVisible(maxPage > 1);
-            pageSize.text(en("{0} pages", images.length));
+        navi.setVisible(maxPage > 1);
+        pageSize.text(en("{0} pages", images.length));
 
-            value.pageSize = images.length;
-            for (int i = 0; i < images.length; i++) {
-                value.pages.add(i);
-            }
+        value.pageSize = images.length;
+        for (int i = 0; i < images.length; i++) {
+            value.pages.add(i);
+        }
 
-            drawPage(0);
-        });
+        drawPage(0);
     }
 
     /**

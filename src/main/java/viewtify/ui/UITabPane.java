@@ -24,6 +24,7 @@ import kiss.Disposable;
 import kiss.WiseConsumer;
 import stylist.Style;
 import stylist.StyleDSL;
+import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
@@ -172,8 +173,7 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
                 menus = new HBox();
 
                 StackPane headerArea = (StackPane) ui.lookup(".tab-header-area");
-                headerArea.getChildren().add(menus);
-                headerArea.widthProperty().addListener((x, o, n) -> {
+                Viewtify.observing(headerArea.widthProperty()).to(width -> {
                     int size = menus.getChildren().size();
 
                     StackPane control = (StackPane) headerArea.lookup(".control-buttons-tab");
@@ -183,13 +183,15 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
                     Pane button = (Pane) control.lookup(".tab-down-button");
                     button.setTranslateX(-style.IconSize * size);
 
-                    menus.setLayoutX(n.doubleValue() - style.IconSize * size);
+                    menus.setLayoutX(width.doubleValue() - style.IconSize * Math.max(1, size));
                 });
+                headerArea.getChildren().add(menus);
             }
 
             UILabel icon = new UILabel(null).style(style.icon);
             builder.accept(icon);
             menus.getChildren().add(icon.ui());
+
         }
         return this;
     }
