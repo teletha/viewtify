@@ -18,6 +18,8 @@ import java.util.function.Consumer;
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.geometry.Side;
 import javafx.scene.Node;
@@ -28,7 +30,6 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-
 import kiss.Variable;
 import viewtify.ui.UIContextMenu;
 import viewtify.ui.UserInterfaceProvider;
@@ -51,26 +52,53 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
     }
 
     /**
-     * Create context menu.
-     * 
-     * @param builder
-     * @return
+     * Defines the context menu for the UI component. The menu is not generated until it is actually
+     * needed. This method allows you to specify a context menu using a builder function.
+     *
+     * @param builder A consumer that builds the UIContextMenu for the context menu.
+     * @return A chainable API for further configuration.
      */
     default Self context(Consumer<UIContextMenu> builder) {
+        return context(true, this, builder);
+    }
+
+    /**
+     * Defines the context menu with the specified ID for the UI component. The menu is not
+     * generated until it is actually needed. If the specified ID already exists, the menu will be
+     * overwritten instead of added. This method allows you to specify a context menu using a
+     * builder function.
+     *
+     * @param id An identifier for the context menu.
+     * @param builder A consumer that builds the UIContextMenu for the context menu.
+     * @return A chainable API for further configuration.
+     */
+    default Self context(Object id, Consumer<UIContextMenu> builder) {
+        return context(true, this, builder);
+    }
+
+    /**
+     * Define the context menu with the option to specify whether it should be generated lazily.
+     * This method allows you to specify a context menu using a builder function.
+     *
+     * @param lazy If true, the context menu will be generated lazily.
+     * @param builder A consumer that builds the UIContextMenu for the context menu.
+     * @return A chainable API for further configuration.
+     */
+    default Self context(boolean lazy, Consumer<UIContextMenu> builder) {
         return context(this, builder);
     }
 
     /**
-     * Add a context menu. If the specified ID already exists, the menu will be overwritten instead
-     * of added.
-     * 
-     * @param id An identifier of context menu.
-     * @param builder
-     * @return
+     * Define the context menu with the option to specify whether it should be generated lazily. If
+     * the specified ID already exists, the menu will be overwritten instead of added. This method
+     * allows you to specify a context menu using a builder function.
+     *
+     * @param lazy If true, the context menu will be generated lazily.
+     * @param id An identifier for the context menu.
+     * @param builder A consumer that builds the UIContextMenu for the context menu.
+     * @return A chainable API for further configuration.
      */
-    default Self context(Object id, Consumer<UIContextMenu> builder) {
-        removeContext(id);
-
+    default Self context(boolean lazy, Object id, Consumer<UIContextMenu> builder) {
         EnhancedContextMenu menus = context();
 
         // separate for each context assigners
@@ -87,24 +115,32 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
         }
 
         // build context menus
-        menus.addEventFilter(Menu.ON_SHOWING, e -> {
-            ObservableList<MenuItem> children = menus.getItems();
-            for (int i = children.size() - 1; 0 <= i; i--) {
-                MenuItem child = children.get(i);
-                if (child.getProperties().containsKey(id + "@placeholder")) {
-                    children.remove(i);
-                    List<MenuItem> container = new ArrayList();
-                    builder.accept(new UIContextMenu(id, container));
-                    children.addAll(i, container);
-                    System.out.println("Build context " + menus);
+        if (!lazy) {
+            // eager setup
+            builder.accept(new UIContextMenu(id, menus.getItems()));
+        } else {
+            // lazy setup
+            EventHandler<Event>[] setup = new EventHandler[1];
+            setup[0] = e -> {
+                ObservableList<MenuItem> children = menus.getItems();
+                for (int i = children.size() - 1; 0 <= i; i--) {
+                    MenuItem child = children.get(i);
+                    if (child.getProperties().containsKey(id)) {
+                        children.remove(i);
+                        List<MenuItem> container = new ArrayList();
+                        builder.accept(new UIContextMenu(id, container));
+                        children.addAll(i, container);
+                    }
                 }
-            }
-        });
+                menus.removeEventFilter(Menu.ON_SHOWING, setup[0]);
+            };
+            menus.addEventFilter(Menu.ON_SHOWING, setup[0]);
 
-        // create dummy context
-        MenuItem menu = new MenuItem("");
-        menu.getProperties().put(id + "@placeholder", null);
-        menus.getItems().add(menu);
+            // create dummy context
+            MenuItem menu = new MenuItem("");
+            menu.getProperties().put(id, null);
+            menus.getItems().add(menu);
+        }
 
         // API definition
         return (Self) this;
