@@ -357,7 +357,9 @@ public class PrintPreview extends DialogView<PrintInfo> {
 
         currentPage = page;
 
-        location.text("  " + (currentPage + 1) + " / " + maxPage + "  ");
+        Viewtify.inUI(() -> {
+            location.text("  " + (currentPage + 1) + " / " + maxPage + "  ");
+        });
 
         WritableImage image = images[currentPage];
         view.ui.setFitWidth(image.getWidth());

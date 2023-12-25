@@ -1052,7 +1052,13 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
             });
 
             filter.observe().to(v -> {
-                if (filtered != null) filtered.setPredicate(v);
+                if (filtered != null) {
+                    if (filtered.getPredicate() == v) {
+                        invokeRefilter();
+                    } else {
+                        filtered.setPredicate(v);
+                    }
+                }
             });
             sorter.observe().to(v -> {
                 if (sorted.getValue() != null) sorted.getValue().setComparator(v);
@@ -1093,7 +1099,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 synchronized (this) {
                     if (query == null) {
                         query = new CompoundQuery();
-                        query.updated.to(filter::set);
+                        query.updated.effect(() -> System.out.println("UPDATE")).to(filter::set);
                     }
                 }
             }

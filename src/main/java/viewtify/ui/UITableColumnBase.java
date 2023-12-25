@@ -19,7 +19,7 @@ import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.query.CompoundQuery.Query;
 import viewtify.ui.query.QueryView;
 
-public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowV, ColumnV, Table extends UITableBase<RowV, ? extends Control, Table>>
+public abstract class UITableColumnBase<Column extends TableColumnBase, Self extends UITableColumnBase, RowV, ColumnV, T extends UITableBase<RowV, ? extends Control, T>>
         implements UserInterfaceProvider<Column>, LabelHelper<Self>, StyleHelper<Self, Column> {
 
     /** The actual widget. */
@@ -56,7 +56,7 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
      * 
      * @return
      */
-    public abstract Table table();
+    public abstract T table();
 
     /**
      * Enable the enhanced filtering user-interface.
@@ -69,7 +69,7 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
 
         if (enable) {
             if (graphic == null) {
-                Table table = table();
+                T table = table();
                 query = table.query().addObservableQuery(ui.textProperty(), columnType, ui::getCellObservableValue);
 
                 UIButton button = new UIButton(null);
