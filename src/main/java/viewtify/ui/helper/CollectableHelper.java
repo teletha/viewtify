@@ -38,6 +38,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -1099,7 +1100,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 synchronized (this) {
                     if (query == null) {
                         query = new CompoundQuery();
-                        query.updated.effect(() -> System.out.println("UPDATE")).to(filter::set);
+                        query.updated.to(filter::set);
                     }
                 }
             }

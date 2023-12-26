@@ -12,7 +12,6 @@ package viewtify.ui.helper;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
@@ -92,7 +91,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param contents The contents to display in popup.
      * @return Chainable API.
      */
-    default Self popup(UserInterfaceProvider<Node> contents) {
+    default Self popup(UserInterfaceProvider<? extends Node> contents) {
         return popup(null, contents);
     }
 
@@ -102,7 +101,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param contents The contents to display in popup.
      * @return Chainable API.
      */
-    default Self popup(ArrowLocation arrow, UserInterfaceProvider<Node> contents) {
+    default Self popup(ArrowLocation arrow, UserInterfaceProvider<? extends Node> contents) {
         if (contents != null) {
             popup(arrow, () -> contents);
         }
@@ -164,11 +163,21 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
                         p.setOnHidden(e -> show(builder, p, x, y));
                     }
                 } else {
-                    show(builder, p, x, y);
+                    show(builder, arrow);
                 }
             });
         }
         return (Self) this;
+    }
+
+    /**
+     * @param builder
+     * @param arrow
+     */
+    private void show(Supplier<UserInterfaceProvider<? extends Node>> builder, ArrowLocation arrow) {
+        Bounds bound = ui().localToScreen(ui().getBoundsInLocal());
+
+        Viewtify.dialog().showPopup(arrow, bound, builder);
     }
 
     /**
@@ -178,14 +187,15 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * @param popup A singleton popup widget.
      */
     private void show(Supplier<UserInterfaceProvider<? extends Node>> builder, PopOver popup, double x, double y) {
-        Platform.runLater(() -> {
-            Node ui = builder.get().ui();
-
-            popup.setContentNode(ui);
-            popup.show(ui(), x, y);
-            popup.setUserData(ui());
-            popup.setOnHidden(e -> popup.setContentNode(null));
-        });
+        Viewtify.dialog().showPopup(x, y, builder);
+        // Platform.runLater(() -> {
+        // Node ui = builder.get().ui();
+        //
+        // popup.setContentNode(ui);
+        // popup.show(ui(), x, y);
+        // popup.setUserData(ui());
+        // popup.setOnHidden(e -> popup.setContentNode(null));
+        // });
     }
 
     /**

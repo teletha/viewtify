@@ -10,9 +10,12 @@
 package viewtify;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.DoublePropertyBase;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -31,9 +34,14 @@ import javafx.scene.image.WritableImage;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
@@ -47,6 +55,7 @@ import viewtify.ui.UIButton;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
 import viewtify.ui.UserInterface;
+import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
@@ -59,10 +68,13 @@ import viewtify.ui.view.PrintPreview.PrintInfo;
 public final class ViewtyDialog<T> {
 
     /** The associated stage. */
-    private final Stage stage;
+    private Stage stage;
 
     /** The dialog style. */
     private StageStyle style = StageStyle.DECORATED;
+
+    /** The dialog modality. */
+    private Modality modality = Modality.APPLICATION_MODAL;
 
     /** The title of this dialog. */
     private Variable<String> title;
@@ -138,6 +150,19 @@ public final class ViewtyDialog<T> {
     public ViewtyDialog<T> style(StageStyle style) {
         if (style != null) {
             this.style = style;
+        }
+        return this;
+    }
+
+    /**
+     * Configure modality of this dialog.
+     * 
+     * @param modality A dialog modality.
+     * @return Chainable API.
+     */
+    public ViewtyDialog<T> modal(Modality modality) {
+        if (modality != null) {
+            this.modality = modality;
         }
         return this;
     }
@@ -315,6 +340,7 @@ public final class ViewtyDialog<T> {
         });
 
         DialogPane dialogPane = dialog.getDialogPane();
+        view.dialog = dialog;
         view.pane = dialogPane;
 
         Node ui = view.ui();
@@ -339,7 +365,7 @@ public final class ViewtyDialog<T> {
         if (blurable) {
             Parent owner = dialog.getOwner().getScene().getRoot();
             owner.setEffect(new BoxBlur(5, 5, 8));
-            dialog.addEventHandler(DialogEvent.DIALOG_CLOSE_REQUEST, e -> {
+            dialog.getDialogPane().getScene().getWindow().addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> {
                 owner.setEffect(null);
             });
         }
@@ -474,6 +500,80 @@ public final class ViewtyDialog<T> {
     }
 
     /**
+     * @param builder
+     */
+    public void showPopup(ArrowLocation arrow, Bounds source, Supplier<UserInterfaceProvider<? extends Node>> builder) {
+        fadable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
+
+            @Override
+            protected ViewDSL declareUI() {
+                return new ViewDSL() {
+                    {
+                        $(builder.get());
+                    }
+                };
+            }
+
+            @Override
+            protected void initialize() {
+                Node node = Objects
+                        .requireNonNullElse(dialog.getOwner().getScene().getFocusOwner(), dialog.getOwner().getScene().getRoot());
+
+                Bounds bounds = ui().getBoundsInLocal();
+                double x, y;
+                double gap = 5;
+
+                x = source.getCenterX() - (bounds.getWidth() / 2);
+                y = source.getMaxY() + gap;
+
+                Window window = pane.getScene().getWindow();
+                window.setOpacity(0);
+                window.setY(y - 10);
+                window.setX(x);
+
+                DoubleProperty a = new DoublePropertyBase() {
+
+                    @Override
+                    public String getName() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getBean() {
+                        return null;
+                    }
+
+                    /**
+                     * {@inheritDoc}
+                     */
+                    @Override
+                    public double get() {
+                        return window.getY();
+                    }
+
+                    /**
+                     * {@inheritDoc}
+                     */
+                    @Override
+                    public void set(double newValue) {
+                        window.setY(newValue);
+                    }
+                };
+
+                Anime.define().effect(window.opacityProperty(), 1).effect(a, y).run(() -> {
+                    Viewtify.observe(window.focusedProperty()).take(v -> !v).take(1).to(() -> {
+                        System.out.println("REG");
+                        Anime.define().effect(window.opacityProperty(), 0).effect(a, y + 10).run(() -> {
+                            window.hide();
+                            System.out.println(node + " @@");
+                        });
+                    });
+                });
+            }
+        });
+    }
+
+    /**
      * Show the print preview dialog.
      */
     public Variable<PrintInfo> showPrintPreview(WritableImage... images) {
@@ -501,6 +601,7 @@ public final class ViewtyDialog<T> {
     private <D extends Dialog<R>, R> D initialize(D dialog) {
         dialog.initOwner(stage);
         dialog.initStyle(style);
+        dialog.initModality(modality);
         DialogPane dialogPane = dialog.getDialogPane();
 
         if (title != null) {
@@ -592,6 +693,8 @@ public final class ViewtyDialog<T> {
 
         /** The value holder. */
         public V value;
+
+        Dialog dialog;
 
         /** The associated dialog pane. */
         DialogPane pane;
