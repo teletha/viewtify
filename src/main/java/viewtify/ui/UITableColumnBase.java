@@ -14,6 +14,9 @@ import javafx.scene.control.Control;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
+
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.query.CompoundQuery.Query;
@@ -74,8 +77,7 @@ public abstract class UITableColumnBase<Column extends TableColumnBase, Self ext
 
                 UIButton button = new UIButton(null);
                 button.style("filterable").styleWhile(table.isFiltering(), "filtering");
-                button.focusable(false);
-                button.popup(() -> new QueryView(table, query));
+                button.popup(ArrowLocation.BOTTOM_CENTER, () -> new QueryView(table, query));
 
                 ui.setGraphic(button.ui());
             }
