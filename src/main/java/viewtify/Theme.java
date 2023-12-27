@@ -70,7 +70,12 @@ public enum Theme {
      */
     private Color color(String code) {
         if (code.startsWith("-fx-")) {
-            return color(Modena.colors.get(code));
+            Color color = variables.get(code);
+            if (color == null) {
+                return color(Modena.colors.get(code));
+            } else {
+                return color;
+            }
         }
 
         if (code.startsWith("derive")) {
@@ -126,6 +131,15 @@ public enum Theme {
      */
     public Color accent() {
         return variables.getOrDefault("-fx-accent", Color.BLACK);
+    }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
+    public Color color() {
+        return variables.getOrDefault("-fx-color", Color.BLACK);
     }
 
     /**
@@ -197,6 +211,6 @@ public enum Theme {
      * @return
      */
     public Color background() {
-        return variables.getOrDefault("-fx-background-color", Color.BLACK);
+        return variables.getOrDefault("-fx-background", Color.BLACK);
     }
 }

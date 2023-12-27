@@ -9,6 +9,7 @@
  */
 package viewtify.style;
 
+import stylist.Style;
 import stylist.StyleDSL;
 
 /**
@@ -24,4 +25,10 @@ public interface ViewtyStyle extends StyleDSL {
             font.smooth.grayscale();
         });
     }
+
+    Style popup = () -> {
+        padding.size(15, px);
+        border.radius(5, px).color("derive(-fx-color,-30%)");
+        background.color("-fx-control-inner-background");
+    };
 }

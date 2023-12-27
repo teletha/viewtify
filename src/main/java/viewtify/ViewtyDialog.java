@@ -332,7 +332,6 @@ public final class ViewtyDialog<T> {
         });
 
         DialogPane dialogPane = dialog.getDialogPane();
-        view.dialog = dialog;
         view.pane = dialogPane;
 
         Node ui = view.ui();
@@ -612,10 +611,8 @@ public final class ViewtyDialog<T> {
         /** The value holder. */
         public V value;
 
-        Dialog dialog;
-
         /** The associated dialog pane. */
-        DialogPane pane;
+        protected DialogPane pane;
 
         /** The page title. */
         @Override

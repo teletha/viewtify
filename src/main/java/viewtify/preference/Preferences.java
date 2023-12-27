@@ -27,7 +27,9 @@ import kiss.Signal;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseFunction;
+import viewtify.Theme;
 import viewtify.Viewtify;
+import viewtify.ui.view.AppearanceSetting;
 
 public abstract class Preferences implements Storable<Preferences>, Extensible {
 
@@ -263,6 +265,15 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
         for (PreferencesList preferencesList : CACHE_LIST.values()) {
             Viewtify.inUI((Runnable) preferencesList::restore);
         }
+    }
+
+    /**
+     * Shorthand method to access theme.
+     * 
+     * @return
+     */
+    public static Theme theme() {
+        return of(AppearanceSetting.class).theme.exact();
     }
 
     /**

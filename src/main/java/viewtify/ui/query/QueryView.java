@@ -41,7 +41,7 @@ public class QueryView<M> extends View {
      */
     class view extends ViewDSL {
         {
-            $(vbox, style.root, () -> {
+            $(vbox, () -> {
                 $(title, FormStyles.LabelMin);
                 for (Query q : compound.queries()) {
                     $(new Editor(q));
@@ -54,11 +54,6 @@ public class QueryView<M> extends View {
      * Declare styles.
      */
     interface style extends StyleDSL {
-        Style root = () -> {
-            padding.size(15, px);
-            border.radius(3, px).color("-fx-outer-border");
-        };
-
         Style addition = () -> {
             text.align.right();
         };

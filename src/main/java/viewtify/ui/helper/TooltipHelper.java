@@ -16,8 +16,12 @@ import org.controlsfx.control.PopOver.ArrowLocation;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.PopupWindow.AnchorLocation;
@@ -25,8 +29,10 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import kiss.Variable;
+import viewtify.Theme;
 import viewtify.Viewtify;
 import viewtify.ViewtyDialog.DialogView;
+import viewtify.preference.Preferences;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
@@ -163,6 +169,12 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
 
             @Override
             protected void initialize() {
+                Theme theme = Preferences.theme();
+                BackgroundFill outer = new BackgroundFill(theme.color(), new CornerRadii(3), new Insets(0));
+                BackgroundFill inner = new BackgroundFill(theme.background(), new CornerRadii(3), new Insets(1));
+                pane.getScene().setFill(null);
+                pane.setBackground(new Background(outer, inner));
+
                 Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
                 Bounds popupBounds = ui().getBoundsInLocal();
                 double x, y;
