@@ -35,6 +35,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
@@ -100,6 +101,9 @@ public final class ViewtyDialog<T> {
 
     /** The dialog effect. */
     private boolean blurable;
+
+    /** The dialog mode. */
+    private boolean blockable = true;
 
     /** The diposer. */
     private final Disposable disposer = Disposable.empty();
@@ -243,6 +247,16 @@ public final class ViewtyDialog<T> {
      */
     public ViewtyDialog<T> blurable() {
         blurable = true;
+        return this;
+    }
+
+    /**
+     * Congifure the loading mode.
+     * 
+     * @return
+     */
+    public ViewtyDialog<T> unblockable() {
+        blockable = false;
         return this;
     }
 
@@ -597,7 +611,13 @@ public final class ViewtyDialog<T> {
                 }
             });
 
-            return Variable.of(dialog.showAndWait().orElseGet(defaultValue));
+            if (blockable) {
+                return Variable.of(dialog.showAndWait().orElseGet(defaultValue));
+            } else {
+                dialog.show();
+                return Variable.empty();
+
+            }
         } finally {
             disposer.dispose();
         }

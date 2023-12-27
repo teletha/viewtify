@@ -9,13 +9,14 @@
  */
 package viewtify.ui;
 
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
+
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.query.CompoundQuery.Query;

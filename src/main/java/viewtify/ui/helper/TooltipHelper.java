@@ -12,8 +12,6 @@ package viewtify.ui.helper;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
@@ -28,7 +26,12 @@ import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
+
+import org.controlsfx.control.PopOver.ArrowLocation;
+
+import kiss.I;
 import kiss.Variable;
+import kiss.WiseRunnable;
 import viewtify.Theme;
 import viewtify.Viewtify;
 import viewtify.ViewtyDialog.DialogView;
@@ -154,62 +157,68 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
             return;
         }
 
-        unpopup();
+        unpopup(() -> {
+            Viewtify.dialog()
+                    .unblockable()
+                    .disableButtons(true)
+                    .style(StageStyle.TRANSPARENT)
+                    .modal(Modality.NONE)
+                    .show(new DialogView<>() {
 
-        Viewtify.dialog().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
+                        @Override
+                        protected ViewDSL declareUI() {
+                            return new ViewDSL() {
+                                {
+                                    $(builder.get());
+                                }
+                            };
+                        }
 
-            @Override
-            protected ViewDSL declareUI() {
-                return new ViewDSL() {
-                    {
-                        $(builder.get());
-                    }
-                };
-            }
+                        @Override
+                        protected void initialize() {
+                            Theme theme = Preferences.theme();
+                            BackgroundFill outer = new BackgroundFill(theme.color(), new CornerRadii(3), new Insets(0));
+                            BackgroundFill inner = new BackgroundFill(theme.background(), new CornerRadii(3), new Insets(1));
+                            pane.getScene().setFill(null);
+                            pane.setBackground(new Background(outer, inner));
 
-            @Override
-            protected void initialize() {
-                Theme theme = Preferences.theme();
-                BackgroundFill outer = new BackgroundFill(theme.color(), new CornerRadii(3), new Insets(0));
-                BackgroundFill inner = new BackgroundFill(theme.background(), new CornerRadii(3), new Insets(1));
-                pane.getScene().setFill(null);
-                pane.setBackground(new Background(outer, inner));
+                            Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
+                            Bounds popupBounds = ui().getBoundsInLocal();
+                            double x, y;
+                            double gap = 5;
 
-                Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
-                Bounds popupBounds = ui().getBoundsInLocal();
-                double x, y;
-                double gap = 5;
+                            x = switch (arrow) {
+                            case TOP_CENTER, BOTTOM_CENTER -> sourceBounds.getCenterX() - popupBounds.getWidth() / 2;
+                            case TOP_LEFT, BOTTOM_LEFT -> sourceBounds.getCenterX();
+                            case TOP_RIGHT, BOTTOM_RIGHT -> sourceBounds.getCenterX() - popupBounds.getWidth();
+                            case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> sourceBounds.getMinX() - popupBounds.getWidth() - gap;
+                            case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> sourceBounds.getMaxX() + gap;
+                            };
+                            y = switch (arrow) {
+                            case RIGHT_TOP, LEFT_TOP -> sourceBounds.getMinY();
+                            case RIGHT_CENTER, LEFT_CENTER -> sourceBounds.getCenterY() - popupBounds.getHeight() / 2;
+                            case RIGHT_BOTTOM, LEFT_BOTTOM -> sourceBounds.getMaxY() - popupBounds.getHeight();
+                            case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> sourceBounds.getMaxY() + gap;
+                            case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> sourceBounds.getMinY() - popupBounds.getHeight() - gap;
+                            };
 
-                x = switch (arrow) {
-                case TOP_CENTER, BOTTOM_CENTER -> sourceBounds.getCenterX() - popupBounds.getWidth() / 2;
-                case TOP_LEFT, BOTTOM_LEFT -> sourceBounds.getCenterX();
-                case TOP_RIGHT, BOTTOM_RIGHT -> sourceBounds.getCenterX() - popupBounds.getWidth();
-                case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> sourceBounds.getMinX() - popupBounds.getWidth() - gap;
-                case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> sourceBounds.getMaxX() + gap;
-                };
-                y = switch (arrow) {
-                case RIGHT_TOP, LEFT_TOP -> sourceBounds.getMinY();
-                case RIGHT_CENTER, LEFT_CENTER -> sourceBounds.getCenterY() - popupBounds.getHeight() / 2;
-                case RIGHT_BOTTOM, LEFT_BOTTOM -> sourceBounds.getMaxY() - popupBounds.getHeight();
-                case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> sourceBounds.getMaxY() + gap;
-                case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> sourceBounds.getMinY() - popupBounds.getHeight() - gap;
-                };
+                            Window window = ui().getScene().getWindow();
+                            window.setOpacity(0);
+                            window.setY(y - 10);
+                            window.setX(x);
 
-                Window window = ui().getScene().getWindow();
-                window.setOpacity(0);
-                window.setY(y - 10);
-                window.setX(x);
+                            DoubleProperty locationY = Viewtify.property(window::getY, window::setY);
 
-                DoubleProperty locationY = Viewtify.property(window::getY, window::setY);
+                            Anime.define().effect(window.opacityProperty(), 1).effect(locationY, y).run(() -> {
+                                window.requestFocus();
+                                ReferenceHolder.popups.put(source, window);
 
-                Anime.define().effect(window.opacityProperty(), 1).effect(locationY, y).run(() -> {
-                    ReferenceHolder.popups.put(source, window);
-
-                    Viewtify.observe(window.focusedProperty()).take(v -> !v).to(() -> {
-                        hidePopup(source);
+                                Viewtify.observe(window.focusedProperty()).take(v -> !v).to(() -> {
+                                    hidePopup(source);
+                                });
+                            });
+                        }
                     });
-                });
-            }
         });
     }
 
@@ -217,8 +226,21 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * Close the current popup window.
      */
     static void unpopup() {
-        for (Node source : ReferenceHolder.popups.keySet()) {
-            hidePopup(source);
+        unpopup(I.NoOP);
+    }
+
+    /**
+     * Close the current popup window.
+     */
+    private static void unpopup(WiseRunnable... finisher) {
+        if (ReferenceHolder.popups.isEmpty()) {
+            for (WiseRunnable fin : finisher) {
+                fin.run();
+            }
+        } else {
+            for (Node source : ReferenceHolder.popups.keySet()) {
+                hidePopup(source, finisher);
+            }
         }
     }
 
@@ -227,7 +249,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      * 
      * @param source
      */
-    private static void hidePopup(Node source) {
+    private static void hidePopup(Node source, WiseRunnable... finisher) {
         Window window = ReferenceHolder.popups.get(source);
         if (window != null) {
             DoubleProperty locationY = Viewtify.property(window::getY, window::setY);
@@ -235,6 +257,9 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
             Anime.define().effect(window.opacityProperty(), 0).effect(locationY, locationY.doubleValue() + 10).run(() -> {
                 window.hide();
                 ReferenceHolder.popups.remove(source);
+                for (WiseRunnable fin : finisher) {
+                    fin.run();
+                }
             });
         }
     }

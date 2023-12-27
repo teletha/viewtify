@@ -142,7 +142,7 @@ public class QueryView<M> extends View {
             ((ValueHelper<?, V>) input).observing(v -> tester.disable(v == null));
 
             if (query == initialFocus) {
-                input.focus();
+                // input.focus();
             }
         }
     }
