@@ -12,19 +12,24 @@ package viewtify.ui.helper;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import org.controlsfx.control.PopOver.ArrowLocation;
+
+import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.PopupWindow.AnchorLocation;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.util.Duration;
-
-import org.controlsfx.control.PopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import kiss.Variable;
 import viewtify.Viewtify;
+import viewtify.ViewtyDialog.DialogView;
 import viewtify.ui.UserInterfaceProvider;
+import viewtify.ui.ViewDSL;
+import viewtify.ui.anime.Anime;
 
 /**
  * An interface providing methods for managing tooltips and popups for a UI element.
@@ -128,43 +133,7 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
         if (builder != null) {
             UserActionHelper<?> helper = UserActionHelper.of(ui());
             helper.when(User.LeftClick, event -> {
-                PopOver p = ReferenceHolder.popover();
-                double x, y;
-                if (arrow == null) {
-                    x = event.getScreenX() + 25;
-                    y = event.getScreenY();
-                } else {
-                    int size = 6;
-                    p.setArrowSize(size);
-                    p.setArrowLocation(arrow);
-
-                    Bounds bound = ui().localToScreen(ui().getBoundsInLocal());
-                    x = switch (arrow) {
-                    case TOP_CENTER, BOTTOM_CENTER -> bound.getCenterX() - bound.getWidth() / 4;
-                    case TOP_LEFT, BOTTOM_LEFT -> bound.getCenterX();
-                    case TOP_RIGHT, BOTTOM_RIGHT -> bound.getMinX();
-                    case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> bound.getMinX();
-                    case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> bound.getMaxX();
-                    };
-                    y = switch (arrow) {
-                    case RIGHT_TOP, LEFT_TOP -> bound.getCenterY();
-                    case RIGHT_CENTER, LEFT_CENTER -> bound.getCenterY() - bound.getHeight() / 4;
-                    case RIGHT_BOTTOM, LEFT_BOTTOM -> bound.getMinY();
-                    case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> bound.getMaxY();
-                    case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> bound.getMinY();
-                    };
-                }
-
-                if (p.isShowing()) {
-                    if (p.getUserData() == ui()) {
-                        p.hide();
-                        p.setUserData(null);
-                    } else {
-                        p.setOnHidden(e -> show(builder, p, x, y));
-                    }
-                } else {
-                    show(builder, arrow);
-                }
+                showPopup(ui(), arrow, builder);
             });
         }
         return (Self) this;
@@ -172,64 +141,89 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
 
     /**
      * @param builder
-     * @param arrow
      */
-    private void show(Supplier<UserInterfaceProvider<? extends Node>> builder, ArrowLocation arrow) {
-        Bounds bound = ui().localToScreen(ui().getBoundsInLocal());
+    private void showPopup(Node source, ArrowLocation arrow, Supplier<UserInterfaceProvider<? extends Node>> builder) {
+        if (ReferenceHolder.popups.containsKey(source)) {
+            hidePopup(source);
+            return;
+        }
 
-        Viewtify.dialog().showPopup(arrow, bound, builder);
-    }
+        unpopup();
 
-    /**
-     * Show popup.
-     * 
-     * @param builder Create the contents. This callback will be invoked every showing the popup.
-     * @param popup A singleton popup widget.
-     */
-    private void show(Supplier<UserInterfaceProvider<? extends Node>> builder, PopOver popup, double x, double y) {
-        Viewtify.dialog().showPopup(x, y, builder);
-        // Platform.runLater(() -> {
-        // Node ui = builder.get().ui();
-        //
-        // popup.setContentNode(ui);
-        // popup.show(ui(), x, y);
-        // popup.setUserData(ui());
-        // popup.setOnHidden(e -> popup.setContentNode(null));
-        // });
+        Viewtify.dialog().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
+
+            @Override
+            protected ViewDSL declareUI() {
+                return new ViewDSL() {
+                    {
+                        $(builder.get());
+                    }
+                };
+            }
+
+            @Override
+            protected void initialize() {
+                Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
+                Bounds popupBounds = ui().getBoundsInLocal();
+                double x, y;
+                double gap = 5;
+
+                x = switch (arrow) {
+                case TOP_CENTER, BOTTOM_CENTER -> sourceBounds.getCenterX() - popupBounds.getWidth() / 2;
+                case TOP_LEFT, BOTTOM_LEFT -> sourceBounds.getCenterX();
+                case TOP_RIGHT, BOTTOM_RIGHT -> sourceBounds.getCenterX() - popupBounds.getWidth();
+                case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> sourceBounds.getMinX() - popupBounds.getWidth() - gap;
+                case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> sourceBounds.getMaxX() + gap;
+                };
+                y = switch (arrow) {
+                case RIGHT_TOP, LEFT_TOP -> sourceBounds.getMinY();
+                case RIGHT_CENTER, LEFT_CENTER -> sourceBounds.getCenterY() - popupBounds.getHeight() / 2;
+                case RIGHT_BOTTOM, LEFT_BOTTOM -> sourceBounds.getMaxY() - popupBounds.getHeight();
+                case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> sourceBounds.getMaxY() + gap;
+                case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> sourceBounds.getMinY() - popupBounds.getHeight() - gap;
+                };
+
+                Window window = ui().getScene().getWindow();
+                window.setOpacity(0);
+                window.setY(y - 10);
+                window.setX(x);
+
+                DoubleProperty locationY = Viewtify.property(window::getY, window::setY);
+
+                Anime.define().effect(window.opacityProperty(), 1).effect(locationY, y).run(() -> {
+                    ReferenceHolder.popups.put(source, window);
+
+                    Viewtify.observe(window.focusedProperty()).take(v -> !v).to(() -> {
+                        hidePopup(source);
+                    });
+                });
+            }
+        });
     }
 
     /**
      * Close the current popup window.
      */
     static void unpopup() {
-        ReferenceHolder.popover().hide();
+        for (Node source : ReferenceHolder.popups.keySet()) {
+            hidePopup(source);
+        }
     }
 
     /**
-     * Sets the content to be displayed on an overlay popup using a {@link Supplier}.
-     *
-     * @param builder Create the contents. This callback will be invoked every time the overlay is
-     *            shown.
-     * @return The implementing class instance for method chaining.
+     * Close the specified popup window.
+     * 
+     * @param source
      */
-    default Self overlay(Supplier<UserInterfaceProvider<? extends Node>> builder) {
-        if (builder != null) {
-            PopOver p = ReferenceHolder.popover();
-            W node = ui();
-            Bounds local = node.getBoundsInLocal();
-            Bounds bounds = node.localToScreen(local);
+    private static void hidePopup(Node source) {
+        Window window = ReferenceHolder.popups.get(source);
+        if (window != null) {
+            DoubleProperty locationY = Viewtify.property(window::getY, window::setY);
 
-            if (p.isShowing()) {
-                if (p.getUserData() == ui()) {
-                    p.hide();
-                    p.setUserData(null);
-                } else {
-                    p.setOnHidden(e -> show(builder, p, bounds.getMinX(), bounds.getMinY()));
-                }
-            } else {
-                show(builder, p, bounds.getMinX(), bounds.getMinY());
-            }
+            Anime.define().effect(window.opacityProperty(), 0).effect(locationY, locationY.doubleValue() + 10).run(() -> {
+                window.hide();
+                ReferenceHolder.popups.remove(source);
+            });
         }
-        return (Self) this;
     }
 }

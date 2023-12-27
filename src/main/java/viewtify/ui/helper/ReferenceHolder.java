@@ -9,22 +9,16 @@
  */
 package viewtify.ui.helper;
 
-import org.controlsfx.control.PopOver;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javafx.scene.Node;
+import javafx.stage.Window;
 
 public abstract class ReferenceHolder {
 
-    /** The reusable managed popup base. (Lazy SINGLETON) */
-    private static PopOver popover;
-
-    /** The reusable managed popup base. (Lazy SINGLETON) */
-    static final synchronized PopOver popover() {
-        if (popover == null) {
-            popover = new PopOver();
-            popover.setArrowSize(0);
-            popover.setDetachable(false);
-        }
-        return popover;
-    }
+    /** The popup manager. */
+    static final Map<Node, Window> popups = new ConcurrentHashMap();
 
     /** The reference holder. */
     volatile CollectableHelper.Ð collectable;

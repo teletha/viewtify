@@ -33,6 +33,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.DoubleConsumer;
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -45,6 +47,7 @@ import javafx.beans.binding.FloatExpression;
 import javafx.beans.binding.IntegerExpression;
 import javafx.beans.binding.LongExpression;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.DoublePropertyBase;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
@@ -1297,6 +1300,44 @@ public final class Viewtify {
                 map.removeListener(listener);
             });
         });
+    }
+
+    /**
+     * Create the wrapped property of the specified setter.
+     * 
+     * @param getter
+     * @param setter
+     * @return
+     */
+    public static DoubleProperty property(DoubleSupplier getter, DoubleConsumer setter) {
+        return new DoublePropertyBase() {
+
+            @Override
+            public String getName() {
+                return null;
+            }
+
+            @Override
+            public Object getBean() {
+                return null;
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public double get() {
+                return getter.getAsDouble();
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void set(double newValue) {
+                setter.accept(newValue);
+            }
+        };
     }
 
     /**

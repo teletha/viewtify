@@ -10,12 +10,9 @@
 package viewtify;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.DoublePropertyBase;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -37,11 +34,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
@@ -55,7 +48,6 @@ import viewtify.ui.UIButton;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
 import viewtify.ui.UserInterface;
-import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
@@ -495,80 +487,6 @@ public final class ViewtyDialog<T> {
             view.label.text(message);
             if (setting != null) {
                 setting.accept(view.input);
-            }
-        });
-    }
-
-    /**
-     * @param builder
-     */
-    public void showPopup(ArrowLocation arrow, Bounds source, Supplier<UserInterfaceProvider<? extends Node>> builder) {
-        fadable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
-
-            @Override
-            protected ViewDSL declareUI() {
-                return new ViewDSL() {
-                    {
-                        $(builder.get());
-                    }
-                };
-            }
-
-            @Override
-            protected void initialize() {
-                Node node = Objects
-                        .requireNonNullElse(dialog.getOwner().getScene().getFocusOwner(), dialog.getOwner().getScene().getRoot());
-
-                Bounds bounds = ui().getBoundsInLocal();
-                double x, y;
-                double gap = 5;
-
-                x = source.getCenterX() - (bounds.getWidth() / 2);
-                y = source.getMaxY() + gap;
-
-                Window window = pane.getScene().getWindow();
-                window.setOpacity(0);
-                window.setY(y - 10);
-                window.setX(x);
-
-                DoubleProperty a = new DoublePropertyBase() {
-
-                    @Override
-                    public String getName() {
-                        return null;
-                    }
-
-                    @Override
-                    public Object getBean() {
-                        return null;
-                    }
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public double get() {
-                        return window.getY();
-                    }
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public void set(double newValue) {
-                        window.setY(newValue);
-                    }
-                };
-
-                Anime.define().effect(window.opacityProperty(), 1).effect(a, y).run(() -> {
-                    Viewtify.observe(window.focusedProperty()).take(v -> !v).take(1).to(() -> {
-                        System.out.println("REG");
-                        Anime.define().effect(window.opacityProperty(), 0).effect(a, y + 10).run(() -> {
-                            window.hide();
-                            System.out.println(node + " @@");
-                        });
-                    });
-                });
             }
         });
     }
