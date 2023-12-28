@@ -17,12 +17,12 @@ import kiss.Singleton;
 import stylist.Style;
 import stylist.StyleDSL;
 import stylist.value.Color;
+import viewtify.ViewtyDialog;
 import viewtify.ui.UIHBox;
 import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.helper.TooltipHelper;
 import viewtify.ui.helper.User;
 
 class Visualizers {
@@ -227,7 +227,7 @@ class Visualizers {
             protected void initialize() {
                 edit.text(FontAwesome.Glyph.PENCIL).tooltip(en("Edit")).enable(event.isEditable());
                 delete.text(FontAwesome.Glyph.TRASH).tooltip(en("Delete")).enable(event.isEditable());
-                close.text(FontAwesome.Glyph.CLOSE).tooltip(en("Close")).when(User.LeftClick, TooltipHelper::unpopup);
+                close.text(FontAwesome.Glyph.CLOSE).tooltip(en("Close")).when(User.LeftClick, ViewtyDialog::unpopup);
             }
         }
     }

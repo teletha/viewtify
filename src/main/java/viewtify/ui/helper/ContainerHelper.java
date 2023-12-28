@@ -26,7 +26,7 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
      * @param provider
      * @return
      */
-    default Self content(UserInterfaceProvider<Node> provider, SwapAnime... anime) {
+    default Self content(UserInterfaceProvider<? extends Node> provider, SwapAnime... anime) {
         if (provider != null) {
             Node after = provider.ui();
             FXUtils.setAssociation(after, Disposable.class, provider);

@@ -12,7 +12,10 @@ package viewtify;
 import java.util.List;
 import java.util.function.Supplier;
 
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import javafx.beans.property.DoubleProperty;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -28,27 +31,33 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
 import kiss.Variable;
 import kiss.WiseConsumer;
+import kiss.WiseRunnable;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
+import viewtify.preference.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIText;
 import viewtify.ui.UserInterface;
+import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
@@ -502,6 +511,120 @@ public final class ViewtyDialog<T> {
                 setting.accept(view.input);
             }
         });
+    }
+
+    /** The popup manager. */
+    private static Window popup;
+
+    /**
+     * @param builder
+     */
+    public void showPopup(Supplier<UserInterfaceProvider<? extends Node>> builder) {
+        showPopup(stage.getScene().getRoot(), null, builder);
+    }
+
+    /**
+     * @param builder
+     */
+    public void showPopup(Node source, ArrowLocation arrow, Supplier<UserInterfaceProvider<? extends Node>> builder) {
+        unpopup(() -> {
+            unblockable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
+
+                @Override
+                protected ViewDSL declareUI() {
+                    return new ViewDSL() {
+                        {
+                            $(builder.get());
+                        }
+                    };
+                }
+
+                @Override
+                protected void initialize() {
+                    Theme theme = Preferences.theme();
+                    BackgroundFill outer = new BackgroundFill(theme.color(), new CornerRadii(3), new Insets(0));
+                    BackgroundFill inner = new BackgroundFill(theme.background(), new CornerRadii(3), new Insets(1));
+                    pane.getScene().setFill(null);
+                    pane.setBackground(new Background(outer, inner));
+
+                    Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
+                    Bounds popupBounds = ui().getBoundsInLocal();
+                    double x, y;
+                    double gap = 5;
+
+                    x = switch (arrow) {
+                    case TOP_CENTER, BOTTOM_CENTER -> sourceBounds.getCenterX() - popupBounds.getWidth() / 2;
+                    case TOP_LEFT, BOTTOM_LEFT -> sourceBounds.getCenterX();
+                    case TOP_RIGHT, BOTTOM_RIGHT -> sourceBounds.getCenterX() - popupBounds.getWidth();
+                    case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> sourceBounds.getMinX() - popupBounds.getWidth() - gap;
+                    case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> sourceBounds.getMaxX() + gap;
+                    };
+                    y = switch (arrow) {
+                    case RIGHT_TOP, LEFT_TOP -> sourceBounds.getMinY();
+                    case RIGHT_CENTER, LEFT_CENTER -> sourceBounds.getCenterY() - popupBounds.getHeight() / 2;
+                    case RIGHT_BOTTOM, LEFT_BOTTOM -> sourceBounds.getMaxY() - popupBounds.getHeight();
+                    case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> sourceBounds.getMaxY() + gap;
+                    case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> sourceBounds.getMinY() - popupBounds.getHeight() - gap;
+                    };
+
+                    Window window = ui().getScene().getWindow();
+                    window.setOpacity(0);
+                    window.setY(y - 10);
+                    window.setX(x);
+
+                    DoubleProperty locationY = Viewtify.property(window::getY, window::setY);
+
+                    Anime.define().effect(window.opacityProperty(), 1).effect(locationY, y).run(() -> {
+                        window.requestFocus();
+                        popup = window;
+
+                        Viewtify.observe(window.focusedProperty()).take(v -> !v).to(() -> {
+                            hidePopup();
+                        });
+                    });
+                }
+            });
+        });
+    }
+
+    public static void unpopup() {
+        unpopup(I.NoOP);
+    }
+
+    /**
+     * Close the current popup window.
+     */
+    private static void unpopup(WiseRunnable... finisher) {
+        if (popup == null) {
+            for (WiseRunnable fin : finisher) {
+                fin.run();
+            }
+        } else {
+            hidePopup(finisher);
+        }
+    }
+
+    /**
+     * Close the specified popup window.
+     * 
+     * @param source
+     */
+    private static void hidePopup(WiseRunnable... finisher) {
+        Window window = popup;
+        if (window != null) {
+            DoubleProperty locationY = Viewtify.property(window::getY, window::setY);
+
+            Anime.define().effect(window.opacityProperty(), 0).effect(locationY, locationY.doubleValue() + 10).run(() -> {
+                window.setOnHidden(e -> {
+                    popup = null;
+                    for (WiseRunnable fin : finisher) {
+                        fin.run();
+                    }
+                });
+
+                window.hide();
+            });
+        }
     }
 
     /**
