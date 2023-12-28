@@ -12,8 +12,6 @@ package viewtify;
 import java.util.List;
 import java.util.function.Supplier;
 
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
@@ -42,6 +40,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
@@ -113,6 +114,9 @@ public final class ViewtyDialog<T> {
 
     /** The dialog mode. */
     private boolean blockable = true;
+
+    /** The location calculator. */
+    private WiseConsumer<Node> locator;
 
     /** The diposer. */
     private final Disposable disposer = Disposable.empty();
@@ -290,6 +294,58 @@ public final class ViewtyDialog<T> {
     }
 
     /**
+     * Configure the location of dialog.
+     * 
+     * @param x A location of x-axis.
+     * @param y A location of y-axis.
+     * @return
+     */
+    public ViewtyDialog<T> location(double x, double y) {
+        this.locator = ui -> {
+            Window window = ui.getScene().getWindow();
+            window.setY(y);
+            window.setX(x);
+        };
+        return this;
+    }
+
+    /**
+     * Configure the location of dialog.
+     * 
+     * @param source A invoker node.
+     * @param arrow Specify the ground plane of the Invoker Node and pop-up area.
+     * @return
+     */
+    public ViewtyDialog<T> location(Node source, ArrowLocation arrow) {
+        this.locator = ui -> {
+            Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
+            Bounds popupBounds = ui.getBoundsInLocal();
+            double x, y;
+            double gap = 5;
+
+            x = switch (arrow) {
+            case TOP_CENTER, BOTTOM_CENTER -> sourceBounds.getCenterX() - popupBounds.getWidth() / 2;
+            case TOP_LEFT, BOTTOM_LEFT -> sourceBounds.getCenterX();
+            case TOP_RIGHT, BOTTOM_RIGHT -> sourceBounds.getCenterX() - popupBounds.getWidth();
+            case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> sourceBounds.getMinX() - popupBounds.getWidth() - gap;
+            case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> sourceBounds.getMaxX() + gap;
+            };
+            y = switch (arrow) {
+            case RIGHT_TOP, LEFT_TOP -> sourceBounds.getMinY();
+            case RIGHT_CENTER, LEFT_CENTER -> sourceBounds.getCenterY() - popupBounds.getHeight() / 2;
+            case RIGHT_BOTTOM, LEFT_BOTTOM -> sourceBounds.getMaxY() - popupBounds.getHeight();
+            case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> sourceBounds.getMaxY() + gap;
+            case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> sourceBounds.getMinY() - popupBounds.getHeight() - gap;
+            };
+
+            Window window = ui.getScene().getWindow();
+            window.setY(y);
+            window.setX(x);
+        };
+        return this;
+    }
+
+    /**
      * Configure the size of dialog.
      * 
      * @return
@@ -365,7 +421,7 @@ public final class ViewtyDialog<T> {
         if (fadable) {
             DoubleProperty opacity = dialogPane.getScene().getWindow().opacityProperty();
 
-            dialog.setOnShowing(e -> {
+            dialog.addEventHandler(DialogEvent.DIALOG_SHOWING, e -> {
                 Anime.define().init(opacity, 0).effect(opacity, 1, 0.3).run();
             });
             dialog.addEventHandler(DialogEvent.DIALOG_CLOSE_REQUEST, e -> {
@@ -381,6 +437,12 @@ public final class ViewtyDialog<T> {
             owner.setEffect(new BoxBlur(5, 5, 8));
             dialog.getDialogPane().getScene().getWindow().addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> {
                 owner.setEffect(null);
+            });
+        }
+
+        if (locator != null) {
+            dialog.addEventHandler(DialogEvent.DIALOG_SHOWING, e -> {
+                locator.accept(dialogPane);
             });
         }
 
@@ -528,57 +590,33 @@ public final class ViewtyDialog<T> {
      */
     public void showPopup(Node source, ArrowLocation arrow, Supplier<UserInterfaceProvider<? extends Node>> builder) {
         unpopup(() -> {
-            unblockable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
+            unblockable().disableButtons(true)
+                    .style(StageStyle.TRANSPARENT)
+                    .modal(Modality.NONE)
+                    .location(source, arrow)
+                    .show(new DialogView<>() {
 
-                @Override
-                protected ViewDSL declareUI() {
-                    return new ViewDSL() {
-                        {
-                            $(builder.get());
+                        @Override
+                        protected ViewDSL declareUI() {
+                            return new ViewDSL() {
+                                {
+                                    $(builder.get());
+                                }
+                            };
                         }
-                    };
-                }
 
-                @Override
-                protected void initialize() {
-                    Theme theme = Preferences.theme();
-                    BackgroundFill outer = new BackgroundFill(theme.color(), new CornerRadii(3), new Insets(0));
-                    BackgroundFill inner = new BackgroundFill(theme.background(), new CornerRadii(3), new Insets(1));
-                    pane.getScene().setFill(null);
-                    pane.setBackground(new Background(outer, inner));
+                        @Override
+                        protected void initialize() {
+                            Theme theme = Preferences.theme();
+                            BackgroundFill outer = new BackgroundFill(theme.color(), new CornerRadii(3), new Insets(0));
+                            BackgroundFill inner = new BackgroundFill(theme.background(), new CornerRadii(3), new Insets(1));
+                            pane.getScene().setFill(null);
+                            pane.setBackground(new Background(outer, inner));
 
-                    calculatePosition(ui(), source, arrow);
-
-                    fadeIn(ui().getScene().getWindow(), I.NoOP);
-                }
-            });
+                            fadeIn(ui().getScene().getWindow(), I.NoOP);
+                        }
+                    });
         });
-    }
-
-    private void calculatePosition(Node ui, Node source, ArrowLocation arrow) {
-        Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
-        Bounds popupBounds = ui.getBoundsInLocal();
-        double x, y;
-        double gap = 5;
-
-        x = switch (arrow) {
-        case TOP_CENTER, BOTTOM_CENTER -> sourceBounds.getCenterX() - popupBounds.getWidth() / 2;
-        case TOP_LEFT, BOTTOM_LEFT -> sourceBounds.getCenterX();
-        case TOP_RIGHT, BOTTOM_RIGHT -> sourceBounds.getCenterX() - popupBounds.getWidth();
-        case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> sourceBounds.getMinX() - popupBounds.getWidth() - gap;
-        case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> sourceBounds.getMaxX() + gap;
-        };
-        y = switch (arrow) {
-        case RIGHT_TOP, LEFT_TOP -> sourceBounds.getMinY();
-        case RIGHT_CENTER, LEFT_CENTER -> sourceBounds.getCenterY() - popupBounds.getHeight() / 2;
-        case RIGHT_BOTTOM, LEFT_BOTTOM -> sourceBounds.getMaxY() - popupBounds.getHeight();
-        case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> sourceBounds.getMaxY() + gap;
-        case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> sourceBounds.getMinY() - popupBounds.getHeight() - gap;
-        };
-
-        Window window = ui.getScene().getWindow();
-        window.setY(y);
-        window.setX(x);
     }
 
     public static void unpopup() {
