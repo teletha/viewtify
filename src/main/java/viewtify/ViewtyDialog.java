@@ -514,7 +514,7 @@ public final class ViewtyDialog<T> {
     }
 
     /** The popup manager. */
-    private static Window popup;
+    private static Window popupWindow;
 
     /**
      * @param builder
@@ -547,44 +547,38 @@ public final class ViewtyDialog<T> {
                     pane.getScene().setFill(null);
                     pane.setBackground(new Background(outer, inner));
 
-                    Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
-                    Bounds popupBounds = ui().getBoundsInLocal();
-                    double x, y;
-                    double gap = 5;
+                    calculatePosition(ui(), source, arrow);
 
-                    x = switch (arrow) {
-                    case TOP_CENTER, BOTTOM_CENTER -> sourceBounds.getCenterX() - popupBounds.getWidth() / 2;
-                    case TOP_LEFT, BOTTOM_LEFT -> sourceBounds.getCenterX();
-                    case TOP_RIGHT, BOTTOM_RIGHT -> sourceBounds.getCenterX() - popupBounds.getWidth();
-                    case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> sourceBounds.getMinX() - popupBounds.getWidth() - gap;
-                    case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> sourceBounds.getMaxX() + gap;
-                    };
-                    y = switch (arrow) {
-                    case RIGHT_TOP, LEFT_TOP -> sourceBounds.getMinY();
-                    case RIGHT_CENTER, LEFT_CENTER -> sourceBounds.getCenterY() - popupBounds.getHeight() / 2;
-                    case RIGHT_BOTTOM, LEFT_BOTTOM -> sourceBounds.getMaxY() - popupBounds.getHeight();
-                    case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> sourceBounds.getMaxY() + gap;
-                    case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> sourceBounds.getMinY() - popupBounds.getHeight() - gap;
-                    };
-
-                    Window window = ui().getScene().getWindow();
-                    window.setOpacity(0);
-                    window.setY(y - 10);
-                    window.setX(x);
-
-                    DoubleProperty locationY = Viewtify.property(window::getY, window::setY);
-
-                    Anime.define().effect(window.opacityProperty(), 1).effect(locationY, y).run(() -> {
-                        window.requestFocus();
-                        popup = window;
-
-                        Viewtify.observe(window.focusedProperty()).take(v -> !v).to(() -> {
-                            hidePopup();
-                        });
-                    });
+                    fadeIn(ui().getScene().getWindow(), I.NoOP);
                 }
             });
         });
+    }
+
+    private void calculatePosition(Node ui, Node source, ArrowLocation arrow) {
+        Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
+        Bounds popupBounds = ui.getBoundsInLocal();
+        double x, y;
+        double gap = 5;
+
+        x = switch (arrow) {
+        case TOP_CENTER, BOTTOM_CENTER -> sourceBounds.getCenterX() - popupBounds.getWidth() / 2;
+        case TOP_LEFT, BOTTOM_LEFT -> sourceBounds.getCenterX();
+        case TOP_RIGHT, BOTTOM_RIGHT -> sourceBounds.getCenterX() - popupBounds.getWidth();
+        case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> sourceBounds.getMinX() - popupBounds.getWidth() - gap;
+        case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> sourceBounds.getMaxX() + gap;
+        };
+        y = switch (arrow) {
+        case RIGHT_TOP, LEFT_TOP -> sourceBounds.getMinY();
+        case RIGHT_CENTER, LEFT_CENTER -> sourceBounds.getCenterY() - popupBounds.getHeight() / 2;
+        case RIGHT_BOTTOM, LEFT_BOTTOM -> sourceBounds.getMaxY() - popupBounds.getHeight();
+        case TOP_LEFT, TOP_CENTER, TOP_RIGHT -> sourceBounds.getMaxY() + gap;
+        case BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT -> sourceBounds.getMinY() - popupBounds.getHeight() - gap;
+        };
+
+        Window window = ui.getScene().getWindow();
+        window.setY(y);
+        window.setX(x);
     }
 
     public static void unpopup() {
@@ -594,34 +588,40 @@ public final class ViewtyDialog<T> {
     /**
      * Close the current popup window.
      */
-    private static void unpopup(WiseRunnable... finisher) {
-        if (popup == null) {
-            for (WiseRunnable fin : finisher) {
-                fin.run();
-            }
+    private static void unpopup(WiseRunnable finisher) {
+        if (popupWindow == null) {
+            finisher.run();
         } else {
-            hidePopup(finisher);
+            fadeOut(popupWindow, finisher);
         }
     }
 
-    /**
-     * Close the specified popup window.
-     * 
-     * @param source
-     */
-    private static void hidePopup(WiseRunnable... finisher) {
-        Window window = popup;
+    private static void fadeIn(Window window, WiseRunnable finisher) {
+        if (window != null) {
+            double y = window.getY();
+            window.setOpacity(0);
+            window.setY(y - 10);
+
+            DoubleProperty locationY = Viewtify.property(window::getY, window::setY);
+            Anime.define().effect(window.opacityProperty(), 1).effect(locationY, y).run(() -> {
+                window.requestFocus();
+                popupWindow = window;
+
+                Viewtify.observe(window.focusedProperty()).take(v -> !v).to(() -> {
+                    fadeOut(window, I.NoOP);
+                });
+            });
+        }
+    }
+
+    private static void fadeOut(Window window, WiseRunnable finisher) {
         if (window != null) {
             DoubleProperty locationY = Viewtify.property(window::getY, window::setY);
-
             Anime.define().effect(window.opacityProperty(), 0).effect(locationY, locationY.doubleValue() + 10).run(() -> {
                 window.setOnHidden(e -> {
-                    popup = null;
-                    for (WiseRunnable fin : finisher) {
-                        fin.run();
-                    }
+                    popupWindow = null;
+                    finisher.run();
                 });
-
                 window.hide();
             });
         }
