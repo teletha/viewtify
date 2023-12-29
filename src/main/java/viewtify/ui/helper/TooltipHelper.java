@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
 import javafx.geometry.Bounds;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
@@ -126,7 +127,10 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
         if (builder != null) {
             UserActionHelper<?> helper = UserActionHelper.of(ui());
             helper.when(User.LeftClick, event -> {
-                Viewtify.dialog().showPopup(ui(), arrow, builder);
+                Viewtify.dialog()
+                        .location(ui(), Objects.requireNonNullElse(arrow, ArrowLocation.TOP_CENTER))
+                        .fadable(Side.TOP)
+                        .showPopup(builder);
             });
         }
         return (Self) this;
