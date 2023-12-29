@@ -227,7 +227,7 @@ class Visualizers {
             protected void initialize() {
                 edit.text(FontAwesome.Glyph.PENCIL).tooltip(en("Edit")).enable(event.isEditable());
                 delete.text(FontAwesome.Glyph.TRASH).tooltip(en("Delete")).enable(event.isEditable());
-                close.text(FontAwesome.Glyph.CLOSE).tooltip(en("Close")).when(User.LeftClick, ViewtyDialog::unpopup);
+                close.text(FontAwesome.Glyph.CLOSE).tooltip(en("Close")).when(User.LeftClick, ViewtyDialog::hidePopup);
             }
         }
     }

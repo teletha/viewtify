@@ -13,12 +13,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javafx.scene.Node;
-import javafx.stage.Window;
+import kiss.Disposable;
 
 public abstract class ReferenceHolder {
 
     /** The popup manager. */
-    static final Map<Node, Window> popups = new ConcurrentHashMap();
+    static final Map<Node, Disposable> popups = new ConcurrentHashMap();
 
     /** The reference holder. */
     volatile CollectableHelper.Ð collectable;

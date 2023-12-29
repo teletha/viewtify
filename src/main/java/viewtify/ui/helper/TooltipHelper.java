@@ -21,6 +21,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.stage.PopupWindow.AnchorLocation;
 import javafx.util.Duration;
+import kiss.Disposable;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
@@ -125,12 +126,26 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
      */
     default Self popup(ArrowLocation arrow, Supplier<UserInterfaceProvider<? extends Node>> builder) {
         if (builder != null) {
-            UserActionHelper<?> helper = UserActionHelper.of(ui());
+            W ui = ui();
+            UserActionHelper<?> helper = UserActionHelper.of(ui);
             helper.when(User.LeftClick, event -> {
-                Viewtify.dialog()
-                        .location(ui(), Objects.requireNonNullElse(arrow, ArrowLocation.TOP_CENTER))
-                        .fadable(Side.TOP)
-                        .showPopup(builder);
+                Disposable closer = ReferenceHolder.popups.remove(ui);
+                if (closer != null) {
+                    System.out.println("Reuqest hide");
+                    closer.dispose();
+                } else {
+                    System.out.println("Request popup");
+                    Disposable disposer = Viewtify.dialog()
+                            .location(ui(), Objects.requireNonNullElse(arrow, ArrowLocation.TOP_CENTER))
+                            .fadable(Side.TOP)
+                            .showPopup(builder);
+
+                    disposer.add(() -> {
+                        ReferenceHolder.popups.remove(ui);
+                        System.out.println("Dispose popup");
+                    });
+                    ReferenceHolder.popups.put(ui, disposer);
+                }
             });
         }
         return (Self) this;

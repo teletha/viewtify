@@ -126,6 +126,9 @@ public final class ViewtyDialog<T> {
     private boolean blockable = true;
 
     /** The location calculator. */
+    private Node invoker;
+
+    /** The location calculator. */
     private WiseConsumer<Node> locator;
 
     /** The diposer. */
@@ -375,6 +378,7 @@ public final class ViewtyDialog<T> {
      * @return
      */
     public ViewtyDialog<T> location(Node source, ArrowLocation arrow) {
+        this.invoker = source;
         this.locator = ui -> {
             Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
             Bounds popupBounds = ui.getBoundsInLocal();
@@ -483,13 +487,12 @@ public final class ViewtyDialog<T> {
         }
 
         if (fadable) {
-            double time = 0.3;
-            double distance = sliding == null ? 0 : sliding == Side.TOP || sliding == Side.LEFT ? 10 : -10;
+            double distance = sliding == null ? 0 : sliding == Side.TOP || sliding == Side.LEFT ? slideDistance : -slideDistance;
             Window window = dialogPane.getScene().getWindow();
             DoubleProperty location = sliding == null || sliding.isVertical() ? Viewtify.property(window::getX, window::setX)
                     : Viewtify.property(window::getY, window::setY);
 
-            // showing effect
+            // shown effect
             dialog.addEventHandler(DialogEvent.DIALOG_SHOWING, e -> {
                 double now = location.get();
                 if (Double.isNaN(now)) {
@@ -501,7 +504,7 @@ public final class ViewtyDialog<T> {
                 window.setOpacity(0);
                 location.set(now - distance);
 
-                Anime.define().duration(time).effect(window.opacityProperty(), 1).effect(location, now).run();
+                Anime.define().duration(fadeTime).effect(window.opacityProperty(), 1).effect(location, now).run();
             });
 
             // hidden effect
@@ -509,10 +512,10 @@ public final class ViewtyDialog<T> {
                 if (window.getOpacity() != 0) {
                     e.consume();
                     Anime.define()
-                            .duration(time)
-                            .effect(window.opacityProperty(), 0)
+                            .duration(fadeTime)
+                            .effect(window.opacityProperty(), 0.5)
                             .effect(location, location.get() + distance)
-                            .run(dialog::close);
+                            .run(window::hide);
                 }
             };
             window.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, hidden);
@@ -657,51 +660,68 @@ public final class ViewtyDialog<T> {
     }
 
     /** The popup manager. */
-    private static Window popupWindow;
+    private static Disposable previousPopup = Disposable.empty();
 
     /**
      * @param builder
      */
-    public void showPopup(Supplier<UserInterfaceProvider<? extends Node>> builder) {
-        unpopup();
+    public Disposable showPopup(Supplier<UserInterfaceProvider<? extends Node>> builder) {
+        Disposable closer = Disposable.empty();
 
-        unblockable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
+        previousPopup.add(() -> {
+            unblockable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
 
-            @Override
-            protected ViewDSL declareUI() {
-                return new ViewDSL() {
-                    {
-                        $(builder.get());
-                    }
-                };
-            }
+                @Override
+                protected ViewDSL declareUI() {
+                    return new ViewDSL() {
+                        {
+                            $(builder.get());
+                        }
+                    };
+                }
 
-            @Override
-            protected void initialize() {
-                Theme theme = Preferences.theme();
-                BackgroundFill outer = new BackgroundFill(theme.color(), new CornerRadii(3), new Insets(0));
-                BackgroundFill inner = new BackgroundFill(theme.background(), new CornerRadii(3), new Insets(1));
-                pane.getScene().setFill(null);
-                pane.setBackground(new Background(outer, inner));
+                @Override
+                protected void initialize() {
+                    Theme theme = Preferences.theme();
+                    BackgroundFill outer = new BackgroundFill(theme.color(), new CornerRadii(3), new Insets(0));
+                    BackgroundFill inner = new BackgroundFill(theme.background(), new CornerRadii(3), new Insets(1));
+                    pane.getScene().setFill(null);
+                    pane.setBackground(new Background(outer, inner));
 
-                Window window = pane.getScene().getWindow();
-                window.focusedProperty().addListener((object, old, focused) -> {
-                    if (!focused) {
-                        popupWindow = null;
-                        window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
-                    }
-                });
-            }
+                    Window window = pane.getScene().getWindow();
+                    closer.add(() -> hidePopup(window));
+                    window.focusedProperty().addListener((object, old, focused) -> {
+                        if (!focused) {
+                            hidePopup(window);
+                        }
+                    });
+                    window.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> {
+                        closer.dispose();
+                    });
+                }
+            });
         });
+        previousPopup.dispose();
+
+        return previousPopup = closer;
     }
+
+    // /**
+    // * Close the current popup window.
+    // */
+    // public static void hidePopup() {
+    // if (popupWindow != null) {
+    // popupWindow.fireEvent(new WindowEvent(popupWindow, WindowEvent.WINDOW_CLOSE_REQUEST));
+    // popupWindow = null;
+    // }
+    // }
 
     /**
      * Close the current popup window.
      */
-    public static void unpopup() {
-        if (popupWindow != null) {
-            popupWindow.fireEvent(new WindowEvent(popupWindow, WindowEvent.WINDOW_CLOSE_REQUEST));
-            popupWindow = null;
+    private static void hidePopup(Window window) {
+        if (window != null) {
+            window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
         }
     }
 
