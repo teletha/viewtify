@@ -894,7 +894,7 @@ public final class Viewtify {
      * @return
      */
     public static <V> ViewtyDialog<?> dialog() {
-        return new ViewtyDialog(mainStage);
+        return new ViewtyDialog();
     }
 
     /**

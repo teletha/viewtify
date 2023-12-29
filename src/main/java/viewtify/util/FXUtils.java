@@ -21,7 +21,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Window;
 import javafx.util.Duration;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -507,5 +509,19 @@ public class FXUtils {
 
     @SuppressWarnings("serial")
     private static class UserData extends ConcurrentHashMap<Class, Object> {
+    }
+
+    /**
+     * Retrieve the focused window.
+     * 
+     * @return
+     */
+    public static Variable<Window> findFocusedWindow() {
+        for (Window window : Window.getWindows()) {
+            if (window.isFocused()) {
+                return Variable.of(window);
+            }
+        }
+        return Variable.empty();
     }
 }

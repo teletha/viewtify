@@ -9,10 +9,10 @@
  */
 package viewtify;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
-
-import org.controlsfx.control.PopOver.ArrowLocation;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.event.Event;
@@ -45,6 +45,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
@@ -65,14 +68,18 @@ import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
 import viewtify.ui.view.PrintPreview;
 import viewtify.ui.view.PrintPreview.PrintInfo;
+import viewtify.util.FXUtils;
 
 /**
  * The specialized dialog builder.
  */
 public final class ViewtyDialog<T> {
 
-    /** The associated stage. */
-    private Stage stage;
+    /** The popup hierarchy. */
+    private static final LinkedList<Window> hierarchy = new LinkedList();
+
+    /** The associated window. */
+    private Window baseWindow;
 
     /** The dialog style. */
     private StageStyle style = StageStyle.DECORATED;
@@ -125,6 +132,9 @@ public final class ViewtyDialog<T> {
     /** The dialog mode. */
     private boolean blockable = true;
 
+    /** The dialog mode. */
+    private boolean hierarchical;
+
     /** The location calculator. */
     private Node invoker;
 
@@ -137,8 +147,8 @@ public final class ViewtyDialog<T> {
     /**
      * Hide constructor.
      */
-    ViewtyDialog(Stage stage) {
-        this.stage = stage;
+    ViewtyDialog() {
+        this.baseWindow = FXUtils.findFocusedWindow().exact();
     }
 
     /**
@@ -335,6 +345,16 @@ public final class ViewtyDialog<T> {
     }
 
     /**
+     * Congifure the loading mode.
+     * 
+     * @return
+     */
+    ViewtyDialog<T> hierarchical() {
+        hierarchical = true;
+        return this;
+    }
+
+    /**
      * Configure the size of dialog.
      * 
      * @return
@@ -486,9 +506,10 @@ public final class ViewtyDialog<T> {
             });
         }
 
+        Window window = dialogPane.getScene().getWindow();
+
         if (fadable) {
             double distance = sliding == null ? 0 : sliding == Side.TOP || sliding == Side.LEFT ? slideDistance : -slideDistance;
-            Window window = dialogPane.getScene().getWindow();
             DoubleProperty location = sliding == null || sliding.isVertical() ? Viewtify.property(window::getX, window::setX)
                     : Viewtify.property(window::getY, window::setY);
 
@@ -528,6 +549,16 @@ public final class ViewtyDialog<T> {
             dialog.getDialogPane().getScene().getWindow().addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> {
                 owner.setEffect(null);
             });
+        }
+
+        if (hierarchical) {
+            Iterator<Window> iterator = hierarchy.descendingIterator();
+            while (iterator.hasNext()) {
+                Window base = iterator.next();
+                if (base == window) {
+
+                }
+            }
         }
 
         dialogPane.setContent(ui);
@@ -593,7 +624,7 @@ public final class ViewtyDialog<T> {
             chooser.setInitialDirectory(initial.asJavaFile());
         }
 
-        return Variable.of(chooser.showDialog(stage)).map(dir -> Locator.directory(dir.toPath()));
+        return Variable.of(chooser.showDialog(baseWindow)).map(dir -> Locator.directory(dir.toPath()));
     }
 
     /**
@@ -620,7 +651,7 @@ public final class ViewtyDialog<T> {
             chooser.getExtensionFilters().add(filter);
         }
 
-        java.io.File result = chooser.showOpenDialog(stage);
+        java.io.File result = chooser.showOpenDialog(baseWindow);
         return Variable.of(result).map(x -> Locator.file(result.toPath()));
     }
 
@@ -659,51 +690,45 @@ public final class ViewtyDialog<T> {
         });
     }
 
-    /** The popup manager. */
-    private static Disposable previousPopup = Disposable.empty();
+    private static long popupable;
 
     /**
      * @param builder
      */
-    public Disposable showPopup(Supplier<UserInterfaceProvider<? extends Node>> builder) {
-        Disposable closer = Disposable.empty();
+    public void showPopup(Supplier<UserInterfaceProvider<? extends Node>> builder) {
+        if (System.currentTimeMillis() < popupable) {
+            return;
+        }
 
-        previousPopup.add(() -> {
-            unblockable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
+        hierarchical().unblockable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
 
-                @Override
-                protected ViewDSL declareUI() {
-                    return new ViewDSL() {
-                        {
-                            $(builder.get());
-                        }
-                    };
-                }
+            @Override
+            protected ViewDSL declareUI() {
+                return new ViewDSL() {
+                    {
+                        $(builder.get());
+                    }
+                };
+            }
 
-                @Override
-                protected void initialize() {
-                    Theme theme = Preferences.theme();
-                    BackgroundFill outer = new BackgroundFill(theme.color(), new CornerRadii(3), new Insets(0));
-                    BackgroundFill inner = new BackgroundFill(theme.background(), new CornerRadii(3), new Insets(1));
-                    pane.getScene().setFill(null);
-                    pane.setBackground(new Background(outer, inner));
+            @Override
+            protected void initialize() {
+                Theme theme = Preferences.theme();
+                BackgroundFill outer = new BackgroundFill(theme.color(), new CornerRadii(3), new Insets(0));
+                BackgroundFill inner = new BackgroundFill(theme.background(), new CornerRadii(3), new Insets(1));
+                pane.getScene().setFill(null);
+                pane.setBackground(new Background(outer, inner));
 
-                    Window window = pane.getScene().getWindow();
-                    closer.add(() -> hidePopup(window));
-                    window.focusedProperty().addListener((object, old, focused) -> {
-                        if (!focused) {
-                            hidePopup(window);
-                        }
-                    });
-                    window.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> {
-                        closer.dispose();
-                    });
-                }
-            });
+                Window window = pane.getScene().getWindow();
+                window.focusedProperty().addListener((object, old, focused) -> {
+                    if (!focused) {
+                        hidePopup(window);
+                    }
+                });
+                window.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> {
+                });
+            }
         });
-        previousPopup.dispose();
-
-        return previousPopup = closer;
     }
 
     // /**
@@ -719,8 +744,9 @@ public final class ViewtyDialog<T> {
     /**
      * Close the current popup window.
      */
-    private static void hidePopup(Window window) {
+    private void hidePopup(Window window) {
         if (window != null) {
+            popupable = System.currentTimeMillis() + (long) (fadeTime * 1000);
             window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
         }
     }
@@ -751,7 +777,7 @@ public final class ViewtyDialog<T> {
      * @return
      */
     private <D extends Dialog<R>, R> D initialize(D dialog) {
-        dialog.initOwner(stage);
+        dialog.initOwner(baseWindow);
         dialog.initStyle(style);
         dialog.initModality(modality);
         DialogPane dialogPane = dialog.getDialogPane();
