@@ -189,13 +189,28 @@
     -fx-fill: -fx-background !important;
 }
 
+/* ==========================================================================
+  Popup
+===========================================================================*/
+.dialog-popup {
+    -fx-background-radius: 5, 4; /* I feel that a slightly larger outer radius would make the roundness more recognizable. */
+    -fx-background-color:
+        linear-gradient(to bottom,
+            derive(-fx-color,-17%),
+            derive(-fx-color,-30%)
+        ),
+        -fx-control-inner-background;
+    -fx-background-insets: 0, 0.7;
+}
+
 
 /* ==========================================================================
   Context Menu
 ===========================================================================*/
 .context-menu {
-    -fx-background-radius: 3, 3;
+    -fx-background-radius: 5, 4; /* I feel that a slightly larger outer radius would make the roundness more recognizable. */
     -fx-padding: 5px;
+    -fx-background-insets: 0, 0.7;
 }
 
 .context-menu .menu, .context-menu .menu-item {
@@ -210,7 +225,6 @@
 .context-menu .label {
 		-fx-pref-width: 160px;
 }
-
 
 
 /* ==========================================================================

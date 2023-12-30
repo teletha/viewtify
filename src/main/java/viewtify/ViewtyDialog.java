@@ -14,8 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
 
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -36,9 +34,6 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -47,6 +42,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
@@ -55,7 +53,6 @@ import kiss.WiseConsumer;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
-import viewtify.preference.Preferences;
 import viewtify.style.FormStyles;
 import viewtify.ui.UIButton;
 import viewtify.ui.UILabel;
@@ -712,11 +709,8 @@ public final class ViewtyDialog<T> {
 
             @Override
             protected void initialize() {
-                Theme theme = Preferences.theme();
-                BackgroundFill outer = new BackgroundFill(theme.color(), new CornerRadii(3), new Insets(0));
-                BackgroundFill inner = new BackgroundFill(theme.background(), new CornerRadii(3), new Insets(1));
                 pane.getScene().setFill(null);
-                pane.setBackground(new Background(outer, inner));
+                pane.getStyleClass().add("dialog-popup");
 
                 Window window = pane.getScene().getWindow();
                 window.focusedProperty().addListener((object, old, focused) -> {
