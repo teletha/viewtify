@@ -14,6 +14,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
 
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -45,9 +47,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
@@ -118,7 +117,7 @@ public final class ViewtyDialog<T> {
     private boolean fadable;
 
     /** The dialog effect. */
-    private double fadeTime = 0.3;
+    private double fadeTime = 0.2;
 
     /** The dialog effect. */
     private double slideDistance = 10;
