@@ -9,8 +9,6 @@
  */
 package viewtify;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -71,9 +69,6 @@ import viewtify.util.FXUtils;
  */
 public final class ViewtyDialog<T> {
 
-    /** The popup hierarchy. */
-    private static final LinkedList<Window> hierarchy = new LinkedList();
-
     /** The associated window. */
     private Window baseWindow;
 
@@ -127,12 +122,6 @@ public final class ViewtyDialog<T> {
 
     /** The dialog mode. */
     private boolean blockable = true;
-
-    /** The dialog mode. */
-    private boolean hierarchical;
-
-    /** The location calculator. */
-    private Node invoker;
 
     /** The location calculator. */
     private WiseConsumer<Node> locator;
@@ -341,16 +330,6 @@ public final class ViewtyDialog<T> {
     }
 
     /**
-     * Congifure the loading mode.
-     * 
-     * @return
-     */
-    ViewtyDialog<T> hierarchical() {
-        hierarchical = true;
-        return this;
-    }
-
-    /**
      * Configure the size of dialog.
      * 
      * @return
@@ -394,7 +373,6 @@ public final class ViewtyDialog<T> {
      * @return
      */
     public ViewtyDialog<T> location(Node source, ArrowLocation arrow) {
-        this.invoker = source;
         this.locator = ui -> {
             Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
             Bounds popupBounds = ui.getBoundsInLocal();
@@ -547,16 +525,6 @@ public final class ViewtyDialog<T> {
             });
         }
 
-        if (hierarchical) {
-            Iterator<Window> iterator = hierarchy.descendingIterator();
-            while (iterator.hasNext()) {
-                Window base = iterator.next();
-                if (base == window) {
-
-                }
-            }
-        }
-
         dialogPane.setContent(ui);
 
         return showAndTell(dialog, disableButtons ? () -> view.value : () -> null);
@@ -696,7 +664,7 @@ public final class ViewtyDialog<T> {
             return;
         }
 
-        hierarchical().unblockable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
+        unblockable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
 
             @Override
             protected ViewDSL declareUI() {
