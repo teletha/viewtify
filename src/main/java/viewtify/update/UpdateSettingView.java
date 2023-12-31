@@ -21,7 +21,6 @@ import viewtify.ui.UICheckSwitch;
 import viewtify.ui.UILabel;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.helper.User;
 
 public class UpdateSettingView extends View {
 
@@ -73,9 +72,7 @@ public class UpdateSettingView extends View {
         UpdateSetting setting = Preferences.of(UpdateSetting.class);
 
         checkOnStartup.sync(setting.checkOnStartup);
-        confirm.action(Update::apply).when(User.LeftClick, () -> {
-            System.out.println("OK");
-        });
+        confirm.action(Update::apply);
 
         I.schedule(0, 6, TimeUnit.HOURS, false).to(() -> {
             if (Update.isAvailable(Viewtify.application().updateSite())) {

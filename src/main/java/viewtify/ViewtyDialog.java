@@ -381,8 +381,8 @@ public final class ViewtyDialog<T> {
 
             x = switch (arrow) {
             case TOP_CENTER, BOTTOM_CENTER -> sourceBounds.getCenterX() - popupBounds.getWidth() / 2;
-            case TOP_LEFT, BOTTOM_LEFT -> sourceBounds.getCenterX();
-            case TOP_RIGHT, BOTTOM_RIGHT -> sourceBounds.getCenterX() - popupBounds.getWidth();
+            case TOP_LEFT, BOTTOM_LEFT -> sourceBounds.getMinX();
+            case TOP_RIGHT, BOTTOM_RIGHT -> sourceBounds.getMaxX() - popupBounds.getWidth();
             case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> sourceBounds.getMinX() - popupBounds.getWidth() - gap;
             case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> sourceBounds.getMaxX() + gap;
             };
@@ -475,7 +475,7 @@ public final class ViewtyDialog<T> {
         }
 
         if (locator != null) {
-            dialog.addEventHandler(DialogEvent.DIALOG_SHOWING, e -> {
+            dialog.addEventHandler(DialogEvent.DIALOG_SHOWN, e -> {
                 locator.accept(dialogPane);
             });
         }
@@ -488,7 +488,7 @@ public final class ViewtyDialog<T> {
                     : Viewtify.property(window::getY, window::setY);
 
             // shown effect
-            dialog.addEventHandler(DialogEvent.DIALOG_SHOWING, e -> {
+            dialog.addEventHandler(DialogEvent.DIALOG_SHOWN, e -> {
                 double now = location.get();
                 if (Double.isNaN(now)) {
                     window.centerOnScreen();

@@ -12,6 +12,8 @@ package viewtify.update;
 import java.util.List;
 
 import javafx.geometry.Rectangle2D;
+import javafx.geometry.Side;
+
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -107,6 +109,7 @@ public class Update {
                 .translatable()
                 .disableButtons(forcibly)
                 .disableCloseButton(forcibly)
+                .fadable(Side.TOP)
                 .show(new Updater(forcibly))
                 .to(tasks -> {
                     Rectangle2D bounds = ScreenSelector.Application.select();

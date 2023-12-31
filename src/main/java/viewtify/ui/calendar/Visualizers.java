@@ -119,7 +119,6 @@ class Visualizers {
 
         private interface Styles extends StyleDSL {
             Style box = () -> {
-                display.width.fitContent().height.fitContent();
                 padding.horizontal(4, px).bottom(2, px);
                 cursor.pointer();
                 border.radius(2, px);
@@ -168,7 +167,7 @@ class Visualizers {
                 return new ViewDSL() {
                     {
 
-                        $(hbox, () -> {
+                        $(hbox, Styles.popup, () -> {
                             $(vbox, Styles.box, () -> {
                                 label(event.startDate() + " " + event.startTime(), Styles.date);
                                 label(event.title(), Styles.title);
@@ -185,6 +184,9 @@ class Visualizers {
             }
 
             interface Styles extends StyleDSL {
+                Style popup = () -> {
+                };
+
                 Style box = () -> {
                     padding.bottom(5, px).horizontal(8, px);
                 };
@@ -207,11 +209,12 @@ class Visualizers {
                 };
 
                 Style icon = () -> {
-                    font.size(1.3, em);
+                    display.width(19, px).height(19, px);
+                    font.size(14, px);
                     margin.bottom(3, px);
                     cursor.pointer();
                     border.radius(2, px);
-                    padding.vertical(0, px).horizontal(5, px);
+                    text.align.center().verticalAlign.middle();
 
                     $.hover(() -> {
                         background.color("-fx-accent");
@@ -226,8 +229,7 @@ class Visualizers {
             protected void initialize() {
                 edit.text(FontAwesome.Glyph.PENCIL).tooltip(en("Edit")).enable(event.isEditable());
                 delete.text(FontAwesome.Glyph.TRASH).tooltip(en("Delete")).enable(event.isEditable());
-                // close.text(FontAwesome.Glyph.CLOSE).tooltip(en("Close")).when(User.LeftClick,
-                // ViewtyDialog::hidePopup);
+                close.text(FontAwesome.Glyph.CLOSE).tooltip(en("Close"));
             }
         }
     }
