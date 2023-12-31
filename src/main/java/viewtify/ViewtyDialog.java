@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -685,7 +686,7 @@ public final class ViewtyDialog<T> {
                 Window window = pane.getScene().getWindow();
                 window.focusedProperty().addListener((object, old, focused) -> {
                     if (!focused) {
-                        hidePopup(window);
+                        hidePopup(window, fadeTime);
                     }
                 });
                 window.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> {
@@ -694,20 +695,10 @@ public final class ViewtyDialog<T> {
         });
     }
 
-    // /**
-    // * Close the current popup window.
-    // */
-    // public static void hidePopup() {
-    // if (popupWindow != null) {
-    // popupWindow.fireEvent(new WindowEvent(popupWindow, WindowEvent.WINDOW_CLOSE_REQUEST));
-    // popupWindow = null;
-    // }
-    // }
-
     /**
      * Close the current popup window.
      */
-    private void hidePopup(Window window) {
+    private static void hidePopup(Window window, double fadeTime) {
         if (window != null) {
             popupable = System.currentTimeMillis() + (long) (fadeTime * 1000);
             window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
@@ -830,6 +821,19 @@ public final class ViewtyDialog<T> {
             }
         } finally {
             disposer.dispose();
+        }
+    }
+
+    /**
+     * Close all dialogs.
+     */
+    public static void close() {
+        ObservableList<Window> windows = Window.getWindows();
+        for (int i = windows.size() - 1; 0 <= i; i--) {
+            Window window = windows.get(i);
+            if (window.getScene().getRoot() instanceof DialogPane) {
+                hidePopup(window, 0.2);
+            }
         }
     }
 
