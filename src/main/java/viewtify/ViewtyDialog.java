@@ -14,7 +14,6 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -50,6 +49,7 @@ import kiss.I;
 import kiss.Model;
 import kiss.Variable;
 import kiss.WiseConsumer;
+import kiss.WiseRunnable;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -70,6 +70,8 @@ import viewtify.util.FXUtils;
  * The specialized dialog builder.
  */
 public final class ViewtyDialog<T> {
+
+    private static final double animeation = 0.2;
 
     /** The associated window. */
     private Window baseWindow;
@@ -109,12 +111,6 @@ public final class ViewtyDialog<T> {
 
     /** The dialog effect. */
     private boolean fadable;
-
-    /** The dialog effect. */
-    private double fadeTime = 0.2;
-
-    /** The dialog effect. */
-    private double slideDistance = 10;
 
     /** The dialog effect. */
     private boolean blurable;
@@ -259,16 +255,7 @@ public final class ViewtyDialog<T> {
      * @return
      */
     public ViewtyDialog<T> fadable() {
-        return fadable(fadeTime);
-    }
-
-    /**
-     * Congifure the loading effect.
-     * 
-     * @return
-     */
-    public ViewtyDialog<T> fadable(double duration) {
-        return fadable(duration, sliding, slideDistance);
+        return fadable(sliding);
     }
 
     /**
@@ -277,37 +264,8 @@ public final class ViewtyDialog<T> {
      * @return
      */
     public ViewtyDialog<T> fadable(Side sliding) {
-        return fadable(fadeTime, sliding);
-    }
-
-    /**
-     * Congifure the loading effect.
-     * 
-     * @return
-     */
-    public ViewtyDialog<T> fadable(Side sliding, double distance) {
-        return fadable(fadeTime, sliding, distance);
-    }
-
-    /**
-     * Congifure the loading effect.
-     * 
-     * @return
-     */
-    public ViewtyDialog<T> fadable(double duration, Side sliding) {
-        return fadable(duration, sliding, slideDistance);
-    }
-
-    /**
-     * Congifure the loading effect.
-     * 
-     * @return
-     */
-    public ViewtyDialog<T> fadable(double duration, Side sliding, double distance) {
         this.fadable = true;
-        this.fadeTime = duration;
         this.sliding = sliding;
-        this.slideDistance = distance;
         return this;
     }
 
@@ -486,7 +444,7 @@ public final class ViewtyDialog<T> {
         Window window = dialogPane.getScene().getWindow();
 
         if (fadable) {
-            double distance = sliding == null ? 0 : sliding == Side.TOP || sliding == Side.LEFT ? slideDistance : -slideDistance;
+            double distance = sliding == null ? 0 : sliding == Side.TOP || sliding == Side.LEFT ? 10 : -10;
             DoubleProperty location = sliding == null || sliding.isVertical() ? Viewtify.property(window::getX, window::setX)
                     : Viewtify.property(window::getY, window::setY);
 
@@ -502,7 +460,7 @@ public final class ViewtyDialog<T> {
                 window.setOpacity(0);
                 location.set(now - distance);
 
-                Anime.define().duration(fadeTime).effect(window.opacityProperty(), 1).effect(location, now).run();
+                Anime.define().duration(animeation).effect(window.opacityProperty(), 1).effect(location, now).run();
             });
 
             // hidden effect
@@ -510,7 +468,7 @@ public final class ViewtyDialog<T> {
                 if (window.getOpacity() != 0) {
                     e.consume();
                     Anime.define()
-                            .duration(fadeTime)
+                            .duration(animeation)
                             .effect(window.opacityProperty(), 0.5)
                             .effect(location, location.get() + distance)
                             .run(window::hide);
@@ -657,50 +615,74 @@ public final class ViewtyDialog<T> {
         });
     }
 
-    private static long popupable;
+    private static Popup latestPopup;
 
     /**
      * @param builder
      */
     public void showPopup(Supplier<UserInterfaceProvider<? extends Node>> builder) {
-        if (System.currentTimeMillis() < popupable) {
-            return;
+        WiseRunnable showPopup = () -> {
+            unblockable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new Popup(builder));
+        };
+
+        if (latestPopup == null) {
+            showPopup.run();
+        } else {
+            latestPopup.requestClosing(latestPopup.builder == builder ? null : showPopup);
         }
-
-        unblockable().disableButtons(true).style(StageStyle.TRANSPARENT).modal(Modality.NONE).show(new DialogView<>() {
-
-            @Override
-            protected ViewDSL declareUI() {
-                return new ViewDSL() {
-                    {
-                        $(builder.get());
-                    }
-                };
-            }
-
-            @Override
-            protected void initialize() {
-                pane.getScene().setFill(null);
-                pane.getStyleClass().add("dialog-popup");
-
-                Window window = pane.getScene().getWindow();
-                window.focusedProperty().addListener((object, old, focused) -> {
-                    if (!focused) {
-                        hidePopup(window, fadeTime);
-                    }
-                });
-                window.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> {
-                });
-            }
-        });
     }
 
     /**
-     * Close the current popup window.
+     * Special popup dialog.
      */
-    private static void hidePopup(Window window, double fadeTime) {
-        if (window != null) {
-            popupable = System.currentTimeMillis() + (long) (fadeTime * 1000);
+    private static class Popup extends DialogView<Object> {
+
+        private final Supplier<UserInterfaceProvider<? extends Node>> builder;
+
+        private WiseRunnable finisher;
+
+        /**
+         * @param builder
+         */
+        private Popup(Supplier<UserInterfaceProvider<? extends Node>> builder) {
+            this.builder = builder;
+        }
+
+        @Override
+        protected ViewDSL declareUI() {
+            return new ViewDSL() {
+                {
+                    $(builder.get());
+                }
+            };
+        }
+
+        @Override
+        protected void initialize() {
+            latestPopup = this;
+
+            pane.getScene().setFill(null);
+            pane.getStyleClass().add("dialog-popup");
+
+            Window window = pane.getScene().getWindow();
+            window.focusedProperty().addListener((object, old, focused) -> {
+                if (!focused) {
+                    requestClosing(null);
+                }
+            });
+            window.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> {
+                latestPopup = null;
+                if (finisher != null) finisher.run();
+            });
+        }
+
+        /**
+         * Request closing window.
+         */
+        private void requestClosing(WiseRunnable finisher) {
+            if (finisher != null) this.finisher = finisher;
+
+            Window window = pane.getScene().getWindow();
             window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
         }
     }
@@ -828,12 +810,8 @@ public final class ViewtyDialog<T> {
      * Close all dialogs.
      */
     public static void close() {
-        ObservableList<Window> windows = Window.getWindows();
-        for (int i = windows.size() - 1; 0 <= i; i--) {
-            Window window = windows.get(i);
-            if (window.getScene().getRoot() instanceof DialogPane) {
-                hidePopup(window, 0.2);
-            }
+        if (latestPopup != null) {
+            latestPopup.requestClosing(null);
         }
     }
 
