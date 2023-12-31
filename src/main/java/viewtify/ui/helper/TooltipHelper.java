@@ -127,13 +127,8 @@ public interface TooltipHelper<Self extends TooltipHelper, W extends Node> exten
     default Self popup(ArrowLocation arrow, Supplier<UserInterfaceProvider<? extends Node>> builder) {
         if (builder != null) {
             W ui = ui();
-            UserActionHelper<?> helper = UserActionHelper.of(ui);
-            helper.when(User.LeftClick, event -> {
-                Viewtify.dialog()
-                        .location(ui(), Objects.requireNonNullElse(arrow, ArrowLocation.TOP_CENTER))
-                        .fadable(Side.TOP)
-                        .showPopup(builder);
-            });
+            UserActionHelper.of(ui)
+                    .when(User.LeftClick, event -> Viewtify.dialog().location(ui, arrow).fadable(Side.TOP).showPopup(builder));
         }
         return (Self) this;
     }

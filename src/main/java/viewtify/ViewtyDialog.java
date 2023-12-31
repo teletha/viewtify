@@ -10,6 +10,7 @@
 package viewtify;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import javafx.beans.property.DoubleProperty;
@@ -374,19 +375,20 @@ public final class ViewtyDialog<T> {
      */
     public ViewtyDialog<T> location(Node source, ArrowLocation arrow) {
         this.locator = ui -> {
+            ArrowLocation location = Objects.requireNonNullElse(arrow, ArrowLocation.TOP_CENTER);
             Bounds sourceBounds = source.localToScreen(source.getBoundsInLocal());
             Bounds popupBounds = ui.getBoundsInLocal();
             double x, y;
             double gap = 5;
 
-            x = switch (arrow) {
+            x = switch (location) {
             case TOP_CENTER, BOTTOM_CENTER -> sourceBounds.getCenterX() - popupBounds.getWidth() / 2;
             case TOP_LEFT, BOTTOM_LEFT -> sourceBounds.getMinX();
             case TOP_RIGHT, BOTTOM_RIGHT -> sourceBounds.getMaxX() - popupBounds.getWidth();
             case RIGHT_CENTER, RIGHT_BOTTOM, RIGHT_TOP -> sourceBounds.getMinX() - popupBounds.getWidth() - gap;
             case LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM -> sourceBounds.getMaxX() + gap;
             };
-            y = switch (arrow) {
+            y = switch (location) {
             case RIGHT_TOP, LEFT_TOP -> sourceBounds.getMinY();
             case RIGHT_CENTER, LEFT_CENTER -> sourceBounds.getCenterY() - popupBounds.getHeight() / 2;
             case RIGHT_BOTTOM, LEFT_BOTTOM -> sourceBounds.getMaxY() - popupBounds.getHeight();
