@@ -1,5 +1,50 @@
 # Changelog
 
+## [2.18.0](https://github.com/teletha/viewtify/compare/v2.17.0...v2.18.0) (2024-01-01)
+
+
+### Features
+
+* add Anime#delay ([620c84d](https://github.com/teletha/viewtify/commit/620c84d02fc120e75ca197edd4a9055d7180d183))
+* add PrintInfo#print(WritableImage) ([880d430](https://github.com/teletha/viewtify/commit/880d430e8fb0401eee47dce224e48cec39ccf15e))
+* add UserInterfaceProvider#snapshot ([acfede6](https://github.com/teletha/viewtify/commit/acfede6bbe11c3e1106d67b43e61b2469f73ecfd))
+* animate the context menu when showing ([b37b200](https://github.com/teletha/viewtify/commit/b37b200911c98282f61c8c34086a683b5fa90b55))
+* docking tab is translatable. ([bdc55de](https://github.com/teletha/viewtify/commit/bdc55de8109e620a5bc0726c1827072eb84c6b9a))
+* DockSystem provides manage events. ([a965e3f](https://github.com/teletha/viewtify/commit/a965e3ffb9563c7964d381a8a85a97a1322d745b))
+* enhance context menu ([b767c59](https://github.com/teletha/viewtify/commit/b767c599d7c429122aee8dbc343fc7f9a9590436))
+* enhance popup style ([c3c4b4b](https://github.com/teletha/viewtify/commit/c3c4b4baac162b5790be221f5d45df0f8f2cf563))
+* replace native context menu ([77c7201](https://github.com/teletha/viewtify/commit/77c72011b19233f4ebe211ef0b85eec27e4e6d07))
+* replace popup control coz no-way to avoid IME bug ([432424b](https://github.com/teletha/viewtify/commit/432424b1feb91664e9a826139a9766de7c50bb8e))
+* support CheckMenuItem ([f05f367](https://github.com/teletha/viewtify/commit/f05f36727f1d70907c8a6e4c1d38e0e38bea76c5))
+* support eagar/lazy setup for context menu ([92b12d0](https://github.com/teletha/viewtify/commit/92b12d066ff34ee0717829daf4dc721af52a52b9))
+* TooltipHelper support popup arrow. ([bc8157b](https://github.com/teletha/viewtify/commit/bc8157b6add8ed3bed770a3d96265213cc934026))
+* UITabPane#registerIcon ([4a00ec6](https://github.com/teletha/viewtify/commit/4a00ec6b69881c1cacf9b33f4e174af5b9eb0390))
+* UserActionHelper can accept component event type. ([43bc243](https://github.com/teletha/viewtify/commit/43bc243d082c608f8e67bb77bcd88c30919f83f4))
+* View provides default title and icon path. ([bc11ab4](https://github.com/teletha/viewtify/commit/bc11ab409b79d9950dd83b05915a4d8573c24d73))
+* ViewtyDialog is locatable. ([54800fe](https://github.com/teletha/viewtify/commit/54800fec126610ed374c6f243c17458e5ed12902))
+* ViewtyDialog is slidable ([006316b](https://github.com/teletha/viewtify/commit/006316b2b8f32e3f51640c8b343bf01a83c75704))
+
+
+### Bug Fixes
+
+* calendar dtail's style ([95ea613](https://github.com/teletha/viewtify/commit/95ea613c09ef060e8f9f88ca36813ae370ebce55))
+* close all nested context menu gracefully ([629600d](https://github.com/teletha/viewtify/commit/629600d3ded5a171a01302de7f292069b8fc8d2e))
+* close context menu gracefully ([e7d36fc](https://github.com/teletha/viewtify/commit/e7d36fc3825ce08ca69f2b3defa24ff73596a358))
+* context animation ([36af3c7](https://github.com/teletha/viewtify/commit/36af3c7cb64a5d26ce0ea347e95de11b1015ffb6))
+* correct dialog position ([7b971a7](https://github.com/teletha/viewtify/commit/7b971a7849b32bf8ba461cdff9dcfb6261f9158a))
+* correct the miss position of context menu ([d3f4854](https://github.com/teletha/viewtify/commit/d3f485407c6c775408a4d5d56d61f3ce50feb9e9))
+* correct variable-color lookup ([62a50d6](https://github.com/teletha/viewtify/commit/62a50d6b944a2dbe4ff5112401d3dbafd45efe69))
+* dialog can fit to the correct size ([3f06196](https://github.com/teletha/viewtify/commit/3f061969962bc777d5300d4fa02adde84f98f29f))
+* enhance popup ([634fd4c](https://github.com/teletha/viewtify/commit/634fd4c6ee08f0e66008c2d16263e294bb2014b2))
+* enlarge preference row ([606dba9](https://github.com/teletha/viewtify/commit/606dba95711ee21130f1cb0c4093be5f29821f6e))
+* enlarge preference view ([44049ba](https://github.com/teletha/viewtify/commit/44049ba2e224dba490cc00d4b83d6d093b7c0d54))
+* hide calendar view ([02d7a2e](https://github.com/teletha/viewtify/commit/02d7a2ebf89875adb6cb854e9722e59f29c6afae))
+* normalize popup position ([b9c3a9b](https://github.com/teletha/viewtify/commit/b9c3a9bcb116c29a7742091387f608e728ac0d3b))
+* remove unused code ([c9a34f5](https://github.com/teletha/viewtify/commit/c9a34f548dde10a1474b2d8b330cc29d2a95d5a0))
+* rename method ([9123e01](https://github.com/teletha/viewtify/commit/9123e0177e12c9c14c8bba41716aaded6406876b))
+* style context separator ([342dd62](https://github.com/teletha/viewtify/commit/342dd6262a39a9b4446ca7ef18618a0656589c1a))
+* write doc ([43a72bb](https://github.com/teletha/viewtify/commit/43a72bb72a36cf9c39798430570d2cca3c994693))
+
 ## [2.17.0](https://github.com/teletha/viewtify/compare/v2.16.1...v2.17.0) (2023-12-14)
 
 
