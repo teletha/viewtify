@@ -9,10 +9,9 @@
  */
 package viewtify.ui.calendar;
 
-import javafx.scene.Node;
-
 import org.controlsfx.glyphfont.FontAwesome;
 
+import javafx.scene.Node;
 import kiss.Managed;
 import kiss.Singleton;
 import stylist.Style;
@@ -215,7 +214,7 @@ class Visualizers {
                 Style icon = () -> {
                     display.width(19, px).height(19, px);
                     font.size(14, px);
-                    margin.bottom(3, px);
+                    margin.bottom(6, px);
                     cursor.pointer();
                     border.radius(2, px);
                     text.align.center().verticalAlign.middle();
