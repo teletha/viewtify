@@ -101,7 +101,9 @@ public class UITableCheckBoxColumn<RowV> extends UITableColumn<RowV, RowV> {
      * Deselect all checkboxes.
      */
     public void deselectAll() {
-        selected.clear();
+        Viewtify.inUI(() -> {
+            selected.clear();
+        });
     }
 
     /**

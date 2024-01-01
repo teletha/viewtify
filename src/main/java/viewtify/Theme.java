@@ -201,8 +201,26 @@ public enum Theme {
      * 
      * @return
      */
+    public Color textLight() {
+        return variables.getOrDefault("-fx-light-text-color", Color.BLACK);
+    }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
     public Color textMid() {
         return variables.getOrDefault("-fx-mid-text-color", Color.BLACK);
+    }
+
+    /**
+     * Retrieve the variable color.
+     * 
+     * @return
+     */
+    public Color textDark() {
+        return variables.getOrDefault("-fx-dark-text-color", Color.BLACK);
     }
 
     /**
