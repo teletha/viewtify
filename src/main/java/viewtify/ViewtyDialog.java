@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -41,9 +43,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import org.controlsfx.control.PopOver.ArrowLocation;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Model;
@@ -888,7 +887,7 @@ public final class ViewtyDialog<T> {
                 {
                     $(vbox, () -> {
                         $(label, FormStyles.Row);
-                        $(input, FormStyles.Row);
+                        $(input);
                     });
                 }
             };
