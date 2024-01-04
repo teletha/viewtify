@@ -281,8 +281,8 @@ public final class Viewtify {
         if (applicationLaunchingClass == null) {
             applicationLaunchingClass = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE)
                     .walk(stacks -> stacks.filter(stack -> stack.getMethodName().equals("main")).findAny())
-                    .get()
-                    .getDeclaringClass();
+                    .map(x -> x.getDeclaringClass())
+                    .orElse(null);
         }
         return viewtify;
     }
