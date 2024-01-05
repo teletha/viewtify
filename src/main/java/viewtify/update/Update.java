@@ -14,6 +14,7 @@ import java.util.List;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.Side;
 
+import kiss.I;
 import psychopath.Directory;
 import psychopath.File;
 import psychopath.Locator;
@@ -104,7 +105,7 @@ public class Update {
         };
 
         Viewtify.dialog()
-                .title("Updater")
+                .title(I.translate("Preparing to update application."))
                 .button("Update", "Cancel")
                 .translatable()
                 .disableButtons(forcibly)
