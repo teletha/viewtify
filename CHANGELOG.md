@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.18.1](https://github.com/teletha/viewtify/compare/v2.18.0...v2.18.1) (2024-01-08)
+
+
+### Bug Fixes
+
+* anonymous browser is broken ([c76532b](https://github.com/teletha/viewtify/commit/c76532bc65cadd0ac3e9c351597cdb9370c96ec0))
+* update ci process ([fe92987](https://github.com/teletha/viewtify/commit/fe92987436ad775eac5f006d34db13bfbe6275b8))
+* update dialog is translatable ([fd04f6b](https://github.com/teletha/viewtify/commit/fd04f6b5a68a683d11915a140aef93fd3321a63f))
+* update lisence ([fcb1fda](https://github.com/teletha/viewtify/commit/fcb1fdad9ba63a4b8e82b93c9badd9806e72bb9a))
+
 ## [2.18.0](https://github.com/teletha/viewtify/compare/v2.17.0...v2.18.0) (2024-01-01)
 
 
