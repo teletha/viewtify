@@ -20,7 +20,7 @@ public interface FormStyles extends ViewtyStyle {
 
     Style Row = () -> {
         margin.vertical(GAP, px);
-        text.verticalAlign.baseline();
+        text.verticalAlign.middle();
     };
 
     Style Label = () -> {
@@ -57,7 +57,7 @@ public interface FormStyles extends ViewtyStyle {
     };
 
     Style DescriptionTitle = () -> {
-        margin.bottom(0, px).top(10, px);
+        margin.bottom(0, px).top(13, px);
         font.size(14, px).weight.bold().color("-fx-light-text-color");
 
         $.descendant(() -> {

@@ -13,6 +13,7 @@ import org.controlsfx.control.ToggleSwitch;
 
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableBooleanValue;
+import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.LabelHelper;
@@ -22,7 +23,7 @@ public class UICheckSwitch extends UserInterface<UICheckSwitch, ToggleSwitch>
         implements ValueHelper<UICheckSwitch, Boolean>, ContextMenuHelper<UICheckSwitch>, LabelHelper<UICheckSwitch> {
 
     /** The default label */
-    private final String[] labels = {"ON", "OFF"};
+    private final Variable[] labels = {Variable.of("ON"), Variable.of("OFF")};
 
     /**
      * Enchanced view.
@@ -32,7 +33,7 @@ public class UICheckSwitch extends UserInterface<UICheckSwitch, ToggleSwitch>
     public UICheckSwitch(View view) {
         super(new ToggleSwitch(), view);
 
-        observing().on(Viewtify.UIThread).to(x -> text(x ? labels[0] : labels[1]), this);
+        observing().on(Viewtify.UIThread).to(x -> updateLabel(), this);
     }
 
     /**
@@ -69,8 +70,27 @@ public class UICheckSwitch extends UserInterface<UICheckSwitch, ToggleSwitch>
      * @return
      */
     public UICheckSwitch labels(String on, String off) {
-        labels[0] = on;
-        labels[1] = off;
+        return labels(Variable.of(on), Variable.of(off));
+    }
+
+    /**
+     * Set the state labels.
+     * 
+     * @param on
+     * @param off
+     * @return
+     */
+    public UICheckSwitch labels(Variable<String> on, Variable<String> off) {
+        if (on != null && off != null) {
+            labels[0] = on;
+            labels[1] = off;
+
+            updateLabel();
+        }
         return this;
+    }
+
+    private void updateLabel() {
+        text(value() ? labels[0] : labels[1]);
     }
 }

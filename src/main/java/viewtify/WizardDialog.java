@@ -14,7 +14,6 @@ import java.util.List;
 
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.ColumnConstraints;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -77,7 +76,7 @@ class WizardDialog<V> extends DialogView<V> {
             {
                 $(vbox, () -> {
                     $(navi);
-                    $(main);
+                    $(main, styles.main);
                 });
             }
         };
@@ -143,13 +142,23 @@ class WizardDialog<V> extends DialogView<V> {
 
         Numeric circle = Numeric.of(28, px);
 
+        Style main = () -> {
+            padding.horizontal(circle.multiply(1.2)).vertical(circle.divide(3));
+        };
+
         Style navi = () -> {
             text.align.center();
             padding.vertical(10, px);
         };
 
         Style stepNumber = () -> {
-            display.maxWidth(circle).minWidth(circle).width(circle).height(circle).opacity(initialOpacity);
+            display.maxWidth(circle)
+                    .minWidth(circle)
+                    .width(circle)
+                    .height(circle)
+                    .maxHeight(circle)
+                    .minHeight(circle)
+                    .opacity(initialOpacity);
             border.radius(circle.divide(2));
             background.color(passive);
             text.align.center();
