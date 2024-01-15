@@ -178,6 +178,16 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
     }
 
     /**
+     * Declare the label text.
+     * 
+     * @param text
+     * @return
+     */
+    protected final UILabel text(String text) {
+        return new UILabel(null).text(text);
+    }
+
+    /**
      * Declare Form UI simply.
      * 
      * @param label A form label.
@@ -209,24 +219,10 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * Declare Form UI simply.
      * 
      * @param label A form label.
-     */
-    protected final void description(String label, Object... description) {
-        $(hbox, FormStyles.Row, () -> {
-            $(() -> TextNotation.parse(label), FormStyles.Label);
-            for (Object desc : description) {
-                $(() -> TextNotation.parse(String.valueOf(desc)));
-            }
-        });
-    }
-
-    /**
-     * Declare Form UI simply.
-     * 
-     * @param label A form label.
      * @param description A label description.
      */
-    protected final void form(String label, String description) {
-        // form(() -> TextNotation.parse(label), null, () -> );
+    protected final void form(UserInterfaceProvider label, Object description) {
+        form(label, null, text(String.valueOf(description)));
     }
 
     /**
