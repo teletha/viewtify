@@ -20,7 +20,8 @@ public interface FormStyles extends ViewtyStyle {
 
     Style Row = () -> {
         margin.vertical(GAP, px);
-        text.verticalAlign.middle();
+        text.verticalAlign.baseline();
+        background.color("red");
     };
 
     Style Label = () -> {
