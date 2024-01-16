@@ -16,11 +16,13 @@ import stylist.Style;
  */
 public interface FormStyles extends ViewtyStyle {
 
-    int GAP = 4;
+    int HorizontalGap = 2;
+
+    int VerticalGap = 4;
 
     Style Row = () -> {
-        margin.vertical(GAP, px);
-        text.verticalAlign.baseline();
+        margin.vertical(VerticalGap, px);
+        text.verticalAlign.middle();
         background.color("red");
     };
 
@@ -54,7 +56,7 @@ public interface FormStyles extends ViewtyStyle {
     };
 
     Style Description = () -> {
-        margin.vertical(GAP, px);
+        margin.vertical(VerticalGap, px);
     };
 
     Style DescriptionTitle = () -> {
@@ -106,7 +108,101 @@ public interface FormStyles extends ViewtyStyle {
         });
     };
 
+    Style FormMin = () -> {
+        $.descendant(Label, () -> {
+            display.width(80, px);
+        });
+
+        $.descendant(LabelMin, () -> {
+            display.width(40, px);
+        });
+    };
+
+    Style FormSlim = () -> {
+        $.descendant(Label, () -> {
+            display.width(100, px);
+        });
+
+        $.descendant(LabelMin, () -> {
+            display.width(60, px);
+        });
+    };
+
+    Style Form = () -> {
+        $.descendant(Label, () -> {
+            display.width(120, px);
+        });
+
+        $.descendant(LabelMin, () -> {
+            display.width(80, px);
+        });
+    };
+
+    Style FormWide = () -> {
+        $.descendant(Label, () -> {
+            display.width(140, px);
+        });
+
+        $.descendant(LabelMin, () -> {
+            display.width(100, px);
+        });
+    };
+
+    Style FormMax = () -> {
+        $.descendant(Label, () -> {
+            display.width(160, px);
+        });
+
+        $.descendant(LabelMin, () -> {
+            display.width(120, px);
+        });
+    };
+
+    Style LabelLeft = () -> {
+        $.descendant(Label, () -> {
+            text.align.left();
+        });
+
+        $.descendant(LabelMin, () -> {
+            text.align.left();
+        });
+    };
+
+    Style LabelRight = () -> {
+        $.descendant(Label, () -> {
+            text.align.right();
+        });
+
+        $.descendant(LabelMin, () -> {
+            text.align.right();
+        });
+    };
+
+    Style LabelCenter = () -> {
+        $.descendant(Label, () -> {
+            text.align.center();
+        });
+
+        $.descendant(LabelMin, () -> {
+            text.align.center();
+        });
+    };
+
     Style Sequencial = () -> {
-        margin.left(GAP, px);
+        margin.right(HorizontalGap, px);
+    };
+
+    Style Combined = () -> {
+        display.height.fitContent();
+        padding.size(0, px).right(2, px);
+        margin.size(0, px);
+    };
+
+    Style CombinedItem = () -> {
+        text.align.center();
+    };
+
+    Style CheckBox = () -> {
+        text.align.left();
     };
 }

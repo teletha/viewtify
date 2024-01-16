@@ -28,6 +28,7 @@ import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -38,6 +39,7 @@ import javafx.util.StringConverter;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
+import viewtify.style.FormStyles;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
 import viewtify.ui.helper.PlaceholderHelper;
@@ -417,6 +419,29 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
     public UIText<V> suggest(Callback<ISuggestionRequest, Collection<V>> suggestionProvider, StringConverter<V> converter) {
         TextFields.bindAutoCompletion(ui, suggestionProvider, converter);
         return this;
+    }
+
+    /**
+     * Create combined text input user interface.
+     * 
+     * @return
+     */
+    public UIHBox combine(UIText... combiners) {
+        UIHBox container = new UIHBox(view).style("text-input").style(FormStyles.Combined);
+        ObservableList<Node> children = container.ui().getChildren();
+        UIText[] inputs = I.array(new UIText[] {this}, combiners);
+
+        for (UIText<?> input : inputs) {
+            input.style("noborder").style(FormStyles.CombinedItem).whenFocus(focused -> {
+                if (focused) {
+                    container.style("focused");
+                } else {
+                    container.unstyle("focused");
+                }
+            });
+            children.add(input.ui());
+        }
+        return container;
     }
 
     /**

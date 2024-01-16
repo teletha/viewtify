@@ -282,14 +282,28 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * 
      * @param label A form label.
      * @param style Additional style for controls.
-     * @param userInterfaces A list of form controls.
+     * @param providers A list of form controls.
      */
-    private void form(UserInterfaceProvider label, Style style, UserInterfaceProvider... userInterfaces) {
-        form(label, () -> {
-            for (UserInterfaceProvider userInterface : userInterfaces) {
-                $(userInterface, style == null ? new Style[] {FormStyles.Input} : new Style[] {FormStyles.Input, style});
-            }
-        });
+    private void form(UserInterfaceProvider label, Style style, UserInterfaceProvider... providers) {
+        form(label, () -> extracted(style, providers));
+    }
+
+    private void extracted(Style style, UserInterfaceProvider... providers) {
+        Style[] styles = style == null ? new Style[] {FormStyles.Input} : new Style[] {FormStyles.Input, style};
+        for (int i = 0; i < providers.length; i++) {
+            if (i != providers.length - 1) styles = I.array(styles, FormStyles.Sequencial);
+            if (providers[i] instanceof UICheckBox) styles = I.array(styles, FormStyles.CheckBox);
+            $(providers[i], styles);
+        }
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     */
+    protected final void form(String label, WiseRunnable process) {
+        form(() -> TextNotation.parse(label), process);
     }
 
     /**
