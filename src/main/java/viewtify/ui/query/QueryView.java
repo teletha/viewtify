@@ -41,8 +41,8 @@ public class QueryView<M> extends View {
      */
     class view extends ViewDSL {
         {
-            $(vbox, () -> {
-                $(title, FormStyles.LabelMin);
+            $(vbox, FormStyles.FormSlim, FormStyles.LabelCenter, () -> {
+                $(title);
                 for (Query q : compound.queries()) {
                     $(new Editor(q));
                 }
@@ -104,19 +104,6 @@ public class QueryView<M> extends View {
         /** The input UI. */
         final UserInterface input;
 
-        /**
-         * Declare view.
-         */
-        class view extends ViewDSL {
-            {
-                $(hbox, FormStyles.Row, () -> {
-                    $(extractor, FormStyles.LabelMin);
-                    $(input, FormStyles.Input);
-                    $(tester, FormStyles.Input);
-                });
-            }
-        }
-
         /** The associated {@link Query}. */
         private final Query<M, V> query;
 
@@ -132,8 +119,19 @@ public class QueryView<M> extends View {
          * {@inheritDoc}
          */
         @Override
+        protected ViewDSL declareUI() {
+            return new ViewDSL() {
+                {
+                    form(query.name.getValue(), input, tester);
+                }
+            };
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
         protected void initialize() {
-            extractor.text(query.name);
             tester.items(Tester.by(query.type))
                     .select(query.tester.or(tester.first()))
                     .renderByVariable(m -> m.description)

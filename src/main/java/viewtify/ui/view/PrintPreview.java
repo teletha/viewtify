@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.controlsfx.control.SegmentedButton;
-
 import javafx.event.Event;
 import javafx.geometry.Bounds;
 import javafx.print.JobSettings;
@@ -36,6 +34,9 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import org.controlsfx.control.SegmentedButton;
+
 import kiss.I;
 import kiss.WiseSupplier;
 import stylist.Style;
@@ -143,47 +144,22 @@ public class PrintPreview extends DialogView<PrintInfo> {
                     });
                     $(vbox, style.side, () -> {
                         $(hbox, FormStyles.Row, style.title, () -> {
-                            label(en("Settings"), FormStyles.LabelMin);
+                            label(en("Settings"));
 
                             $(pageSize, FormStyles.Input, style.pageSize);
                         });
 
-                        $(hbox, FormStyles.Row, () -> {
-                            label(en("Number of copies"), FormStyles.LabelMin);
-                            $(copies, FormStyles.Input);
-                        });
-                        $(hbox, FormStyles.Row, () -> {
-                            label(en("Page"), FormStyles.LabelMin);
-                            $(pager, FormStyles.Input);
-                        });
-                        $(hbox, FormStyles.Row, () -> {
-                            label(en("Printer"), FormStyles.LabelMin);
-                            $(printer, FormStyles.Input);
-                        });
-
+                        form(en("Number of copies"), copies);
+                        form(en("Page"), pager);
+                        form(en("Printer"), printer);
                         $(hbox, FormStyles.Row, style.advanced, () -> {
-                            label(en("Advanced Settings"), FormStyles.LabelMin);
+                            label(en("Advanced Settings"));
                         });
-                        $(hbox, FormStyles.Row, () -> {
-                            label(en("Paper"), FormStyles.LabelMin);
-                            $(paper, FormStyles.Input);
-                        });
-                        $(hbox, FormStyles.Row, () -> {
-                            label(en("Color mode"), FormStyles.LabelMin);
-                            $(color, FormStyles.Input);
-                        });
-                        $(hbox, FormStyles.Row, () -> {
-                            label(en("Print orientation"), FormStyles.LabelMin);
-                            $(orientation, FormStyles.Input);
-                        });
-                        $(hbox, FormStyles.Row, () -> {
-                            label(en("Print side"), FormStyles.LabelMin);
-                            $(side, FormStyles.Input);
-                        });
-                        $(hbox, FormStyles.Row, () -> {
-                            label(en("Quality"), FormStyles.LabelMin);
-                            $(quality, FormStyles.Input);
-                        });
+                        form(en("Paper"), paper);
+                        form(en("Color mode"), color);
+                        form(en("Print orientation"), orientation);
+                        form(en("Print side"), side);
+                        form(en("Quality"), quality);
                     });
                 });
             }

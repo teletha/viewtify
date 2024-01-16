@@ -18,7 +18,7 @@ public interface FormStyles extends ViewtyStyle {
 
     int HorizontalGap = 2;
 
-    int VerticalGap = 4;
+    int VerticalGap = 2;
 
     Style Row = () -> {
         margin.vertical(VerticalGap, px);
@@ -28,10 +28,7 @@ public interface FormStyles extends ViewtyStyle {
 
     Style Label = () -> {
         display.width(120, px);
-    };
-
-    Style LabelMin = () -> {
-        display.width(80, px);
+        margin.top(6, px);
     };
 
     Style Input = () -> {
@@ -112,19 +109,11 @@ public interface FormStyles extends ViewtyStyle {
         $.descendant(Label, () -> {
             display.width(80, px);
         });
-
-        $.descendant(LabelMin, () -> {
-            display.width(40, px);
-        });
     };
 
     Style FormSlim = () -> {
         $.descendant(Label, () -> {
             display.width(100, px);
-        });
-
-        $.descendant(LabelMin, () -> {
-            display.width(60, px);
         });
     };
 
@@ -132,19 +121,11 @@ public interface FormStyles extends ViewtyStyle {
         $.descendant(Label, () -> {
             display.width(120, px);
         });
-
-        $.descendant(LabelMin, () -> {
-            display.width(80, px);
-        });
     };
 
     Style FormWide = () -> {
         $.descendant(Label, () -> {
             display.width(140, px);
-        });
-
-        $.descendant(LabelMin, () -> {
-            display.width(100, px);
         });
     };
 
@@ -152,18 +133,10 @@ public interface FormStyles extends ViewtyStyle {
         $.descendant(Label, () -> {
             display.width(160, px);
         });
-
-        $.descendant(LabelMin, () -> {
-            display.width(120, px);
-        });
     };
 
     Style LabelLeft = () -> {
         $.descendant(Label, () -> {
-            text.align.left();
-        });
-
-        $.descendant(LabelMin, () -> {
             text.align.left();
         });
     };
@@ -172,18 +145,10 @@ public interface FormStyles extends ViewtyStyle {
         $.descendant(Label, () -> {
             text.align.right();
         });
-
-        $.descendant(LabelMin, () -> {
-            text.align.right();
-        });
     };
 
     Style LabelCenter = () -> {
         $.descendant(Label, () -> {
-            text.align.center();
-        });
-
-        $.descendant(LabelMin, () -> {
             text.align.center();
         });
     };
