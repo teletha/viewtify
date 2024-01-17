@@ -285,16 +285,14 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param providers A list of form controls.
      */
     private void form(UserInterfaceProvider label, Style style, UserInterfaceProvider... providers) {
-        form(label, () -> extracted(style, providers));
-    }
-
-    private void extracted(Style style, UserInterfaceProvider... providers) {
-        Style[] styles = style == null ? new Style[] {FormStyles.Input} : new Style[] {FormStyles.Input, style};
-        for (int i = 0; i < providers.length; i++) {
-            if (i != providers.length - 1) styles = I.array(styles, FormStyles.Sequencial);
-            if (providers[i] instanceof UICheckBox) styles = I.array(styles, FormStyles.CheckBox);
-            $(providers[i], styles);
-        }
+        form(label, () -> {
+            Style[] styles = style == null ? new Style[] {} : new Style[] {style};
+            for (int i = 0; i < providers.length; i++) {
+                if (i != providers.length - 1) styles = I.array(styles, FormStyles.Sequencial);
+                if (providers[i] instanceof UICheckBox) styles = I.array(styles, FormStyles.CheckBox);
+                $(providers[i], styles);
+            }
+        });
     }
 
     /**
@@ -321,11 +319,36 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param label A form label.
      */
     protected final void form(UserInterfaceProvider label, WiseRunnable process) {
-        $(hbox, FormStyles.Row, () -> {
+        form(() -> {
             if (label != null) {
                 $(label, FormStyles.Label);
             }
-            process.run();
+        }, process);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     */
+    protected final void form(String label, WiseRunnable labelProcess, WiseRunnable process) {
+        form(() -> {
+            $(vbox, () -> {
+                $(() -> TextNotation.parse(label), FormStyles.Label);
+                labelProcess.run();
+            });
+        }, process);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     */
+    private final void form(WiseRunnable label, WiseRunnable form) {
+        $(hbox, FormStyles.Row, () -> {
+            if (label != null) label.run();
+            if (form != null) form.run();
         });
     }
 

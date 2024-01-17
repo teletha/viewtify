@@ -31,6 +31,10 @@ public interface FormStyles extends ViewtyStyle {
         margin.top(6, px);
     };
 
+    Style LabelInfo = Label.with(() -> {
+        font.size(0.88, em);
+    });
+
     Style Input = () -> {
         display.width(160, px);
     };

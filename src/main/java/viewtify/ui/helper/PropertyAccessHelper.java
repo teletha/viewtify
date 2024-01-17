@@ -88,6 +88,9 @@ public interface PropertyAccessHelper {
         public static final Type<Double> GraphicTextGap = new Type("graphicTextGap");
 
         /** The defined property type. */
+        public static final Type<Double> Height = new Type("prefHeight");
+
+        /** The defined property type. */
         public static final Type<Double> HGap = new Type("hgap");
 
         /** The defined property type. */
@@ -103,7 +106,13 @@ public interface PropertyAccessHelper {
         public static final Type<Boolean> Managed = new Type("managed");
 
         /** The defined property type. */
+        public static final Type<Double> MaxHeight = new Type("maxHeight");
+
+        /** The defined property type. */
         public static final Type<Double> MaxWidth = new Type("maxWidth");
+
+        /** The defined property type. */
+        public static final Type<Double> MinHeight = new Type("minHeight");
 
         /** The defined property type. */
         public static final Type<Double> MinWidth = new Type("minWidth");
