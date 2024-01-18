@@ -9,12 +9,17 @@
  */
 package viewtify.style;
 
+import kiss.Variable;
 import stylist.Style;
 
 /**
  * Built-in form CSS
  */
 public interface FormStyles extends ViewtyStyle {
+
+    Variable<Integer> Column = Variable.of(30);
+
+    Variable<Integer> Gap = Variable.of(2);
 
     int HorizontalGap = 2;
 
@@ -158,7 +163,7 @@ public interface FormStyles extends ViewtyStyle {
     };
 
     Style Sequencial = () -> {
-        margin.right(HorizontalGap, px);
+        margin.right(Gap.v, px);
     };
 
     Style Combined = () -> {
@@ -174,4 +179,34 @@ public interface FormStyles extends ViewtyStyle {
     Style CheckBox = () -> {
         text.align.left();
     };
+
+    private static Style colum(int size) {
+        return () -> {
+            display.width(Column.v * size + Gap.v * (size - 1), px);
+        };
+    }
+
+    Style Column1 = colum(1);
+
+    Style Column2 = colum(2);
+
+    Style Column3 = colum(3);
+
+    Style Column4 = colum(4);
+
+    Style Column5 = colum(5);
+
+    Style Column6 = colum(6);
+
+    Style Column7 = colum(7);
+
+    Style Column8 = colum(8);
+
+    Style Column9 = colum(9);
+
+    Style Column10 = colum(10);
+
+    Style Column11 = colum(11);
+
+    Style Column12 = colum(12);
 }
