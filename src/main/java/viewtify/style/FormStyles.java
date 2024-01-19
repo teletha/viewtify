@@ -24,7 +24,6 @@ public interface FormStyles extends ViewtyStyle {
     Style Row = () -> {
         margin.vertical(Gap.v, px);
         text.verticalAlign.middle();
-        background.color("red");
     };
 
     Style Label = () -> {
