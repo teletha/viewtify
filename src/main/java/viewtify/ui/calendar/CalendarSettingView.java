@@ -52,12 +52,12 @@ public class CalendarSettingView extends View {
     protected ViewDSL declareUI() {
         return new ViewDSL() {
             {
-                $(vbox, () -> {
-                    form(en("First day of week"), firstDoW);
-                    form(en("Start time"), startTime);
-                    form(en("End time"), endTime);
-                    form(en("Initial page"), initialView);
-                    form(en("Emphsize today"), FormStyles.InputMin, emphsizeToday);
+                $(vbox, FormStyles.Label90, () -> {
+                    form(en("First day of week"), FormStyles.Column5, firstDoW);
+                    form(en("Start time"), FormStyles.Column5, startTime);
+                    form(en("End time"), FormStyles.Column5, endTime);
+                    form(en("Initial page"), FormStyles.Column5, initialView);
+                    form(en("Emphsize today"), FormStyles.Column3, emphsizeToday);
                     form(en("Event sources"), () -> {
                         $(vbox, () -> {
                             for (TimeEventSource source : I.find(TimeEventSource.class)) {
@@ -80,7 +80,6 @@ public class CalendarSettingView extends View {
         startTime.items(IntStream.range(0, 19).mapToObj(hour -> LocalTime.of(hour, 0))).sync(Calendars.setting.startTime);
         endTime.items(IntStream.range(5, 24).mapToObj(hour -> LocalTime.of(hour, 59))).sync(Calendars.setting.endTime);
         initialView.items(YearView.class, MonthView.class, WeekView.class, DayView.class)
-                .style(FormStyles.Input)
                 .sync(Calendars.setting.initialView)
                 .renderByVariable(x -> en(x.getSimpleName().replace("View", "")));
         emphsizeToday.sync(Calendars.setting.emphsizeToday);
@@ -110,8 +109,8 @@ public class CalendarSettingView extends View {
             return new ViewDSL() {
                 {
                     $(hbox, FormStyles.Row, () -> {
-                        $(enable, FormStyles.InputMin);
-                        $(color, FormStyles.Input);
+                        $(enable, FormStyles.Column3);
+                        $(color, FormStyles.Column5);
                     });
                 }
             };

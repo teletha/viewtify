@@ -21,36 +21,19 @@ public interface FormStyles extends ViewtyStyle {
 
     Variable<Integer> Gap = Variable.of(2);
 
-    int HorizontalGap = 2;
-
-    int VerticalGap = 2;
-
     Style Row = () -> {
-        margin.vertical(VerticalGap, px);
+        margin.vertical(Gap.v, px);
         text.verticalAlign.middle();
         background.color("red");
     };
 
     Style Label = () -> {
-        display.width(120, px);
         margin.top(6, px);
     };
 
     Style LabelInfo = Label.with(() -> {
         font.size(0.88, em);
     });
-
-    Style Input = () -> {
-        display.width(160, px);
-    };
-
-    Style InputMin = () -> {
-        display.width(80, px);
-    };
-
-    Style Button = () -> {
-        display.width(62, px);
-    };
 
     Style Title = () -> {
         margin.bottom(6, px);
@@ -62,7 +45,7 @@ public interface FormStyles extends ViewtyStyle {
     };
 
     Style Description = () -> {
-        margin.vertical(VerticalGap, px);
+        margin.vertical(Gap.v, px);
     };
 
     Style DescriptionTitle = () -> {
@@ -86,61 +69,33 @@ public interface FormStyles extends ViewtyStyle {
         padding.vertical(8, px).horizontal(12, px);
     };
 
-    Style Preferences = () -> {
-        // marker class
-
-        $.descendant(Row, () -> {
-            display.minWidth(350, px).minHeight(48, px);
-            border.radius(2, px);
-            background.color("-fx-control-inner-background");
-            margin.bottom(1, px);
-            padding.horizontal(10, px).vertical(10, px);
-            text.verticalAlign.middle().align.right();
-
-            $.hover(() -> {
-                background.color("-fx-control-inner-background-alt");
-            });
-
-            $.descendant(Row, () -> {
-                display.minHeight(36, px);
-                padding.vertical(5, px);
-            });
-        });
-
+    Style Label70 = () -> {
         $.descendant(Label, () -> {
-            display.width.fill();
-            text.verticalAlign.baseline();
-            margin.right(20, px).top(4, px);
+            display.width(70, px);
         });
     };
 
-    Style FormMin = () -> {
+    Style Label90 = () -> {
         $.descendant(Label, () -> {
-            display.width(80, px);
+            display.width(90, px);
         });
     };
 
-    Style FormSlim = () -> {
+    Style Label110 = () -> {
         $.descendant(Label, () -> {
-            display.width(100, px);
+            display.width(110, px);
         });
     };
 
-    Style Form = () -> {
+    Style Label130 = () -> {
         $.descendant(Label, () -> {
-            display.width(120, px);
+            display.width(130, px);
         });
     };
 
-    Style FormWide = () -> {
+    Style Label150 = () -> {
         $.descendant(Label, () -> {
-            display.width(140, px);
-        });
-    };
-
-    Style FormMax = () -> {
-        $.descendant(Label, () -> {
-            display.width(160, px);
+            display.width(150, px);
         });
     };
 
@@ -180,6 +135,11 @@ public interface FormStyles extends ViewtyStyle {
         text.align.left();
     };
 
+    Style Separator = () -> {
+        margin.vertical(6, px);
+        display.opacity(0);
+    };
+
     private static Style colum(int size) {
         return () -> {
             display.width(Column.v * size + Gap.v * (size - 1), px);
@@ -209,4 +169,32 @@ public interface FormStyles extends ViewtyStyle {
     Style Column11 = colum(11);
 
     Style Column12 = colum(12);
+
+    Style Preferences = () -> {
+        // marker class
+
+        $.descendant(Row, () -> {
+            display.minWidth(350, px).minHeight(48, px);
+            border.radius(2, px);
+            background.color("-fx-control-inner-background");
+            margin.bottom(1, px);
+            padding.horizontal(10, px).vertical(10, px);
+            text.verticalAlign.middle().align.right();
+
+            $.hover(() -> {
+                background.color("-fx-control-inner-background-alt");
+            });
+
+            $.descendant(Row, () -> {
+                display.minHeight(36, px);
+                padding.vertical(5, px);
+            });
+        });
+
+        $.descendant(Label, () -> {
+            display.width.fill();
+            text.verticalAlign.baseline();
+            margin.right(20, px).top(4, px);
+        });
+    };
 }

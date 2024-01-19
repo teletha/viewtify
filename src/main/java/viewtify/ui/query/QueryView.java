@@ -41,7 +41,7 @@ public class QueryView<M> extends View {
      */
     class view extends ViewDSL {
         {
-            $(vbox, FormStyles.FormSlim, FormStyles.LabelCenter, () -> {
+            $(vbox, FormStyles.Label90, FormStyles.LabelCenter, () -> {
                 $(title);
                 for (Query q : compound.queries()) {
                     $(new Editor(q));

@@ -58,11 +58,11 @@ public class AppearanceSettingView extends View {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
-                    form(en("Color Scheme"), theme);
-                    form(en("Theme Kind"), themeType);
-                    form(en("Language"), lang);
-                    form(en("Font"), family, size.style(FormStyles.InputMin, FormStyles.Sequencial));
-                    form(en("Enable smooth scroll"), FormStyles.InputMin, smoothScroll);
+                    form(en("Color Scheme"), FormStyles.Column5, theme);
+                    form(en("Theme Kind"), FormStyles.Column5, themeType);
+                    form(en("Language"), FormStyles.Column5, lang);
+                    form(en("Font"), family.style(FormStyles.Column5), size.style(FormStyles.Column2));
+                    form(en("Enable smooth scroll"), FormStyles.Column3, smoothScroll);
                 });
             }
         };
@@ -81,7 +81,7 @@ public class AppearanceSettingView extends View {
                 .render(x -> x.getDisplayLanguage(x))
                 .sync(setting.lang);
 
-        family.items(Font.getFamilies()).sync(setting.font).style(FormStyles.Input);
+        family.items(Font.getFamilies()).sync(setting.font);
         size.items(IntStream.range(8, 18)).format(x -> x + "px").sync(setting.fontSize);
         smoothScroll.sync(setting.smoothScroll);
     }

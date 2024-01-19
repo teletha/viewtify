@@ -125,9 +125,7 @@ public class KeyBindingSettingView extends View {
                 {
                     $(vbox, () -> {
                         label(en("Enter a new shortcut key to assign to {0}", command.name()));
-                        $(hbox, FormStyles.Row, () -> {
-                            $(input, FormStyles.Input);
-                        });
+                        form(FormStyles.Column5, input);
                     });
                 }
             };

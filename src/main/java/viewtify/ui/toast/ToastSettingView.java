@@ -63,14 +63,14 @@ public class ToastSettingView extends View {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
-                    form(en("Enable Notification"), FormStyles.InputMin, enableNotification);
-                    form(en("Notification Monitor"), notificationMonitor);
-                    form(en("Notification Location"), notificationArea);
-                    form(en("Notification Duration"), notificationDuration);
-                    form(en("Max number of Notifications"), notificationMax);
-                    form(en("Notification area spacing"), notificationGap);
-                    form(en("Notification area opacity"), notificationOpacity);
-                    form(en("Test notification"), notificationTest);
+                    form(en("Enable Notification"), FormStyles.Column3, enableNotification);
+                    form(en("Notification Monitor"), FormStyles.Column5, notificationMonitor);
+                    form(en("Notification Location"), FormStyles.Column5, notificationArea);
+                    form(en("Notification Duration"), FormStyles.Column5, notificationDuration);
+                    form(en("Max number of Notifications"), FormStyles.Column5, notificationMax);
+                    form(en("Notification area spacing"), FormStyles.Column5, notificationGap);
+                    form(en("Notification area opacity"), FormStyles.Column5, notificationOpacity);
+                    form(en("Test notification"), FormStyles.Column5, notificationTest);
                 });
             }
         };

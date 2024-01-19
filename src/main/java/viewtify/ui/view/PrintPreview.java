@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.controlsfx.control.SegmentedButton;
+
 import javafx.event.Event;
 import javafx.geometry.Bounds;
 import javafx.print.JobSettings;
@@ -34,9 +36,6 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-import org.controlsfx.control.SegmentedButton;
-
 import kiss.I;
 import kiss.WiseSupplier;
 import stylist.Style;
@@ -142,24 +141,23 @@ public class PrintPreview extends DialogView<PrintInfo> {
                         $(view);
                         $(() -> navi, style.navi);
                     });
-                    $(vbox, style.side, () -> {
+                    $(vbox, style.side, FormStyles.Label90, FormStyles.LabelCenter, () -> {
                         $(hbox, FormStyles.Row, style.title, () -> {
                             label(en("Settings"));
-
-                            $(pageSize, FormStyles.Input, style.pageSize);
+                            $(pageSize, FormStyles.Column5, style.pageSize);
                         });
 
-                        form(en("Number of copies"), copies);
-                        form(en("Page"), pager);
-                        form(en("Printer"), printer);
+                        form(en("Number of copies"), FormStyles.Column5, copies);
+                        form(en("Page"), FormStyles.Column5, pager);
+                        form(en("Printer"), FormStyles.Column5, printer);
                         $(hbox, FormStyles.Row, style.advanced, () -> {
                             label(en("Advanced Settings"));
                         });
-                        form(en("Paper"), paper);
-                        form(en("Color mode"), color);
-                        form(en("Print orientation"), orientation);
-                        form(en("Print side"), side);
-                        form(en("Quality"), quality);
+                        form(en("Paper"), FormStyles.Column5, paper);
+                        form(en("Color mode"), FormStyles.Column5, color);
+                        form(en("Print orientation"), FormStyles.Column5, orientation);
+                        form(en("Print side"), FormStyles.Column5, side);
+                        form(en("Quality"), FormStyles.Column5, quality);
                     });
                 });
             }

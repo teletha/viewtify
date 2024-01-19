@@ -44,12 +44,12 @@ public class UpdateSettingView extends View {
         return new ViewDSL() {
             {
                 $(vbox, () -> {
-                    form(en("Confirm update on startup"), FormStyles.InputMin, checkOnStartup);
-                    form(en("Confirm update"), confirm);
-                    form(en("Reboot application"), reboot);
-                    form(en("Application"), versionApp);
-                    form(en("Operating System"), versionOS);
-                    form(en("Java Runtime"), versionJava);
+                    form(en("Confirm update on startup"), FormStyles.Column3, checkOnStartup);
+                    form(en("Confirm update"), FormStyles.Column5, confirm);
+                    form(en("Reboot application"), FormStyles.Column5, reboot);
+                    form(en("Application"), FormStyles.Column5, versionApp);
+                    form(en("Operating System"), FormStyles.Column5, versionOS);
+                    form(en("Java Runtime"), FormStyles.Column5, versionJava);
                 });
             }
         };
