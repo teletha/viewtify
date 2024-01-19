@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.19.0](https://github.com/teletha/viewtify/compare/v2.18.0...v2.19.0) (2024-01-19)
+
+
+### Features
+
+* add BlockHelper ([36e0394](https://github.com/teletha/viewtify/commit/36e0394b0140a878a15aabd263383ab15feb30b9))
+* refactoring form styles ([b863d59](https://github.com/teletha/viewtify/commit/b863d59da9e432744878debf59916a6ce2307144))
+
+
+### Bug Fixes
+
+* anonymous browser is broken ([c76532b](https://github.com/teletha/viewtify/commit/c76532bc65cadd0ac3e9c351597cdb9370c96ec0))
+* form styel ([0389892](https://github.com/teletha/viewtify/commit/0389892711e4adc685c90f54e941c56aff0dcc61))
+* update ci process ([fe92987](https://github.com/teletha/viewtify/commit/fe92987436ad775eac5f006d34db13bfbe6275b8))
+* update dialog is translatable ([fd04f6b](https://github.com/teletha/viewtify/commit/fd04f6b5a68a683d11915a140aef93fd3321a63f))
+* update lisence ([fcb1fda](https://github.com/teletha/viewtify/commit/fcb1fdad9ba63a4b8e82b93c9badd9806e72bb9a))
+
 ## [2.18.0](https://github.com/teletha/viewtify/compare/v2.17.0...v2.18.0) (2024-01-01)
 
 
