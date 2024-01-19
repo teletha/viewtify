@@ -123,7 +123,7 @@ public interface FormStyles extends ViewtyStyle {
 
     Style Combined = () -> {
         display.height.fitContent();
-        padding.size(0, px).right(2, px);
+        padding.size(0, px);
         margin.size(0, px);
     };
 

@@ -14,10 +14,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import org.controlsfx.control.CheckComboBox;
-import org.controlsfx.control.HiddenSidesPane;
-import org.controlsfx.control.SegmentedButton;
-
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import javafx.geometry.Orientation;
@@ -36,6 +32,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import org.controlsfx.control.CheckComboBox;
+import org.controlsfx.control.HiddenSidesPane;
+import org.controlsfx.control.SegmentedButton;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -243,7 +244,18 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param userInterfaces A list of form controls.
      */
     protected final void form(String label, Style style, UserInterfaceProvider... userInterfaces) {
-        form(() -> TextNotation.parse(label), style, userInterfaces);
+        form(() -> TextNotation.parse(label), new Style[] {style}, userInterfaces);
+    }
+
+    /**
+     * Declare Form UI simply.
+     * 
+     * @param label A form label.
+     * @param style1 Additional style for controls.
+     * @param userInterfaces A list of form controls.
+     */
+    protected final void form(String label, Style style1, Style style2, UserInterfaceProvider... userInterfaces) {
+        form(() -> TextNotation.parse(label), new Style[] {style1, style2}, userInterfaces);
     }
 
     /**
@@ -264,7 +276,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param userInterfaces A list of form controls.
      */
     protected final void form(Variable label, Style style, UserInterfaceProvider... userInterfaces) {
-        form(() -> TextNotation.parse(label), style, userInterfaces);
+        form(() -> TextNotation.parse(label), new Style[] {style}, userInterfaces);
     }
 
     /**
@@ -274,7 +286,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param userInterfaces A list of form controls.
      */
     protected final void form(Style style, UserInterfaceProvider... userInterfaces) {
-        form((UserInterfaceProvider) null, style, userInterfaces);
+        form((UserInterfaceProvider) null, new Style[] {style}, userInterfaces);
     }
 
     /**
@@ -284,12 +296,12 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param style Additional style for controls.
      * @param providers A list of form controls.
      */
-    private void form(UserInterfaceProvider label, Style style, UserInterfaceProvider... providers) {
+    private void form(UserInterfaceProvider label, Style[] styles, UserInterfaceProvider... providers) {
         form(label, () -> {
-            Style[] styles = style == null ? new Style[] {} : new Style[] {style};
+            Style[] defined = styles;
             for (int i = 0; i < providers.length; i++) {
-                if (i != providers.length - 1) styles = I.array(styles, FormStyles.Sequencial);
-                if (providers[i] instanceof UICheckBox) styles = I.array(styles, FormStyles.CheckBox);
+                if (i != providers.length - 1) defined = I.array(defined, FormStyles.Sequencial);
+                if (providers[i] instanceof UICheckBox) defined = I.array(defined, FormStyles.CheckBox);
                 $(providers[i], styles);
             }
         });
