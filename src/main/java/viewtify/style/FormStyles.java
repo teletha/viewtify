@@ -22,6 +22,7 @@ public interface FormStyles extends ViewtyStyle {
     Variable<Integer> Gap = Variable.of(2);
 
     Style Row = () -> {
+        display.minHeight(29, px);
         margin.vertical(Gap.v, px);
         text.verticalAlign.middle();
     };
