@@ -123,7 +123,7 @@ public interface FormStyles extends ViewtyStyle {
 
     Style Combined = () -> {
         display.height.fitContent();
-        padding.size(0, px);
+        padding.size(0, px).right(2, px);
         margin.size(0, px);
     };
 
@@ -169,6 +169,33 @@ public interface FormStyles extends ViewtyStyle {
     Style Column11 = colum(11);
 
     Style Column12 = colum(12);
+
+    Style ColumnlLeft = () -> {
+        $.descendant(Column1, text.align::left);
+        $.descendant(Column2, text.align::left);
+        $.descendant(Column3, text.align::left);
+        $.descendant(Column4, text.align::left);
+        $.descendant(Column5, text.align::left);
+        $.descendant(Column6, text.align::left);
+    };
+
+    Style ColumnRight = () -> {
+        $.descendant(Column1, text.align::right);
+        $.descendant(Column2, text.align::right);
+        $.descendant(Column3, text.align::right);
+        $.descendant(Column4, text.align::right);
+        $.descendant(Column5, text.align::right);
+        $.descendant(Column6, text.align::right);
+    };
+
+    Style ColumnCenter = () -> {
+        $.descendant(Column1, text.align::center);
+        $.descendant(Column2, text.align::center);
+        $.descendant(Column3, text.align::center);
+        $.descendant(Column4, text.align::center);
+        $.descendant(Column5, text.align::center);
+        $.descendant(Column6, text.align::center);
+    };
 
     Style Preferences = () -> {
         // marker class
