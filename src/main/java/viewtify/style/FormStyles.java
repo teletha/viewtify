@@ -140,10 +140,18 @@ public interface FormStyles extends ViewtyStyle {
         display.opacity(0);
     };
 
+    /**
+     * Calculate the width of specified columns.
+     * 
+     * @param columns
+     * @return
+     */
+    static int calculateColumnWidth(int columns) {
+        return Column.v * columns + Gap.v * (columns - 1);
+    }
+
     private static Style colum(int size) {
-        return () -> {
-            display.width(Column.v * size + Gap.v * (size - 1), px);
-        };
+        return () -> display.width(calculateColumnWidth(size), px);
     }
 
     Style Column1 = colum(1);
@@ -171,30 +179,36 @@ public interface FormStyles extends ViewtyStyle {
     Style Column12 = colum(12);
 
     Style ColumnlLeft = () -> {
-        $.descendant(Column1, text.align::left);
-        $.descendant(Column2, text.align::left);
-        $.descendant(Column3, text.align::left);
-        $.descendant(Column4, text.align::left);
-        $.descendant(Column5, text.align::left);
-        $.descendant(Column6, text.align::left);
+        Style special = text.align::left;
+
+        $.descendant(Column1, special);
+        $.descendant(Column2, special);
+        $.descendant(Column3, special);
+        $.descendant(Column4, special);
+        $.descendant(Column5, special);
+        $.descendant(Column6, special);
     };
 
     Style ColumnRight = () -> {
-        $.descendant(Column1, text.align::right);
-        $.descendant(Column2, text.align::right);
-        $.descendant(Column3, text.align::right);
-        $.descendant(Column4, text.align::right);
-        $.descendant(Column5, text.align::right);
-        $.descendant(Column6, text.align::right);
+        Style special = text.align::right;
+
+        $.descendant(Column1, special);
+        $.descendant(Column2, special);
+        $.descendant(Column3, special);
+        $.descendant(Column4, special);
+        $.descendant(Column5, special);
+        $.descendant(Column6, special);
     };
 
     Style ColumnCenter = () -> {
-        $.descendant(Column1, text.align::center);
-        $.descendant(Column2, text.align::center);
-        $.descendant(Column3, text.align::center);
-        $.descendant(Column4, text.align::center);
-        $.descendant(Column5, text.align::center);
-        $.descendant(Column6, text.align::center);
+        Style special = text.align::center;
+
+        $.descendant(Column1, special);
+        $.descendant(Column2, special);
+        $.descendant(Column3, special);
+        $.descendant(Column4, special);
+        $.descendant(Column5, special);
+        $.descendant(Column6, special);
     };
 
     Style Preferences = () -> {

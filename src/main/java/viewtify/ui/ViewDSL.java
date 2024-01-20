@@ -183,7 +183,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * @param text
      * @return
      */
-    protected final UILabel text(String text) {
+    protected final UILabel text(Object text) {
         return new UILabel(null).text(text);
     }
 
@@ -213,16 +213,6 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
                 $(() -> TextNotation.parse(detail), FormStyles.DescriptionDetail);
             }
         });
-    }
-
-    /**
-     * Declare Form UI simply.
-     * 
-     * @param label A form label.
-     * @param description A label description.
-     */
-    protected final void form(UserInterfaceProvider label, Object description) {
-        form(label, null, text(String.valueOf(description)));
     }
 
     /**
@@ -318,7 +308,7 @@ public class ViewDSL extends Tree<UserInterfaceProvider, ViewDSL.UINode> impleme
      * 
      * @param label A form label.
      */
-    protected final void form(UserInterfaceProvider label, WiseRunnable process) {
+    private void form(UserInterfaceProvider label, WiseRunnable process) {
         form(() -> {
             if (label != null) {
                 $(label, FormStyles.Label);

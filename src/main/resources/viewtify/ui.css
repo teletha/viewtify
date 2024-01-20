@@ -384,36 +384,42 @@
 .text-input,
 .text-field,
 .button {
-    -fx-padding: 6px 4px;
+    -fx-padding: 6 4;
 }
 
 .toggle-button {
-		-fx-padding: 6px 10px;
+		-fx-padding: 6 10;
 }
 
 .text-area {
-    -fx-padding: 0px;
+    -fx-padding: 0;
 }
 
 .text-area .content {
-    -fx-padding: 6px 8px;
+    -fx-padding: 6 8;
 }
 
 .text-field.noborder {
-    -fx-padding: 6px 0px;
+    -fx-padding: 6 0;
 }
 
 .combo-box {
-    -fx-padding: 2px 0px;
+    -fx-padding: 2 0;
+}
+.combo-box > .list-cell {
+    -fx-padding: 4 2 4 6;
+}
+.combo-box-base > .arrow-button {
+    -fx-padding: 4 6 4 2;
 }
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
-    -fx-padding: 7px 8px;
+    -fx-padding: 7 8;
 }
 
 .table-row-cell {
-    -fx-padding: 2px 0;
+    -fx-padding: 2 0;
 }
 
 .column-header .label {
-    -fx-padding: 5px 1px;
+    -fx-padding: 5 1;
 }
