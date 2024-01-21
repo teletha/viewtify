@@ -132,7 +132,7 @@ public interface FormStyles extends ViewtyStyle {
     };
 
     Style CheckBox = () -> {
-        text.align.left();
+        text.align.left().indent(6, px);
     };
 
     Style Separator = () -> {
@@ -187,6 +187,7 @@ public interface FormStyles extends ViewtyStyle {
         $.descendant(Column4, special);
         $.descendant(Column5, special);
         $.descendant(Column6, special);
+        $.descendant(CheckBox, CheckBox);
     };
 
     Style ColumnRight = () -> {
@@ -198,6 +199,7 @@ public interface FormStyles extends ViewtyStyle {
         $.descendant(Column4, special);
         $.descendant(Column5, special);
         $.descendant(Column6, special);
+        $.descendant(CheckBox, CheckBox);
     };
 
     Style ColumnCenter = () -> {
@@ -209,6 +211,7 @@ public interface FormStyles extends ViewtyStyle {
         $.descendant(Column4, special);
         $.descendant(Column5, special);
         $.descendant(Column6, special);
+        $.descendant(CheckBox, CheckBox);
     };
 
     Style Preferences = () -> {
