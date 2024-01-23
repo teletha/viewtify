@@ -335,6 +335,15 @@
 .text-field.noborder {
 		-fx-background-insets: 0;
 		-fx-background-color: transparent;
+    -fx-padding: 6 0;
+}
+
+.text-field.noborder > .left-pane {
+    -fx-padding: 0 1 0 3;
+}
+
+.text-field.noborder > .right-pane {
+    -fx-padding: 0 3 0 1;
 }
 
 .text-input.focused {
@@ -397,10 +406,6 @@
 
 .text-area .content {
     -fx-padding: 6 8;
-}
-
-.text-field.noborder {
-    -fx-padding: 6 0;
 }
 
 .combo-box {
