@@ -38,7 +38,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -656,7 +655,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @param action
      */
     private void modifyItemUISafely(Consumer<ObservableList<E>> action) {
-        action.accept(items());
+        Viewtify.inUI(() -> action.accept(items()));
     }
 
     /**
