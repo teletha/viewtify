@@ -45,7 +45,7 @@ public class Project extends bee.api.Project {
                 * Browser manipulation
                 """);
 
-        require(SourceVersion.RELEASE_19, SourceVersion.RELEASE_17);
+        require(SourceVersion.RELEASE_21, SourceVersion.RELEASE_17);
 
         require("com.github.teletha", "altfx");
         require("com.github.teletha", "sinobu");

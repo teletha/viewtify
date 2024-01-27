@@ -22,6 +22,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -134,7 +135,10 @@ public class UITableColumn<RowV, ColumnV>
      */
     public UITableColumn<RowV, ColumnV> modelBySignal(WiseFunction<RowV, Signal<ColumnV>> mapper) {
         if (mapper != null) {
-            modelByProperty(v -> mapper.apply(v).to(new SmartProperty(), SmartProperty::set));
+            modelByProperty(v -> mapper.apply(v)
+                    .subscribeOn(Viewtify.WorkerThread)
+                    .on(Viewtify.UIThread)
+                    .to(new SmartProperty(), SmartProperty::set));
         }
         return this;
     }

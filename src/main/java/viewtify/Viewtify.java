@@ -28,7 +28,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.BooleanSupplier;
@@ -116,18 +115,7 @@ public final class Viewtify {
     public static final Disposable Terminator = Disposable.empty();
 
     /** The thread pool. */
-    private static final ExecutorService pool = Executors.newCachedThreadPool(new ThreadFactory() {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Thread newThread(Runnable runnable) {
-            Thread thread = new Thread(runnable);
-            thread.setDaemon(true);
-            return thread;
-        }
-    });
+    private static final ExecutorService pool = Executors.newVirtualThreadPerTaskExecutor();
 
     /** Executor for UI Thread. */
     public static final Consumer<Runnable> UIThread = Viewtify::inUI;
