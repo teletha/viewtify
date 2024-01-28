@@ -21,7 +21,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
-
 import kiss.I;
 import kiss.WiseConsumer;
 import viewtify.Viewtify;
@@ -43,7 +42,7 @@ class TabArea extends ViewArea<UITabPane> {
     private String selectedInitial;
 
     /** The initial view id manager. */
-    private List<String> viewInitial = new ArrayList();
+    private List<String> views = new ArrayList();
 
     /** The header node. */
     private final StackPane header;
@@ -63,6 +62,7 @@ class TabArea extends ViewArea<UITabPane> {
 
         saveSelectedTab();
         node.style("stop-anime");
+        node.ui.setTabClosingPolicy(DockSystem.tabPolicy);
         node.when(User.DragOver, e -> DockSystem.onDragOver(e, this));
         node.when(User.DragEnter, e -> DockSystem.onDragEntered(e, this));
         node.when(User.DragExit, e -> DockSystem.onDragExited(e, this));
@@ -140,7 +140,6 @@ class TabArea extends ViewArea<UITabPane> {
      * 
      * @return The ids property.
      */
-    @SuppressWarnings("unused")
     private final List<String> getIds() {
         return I.signal(node.ui.getTabs()).map(Tab::getId).toList();
     }
@@ -152,7 +151,7 @@ class TabArea extends ViewArea<UITabPane> {
      */
     @SuppressWarnings("unused")
     private final void setIds(List<String> ids) {
-        this.viewInitial = ids;
+        this.views = ids;
     }
 
     /**
@@ -215,6 +214,18 @@ class TabArea extends ViewArea<UITabPane> {
         if (checkEmpty) {
             handleEmpty();
         }
+
+        DockSystem.opened.remove(tab.getId());
+    }
+
+    /**
+     * Remove all views from this area.
+     */
+    void removeAll() {
+        List<Tab> copies = node.ui.getTabs().stream().toList();
+        for (Tab tab : copies) {
+            remove(tab, true);
+        }
     }
 
     /**
@@ -249,6 +260,7 @@ class TabArea extends ViewArea<UITabPane> {
         default:
             node.ui.getTabs().add(position, tab);
             tab.setOnCloseRequest(e -> remove(tab, true));
+            views.add(tab.getId());
 
             selectInitialTabOnlyOnce(tab);
             return this;
@@ -283,7 +295,7 @@ class TabArea extends ViewArea<UITabPane> {
      * @return
      */
     private boolean compare(String tester, String test) {
-        for (String id : viewInitial) {
+        for (String id : views) {
             if (id.equals(tester)) {
                 return false;
             } else if (id.equals(test)) {
@@ -298,7 +310,7 @@ class TabArea extends ViewArea<UITabPane> {
      */
     @Override
     protected boolean hasView(String id) {
-        return viewInitial.contains(id);
+        return views.contains(id);
     }
 
     /**
@@ -311,4 +323,17 @@ class TabArea extends ViewArea<UITabPane> {
         }
     }
 
+    /**
+     * Select tab by id.
+     * 
+     * @param id
+     */
+    void select(String id) {
+        for (UITab tab : node.items()) {
+            if (tab.getId().equals(id)) {
+                node.select(tab);
+                return;
+            }
+        }
+    }
 }

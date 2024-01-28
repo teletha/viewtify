@@ -12,6 +12,7 @@ package viewtify.ui.dock;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
@@ -30,6 +31,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.skin.TabAbuse;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
@@ -47,7 +49,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -105,7 +106,10 @@ public final class DockSystem {
     static final Variable<Tab> selected = Variable.empty();
 
     /** The dock system event. */
-    private static final ObservableSet<String> opened = FXCollections.observableSet();
+    static final ObservableSet<String> opened = FXCollections.observableSet();
+
+    /** The user configuration. */
+    static TabClosingPolicy tabPolicy = TabClosingPolicy.SELECTED_TAB;
 
     /**
      * Hide.
@@ -120,6 +124,19 @@ public final class DockSystem {
      */
     private static DockLayout layout() {
         return I.make(DockLayout.class);
+    }
+
+    /**
+     * Configure the {@link TabClosingPolicy}.
+     * 
+     * @param policy
+     */
+    public static void configure(TabClosingPolicy policy) {
+        tabPolicy = Objects.requireNonNullElse(policy, TabClosingPolicy.SELECTED_TAB);
+
+        layout().find(TabArea.class).to(tab -> {
+            tab.node.policy(policy);
+        });
     }
 
     /**
@@ -181,23 +198,7 @@ public final class DockSystem {
      * @param id A tab ID to select.
      */
     public static void select(String id) {
-        DockLayout layout = layout();
-        TabArea area = I.signal(layout.roots)
-                .as(ViewArea.class)
-                .recurseMap(s -> s.flatIterable(v -> (List<ViewArea>) v.children))
-                .take(v -> v.hasView(id))
-                .as(TabArea.class)
-                .first()
-                .to().v;
-
-        if (area != null) {
-            for (UITab tab : area.node.items()) {
-                if (tab.getId().equals(id)) {
-                    area.node.select(tab);
-                    return;
-                }
-            }
-        }
+        layout().find(TabArea.class).take(x -> x.hasView(id)).first().to(x -> x.select(id));
     }
 
     /**
@@ -283,7 +284,7 @@ public final class DockSystem {
         stage.setY(bounds.getMinY());
         stage.setOnShown(shown);
         stage.setOnCloseRequest(e -> {
-            area.findAll(TabArea.class).flatIterable(tab -> tab.node.ui.getTabs()).to(tab -> opened.remove(tab.getId()));
+            area.findAll(TabArea.class).to(TabArea::removeAll);
             layout().roots.remove(area);
         });
 
@@ -357,6 +358,17 @@ public final class DockSystem {
                 }
             }
             return main;
+        }
+
+        /**
+         * Find all typed views.
+         * 
+         * @param <X>
+         * @param type
+         * @return
+         */
+        private <X extends ViewArea> Signal<X> find(Class<X> type) {
+            return I.signal(roots).as(ViewArea.class).recurseMap(s -> s.flatIterable(v -> (List<ViewArea>) v.children)).as(type);
         }
     }
 
