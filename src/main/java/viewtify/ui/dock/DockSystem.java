@@ -49,6 +49,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -57,6 +58,8 @@ import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseConsumer;
+import kiss.WiseRunnable;
+import psychopath.Locator;
 import viewtify.Viewtify;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIPane;
@@ -295,6 +298,25 @@ public final class DockSystem {
 
     /** The registered menu builders. */
     static final List<WiseConsumer<UILabel>> menuBuilders = new ArrayList();
+
+    /**
+     * Register the layout.
+     * 
+     * @param defaultLayout
+     */
+    public static void registerLayout(WiseRunnable defaultLayout) {
+        Objects.requireNonNull(defaultLayout);
+
+        DockLayout layout = layout();
+        System.out.println(layout.locate());
+        System.out.println(Locator.file(layout.locate()).isAbsent());
+        if (Locator.file(layout.locate()).isAbsent()) {
+            // use default setup
+            defaultLayout.run();
+        } else {
+
+        }
+    }
 
     /**
      * Register the menu on tab header.

@@ -618,7 +618,7 @@ public final class Viewtify {
             checkHeadlessMode();
 
             // Configure the directory of application's preference
-            String prefs = ".preferences for " + applicationClass.getSimpleName().toLowerCase();
+            String prefs = "." + applicationClass.getSimpleName().toLowerCase();
             I.env("PreferenceDirectory", prefs);
 
             // Configure the directory of user's preference
