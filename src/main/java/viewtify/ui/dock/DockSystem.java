@@ -49,7 +49,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -308,8 +307,6 @@ public final class DockSystem {
         Objects.requireNonNull(defaultLayout);
 
         DockLayout layout = layout();
-        System.out.println(layout.locate());
-        System.out.println(Locator.file(layout.locate()).isAbsent());
         if (Locator.file(layout.locate()).isAbsent()) {
             // use default setup
             defaultLayout.run();
