@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://docs.oracle.com/en/java/javase/17/"><img src="https://img.shields.io/badge/Java-Release%2017-green"/></a>
+    <a href="https://docs.oracle.com/en/java/javase/21/"><img src="https://img.shields.io/badge/Java-Release%2021-green"/></a>
     <span>&nbsp;</span>
     <a href="https://jitpack.io/#teletha/viewtify"><img src="https://img.shields.io/jitpack/v/github/teletha/viewtify?label=Repository&color=green"></a>
     <span>&nbsp;</span>
@@ -44,7 +44,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 
 
 ## Prerequisites
-Viewtify runs on all major operating systems and requires only [Java version 17](https://docs.oracle.com/en/java/javase/17/) or later to run.
+Viewtify runs on all major operating systems and requires only [Java version 21](https://docs.oracle.com/en/java/javase/21/) or later to run.
 To check, please run `java -version` from the command line interface. You should see something like this:
 ```
 > java -version
@@ -138,15 +138,15 @@ Viewtify depends on the following products on runtime.
 * [conjure-1.1.1](https://mvnrepository.com/artifact/com.github.teletha/conjure/1.1.1)
 * [controlsfx-11.2.0](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.2.0)
 * [javafx-base-22-ea+16](https://mvnrepository.com/artifact/org.openjfx/javafx-base/22-ea+16)
-* [javafx-base-22-ea+16-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/22-ea+16)
+* [javafx-base-22-ea+16-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-base/22-ea+16)
 * [javafx-controls-22-ea+16](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/22-ea+16)
-* [javafx-controls-22-ea+16-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/22-ea+16)
+* [javafx-controls-22-ea+16-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/22-ea+16)
 * [javafx-graphics-22-ea+16](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/22-ea+16)
-* [javafx-graphics-22-ea+16-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/22-ea+16)
+* [javafx-graphics-22-ea+16-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/22-ea+16)
 * [javafx-media-22-ea+16](https://mvnrepository.com/artifact/org.openjfx/javafx-media/22-ea+16)
-* [javafx-media-22-ea+16-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/22-ea+16)
+* [javafx-media-22-ea+16-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-media/22-ea+16)
 * [javafx-web-22-ea+16](https://mvnrepository.com/artifact/org.openjfx/javafx-web/22-ea+16)
-* [javafx-web-22-ea+16-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/22-ea+16)
+* [javafx-web-22-ea+16-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-web/22-ea+16)
 * [lycoris-1.0.0](https://mvnrepository.com/artifact/com.github.teletha/lycoris/1.0.0)
 * [openjfx-monocle-jdk-12.0.1+2](https://mvnrepository.com/artifact/org.testfx/openjfx-monocle/jdk-12.0.1+2)
 * [psychopath-1.12.1](https://mvnrepository.com/artifact/com.github.teletha/psychopath/1.12.1)
