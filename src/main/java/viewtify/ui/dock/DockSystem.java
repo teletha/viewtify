@@ -49,13 +49,16 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
 import kiss.I;
+import kiss.JSON;
 import kiss.Managed;
 import kiss.Signal;
 import kiss.Signaling;
 import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
+import kiss.WiseBiFunction;
 import kiss.WiseConsumer;
 import kiss.WiseRunnable;
 import psychopath.Locator;
@@ -64,6 +67,7 @@ import viewtify.ui.UILabel;
 import viewtify.ui.UIPane;
 import viewtify.ui.UITab;
 import viewtify.ui.UserInterfaceProvider;
+import viewtify.ui.View;
 
 /**
  * Handles the full window management with fully customizable layout and drag&drop into new not
@@ -313,6 +317,10 @@ public final class DockSystem {
         } else {
 
         }
+    }
+
+    public static void registerBuilder(WiseBiFunction<String, JSON, View> builder) {
+
     }
 
     /**
