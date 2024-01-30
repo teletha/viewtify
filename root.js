@@ -300,6 +300,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "DockRegister",
+			"packageName": "viewtify.ui.dock",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "DockSystem",
 			"packageName": "viewtify.ui.dock",
 			"type": "Class"
