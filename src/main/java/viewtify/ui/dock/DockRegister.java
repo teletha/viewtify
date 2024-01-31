@@ -9,17 +9,47 @@
  */
 package viewtify.ui.dock;
 
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import kiss.Extensible;
 import kiss.I;
 import kiss.Managed;
 import kiss.Singleton;
+import kiss.Variable;
 import viewtify.ui.UITab;
 import viewtify.ui.View;
 
 @Managed(Singleton.class)
 public abstract class DockRegister implements Extensible {
+
+    /** The managed independent dock items. */
+    private final List<DockItem> independents = new ArrayList();
+
+    /**
+     * Initialize and analyze
+     */
+    protected DockRegister() {
+        I.signal(getClass().getDeclaredMethods())
+                .take(m -> m.getParameterCount() == 0 && Modifier.isPublic(m.getModifiers()) && m.getReturnType() == void.class)
+                .to(m -> {
+                    DockItem item = new DockItem(m.getName(), Variable.of(m.getName()), () -> {
+                    });
+
+                    independents.add(item);
+                });
+    }
+
+    /**
+     * Register the specified view.
+     * 
+     * @param view
+     */
+    protected void register(Class<? extends View> view) {
+        register(I.make(view));
+    }
 
     /**
      * Register the specified view.
@@ -32,32 +62,10 @@ public abstract class DockRegister implements Extensible {
         return DockSystem.register(view.id()).text(view.title()).contentsLazy(tab -> view);
     }
 
-    final DockItem match(String id) {
-        int index = id.indexOf('@');
-        if (index == -1) {
-            try {
-                // class id
-                Class<?> clazz = Class.forName(id);
-                if (View.class.isAssignableFrom(clazz)) {
-
-                } else {
-
-                }
-            } catch (ClassNotFoundException e) {
-                // normal id
-            }
-        } else {
-
-        }
-    }
-
-    private void matchByType(String name, String param) {
-        try {
-            I.signal(getClass().getMethods()).take(m -> m.getName().equals(name)).take(m -> m.getParameterCount() == 1).to(m -> {
-
-            });
-        } catch (ClassNotFoundException e) {
-            // name id
-        }
+    /**
+     * Query all independent views.
+     */
+    public List<DockItem> queryIndependentDocks() {
+        return independents;
     }
 }

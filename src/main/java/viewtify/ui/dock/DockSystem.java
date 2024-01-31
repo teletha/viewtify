@@ -49,6 +49,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
 import kiss.I;
 import kiss.JSON;
 import kiss.Managed;
@@ -272,17 +273,6 @@ public final class DockSystem {
         area.setViewportRatio(o.recommendedRatio);
         opened.add(id);
         return tab;
-    }
-
-    /**
-     * Register a new view within this dock system.
-     * <p/>
-     * The Position will give an advice where this view should be placed.
-     *
-     * @param id The view to register.
-     */
-    public static void register(String id, WiseConsumer<UITab> tab) {
-        register(id, o -> o, tab);
     }
 
     /**
