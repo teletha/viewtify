@@ -293,6 +293,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "DockItem",
+			"packageName": "viewtify.ui.dock",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "DockRecommendedLocation",
 			"packageName": "viewtify.ui.dock",
 			"type": "Class"
@@ -310,6 +317,13 @@ const root = {
 			"name": "DockSystem",
 			"packageName": "viewtify.ui.dock",
 			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Dockable",
+			"packageName": "viewtify.ui.dock",
+			"type": "Functional"
 		},
 		{
 			"modifiers": {
