@@ -321,13 +321,6 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Dockable",
-			"packageName": "viewtify.ui.dock",
-			"type": "Functional"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "EditableHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
