@@ -140,7 +140,7 @@ class TabArea extends ViewArea<UITabPane> {
      * 
      * @return The ids property.
      */
-    private final List<String> getIds() {
+    final List<String> getIds() {
         return I.signal(node.ui.getTabs()).map(Tab::getId).toList();
     }
 

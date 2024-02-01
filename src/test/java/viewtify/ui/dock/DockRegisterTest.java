@@ -14,7 +14,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import kiss.I;
-import kiss.Variable;
 import viewtify.ui.View;
 
 class DockRegisterTest {
@@ -24,7 +23,7 @@ class DockRegisterTest {
         @SuppressWarnings("unused")
         class Register extends DockRegister {
             public void dock() {
-                register(ViewA.class);
+                register(MainView.class);
             }
         }
 
@@ -33,22 +32,48 @@ class DockRegisterTest {
         assert items.size() == 1;
 
         DockItem item = items.get(0);
-        assert item.id.equals("dock");
-        assert item.title.is("Title A");
+        assert item.id.equals("Dock");
+        assert item.title.is("Main");
         assert item.registration != null;
     }
 
-    private static class ViewA extends View {
+    @Test
+    void registerMultiple() {
+        @SuppressWarnings("unused")
+        class Register extends DockRegister {
+            public void dockMain() {
+                register(MainView.class);
+            }
+
+            public void dockSub() {
+                register(SubView.class);
+            }
+        }
+
+        Register register = I.make(Register.class);
+        List<DockItem> items = register.queryIndependentDocks();
+        assert items.size() == 2;
+
+        DockItem item = items.get(0);
+        assert item.id.equals("DockMain");
+        assert item.title.is("Main");
+        assert item.registration != null;
+
+        item = items.get(1);
+        assert item.id.equals("DockSub");
+        assert item.title.is("Sub");
+        assert item.registration != null;
+    }
+
+    private static class MainView extends View {
         @Override
         protected void initialize() {
         }
+    }
 
-        /**
-         * {@inheritDoc}
-         */
+    private static class SubView extends View {
         @Override
-        public Variable<String> title() {
-            return Variable.of("Title A");
+        protected void initialize() {
         }
     }
 }

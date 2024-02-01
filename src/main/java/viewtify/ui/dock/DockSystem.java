@@ -49,7 +49,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import kiss.I;
 import kiss.JSON;
 import kiss.Managed;
@@ -326,7 +325,14 @@ public final class DockSystem {
             // use default setup
             defaultLayout.run();
         } else {
-
+            layout.find(TabArea.class).effect(x -> System.out.println(x.getIds())).flatIterable(TabArea::getIds).to(id -> {
+                System.out.println(id);
+                for (DockRegister register : I.find(DockRegister.class)) {
+                    if (register.request(id)) {
+                        break;
+                    }
+                }
+            });
         }
     }
 
