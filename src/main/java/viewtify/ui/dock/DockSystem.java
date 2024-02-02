@@ -49,6 +49,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
 import kiss.I;
 import kiss.JSON;
 import kiss.Managed;
@@ -267,22 +268,12 @@ public final class DockSystem {
 
         // Since the recommended area does not exist,
         // add a view after creating that area.
+
         area = layout.findRoot().add(tab, o.recommendedArea);
         area.location = o.recommendedArea;
         area.setViewportRatio(o.recommendedRatio);
         opened.add(id);
         return tab;
-    }
-
-    /**
-     * Register a new view within this dock system.
-     * <p/>
-     * The Position will give an advice where this view should be placed.
-     *
-     * @param id The view to register.
-     */
-    public static void register(String id, UnaryOperator<DockRecommendedLocation> option, WiseConsumer<UITab> tab) {
-
     }
 
     /**
@@ -317,7 +308,7 @@ public final class DockSystem {
      * 
      * @param defaultLayout
      */
-    public static void registerLayout(WiseRunnable defaultLayout) {
+    public static void initializeLayout(WiseRunnable defaultLayout) {
         Objects.requireNonNull(defaultLayout);
 
         DockLayout layout = layout();
@@ -325,10 +316,9 @@ public final class DockSystem {
             // use default setup
             defaultLayout.run();
         } else {
-            layout.find(TabArea.class).effect(x -> System.out.println(x.getIds())).flatIterable(TabArea::getIds).to(id -> {
-                System.out.println(id);
+            layout.find(TabArea.class).flatIterable(TabArea::getIds).to(id -> {
                 for (DockRegister register : I.find(DockRegister.class)) {
-                    if (register.request(id)) {
+                    if (register.queryBy(id)) {
                         break;
                     }
                 }

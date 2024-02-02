@@ -32,9 +32,9 @@ class DockRegisterTest {
         assert items.size() == 1;
 
         DockItem item = items.get(0);
-        assert item.id.equals("Dock");
-        assert item.title.is("Main");
-        assert item.registration != null;
+        assert item.id().equals("Dock");
+        assert item.title().is("Main");
+        assert item.registration() != null;
     }
 
     @Test
@@ -55,14 +55,14 @@ class DockRegisterTest {
         assert items.size() == 2;
 
         DockItem item = items.get(0);
-        assert item.id.equals("DockMain");
-        assert item.title.is("Main");
-        assert item.registration != null;
+        assert item.id().equals("DockMain");
+        assert item.title().is("Main");
+        assert item.registration() != null;
 
         item = items.get(1);
-        assert item.id.equals("DockSub");
-        assert item.title.is("Sub");
-        assert item.registration != null;
+        assert item.id().equals("DockSub");
+        assert item.title().is("Sub");
+        assert item.registration() != null;
     }
 
     private static class MainView extends View {

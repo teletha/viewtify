@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 import kiss.Extensible;
 import kiss.I;
@@ -51,7 +52,16 @@ public abstract class DockRegister implements Extensible {
      * @param view
      */
     protected void register(Class<? extends View> view) {
-        register(I.make(view), 1);
+        register(estimateId(1), I.make(view), UnaryOperator.identity());
+    }
+
+    /**
+     * Register the specified view.
+     * 
+     * @param view
+     */
+    protected void register(Class<? extends View> view, UnaryOperator<DockRecommendedLocation> option) {
+        register(estimateId(1), I.make(view), option);
     }
 
     /**
@@ -60,7 +70,7 @@ public abstract class DockRegister implements Extensible {
      * @param view
      */
     protected void register(View view) {
-        register(view, 1);
+        register(estimateId(1), view, UnaryOperator.identity());
     }
 
     /**
@@ -68,14 +78,22 @@ public abstract class DockRegister implements Extensible {
      * 
      * @param view
      */
-    private void register(View view, int depth) {
+    protected void register(View view, UnaryOperator<DockRecommendedLocation> option) {
+        register(estimateId(1), view, option);
+    }
+
+    /**
+     * Register the specified view.
+     * 
+     * @param view
+     */
+    private void register(String id, View view, UnaryOperator<DockRecommendedLocation> option) {
         Objects.requireNonNull(view);
-        String id = estimateId(depth + 1);
 
         if (inspect) {
-            independents.add(new DockItem(id, view.title(), () -> register(view)));
+            independents.add(new DockItem(id, view.title(), () -> register(id, view, option)));
         } else {
-            DockSystem.register(id).text(view.title()).contentsLazy(tab -> view);
+            DockSystem.register(id, option).text(view.title()).contentsLazy(tab -> view);
         }
     }
 
@@ -107,14 +125,15 @@ public abstract class DockRegister implements Extensible {
     }
 
     /**
+     * Request tab registration by id.
+     * 
      * @param id
      * @return
      */
-    boolean request(String id) {
+    protected boolean queryBy(String id) {
         for (DockItem item : independents) {
-            if (item.id.equals(id)) {
-                item.registration.run();
-                System.out.println("Register " + item.id);
+            if (item.id().equals(id)) {
+                item.registration().run();
                 return true;
             }
         }

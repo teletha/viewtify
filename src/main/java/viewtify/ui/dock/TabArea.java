@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
@@ -21,6 +20,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
+
 import kiss.I;
 import kiss.WiseConsumer;
 import viewtify.Viewtify;
@@ -90,7 +90,10 @@ class TabArea extends ViewArea<UITabPane> {
         header.addEventHandler(DragEvent.DRAG_EXITED, e -> DockSystem.onHeaderDragExited(e, this));
         header.addEventHandler(DragEvent.DRAG_DROPPED, e -> DockSystem.onHeaderDragDropped(e, this));
         header.addEventHandler(DragEvent.DRAG_OVER, e -> DockSystem.onHeaderDragOver(e, this));
-        node.when(User.input(Key.Alt)).take(v -> node.items().size() == 1).to(e -> setHeader(!header.isVisible()));
+        node.when(User.input(Key.Alt)).take(v -> node.items().size() == 1).to(e -> {
+            setHeader(!header.isVisible());
+            DockSystem.requestSavingLayout();
+        });
 
         // If the user has not set a title, the title of the selected tab will be used as the title
         // of the window.
@@ -129,10 +132,7 @@ class TabArea extends ViewArea<UITabPane> {
      * @param show The header value to set.
      */
     private final void setHeader(boolean show) {
-        Platform.runLater(() -> {
-            node.showHeader(show);
-            DockSystem.requestSavingLayout();
-        });
+        node.showHeader(show);
     }
 
     /**
@@ -141,7 +141,7 @@ class TabArea extends ViewArea<UITabPane> {
      * @return The ids property.
      */
     final List<String> getIds() {
-        return I.signal(node.ui.getTabs()).map(Tab::getId).toList();
+        return views;
     }
 
     /**
@@ -214,7 +214,7 @@ class TabArea extends ViewArea<UITabPane> {
         if (checkEmpty) {
             handleEmpty();
         }
-
+        updatePosition();
         DockSystem.opened.remove(tab.getId());
     }
 
@@ -260,9 +260,9 @@ class TabArea extends ViewArea<UITabPane> {
         default:
             node.ui.getTabs().add(position, tab);
             tab.setOnCloseRequest(e -> remove(tab, true));
-            views.add(tab.getId());
 
             selectInitialTabOnlyOnce(tab);
+            updatePosition();
             return this;
         }
     }
@@ -335,5 +335,14 @@ class TabArea extends ViewArea<UITabPane> {
                 return;
             }
         }
+    }
+
+    /**
+     * Update tab position.
+     */
+    private void updatePosition() {
+        views = I.signal(node.ui.getTabs()).map(Tab::getId).toList();
+
+        DockSystem.requestSavingLayout();
     }
 }
