@@ -39,7 +39,8 @@ public abstract class DockRegister implements Extensible {
      */
     protected DockRegister() {
         I.signal(getClass().getDeclaredMethods())
-                .take(m -> m.getParameterCount() == 0 && Modifier.isPublic(m.getModifiers()) && m.getReturnType() == void.class)
+                .take(m -> m.isAnnotationPresent(DockType.class) && m.getParameterCount() == 0 && Modifier.isPublic(m.getModifiers()) && m
+                        .getReturnType() == void.class)
                 .sort(Comparator.comparing(Method::getName))
                 .to((WiseConsumer<Method>) m -> m.invoke(this));
 

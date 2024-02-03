@@ -9,10 +9,15 @@
  */
 package viewtify.ui.dock;
 
+import java.util.function.UnaryOperator;
+
 import icy.manipulator.Icy;
 import icy.manipulator.Icy.Property;
+import kiss.I;
 import kiss.Variable;
 import kiss.WiseConsumer;
+import viewtify.ui.UITab;
+import viewtify.ui.View;
 
 @Icy
 public abstract class DockModel {
@@ -21,10 +26,18 @@ public abstract class DockModel {
     public abstract String id();
 
     @Property
-    public Variable<String> title() {
-        return Variable.of(id());
-    }
+    public abstract Variable<String> title();
 
     @Property
-    public abstract WiseConsumer<Dock> register();
+    public abstract WiseConsumer<UITab> content();
+
+    @Property
+    public UnaryOperator<DockRecommendedLocation> location() {
+        return UnaryOperator.identity();
+    }
+
+    public static Dock of(Class<? extends View> type) {
+        View view = I.make(type);
+        return Dock.with.id(view.id()).content(tab -> tab.contentsLazy(type)).title(view.title());
+    }
 }
