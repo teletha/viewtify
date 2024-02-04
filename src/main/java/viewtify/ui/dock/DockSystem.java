@@ -314,8 +314,8 @@ public final class DockSystem {
             defaultLayout.run();
         } else {
             layout.find(TabArea.class).flatIterable(TabArea::getIds).to(id -> {
-                for (DockRegister register : I.find(DockRegister.class)) {
-                    if (register.queryBy(id)) {
+                for (DockProvider register : I.find(DockProvider.class)) {
+                    if (register.register(id)) {
                         break;
                     }
                 }

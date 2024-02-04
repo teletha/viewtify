@@ -16,28 +16,37 @@ import icy.manipulator.Icy.Property;
 import kiss.I;
 import kiss.Variable;
 import kiss.WiseConsumer;
-import viewtify.ui.UITab;
 import viewtify.ui.View;
 
 @Icy
 public abstract class DockModel {
 
     @Property
-    public abstract String id();
+    public abstract Class<? extends View> view();
 
     @Property
-    public abstract Variable<String> title();
+    public abstract WiseConsumer<Dock> registration();
 
-    @Property
-    public abstract WiseConsumer<UITab> content();
+    public String id() {
+        return I.make(view()).id();
+    }
+
+    public Variable<String> title() {
+        return I.make(view()).title();
+    }
 
     @Property
     public UnaryOperator<DockRecommendedLocation> location() {
         return UnaryOperator.identity();
     }
 
+    public void register() {
+        registration().accept((Dock) this);
+    }
+
     public static Dock of(Class<? extends View> type) {
-        View view = I.make(type);
-        return Dock.with.id(view.id()).content(tab -> tab.contentsLazy(type)).title(view.title());
+        return Dock.with.view(type).registration(dock -> {
+            DockSystem.register(dock.id()).text(dock.title()).contentsLazy(tab -> I.make(dock.view()));
+        });
     }
 }

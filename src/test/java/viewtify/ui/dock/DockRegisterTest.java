@@ -21,18 +21,16 @@ class DockRegisterTest {
     @Test
     void register() {
         @SuppressWarnings("unused")
-        class Register extends DockRegister {
-            public void dock() {
-                register(MainView.class);
-            }
+        class Register extends DockProvider {
+            public final Dock main = Dock.of(MainView.class);
         }
 
         Register register = I.make(Register.class);
-        List<DockItem> items = register.queryIndependentDocks();
+        List<Dock> items = register.queryIndependentDocks();
         assert items.size() == 1;
 
-        DockItem item = items.get(0);
-        assert item.id().equals("Dock");
+        Dock item = items.get(0);
+        assert item.id().equals("MainView");
         assert item.title().is("Main");
         assert item.registration() != null;
     }
@@ -40,27 +38,23 @@ class DockRegisterTest {
     @Test
     void registerMultiple() {
         @SuppressWarnings("unused")
-        class Register extends DockRegister {
-            public void dockMain() {
-                register(MainView.class);
-            }
+        class Register extends DockProvider {
+            public final Dock main = Dock.of(MainView.class);
 
-            public void dockSub() {
-                register(SubView.class);
-            }
+            public final Dock sub = Dock.of(SubView.class);
         }
 
         Register register = I.make(Register.class);
-        List<DockItem> items = register.queryIndependentDocks();
+        List<Dock> items = register.queryIndependentDocks();
         assert items.size() == 2;
 
-        DockItem item = items.get(0);
-        assert item.id().equals("DockMain");
+        Dock item = items.get(0);
+        assert item.id().equals("MainView");
         assert item.title().is("Main");
         assert item.registration() != null;
 
         item = items.get(1);
-        assert item.id().equals("DockSub");
+        assert item.id().equals("SubView");
         assert item.title().is("Sub");
         assert item.registration() != null;
     }
