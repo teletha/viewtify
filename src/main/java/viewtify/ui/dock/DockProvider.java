@@ -24,7 +24,7 @@ import kiss.Ⅱ;
 public abstract class DockProvider implements Extensible {
 
     /** The managed independent dock items. */
-    private List<Dock> independents;
+    private List<Dock> docks;
 
     private List<Ⅱ<TypedDock, Class>> typed;
 
@@ -35,14 +35,14 @@ public abstract class DockProvider implements Extensible {
     }
 
     private List<Dock> docks() {
-        if (independents == null) {
-            independents = I.signal(getClass().getFields())
+        if (docks == null) {
+            docks = I.signal(getClass().getFields())
                     .take(field -> Modifier.isFinal(field.getModifiers()) && field.getType() == Dock.class)
                     .map(field -> (Dock) field.get(this))
                     .sort(Comparator.comparing(Dock::id))
                     .toList();
         }
-        return independents;
+        return docks;
     }
 
     private List<Ⅱ<TypedDock, Class>> typed() {
@@ -59,8 +59,15 @@ public abstract class DockProvider implements Extensible {
     /**
      * Query all independent views.
      */
-    public List<Dock> queryIndependentDocks() {
+    public List<Dock> findDocks() {
         return docks();
+    }
+
+    /**
+     * Query all independent views.
+     */
+    public List<TypedDock> findTypedDocks() {
+        return typed().stream().map(x -> x.ⅰ).toList();
     }
 
     /**
@@ -84,7 +91,7 @@ public abstract class DockProvider implements Extensible {
 
             for (Ⅱ<TypedDock, Class> dock : typed()) {
                 if (dock.ⅰ.id.equalsIgnoreCase(prefix)) {
-                    dock.ⅰ.register(I.transform(param, dock.ⅱ));
+                    dock.ⅰ.show(I.transform(param, dock.ⅱ));
                 }
             }
         }

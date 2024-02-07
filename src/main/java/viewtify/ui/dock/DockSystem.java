@@ -49,7 +49,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -265,7 +264,6 @@ public final class DockSystem {
 
         // Since the recommended area does not exist,
         // add a view after creating that area.
-
         area = layout.findRoot().add(tab, o.recommendedArea);
         area.location = o.recommendedArea;
         area.setViewportRatio(o.recommendedRatio);
@@ -302,16 +300,23 @@ public final class DockSystem {
 
     /**
      * Register the layout.
-     * 
-     * @param defaultLayout
      */
-    public static void initializeLayout(WiseRunnable defaultLayout) {
-        Objects.requireNonNull(defaultLayout);
-
+    public static void initialize(WiseConsumer<UILabel> menuBuilder) {
         DockLayout layout = layout();
         if (Locator.file(layout.locate()).isAbsent()) {
-            // use default setup
-            defaultLayout.run();
+            for (DockProvider provider : I.find(DockProvider.class)) {
+                for (Dock dock : provider.findDocks()) {
+                    if (dock.initialView) {
+                        dock.show();
+                    }
+                }
+
+                for (TypedDock dock : provider.findTypedDocks()) {
+                    for (Object param : dock.showOnInitial) {
+                        dock.show(param);
+                    }
+                }
+            }
         } else {
             layout.find(TabArea.class).flatIterable(TabArea::getIds).to(id -> {
                 for (DockProvider register : I.find(DockProvider.class)) {
@@ -320,6 +325,16 @@ public final class DockSystem {
                     }
                 }
             });
+        }
+
+        if (menuBuilder != null) {
+            menuBuilders.add(menuBuilder);
+
+            for (RootArea area : layout().roots) {
+                area.findAll(TabArea.class).to(x -> {
+                    x.node.registerIcon(menuBuilder);
+                });
+            }
         }
     }
 
@@ -330,23 +345,6 @@ public final class DockSystem {
     public static <T> void registerBuilder(String pattern, Class<T> type, WiseConsumer<T> builder) {
         if (pattern != null && builder != null) {
 
-        }
-    }
-
-    /**
-     * Register the menu on tab header.
-     * 
-     * @param builder A menu builder.
-     */
-    public static void registerMenu(WiseConsumer<UILabel> builder) {
-        if (builder != null) {
-            menuBuilders.add(builder);
-
-            for (RootArea area : layout().roots) {
-                area.findAll(TabArea.class).to(x -> {
-                    x.node.registerIcon(builder);
-                });
-            }
         }
     }
 

@@ -9,6 +9,7 @@
  */
 package viewtify.ui.dock;
 
+import java.util.List;
 import java.util.function.UnaryOperator;
 
 import icy.manipulator.Icy;
@@ -31,7 +32,22 @@ public abstract class TypedDockModel<T> {
         return UnaryOperator.identity();
     }
 
-    public void register(T param) {
+    /**
+     * Set as the View to be displayed during the initial layout.
+     * 
+     * @return
+     */
+    @Property
+    public List<T> showOnInitial() {
+        return List.of();
+    }
+
+    /**
+     * Show view with the specified parameter.
+     * 
+     * @param param
+     */
+    public void show(T param) {
         UITab tab = DockSystem.register(id() + " " + I.transform(param, String.class));
         registration().accept(tab, param);
     }

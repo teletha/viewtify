@@ -22,11 +22,11 @@ class DockRegisterTest {
     void register() {
         @SuppressWarnings("unused")
         class Register extends DockProvider {
-            public final Dock main = Dock.of(MainView.class);
+            public final Dock main = Dock.with.view(MainView.class);
         }
 
         Register register = I.make(Register.class);
-        List<Dock> items = register.queryIndependentDocks();
+        List<Dock> items = register.findDocks();
         assert items.size() == 1;
 
         Dock item = items.get(0);
@@ -39,13 +39,13 @@ class DockRegisterTest {
     void registerMultiple() {
         @SuppressWarnings("unused")
         class Register extends DockProvider {
-            public final Dock main = Dock.of(MainView.class);
+            public final Dock main = Dock.with.view(MainView.class);
 
-            public final Dock sub = Dock.of(SubView.class);
+            public final Dock sub = Dock.with.view(SubView.class);
         }
 
         Register register = I.make(Register.class);
-        List<Dock> items = register.queryIndependentDocks();
+        List<Dock> items = register.findDocks();
         assert items.size() == 2;
 
         Dock item = items.get(0);

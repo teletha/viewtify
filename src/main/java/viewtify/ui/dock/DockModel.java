@@ -12,6 +12,7 @@ package viewtify.ui.dock;
 import java.util.function.UnaryOperator;
 
 import icy.manipulator.Icy;
+import icy.manipulator.Icy.Overload;
 import icy.manipulator.Icy.Property;
 import kiss.I;
 import kiss.Variable;
@@ -21,11 +22,53 @@ import viewtify.ui.View;
 @Icy
 public abstract class DockModel {
 
+    /**
+     * Set the View class to be displayed.
+     * 
+     * @return
+     */
     @Property
     public abstract Class<? extends View> view();
 
+    /**
+     * Sets the behaviour when actually displayed on the tab.
+     * 
+     * @return
+     */
     @Property
-    public abstract WiseConsumer<Dock> registration();
+    public WiseConsumer<Dock> registration() {
+        return dock -> DockSystem.register(dock.id()).text(dock.title()).contentsLazy(tab -> I.make(dock.view()));
+    }
+
+    /**
+     * Determines the area to be displayed when showing.
+     * 
+     * @return
+     */
+    @Property
+    public UnaryOperator<DockRecommendedLocation> location() {
+        return UnaryOperator.identity();
+    }
+
+    /**
+     * Sets whether or not to display this information during the initial layout.
+     * 
+     * @return
+     */
+    @Property
+    public boolean initialView() {
+        return false;
+    }
+
+    /**
+     * Set as the View to be displayed during the initial layout.
+     * 
+     * @return
+     */
+    @Overload("initialView")
+    private boolean showOnInitial() {
+        return true;
+    }
 
     public String id() {
         return I.make(view()).id();
@@ -35,18 +78,10 @@ public abstract class DockModel {
         return I.make(view()).title();
     }
 
-    @Property
-    public UnaryOperator<DockRecommendedLocation> location() {
-        return UnaryOperator.identity();
-    }
-
-    public void register() {
+    /**
+     * Show view.
+     */
+    public void show() {
         registration().accept((Dock) this);
-    }
-
-    public static Dock of(Class<? extends View> type) {
-        return Dock.with.view(type).registration(dock -> {
-            DockSystem.register(dock.id()).text(dock.title()).contentsLazy(tab -> I.make(dock.view()));
-        });
     }
 }
