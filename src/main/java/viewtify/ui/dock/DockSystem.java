@@ -16,6 +16,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
+import org.controlsfx.glyphfont.FontAwesome;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,7 +59,6 @@ import kiss.Singleton;
 import kiss.Storable;
 import kiss.Variable;
 import kiss.WiseConsumer;
-import kiss.WiseRunnable;
 import psychopath.Locator;
 import viewtify.Viewtify;
 import viewtify.ui.UILabel;
@@ -299,7 +300,30 @@ public final class DockSystem {
     static final List<WiseConsumer<UILabel>> menuBuilders = new ArrayList();
 
     /**
-     * Register the layout.
+     * Initialize dock system with default menu.
+     */
+    public static void initialize() {
+        initialize(icon -> {
+            icon.text(FontAwesome.Glyph.BARS).behaveLikeButton().context(menus -> {
+                menus.menu(I.translate("Open new page"), sub -> {
+                    for (DockProvider provider : I.find(DockProvider.class)) {
+                        for (Dock item : provider.findDocks()) {
+                            sub.menu(item.title()).disableWhen(DockSystem.isOpened(item.id())).action(item::show);
+                        }
+                    }
+                });
+                for (DockProvider provider : I.find(DockProvider.class)) {
+                    provider.hookMenu(menus);
+                }
+                menus.separator();
+                menus.menu(I.translate("Reboot")).action(Viewtify.application()::reactivate);
+                menus.menu(I.translate("Exit")).action(Viewtify.application()::deactivate);
+            });
+        });
+    }
+
+    /**
+     * Initialize dock system with your menu builder.
      */
     public static void initialize(WiseConsumer<UILabel> menuBuilder) {
         DockLayout layout = layout();
@@ -335,16 +359,6 @@ public final class DockSystem {
                     x.node.registerIcon(menuBuilder);
                 });
             }
-        }
-    }
-
-    public static void registerBuilder(String pattern, WiseRunnable builder) {
-        registerBuilder(pattern, null, I.wiseC(builder));
-    }
-
-    public static <T> void registerBuilder(String pattern, Class<T> type, WiseConsumer<T> builder) {
-        if (pattern != null && builder != null) {
-
         }
     }
 

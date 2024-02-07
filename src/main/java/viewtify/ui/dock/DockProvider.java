@@ -9,7 +9,6 @@
  */
 package viewtify.ui.dock;
 
-import java.lang.reflect.Modifier;
 import java.util.Comparator;
 import java.util.List;
 
@@ -19,6 +18,8 @@ import kiss.Managed;
 import kiss.Model;
 import kiss.Singleton;
 import kiss.Ⅱ;
+import viewtify.ui.UIContextMenu;
+import viewtify.ui.UITab;
 
 @Managed(Singleton.class)
 public abstract class DockProvider implements Extensible {
@@ -37,7 +38,7 @@ public abstract class DockProvider implements Extensible {
     private List<Dock> docks() {
         if (docks == null) {
             docks = I.signal(getClass().getFields())
-                    .take(field -> Modifier.isFinal(field.getModifiers()) && field.getType() == Dock.class)
+                    .take(field -> field.getType() == Dock.class)
                     .map(field -> (Dock) field.get(this))
                     .sort(Comparator.comparing(Dock::id))
                     .toList();
@@ -48,7 +49,7 @@ public abstract class DockProvider implements Extensible {
     private List<Ⅱ<TypedDock, Class>> typed() {
         if (typed == null) {
             typed = I.signal(getClass().getFields())
-                    .take(field -> Modifier.isFinal(field.getModifiers()) && field.getType() == TypedDock.class)
+                    .take(field -> field.getType() == TypedDock.class)
                     .map(field -> I
                             .pair((TypedDock) field.get(this), (Class) Model.collectParameters(field.getGenericType(), TypedDock.class)[0]))
                     .toList();
@@ -79,7 +80,7 @@ public abstract class DockProvider implements Extensible {
     protected boolean register(String id) {
         for (Dock dock : docks()) {
             if (dock.id().equals(id)) {
-                dock.registration.accept(dock);
+                dock.show();
                 return true;
             }
         }
@@ -97,5 +98,21 @@ public abstract class DockProvider implements Extensible {
         }
 
         return false;
+    }
+
+    /**
+     * Hook view registration.
+     * 
+     * @param tab
+     */
+    protected void hookView(UITab tab) {
+    }
+
+    /**
+     * Hook menu registration.
+     * 
+     * @param menu
+     */
+    protected void hookMenu(UIContextMenu menu) {
     }
 }
