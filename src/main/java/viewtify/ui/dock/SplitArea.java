@@ -13,13 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
-import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane.Divider;
-
 import viewtify.ui.UISplitPane;
 import viewtify.ui.helper.User;
 
@@ -101,16 +99,11 @@ class SplitArea extends ViewArea<UISplitPane> {
      * @param dividers The dividers value to set.
      */
     private final void setDividers(List<Double> dividers) {
-        // During Stage initialization, window size changes several times until layout is completed.
-        // Every change modifies divider positions. If we want to control divider positions, they
-        // have to be set after Stage is fully initialized:
-        Platform.runLater(() -> {
-            double[] values = new double[dividers.size()];
-            for (int i = 0; i < values.length; i++) {
-                values[i] = dividers.get(i);
-            }
-            node.ui.setDividerPositions(values);
-        });
+        double[] values = new double[dividers.size()];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = dividers.get(i);
+        }
+        node.ui.setDividerPositions(values);
     }
 
     /**

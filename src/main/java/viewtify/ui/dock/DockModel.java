@@ -30,6 +30,11 @@ public abstract class DockModel {
     @Property
     public abstract Class<? extends View> view();
 
+    @Property
+    public String id() {
+        return I.make(view()).id();
+    }
+
     /**
      * Sets the behaviour when actually displayed on the tab.
      * 
@@ -37,7 +42,7 @@ public abstract class DockModel {
      */
     @Property
     public WiseConsumer<Dock> registration() {
-        return dock -> DockSystem.register(dock.id()).text(dock.title()).contentsLazy(tab -> I.make(dock.view()));
+        return dock -> DockSystem.register(dock.id(), location()).text(dock.title()).contentsLazy(tab -> I.make(dock.view()));
     }
 
     /**
@@ -68,10 +73,6 @@ public abstract class DockModel {
     @Overload("initialView")
     private boolean showOnInitial() {
         return true;
-    }
-
-    public String id() {
-        return I.make(view()).id();
     }
 
     public Variable<String> title() {

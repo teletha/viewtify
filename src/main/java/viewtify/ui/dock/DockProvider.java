@@ -9,7 +9,6 @@
  */
 package viewtify.ui.dock;
 
-import java.util.Comparator;
 import java.util.List;
 
 import kiss.Extensible;
@@ -40,7 +39,6 @@ public abstract class DockProvider implements Extensible {
             docks = I.signal(getClass().getFields())
                     .take(field -> field.getType() == Dock.class)
                     .map(field -> (Dock) field.get(this))
-                    .sort(Comparator.comparing(Dock::id))
                     .toList();
         }
         return docks;

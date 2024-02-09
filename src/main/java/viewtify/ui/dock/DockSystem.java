@@ -265,9 +265,12 @@ public final class DockSystem {
 
         // Since the recommended area does not exist,
         // add a view after creating that area.
-        area = layout.findRoot().add(tab, o.recommendedArea);
+        ViewArea base = layout.find(o.base).or(layout.findRoot());
+
+        area = base.add(tab, o.recommendedArea);
         area.location = o.recommendedArea;
-        area.setViewportRatio(o.recommendedRatio);
+        area.setViewportRatio(o.recommendedArea == PositionRight || o.recommendedArea == PositionBottom ? 1 - o.recommendedRatio
+                : o.recommendedRatio);
         opened.add(id);
         return tab;
     }
@@ -327,7 +330,7 @@ public final class DockSystem {
      */
     public static void initialize(WiseConsumer<UILabel> menuBuilder) {
         DockLayout layout = layout();
-        if (Locator.file(layout.locate()).isAbsent()) {
+        if (Locator.file(layout.locate()).isAbsent() || true) {
             for (DockProvider provider : I.find(DockProvider.class)) {
                 for (Dock dock : provider.findDocks()) {
                     if (dock.initialView) {
@@ -381,7 +384,7 @@ public final class DockSystem {
          * 
          */
         private DockLayout() {
-            restore();
+            // restore();
             save.expose.debounce(1000, TimeUnit.MILLISECONDS).to(this::store);
         }
 
@@ -418,6 +421,16 @@ public final class DockSystem {
          */
         private <X extends ViewArea> Signal<X> find(Class<X> type) {
             return I.signal(roots).as(ViewArea.class).recurseMap(s -> s.flatIterable(v -> (List<ViewArea>) v.children)).as(type);
+        }
+
+        /**
+         * Find view area by dock.
+         * 
+         * @param dock
+         * @return
+         */
+        private Variable<ViewArea> find(Dock dock) {
+            return dock == null ? Variable.empty() : find(TabArea.class).take(v -> v.hasView(dock.id())).first().as(ViewArea.class).to();
         }
     }
 

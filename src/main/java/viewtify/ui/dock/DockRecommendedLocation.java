@@ -17,6 +17,8 @@ public final class DockRecommendedLocation {
     /** Default value is 0.5. */
     double recommendedRatio = 0.5;
 
+    Dock base;
+
     /**
      * Hide
      */
@@ -48,8 +50,30 @@ public final class DockRecommendedLocation {
      * 
      * @return
      */
+    public DockRecommendedLocation top(Dock base) {
+        recommendedArea = DockSystem.PositionTop;
+        this.base = base;
+        return this;
+    }
+
+    /**
+     * Specify the recommended area.
+     * 
+     * @return
+     */
     public DockRecommendedLocation bottom() {
         recommendedArea = DockSystem.PositionBottom;
+        return this;
+    }
+
+    /**
+     * Specify the recommended area.
+     * 
+     * @return
+     */
+    public DockRecommendedLocation bottom(Dock base) {
+        recommendedArea = DockSystem.PositionBottom;
+        this.base = base;
         return this;
     }
 
@@ -68,8 +92,30 @@ public final class DockRecommendedLocation {
      * 
      * @return
      */
+    public DockRecommendedLocation right(Dock base) {
+        recommendedArea = DockSystem.PositionRight;
+        this.base = base;
+        return this;
+    }
+
+    /**
+     * Specify the recommended area.
+     * 
+     * @return
+     */
     public DockRecommendedLocation left() {
         recommendedArea = DockSystem.PositionLeft;
+        return this;
+    }
+
+    /**
+     * Specify the recommended area.
+     * 
+     * @return
+     */
+    public DockRecommendedLocation left(Dock base) {
+        recommendedArea = DockSystem.PositionLeft;
+        this.base = base;
         return this;
     }
 
@@ -82,4 +128,13 @@ public final class DockRecommendedLocation {
         recommendedRatio = division;
         return this;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "DockRecommendedLocation [recommendedArea=" + recommendedArea + ", recommendedRatio=" + recommendedRatio + ", base=" + base + "]";
+    }
+
 }
