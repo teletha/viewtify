@@ -30,11 +30,6 @@ public abstract class DockModel {
     @Property
     public abstract Class<? extends View> view();
 
-    @Property
-    public String id() {
-        return I.make(view()).id();
-    }
-
     /**
      * Sets the behaviour when actually displayed on the tab.
      * 
@@ -73,6 +68,10 @@ public abstract class DockModel {
     @Overload("initialView")
     private boolean showOnInitial() {
         return true;
+    }
+
+    public String id() {
+        return I.make(view()).id();
     }
 
     public Variable<String> title() {
