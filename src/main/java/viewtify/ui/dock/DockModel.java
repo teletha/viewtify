@@ -70,18 +70,28 @@ public abstract class DockModel {
         return true;
     }
 
-    public String id() {
+    /**
+     * Get the id of dock.
+     * 
+     * @return
+     */
+    public final String id() {
         return I.make(view()).id();
     }
 
-    public Variable<String> title() {
+    /**
+     * Get the titke of dock.
+     * 
+     * @return
+     */
+    public final Variable<String> title() {
         return I.make(view()).title();
     }
 
     /**
      * Show view.
      */
-    public void show() {
+    public final void show() {
         registration().accept((Dock) this);
     }
 }

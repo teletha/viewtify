@@ -114,6 +114,23 @@ public final class DockSystem {
     /** The user configuration. */
     static TabClosingPolicy tabPolicy = TabClosingPolicy.SELECTED_TAB;
 
+    /** Avoid multiplex requesting. */
+    private static boolean requesting;
+
+    /**
+     * Save the current layout info.
+     */
+    static void requestSavingLayout() {
+        if (!requesting) {
+            requesting = true;
+            try {
+                layout().save.accept(true);
+            } finally {
+                requesting = false;
+            }
+        }
+    }
+
     /**
      * Hide.
      */
@@ -143,24 +160,10 @@ public final class DockSystem {
     }
 
     /**
-     * Save the current layout info.
-     */
-    static void requestSavingLayout() {
-        layout().save.accept(true);
-    }
-
-    /**
      * The root user interface for the docking system.
      */
     public static UIPane ui() {
         return layout().findRoot().node;
-    }
-
-    /**
-     * Validate dock system. Clean up the invalidate area.
-     */
-    public static void validate() {
-        layout().roots.forEach(RootArea::validate);
     }
 
     /**
@@ -235,30 +238,18 @@ public final class DockSystem {
 
         // First, if there is an area where the specified view's ID is registered,
         // add the view there.
-        ViewArea area = I.signal(layout.roots)
-                .as(ViewArea.class)
-                .recurseMap(s -> s.flatIterable(v -> (List<ViewArea>) v.children))
-                .take(v -> v.hasView(id))
-                .first()
-                .to().v;
-
-        if (area != null) {
-            area.add(tab, PositionRestore);
+        Variable<TabArea> area = layout.find(TabArea.class).take(x -> x.hasView(id)).first().to();
+        if (area.isPresent()) {
+            area.v.add(tab, PositionRestore);
             opened.add(id);
             return tab;
         }
 
         // Next, if there is an area where adding the specified view is recommended,
         // add the view there.
-        area = I.signal(layout.roots)
-                .as(ViewArea.class)
-                .recurseMap(s -> s.flatIterable(v -> (List<ViewArea>) v.children))
-                .take(v -> v.location == o.recommendedArea)
-                .first()
-                .to().v;
-
-        if (area != null) {
-            area.add(tab, PositionRestore);
+        area = layout.find(TabArea.class).take(v -> v.location == o.recommendedArea).first().to();
+        if (area.isPresent()) {
+            area.v.add(tab, PositionRestore);
             opened.add(id);
             return tab;
         }
@@ -266,10 +257,9 @@ public final class DockSystem {
         // Since the recommended area does not exist,
         // add a view after creating that area.
         ViewArea base = layout.find(o.base).or(layout.findRoot());
-
-        area = base.add(tab, o.recommendedArea);
-        area.location = o.recommendedArea;
-        area.setViewportRatio(o.recommendedArea == PositionRight || o.recommendedArea == PositionBottom ? 1 - o.recommendedRatio
+        ViewArea created = base.add(tab, o.recommendedArea);
+        created.location = o.recommendedArea;
+        created.setViewportRatio(o.recommendedArea == PositionRight || o.recommendedArea == PositionBottom ? 1 - o.recommendedRatio
                 : o.recommendedRatio);
         opened.add(id);
         return tab;
@@ -330,7 +320,7 @@ public final class DockSystem {
      */
     public static void initialize(WiseConsumer<UILabel> menuBuilder) {
         DockLayout layout = layout();
-        if (Locator.file(layout.locate()).isAbsent() || true) {
+        if (Locator.file(layout.locate()).isAbsent()) {
             for (DockProvider provider : I.find(DockProvider.class)) {
                 for (Dock dock : provider.findDocks()) {
                     if (dock.initialView) {
@@ -346,12 +336,15 @@ public final class DockSystem {
             }
         } else {
             layout.find(TabArea.class).flatIterable(TabArea::getIds).to(id -> {
-                for (DockProvider register : I.find(DockProvider.class)) {
-                    if (register.register(id)) {
+                for (DockProvider provider : I.find(DockProvider.class)) {
+                    if (provider.register(id)) {
                         break;
                     }
                 }
             });
+
+            // validate all area
+            // layout.roots.forEach(RootArea::validate);
         }
 
         if (menuBuilder != null) {
@@ -384,8 +377,8 @@ public final class DockSystem {
          * 
          */
         private DockLayout() {
-            // restore();
             save.expose.debounce(1000, TimeUnit.MILLISECONDS).to(this::store);
+            restore();
         }
 
         /**

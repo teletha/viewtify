@@ -20,7 +20,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
-
 import kiss.I;
 import kiss.WiseConsumer;
 import viewtify.Viewtify;
@@ -242,7 +241,10 @@ class TabArea extends ViewArea<UITabPane> {
      */
     @Override
     public TabArea add(UITab tab, int position) {
+        boolean restore = false;
+
         if (position == DockSystem.PositionRestore) {
+            restore = true;
             position = restorePosition(tab);
         }
 
@@ -262,7 +264,7 @@ class TabArea extends ViewArea<UITabPane> {
             tab.setOnCloseRequest(e -> remove(tab, true));
 
             selectInitialTabOnlyOnce(tab);
-            updatePosition();
+            if (!restore) updatePosition();
             return this;
         }
     }
