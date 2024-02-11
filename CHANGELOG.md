@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.20.0](https://github.com/teletha/viewtify/compare/v2.19.0...v2.20.0) (2024-02-11)
+
+
+### Features
+
+* enahance dock location ([ff8d893](https://github.com/teletha/viewtify/commit/ff8d8939c72fcea17275fde43de6bd99e4ab3bac))
+* remake dock api ([079fdfd](https://github.com/teletha/viewtify/commit/079fdfd9998309028e901e1ab1ec755b243e01f9))
+* require java 21 ([68ec5c7](https://github.com/teletha/viewtify/commit/68ec5c7370a57f42154272f5ce4b246f3d9484b4))
+
+
+### Bug Fixes
+
+* checkbox style ([7138bf4](https://github.com/teletha/viewtify/commit/7138bf4bd4d073306f51af28d5e24e7edca2ec30))
+* combined form style ([0f0f614](https://github.com/teletha/viewtify/commit/0f0f6141f1ece19ae74cee774b2ef3ae69db7238))
+* dock related bugs ([d352e1b](https://github.com/teletha/viewtify/commit/d352e1b70b76083f15c9d1a21dc2dba62ff5f2d9))
+* docks are restorable ([5a0ef1d](https://github.com/teletha/viewtify/commit/5a0ef1d9b06c253d8293c402df2e150a6002253b))
+* enahnce docsystem ([d7e20e4](https://github.com/teletha/viewtify/commit/d7e20e4e13a22b50e5a4d057b75116600a12e9f4))
+* refactoring form ([aba354d](https://github.com/teletha/viewtify/commit/aba354dc8e99590ff406e60114d19606edd3a87f))
+
 ## [2.19.0](https://github.com/teletha/viewtify/compare/v2.18.0...v2.19.0) (2024-01-19)
 
 
