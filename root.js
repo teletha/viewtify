@@ -293,9 +293,51 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "DockItem",
+			"name": "Dock",
 			"packageName": "viewtify.ui.dock",
 			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Dock.ÅssignableAll",
+			"packageName": "viewtify.ui.dock",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Dock.ÅssignableView",
+			"packageName": "viewtify.ui.dock",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Dock.ÅssignableÅrbitrary",
+			"packageName": "viewtify.ui.dock",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "Dock.Ìnstantiator",
+			"packageName": "viewtify.ui.dock",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "DockModel",
+			"packageName": "viewtify.ui.dock",
+			"type": "AbstractClass"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "DockProvider",
+			"packageName": "viewtify.ui.dock",
+			"type": "AbstractClass"
 		},
 		{
 			"modifiers": {
@@ -303,13 +345,6 @@ const root = {
 			"name": "DockRecommendedLocation",
 			"packageName": "viewtify.ui.dock",
 			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "DockRegister",
-			"packageName": "viewtify.ui.dock",
-			"type": "AbstractClass"
 		},
 		{
 			"modifiers": {
@@ -751,6 +786,55 @@ const root = {
 			"name": "Translatable",
 			"packageName": "viewtify.util",
 			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TypedDock",
+			"packageName": "viewtify.ui.dock",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TypedDock.ÅssignableAll",
+			"packageName": "viewtify.ui.dock",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TypedDock.ÅssignableId",
+			"packageName": "viewtify.ui.dock",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TypedDock.ÅssignableRegistration",
+			"packageName": "viewtify.ui.dock",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TypedDock.ÅssignableÅrbitrary",
+			"packageName": "viewtify.ui.dock",
+			"type": "Interface"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TypedDock.Ìnstantiator",
+			"packageName": "viewtify.ui.dock",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "TypedDockModel",
+			"packageName": "viewtify.ui.dock",
+			"type": "AbstractClass"
 		},
 		{
 			"modifiers": {
