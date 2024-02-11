@@ -249,7 +249,7 @@ public final class DockSystem {
         // add the view there.
         area = layout.find(TabArea.class).take(v -> v.location == o.recommendedArea).first().to();
         if (area.isPresent()) {
-            area.v.add(tab, PositionRestore);
+            area.v.add(tab, PositionCenter);
             opened.add(id);
             return tab;
         }
@@ -344,7 +344,7 @@ public final class DockSystem {
             });
 
             // validate all area
-            // layout.roots.forEach(RootArea::validate);
+            layout.roots.forEach(RootArea::validate);
         }
 
         if (menuBuilder != null) {
