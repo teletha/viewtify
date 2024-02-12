@@ -21,6 +21,7 @@ import javafx.collections.ObservableMap;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventTarget;
+import javafx.event.EventType;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
@@ -30,7 +31,10 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.WindowEvent;
+
 import kiss.Variable;
+import kiss.WiseRunnable;
 import viewtify.ui.UIContextMenu;
 import viewtify.ui.UserInterfaceProvider;
 
@@ -73,7 +77,7 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
      * @return A chainable API for further configuration.
      */
     default Self context(Object id, Consumer<UIContextMenu> builder) {
-        return context(true, this, builder);
+        return context(true, id, builder);
     }
 
     /**
@@ -361,5 +365,21 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
             return Variable.of(target);
         }
         return Variable.empty();
+    }
+
+    /**
+     * Register window event.
+     * 
+     * @param type
+     * @param action
+     * @return
+     */
+    default Self when(EventType<WindowEvent> type, WiseRunnable action) {
+        if (action != null) {
+            context().addEventHandler(type, e -> {
+                action.run();
+            });
+        }
+        return (Self) this;
     }
 }

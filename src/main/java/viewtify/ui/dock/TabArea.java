@@ -13,13 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.WindowEvent;
+
 import kiss.I;
 import kiss.WiseConsumer;
 import viewtify.Viewtify;
@@ -77,7 +78,8 @@ class TabArea extends ViewArea<UITabPane> {
                     });
         });
 
-        node.ui.getTabs().addListener((InvalidationListener) c -> DockSystem.requestSavingLayout());
+        // node.ui.getTabs().addListener((InvalidationListener) c ->
+        // DockSystem.requestSavingLayout());
 
         // Since TabPane implementation delays the initialization of Skin and internal nodes
         // are not generated. So we should create Skin eagerly.
@@ -210,11 +212,27 @@ class TabArea extends ViewArea<UITabPane> {
      */
     void remove(Tab tab, boolean checkEmpty) {
         node.ui.getTabs().remove(tab);
-        if (checkEmpty) {
+
+        handleTabManipulation(tab.getId(), false, checkEmpty);
+    }
+
+    /**
+     * Handle tab removing.
+     * 
+     * @param id
+     * @param checkEmpty
+     */
+    private void handleTabManipulation(String id, boolean add, boolean checkEmpty) {
+        if (!add && checkEmpty) {
             handleEmpty();
         }
+
         updatePosition();
-        DockSystem.opened.remove(tab.getId());
+        if (add) {
+            DockSystem.openedTabs.add(id);
+        } else {
+            DockSystem.openedTabs.remove(id);
+        }
     }
 
     /**
@@ -265,6 +283,9 @@ class TabArea extends ViewArea<UITabPane> {
 
             selectInitialTabOnlyOnce(tab);
             if (!restore) updatePosition();
+
+            tab.getProperties().put("tabarea", this);
+            // handleTabManipulation(tab.getId(), true, false);
             return this;
         }
     }
@@ -346,5 +367,20 @@ class TabArea extends ViewArea<UITabPane> {
         views = I.signal(node.ui.getTabs()).map(Tab::getId).toList();
 
         DockSystem.requestSavingLayout();
+    }
+
+    /**
+     * @param menuBuilder
+     */
+    void registerMenu(WiseConsumer<UILabel> menuBuilder) {
+        node.registerIcon(label -> {
+            menuBuilder.accept(label);
+
+            label.when(WindowEvent.WINDOW_SHOWING, () -> {
+                DockSystem.latestMenuActivatedTabArea = this;
+            }).when(WindowEvent.WINDOW_HIDDEN, () -> {
+                DockSystem.latestMenuActivatedTabArea = null;
+            });
+        });
     }
 }

@@ -16,8 +16,6 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
-import org.controlsfx.glyphfont.FontAwesome;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,6 +49,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import org.controlsfx.glyphfont.FontAwesome;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -71,6 +72,24 @@ import viewtify.ui.UserInterfaceProvider;
  * existing windows.
  */
 public final class DockSystem {
+
+    /** The translatable text. */
+    private static final Variable<String> CloseThisTab = I.translate("Close this tab");
+
+    /** The translatable text. */
+    private static final Variable<String> CloseMultipleTabs = I.translate("Close multiple tabs");
+
+    /** The translatable text. */
+    private static final Variable<String> CloseRightTabs = I.translate("Close tabs to the right");
+
+    /** The translatable text. */
+    private static final Variable<String> CloseLeftTabs = I.translate("Close tabs to the left");
+
+    /** The translatable text. */
+    private static final Variable<String> CloseOtherTabs = I.translate("Close all other tabs");
+
+    /** The translatable text. */
+    private static final Variable<String> CloseAllTabs = I.translate("Close all tabs");
 
     /** The root user interface for the docking system. */
     public static final UserInterfaceProvider<Parent> UI = () -> layout().findRoot().node.ui;
@@ -109,7 +128,7 @@ public final class DockSystem {
     static final Variable<Tab> selected = Variable.empty();
 
     /** The dock system event. */
-    static final ObservableSet<String> opened = FXCollections.observableSet();
+    static final ObservableSet<String> openedTabs = FXCollections.observableSet();
 
     /** The user configuration. */
     static TabClosingPolicy tabPolicy = TabClosingPolicy.ALL_TABS;
@@ -191,7 +210,7 @@ public final class DockSystem {
      * @return
      */
     public static Signal<Boolean> isOpened(String id) {
-        return Viewtify.observing(opened).map(x -> x.contains(id));
+        return Viewtify.observing(openedTabs).map(x -> x.contains(id));
     }
 
     public static Tab selected() {
@@ -232,16 +251,53 @@ public final class DockSystem {
 
         UITab tab = new UITab(null);
         tab.setId(id);
+        tab.context(menus -> {
+            menus.menu().text(CloseThisTab).action(() -> {
+                TabArea area = (TabArea) tab.getProperties().get("tabarea");
+                area.remove(tab, true);
+            });
+            menus.menu(CloseMultipleTabs, sub -> {
+                sub.menu(CloseRightTabs).action(() -> {
+                    TabArea area = (TabArea) tab.getProperties().get("tabarea");
+                    ObservableList<Tab> tabs = tab.getTabPane().getTabs();
+                    I.signal(tabs).skip(tabs.indexOf(tab) + 1).buffer().flatIterable(x -> x).to(x -> area.remove(x, true));
+                });
+                sub.menu(CloseLeftTabs).action(() -> {
+                    TabArea area = (TabArea) tab.getProperties().get("tabarea");
+                    ObservableList<Tab> tabs = tab.getTabPane().getTabs();
+                    I.signal(tabs).take(tabs.indexOf(tab)).buffer().flatIterable(x -> x).to(x -> area.remove(x, true));
+                });
+                sub.menu(CloseOtherTabs).action(() -> {
+                    TabArea area = (TabArea) tab.getProperties().get("tabarea");
+                    ObservableList<Tab> tabs = tab.getTabPane().getTabs();
+                    I.signal(tabs).skip(tab).buffer().flatIterable(x -> x).to(x -> area.remove(x, true));
+                });
+                sub.menu(CloseAllTabs).action(() -> {
+                    TabArea area = (TabArea) tab.getProperties().get("tabarea");
+                    ObservableList<Tab> tabs = tab.getTabPane().getTabs();
+                    I.signal(tabs).buffer().flatIterable(x -> x).to(x -> area.remove(x, true));
+                });
+            });
+        });
 
         DockRecommendedLocation o = option.apply(new DockRecommendedLocation());
         DockLayout layout = layout();
 
-        // First, if there is an area where the specified view's ID is registered,
+        // First, if the registration is activated on the tab mene,
         // add the view there.
-        Variable<TabArea> area = layout.find(TabArea.class).take(x -> x.hasView(id)).first().to();
+        Variable<TabArea> area = Variable.of(latestMenuActivatedTabArea);
+        if (area.isPresent()) {
+            area.v.add(tab, PositionCenter);
+            openedTabs.add(id);
+            return tab;
+        }
+
+        // Next, if there is an area where the specified view's ID is registered,
+        // add the view there.
+        area = layout.find(TabArea.class).take(x -> x.hasView(id)).first().to();
         if (area.isPresent()) {
             area.v.add(tab, PositionRestore);
-            opened.add(id);
+            openedTabs.add(id);
             return tab;
         }
 
@@ -250,7 +306,7 @@ public final class DockSystem {
         area = layout.find(TabArea.class).take(v -> v.location == o.recommendedArea).first().to();
         if (area.isPresent()) {
             area.v.add(tab, PositionCenter);
-            opened.add(id);
+            openedTabs.add(id);
             return tab;
         }
 
@@ -261,7 +317,7 @@ public final class DockSystem {
         created.location = o.recommendedArea;
         created.setViewportRatio(o.recommendedArea == PositionRight || o.recommendedArea == PositionBottom ? 1 - o.recommendedRatio
                 : o.recommendedRatio);
-        opened.add(id);
+        openedTabs.add(id);
         return tab;
     }
 
@@ -291,6 +347,9 @@ public final class DockSystem {
 
     /** The registered menu builders. */
     static final List<WiseConsumer<UILabel>> menuBuilders = new ArrayList();
+
+    /** The latest activate menu tabarea. */
+    static TabArea latestMenuActivatedTabArea;
 
     /**
      * Initialize dock system with default menu.
@@ -351,8 +410,8 @@ public final class DockSystem {
             menuBuilders.add(menuBuilder);
 
             for (RootArea area : layout().roots) {
-                area.findAll(TabArea.class).to(x -> {
-                    x.node.registerIcon(menuBuilder);
+                area.findAll(TabArea.class).to(tabs -> {
+                    tabs.registerMenu(menuBuilder);
                 });
             }
         }

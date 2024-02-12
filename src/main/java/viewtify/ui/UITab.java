@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.StackPane;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.WiseFunction;
@@ -77,12 +78,6 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
         });
         addEventHandler(TAB_CLOSE_REQUEST_EVENT, e -> {
             System.out.println("REQUEST");
-        });
-
-        context(menus -> {
-            menus.menu().text(I.translate("Close this tab")).action(() -> {
-                getTabPane().getTabs().remove(this);
-            });
         });
     }
 
@@ -147,6 +142,17 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
      */
     public final UITab closable(boolean enable) {
         setClosable(enable);
+        return this;
+    }
+
+    /**
+     * Close this tab.
+     * 
+     * @return
+     */
+    public final UITab close() {
+        getTabPane().getTabs().remove(this);
+
         return this;
     }
 

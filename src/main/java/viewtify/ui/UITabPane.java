@@ -20,6 +20,7 @@ import javafx.scene.control.TabPane.TabDragPolicy;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+
 import kiss.Disposable;
 import kiss.WiseConsumer;
 import stylist.Style;
@@ -180,7 +181,6 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
             UILabel icon = new UILabel(null).style(style.icon);
             builder.accept(icon);
             menus.getChildren().add(icon.ui());
-
         }
         return this;
     }
