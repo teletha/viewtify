@@ -132,9 +132,34 @@ public class UIContextMenu {
      * Declare simple menu with text.
      * 
      * @param text A label text.
+     * @param rebuildable Determines whether the menu is regenerated each time it is opened.
+     * @param sub Define submenus.
+     */
+    public void menu(Object text, boolean rebuildable, Consumer<UIContextMenu> sub) {
+        menu(Variable.of(String.valueOf(text)), sub);
+    }
+
+    /**
+     * Declare simple menu with text.
+     * 
+     * @param text A label text.
+     * @param sub Define submenus.
      */
     public void menu(Variable<String> text, Consumer<UIContextMenu> sub) {
+        menu(text, true, sub);
+    }
+
+    /**
+     * Declare simple menu with text.
+     * 
+     * @param text A label text.
+     * @param rebuildable Determines whether the menu is regenerated each time it is opened.
+     * @param sub Define submenus.
+     */
+    public void menu(Variable<String> text, boolean rebuildable, Consumer<UIContextMenu> sub) {
         UIMenuItem<Menu> menu = new UIMenuItem<>(register(new Menu())).text(text);
+
+        // enhance animation
         menu.when(Menu.ON_SHOWN, () -> {
             ContextMenu context = MonkeyPatch.findContextMenu(menu.ui.getStyleableNode(), "submenu");
             MonkeyPatch.fix(context);
@@ -156,6 +181,13 @@ public class UIContextMenu {
         });
 
         sub.accept(new UIContextMenu(text, menu.ui.getItems()));
+
+        if (rebuildable) {
+            menu.when(Menu.ON_SHOWING, () -> {
+                menu.ui.getItems().clear();
+                sub.accept(new UIContextMenu(text, menu.ui.getItems()));
+            });
+        }
     }
 
     /**

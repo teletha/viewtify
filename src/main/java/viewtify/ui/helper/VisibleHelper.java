@@ -239,7 +239,7 @@ public interface VisibleHelper<Self extends VisibleHelper> extends PropertyAcces
      */
     default Self invisibleWhen(ObservableValue<Boolean> condition) {
         if (condition != null) {
-            invisibleWhen(BooleanBinding.booleanExpression(condition).not());
+            visibleWhen(BooleanBinding.booleanExpression(condition).not());
         }
         return (Self) this;
     }

@@ -90,20 +90,24 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
         context(menus -> {
             menus.menu().text(CloseThisTab).action(this::close);
             menus.menu(CloseMultipleTabs, sub -> {
-                sub.menu(CloseRightTabs).action(() -> {
-                    ObservableList<Tab> tabs = getTabPane().getTabs();
-                    I.signal(tabs).skip(tabs.indexOf(this) + 1).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
-                });
-                sub.menu(CloseLeftTabs).action(() -> {
-                    ObservableList<Tab> tabs = getTabPane().getTabs();
-                    I.signal(tabs).take(tabs.indexOf(this)).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
-                });
-                sub.menu(CloseOtherTabs).action(() -> {
-                    ObservableList<Tab> tabs = getTabPane().getTabs();
+                ObservableList<Tab> tabs = getTabPane().getTabs();
+                int index = tabs.indexOf(this);
+
+                if (index + 1 != tabs.size()) {
+                    sub.menu(CloseRightTabs).action(() -> {
+                        I.signal(tabs).skip(index + 1).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
+                    });
+                }
+                if (index != 0) {
+                    sub.menu(CloseLeftTabs).action(() -> {
+                        I.signal(tabs).take(index).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
+                    });
+                }
+                if (tabs.size() > 1) sub.menu(CloseOtherTabs).action(() -> {
                     I.signal(tabs).skip(this).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
                 });
                 sub.menu(CloseAllTabs).action(() -> {
-                    getTabPane().getTabs().clear();
+                    tabs.clear();
                 });
             });
         });

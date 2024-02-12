@@ -380,6 +380,7 @@ class TabArea extends ViewArea<UITabPane> {
 
             label.when(WindowEvent.WINDOW_SHOWING, () -> {
                 DockSystem.latestMenuActivatedTabArea = this;
+                System.out.println("SHOW");
             }).when(WindowEvent.WINDOW_HIDDEN, () -> {
                 DockSystem.latestMenuActivatedTabArea = null;
             });

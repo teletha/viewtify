@@ -10,14 +10,16 @@
 package viewtify.ui;
 
 import javafx.scene.control.MenuItem;
+
 import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.UserActionHelper;
+import viewtify.ui.helper.VisibleHelper;
 
 public class UIMenuItem<M extends MenuItem>
-        implements StyleHelper<UIMenuItem<M>, MenuItem>, DisableHelper<UIMenuItem<M>>, LabelHelper<UIMenuItem<M>>,
-        UserActionHelper<UIMenuItem<M>> {
+        implements StyleHelper<UIMenuItem<M>, MenuItem>, DisableHelper<UIMenuItem<M>>, VisibleHelper<UIMenuItem<M>>,
+        LabelHelper<UIMenuItem<M>>, UserActionHelper<UIMenuItem<M>> {
 
     /** The actual ui. */
     final M ui;

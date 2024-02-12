@@ -237,36 +237,6 @@ public final class DockSystem {
 
         UITab tab = new UITab(null);
         tab.setId(id);
-        // tab.context(menus -> {
-        // menus.menu().text(CloseThisTab).action(() -> {
-        // TabArea area = (TabArea) tab.getProperties().get("tabarea");
-        // area.remove(tab);
-        // });
-        // menus.menu(CloseMultipleTabs, sub -> {
-        // sub.menu(CloseRightTabs).action(() -> {
-        // TabArea area = (TabArea) tab.getProperties().get("tabarea");
-        // ObservableList<Tab> tabs = tab.getTabPane().getTabs();
-        // I.signal(tabs).skip(tabs.indexOf(tab) + 1).buffer().flatIterable(x -> x).to(x ->
-        // area.remove(x));
-        // });
-        // sub.menu(CloseLeftTabs).action(() -> {
-        // TabArea area = (TabArea) tab.getProperties().get("tabarea");
-        // ObservableList<Tab> tabs = tab.getTabPane().getTabs();
-        // I.signal(tabs).take(tabs.indexOf(tab)).buffer().flatIterable(x -> x).to(x ->
-        // area.remove(x));
-        // });
-        // sub.menu(CloseOtherTabs).action(() -> {
-        // TabArea area = (TabArea) tab.getProperties().get("tabarea");
-        // ObservableList<Tab> tabs = tab.getTabPane().getTabs();
-        // I.signal(tabs).skip(tab).buffer().flatIterable(x -> x).to(x -> area.remove(x));
-        // });
-        // sub.menu(CloseAllTabs).action(() -> {
-        // TabArea area = (TabArea) tab.getProperties().get("tabarea");
-        // ObservableList<Tab> tabs = tab.getTabPane().getTabs();
-        // I.signal(tabs).buffer().flatIterable(x -> x).to(x -> area.remove(x));
-        // });
-        // });
-        // });
 
         DockRecommendedLocation o = option.apply(new DockRecommendedLocation());
         DockLayout layout = layout();
