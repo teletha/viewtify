@@ -65,6 +65,7 @@ import viewtify.Viewtify;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIPane;
 import viewtify.ui.UITab;
+import viewtify.ui.UITabPane;
 import viewtify.ui.UserInterfaceProvider;
 
 /**
@@ -72,24 +73,6 @@ import viewtify.ui.UserInterfaceProvider;
  * existing windows.
  */
 public final class DockSystem {
-
-    /** The translatable text. */
-    private static final Variable<String> CloseThisTab = I.translate("Close this tab");
-
-    /** The translatable text. */
-    private static final Variable<String> CloseMultipleTabs = I.translate("Close multiple tabs");
-
-    /** The translatable text. */
-    private static final Variable<String> CloseRightTabs = I.translate("Close tabs to the right");
-
-    /** The translatable text. */
-    private static final Variable<String> CloseLeftTabs = I.translate("Close tabs to the left");
-
-    /** The translatable text. */
-    private static final Variable<String> CloseOtherTabs = I.translate("Close all other tabs");
-
-    /** The translatable text. */
-    private static final Variable<String> CloseAllTabs = I.translate("Close all tabs");
 
     /** The root user interface for the docking system. */
     public static final UserInterfaceProvider<Parent> UI = () -> layout().findRoot().node.ui;
@@ -132,6 +115,9 @@ public final class DockSystem {
 
     /** The user configuration. */
     static TabClosingPolicy tabPolicy = TabClosingPolicy.ALL_TABS;
+
+    /** The initialization state. */
+    static boolean whileInitialization;
 
     /** Avoid multiplex requesting. */
     private static boolean requesting;
@@ -251,34 +237,36 @@ public final class DockSystem {
 
         UITab tab = new UITab(null);
         tab.setId(id);
-        tab.context(menus -> {
-            menus.menu().text(CloseThisTab).action(() -> {
-                TabArea area = (TabArea) tab.getProperties().get("tabarea");
-                area.remove(tab, true);
-            });
-            menus.menu(CloseMultipleTabs, sub -> {
-                sub.menu(CloseRightTabs).action(() -> {
-                    TabArea area = (TabArea) tab.getProperties().get("tabarea");
-                    ObservableList<Tab> tabs = tab.getTabPane().getTabs();
-                    I.signal(tabs).skip(tabs.indexOf(tab) + 1).buffer().flatIterable(x -> x).to(x -> area.remove(x, true));
-                });
-                sub.menu(CloseLeftTabs).action(() -> {
-                    TabArea area = (TabArea) tab.getProperties().get("tabarea");
-                    ObservableList<Tab> tabs = tab.getTabPane().getTabs();
-                    I.signal(tabs).take(tabs.indexOf(tab)).buffer().flatIterable(x -> x).to(x -> area.remove(x, true));
-                });
-                sub.menu(CloseOtherTabs).action(() -> {
-                    TabArea area = (TabArea) tab.getProperties().get("tabarea");
-                    ObservableList<Tab> tabs = tab.getTabPane().getTabs();
-                    I.signal(tabs).skip(tab).buffer().flatIterable(x -> x).to(x -> area.remove(x, true));
-                });
-                sub.menu(CloseAllTabs).action(() -> {
-                    TabArea area = (TabArea) tab.getProperties().get("tabarea");
-                    ObservableList<Tab> tabs = tab.getTabPane().getTabs();
-                    I.signal(tabs).buffer().flatIterable(x -> x).to(x -> area.remove(x, true));
-                });
-            });
-        });
+        // tab.context(menus -> {
+        // menus.menu().text(CloseThisTab).action(() -> {
+        // TabArea area = (TabArea) tab.getProperties().get("tabarea");
+        // area.remove(tab);
+        // });
+        // menus.menu(CloseMultipleTabs, sub -> {
+        // sub.menu(CloseRightTabs).action(() -> {
+        // TabArea area = (TabArea) tab.getProperties().get("tabarea");
+        // ObservableList<Tab> tabs = tab.getTabPane().getTabs();
+        // I.signal(tabs).skip(tabs.indexOf(tab) + 1).buffer().flatIterable(x -> x).to(x ->
+        // area.remove(x));
+        // });
+        // sub.menu(CloseLeftTabs).action(() -> {
+        // TabArea area = (TabArea) tab.getProperties().get("tabarea");
+        // ObservableList<Tab> tabs = tab.getTabPane().getTabs();
+        // I.signal(tabs).take(tabs.indexOf(tab)).buffer().flatIterable(x -> x).to(x ->
+        // area.remove(x));
+        // });
+        // sub.menu(CloseOtherTabs).action(() -> {
+        // TabArea area = (TabArea) tab.getProperties().get("tabarea");
+        // ObservableList<Tab> tabs = tab.getTabPane().getTabs();
+        // I.signal(tabs).skip(tab).buffer().flatIterable(x -> x).to(x -> area.remove(x));
+        // });
+        // sub.menu(CloseAllTabs).action(() -> {
+        // TabArea area = (TabArea) tab.getProperties().get("tabarea");
+        // ObservableList<Tab> tabs = tab.getTabPane().getTabs();
+        // I.signal(tabs).buffer().flatIterable(x -> x).to(x -> area.remove(x));
+        // });
+        // });
+        // });
 
         DockRecommendedLocation o = option.apply(new DockRecommendedLocation());
         DockLayout layout = layout();
@@ -378,6 +366,8 @@ public final class DockSystem {
      * Initialize dock system with your menu builder.
      */
     public static void initialize(WiseConsumer<UILabel> menuBuilder) {
+        whileInitialization = true;
+
         DockLayout layout = layout();
         if (Locator.file(layout.locate()).isAbsent()) {
             for (DockProvider provider : I.find(DockProvider.class)) {
@@ -415,6 +405,8 @@ public final class DockSystem {
                 });
             }
         }
+
+        whileInitialization = false;
     }
 
     /**
@@ -547,6 +539,7 @@ public final class DockSystem {
         event.consume(); // stop event propagation
 
         dragedTab = tab;
+        dragedTab.getStyleClass().add(UITabPane.AvoidAutomaticDisposingTabClass);
         dragedTabArea = area;
         dragedDoppelganger.setText(tab.getText());
 
@@ -571,6 +564,7 @@ public final class DockSystem {
 
             if (event.getTransferMode() == TransferMode.MOVE && event.getDragboard().hasContent(DnD)) {
                 area.handleEmpty();
+                dragedTab.getStyleClass().remove(UITabPane.AvoidAutomaticDisposingTabClass);
                 dragedTab = null;
                 dragedTabArea = null;
 
@@ -640,7 +634,7 @@ public final class DockSystem {
             int position = detectPosition(event, area.node.ui);
             if (canDrop(position, area)) {
                 if (area.node.isHeaderShown() || position != PositionCenter) {
-                    dragedTabArea.remove(dragedTab, false);
+                    dragedTabArea.remove(dragedTab);
                     area.add(dragedTab, position);
                 } else {
                     // switch operation
@@ -648,8 +642,8 @@ public final class DockSystem {
                     int dragedIndex = dragedTabArea.node.indexOf(dragedTab);
 
                     // remove each tab
-                    area.remove(tab, false);
-                    dragedTabArea.remove(dragedTab, false);
+                    area.remove(tab);
+                    dragedTabArea.remove(dragedTab);
 
                     // add each tab
                     area.add(dragedTab, PositionCenter);
@@ -705,7 +699,7 @@ public final class DockSystem {
                         .getWidth(), contentsBound.getHeight() + titleBarHeight);
 
                 openNewWindow(area, bounds, e -> {
-                    dragedTabArea.remove(dragedTab, false);
+                    dragedTabArea.remove(dragedTab);
                     area.add(dragedTab, PositionCenter);
                     layout().roots.add(area);
                 });
@@ -872,7 +866,7 @@ public final class DockSystem {
 
             int[] values = calculate(area, event);
 
-            dragedTabArea.remove(dragedTab, false);
+            dragedTabArea.remove(dragedTab);
             area.add(dragedTab, values[1]);
             area.node.ui.getSelectionModel().select(values[1]);
 
@@ -905,7 +899,7 @@ public final class DockSystem {
      * @param area
      */
     private static void revert(TabArea area) {
-        area.remove(dragedDoppelganger, false);
+        area.remove(dragedDoppelganger);
 
         for (Tab tab : area.node.ui.getTabs()) {
             Node node = tab.getStyleableNode();
@@ -1014,7 +1008,7 @@ public final class DockSystem {
             // cannot be calculated.
             // Therefore, it is necessary to calculate it first.
             int position = detectPosition(event, area.node.ui);
-            dragedTabArea.remove(dragedTab, false);
+            dragedTabArea.remove(dragedTab);
             area.add(dragedTab, position);
 
             onSplitterDragExited();

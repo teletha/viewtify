@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 
 import kiss.I;
 import kiss.Signal;
+import kiss.Variable;
 import kiss.WiseFunction;
 import viewtify.Viewtify;
 import viewtify.ui.helper.ContextMenuHelper;
@@ -29,6 +30,24 @@ import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 
 public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<UITab>, ContextMenuHelper<UITab>, DisableHelper<UITab> {
+
+    /** The translatable text. */
+    private static final Variable<String> CloseThisTab = I.translate("Close this tab");
+
+    /** The translatable text. */
+    private static final Variable<String> CloseMultipleTabs = I.translate("Close multiple tabs");
+
+    /** The translatable text. */
+    private static final Variable<String> CloseRightTabs = I.translate("Close tabs to the right");
+
+    /** The translatable text. */
+    private static final Variable<String> CloseLeftTabs = I.translate("Close tabs to the left");
+
+    /** The translatable text. */
+    private static final Variable<String> CloseOtherTabs = I.translate("Close all other tabs");
+
+    /** The translatable text. */
+    private static final Variable<String> CloseAllTabs = I.translate("Close all tabs");
 
     /** Cache to find tab node. */
     private static final WiseFunction<Node, Object> findTab;
@@ -54,7 +73,7 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
     private final AtomicBoolean loaded = new AtomicBoolean();
 
     /** The actual contents. */
-    private View contents;
+    View contents;
 
     /** The cached reference for the styleable node . */
     private WeakReference<Node> styleable;
@@ -68,16 +87,25 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
         selectedProperty().addListener(change -> load());
         tabPaneProperty().addListener(invalidaed -> styleable = null);
 
-        addEventHandler(CLOSED_EVENT, e -> {
-            System.out.println("CLOSE");
-            if (contents != null) {
-                System.out.println("Dispose tab");
-                contents.dispose();
-                contents = null;
-            }
-        });
-        addEventHandler(TAB_CLOSE_REQUEST_EVENT, e -> {
-            System.out.println("REQUEST");
+        context(menus -> {
+            menus.menu().text(CloseThisTab).action(this::close);
+            menus.menu(CloseMultipleTabs, sub -> {
+                sub.menu(CloseRightTabs).action(() -> {
+                    ObservableList<Tab> tabs = getTabPane().getTabs();
+                    I.signal(tabs).skip(tabs.indexOf(this) + 1).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
+                });
+                sub.menu(CloseLeftTabs).action(() -> {
+                    ObservableList<Tab> tabs = getTabPane().getTabs();
+                    I.signal(tabs).take(tabs.indexOf(this)).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
+                });
+                sub.menu(CloseOtherTabs).action(() -> {
+                    ObservableList<Tab> tabs = getTabPane().getTabs();
+                    I.signal(tabs).skip(this).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
+                });
+                sub.menu(CloseAllTabs).action(() -> {
+                    getTabPane().getTabs().clear();
+                });
+            });
         });
     }
 

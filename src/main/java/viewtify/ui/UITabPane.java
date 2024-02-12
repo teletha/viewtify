@@ -12,8 +12,10 @@ package viewtify.ui;
 import java.util.function.Consumer;
 
 import javafx.beans.property.Property;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TabPane.TabDragPolicy;
@@ -21,7 +23,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-import kiss.Disposable;
 import kiss.WiseConsumer;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -36,8 +37,7 @@ import viewtify.ui.helper.User;
 public class UITabPane extends UserInterface<UITabPane, TabPane>
         implements ContextMenuHelper<UITabPane>, SelectableHelper<UITabPane, UITab>, CollectableHelper<UITabPane, UITab> {
 
-    /** The model disposer. */
-    private Disposable disposable = Disposable.empty();
+    public static final String AvoidAutomaticDisposingTabClass = "undisposable";
 
     /**
      * Enchanced view.
@@ -49,6 +49,17 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
 
         // FUNCTIONALITY : wheel scroll will change selection.
         when(User.Scroll).take(Actions.inside(() -> ui.lookup(".tab-header-background"))).to(Actions.traverse(ui.getSelectionModel()));
+
+        // dispose view automatically
+        ui.getTabs().addListener((ListChangeListener<Tab>) change -> {
+            while (change.next()) {
+                for (Tab removed : change.getRemoved()) {
+                    if (removed instanceof UITab tab && tab.contents != null && !tab.getStyleClass().contains(AvoidAutomaticDisposingTabClass)) {
+                        tab.contents.dispose();
+                    }
+                }
+            }
+        });
     }
 
     /**

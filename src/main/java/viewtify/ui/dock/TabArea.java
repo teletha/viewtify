@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -78,9 +79,6 @@ class TabArea extends ViewArea<UITabPane> {
                     });
         });
 
-        // node.ui.getTabs().addListener((InvalidationListener) c ->
-        // DockSystem.requestSavingLayout());
-
         // Since TabPane implementation delays the initialization of Skin and internal nodes
         // are not generated. So we should create Skin eagerly.
         TabPaneSkin skin = new TabPaneSkin(node.ui);
@@ -110,10 +108,62 @@ class TabArea extends ViewArea<UITabPane> {
             }
         });
 
+        node.ui.getTabs().addListener((ListChangeListener<Tab>) change -> {
+            while (change.next()) {
+                for (Tab tab : change.getRemoved()) {
+                    handleTabManipulation(tab.getId(), false);
+                }
+
+                for (Tab tab : change.getAddedSubList()) {
+                    handleTabManipulation(tab.getId(), true);
+                }
+            }
+        });
+
         if (DockSystem.menuBuilders.size() != 0) {
             for (WiseConsumer<UILabel> builder : DockSystem.menuBuilders) {
                 node.registerIcon(builder);
             }
+        }
+    }
+
+    /**
+     * Handle tab removing.
+     * 
+     * @param id
+     * @param checkEmpty
+     */
+    private void handleTabManipulation(String id, boolean add) {
+        if (!add) {
+            handleEmpty();
+        }
+
+        updatePosition();
+
+        if (add) {
+            DockSystem.openedTabs.add(id);
+        } else {
+            DockSystem.openedTabs.remove(id);
+        }
+    }
+
+    /**
+     * Check if this area is empty, so remove it.
+     */
+    void handleEmpty() {
+        if (node.ui.getTabs().isEmpty()) {
+            parent.remove(this);
+        }
+    }
+
+    /**
+     * Update tab position.
+     */
+    private void updatePosition() {
+        if (!DockSystem.whileInitialization) {
+            views = I.signal(node.ui.getTabs()).map(Tab::getId).toList();
+
+            DockSystem.requestSavingLayout();
         }
     }
 
@@ -208,31 +258,9 @@ class TabArea extends ViewArea<UITabPane> {
      * remove this area.
      *
      * @param tab The view to remove.
-     * @param checkEmpty Should this area be removed if it is empty?
      */
-    void remove(Tab tab, boolean checkEmpty) {
+    void remove(Tab tab) {
         node.ui.getTabs().remove(tab);
-
-        handleTabManipulation(tab.getId(), false, checkEmpty);
-    }
-
-    /**
-     * Handle tab removing.
-     * 
-     * @param id
-     * @param checkEmpty
-     */
-    private void handleTabManipulation(String id, boolean add, boolean checkEmpty) {
-        if (!add && checkEmpty) {
-            handleEmpty();
-        }
-
-        updatePosition();
-        if (add) {
-            DockSystem.openedTabs.add(id);
-        } else {
-            DockSystem.openedTabs.remove(id);
-        }
     }
 
     /**
@@ -241,16 +269,7 @@ class TabArea extends ViewArea<UITabPane> {
     void removeAll() {
         List<Tab> copies = node.ui.getTabs().stream().toList();
         for (Tab tab : copies) {
-            remove(tab, true);
-        }
-    }
-
-    /**
-     * Check if this area is empty, so remove it.
-     */
-    void handleEmpty() {
-        if (node.ui.getTabs().isEmpty()) {
-            parent.remove(this);
+            remove(tab);
         }
     }
 
@@ -259,10 +278,7 @@ class TabArea extends ViewArea<UITabPane> {
      */
     @Override
     public TabArea add(UITab tab, int position) {
-        boolean restore = false;
-
         if (position == DockSystem.PositionRestore) {
-            restore = true;
             position = restorePosition(tab);
         }
 
@@ -279,13 +295,8 @@ class TabArea extends ViewArea<UITabPane> {
 
         default:
             node.ui.getTabs().add(position, tab);
-            tab.setOnCloseRequest(e -> remove(tab, true));
 
             selectInitialTabOnlyOnce(tab);
-            if (!restore) updatePosition();
-
-            tab.getProperties().put("tabarea", this);
-            // handleTabManipulation(tab.getId(), true, false);
             return this;
         }
     }
@@ -358,15 +369,6 @@ class TabArea extends ViewArea<UITabPane> {
                 return;
             }
         }
-    }
-
-    /**
-     * Update tab position.
-     */
-    private void updatePosition() {
-        views = I.signal(node.ui.getTabs()).map(Tab::getId).toList();
-
-        DockSystem.requestSavingLayout();
     }
 
     /**
