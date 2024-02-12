@@ -52,6 +52,9 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
     /** Tab state. */
     private final AtomicBoolean loaded = new AtomicBoolean();
 
+    /** The actual contents. */
+    private View contents;
+
     /** The cached reference for the styleable node . */
     private WeakReference<Node> styleable;
 
@@ -63,6 +66,24 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
 
         selectedProperty().addListener(change -> load());
         tabPaneProperty().addListener(invalidaed -> styleable = null);
+
+        addEventHandler(CLOSED_EVENT, e -> {
+            System.out.println("CLOSE");
+            if (contents != null) {
+                System.out.println("Dispose tab");
+                contents.dispose();
+                contents = null;
+            }
+        });
+        addEventHandler(TAB_CLOSE_REQUEST_EVENT, e -> {
+            System.out.println("REQUEST");
+        });
+
+        context(menus -> {
+            menus.menu().text(I.translate("Close this tab")).action(() -> {
+                getTabPane().getTabs().remove(this);
+            });
+        });
     }
 
     /**
@@ -143,9 +164,9 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
      */
     public final void load() {
         if (viewBuilder != null && loaded.getAndSet(true) == false) {
-            View view = viewBuilder.apply(this);
-            view.initializeLazy(parent);
-            setContent(view.ui());
+            contents = viewBuilder.apply(this);
+            contents.initializeLazy(parent);
+            setContent(contents.ui());
         }
     }
 

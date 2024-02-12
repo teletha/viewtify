@@ -112,7 +112,7 @@ public final class DockSystem {
     static final ObservableSet<String> opened = FXCollections.observableSet();
 
     /** The user configuration. */
-    static TabClosingPolicy tabPolicy = TabClosingPolicy.SELECTED_TAB;
+    static TabClosingPolicy tabPolicy = TabClosingPolicy.ALL_TABS;
 
     /** Avoid multiplex requesting. */
     private static boolean requesting;
