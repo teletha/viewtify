@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.21.0](https://github.com/teletha/viewtify/compare/v2.20.0...v2.21.0) (2024-02-13)
+
+
+### Features
+
+* add ContextMenuHelper#hookContext ([b8783c4](https://github.com/teletha/viewtify/commit/b8783c4c7e1c092c4f4245e7a2135341d6c41af2))
+* context menu is rebuildable ([afcf0f3](https://github.com/teletha/viewtify/commit/afcf0f322e47d7666c651026b1e3e1c5df9c4a70))
+* context submenu is rebuildable ([aceb266](https://github.com/teletha/viewtify/commit/aceb2665e67992528496f129b3b696c0b3709d15))
+* open dock on the manipulated menu area ([e04dc7f](https://github.com/teletha/viewtify/commit/e04dc7f098d09042d7190e75e1b94a110af8cc94))
+* support automatic disposing ([a6c6a2d](https://github.com/teletha/viewtify/commit/a6c6a2def05323f9be5255003ae57a2f5df42847))
+* Tab can be closed on context menu. ([4286c97](https://github.com/teletha/viewtify/commit/4286c97bb2e09404082c996f137d8d47ded2d76f))
+* UITabPane supports automatic disposing view ([a63a716](https://github.com/teletha/viewtify/commit/a63a7167927dde3300c0d86c11a66a07f3f111c2))
+
+
+### Bug Fixes
+
+* various dock related bugs ([805f9e8](https://github.com/teletha/viewtify/commit/805f9e8102aa4fcf250a520a1daab1afbf6d3f46))
+
 ## [2.20.0](https://github.com/teletha/viewtify/compare/v2.19.0...v2.20.0) (2024-02-11)
 
 
