@@ -18,8 +18,6 @@ import java.util.function.Consumer;
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
 import javafx.geometry.Side;
@@ -63,7 +61,7 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
      * @return A chainable API for further configuration.
      */
     default Self context(Consumer<UIContextMenu> builder) {
-        return context(true, this, builder);
+        return context(this, true, builder);
     }
 
     /**
@@ -77,18 +75,18 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
      * @return A chainable API for further configuration.
      */
     default Self context(Object id, Consumer<UIContextMenu> builder) {
-        return context(true, id, builder);
+        return context(id, true, builder);
     }
 
     /**
      * Define the context menu with the option to specify whether it should be generated lazily.
      * This method allows you to specify a context menu using a builder function.
      *
-     * @param lazy If true, the context menu will be generated lazily.
+     * @param rebuildable If true, the context menu will be generated on every popup.
      * @param builder A consumer that builds the UIContextMenu for the context menu.
      * @return A chainable API for further configuration.
      */
-    default Self context(boolean lazy, Consumer<UIContextMenu> builder) {
+    default Self context(boolean rebuildable, Consumer<UIContextMenu> builder) {
         return context(this, builder);
     }
 
@@ -96,13 +94,13 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
      * Define the context menu with the option to specify whether it should be generated lazily. If
      * the specified ID already exists, the menu will be overwritten instead of added. This method
      * allows you to specify a context menu using a builder function.
-     *
-     * @param lazy If true, the context menu will be generated lazily.
+     * 
      * @param id An identifier for the context menu.
+     * @param rebuildable If true, the context menu will be generated on every popup.
      * @param builder A consumer that builds the UIContextMenu for the context menu.
      * @return A chainable API for further configuration.
      */
-    default Self context(boolean lazy, Object id, Consumer<UIContextMenu> builder) {
+    default Self context(Object id, boolean rebuildable, Consumer<UIContextMenu> builder) {
         EnhancedContextMenu menus = context();
 
         // separate for each context assigners
@@ -119,26 +117,30 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
         }
 
         // build context menus
-        if (!lazy) {
+        if (!rebuildable) {
             // eager setup
             builder.accept(new UIContextMenu(id, menus.getItems()));
         } else {
             // lazy setup
-            EventHandler<Event>[] setup = new EventHandler[1];
-            setup[0] = e -> {
+            menus.addEventFilter(Menu.ON_SHOWING, e -> {
+                int index = 0;
                 ObservableList<MenuItem> children = menus.getItems();
+
+                // remove old menus
                 for (int i = children.size() - 1; 0 <= i; i--) {
                     MenuItem child = children.get(i);
                     if (child.getProperties().containsKey(id)) {
                         children.remove(i);
-                        List<MenuItem> container = new ArrayList();
-                        builder.accept(new UIContextMenu(id, container));
-                        children.addAll(i, container);
+                        index = i;
                     }
                 }
-                menus.removeEventFilter(Menu.ON_SHOWING, setup[0]);
-            };
-            menus.addEventFilter(Menu.ON_SHOWING, setup[0]);
+
+                // add new menus
+                List<MenuItem> container = new ArrayList();
+                builder.accept(new UIContextMenu(id, container));
+                container.forEach(menu -> menu.getProperties().put(id, null));
+                children.addAll(index, container);
+            });
 
             // create dummy context
             MenuItem menu = new MenuItem("");

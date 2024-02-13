@@ -88,28 +88,31 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
         tabPaneProperty().addListener(invalidaed -> styleable = null);
 
         context(menus -> {
-            menus.menu().text(CloseThisTab).action(this::close);
-            menus.menu(CloseMultipleTabs, sub -> {
-                ObservableList<Tab> tabs = getTabPane().getTabs();
-                int index = tabs.indexOf(this);
+            ObservableList<Tab> tabs = getTabPane().getTabs();
 
-                if (index + 1 != tabs.size()) {
-                    sub.menu(CloseRightTabs).action(() -> {
-                        I.signal(tabs).skip(index + 1).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
+            menus.menu().text(CloseThisTab).action(this::close);
+            if (tabs.size() > 1) {
+                menus.menu(CloseMultipleTabs, sub -> {
+                    int index = tabs.indexOf(this);
+
+                    if (index + 1 != tabs.size()) {
+                        sub.menu(CloseRightTabs).action(() -> {
+                            I.signal(tabs).skip(index + 1).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
+                        });
+                    }
+                    if (index != 0) {
+                        sub.menu(CloseLeftTabs).action(() -> {
+                            I.signal(tabs).take(index).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
+                        });
+                    }
+                    if (tabs.size() > 1) sub.menu(CloseOtherTabs).action(() -> {
+                        I.signal(tabs).skip(this).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
                     });
-                }
-                if (index != 0) {
-                    sub.menu(CloseLeftTabs).action(() -> {
-                        I.signal(tabs).take(index).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
+                    sub.menu(CloseAllTabs).action(() -> {
+                        tabs.clear();
                     });
-                }
-                if (tabs.size() > 1) sub.menu(CloseOtherTabs).action(() -> {
-                    I.signal(tabs).skip(this).buffer().flatIterable(x -> x).to(x -> tabs.remove(x));
                 });
-                sub.menu(CloseAllTabs).action(() -> {
-                    tabs.clear();
-                });
-            });
+            }
         });
     }
 
