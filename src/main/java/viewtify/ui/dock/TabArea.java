@@ -378,13 +378,11 @@ class TabArea extends ViewArea<UITabPane> {
      * @param menuBuilder
      */
     void registerMenu(WiseConsumer<UILabel> menuBuilder) {
-        System.out.println("REGISTER ");
         node.registerIcon(label -> {
             menuBuilder.accept(label);
 
             label.when(WindowEvent.WINDOW_SHOWING, () -> {
                 DockSystem.latestMenuActivatedTabArea = this;
-                System.out.println("SHOW");
             }).when(WindowEvent.WINDOW_HIDDEN, () -> {
                 DockSystem.latestMenuActivatedTabArea = null;
             });

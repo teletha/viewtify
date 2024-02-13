@@ -23,8 +23,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-import kiss.Managed;
-import kiss.Singleton;
 import kiss.WiseConsumer;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -38,8 +36,6 @@ import viewtify.ui.helper.User;
 
 public class UITabPane extends UserInterface<UITabPane, TabPane>
         implements ContextMenuHelper<UITabPane>, SelectableHelper<UITabPane, UITab>, CollectableHelper<UITabPane, UITab> {
-
-    public static final String AvoidAutomaticDisposingTabClass = "undisposable";
 
     /**
      * Enchanced view.
@@ -56,13 +52,8 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
         ui.getTabs().addListener((ListChangeListener<Tab>) change -> {
             while (change.next()) {
                 for (Tab removed : change.getRemoved()) {
-                    if (removed instanceof UITab tab && tab.contents != null) {
-                        if (!tab.getStyleClass().contains(AvoidAutomaticDisposingTabClass)) {
-                            Managed managed = tab.contents.getClass().getAnnotation(Managed.class);
-                            if (managed == null || managed.value() != Singleton.class) {
-                                tab.contents.dispose();
-                            }
-                        }
+                    if (removed instanceof UITab tab && tab.supportAutomaticDispose()) {
+                        tab.dispose();
                     }
                 }
             }

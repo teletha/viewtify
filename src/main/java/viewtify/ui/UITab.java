@@ -29,7 +29,8 @@ import viewtify.ui.helper.DisableHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.StyleHelper;
 
-public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<UITab>, ContextMenuHelper<UITab>, DisableHelper<UITab> {
+public class UITab extends Tab
+        implements StyleHelper<UITab, Tab>, LabelHelper<UITab>, ContextMenuHelper<UITab>, DisableHelper<UITab>, AutoDisposable {
 
     /** The translatable text. */
     private static final Variable<String> CloseThisTab = I.translate("Close this tab");
@@ -253,5 +254,26 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
             }
         }
         return styleable == null ? null : styleable.get();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void vandalize() {
+        if (contents != null) contents.dispose();
+        if (styleable != null) styleable.clear();
+
+        contents = null;
+        viewBuilder = null;
+        styleable = null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean supportAutomaticDispose() {
+        return AutoDisposable.supportAutomaticDispose(this) && (contents == null || contents.supportAutomaticDispose());
     }
 }

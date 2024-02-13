@@ -62,10 +62,10 @@ import kiss.Variable;
 import kiss.WiseConsumer;
 import psychopath.Locator;
 import viewtify.Viewtify;
+import viewtify.ui.AutoDisposable;
 import viewtify.ui.UILabel;
 import viewtify.ui.UIPane;
 import viewtify.ui.UITab;
-import viewtify.ui.UITabPane;
 import viewtify.ui.UserInterfaceProvider;
 
 /**
@@ -509,7 +509,7 @@ public final class DockSystem {
         event.consume(); // stop event propagation
 
         dragedTab = tab;
-        dragedTab.getStyleClass().add(UITabPane.AvoidAutomaticDisposingTabClass);
+        dragedTab.getStyleClass().add(AutoDisposable.AvoidAutoDisposeClass);
         dragedTabArea = area;
         dragedDoppelganger.setText(tab.getText());
 
@@ -534,7 +534,7 @@ public final class DockSystem {
 
             if (event.getTransferMode() == TransferMode.MOVE && event.getDragboard().hasContent(DnD)) {
                 area.handleEmpty();
-                dragedTab.getStyleClass().remove(UITabPane.AvoidAutomaticDisposingTabClass);
+                dragedTab.getStyleClass().remove(AutoDisposable.AvoidAutoDisposeClass);
                 dragedTab = null;
                 dragedTabArea = null;
 

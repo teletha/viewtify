@@ -26,16 +26,19 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
+import kiss.Managed;
 import kiss.Model;
 import kiss.Signal;
+import kiss.Singleton;
 import kiss.Variable;
 import viewtify.Viewtify;
 import viewtify.util.ScreenSelector;
 
-public abstract class View implements Extensible, UserInterfaceProvider<Node>, Disposable {
+public abstract class View implements Extensible, UserInterfaceProvider<Node>, AutoDisposable {
 
     /** The human-readable ID separator. */
     public static final String IDSeparator = " ➝ ";
@@ -445,6 +448,15 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, D
             deconstruct(pane);
         }
         root = null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean supportAutomaticDispose() {
+        Managed managed = getClass().getAnnotation(Managed.class);
+        return (managed == null || managed.value() != Singleton.class);
     }
 
     /**
