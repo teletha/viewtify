@@ -19,7 +19,6 @@ import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.EventTarget;
-import javafx.event.EventType;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
@@ -370,17 +369,16 @@ public interface ContextMenuHelper<Self extends ContextMenuHelper> extends Prope
     }
 
     /**
-     * Register window event.
+     * Hook context event.
      * 
-     * @param type
-     * @param action
      * @return
      */
-    default Self when(EventType<WindowEvent> type, WiseRunnable action) {
-        if (action != null) {
-            context().addEventHandler(type, e -> {
-                action.run();
-            });
+    default Self hookContext(WiseRunnable beforeShowing, WiseRunnable afterHidden) {
+        if (beforeShowing != null) {
+            context().addEventHandler(WindowEvent.WINDOW_SHOWING, e -> beforeShowing.run());
+        }
+        if (afterHidden != null) {
+            context().addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> afterHidden.run());
         }
         return (Self) this;
     }

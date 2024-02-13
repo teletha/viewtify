@@ -16,10 +16,11 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
 import viewtify.ui.anime.Anime;
 import viewtify.util.MonkeyPatch;
 
-public class EnhancedContextMenu extends ContextMenu {
+public class EnhancedContextMenu extends ContextMenu implements UserActionHelper<EnhancedContextMenu> {
 
     /** The reusable event consumer. */
     static final EventHandler<ContextMenuEvent> NOOP = ContextMenuEvent::consume;
@@ -44,6 +45,14 @@ public class EnhancedContextMenu extends ContextMenu {
                 MonkeyPatch.fix(EnhancedContextMenu.this);
             }
         });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object ui() {
+        return this;
     }
 
     /**

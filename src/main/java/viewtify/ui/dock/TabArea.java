@@ -20,7 +20,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.WindowEvent;
 
 import kiss.I;
 import kiss.WiseConsumer;
@@ -381,9 +380,9 @@ class TabArea extends ViewArea<UITabPane> {
         node.registerIcon(label -> {
             menuBuilder.accept(label);
 
-            label.when(WindowEvent.WINDOW_SHOWING, () -> {
+            label.hookContext(() -> {
                 DockSystem.latestMenuActivatedTabArea = this;
-            }).when(WindowEvent.WINDOW_HIDDEN, () -> {
+            }, () -> {
                 DockSystem.latestMenuActivatedTabArea = null;
             });
         });
