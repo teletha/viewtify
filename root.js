@@ -104,6 +104,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AutoDisposable",
+			"packageName": "viewtify.ui",
+			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "BlockHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
