@@ -120,10 +120,8 @@ class TabArea extends ViewArea<UITabPane> {
             }
         });
 
-        if (DockSystem.menuBuilders.size() != 0) {
-            for (WiseConsumer<UILabel> builder : DockSystem.menuBuilders) {
-                node.registerIcon(builder);
-            }
+        for (WiseConsumer<UILabel> builder : DockSystem.menuBuilders) {
+            registerMenu(builder);
         }
     }
 
@@ -278,6 +276,10 @@ class TabArea extends ViewArea<UITabPane> {
      */
     @Override
     public TabArea add(UITab tab, int position) {
+        return add(tab, position, false);
+    }
+
+    TabArea add(UITab tab, int position, boolean select) {
         if (position == DockSystem.PositionRestore) {
             position = restorePosition(tab);
         }
@@ -295,6 +297,7 @@ class TabArea extends ViewArea<UITabPane> {
 
         default:
             node.ui.getTabs().add(position, tab);
+            if (select) tab.select();
 
             selectInitialTabOnlyOnce(tab);
             return this;
@@ -375,6 +378,7 @@ class TabArea extends ViewArea<UITabPane> {
      * @param menuBuilder
      */
     void registerMenu(WiseConsumer<UILabel> menuBuilder) {
+        System.out.println("REGISTER ");
         node.registerIcon(label -> {
             menuBuilder.accept(label);
 

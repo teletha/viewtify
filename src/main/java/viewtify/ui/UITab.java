@@ -192,6 +192,17 @@ public class UITab extends Tab implements StyleHelper<UITab, Tab>, LabelHelper<U
     }
 
     /**
+     * Select this tab.
+     * 
+     * @return
+     */
+    public final UITab select() {
+        getTabPane().getSelectionModel().select(this);
+
+        return this;
+    }
+
+    /**
      * Test if this tab has been already loaded.
      * 
      * @return

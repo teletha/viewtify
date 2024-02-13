@@ -245,7 +245,7 @@ public final class DockSystem {
         // add the view there.
         Variable<TabArea> area = Variable.of(latestMenuActivatedTabArea);
         if (area.isPresent()) {
-            area.v.add(tab, PositionCenter);
+            area.v.add(tab, PositionCenter, true);
             openedTabs.add(id);
             return tab;
         }
@@ -644,6 +644,11 @@ public final class DockSystem {
             break;
 
         default:
+            // exclude if the source and destination are the same
+            // and the source area has single tab only
+            if (area == dragedTabArea && area.node.size() == 1) {
+                return false;
+            }
             break;
         }
         return true;
