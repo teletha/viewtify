@@ -335,7 +335,7 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
          */
         public <R> Preference<V> syncTo(WiseFunction<V, R> converter, Consumer<R> target) {
             if (target != null) {
-                observe().debounce(250, TimeUnit.MILLISECONDS).map(converter).diff().to(target);
+                observing().debounce(250, TimeUnit.MILLISECONDS).map(converter).diff().to(target);
             }
             return this;
         }
