@@ -27,12 +27,14 @@ import kiss.WiseConsumer;
 import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
+import viewtify.preference.Preferences;
 import viewtify.property.SmartProperty;
 import viewtify.ui.helper.Actions;
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.SelectableHelper;
 import viewtify.ui.helper.User;
+import viewtify.ui.view.AppearanceSetting;
 
 public class UITabPane extends UserInterface<UITabPane, TabPane>
         implements ContextMenuHelper<UITabPane>, SelectableHelper<UITabPane, UITab>, CollectableHelper<UITabPane, UITab> {
@@ -58,6 +60,9 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
                 }
             }
         });
+
+        AppearanceSetting setting = Preferences.of(AppearanceSetting.class);
+        setting.tabClosingPolicy.syncTo(ui::setTabClosingPolicy);
     }
 
     /**

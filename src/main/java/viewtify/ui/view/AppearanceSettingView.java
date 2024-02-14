@@ -13,7 +13,9 @@ import java.util.Locale;
 import java.util.stream.IntStream;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.text.Font;
+
 import kiss.Variable;
 import viewtify.Theme;
 import viewtify.ThemeType;
@@ -45,6 +47,9 @@ public class AppearanceSettingView extends View {
     /** The scroll behavior. */
     public UICheckSwitch smoothScroll;
 
+    /** The tab closing button. */
+    public UIComboBox<TabClosingPolicy> tabClosingPolicy;
+
     /**
      * {@inheritDoc}
      */
@@ -63,6 +68,7 @@ public class AppearanceSettingView extends View {
                     form(en("Language"), FormStyles.Column5, lang);
                     form(en("Font"), family.style(FormStyles.Column5), size.style(FormStyles.Column2));
                     form(en("Enable smooth scroll"), FormStyles.Column3, smoothScroll);
+                    form(en("Show tab closing button"), FormStyles.Column5, tabClosingPolicy);
                 });
             }
         };
@@ -84,6 +90,20 @@ public class AppearanceSettingView extends View {
         family.items(Font.getFamilies()).sync(setting.font);
         size.items(IntStream.range(8, 18)).format(x -> x + "px").sync(setting.fontSize);
         smoothScroll.sync(setting.smoothScroll);
+        tabClosingPolicy.items(TabClosingPolicy.values()).renderByVariable(this::renderPolicy).sync(setting.tabClosingPolicy);
+    }
+
+    /**
+     * Render the {@link TabClosingPolicy}.
+     * 
+     * @return
+     */
+    private Variable<String> renderPolicy(TabClosingPolicy policy) {
+        return switch (policy) {
+        case TabClosingPolicy.ALL_TABS -> en("Show always");
+        case SELECTED_TAB -> en("Selected only");
+        case UNAVAILABLE -> en("Don't show");
+        };
     }
 
     /**

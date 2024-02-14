@@ -12,7 +12,6 @@ package viewtify.ui.dock;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
@@ -31,7 +30,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.skin.TabAbuse;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
@@ -113,9 +111,6 @@ public final class DockSystem {
     /** The dock system event. */
     static final ObservableSet<String> openedTabs = FXCollections.observableSet();
 
-    /** The user configuration. */
-    static TabClosingPolicy tabPolicy = TabClosingPolicy.ALL_TABS;
-
     /** The initialization state. */
     static boolean whileInitialization;
 
@@ -149,19 +144,6 @@ public final class DockSystem {
      */
     private static DockLayout layout() {
         return I.make(DockLayout.class);
-    }
-
-    /**
-     * Configure the {@link TabClosingPolicy}.
-     * 
-     * @param policy
-     */
-    public static void configure(TabClosingPolicy policy) {
-        tabPolicy = Objects.requireNonNullElse(policy, TabClosingPolicy.SELECTED_TAB);
-
-        layout().find(TabArea.class).to(tab -> {
-            tab.node.policy(policy);
-        });
     }
 
     /**

@@ -11,7 +11,9 @@ package viewtify.ui.view;
 
 import java.util.Locale;
 
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.text.Font;
+
 import kiss.I;
 import viewtify.Theme;
 import viewtify.ThemeType;
@@ -34,4 +36,6 @@ public class AppearanceSetting extends Preferences {
     public final Preference<Integer> fontSize = initialize(12).syncTo(x -> Viewtify.manage(Font.font(font.v, x.doubleValue())));
 
     public final Preference<Boolean> smoothScroll = initialize(true);
+
+    public final Preference<TabClosingPolicy> tabClosingPolicy = initialize(TabClosingPolicy.UNAVAILABLE);
 }

@@ -62,7 +62,6 @@ class TabArea extends ViewArea<UITabPane> {
 
         saveSelectedTab();
         node.style("stop-anime");
-        node.ui.setTabClosingPolicy(DockSystem.tabPolicy);
         node.when(User.DragOver, e -> DockSystem.onDragOver(e, this));
         node.when(User.DragEnter, e -> DockSystem.onDragEntered(e, this));
         node.when(User.DragExit, e -> DockSystem.onDragExited(e, this));
