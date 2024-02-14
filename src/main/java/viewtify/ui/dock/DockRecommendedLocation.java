@@ -19,10 +19,28 @@ public final class DockRecommendedLocation {
 
     Dock base;
 
+    int windowWidth;
+
+    int windowHeight;
+
+    boolean windowHeader;
+
     /**
      * Hide
      */
     DockRecommendedLocation() {
+    }
+
+    /**
+     * Specify the recommended window.
+     * 
+     * @return
+     */
+    public DockRecommendedLocation window(int width, int height, boolean showHeader) {
+        windowWidth = width;
+        windowHeight = height;
+        windowHeader = showHeader;
+        return this;
     }
 
     /**

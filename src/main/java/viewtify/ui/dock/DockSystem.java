@@ -46,6 +46,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 import org.controlsfx.glyphfont.FontAwesome;
@@ -223,7 +224,27 @@ public final class DockSystem {
         DockRecommendedLocation o = option.apply(new DockRecommendedLocation());
         DockLayout layout = layout();
 
-        // First, if the registration is activated on the tab mene,
+        // First, if window is recommended, add the view there.
+        if (0 < o.windowWidth && 0 < o.windowHeight) {
+            RootArea area = new RootArea();
+            area.sub = true;
+
+            Window window = layout.main.node.ui.getScene().getWindow();
+            double width = Math.min(window.getWidth(), o.windowWidth);
+            double height = Math.min(window.getHeight(), o.windowHeight);
+            double x = window.getX() + (window.getWidth() - width) / 2;
+            double y = window.getY() + (window.getHeight() - height) / 2;
+
+            openNewWindow(area, new BoundingBox(x, y, width, height), e -> {
+                TabArea tabArea = area.add(tab, PositionCenter);
+                tabArea.node.showHeader(o.windowHeader);
+                layout().roots.add(area);
+            });
+            openedTabs.add(id);
+            return tab;
+        }
+
+        // Next, if the registration is activated on the tab mene,
         // add the view there.
         Variable<TabArea> area = Variable.of(latestMenuActivatedTabArea);
         if (area.isPresent()) {
@@ -336,7 +357,7 @@ public final class DockSystem {
                 }
             }
         } else {
-            layout.find(TabArea.class).flatIterable(TabArea::getIds).to(id -> {
+            layout.find(TabArea.class).flatIterable(TabArea::getIds).buffer().flatIterable(x -> x).to(id -> {
                 for (DockProvider provider : I.find(DockProvider.class)) {
                     if (provider.register(id)) {
                         break;
