@@ -147,7 +147,7 @@ class TabArea extends ViewArea<UITabPane> {
      * Update tab position.
      */
     private void updatePosition() {
-        if (!DockSystem.whileInitialization) {
+        if (!DockSystem.whileRestration) {
             views = I.signal(node.ui.getTabs()).map(Tab::getId).toList();
 
             DockSystem.requestSavingLayout();

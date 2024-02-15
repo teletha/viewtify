@@ -13,7 +13,6 @@ import java.util.List;
 
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.Side;
-
 import kiss.I;
 import psychopath.Directory;
 import psychopath.File;
@@ -131,7 +130,7 @@ public class Update {
                                 // copy resources
                                 // ====================================
                                 List<String> patterns = updateDir.children().map(c -> c.isFile() ? c.name() : c.name() + "/**").toList();
-                                patterns.add("!.preferences for */**");
+                                patterns.add("!.*/**");
                                 updateDir.trackCopyingTo(origin.root, o -> o.strip().glob(patterns).replaceDifferent().sync()).to(monitor);
 
                                 // ====================================

@@ -112,7 +112,7 @@ public final class DockSystem {
     static final ObservableSet<String> openedTabs = FXCollections.observableSet();
 
     /** The initialization state. */
-    static boolean whileInitialization;
+    static boolean whileRestration;
 
     /** Avoid multiplex requesting. */
     private static boolean requesting;
@@ -339,8 +339,6 @@ public final class DockSystem {
      * Initialize dock system with your menu builder.
      */
     public static void initialize(WiseConsumer<UILabel> menuBuilder) {
-        whileInitialization = true;
-
         DockLayout layout = layout();
         if (Locator.file(layout.locate()).isAbsent()) {
             for (DockProvider provider : I.find(DockProvider.class)) {
@@ -357,6 +355,8 @@ public final class DockSystem {
                 }
             }
         } else {
+            whileRestration = true;
+
             layout.find(TabArea.class).flatIterable(TabArea::getIds).buffer().flatIterable(x -> x).to(id -> {
                 for (DockProvider provider : I.find(DockProvider.class)) {
                     if (provider.register(id)) {
@@ -367,6 +367,8 @@ public final class DockSystem {
 
             // validate all area
             layout.roots.forEach(RootArea::validate);
+
+            whileRestration = false;
         }
 
         if (menuBuilder != null) {
@@ -378,8 +380,6 @@ public final class DockSystem {
                 });
             }
         }
-
-        whileInitialization = false;
     }
 
     /**
