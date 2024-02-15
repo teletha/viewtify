@@ -988,8 +988,12 @@ public final class Viewtify {
         // ================================================================
         scene.getStylesheets().addAll(stylesheets);
 
-        // apply title and icon
-        stage.setTitle(viewtify.title);
+        // apply title
+        if (stage.getTitle() == null) {
+            stage.setTitle(viewtify.title);
+        }
+
+        // apply icon
         if (viewtify.icon.length() != 0) {
             stage.getIcons().add(new Image(viewtify.icon));
         }
