@@ -17,7 +17,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Objects;
 import java.util.WeakHashMap;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -38,6 +37,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -139,12 +139,8 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self items(List<E> items) {
-        if (items instanceof ObservableList) {
-            return items((ObservableList<E>) items);
-        }
-
         if (items == null || items.isEmpty()) {
-            modifyItemUISafely(list -> {
+            modifyItem(list -> {
                 list.clear();
             });
         } else {
@@ -152,28 +148,9 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
                 ((CollectableItemRenderingHelper<?, Translatable>) this).renderByVariable(Translatable::toTraslated);
             }
 
-            modifyItemUISafely(list -> {
+            modifyItem(list -> {
                 list.setAll(items);
             });
-        }
-        return (Self) this;
-    }
-
-    /**
-     * Sets all values as items.
-     * 
-     * @param items All items to set.
-     * @return Chainable API.
-     */
-    default Self items(ObservableList<E> items) {
-        Objects.requireNonNull(items);
-
-        if (this instanceof CollectableItemRenderingHelper && !items.isEmpty() && items.get(0) instanceof Translatable) {
-            ((CollectableItemRenderingHelper<?, Translatable>) this).renderByVariable(Translatable::toTraslated);
-        }
-
-        if (items != null) {
-            modifyItemUISafely(list -> refer().items.setValue(items));
         }
         return (Self) this;
     }
@@ -415,7 +392,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      */
     default Self addItemAt(int index, E item) {
         if (item != null && 0 <= index) {
-            modifyItemUISafely(list -> list.add(Math.min(index, list.size()), item));
+            modifyItem(list -> list.add(Math.min(index, list.size()), item));
         }
         return (Self) this;
     }
@@ -441,7 +418,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self addItemAtFirst(E item) {
-        modifyItemUISafely(list -> list.add(0, item));
+        modifyItem(list -> list.add(0, item));
         return (Self) this;
     }
 
@@ -466,7 +443,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      */
     default Self addItemAtLast(E item) {
         if (item != null) {
-            modifyItemUISafely(list -> list.add(item));
+            modifyItem(list -> list.add(item));
         }
         return (Self) this;
     }
@@ -493,7 +470,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      */
     default Self setItemAt(int index, E item) {
         if (item != null && 0 <= index) {
-            modifyItemUISafely(list -> list.set(Math.min(index, list.size()), item));
+            modifyItem(list -> list.set(Math.min(index, list.size()), item));
         }
         return (Self) this;
     }
@@ -506,7 +483,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      */
     default Self removeItem(E item) {
         if (item != null) {
-            modifyItemUISafely(list -> {
+            modifyItem(list -> {
                 Iterator<E> iterator = list.iterator();
 
                 while (iterator.hasNext()) {
@@ -529,7 +506,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self removeItems(Collection<E> items) {
-        modifyItemUISafely(list -> list.removeAll(items));
+        modifyItem(list -> list.removeAll(items));
         return (Self) this;
     }
 
@@ -539,7 +516,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return
      */
     default Self removeItemAll() {
-        modifyItemUISafely(List<E>::clear);
+        modifyItem(List<E>::clear);
         return (Self) this;
     }
 
@@ -552,7 +529,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
         if (indexies.length != 0) {
             Arrays.sort(indexies);
 
-            modifyItemUISafely(list -> {
+            modifyItem(list -> {
                 for (int i = indexies.length - 1; 0 <= i; i--) {
                     list.remove(indexies[i]);
                 }
@@ -579,7 +556,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self removeItemAtFirst() {
-        modifyItemUISafely(list -> {
+        modifyItem(list -> {
             Iterator<E> iterator = list.iterator();
             if (iterator.hasNext()) {
                 iterator.next();
@@ -595,7 +572,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self removeItemAtLast() {
-        modifyItemUISafely(list -> {
+        modifyItem(list -> {
             ListIterator<E> iterator = list.listIterator(list.size());
             if (iterator.hasPrevious()) {
                 iterator.previous();
@@ -625,7 +602,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      */
     default Self replaceItemAt(E target, E replacer) {
         if (target != null && replacer != null) {
-            modifyItemUISafely(list -> {
+            modifyItem(list -> {
                 int index = list.indexOf(target);
                 if (index != -1) {
                     list.set(index, replacer);
@@ -643,19 +620,20 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self swap(int one, int other) {
-        modifyItemUISafely(list -> {
+        modifyItem(list -> {
             Collections.swap(list, one, other);
         });
         return (Self) this;
     }
 
     /**
-     * Modify items in UI thread.
+     * Item manipulation.
      * 
      * @param action
      */
-    private void modifyItemUISafely(Consumer<ObservableList<E>> action) {
-        Viewtify.inUI(() -> action.accept(items()));
+    private void modifyItem(Consumer<ObservableList<E>> action) {
+        action.accept(items());
+        // Viewtify.inUI(() -> action.accept(items()));
     }
 
     /**

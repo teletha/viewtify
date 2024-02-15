@@ -324,5 +324,13 @@ public class Edito {
         protected T clone(T value) {
             return Edito.clone(value);
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            return latest.toString();
+        }
     }
 }
