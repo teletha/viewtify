@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.22.0](https://github.com/teletha/viewtify/compare/v2.21.0...v2.22.0) (2024-02-15)
+
+
+### Features
+
+* AppearanceSetting provides tab closing policy ([adc0e46](https://github.com/teletha/viewtify/commit/adc0e46e9ac611f916cdf54944ffcff19c612cdc))
+
+
+### Bug Fixes
+
+* discard automatic title selection ([d2b5140](https://github.com/teletha/viewtify/commit/d2b514036ae772b4c45fd50d26f69561f152575b))
+* Preference#syncTo emit value immediately ([89e81b7](https://github.com/teletha/viewtify/commit/89e81b74a6e6da664e439dfbfb4817588a622300))
+* sub window is trackable smartly on dock system ([95fd248](https://github.com/teletha/viewtify/commit/95fd2488190d1ee29bbe832a2c5c83a30e6c9046))
+
 ## [2.21.0](https://github.com/teletha/viewtify/compare/v2.20.0...v2.21.0) (2024-02-13)
 
 
