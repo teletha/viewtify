@@ -11,7 +11,6 @@ package viewtify.ui.dock;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-
 import viewtify.ui.UIPane;
 import viewtify.ui.UITab;
 import viewtify.ui.UITabPane;

@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
+import org.controlsfx.glyphfont.FontAwesome;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,9 +50,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import org.controlsfx.glyphfont.FontAwesome;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -224,10 +223,19 @@ public final class DockSystem {
         DockRecommendedLocation o = option.apply(new DockRecommendedLocation());
         DockLayout layout = layout();
 
-        // First, if window is recommended, add the view there.
+        // First, if there is an area where the specified view's ID is registered,
+        // add the view there.
+        Variable<TabArea> area = layout.find(TabArea.class).take(x -> x.hasView(id)).first().to();
+        if (area.isPresent()) {
+            area.v.add(tab, PositionRestore);
+            openedTabs.add(id);
+            return tab;
+        }
+
+        // Next, if window is recommended, add the view there.
         if (0 < o.windowWidth && 0 < o.windowHeight) {
-            RootArea area = new RootArea();
-            area.sub = true;
+            RootArea root = new RootArea();
+            root.sub = true;
 
             Window window = layout.main.node.ui.getScene().getWindow();
             double width = Math.min(window.getWidth(), o.windowWidth);
@@ -235,10 +243,10 @@ public final class DockSystem {
             double x = window.getX() + (window.getWidth() - width) / 2;
             double y = window.getY() + (window.getHeight() - height) / 2;
 
-            openNewWindow(area, new BoundingBox(x, y, width, height), e -> {
-                TabArea tabArea = area.add(tab, PositionCenter);
+            openNewWindow(root, new BoundingBox(x, y, width, height), e -> {
+                TabArea tabArea = root.add(tab, PositionCenter);
                 tabArea.node.showHeader(o.windowHeader);
-                layout().roots.add(area);
+                layout().roots.add(root);
             });
             openedTabs.add(id);
             return tab;
@@ -246,18 +254,9 @@ public final class DockSystem {
 
         // Next, if the registration is activated on the tab mene,
         // add the view there.
-        Variable<TabArea> area = Variable.of(latestMenuActivatedTabArea);
+        area = Variable.of(latestMenuActivatedTabArea);
         if (area.isPresent()) {
             area.v.add(tab, PositionCenter, true);
-            openedTabs.add(id);
-            return tab;
-        }
-
-        // Next, if there is an area where the specified view's ID is registered,
-        // add the view there.
-        area = layout.find(TabArea.class).take(x -> x.hasView(id)).first().to();
-        if (area.isPresent()) {
-            area.v.add(tab, PositionRestore);
             openedTabs.add(id);
             return tab;
         }
@@ -299,6 +298,7 @@ public final class DockSystem {
         stage.setOnCloseRequest(e -> {
             area.findAll(TabArea.class).to(TabArea::removeAll);
             layout().roots.remove(area);
+            Viewtify.unmanage(area.name);
         });
 
         Viewtify.manage(area.name, scene, false);

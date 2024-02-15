@@ -37,6 +37,8 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -72,9 +74,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -970,9 +969,9 @@ public final class Viewtify {
      * 
      * @param id An identical name of the window. (required)
      * @param scene A target window to manage. (required)
-     * @param untrackable
+     * @param dontTrack
      */
-    private static void manage(String id, Scene scene, Stage stage, boolean untrackable) {
+    private static void manage(String id, Scene scene, Stage stage, boolean dontTrack) {
         if (scene == null || stage == null) {
             return;
         }
@@ -1013,13 +1012,20 @@ public final class Viewtify {
         // It constantly monitors the status and saves any changes.
         // ================================================================
         I.make(WindowLocator.class).locate(id, stage);
-        if (untrackable) {
-            stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> {
-                WindowLocator locator = I.make(WindowLocator.class);
-                if (locator.remove(id) != null) {
-                    locator.store();
-                }
-            });
+        if (dontTrack) {
+            stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> unmanage(id));
+        }
+    }
+
+    /**
+     * Unmanage from viewtify application window.
+     * 
+     * @param id
+     */
+    public static void unmanage(String id) {
+        WindowLocator locator = I.make(WindowLocator.class);
+        if (locator.remove(id) != null) {
+            locator.store();
         }
     }
 
