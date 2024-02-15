@@ -169,6 +169,11 @@ Additional useful functions and widgets that do not exist in JavaFX.
 	</issueManagement>
 	<developers>
 		<developer>
+			<name>teletha</name>
+			<email/>
+			<url>https://github.com/teletha</url>
+		</developer>
+		<developer>
 			<name/>
 			<email/>
 			<url>https://github.com/apps/github-actions</url>
