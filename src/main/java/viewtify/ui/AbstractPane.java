@@ -44,7 +44,6 @@ public abstract class AbstractPane<E, P extends Pane, Self extends AbstractPane>
     /** The model modifier. */
     private final ListChangeListener<E> modelModifier = c -> {
         while (c.next()) {
-            System.out.println(c);
             if (c.wasPermutated()) {
                 Map<Integer, Integer> mapping = new HashMap();
                 for (int i = c.getFrom(); i < c.getTo(); i++) {
