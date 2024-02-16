@@ -37,7 +37,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -933,6 +932,18 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
         }
         if (refer.sorter.isPresent()) {
             refer.invokeResort();
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Update the original {@link ObservableList}, which should not normally be touched.
+     * 
+     * @param newList
+     */
+    default Self updateUnderlayModel(ObservableList<E> newList) {
+        if (newList != null) {
+            refer().items.setValue(newList);
         }
         return (Self) this;
     }

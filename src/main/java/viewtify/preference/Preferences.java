@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javafx.collections.ObservableList;
 import kiss.Extensible;
 import kiss.I;
 import kiss.Model;
@@ -240,7 +241,7 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
      * @param type
      * @return
      */
-    public static <P extends Preferences> List<P> all(Class<P> type) {
+    public static <P extends Preferences> ObservableList<P> all(Class<P> type) {
         return CACHE_LIST.computeIfAbsent(type, PreferencesList::new);
     }
 

@@ -44,6 +44,7 @@ public abstract class AbstractPane<E, P extends Pane, Self extends AbstractPane>
     /** The model modifier. */
     private final ListChangeListener<E> modelModifier = c -> {
         while (c.next()) {
+            System.out.println(c);
             if (c.wasPermutated()) {
                 Map<Integer, Integer> mapping = new HashMap();
                 for (int i = c.getFrom(); i < c.getTo(); i++) {
@@ -136,7 +137,12 @@ public abstract class AbstractPane<E, P extends Pane, Self extends AbstractPane>
                 views.put(added, view);
                 animator.observe(node);
 
-                ui.getChildren().add(this.models.get().indexOf(added), node);
+                int index = this.models.get().indexOf(added);
+                if (index == -1) {
+                    ui.getChildren().add(node);
+                } else {
+                    ui.getChildren().add(index, node);
+                }
 
                 ShowAnime.FadeIn(1).run(ui, node);
             }
