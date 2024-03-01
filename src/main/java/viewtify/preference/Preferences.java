@@ -17,7 +17,10 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.function.DoubleSupplier;
 import java.util.function.Function;
+import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
 
 import javafx.collections.ObservableList;
 import kiss.Extensible;
@@ -369,7 +372,7 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
     /**
      * Preference value for primitive int.
      */
-    public class IntPreference extends Preference<Integer> {
+    public class IntPreference extends Preference<Integer> implements IntSupplier {
 
         /**
          * Hide constructor.
@@ -432,12 +435,20 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
             requirements.add(v -> Math.max(Math.min(v, max), min));
             return this;
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int getAsInt() {
+            return get();
+        }
     }
 
     /**
      * Preference value for primitive long.
      */
-    public class LongPreference extends Preference<Long> {
+    public class LongPreference extends Preference<Long> implements LongSupplier {
 
         /**
          * Hide constructor.
@@ -500,12 +511,20 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
             requirements.add(v -> Math.max(Math.min(v, max), min));
             return this;
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public long getAsLong() {
+            return get();
+        }
     }
 
     /**
      * Preference value for primitive double.
      */
-    public class DoublePreference extends Preference<Double> {
+    public class DoublePreference extends Preference<Double> implements DoubleSupplier {
 
         /**
          * Hide constructor.
@@ -567,6 +586,14 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
 
             requirements.add(v -> Math.max(Math.min(v, max), min));
             return this;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public double getAsDouble() {
+            return get();
         }
     }
 
