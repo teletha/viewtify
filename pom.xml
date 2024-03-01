@@ -173,11 +173,6 @@ Additional useful functions and widgets that do not exist in JavaFX.
 			<email/>
 			<url>https://github.com/teletha</url>
 		</developer>
-		<developer>
-			<name/>
-			<email/>
-			<url>https://github.com/apps/github-actions</url>
-		</developer>
 	</developers>
 	<build>
 		<plugins>
