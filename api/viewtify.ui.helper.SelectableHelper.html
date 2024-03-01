@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<meta content="Explains how to use Viewtify and its API. " name="description"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="e">
-		<header class="k">
-			<h1 class="h" date="Use saved searches to filter your results more quickly" ver="2.22.0"><code>Viewtify</code></h1>
-			<nav class="i"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="N">
+		<header class="H">
+			<h1 class="a" date="2024-02-15" ver="2.22.0"><code>Viewtify</code></h1>
+			<nav class="R"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -19,7 +23,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="N" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="X" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -27,19 +31,19 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="g">
-			<nav class="P">
+		<main class="j">
+			<nav class="k">
 				<div></div>
 			</nav>
-			<article class="Z" id="Article">
-				<section class="L"><code class="X">viewtify.ui.helper</code>
-					<h2 class="Functional J"><code class="f">SelectableHelper</code><code class="S">&#60;<code>Self</code>, <code>E</code>&#62;</code></h2>
-					<div class="l">
+			<article class="c" id="Article">
+				<section class="e"><code class="f">viewtify.ui.helper</code>
+					<h2 class="Functional O"><code class="V">SelectableHelper</code><code class="i">&#60;<code>Self</code>, <code>E</code>&#62;</code></h2>
+					<div class="d">
 						<ul class="C D">
 							<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.helper.SelectableHelper.html">SelectableHelper</a><code class="parameters"><code>Self</code>, <code>E</code></code></code></code><span><p>The type of the implementing class, enabling method chaining.</p>
-								</span></li>
+</span></li>
 							<li><code>E</code><span><p>The type of the elements in the selection model.</p>
-								</span></li>
+</span></li>
 						</ul>
 						<ul class="C F">
 							<li><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.html">PropertyAccessHelper</a></code></li>
@@ -55,308 +59,308 @@
 							<li><code><a href="api/viewtify.ui.UITreeTableView.html">UITreeTableView</a><code class="parameters"><code>RowV</code></code></code></li>
 						</ul>
 					</div><span class="B"><p>An interface providing methods for handling selection in UI elements.</p>
-					</span></section>
-				<section class="L" id="selectionModelProperty()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">selectionModelProperty</code><code class="S">()</code><i class="R"><code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a><code class="parameters"><code>E</code></code></code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="selectionModelProperty()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">selectionModelProperty</code><code class="i">()</code><i class="b"><code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a><code class="parameters"><code>E</code></code></code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a><code class="parameters"><code>E</code></code></code></td>
 							<td><span><p>The <code>SelectionModel</code> for the implementing class.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Retrieves the <code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code>.</p>
-					</span></section>
-				<section class="L" id="isSelected()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">isSelected</code><code class="S">()</code><i class="R"><code>boolean</code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="isSelected()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">isSelected</code><code class="i">()</code><i class="b"><code>boolean</code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>boolean</code></td>
 							<td><span><code>true</code> if there is a selection, <code>false</code> otherwise.</span></td>
 						</tr>
 					</table><span class="B"><p>Checks if there is any current selection.</p>
-					</span></section>
-				<section class="L" id="isNotSelected()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">isNotSelected</code><code class="S">()</code><i class="R"><code>boolean</code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="isNotSelected()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">isNotSelected</code><code class="i">()</code><i class="b"><code>boolean</code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>boolean</code></td>
 							<td><span><code>true</code> if there is no selection, <code>false</code> otherwise.</span></td>
 						</tr>
 					</table><span class="B"><p>Checks if there is no current selection.</p>
-					</span></section>
-				<section class="L" id="isSelectedAt(int)">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">isSelectedAt</code><code class="S">(<code>int</code> <code class="parameterName">index</code>)</code><i class="R"><code>boolean</code></i></h2>
-					<table class="Y">
-						<tr class="H">
+</span></section>
+				<section class="e" id="isSelectedAt(int)">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">isSelectedAt</code><code class="i">(<code>int</code> <code class="parameterName">index</code>)</code><i class="b"><code>boolean</code></i></h2>
+					<table class="Z">
+						<tr class="W">
 							<td><code>int</code> <code>index</code></td>
 							<td><span><p>The index to check.</p>
-								</span></td>
+</span></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code>boolean</code></td>
 							<td><span><code>true</code> if the item at the index is selected, <code>false</code> otherwise.</span></td>
 						</tr>
 					</table><span class="B"><p>Checks if an item at the specified index is currently selected.</p>
-					</span></section>
-				<section class="L" id="isNotSelectedAt(int)">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">isNotSelectedAt</code><code class="S">(<code>int</code> <code class="parameterName">index</code>)</code><i class="R"><code>boolean</code></i></h2>
-					<table class="Y">
-						<tr class="H">
+</span></section>
+				<section class="e" id="isNotSelectedAt(int)">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">isNotSelectedAt</code><code class="i">(<code>int</code> <code class="parameterName">index</code>)</code><i class="b"><code>boolean</code></i></h2>
+					<table class="Z">
+						<tr class="W">
 							<td><code>int</code> <code>index</code></td>
 							<td><span><p>The index to check.</p>
-								</span></td>
+</span></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code>boolean</code></td>
 							<td><span><code>true</code> if the item at the index is not selected, <code>false</code> otherwise.</span></td>
 						</tr>
 					</table><span class="B"><p>Checks if an item at the specified index is not currently selected.</p>
-					</span></section>
-				<section class="L" id="hasSelection()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">hasSelection</code><code class="S">()</code><i class="R"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="hasSelection()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">hasSelection</code><code class="i">()</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></td>
 							<td><span><p>A <code>Signal</code> indicating the presence of a selection.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Provides a Signal that emits <code>true</code> when there is a selection, and
- <code>false</code> otherwise.</p>
-					</span></section>
-				<section class="L" id="hasNoSelection()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">hasNoSelection</code><code class="S">()</code><i class="R"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
-					<table class="Y">
-						<tr class="O">
+<code>false</code> otherwise.</p>
+</span></section>
+				<section class="e" id="hasNoSelection()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">hasNoSelection</code><code class="i">()</code><i class="b"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></td>
 							<td><span><p>A <code>Signal</code> indicating the absence of a selection.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Provides a Signal that emits <code>true</code> when there is no selection, and
- <code>false</code> otherwise.</p>
-					</span></section>
-				<section class="L" id="mode(javafx.scene.control.SelectionMode)">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">mode</code><code class="S">(<code><a href="api/javafx.scene.control.SelectionMode.html">SelectionMode</a></code> <code class="parameterName">mode</code>)</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="H">
+<code>false</code> otherwise.</p>
+</span></section>
+				<section class="e" id="mode(javafx.scene.control.SelectionMode)">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">mode</code><code class="i">(<code><a href="api/javafx.scene.control.SelectionMode.html">SelectionMode</a></code> <code class="parameterName">mode</code>)</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="W">
 							<td><code><a href="api/javafx.scene.control.SelectionMode.html">SelectionMode</a></code> <code>mode</code></td>
 							<td><span><p>The <code>SelectionMode</code> to set.</p>
-								</span></td>
+</span></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Configures the <code><a href="api/javafx.scene.control.SelectionMode.html">SelectionMode</a></code>.</p>
-					</span></section>
-				<section class="L" id="selectedItem()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">selectedItem</code><code class="S">()</code><i class="R"><code>kiss.Variable<code class="parameters"><code>E</code></code></code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="selectedItem()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">selectedItem</code><code class="i">()</code><i class="b"><code>kiss.Variable<code class="parameters"><code>E</code></code></code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>kiss.Variable<code class="parameters"><code>E</code></code></code></td>
 							<td><span><p>A <code>Variable</code> containing the latest selected item.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Gets the latest selected item as a Variable.</p>
-					</span></section>
-				<section class="L" id="selectedItems()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">selectedItems</code><code class="S">()</code><i class="R"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="selectedItems()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">selectedItems</code><code class="i">()</code><i class="b"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></td>
 							<td><span><p>An <code>ObservableList</code> containing the selected items.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Gets a live-state list of the selected items.</p>
-					</span></section>
-				<section class="L" id="selectedIndices()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">selectedIndices</code><code class="S">()</code><i class="R"><code>javafx.collections.ObservableList<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="selectedIndices()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">selectedIndices</code><code class="i">()</code><i class="b"><code>javafx.collections.ObservableList<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>javafx.collections.ObservableList<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></td>
 							<td><span><p>An <code>ObservableList</code> containing the selected indices.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Gets a live-state list of the selected indices.</p>
-					</span></section>
-				<section class="L" id="select(java.lang.Object)">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">select</code><code class="S">(<code>E</code> <code class="parameterName">item</code>)</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="H">
+</span></section>
+				<section class="e" id="select(java.lang.Object)">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">select</code><code class="i">(<code>E</code> <code class="parameterName">item</code>)</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="W">
 							<td><code>E</code> <code>item</code></td>
 							<td><span><p>The item to select.</p>
-								</span></td>
+</span></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Selects the specified item.</p>
-					</span></section>
-				<section class="L" id="selectAt(int)">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">selectAt</code><code class="S">(<code>int</code> <code class="parameterName">index</code>)</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="H">
+</span></section>
+				<section class="e" id="selectAt(int)">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">selectAt</code><code class="i">(<code>int</code> <code class="parameterName">index</code>)</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="W">
 							<td><code>int</code> <code>index</code></td>
 							<td><span><p>The index of the item to select.</p>
-								</span></td>
+</span></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Selects the item at the specified index.</p>
-					</span></section>
-				<section class="L" id="toggleAt(int)">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">toggleAt</code><code class="S">(<code>int</code> <code class="parameterName">index</code>)</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="H">
+</span></section>
+				<section class="e" id="toggleAt(int)">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">toggleAt</code><code class="i">(<code>int</code> <code class="parameterName">index</code>)</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="W">
 							<td><code>int</code> <code>index</code></td>
 							<td><span><p>The index of the item to toggle.</p>
-								</span></td>
+</span></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Toggles the selection state of the item at the specified index.</p>
-					</span></section>
-				<section class="L" id="selectNext()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">selectNext</code><code class="S">()</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="selectNext()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">selectNext</code><code class="i">()</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Moves the selection to the next item.</p>
-					</span></section>
-				<section class="L" id="selectPrevious()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">selectPrevious</code><code class="S">()</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="selectPrevious()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">selectPrevious</code><code class="i">()</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Moves the selection to the previous item.</p>
-					</span></section>
-				<section class="L" id="selectFirst()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">selectFirst</code><code class="S">()</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="selectFirst()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">selectFirst</code><code class="i">()</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Selects the first item in the list.</p>
-					</span></section>
-				<section class="L" id="selectLast()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">selectLast</code><code class="S">()</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="selectLast()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">selectLast</code><code class="i">()</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Selects the last item in the list.</p>
-					</span></section>
-				<section class="L" id="unselect()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">unselect</code><code class="S">()</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="unselect()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">unselect</code><code class="i">()</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Clears the selection.</p>
-					</span></section>
-				<section class="L" id="unselect(java.lang.Object)">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">unselect</code><code class="S">(<code>E</code> <code class="parameterName">item</code>)</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="H">
+</span></section>
+				<section class="e" id="unselect(java.lang.Object)">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">unselect</code><code class="i">(<code>E</code> <code class="parameterName">item</code>)</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="W">
 							<td><code>E</code> <code>item</code></td>
 							<td><span><p>The item to unselect.</p>
-								</span></td>
+</span></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Clears the selection of the specified item.</p>
-					</span></section>
-				<section class="L" id="unselectAt(int)">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">unselectAt</code><code class="S">(<code>int</code> <code class="parameterName">index</code>)</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="H">
+</span></section>
+				<section class="e" id="unselectAt(int)">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">unselectAt</code><code class="i">(<code>int</code> <code class="parameterName">index</code>)</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="W">
 							<td><code>int</code> <code>index</code></td>
 							<td><span><p>The index of the item to unselect.</p>
-								</span></td>
+</span></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Clears the selection of the item at the specified index.</p>
-					</span></section>
-				<section class="L" id="selected()">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">selected</code><code class="S">()</code><i class="R"><code>kiss.Signal<code class="parameters"><code>E</code></code></code></i></h2>
-					<table class="Y">
-						<tr class="O">
+</span></section>
+				<section class="e" id="selected()">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">selected</code><code class="i">()</code><i class="b"><code>kiss.Signal<code class="parameters"><code>E</code></code></code></i></h2>
+					<table class="Z">
+						<tr class="Q">
 							<td><code>kiss.Signal<code class="parameters"><code>E</code></code></code></td>
 							<td><span><p>A <code>Signal</code> containing the selected item.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Provides a Signal that emits the selected item.</p>
-					</span></section>
-				<section class="L" id="whenSelected(java.util.function.Consumer)">
-					<h2 class="c"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="f">whenSelected</code><code class="S">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">selected</code>)</code><i class="R"><code>Self</code></i></h2>
-					<table class="Y">
-						<tr class="H">
+</span></section>
+				<section class="e" id="whenSelected(java.util.function.Consumer)">
+					<h2 class="g"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="V">whenSelected</code><code class="i">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">selected</code>)</code><i class="b"><code>Self</code></i></h2>
+					<table class="Z">
+						<tr class="W">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>E</code></code></code> <code>selected</code></td>
 							<td><span><p>The consumer to be called with the selected item.</p>
-								</span></td>
+</span></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code>Self</code></td>
 							<td><span><p>The implementing class instance for method chaining.</p>
-								</span></td>
+</span></td>
 						</tr>
 					</table><span class="B"><p>Registers a consumer to be called when an item is selected.</p>
-					</span></section>
+</span></section>
 			</article>
-			<aside class="I" id="SubNavi">
-				<div class="m">
-					<h5 class="T">Methods</h5>
+			<aside class="Y" id="SubNavi">
+				<div class="S">
+					<h5 class="K">Methods</h5>
 					<ul>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectionModelProperty()">selectionModelProperty</a></code><code class="S">()</code><i class="U"><code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a><code class="parameters"><code>E</code></code></code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#isSelected()">isSelected</a></code><code class="S">()</code><i class="U"><code>boolean</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#isNotSelected()">isNotSelected</a></code><code class="S">()</code><i class="U"><code>boolean</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#isSelectedAt(int)">isSelectedAt</a></code><code class="S">(<code>int</code> <code class="parameterName">index</code>)</code><i class="U"><code>boolean</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#isNotSelectedAt(int)">isNotSelectedAt</a></code><code class="S">(<code>int</code> <code class="parameterName">index</code>)</code><i class="U"><code>boolean</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#hasSelection()">hasSelection</a></code><code class="S">()</code><i class="U"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#hasNoSelection()">hasNoSelection</a></code><code class="S">()</code><i class="U"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#mode(javafx.scene.control.SelectionMode)">mode</a></code><code class="S">(<code><a href="api/javafx.scene.control.SelectionMode.html">SelectionMode</a></code> <code class="parameterName">mode</code>)</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectedItem()">selectedItem</a></code><code class="S">()</code><i class="U"><code>kiss.Variable<code class="parameters"><code>E</code></code></code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectedItems()">selectedItems</a></code><code class="S">()</code><i class="U"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectedIndices()">selectedIndices</a></code><code class="S">()</code><i class="U"><code>javafx.collections.ObservableList<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#select(java.lang.Object)">select</a></code><code class="S">(<code>E</code> <code class="parameterName">item</code>)</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectAt(int)">selectAt</a></code><code class="S">(<code>int</code> <code class="parameterName">index</code>)</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#toggleAt(int)">toggleAt</a></code><code class="S">(<code>int</code> <code class="parameterName">index</code>)</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectNext()">selectNext</a></code><code class="S">()</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectPrevious()">selectPrevious</a></code><code class="S">()</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectFirst()">selectFirst</a></code><code class="S">()</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectLast()">selectLast</a></code><code class="S">()</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#unselect()">unselect</a></code><code class="S">()</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#unselect(java.lang.Object)">unselect</a></code><code class="S">(<code>E</code> <code class="parameterName">item</code>)</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#unselectAt(int)">unselectAt</a></code><code class="S">(<code>int</code> <code class="parameterName">index</code>)</code><i class="U"><code>Self</code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selected()">selected</a></code><code class="S">()</code><i class="U"><code>kiss.Signal<code class="parameters"><code>E</code></code></code></i></li>
-						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#whenSelected(java.util.function.Consumer)">whenSelected</a></code><code class="S">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">selected</code>)</code><i class="U"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectionModelProperty()">selectionModelProperty</a></code><code class="i">()</code><i class="P"><code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a><code class="parameters"><code>E</code></code></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#isSelected()">isSelected</a></code><code class="i">()</code><i class="P"><code>boolean</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#isNotSelected()">isNotSelected</a></code><code class="i">()</code><i class="P"><code>boolean</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#isSelectedAt(int)">isSelectedAt</a></code><code class="i">(<code>int</code> <code class="parameterName">index</code>)</code><i class="P"><code>boolean</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#isNotSelectedAt(int)">isNotSelectedAt</a></code><code class="i">(<code>int</code> <code class="parameterName">index</code>)</code><i class="P"><code>boolean</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#hasSelection()">hasSelection</a></code><code class="i">()</code><i class="P"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#hasNoSelection()">hasNoSelection</a></code><code class="i">()</code><i class="P"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#mode(javafx.scene.control.SelectionMode)">mode</a></code><code class="i">(<code><a href="api/javafx.scene.control.SelectionMode.html">SelectionMode</a></code> <code class="parameterName">mode</code>)</code><i class="P"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectedItem()">selectedItem</a></code><code class="i">()</code><i class="P"><code>kiss.Variable<code class="parameters"><code>E</code></code></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectedItems()">selectedItems</a></code><code class="i">()</code><i class="P"><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectedIndices()">selectedIndices</a></code><code class="i">()</code><i class="P"><code>javafx.collections.ObservableList<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#select(java.lang.Object)">select</a></code><code class="i">(<code>E</code> <code class="parameterName">item</code>)</code><i class="P"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectAt(int)">selectAt</a></code><code class="i">(<code>int</code> <code class="parameterName">index</code>)</code><i class="P"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#toggleAt(int)">toggleAt</a></code><code class="i">(<code>int</code> <code class="parameterName">index</code>)</code><i class="P"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectNext()">selectNext</a></code><code class="i">()</code><i class="P"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectPrevious()">selectPrevious</a></code><code class="i">()</code><i class="P"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectFirst()">selectFirst</a></code><code class="i">()</code><i class="P"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selectLast()">selectLast</a></code><code class="i">()</code><i class="P"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#unselect()">unselect</a></code><code class="i">()</code><i class="P"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#unselect(java.lang.Object)">unselect</a></code><code class="i">(<code>E</code> <code class="parameterName">item</code>)</code><i class="P"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#unselectAt(int)">unselectAt</a></code><code class="i">(<code>int</code> <code class="parameterName">index</code>)</code><i class="P"><code>Self</code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#selected()">selected</a></code><code class="i">()</code><i class="P"><code>kiss.Signal<code class="parameters"><code>E</code></code></code></i></li>
+						<li><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.SelectableHelper.html#whenSelected(java.util.function.Consumer)">whenSelected</a></code><code class="i">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>E</code></code></code> <code class="parameterName">selected</code>)</code><i class="P"><code>Self</code></i></li>
 					</ul>
 				</div>
 			</aside>

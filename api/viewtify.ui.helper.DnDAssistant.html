@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<meta content="Explains how to use Viewtify and its API. " name="description"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="e">
-		<header class="k">
-			<h1 class="h" date="Use saved searches to filter your results more quickly" ver="2.22.0"><code>Viewtify</code></h1>
-			<nav class="i"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="N">
+		<header class="H">
+			<h1 class="a" date="2024-02-15" ver="2.22.0"><code>Viewtify</code></h1>
+			<nav class="R"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -19,7 +23,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="N" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="X" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -27,111 +31,111 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="g">
-			<nav class="P">
+		<main class="j">
+			<nav class="k">
 				<div></div>
 			</nav>
-			<article class="Z" id="Article">
-				<section class="L"><code class="X">viewtify.ui.helper</code>
-					<h2 class="Class J"><code class="f">DnDAssistant</code><code class="S">&#60;<code>T</code>&#62;</code></h2>
-					<div class="l">
+			<article class="c" id="Article">
+				<section class="e"><code class="f">viewtify.ui.helper</code>
+					<h2 class="Class O"><code class="V">DnDAssistant</code><code class="i">&#60;<code>T</code>&#62;</code></h2>
+					<div class="d">
 						<ul class="C D">
 							<li><code>T</code></li>
 						</ul>
 					</div><span class="B"><p>Drag and Drop supporter.</p>
-					</span></section>
-				<section class="L" id="DnDAssistant()">
-					<h2 class="c"><i class="PUBLIC"></i><code class="f">DnDAssistant</code><code class="S">()</code></h2>
+</span></section>
+				<section class="e" id="DnDAssistant()">
+					<h2 class="g"><i class="PUBLIC"></i><code class="V">DnDAssistant</code><code class="i">()</code></h2>
 				</section>
-				<section class="L" id="source(java.lang.Object)">
-					<h2 class="c"><i class="PUBLIC"></i><code class="f">source</code><code class="S">(<code>Source</code> <code class="parameterName">source</code>)</code><i class="R"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="Y">
-						<tr class="a">
+				<section class="e" id="source(java.lang.Object)">
+					<h2 class="g"><i class="PUBLIC"></i><code class="V">source</code><code class="i">(<code>Source</code> <code class="parameterName">source</code>)</code><i class="b"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="Z">
+						<tr class="h">
 							<td><code>Source</code><code class="extends"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>T</code></code></code> &#38; <code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></code> &#38; <code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a><code class="parameters"><code>?</code></code></code></code></td>
 							<td></td>
 						</tr>
-						<tr class="H">
+						<tr class="W">
 							<td><code>Source</code> <code>source</code></td>
 							<td></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Register as DnD source.</p>
-					</span></section>
-				<section class="L" id="source(java.lang.Object,java.util.function.Function)">
-					<h2 class="c"><i class="PUBLIC"></i><code class="f">source</code><code class="S">(<code>Source</code> <code class="parameterName">source</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Source</code>, <code>T</code></code></code> <code class="parameterName">dataSupplier</code>)</code><i class="R"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="Y">
-						<tr class="a">
+</span></section>
+				<section class="e" id="source(java.lang.Object,java.util.function.Function)">
+					<h2 class="g"><i class="PUBLIC"></i><code class="V">source</code><code class="i">(<code>Source</code> <code class="parameterName">source</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Source</code>, <code>T</code></code></code> <code class="parameterName">dataSupplier</code>)</code><i class="b"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="Z">
+						<tr class="h">
 							<td><code>Source</code><code class="extends"><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></code> &#38; <code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a><code class="parameters"><code>?</code></code></code></code></td>
 							<td></td>
 						</tr>
-						<tr class="H">
+						<tr class="W">
 							<td><code>Source</code> <code>source</code></td>
 							<td></td>
 						</tr>
-						<tr class="H">
+						<tr class="W">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Source</code>, <code>T</code></code></code> <code>dataSupplier</code></td>
 							<td></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Register as DnD source.</p>
-					</span></section>
-				<section class="L" id="target(java.lang.Object)">
-					<h2 class="c"><i class="PUBLIC"></i><code class="f">target</code><code class="S">(<code>Target</code> <code class="parameterName">target</code>)</code><i class="R"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="Y">
-						<tr class="a">
+</span></section>
+				<section class="e" id="target(java.lang.Object)">
+					<h2 class="g"><i class="PUBLIC"></i><code class="V">target</code><code class="i">(<code>Target</code> <code class="parameterName">target</code>)</code><i class="b"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="Z">
+						<tr class="h">
 							<td><code>Target</code><code class="extends"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code>T</code></code></code> &#38; <code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></code> &#38; <code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a><code class="parameters"><code>?</code></code></code></code></td>
 							<td></td>
 						</tr>
-						<tr class="H">
+						<tr class="W">
 							<td><code>Target</code> <code>target</code></td>
 							<td></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Register as DnD target.</p>
-					</span></section>
-				<section class="L" id="target(java.lang.Object,java.util.function.BiConsumer)">
-					<h2 class="c"><i class="PUBLIC"></i><code class="f">target</code><code class="S">(<code>Target</code> <code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code>Target</code>, <code>T</code></code></code> <code class="parameterName">dataTransfer</code>)</code><i class="R"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="Y">
-						<tr class="a">
+</span></section>
+				<section class="e" id="target(java.lang.Object,java.util.function.BiConsumer)">
+					<h2 class="g"><i class="PUBLIC"></i><code class="V">target</code><code class="i">(<code>Target</code> <code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code>Target</code>, <code>T</code></code></code> <code class="parameterName">dataTransfer</code>)</code><i class="b"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="Z">
+						<tr class="h">
 							<td><code>Target</code><code class="extends"><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>?</code><code class="extends"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></code> &#38; <code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a><code class="parameters"><code>?</code></code></code></code></td>
 							<td></td>
 						</tr>
-						<tr class="H">
+						<tr class="W">
 							<td><code>Target</code> <code>target</code></td>
 							<td></td>
 						</tr>
-						<tr class="H">
+						<tr class="W">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code>Target</code>, <code>T</code></code></code> <code>dataTransfer</code></td>
 							<td></td>
 						</tr>
-						<tr class="O">
+						<tr class="Q">
 							<td><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Register as DnD target.</p>
-					</span></section>
+</span></section>
 			</article>
-			<aside class="I" id="SubNavi">
-				<div class="m">
-					<h5 class="T">Constructors</h5>
+			<aside class="Y" id="SubNavi">
+				<div class="S">
+					<h5 class="K">Constructors</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.DnDAssistant.html#DnDAssistant()">DnDAssistant</a></code><code class="S">()</code></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.DnDAssistant.html#DnDAssistant()">DnDAssistant</a></code><code class="i">()</code></li>
 					</ul>
-					<h5 class="T">Methods</h5>
+					<h5 class="K">Methods</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.DnDAssistant.html#source(java.lang.Object)">source</a></code><code class="S">(<code>Source</code> <code class="parameterName">source</code>)</code><i class="U"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.DnDAssistant.html#source(java.lang.Object,java.util.function.Function)">source</a></code><code class="S">(<code>Source</code> <code class="parameterName">source</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Source</code>, <code>T</code></code></code> <code class="parameterName">dataSupplier</code>)</code><i class="U"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.DnDAssistant.html#target(java.lang.Object)">target</a></code><code class="S">(<code>Target</code> <code class="parameterName">target</code>)</code><i class="U"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.DnDAssistant.html#target(java.lang.Object,java.util.function.BiConsumer)">target</a></code><code class="S">(<code>Target</code> <code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code>Target</code>, <code>T</code></code></code> <code class="parameterName">dataTransfer</code>)</code><i class="U"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.DnDAssistant.html#source(java.lang.Object)">source</a></code><code class="i">(<code>Source</code> <code class="parameterName">source</code>)</code><i class="P"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.DnDAssistant.html#source(java.lang.Object,java.util.function.Function)">source</a></code><code class="i">(<code>Source</code> <code class="parameterName">source</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Source</code>, <code>T</code></code></code> <code class="parameterName">dataSupplier</code>)</code><i class="P"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.DnDAssistant.html#target(java.lang.Object)">target</a></code><code class="i">(<code>Target</code> <code class="parameterName">target</code>)</code><i class="P"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.DnDAssistant.html#target(java.lang.Object,java.util.function.BiConsumer)">target</a></code><code class="i">(<code>Target</code> <code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/BiConsumer.html">BiConsumer</a><code class="parameters"><code>Target</code>, <code>T</code></code></code> <code class="parameterName">dataTransfer</code>)</code><i class="P"><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a><code class="parameters"><code>T</code></code></code></i></li>
 					</ul>
 				</div>
 			</aside>
