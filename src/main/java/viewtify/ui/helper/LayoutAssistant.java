@@ -63,6 +63,17 @@ public final class LayoutAssistant implements InvalidationListener {
     }
 
     /**
+     * Register the layouting way.
+     * 
+     * @param layout
+     */
+    public void registerLayout(Runnable layout) {
+        if (layout != null) {
+            previousLayout = layout;
+        }
+    }
+
+    /**
      * Layout forcely if possible.
      */
     public void layoutForcely() {
