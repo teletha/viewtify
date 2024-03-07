@@ -1336,6 +1336,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "WindowCommand",
+			"packageName": "viewtify.keys",
+			"type": "Enum"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "YearMonthView",
 			"packageName": "viewtify.ui.calendar",
 			"type": "Class"
