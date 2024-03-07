@@ -880,6 +880,16 @@ public final class Viewtify {
     }
 
     /**
+     * Check whether the given stage is application's main window or not.
+     * 
+     * @param stage
+     * @return
+     */
+    public final static boolean isMainWindow(Stage stage) {
+        return mainStage == stage;
+    }
+
+    /**
      * Create the general dialog builder.
      * 
      * @return
@@ -1020,7 +1030,9 @@ public final class Viewtify {
         // ================================================================
         I.make(WindowLocator.class).locate(id, stage);
         if (dontTrack) {
-            stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> unmanage(id));
+            stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, x -> {
+                unmanage(id);
+            });
         }
     }
 

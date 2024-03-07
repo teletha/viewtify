@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
-import org.controlsfx.glyphfont.FontAwesome;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,6 +48,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import org.controlsfx.glyphfont.FontAwesome;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -295,9 +296,10 @@ public final class DockSystem {
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
         stage.setOnShown(shown);
-        stage.setOnCloseRequest(e -> {
-            area.findAll(TabArea.class).to(TabArea::removeAll);
+        // don't use onClosingRequest event, it is not fired when Stage#close is called
+        stage.setOnHiding(e -> {
             layout().roots.remove(area);
+            area.findAll(TabArea.class).to(TabArea::removeAll);
             Viewtify.unmanage(area.name);
         });
 
