@@ -166,6 +166,9 @@ public final class Viewtify {
     /** The managed application stylesheets. */
     private static final CopyOnWriteArrayList<String> stylesheets = new CopyOnWriteArrayList();
 
+    /** The global key state manager. */
+    private static final EnumSet<KeyCode> pressed = EnumSet.noneOf(KeyCode.class);
+
     /** Queue to store UI actions as they are requested before launching the UI. */
     private static Queue<Runnable> waitingActions = new ConcurrentLinkedQueue();
 
@@ -1005,7 +1008,6 @@ public final class Viewtify {
         // Monitors the shortcut keys and invokes the corresponding commands.
         // Bug Fix: Prevent the KeyPress event from occurring continuously if you hold down a key.
         // ================================================================
-        EnumSet<KeyCode> pressed = EnumSet.noneOf(KeyCode.class);
         UserActionHelper<?> helper = UserActionHelper.of(scene);
         helper.when(User.KeyPress).take(e -> pressed.add(e.getCode())).to(I.make(ShortcutManager.class)::activate);
         helper.when(User.KeyRelease).to(e -> pressed.remove(e.getCode()));

@@ -26,7 +26,7 @@ public final class LayoutAssistant implements InvalidationListener {
     private final LayoutAssistant parent;
 
     /** Flag whether the node shoud layout on the next rendering phase or not. */
-    private boolean shouldLayout;
+    public boolean shouldLayout;
 
     /** Flag whether the node is layoutable or not. */
     public final Variable<Boolean> canLayout = Variable.of(true);
@@ -59,7 +59,10 @@ public final class LayoutAssistant implements InvalidationListener {
      * Request layouting ui in the next rendering phase.
      */
     public void requestLayout() {
-        invalidated(null);
+        if (shouldLayout == false) {
+            shouldLayout = true;
+            node.requestLayout();
+        }
     }
 
     /**
@@ -149,9 +152,6 @@ public final class LayoutAssistant implements InvalidationListener {
      */
     @Override
     public void invalidated(Observable observable) {
-        if (shouldLayout == false) {
-            shouldLayout = true;
-            node.requestLayout();
-        }
+        requestLayout();
     }
 }
