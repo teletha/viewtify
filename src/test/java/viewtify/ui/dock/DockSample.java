@@ -28,18 +28,18 @@ public class DockSample extends View {
      */
     @Override
     protected void initialize() {
-        DockSystem.register("First").contentsLazy(tab -> new ViewPane("First"));
-        DockSystem.register("Second").contentsLazy(tab -> new ViewPane("Second"));
-        DockSystem.register("Fourth", o -> o.bottom().ratio(0.7)).contentsLazy(tab -> new ViewPane("Fourth"));
-        DockSystem.register("Fifth", o -> o.bottom()).contentsLazy(tab -> new ViewPane("Fifth"));
-        DockSystem.register("Third", o -> o.left().ratio(0.3)).contentsLazy(tab -> new ViewPane("Third"));
-        DockSystem.register("Tab1").contentsLazy(tab -> new ViewPane("Tab1"));
-        DockSystem.register("Tab2").contentsLazy(tab -> new ViewPane("Tab2"));
-        DockSystem.register("Tab3").contentsLazy(tab -> new ViewPane("Tab3"));
-        DockSystem.register("Tab4").contentsLazy(tab -> new ViewPane("Tab4"));
+        DockSystem.register("First").to(tab -> tab.contentsLazy(x -> new ViewPane("First")));
+        DockSystem.register("Second").to(tab -> tab.contentsLazy(x -> new ViewPane("Second")));
+        DockSystem.register("Fourth", o -> o.bottom().ratio(0.7)).to(tab -> tab.contentsLazy(x -> new ViewPane("Fourth")));
+        DockSystem.register("Fifth", o -> o.bottom()).to(tab -> tab.contentsLazy(x -> new ViewPane("Fifth")));
+        DockSystem.register("Third", o -> o.left().ratio(0.3)).to(tab -> tab.contentsLazy(x -> new ViewPane("Third")));
+        DockSystem.register("Tab1").to(tab -> tab.contentsLazy(x -> new ViewPane("Tab1")));
+        DockSystem.register("Tab2").to(tab -> tab.contentsLazy(x -> new ViewPane("Tab2")));
+        DockSystem.register("Tab3").to(tab -> tab.contentsLazy(x -> new ViewPane("Tab3")));
+        DockSystem.register("Tab4").to(tab -> tab.contentsLazy(x -> new ViewPane("Tab4")));
 
         for (int i = 0; i < 40; i++) {
-            DockSystem.register("Auto" + i).contentsLazy(tab -> new ViewPane("Auto"));
+            DockSystem.register("Auto" + i).to(tab -> tab.contentsLazy(x -> new ViewPane("Auto")));
         }
     }
 

@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
+import org.controlsfx.glyphfont.FontAwesome;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,9 +50,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import org.controlsfx.glyphfont.FontAwesome;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -192,7 +191,7 @@ public final class DockSystem {
      * @param id A tab ID to select.
      */
     public static void select(String id) {
-        layout().find(TabArea.class).take(x -> x.hasView(id)).first().to(x -> x.select(id));
+        layout().find(TabArea.class).take(x -> x.hasView(id)).first().to(x -> x.select(id, true));
     }
 
     /**
@@ -202,7 +201,7 @@ public final class DockSystem {
      *
      * @param id The view to register.
      */
-    public static UITab register(String id) {
+    public static Variable<UITab> register(String id) {
         return register(id, o -> o);
     }
 
@@ -213,9 +212,15 @@ public final class DockSystem {
      *
      * @param id The view to register.
      */
-    public static UITab register(String id, UnaryOperator<DockRecommendedLocation> option) {
+    public static Variable<UITab> register(String id, UnaryOperator<DockRecommendedLocation> option) {
         if (id == null || id.isEmpty()) {
-            throw new IllegalArgumentException("Specify a unique ID for the tab.");
+            return Variable.empty();
+        }
+
+        if (openedTabs.contains(id)) {
+            // select
+            select(id);
+            return Variable.empty();
         }
 
         UITab tab = new UITab(null);
@@ -230,7 +235,7 @@ public final class DockSystem {
         if (area.isPresent()) {
             area.v.add(tab, PositionRestore);
             openedTabs.add(id);
-            return tab;
+            return Variable.of(tab);
         }
 
         // Next, if window is recommended, add the view there.
@@ -250,7 +255,7 @@ public final class DockSystem {
                 layout().roots.add(root);
             });
             openedTabs.add(id);
-            return tab;
+            return Variable.of(tab);
         }
 
         // Next, if the registration is activated on the tab mene,
@@ -259,7 +264,7 @@ public final class DockSystem {
         if (area.isPresent()) {
             area.v.add(tab, PositionCenter, true);
             openedTabs.add(id);
-            return tab;
+            return Variable.of(tab);
         }
 
         // Next, if there is an area where adding the specified view is recommended,
@@ -268,7 +273,7 @@ public final class DockSystem {
         if (area.isPresent()) {
             area.v.add(tab, PositionCenter);
             openedTabs.add(id);
-            return tab;
+            return Variable.of(tab);
         }
 
         // Since the recommended area does not exist,
@@ -279,7 +284,7 @@ public final class DockSystem {
         created.setViewportRatio(o.recommendedArea == PositionRight || o.recommendedArea == PositionBottom ? 1 - o.recommendedRatio
                 : o.recommendedRatio);
         openedTabs.add(id);
-        return tab;
+        return Variable.of(tab);
     }
 
     /**

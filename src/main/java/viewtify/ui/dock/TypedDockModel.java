@@ -48,7 +48,8 @@ public abstract class TypedDockModel<T> {
      * @param param
      */
     public void show(T param) {
-        UITab tab = DockSystem.register(id() + " " + I.transform(param, String.class));
-        registration().accept(tab, param);
+        DockSystem.register(id() + " " + I.transform(param, String.class)).to(tab -> {
+            registration().accept(tab, param);
+        });
     }
 }

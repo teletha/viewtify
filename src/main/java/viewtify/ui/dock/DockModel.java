@@ -37,7 +37,7 @@ public abstract class DockModel {
      */
     @Property
     public WiseConsumer<Dock> registration() {
-        return dock -> DockSystem.register(dock.id(), location()).text(dock.title()).contentsLazy(tab -> I.make(dock.view()));
+        return dock -> DockSystem.register(dock.id(), location()).to(tab -> tab.text(dock.title()).contentsLazy(x -> I.make(dock.view())));
     }
 
     /**
