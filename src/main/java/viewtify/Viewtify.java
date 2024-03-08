@@ -37,6 +37,8 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -72,9 +74,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -1044,7 +1043,14 @@ public final class Viewtify {
     public static void unmanage(String id) {
         WindowLocator locator = I.make(WindowLocator.class);
         if (locator.remove(id) != null) {
-            locator.store();
+            // TODO A certain time delay is provided before the changes are saved.
+            // If the window is consciously closed by the user, the app is still running and the
+            // changes are saved. If the window is closed incidentally when the application is
+            // closed, the changes are not saved because the application is not continuing.
+            //
+            // The current delay time is one second, but it is highly questionable whether this time
+            // is sufficient. Is this algorithm problematic?
+            I.schedule(1000, TimeUnit.MILLISECONDS).to(locator::store);
         }
     }
 
