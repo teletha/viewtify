@@ -20,7 +20,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import kiss.I;
 import kiss.WiseConsumer;
 import viewtify.Viewtify;
@@ -361,7 +360,7 @@ class TabArea extends ViewArea<UITabPane> {
                 node.select(tab);
 
                 if (selectWindow) {
-                    node.stage().ifPresent(Stage::toFront);
+                    // node.stage().ifPresent(Stage::toFront);
                 }
                 return;
             }

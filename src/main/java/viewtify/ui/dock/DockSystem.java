@@ -18,7 +18,10 @@ import java.util.function.UnaryOperator;
 import org.controlsfx.glyphfont.FontAwesome;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.event.EventHandler;
@@ -129,6 +132,31 @@ public final class DockSystem {
                 requesting = false;
             }
         }
+    }
+
+    /** The managed window order. */
+    private static final List<Window> order = new ArrayList(Window.getWindows());
+
+    /** The order management. */
+    private static final ChangeListener<Boolean> focusListener = (x, o, n) -> {
+        if (n & x instanceof ReadOnlyProperty p && p.getBean() instanceof Window window) {
+            System.out.println(window);
+        }
+    };
+
+    static {
+        Window.getWindows().forEach(window -> window.focusedProperty().addListener(focusListener));
+        Window.getWindows().addListener((ListChangeListener<Window>) c -> {
+            while (c.next()) {
+                for (Window window : c.getAddedSubList()) {
+                    window.focusedProperty().addListener(focusListener);
+                }
+
+                for (Window window : c.getRemoved()) {
+                    window.focusedProperty().removeListener(focusListener);
+                }
+            }
+        });
     }
 
     /**
