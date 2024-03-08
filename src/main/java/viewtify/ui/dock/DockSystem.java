@@ -15,13 +15,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
-import org.controlsfx.glyphfont.FontAwesome;
-
 import javafx.application.Platform;
-import javafx.beans.property.ReadOnlyProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.event.EventHandler;
@@ -53,6 +48,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import org.controlsfx.glyphfont.FontAwesome;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -132,31 +130,6 @@ public final class DockSystem {
                 requesting = false;
             }
         }
-    }
-
-    /** The managed window order. */
-    private static final List<Window> order = new ArrayList(Window.getWindows());
-
-    /** The order management. */
-    private static final ChangeListener<Boolean> focusListener = (x, o, n) -> {
-        if (n & x instanceof ReadOnlyProperty p && p.getBean() instanceof Window window) {
-            System.out.println(window);
-        }
-    };
-
-    static {
-        Window.getWindows().forEach(window -> window.focusedProperty().addListener(focusListener));
-        Window.getWindows().addListener((ListChangeListener<Window>) c -> {
-            while (c.next()) {
-                for (Window window : c.getAddedSubList()) {
-                    window.focusedProperty().addListener(focusListener);
-                }
-
-                for (Window window : c.getRemoved()) {
-                    window.focusedProperty().removeListener(focusListener);
-                }
-            }
-        });
     }
 
     /**
@@ -325,6 +298,7 @@ public final class DockSystem {
     private static void openNewWindow(RootArea area, Bounds bounds, EventHandler<WindowEvent> shown) {
         Scene scene = new Scene(area.node.ui, bounds.getWidth(), bounds.getHeight());
         Stage stage = new Stage();
+        stage.getProperties().put("DockName", area.name);
         stage.setScene(scene);
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
@@ -403,6 +377,8 @@ public final class DockSystem {
             // validate all area
             layout.roots.forEach(RootArea::validate);
 
+            // reorder window
+
             whileRestration = false;
         }
 
@@ -453,10 +429,10 @@ public final class DockSystem {
                 } else {
                     for (int i = 0; i < roots.size(); i++) {
                         RootArea area = roots.get(i);
-                        if (i == 0) {
-                            main = area;
-                        } else {
+                        if (area.sub) {
                             openNewWindow(area, new BoundingBox(0, 0, 0, 0), null);
+                        } else {
+                            main = area;
                         }
                     }
                 }

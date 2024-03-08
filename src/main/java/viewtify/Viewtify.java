@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.WeakHashMap;
@@ -36,8 +37,6 @@ import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -74,6 +73,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -993,6 +995,8 @@ public final class Viewtify {
             throw new IllegalArgumentException("Require window identifier.");
         }
 
+        scene.getRoot().setId(id);
+
         // ================================================================
         // Application Styling System
         //
@@ -1027,7 +1031,7 @@ public final class Viewtify {
         // Restores the position and size of the window from its previous state.
         // It constantly monitors the status and saves any changes.
         // ================================================================
-        I.make(WindowLocator.class).locate(id, stage);
+        I.make(WindowLocator.class).observe(id, stage);
         if (dontTrack) {
             stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, x -> {
                 unmanage(id);
@@ -1042,7 +1046,7 @@ public final class Viewtify {
      */
     public static void unmanage(String id) {
         WindowLocator locator = I.make(WindowLocator.class);
-        if (locator.remove(id) != null) {
+        if (locator.locations.remove(id) != null || locator.orders.remove(id)) {
             // TODO A certain time delay is provided before the changes are saved.
             // If the window is consciously closed by the user, the app is still running and the
             // changes are saved. If the window is closed incidentally when the application is
@@ -1408,6 +1412,9 @@ public final class Viewtify {
         }
     }
 
+    public static void reorderWindows() {
+    }
+
     /**
      * Thin {@link Property} wrapper for {@link Variable}.
      */
@@ -1581,9 +1588,8 @@ public final class Viewtify {
     /**
      * 
      */
-    @SuppressWarnings("serial")
-    @Managed(value = Singleton.class)
-    private static class WindowLocator extends HashMap<String, Location> implements Storable<WindowLocator> {
+    @Managed(Singleton.class)
+    private static class WindowLocator implements Storable<WindowLocator> {
 
         /** Magic Number for window state. */
         private static final int Normal = 0;
@@ -1594,6 +1600,14 @@ public final class Viewtify {
         /** Magic Number for window state. */
         private static final int Min = 2;
 
+        /** The location data. */
+        @Managed
+        private Map<String, Location> locations = new HashMap();
+
+        /** The order data. */
+        @Managed
+        private List<String> orders = new ArrayList();
+
         /**
          * Hide
          */
@@ -1602,12 +1616,12 @@ public final class Viewtify {
         }
 
         /**
-         * Apply window size and location setting.
+         * Apply window size, location and order observer.
          * 
          * @param stage A target to apply.
          */
-        void locate(String id, Stage stage) {
-            Location location = get(id);
+        void observe(String id, Stage stage) {
+            Location location = locations.get(id);
 
             if (location != null) {
                 // restore window location
@@ -1636,7 +1650,7 @@ public final class Viewtify {
                     .observe(stage.xProperty(), stage.yProperty(), stage.widthProperty(), stage.heightProperty());
 
             windowState.merge(windowLocation.mapTo(true)).debounce(500, TimeUnit.MILLISECONDS).to(() -> {
-                Location store = computeIfAbsent(id, key -> new Location());
+                Location store = locations.computeIfAbsent(id, key -> new Location());
 
                 if (stage.isMaximized()) {
                     store.state = Max;
@@ -1650,6 +1664,15 @@ public final class Viewtify {
                     store.h = stage.getHeight();
                 }
                 store();
+            });
+
+            // observe window order
+            Viewtify.observe(stage.focusedProperty()).take(x -> x).skip(1).to(() -> {
+                orders.remove(id);
+                orders.add(id);
+
+                store();
+                System.out.println(orders);
             });
         }
     }
