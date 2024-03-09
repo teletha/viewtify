@@ -38,6 +38,8 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -73,9 +75,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -608,6 +607,7 @@ public final class Viewtify {
             waitingActions.forEach(Runnable::run);
             waitingActions = null;
         }
+
     }
 
     /**
@@ -995,8 +995,6 @@ public final class Viewtify {
             throw new IllegalArgumentException("Require window identifier.");
         }
 
-        scene.getRoot().setId(id);
-
         // ================================================================
         // Application Styling System
         //
@@ -1046,7 +1044,8 @@ public final class Viewtify {
      */
     public static void unmanage(String id) {
         WindowLocator locator = I.make(WindowLocator.class);
-        if (locator.locations.remove(id) != null || locator.orders.remove(id)) {
+        if (locator.locations.remove(id) != null) {
+            locator.orders.remove(id);
             // TODO A certain time delay is provided before the changes are saved.
             // If the window is consciously closed by the user, the app is still running and the
             // changes are saved. If the window is closed incidentally when the application is
@@ -1412,7 +1411,18 @@ public final class Viewtify {
         }
     }
 
+    /**
+     * Helper method to reorder all managed windows.
+     */
     public static void reorderWindows() {
+        for (String id : I.make(WindowLocator.class).orders) {
+            for (Window window : Window.getWindows()) {
+                if (window.getProperties().get("WindowLocator").equals(id) && window instanceof Stage stage) {
+                    stage.toFront();
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -1606,7 +1616,7 @@ public final class Viewtify {
 
         /** The order data. */
         @Managed
-        private List<String> orders = new ArrayList();
+        private CopyOnWriteArrayList<String> orders = new CopyOnWriteArrayList();
 
         /**
          * Hide
@@ -1667,12 +1677,12 @@ public final class Viewtify {
             });
 
             // observe window order
+            stage.getProperties().put("WindowLocator", id);
             Viewtify.observe(stage.focusedProperty()).take(x -> x).skip(1).to(() -> {
                 orders.remove(id);
                 orders.add(id);
 
                 store();
-                System.out.println(orders);
             });
         }
     }
