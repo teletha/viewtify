@@ -12,6 +12,7 @@ package viewtify;
 import java.awt.Rectangle;
 import java.awt.SplashScreen;
 import java.lang.StackWalker.Option;
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
@@ -98,6 +99,7 @@ import viewtify.ui.anime.Anime;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.toast.Toast;
+import viewtify.ui.toast.ToastSetting;
 import viewtify.ui.view.AppearanceSetting;
 import viewtify.update.Blueprint;
 import viewtify.update.Update;
@@ -155,6 +157,24 @@ public final class Viewtify {
 
         // automatic gc
         I.schedule(5, 30, TimeUnit.MINUTES, true).to(System::gc);
+
+        // error handling in UI thread
+        UncaughtExceptionHandler handler = Thread.getDefaultUncaughtExceptionHandler();
+        if (handler == null) {
+            Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {
+                String message = "Error in " + thread.getName() + " : " + error.getLocalizedMessage();
+
+                // for system log
+                I.error(message);
+                I.error(error);
+
+                // for UI
+                if (Preferences.of(ToastSetting.class).enable.is(true)) {
+                    Toast.show(message);
+                }
+
+            });
+        }
     }
 
     /** The application configurator. */
@@ -475,23 +495,6 @@ public final class Viewtify {
     public Viewtify version(String version) {
         this.version = version;
 
-        return this;
-    }
-
-    /**
-     * Configure error logging.
-     * 
-     * @param errorHandler
-     * @return
-     */
-    public Viewtify error(BiConsumer<String, Throwable> errorHandler) {
-        if (errorHandler == null) {
-            Thread.setDefaultUncaughtExceptionHandler(null);
-        } else {
-            Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {
-                errorHandler.accept("Error in " + thread.getName() + " : " + error.getLocalizedMessage(), error);
-            });
-        }
         return this;
     }
 
