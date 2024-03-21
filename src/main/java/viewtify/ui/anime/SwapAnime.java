@@ -35,25 +35,29 @@ public interface SwapAnime {
     SwapAnime ZoomOut = (parent, before, after, action) -> zoom(parent, before, after, action, 0.15);
 
     /** Built-in animation. */
-    SwapAnime SlideLeft = (parent, before, after, action) -> {
-        Anime.define()
-                .init(after.translateXProperty(), after.getBoundsInLocal().getWidth())
-                .duration(Anime.BASE_DURATION.multiply(0.7))
-                .effect(before.translateXProperty(), -before.getBoundsInLocal().getWidth())
-                .then(action)
-                .effect(after.opacityProperty(), 1)
-                .run();
-    };
+    static SwapAnime slideLeft(WiseRunnable... finisher) {
+        return (parent, before, after, action) -> {
+            Anime.define()
+                    .init(after.translateXProperty(), after.getBoundsInLocal().getWidth())
+                    .duration(Anime.BASE_DURATION.multiply(0.7))
+                    .effect(before.translateXProperty(), -before.getBoundsInLocal().getWidth())
+                    .then(action)
+                    .effect(after.opacityProperty(), 1)
+                    .run(finisher);
+        };
+    }
 
     /** Built-in animation. */
-    SwapAnime SlideRight = (parent, before, after, action) -> {
-        Anime.define()
-                .init(after.translateXProperty(), -after.getBoundsInLocal().getWidth())
-                .duration(Anime.BASE_DURATION.multiply(0.7))
-                .effect(before.translateXProperty(), before.getBoundsInLocal().getWidth())
-                .then(action)
-                .effect(after.opacityProperty(), 1)
-                .run();
+    static SwapAnime slideRight(WiseRunnable... finisher) {
+        return (parent, before, after, action) -> {
+            Anime.define()
+                    .init(after.translateXProperty(), -after.getBoundsInLocal().getWidth())
+                    .duration(Anime.BASE_DURATION.multiply(0.7))
+                    .effect(before.translateXProperty(), before.getBoundsInLocal().getWidth())
+                    .then(action)
+                    .effect(after.opacityProperty(), 1)
+                    .run();
+        };
     };
 
     /**

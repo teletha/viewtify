@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import kiss.Disposable;
 import kiss.Variable;
+import kiss.WiseRunnable;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.anime.SwapAnime;
 import viewtify.util.FXUtils;
@@ -27,6 +28,36 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
      * @return
      */
     default Self content(UserInterfaceProvider<? extends Node> provider, SwapAnime... anime) {
+        if (provider != null) {
+            Node after = provider.ui();
+            FXUtils.setAssociation(after, Disposable.class, provider);
+
+            P parent = ui();
+            ObservableList<Node> children = parent.getChildren();
+
+            if (children.isEmpty()) {
+                children.add(after);
+            } else {
+                Node before = children.get(0);
+                if (before != after && anime != null && 0 < anime.length) {
+                    anime[0].run(parent, before, after, () -> {
+                        children.set(0, after);
+
+                        FXUtils.getAssociation(before, Disposable.class).to(Disposable::dispose);
+                    });
+                }
+            }
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Set the first child content.
+     * 
+     * @param provider
+     * @return
+     */
+    default Self content(UserInterfaceProvider<? extends Node> provider, WiseRunnable finisher, SwapAnime... anime) {
         if (provider != null) {
             Node after = provider.ui();
             FXUtils.setAssociation(after, Disposable.class, provider);

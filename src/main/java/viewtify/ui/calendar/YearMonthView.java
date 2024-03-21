@@ -18,6 +18,7 @@ import javafx.geometry.HPos;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
 import stylist.value.Numeric;
@@ -29,8 +30,6 @@ import viewtify.ui.calendar.TemporalView.TemporalStyles;
 import viewtify.ui.helper.User;
 
 public class YearMonthView extends View {
-
-    private CalendarView calendar;
 
     private UILabel monthText;
 
@@ -142,6 +141,7 @@ public class YearMonthView extends View {
         }
 
         monthText.when(User.LeftClick, () -> {
+            CalendarView calendar = I.make(CalendarView.class);
             calendar.show(MonthView.class, calendar.currentDate.withMonth(month.getValue()));
         });
     }
@@ -155,7 +155,8 @@ public class YearMonthView extends View {
             if (processing.getMonth() == date.getMonth()) {
                 LocalDate associated = processing;
 
-                dayCell.style(Styles.day).text(processing.getDayOfMonth()).when(User.LeftClick, () -> {
+                dayCell.style(Styles.day).text(processing.getDayOfMonth()).when(User.LeftClick).to(e -> {
+                    CalendarView calendar = I.make(CalendarView.class);
                     calendar.show(DayView.class, associated);
                 });
 

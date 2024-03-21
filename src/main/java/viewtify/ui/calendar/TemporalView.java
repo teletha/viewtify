@@ -47,14 +47,22 @@ public abstract class TemporalView extends View {
      * Select next temporal location.
      */
     public final void next() {
-        calendar.show(getClass(), currentDate.plus(1, temporalUnit()), SwapAnime.SlideLeft);
+        View old = calendar.currentView;
+
+        calendar.show(getClass(), currentDate.plus(1, temporalUnit()), SwapAnime.slideLeft(() -> {
+            if (old != null) old.dispose();
+        }));
     }
 
     /**
      * Select previous temporal location.
      */
     public final void previous() {
-        calendar.show(getClass(), currentDate.minus(1, temporalUnit()), SwapAnime.SlideRight);
+        View old = calendar.currentView;
+
+        calendar.show(getClass(), currentDate.minus(1, temporalUnit()), SwapAnime.slideRight(() -> {
+            if (old != null) old.dispose();
+        }));
     }
 
     /**

@@ -59,7 +59,7 @@ public class CalendarView extends View {
 
     private UIHBox main;
 
-    private TemporalView currentView;
+    TemporalView currentView;
 
     LocalDate currentDate;
 
@@ -217,6 +217,7 @@ public class CalendarView extends View {
     private <V extends TemporalView> void draw(Class<V> viewType, LocalDate date, SwapAnime anime) {
         anime = Objects.requireNonNullElse(anime, SwapAnime.FadeOutIn);
 
+        View oldView = currentView;
         V view = I.make(viewType);
         view.ui();
 

@@ -26,7 +26,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
@@ -188,10 +187,18 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, A
      * @return
      */
     public final <T> Signal<T> findUI(Class<T> type) {
-        return I.signal(getClass().getDeclaredFields()).take(f -> type.isAssignableFrom(f.getType())).map(f -> {
+        Signal<T> fields = I.signal(getClass().getDeclaredFields()).take(f -> type.isAssignableFrom(f.getType())).map(f -> {
             f.setAccessible(true);
             return (T) f.get(this);
         });
+        Signal<T> arrays = I.signal(getClass().getDeclaredFields())
+                .take(f -> f.getType().isArray() && type.isAssignableFrom(f.getType().getComponentType()))
+                .flatArray(f -> {
+                    f.setAccessible(true);
+                    return (T[]) f.get(this);
+                });
+
+        return fields.merge(arrays);
     }
 
     /**
