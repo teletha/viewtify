@@ -136,7 +136,7 @@ If you think something might be a bug, but you're not sure, ask on StackOverflow
 Viewtify depends on the following products on runtime.
 * [altfx-1.3.0](https://mvnrepository.com/artifact/com.github.teletha/altfx/1.3.0)
 * [conjure-1.1.1](https://mvnrepository.com/artifact/com.github.teletha/conjure/1.1.1)
-* [controlsfx-11.2.0](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.2.0)
+* [controlsfx-11.2.1](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.2.1)
 * [javafx-base-23-ea+3](https://mvnrepository.com/artifact/org.openjfx/javafx-base/23-ea+3)
 * [javafx-base-23-ea+3-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-base/23-ea+3)
 * [javafx-controls-23-ea+3](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/23-ea+3)
