@@ -31,6 +31,8 @@ import viewtify.ui.UIToggleButton;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.SwapAnime;
+import viewtify.ui.helper.User;
+import viewtify.ui.helper.UserActionHelper;
 
 @Managed(Singleton.class)
 public class CalendarView extends View {
@@ -172,6 +174,12 @@ public class CalendarView extends View {
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .on(Viewtify.UIThread)
                 .to(() -> draw(currentView.getClass(), currentDate, null));
+
+        UserActionHelper.of(ui()).when(User.MouseWheelDown, () -> {
+            currentView.next();
+        }).when(User.MouseWheelUp, () -> {
+            currentView.previous();
+        });
     }
 
     /**

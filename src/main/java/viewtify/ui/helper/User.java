@@ -24,7 +24,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-
 import kiss.I;
 import kiss.Signal;
 import viewtify.keys.Key;
@@ -247,6 +246,14 @@ public final class User<E extends Event> {
 
     /** User Action */
     public static final User<MouseEvent> MouseRelease = new User(MouseEvent.MOUSE_RELEASED);
+
+    /** User Action */
+    public static final User<ScrollEvent> MouseWheelUp = new User<>(ScrollEvent.SCROLL, (helper, signal) -> signal
+            .take(e -> e.getDeltaY() > 0));
+
+    /** User Action */
+    public static final User<ScrollEvent> MouseWheelDown = new User<>(ScrollEvent.SCROLL, (helper, signal) -> signal
+            .take(e -> e.getDeltaY() < 0));
 
     /** User Action */
     public static final User<ScrollEvent> Scroll = new User(ScrollEvent.SCROLL);
