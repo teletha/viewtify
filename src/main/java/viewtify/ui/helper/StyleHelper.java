@@ -249,6 +249,16 @@ public interface StyleHelper<Self extends StyleHelper, S extends Styleable> {
     }
 
     /**
+     * Remove all styles.
+     * 
+     * @return Chainable API
+     */
+    default Self unstyleAll() {
+        ui().getStyleClass().clear();
+        return (Self) this;
+    }
+
+    /**
      * Create temporary {@link StyleHelper}.
      * 
      * @param styleable
