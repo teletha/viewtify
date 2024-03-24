@@ -9,6 +9,7 @@
  */
 package viewtify.ui.helper;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 import javafx.collections.ObservableList;
@@ -158,6 +159,15 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      */
     default ObservableList<Integer> selectedIndices() {
         return model().getSelectedIndices();
+    }
+
+    /**
+     * Gets a snapshoted list of the selected items.
+     *
+     * @return An {@code ObservableList} containing the selected items.
+     */
+    default List<E> snapshotISelectedtems() {
+        return List.of((E[]) selectedItems().toArray());
     }
 
     /**
