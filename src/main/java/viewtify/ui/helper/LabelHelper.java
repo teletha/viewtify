@@ -12,6 +12,9 @@ package viewtify.ui.helper;
 import java.io.InputStream;
 import java.util.Objects;
 
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.INamedCharacter;
+
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -24,10 +27,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import org.controlsfx.glyphfont.Glyph;
-import org.controlsfx.glyphfont.INamedCharacter;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -56,7 +55,9 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Object text) {
-        property(Type.Text).setValue(Objects.toString(text));
+        Viewtify.inUI(() -> {
+            property(Type.Text).setValue(Objects.toString(text));
+        });
         return (Self) this;
     }
 
