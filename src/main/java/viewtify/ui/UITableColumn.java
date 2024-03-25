@@ -22,7 +22,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -34,10 +33,12 @@ import kiss.Ⅱ;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
 import viewtify.ui.helper.CollectableItemRenderingHelper;
+import viewtify.ui.helper.UserActionHelper;
 
 public class UITableColumn<RowV, ColumnV>
         extends UITableColumnBase<TableColumn<RowV, ColumnV>, UITableColumn<RowV, ColumnV>, RowV, ColumnV, UITableView<RowV>>
-        implements CollectableItemRenderingHelper<UITableColumn<RowV, ColumnV>, Ⅱ<RowV, ColumnV>> {
+        implements CollectableItemRenderingHelper<UITableColumn<RowV, ColumnV>, Ⅱ<RowV, ColumnV>>,
+        UserActionHelper<UITableColumn<RowV, ColumnV>> {
 
     /** The value provider utility. */
     private TypeMappingProvider mappingProvider;

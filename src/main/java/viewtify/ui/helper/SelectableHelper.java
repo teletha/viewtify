@@ -17,7 +17,6 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.SingleSelectionModel;
-
 import kiss.Signal;
 import kiss.Variable;
 import viewtify.Viewtify;
@@ -193,6 +192,16 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
         if (0 <= index) {
             selectionModelProperty().select(index);
         }
+        return (Self) this;
+    }
+
+    /**
+     * Select all items.
+     * 
+     * @return The implementing class instance for method chaining.
+     */
+    default Self selectAll() {
+        model().selectAll();
         return (Self) this;
     }
 
