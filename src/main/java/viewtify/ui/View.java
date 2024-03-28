@@ -14,6 +14,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.function.Predicate;
 
@@ -26,6 +27,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import kiss.Disposable;
 import kiss.Extensible;
 import kiss.I;
@@ -402,7 +404,12 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, A
                     parameters[i] = findAncestorView((Class<View>) parameterType);
                 } else if (parameterType == Class.class) {
                     if (specializedTypes == null) specializedTypes = Model.collectParameters(field.getGenericType(), field.getType());
-                    parameters[i] = specializedTypes[i - 1];
+
+                    if (specializedTypes[i - 1] instanceof Class) {
+                        parameters[i] = specializedTypes[i - 1];
+                    } else if (specializedTypes[i - 1] instanceof ParameterizedType parameterized) {
+                        parameters[i] = parameterized.getRawType();
+                    }
                 } else {
                     parameters[i] = I.make(parameterType);
                 }
