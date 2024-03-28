@@ -1,5 +1,34 @@
 # Changelog
 
+## [2.23.0](https://github.com/teletha/viewtify/compare/v2.22.0...v2.23.0) (2024-03-28)
+
+
+### Features
+
+* add CollectableHelper#updateUnderlayModel ([c3c6d37](https://github.com/teletha/viewtify/commit/c3c6d37b2277d8e08aab77f84a39fda8c80be39d))
+* add LayoutAssistant#registerLayout ([37199ae](https://github.com/teletha/viewtify/commit/37199ae1aa1dda7e7021029968e534e23b0aff60))
+* add SelectableHelper#selectAll ([ea3a149](https://github.com/teletha/viewtify/commit/ea3a149aff27c895d3139b84904cefd29c0c8b50))
+* add SelectableHelper#snapshotSelectedItems ([6158e9e](https://github.com/teletha/viewtify/commit/6158e9eaa4ed15f6bb328705753939756633f7ec))
+* add StyleHelper#unstyleAll ([5db0ade](https://github.com/teletha/viewtify/commit/5db0adedbf72307d868efbf44e40c193d5ff6222))
+* built-in window close command ([eb0ec10](https://github.com/teletha/viewtify/commit/eb0ec10ed7964f58dce61fdcc75d5997422db617))
+* CollectableHelper drops ui thread safe action ([200056b](https://github.com/teletha/viewtify/commit/200056b5b3b7509fb60fac17230d570124540d88))
+* manage windows order ([98c0d08](https://github.com/teletha/viewtify/commit/98c0d081d2e810f66595b26293ab96388a9402d5))
+* Preference implements value supplier ([1a1d8fc](https://github.com/teletha/viewtify/commit/1a1d8fcc372583f4331800e01700449dca7f14fe))
+* provide default error handler ([23c9e48](https://github.com/teletha/viewtify/commit/23c9e4882717db778361ca11e0d6bdfafb3bec61))
+* support mouse wheel event ([e5f572c](https://github.com/teletha/viewtify/commit/e5f572cf056cbf37b1efcc671e4600b0ab307510))
+* Viewtify can reorder managed windows ([63c4eb6](https://github.com/teletha/viewtify/commit/63c4eb6a8643d86b150130b2a926d03adf8b541b))
+
+
+### Bug Fixes
+
+* don't register the same dock duplicately ([ce7f3a9](https://github.com/teletha/viewtify/commit/ce7f3a949dcfad09f48f8f3215d7ac9c7eb81b6c))
+* LabelHelper#text is UI thread safe ([0e38953](https://github.com/teletha/viewtify/commit/0e38953398c568dbde222797f07df3f3163d73f4))
+* manage key pressing state in global ([0a12b74](https://github.com/teletha/viewtify/commit/0a12b7435a253cb69045a62643b01fa658f6df43))
+* reduce memory usage ([70abde8](https://github.com/teletha/viewtify/commit/70abde8abaadbf070bc1faf1b439fc42656bb276))
+* save the window info on terminating application ([cabc13d](https://github.com/teletha/viewtify/commit/cabc13dcb34635bae6c166731033437c4926f75d))
+* show window of the selected dock ([ce7f3a9](https://github.com/teletha/viewtify/commit/ce7f3a949dcfad09f48f8f3215d7ac9c7eb81b6c))
+* view support parameterized variable ([537aa35](https://github.com/teletha/viewtify/commit/537aa35d0bfd5db345bd1879cdd4df7e249bac3f))
+
 ## [2.22.0](https://github.com/teletha/viewtify/compare/v2.21.0...v2.22.0) (2024-02-15)
 
 
