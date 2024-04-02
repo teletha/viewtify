@@ -39,8 +39,6 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -76,6 +74,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -162,17 +163,15 @@ public final class Viewtify {
         UncaughtExceptionHandler handler = Thread.getDefaultUncaughtExceptionHandler();
         if (handler == null) {
             Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {
-                String message = "Error in " + thread.getName() + " : " + error.getLocalizedMessage();
-
                 // for system log
-                I.error(message);
+                I.error("Error in " + thread.getName() + " : " + error.getMessage());
                 I.error(error);
 
                 // for UI
                 if (Preferences.of(ToastSetting.class).enable.is(true)) {
-                    Toast.show(message);
+                    // don't use Throwable#getMessage to show more user-friendly message
+                    Toast.show(error.getLocalizedMessage());
                 }
-
             });
         }
     }
