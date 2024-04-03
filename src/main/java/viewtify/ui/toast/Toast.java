@@ -11,6 +11,7 @@ package viewtify.ui.toast;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
@@ -20,7 +21,6 @@ import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -55,6 +55,24 @@ public class Toast {
                 notification.ui().getContent().get(0).setOpacity(v / 100d);
             }
         });
+    }
+
+    /**
+     * Shows a Toast notification with the specified message and optional actions.
+     *
+     * @param message The message to be displayed in the notification.
+     * @param actions Optional actions (WiseRunnable) to be performed when the notification is
+     *            interacted with.
+     */
+    public static void show(Object message, WiseRunnable... actions) {
+        if (setting.enable.is(true)) {
+            Toastable toastable = I.find(Toastable.class, message.getClass());
+            if (toastable == null) {
+                show(Objects.toString(message), actions);
+            } else {
+                toastable.show(message);
+            }
+        }
     }
 
     /**

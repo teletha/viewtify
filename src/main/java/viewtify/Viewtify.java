@@ -39,6 +39,8 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -74,9 +76,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -100,7 +99,6 @@ import viewtify.ui.anime.Anime;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
 import viewtify.ui.toast.Toast;
-import viewtify.ui.toast.ToastSetting;
 import viewtify.ui.view.AppearanceSetting;
 import viewtify.update.Blueprint;
 import viewtify.update.Update;
@@ -164,14 +162,11 @@ public final class Viewtify {
         if (handler == null) {
             Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {
                 // for system log
-                I.error("Error in " + thread.getName() + " : " + error.getMessage());
+                I.error(error.getMessage() + " on " + thread.getName());
                 I.error(error);
 
                 // for UI
-                if (Preferences.of(ToastSetting.class).enable.is(true)) {
-                    // don't use Throwable#getMessage to show more user-friendly message
-                    Toast.show(error.getLocalizedMessage());
-                }
+                Toast.show(error);
             });
         }
     }
