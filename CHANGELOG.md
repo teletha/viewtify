@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.24.0](https://github.com/teletha/viewtify/compare/v2.23.0...v2.24.0) (2024-04-03)
+
+
+### Features
+
+* add Toastable interface ([5137152](https://github.com/teletha/viewtify/commit/51371527fc4d0a28ab404ce3db1a9a5effde913a))
+
+
+### Bug Fixes
+
+* reduce error message ([862884e](https://github.com/teletha/viewtify/commit/862884ee0c2affdd4a65230972a7afca829ee18e))
+
 ## [2.23.0](https://github.com/teletha/viewtify/compare/v2.22.0...v2.23.0) (2024-03-28)
 
 
