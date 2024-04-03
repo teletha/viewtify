@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.24.1](https://github.com/teletha/viewtify/compare/v2.24.0...v2.24.1) (2024-04-03)
+
+
+### Bug Fixes
+
+* avoid ConcurrentModificationException ([12b3510](https://github.com/teletha/viewtify/commit/12b3510a04c8692ca1041247daae0d6d265a347e))
+
 ## [2.24.0](https://github.com/teletha/viewtify/compare/v2.23.0...v2.24.0) (2024-04-03)
 
 
