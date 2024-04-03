@@ -9,9 +9,10 @@
  */
 package viewtify.ui.toast;
 
+import java.util.Deque;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
@@ -42,7 +43,7 @@ import viewtify.util.TextNotation;
 public class Toast {
 
     /** The base transparent window. */
-    private static final LinkedList<Notification> notifications = new LinkedList();
+    private static final Deque<Notification> notifications = new ConcurrentLinkedDeque();
 
     public static final ToastSetting setting = Preferences.of(ToastSetting.class);
 
