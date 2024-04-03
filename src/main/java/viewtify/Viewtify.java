@@ -162,7 +162,6 @@ public final class Viewtify {
         if (handler == null) {
             Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {
                 // for system log
-                I.error(error.getMessage() + " on " + thread.getName());
                 I.error(error);
 
                 // for UI
