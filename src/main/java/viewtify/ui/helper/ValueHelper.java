@@ -75,11 +75,12 @@ public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
      * @return A preference value.
      */
     default <T> T valueOr(T defaultValue) {
-        try {
-            return valueAs((Class<T>) defaultValue.getClass());
-        } catch (Throwable e) {
+        V v = value();
+
+        if (v == null) {
             return defaultValue;
         }
+        return (T) I.transform(v, defaultValue.getClass());
     }
 
     /**
