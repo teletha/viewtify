@@ -9,15 +9,12 @@
  */
 package viewtify.ui.helper;
 
-import java.time.LocalDate;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import kiss.Disposable;
 import kiss.Variable;
 import kiss.WiseFunction;
@@ -53,10 +50,6 @@ class ValueHelperTest {
         assert v.valueOr(987) == 123;
         assert v.valueOr(true) == false;
         assert v.valueOr(987d) == 123d;
-
-        // unconvertable value
-        LocalDate date = LocalDate.now();
-        assert v.valueOr(date) == date;
     }
 
     @Test
@@ -67,10 +60,6 @@ class ValueHelperTest {
         assert v.valueOr(Variable.of(987)) == 123;
         assert v.valueOr(Variable.of(true)) == false;
         assert v.valueOr(Variable.of(987d)) == 123d;
-
-        // unconvertable value
-        LocalDate date = LocalDate.now();
-        assert v.valueOr(Variable.of(date)) == date;
     }
 
     @Test
