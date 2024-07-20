@@ -165,7 +165,7 @@ public interface SelectableHelper<Self extends SelectableHelper<Self, E>, E> ext
      *
      * @return An {@code ObservableList} containing the selected items.
      */
-    default List<E> snapshotISelectedtems() {
+    default List<E> snapshotSelectedtems() {
         return List.of((E[]) selectedItems().toArray());
     }
 
