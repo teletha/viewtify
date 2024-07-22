@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.24.1](https://github.com/teletha/viewtify/compare/v2.24.0...v2.24.1) (2024-07-22)
+
+
+### Bug Fixes
+
+* avoid ConcurrentModificationException ([12b3510](https://github.com/teletha/viewtify/commit/12b3510a04c8692ca1041247daae0d6d265a347e))
+* typo ([68abb71](https://github.com/teletha/viewtify/commit/68abb717cb47b30e7d9232a932e8d1be889b0940))
+* ValueHelper#valueOr is broken when null value ([19a0060](https://github.com/teletha/viewtify/commit/19a0060866f5826ad16a4e06ccf165379e3758e4))
+
 ## [2.24.0](https://github.com/teletha/viewtify/compare/v2.23.0...v2.24.0) (2024-04-03)
 
 
