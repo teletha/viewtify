@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.25.0](https://github.com/teletha/viewtify/compare/v2.24.1...v2.25.0) (2024-08-21)
+
+
+### Features
+
+* update sinobu ([465c55b](https://github.com/teletha/viewtify/commit/465c55b5542082f516774dae2778b822288f97a4))
+
 ## [2.24.1](https://github.com/teletha/viewtify/compare/v2.24.0...v2.24.1) (2024-07-22)
 
 
