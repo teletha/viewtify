@@ -9,6 +9,7 @@
  */
 package viewtify.ui;
 
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -296,8 +297,8 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
          * {@inheritDoc}
          */
         @Override
-        public String locate() {
-            return Viewtify.UserPreference.v.file(Preference.class.getName() + ".json").path();
+        public Path locate() {
+            return Viewtify.UserPreference.v.file(Preference.class.getName() + ".json").asJavaPath();
         }
     }
 }

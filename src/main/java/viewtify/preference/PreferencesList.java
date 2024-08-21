@@ -9,6 +9,7 @@
  */
 package viewtify.preference;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -108,8 +109,8 @@ class PreferencesList<E extends Preferences> extends ObservableListWrapper<E> im
      * {@inheritDoc}
      */
     @Override
-    public final String locate() {
-        return Viewtify.UserPreference.exact().file(id + ".json").path();
+    public final Path locate() {
+        return Viewtify.UserPreference.exact().file(id + ".json").asJavaPath();
     }
 
     /**

@@ -10,6 +10,7 @@
 package viewtify.preference;
 
 import java.lang.reflect.Field;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import java.util.function.IntSupplier;
 import java.util.function.LongSupplier;
 
 import javafx.collections.ObservableList;
+
 import kiss.Extensible;
 import kiss.I;
 import kiss.Model;
@@ -191,8 +193,8 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
      * {@inheritDoc}
      */
     @Override
-    public final String locate() {
-        return Viewtify.UserPreference.exact().file(getClass().getName() + ".json").path();
+    public final Path locate() {
+        return Viewtify.UserPreference.exact().file(getClass().getName() + ".json").asJavaPath();
     }
 
     /**
