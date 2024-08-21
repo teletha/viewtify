@@ -71,35 +71,35 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-base</artifactId>
-			<version>23-ea+22</version>
+			<version>24-ea+5</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-controls</artifactId>
-			<version>23-ea+22</version>
+			<version>24-ea+5</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-graphics</artifactId>
-			<version>23-ea+22</version>
+			<version>24-ea+5</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-media</artifactId>
-			<version>23-ea+22</version>
+			<version>24-ea+5</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-web</artifactId>
-			<version>23-ea+22</version>
+			<version>24-ea+5</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
@@ -120,14 +120,14 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>psychopath</artifactId>
-			<version>1.12.2</version>
+			<version>1.13.0</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>sinobu</artifactId>
-			<version>3.11.0</version>
+			<version>3.13.0</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
