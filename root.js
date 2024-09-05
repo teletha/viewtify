@@ -769,6 +769,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "ToastMonitor",
+			"packageName": "viewtify.ui.toast",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "ToastSetting",
 			"packageName": "viewtify.ui.toast",
 			"type": "Class"
