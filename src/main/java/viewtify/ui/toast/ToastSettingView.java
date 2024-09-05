@@ -9,6 +9,9 @@
  */
 package viewtify.ui.toast;
 
+import java.util.concurrent.TimeUnit;
+
+import kiss.I;
 import kiss.Variable;
 import viewtify.preference.Preferences;
 import viewtify.style.FormStyles;
@@ -94,7 +97,17 @@ public class ToastSettingView extends View {
                 .disableWhen(enableNotification.isNotSelected());
         notificationGap.range(0, 30).sync(setting.gap).format(x -> x + "px").disableWhen(enableNotification.isNotSelected());
         notificationOpacity.range(0, 100).sync(setting.opacity).format(x -> x + "%").disableWhen(enableNotification.isNotSelected());
-        notificationTest.text(en("Notify"))
-                .action(() -> Toast.show(new ToastMonitor().title("This is test process.").message("Create message.")));
+        notificationTest.text(en("Notify")).action(() -> {
+
+            ToastMonitor monitor = new ToastMonitor().title("This is test process.")
+                    .message("Create message.")
+                    .whenCanceled(() -> System.out.println("Canceled"));
+
+            Toast.show(monitor);
+
+            I.schedule(100, 100, TimeUnit.MILLISECONDS, true).take(100).to(x -> {
+                monitor.progress(x / 100d);
+            });
+        });
     }
 }

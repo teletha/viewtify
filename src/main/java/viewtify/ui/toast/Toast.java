@@ -16,15 +16,19 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import org.controlsfx.glyphfont.FontAwesome.Glyph;
-
 import javafx.beans.value.WritableDoubleValue;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
+
+import org.controlsfx.glyphfont.FontAwesome;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -124,36 +128,11 @@ public class Toast {
      * @param monitor The monitorable notification.
      */
     public static void show(ToastMonitor monitor) {
-        show(new MonitorView(monitor));
-    }
-
-    /**
-     * Shows a Toast notification with the specified Node.
-     *
-     * @param view The Node to be displayed in the notification.
-     */
-    public static void show(View view) {
-        show(view::ui);
-    }
-
-    /**
-     * Shows a Toast notification with the specified Node.
-     *
-     * @param node The Node to be displayed in the notification.
-     */
-    public static void show(Node node) {
-        show(() -> node);
-    }
-
-    /**
-     * Shows a Toast notification with the specified Node supplier.
-     *
-     * @param node The Node supplier to provide the content for the notification.
-     */
-    public static void show(Supplier<Node> node) {
         if (setting.enable.is(true)) {
             Notification notification = new Notification();
-            notification.builder = node;
+            MonitorView view = new MonitorView(monitor, notification);
+            notification.builder = view::ui;
+            notification.monitor = monitor;
 
             add(notification);
         }
@@ -284,16 +263,42 @@ public class Toast {
                 box.setOpacity(setting.opacity.v / 100d);
 
                 ui.setX(0);
-                ui.getContent().add(box);
-                UserActionHelper.of(ui).when(User.MouseClick).to(() -> remove(this));
-                if (0 < setting.autoHide.v * 1000) {
-                    disposer = I.schedule(setting.autoHide.v.longValue(), TimeUnit.SECONDS)
-                            .first()
-                            .on(Viewtify.UIThread)
-                            .to(() -> remove(this));
+                ui.getContent().add(monitor == null ? box : showCloseButton(box));
+                if (monitor == null) {
+                    UserActionHelper.of(ui).when(User.MouseClick).to(() -> remove(this));
+                    if (0 < setting.autoHide.v * 1000) {
+                        disposer = I.schedule(setting.autoHide.v.longValue(), TimeUnit.SECONDS)
+                                .first()
+                                .on(Viewtify.UIThread)
+                                .to(() -> remove(this));
+                    }
                 }
             }
             return ui;
+        }
+
+        /**
+         * Show close button at top right corner.
+         * 
+         * @param node
+         * @return
+         */
+        private Node showCloseButton(Node node) {
+            UILabel label = new UILabel(null).text(FontAwesome.Glyph.CLOSE, styles.icon)
+                    .tooltip(I.translate("Stop this task."))
+                    .when(User.LeftClick, () -> {
+                        remove(this);
+                        monitor.cancels.forEach(WiseRunnable::run);
+                    });
+
+            StackPane pane = new StackPane();
+            pane.getChildren().addAll(node, label.ui);
+
+            StackPane.setAlignment(label.ui, Pos.TOP_RIGHT);
+            StackPane.setMargin(label.ui, new Insets(5, 7, 0, 0));
+            StackPane.setAlignment(node, Pos.TOP_LEFT);
+
+            return pane;
         }
     }
 
@@ -319,16 +324,19 @@ public class Toast {
             margin.top(3, px);
         };
 
-        Style cancel = () -> {
-            display.width(12, px).height(12, px);
-            margin.left(20, px);
+        Style icon = () -> {
+            cursor.pointer();
+
+            $.hover(() -> {
+                font.color("-fx-focus-color");
+            });
         };
     }
 
     /**
      * Monitorable task view.
      */
-    private static class MonitorView extends View {
+    private static class MonitorView extends View implements Disposable {
 
         private UILabel title;
 
@@ -336,15 +344,16 @@ public class Toast {
 
         private ProgressIndicator indicator;
 
-        private UILabel cancel;
+        private final ToastMonitor monitor;
 
-        private ToastMonitor monitor;
+        private final Notification notification;
 
         /**
          * @param
          */
-        private MonitorView(ToastMonitor monitor) {
+        private MonitorView(ToastMonitor monitor, Notification notification) {
             this.monitor = monitor;
+            this.notification = notification;
         }
 
         /**
@@ -360,7 +369,6 @@ public class Toast {
                             $(title);
                             $(message);
                         });
-                        $(cancel, styles.cancel);
                     });
                 }
             };
@@ -371,8 +379,6 @@ public class Toast {
          */
         @Override
         protected void initialize() {
-            cancel.text(Glyph.CLOSE);
-
             int width = setting.width.v - styles.pad * 2;
             title.ui.setMaxWidth(width);
             title.ui.setWrapText(true);
@@ -387,7 +393,13 @@ public class Toast {
             });
             monitor.progress.observing().to(x -> {
                 indicator.setProgress(x);
+
+                if (1d <= x) {
+                    monitor.completes.forEach(WiseRunnable::run);
+                    I.schedule(400, TimeUnit.MILLISECONDS).to(() -> Toast.remove(notification));
+                }
             });
         }
+
     }
 }
