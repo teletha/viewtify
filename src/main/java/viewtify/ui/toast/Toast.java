@@ -16,9 +16,12 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
+import org.controlsfx.glyphfont.FontAwesome.Glyph;
+
 import javafx.beans.value.WritableDoubleValue;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
@@ -30,6 +33,9 @@ import stylist.Style;
 import stylist.StyleDSL;
 import viewtify.Viewtify;
 import viewtify.preference.Preferences;
+import viewtify.ui.UILabel;
+import viewtify.ui.View;
+import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
 import viewtify.ui.helper.StyleHelper;
 import viewtify.ui.helper.User;
@@ -115,6 +121,24 @@ public class Toast {
     /**
      * Shows a Toast notification with the specified Node.
      *
+     * @param monitor The monitorable notification.
+     */
+    public static void show(ToastMonitor monitor) {
+        show(new MonitorView(monitor));
+    }
+
+    /**
+     * Shows a Toast notification with the specified Node.
+     *
+     * @param view The Node to be displayed in the notification.
+     */
+    public static void show(View view) {
+        show(view::ui);
+    }
+
+    /**
+     * Shows a Toast notification with the specified Node.
+     *
      * @param node The Node to be displayed in the notification.
      */
     public static void show(Node node) {
@@ -189,7 +213,7 @@ public class Toast {
 
             Iterator<Notification> iterator = isTopSide ? notifications.descendingIterator() : notifications.iterator();
             while (iterator.hasNext()) {
-                Toast.Notification notify = iterator.next();
+                Notification notify = iterator.next();
                 Popup popup = notify.ui();
 
                 if (popup.isShowing()) {
@@ -222,6 +246,8 @@ public class Toast {
         private Popup ui;
 
         private Disposable disposer;
+
+        private ToastMonitor monitor;
 
         @Override
         public Number getValue() {
@@ -284,5 +310,84 @@ public class Toast {
             background.color("derive(-fx-control-inner-background, 10%)");
             border.radius(5, px).color("-fx-light-text-color");
         };
+
+        Style indicator = () -> {
+            margin.right(12, px);
+        };
+
+        Style title = () -> {
+            margin.top(3, px);
+        };
+
+        Style cancel = () -> {
+            display.width(12, px).height(12, px);
+            margin.left(20, px);
+        };
+    }
+
+    /**
+     * Monitorable task view.
+     */
+    private static class MonitorView extends View {
+
+        private UILabel title;
+
+        private UILabel message;
+
+        private ProgressIndicator indicator;
+
+        private UILabel cancel;
+
+        private ToastMonitor monitor;
+
+        /**
+         * @param
+         */
+        private MonitorView(ToastMonitor monitor) {
+            this.monitor = monitor;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected ViewDSL declareUI() {
+            return new ViewDSL() {
+                {
+                    $(hbox, () -> {
+                        $(() -> indicator, styles.indicator);
+                        $(vbox, styles.title, () -> {
+                            $(title);
+                            $(message);
+                        });
+                        $(cancel, styles.cancel);
+                    });
+                }
+            };
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void initialize() {
+            cancel.text(Glyph.CLOSE);
+
+            int width = setting.width.v - styles.pad * 2;
+            title.ui.setMaxWidth(width);
+            title.ui.setWrapText(true);
+            message.ui.setMaxWidth(width);
+            message.ui.setWrapText(true);
+
+            monitor.title.observing().switchVariable(I::translate).to(x -> {
+                title.text(x);
+            });
+            monitor.message.observing().switchVariable(I::translate).to(x -> {
+                message.text(x);
+            });
+            monitor.progress.observing().to(x -> {
+                indicator.setProgress(x);
+            });
+        }
     }
 }

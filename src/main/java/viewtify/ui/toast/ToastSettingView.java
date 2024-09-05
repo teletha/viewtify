@@ -94,6 +94,7 @@ public class ToastSettingView extends View {
                 .disableWhen(enableNotification.isNotSelected());
         notificationGap.range(0, 30).sync(setting.gap).format(x -> x + "px").disableWhen(enableNotification.isNotSelected());
         notificationOpacity.range(0, 100).sync(setting.opacity).format(x -> x + "%").disableWhen(enableNotification.isNotSelected());
-        notificationTest.text(en("Notify")).action(() -> Toast.show("Test"));
+        notificationTest.text(en("Notify"))
+                .action(() -> Toast.show(new ToastMonitor().title("This is test process.").message("Create message.")));
     }
 }
