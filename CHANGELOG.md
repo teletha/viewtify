@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.27.0](https://github.com/teletha/viewtify/compare/v2.26.0...v2.27.0) (2024-09-06)
+
+
+### Features
+
+* brush up Monitor related API ([8eb55b4](https://github.com/teletha/viewtify/commit/8eb55b4b4863959c3929aeb6ba9312b78fdded70))
+
 ## [2.26.0](https://github.com/teletha/viewtify/compare/v2.25.0...v2.26.0) (2024-09-05)
 
 
