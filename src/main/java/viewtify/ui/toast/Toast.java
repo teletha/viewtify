@@ -9,8 +9,10 @@
  */
 package viewtify.ui.toast;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
@@ -30,6 +32,7 @@ import javafx.stage.Popup;
 import javafx.stage.Window;
 import kiss.Disposable;
 import kiss.I;
+import kiss.Signal;
 import kiss.Variable;
 import kiss.WiseRunnable;
 import stylist.Style;
@@ -122,11 +125,11 @@ public class Toast {
     }
 
     /**
-     * Shows a Toast notification with the specified Node.
+     * Show monitorable notification.
      *
-     * @param monitor The monitorable notification.
+     * @param monitor The monitor.
      */
-    public static void show(ToastMonitor monitor) {
+    public static void show(Monitor monitor) {
         if (setting.enable.is(true)) {
             Notification notification = new Notification();
             MonitorView view = new MonitorView(monitor, notification);
@@ -135,6 +138,18 @@ public class Toast {
 
             add(notification);
         }
+    }
+
+    /**
+     * Show monitorable notification with the specified task.
+     * 
+     * @param monitor The monitor..
+     * @param task A task stream.
+     */
+    public static <V> Signal<V> show(Monitor monitor, Signal<V> task) {
+        return task.effectOnce(() -> show(monitor))
+                .effectOnObserve(disposer -> monitor.whenCanceled(disposer::dispose))
+                .effectOnComplete(monitor::completeProgress);
     }
 
     /**
@@ -173,6 +188,160 @@ public class Toast {
 
             // draw UI
             layoutNotifications();
+        }
+    }
+
+    /**
+     * Task monitor on {@link Toast}.
+     */
+    public static class Monitor {
+
+        /** The current title. */
+        private final Variable<String> title;
+
+        /** The current message. */
+        private final Variable<String> message = Variable.empty();
+
+        /** The current progression. */
+        private final Variable<Double> progress = Variable.of(0d);
+
+        /** The action set at task canceled. */
+        private final List<WiseRunnable> cancels = new ArrayList();
+
+        /** The action set at task completed. */
+        private final List<WiseRunnable> completes = new ArrayList();
+
+        /** The total size of task. */
+        private double total;
+
+        /** The completed size of task. */
+        private int current;
+
+        /**
+         * Create {@link Monitor} with the specified title.
+         * 
+         * @param title
+         * @return
+         */
+        public static Monitor title(String title) {
+            return title(Variable.of(title));
+        }
+
+        /**
+         * Create {@link Monitor} with the specified title.
+         * 
+         * @param title
+         * @return
+         */
+        public static Monitor title(Variable<String> title) {
+            return new Monitor(title);
+        }
+
+        /**
+         * Hide constructor.
+         * 
+         * @param title
+         */
+        private Monitor(Variable<String> title) {
+            this.title = title;
+        }
+
+        /**
+         * Set message.
+         * 
+         * @param message
+         */
+        public Monitor message(String message) {
+            this.message.set(message);
+            return this;
+        }
+
+        /**
+         * Set total progress.
+         * 
+         * @param size
+         * @return
+         */
+        public Monitor totalProgress(int size) {
+            this.total = size;
+            return this;
+        }
+
+        /**
+         * Increment progress.
+         */
+        public void incrementProgress() {
+            if (current < total) {
+                current++;
+                calculateProgress();
+            }
+        }
+
+        /**
+         * Increment progress.
+         */
+        public void decrementProgress() {
+            if (0 < current) {
+                current--;
+                calculateProgress();
+            }
+        }
+
+        /**
+         * Set progress
+         * 
+         * @param progress
+         */
+        public void setProgress(int progress) {
+            if (0 <= progress && progress <= total) {
+                current = progress;
+                calculateProgress();
+            }
+        }
+
+        /**
+         * Reset progress.
+         */
+        public void resetProgress() {
+            current = 0;
+            calculateProgress();
+        }
+
+        /**
+         * Complete progress
+         */
+        public void completeProgress() {
+            current = (int) total;
+            calculateProgress();
+        }
+
+        /**
+         * Calculate the current progress.
+         */
+        private void calculateProgress() {
+            progress.set(current / total);
+        }
+
+        /**
+         * Register cancel action.
+         * 
+         * @param action
+         * @return
+         */
+        public Monitor whenCanceled(WiseRunnable action) {
+            if (action != null) this.cancels.add(action);
+            return this;
+        }
+
+        /**
+         * Register complete action.
+         * 
+         * @param action
+         * @return
+         */
+        public Monitor whenCompleted(WiseRunnable action) {
+            if (action != null) this.completes.add(action);
+            return this;
         }
     }
 
@@ -225,7 +394,7 @@ public class Toast {
 
         private Disposable disposer;
 
-        private ToastMonitor monitor;
+        private Monitor monitor;
 
         @Override
         public Number getValue() {
@@ -343,14 +512,14 @@ public class Toast {
 
         private ProgressIndicator indicator;
 
-        private final ToastMonitor monitor;
+        private final Monitor monitor;
 
         private final Notification notification;
 
         /**
          * @param
          */
-        private MonitorView(ToastMonitor monitor, Notification notification) {
+        private MonitorView(Monitor monitor, Notification notification) {
             this.monitor = monitor;
             this.notification = notification;
         }

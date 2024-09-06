@@ -21,6 +21,7 @@ import viewtify.ui.UIComboBox;
 import viewtify.ui.UISlider;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
+import viewtify.ui.toast.Toast.Monitor;
 import viewtify.util.Corner;
 import viewtify.util.ScreenSelector;
 
@@ -99,7 +100,7 @@ public class ToastSettingView extends View {
         notificationOpacity.range(0, 100).sync(setting.opacity).format(x -> x + "%").disableWhen(enableNotification.isNotSelected());
         notificationTest.text(en("Notify")).action(() -> {
 
-            ToastMonitor monitor = new ToastMonitor().title("This is test process.")
+            Monitor monitor = Monitor.title("This is test process.")
                     .message("Create message.")
                     .whenCanceled(() -> System.out.println("Canceled"));
 
