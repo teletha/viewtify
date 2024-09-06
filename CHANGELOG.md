@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.27.1](https://github.com/teletha/viewtify/compare/v2.27.0...v2.27.1) (2024-09-06)
+
+
+### Bug Fixes
+
+* registered task is stopped by monitor's completion ([9930f36](https://github.com/teletha/viewtify/commit/9930f364c8b9568f01ccb0149d3f07a08b18f7ab))
+
 ## [2.27.0](https://github.com/teletha/viewtify/compare/v2.26.0...v2.27.0) (2024-09-06)
 
 
