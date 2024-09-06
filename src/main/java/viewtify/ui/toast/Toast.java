@@ -147,7 +147,8 @@ public class Toast {
      * @param task A task stream.
      */
     public static <V> Signal<V> show(Monitor monitor, Signal<V> task) {
-        return task.effectOnce(() -> show(monitor))
+        return task.takeWhile(x -> monitor.current < monitor.total)
+                .effectOnce(() -> show(monitor))
                 .effectOnObserve(disposer -> monitor.whenCanceled(disposer::dispose))
                 .effectOnComplete(monitor::completeProgress);
     }
