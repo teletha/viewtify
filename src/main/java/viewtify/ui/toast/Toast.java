@@ -16,6 +16,8 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
+import org.controlsfx.glyphfont.FontAwesome;
+
 import javafx.beans.value.WritableDoubleValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,9 +28,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Window;
-
-import org.controlsfx.glyphfont.FontAwesome;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -379,16 +378,19 @@ public class Toast {
          */
         @Override
         protected void initialize() {
-            int width = setting.width.v - styles.pad * 2;
+            int width = setting.width.v - styles.pad * 2 - 32;
             title.ui.setMaxWidth(width);
             title.ui.setWrapText(true);
             message.ui.setMaxWidth(width);
             message.ui.setWrapText(true);
 
-            monitor.title.observing().switchVariable(I::translate).to(x -> {
+            // declare as determinatable explicitly
+            indicator.setProgress(0d);
+
+            monitor.title.observing().skipNull().to(x -> {
                 title.text(x);
             });
-            monitor.message.observing().switchVariable(I::translate).to(x -> {
+            monitor.message.observing().skipNull().to(x -> {
                 message.text(x);
             });
             monitor.progress.observing().to(x -> {

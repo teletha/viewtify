@@ -11,17 +11,14 @@ package viewtify.ui.toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import kiss.Observer;
-import kiss.Signal;
 import kiss.Variable;
 import kiss.WiseRunnable;
 
 public class ToastMonitor {
 
     /** The current title. */
-    final Variable<String> title;
+    Variable<String> title = Variable.empty();
 
     /** The current message. */
     final Variable<String> message = Variable.empty();
@@ -35,13 +32,11 @@ public class ToastMonitor {
     /** The action set at task completed. */
     final List<WiseRunnable> completes = new ArrayList();
 
-    public ToastMonitor() {
-        this(Variable.empty());
-    }
+    /** The total size of task. */
+    private double total;
 
-    public ToastMonitor(Variable<String> title) {
-        this.title = title;
-    }
+    /** The completed size of task. */
+    private int current;
 
     /**
      * Set title.
@@ -50,6 +45,16 @@ public class ToastMonitor {
      */
     public ToastMonitor title(String title) {
         this.title.set(title);
+        return this;
+    }
+
+    /**
+     * Set title.
+     * 
+     * @param title
+     */
+    public ToastMonitor title(Variable<String> title) {
+        this.title = title;
         return this;
     }
 
@@ -64,12 +69,69 @@ public class ToastMonitor {
     }
 
     /**
-     * Set progress.
+     * Set total task size.
      * 
-     * @param current
+     * @param size
+     * @return
      */
-    public void progress(double current) {
-        this.progress.set(current);
+    public ToastMonitor totalProgress(int size) {
+        this.total = size;
+        return this;
+    }
+
+    /**
+     * Increment progress.
+     */
+    public void incrementProgress() {
+        if (current < total) {
+            current++;
+            calculateProgress();
+        }
+    }
+
+    /**
+     * Increment progress.
+     */
+    public void decrementProgress() {
+        if (0 < current) {
+            current--;
+            calculateProgress();
+        }
+    }
+
+    /**
+     * Set progress
+     * 
+     * @param progress
+     */
+    public void setProgress(int progress) {
+        if (0 <= progress && progress <= total) {
+            current = progress;
+            calculateProgress();
+        }
+    }
+
+    /**
+     * Reset progress.
+     */
+    public void resetProgress() {
+        current = 0;
+        calculateProgress();
+    }
+
+    /**
+     * Complete progress
+     */
+    public void completeProgress() {
+        current = (int) total;
+        calculateProgress();
+    }
+
+    /**
+     * Calculate the current progress.
+     */
+    private void calculateProgress() {
+        progress.set(current / total);
     }
 
     /**
@@ -79,9 +141,7 @@ public class ToastMonitor {
      * @return
      */
     public ToastMonitor whenCanceled(WiseRunnable action) {
-        if (action != null) {
-            this.cancels.add(action);
-        }
+        if (action != null) this.cancels.add(action);
         return this;
     }
 
@@ -92,62 +152,7 @@ public class ToastMonitor {
      * @return
      */
     public ToastMonitor whenCompleted(WiseRunnable action) {
-        if (action != null) {
-            this.completes.add(action);
-        }
+        if (action != null) this.completes.add(action);
         return this;
-    }
-
-    public static void show(Variable<String> title, int estimatedTaskSize, Signal<?> task) {
-        double weight = 1d / estimatedTaskSize;
-
-        ToastMonitor monitor = new ToastMonitor(title);
-        monitor.progress(0.01d);
-        Toast.show(monitor);
-
-        Accept accept = new Accept(weight, monitor);
-        task.to(accept, () -> {
-            System.out.println("Stopped");
-        });
-    }
-
-    private static class Accept implements Observer {
-
-        double weight;
-
-        ToastMonitor monitor;
-
-        /**
-         * @param monitor
-         */
-        Accept(double weight, ToastMonitor monitor) {
-            this.weight = weight;
-            this.monitor = monitor;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void accept(Object value) {
-            monitor.message(Objects.toString(value));
-            monitor.progress.set(current -> current + weight);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void complete() {
-            monitor.progress.set(1d);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void error(Throwable e) {
-            monitor.message(e.getLocalizedMessage());
-        }
     }
 }

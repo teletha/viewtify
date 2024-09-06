@@ -106,7 +106,7 @@ public class ToastSettingView extends View {
             Toast.show(monitor);
 
             I.schedule(100, 100, TimeUnit.MILLISECONDS, true).take(100).to(x -> {
-                monitor.progress(x / 100d);
+                monitor.incrementProgress();
             });
         });
     }
