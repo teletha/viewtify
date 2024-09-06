@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.26.0](https://github.com/teletha/viewtify/compare/v2.25.0...v2.26.0) (2024-09-05)
+
+
+### Features
+
+* add Toast#show(View) and #show(ToastMonitor) ([33b7586](https://github.com/teletha/viewtify/commit/33b758622912068d1a7c77f38d97482ff05d4c17))
+
 ## [2.25.0](https://github.com/teletha/viewtify/compare/v2.24.1...v2.25.0) (2024-08-21)
 
 
