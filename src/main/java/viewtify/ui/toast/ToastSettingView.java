@@ -105,9 +105,8 @@ public class ToastSettingView extends View {
                     .totalProgress(100)
                     .whenCanceled(() -> System.out.println("Canceled"));
 
-            Toast.show(monitor, I.schedule(100, 100, TimeUnit.MILLISECONDS, true)).to(x -> {
+            Toast.show(monitor, I.schedule(100, 100, TimeUnit.MILLISECONDS, true)).take(100).to(x -> {
                 monitor.incrementProgress();
-                System.out.println(x);
             });
         });
     }
