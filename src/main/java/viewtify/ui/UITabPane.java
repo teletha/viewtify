@@ -15,10 +15,12 @@ import javafx.beans.property.Property;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TabPane.TabDragPolicy;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -47,8 +49,10 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
     public UITabPane(View view) {
         super(new TabPane(), view);
 
-        // FUNCTIONALITY : wheel scroll will change selection.
+        // FUNCTIONALITY : wheel scroll will change selection
         when(User.Scroll).take(Actions.inside(() -> ui.lookup(".tab-header-background"))).to(Actions.traverse(ui.getSelectionModel()));
+        // FUNCTIONALITY : middle click will close the tab
+        when(User.MiddleClick).map(this::findTab).skipNull().to(UITab::close);
 
         // dispose view automatically
         ui.getTabs().addListener((ListChangeListener<Tab>) change -> {
@@ -63,6 +67,23 @@ public class UITabPane extends UserInterface<UITabPane, TabPane>
 
         AppearanceSetting setting = Preferences.of(AppearanceSetting.class);
         setting.tabClosingPolicy.syncTo(ui::setTabClosingPolicy);
+    }
+
+    /**
+     * Get the event fired tab.
+     * 
+     * @param event
+     * @return
+     */
+    private UITab findTab(MouseEvent event) {
+        Node node = event.getPickResult().getIntersectedNode();
+        while (node != null) {
+            if (node.getProperties().containsKey(Tab.class)) {
+                return (UITab) node.getProperties().get(Tab.class);
+            }
+            node = node.getParent();
+        }
+        return null;
     }
 
     /**
