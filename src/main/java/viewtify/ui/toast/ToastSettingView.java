@@ -21,7 +21,6 @@ import viewtify.ui.UIComboBox;
 import viewtify.ui.UISlider;
 import viewtify.ui.View;
 import viewtify.ui.ViewDSL;
-import viewtify.ui.toast.Toast.Monitor;
 import viewtify.util.Corner;
 import viewtify.util.ScreenSelector;
 
@@ -99,15 +98,11 @@ public class ToastSettingView extends View {
         notificationGap.range(0, 30).sync(setting.gap).format(x -> x + "px").disableWhen(enableNotification.isNotSelected());
         notificationOpacity.range(0, 100).sync(setting.opacity).format(x -> x + "%").disableWhen(enableNotification.isNotSelected());
         notificationTest.text(en("Notify")).action(() -> {
-
-            Monitor monitor = Monitor.title("This is test process.")
+            Toast.<Long> title("This is test process.")
                     .message("Create message.")
                     .totalProgress(100)
-                    .whenCanceled(() -> System.out.println("Canceled"));
-
-            Toast.show(monitor, I.schedule(100, 100, TimeUnit.MILLISECONDS, true)).take(100).to(x -> {
-                monitor.incrementProgress();
-            });
+                    .whenProgressed((m, time) -> m.incrementProgress())
+                    .show(I.schedule(100, 100, TimeUnit.MILLISECONDS, true).take(100));
         });
     }
 }

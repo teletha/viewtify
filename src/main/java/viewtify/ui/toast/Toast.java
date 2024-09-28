@@ -34,6 +34,8 @@ import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
+import kiss.WiseBiConsumer;
+import kiss.WiseFunction;
 import kiss.WiseRunnable;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -52,7 +54,7 @@ import viewtify.util.TextNotation;
  * Represents a Toast notification utility class that provides methods to show various types of
  * notifications. Notifications are displayed as transient messages to the user.
  */
-public class Toast {
+public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
 
     /** The base transparent window. */
     private static final Deque<Notification> notifications = new ConcurrentLinkedDeque();
@@ -129,7 +131,7 @@ public class Toast {
      *
      * @param monitor The monitor.
      */
-    public static void show(Monitor monitor) {
+    private static void show(Toast monitor) {
         if (setting.enable.is(true)) {
             Notification notification = new Notification();
             MonitorView view = new MonitorView(monitor, notification);
@@ -140,17 +142,17 @@ public class Toast {
         }
     }
 
-    /**
-     * Show monitorable notification with the specified task.
-     * 
-     * @param monitor The monitor..
-     * @param task A task stream.
-     */
-    public static <V> Signal<V> show(Monitor monitor, Signal<V> task) {
-        return task.effectOnce(() -> show(monitor))
-                .effectOnObserve(disposer -> monitor.whenCanceled(disposer::dispose))
-                .effectOnComplete(monitor::completeProgress);
-    }
+    // /**
+    // * Show monitorable notification with the specified task.
+    // *
+    // * @param monitor The monitor..
+    // * @param task A task stream.
+    // */
+    // public static <V> Signal<V> show(Monitor monitor, Signal<V> task) {
+    // return task.effectOnce(() -> show(monitor))
+    // .effectOnObserve(disposer -> monitor.whenCanceled(disposer::dispose))
+    // .effectOnComplete(monitor::completeProgress);
+    // }
 
     /**
      * Adds a new notification to the list of notifications. Handles maximum notification count.
@@ -191,158 +193,191 @@ public class Toast {
         }
     }
 
+    /** The current title. */
+    private final Variable<String> title;
+
+    /** The current message. */
+    private final Variable<String> message = Variable.empty();
+
+    /** The current progression. */
+    private final Variable<Double> progression = Variable.of(0d);
+
+    /** The action set at task canceled. */
+    private final List<WiseRunnable> cancels = new ArrayList();
+
+    /** The action set at task completed. */
+    private final List<WiseRunnable> completes = new ArrayList();
+
+    /** The action set at task progressed. */
+    private final List<WiseBiConsumer<Toast<T>, T>> progress = new ArrayList();
+
+    /** The total size of task. */
+    private double total;
+
+    /** The completed size of task. */
+    private int current;
+
     /**
-     * Task monitor on {@link Toast}.
+     * Create {@link Toast} with the specified title.
+     * 
+     * @param title
+     * @return
      */
-    public static class Monitor {
+    public static <T> Toast<T> title(String title) {
+        return title(Variable.of(title));
+    }
 
-        /** The current title. */
-        private final Variable<String> title;
+    /**
+     * Create {@link Toast} with the specified title.
+     * 
+     * @param title
+     * @return
+     */
+    public static <T> Toast<T> title(Variable<String> title) {
+        return new Toast(title);
+    }
 
-        /** The current message. */
-        private final Variable<String> message = Variable.empty();
+    /**
+     * Hide constructor.
+     * 
+     * @param title
+     */
+    private Toast(Variable<String> title) {
+        this.title = title;
+    }
 
-        /** The current progression. */
-        private final Variable<Double> progress = Variable.of(0d);
+    /**
+     * Set message.
+     * 
+     * @param message
+     */
+    public Toast<T> message(String message) {
+        this.message.set(message);
+        return this;
+    }
 
-        /** The action set at task canceled. */
-        private final List<WiseRunnable> cancels = new ArrayList();
+    /**
+     * Set total progress.
+     * 
+     * @param size
+     * @return
+     */
+    public Toast<T> totalProgress(int size) {
+        this.total = size;
+        return this;
+    }
 
-        /** The action set at task completed. */
-        private final List<WiseRunnable> completes = new ArrayList();
-
-        /** The total size of task. */
-        private double total;
-
-        /** The completed size of task. */
-        private int current;
-
-        /**
-         * Create {@link Monitor} with the specified title.
-         * 
-         * @param title
-         * @return
-         */
-        public static Monitor title(String title) {
-            return title(Variable.of(title));
-        }
-
-        /**
-         * Create {@link Monitor} with the specified title.
-         * 
-         * @param title
-         * @return
-         */
-        public static Monitor title(Variable<String> title) {
-            return new Monitor(title);
-        }
-
-        /**
-         * Hide constructor.
-         * 
-         * @param title
-         */
-        private Monitor(Variable<String> title) {
-            this.title = title;
-        }
-
-        /**
-         * Set message.
-         * 
-         * @param message
-         */
-        public Monitor message(String message) {
-            this.message.set(message);
-            return this;
-        }
-
-        /**
-         * Set total progress.
-         * 
-         * @param size
-         * @return
-         */
-        public Monitor totalProgress(int size) {
-            this.total = size;
-            return this;
-        }
-
-        /**
-         * Increment progress.
-         */
-        public void incrementProgress() {
-            if (current < total) {
-                current++;
-                calculateProgress();
-            }
-        }
-
-        /**
-         * Increment progress.
-         */
-        public void decrementProgress() {
-            if (0 < current) {
-                current--;
-                calculateProgress();
-            }
-        }
-
-        /**
-         * Set progress
-         * 
-         * @param progress
-         */
-        public void setProgress(int progress) {
-            if (0 <= progress && progress <= total) {
-                current = progress;
-                calculateProgress();
-            }
-        }
-
-        /**
-         * Reset progress.
-         */
-        public void resetProgress() {
-            current = 0;
+    /**
+     * Increment progress.
+     */
+    public void incrementProgress() {
+        if (current < total) {
+            current++;
             calculateProgress();
         }
+    }
 
-        /**
-         * Complete progress
-         */
-        public void completeProgress() {
-            current = (int) total;
+    /**
+     * Increment progress.
+     */
+    public void decrementProgress() {
+        if (0 < current) {
+            current--;
             calculateProgress();
         }
+    }
 
-        /**
-         * Calculate the current progress.
-         */
-        private void calculateProgress() {
-            progress.set(current / total);
+    /**
+     * Set progress
+     * 
+     * @param progress
+     */
+    public void setProgress(int progress) {
+        if (0 <= progress && progress <= total) {
+            current = progress;
+            calculateProgress();
         }
+    }
 
-        /**
-         * Register cancel action.
-         * 
-         * @param action
-         * @return
-         */
-        public Monitor whenCanceled(WiseRunnable action) {
-            if (action != null) this.cancels.add(action);
-            return this;
-        }
+    /**
+     * Reset progress.
+     */
+    public void resetProgress() {
+        current = 0;
+        calculateProgress();
+    }
 
-        /**
-         * Register complete action.
-         * 
-         * @param action
-         * @return
-         */
-        public Monitor whenCompleted(WiseRunnable action) {
-            if (action != null) this.completes.add(action);
-            return this;
+    /**
+     * Complete progress
+     */
+    public void completeProgress() {
+        current = (int) total;
+        calculateProgress();
+    }
+
+    /**
+     * Calculate the current progress.
+     */
+    private void calculateProgress() {
+        double next = current / total;
+        if (progression.isNot(next)) {
+            progression.set(next);
         }
+    }
+
+    /**
+     * Register progress action.
+     * 
+     * @param action
+     * @return
+     */
+    public Toast<T> whenProgressed(WiseBiConsumer<Toast<T>, T> action) {
+        if (action != null) this.progress.add(action);
+        return this;
+    }
+
+    /**
+     * Register cancel action.
+     * 
+     * @param action
+     * @return
+     */
+    public Toast<T> whenCanceled(WiseRunnable action) {
+        if (action != null) this.cancels.add(action);
+        return this;
+    }
+
+    /**
+     * Register complete action.
+     * 
+     * @param action
+     * @return
+     */
+    public Toast<T> whenCompleted(WiseRunnable action) {
+        if (action != null) this.completes.add(action);
+        return this;
+    }
+
+    /**
+     * Shows a Toast notification for the specified data stream.
+     */
+    public void show(Signal<T> signal) {
+        signal.plug(this).to(I.NoOP);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Signal<T> APPLY(Signal<T> task) throws Throwable {
+        return task.effectOnce(() -> show(this))
+                .effectOnObserve(disposer -> whenCanceled(disposer::dispose))
+                .effectOnComplete(this::completeProgress)
+                .effect(date -> {
+                    for (WiseBiConsumer<Toast<T>, T> p : progress) {
+                        p.accept(this, date);
+                    }
+                });
     }
 
     /**
@@ -394,7 +429,7 @@ public class Toast {
 
         private Disposable disposer;
 
-        private Monitor monitor;
+        private Toast<?> monitor;
 
         @Override
         public Number getValue() {
@@ -512,14 +547,14 @@ public class Toast {
 
         private ProgressIndicator indicator;
 
-        private final Monitor monitor;
+        private final Toast<?> monitor;
 
         private final Notification notification;
 
         /**
          * @param
          */
-        private MonitorView(Monitor monitor, Notification notification) {
+        private MonitorView(Toast monitor, Notification notification) {
             this.monitor = monitor;
             this.notification = notification;
         }
@@ -562,7 +597,7 @@ public class Toast {
             monitor.message.observing().skipNull().to(x -> {
                 message.text(x);
             });
-            monitor.progress.observing().to(x -> {
+            monitor.progression.observing().to(x -> {
                 indicator.setProgress(x);
 
                 if (1d <= x) {
