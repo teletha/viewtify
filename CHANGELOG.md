@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.28.0](https://github.com/teletha/viewtify/compare/v2.27.1...v2.28.0) (2024-09-28)
+
+
+### Features
+
+* support closing tab by middle click ([b8872a9](https://github.com/teletha/viewtify/commit/b8872a9589c9fc260cdf3cf26bcb07f34f5b9f16))
+
+
+### Bug Fixes
+
+* integrate monitor with toast ([34ae3e0](https://github.com/teletha/viewtify/commit/34ae3e033360b16a5b676b8fd5a46ee3f766446f))
+
 ## [2.27.1](https://github.com/teletha/viewtify/compare/v2.27.0...v2.27.1) (2024-09-06)
 
 
