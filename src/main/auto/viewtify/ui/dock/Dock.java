@@ -20,7 +20,7 @@ import viewtify.ui.dock.Dock;
  * 
  * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-public class Dock extends DockModel {
+public class Dock extends DockModel<Dock> {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
