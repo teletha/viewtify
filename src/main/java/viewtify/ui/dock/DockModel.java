@@ -20,7 +20,7 @@ import kiss.WiseConsumer;
 import viewtify.ui.View;
 
 @Icy
-public abstract class DockModel {
+public abstract class DockModel<SELF extends DockModel> {
 
     /**
      * Set the View class to be displayed.
@@ -36,8 +36,9 @@ public abstract class DockModel {
      * @return
      */
     @Property
-    public WiseConsumer<Dock> registration() {
-        return dock -> DockSystem.register(dock.id(), location()).to(tab -> tab.text(dock.title()).contentsLazy(x -> I.make(dock.view())));
+    public WiseConsumer<SELF> registration() {
+        return dock -> DockSystem.register(dock.id(), location())
+                .to(tab -> tab.text(dock.title()).contentsLazy(x -> (View) I.make(dock.view())));
     }
 
     /**
@@ -92,6 +93,6 @@ public abstract class DockModel {
      * Show view.
      */
     public final void show() {
-        registration().accept((Dock) this);
+        registration().accept((SELF) this);
     }
 }
