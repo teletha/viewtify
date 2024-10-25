@@ -43,7 +43,7 @@ public class DockSample extends View {
         }
     }
 
-    private class ViewPane extends View {
+    class ViewPane extends View {
 
         private String id;
 

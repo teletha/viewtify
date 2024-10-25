@@ -13,11 +13,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
+
 import kiss.I;
 import psychopath.File;
 import psychopath.Locator;
@@ -39,7 +41,7 @@ public enum Theme {
         this.location = locate(Character.toLowerCase(name().charAt(0)) + name().substring(1));
 
         try {
-            URL url = new URL(location);
+            URL url = URI.create(location).toURL();
             try (InputStream inputStream = url.openStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
 

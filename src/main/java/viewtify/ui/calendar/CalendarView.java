@@ -217,7 +217,6 @@ public class CalendarView extends View {
     private <V extends TemporalView> void draw(Class<V> viewType, LocalDate date, SwapAnime anime) {
         anime = Objects.requireNonNullElse(anime, SwapAnime.FadeOutIn);
 
-        View oldView = currentView;
         V view = I.make(viewType);
         view.ui();
 

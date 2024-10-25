@@ -12,7 +12,6 @@ package viewtify.ui.query;
 import org.junit.jupiter.api.Test;
 
 import kiss.Variable;
-import viewtify.ui.query.CompoundQuery;
 import viewtify.ui.query.CompoundQuery.Query;
 import viewtify.ui.query.CompoundQuery.Tester;
 

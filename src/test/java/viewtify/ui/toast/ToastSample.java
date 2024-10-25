@@ -27,7 +27,7 @@ public class ToastSample {
         Viewtify.application().use(Theme.Dark).activate(Main.class);
     }
 
-    private static class Main extends View {
+    static class Main extends View {
 
         private UIButton button;
 
