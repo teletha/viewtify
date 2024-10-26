@@ -14,7 +14,6 @@ import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
 import javafx.scene.Node;
-
 import kiss.I;
 import kiss.Signal;
 import kiss.WiseBiConsumer;
@@ -94,7 +93,7 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
      * @param actionType A user action to detect.
      * @return An event {@link Signal}.
      */
-    default <T extends EventType<E>, E extends Event> Signal<E> when(T actionType) {
+    default <E extends Event> Signal<E> when(EventType<E> actionType) {
         return when(new User<E>(actionType));
     }
 
@@ -141,7 +140,7 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
      * @param listener An event listener.
      * @return Chainable API.
      */
-    default <T extends EventType<E>, E extends Event> Self when(T actionType, WiseRunnable listener) {
+    default <E extends Event> Self when(EventType<E> actionType, WiseRunnable listener) {
         return when(new User<E>(actionType), listener);
     }
 
@@ -191,7 +190,7 @@ public interface UserActionHelper<Self extends UserActionHelper<Self>> {
      * @param listener An event listener.
      * @return Chainable API.
      */
-    default <T extends EventType<E>, E extends Event> Self when(T actionType, WiseConsumer<E> listener) {
+    default <E extends Event> Self when(EventType<E> actionType, WiseConsumer<E> listener) {
         return when(new User<E>(actionType), listener);
     }
 
