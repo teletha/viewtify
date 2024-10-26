@@ -64,7 +64,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>icymanipulator</artifactId>
-			<version>1.5.0</version>
+			<version>1.5.1</version>
 			<scope>provided</scope>
 			<exclusions/>
 		</dependency>
