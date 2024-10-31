@@ -22,6 +22,9 @@ import viewtify.ui.dock.Dock;
  */
 public class Dock extends DockModel<Dock> {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -60,10 +63,24 @@ public class Dock extends DockModel<Dock> {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = Dock.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -71,16 +88,28 @@ public class Dock extends DockModel<Dock> {
     }
 
     /** The final property updater. */
-    private static final MethodHandle viewUpdater = updater("view");
+    private static final Field viewField = updater("view");
+
+    /** The fast final property updater. */
+    private static final MethodHandle viewUpdater = handler(viewField);
 
     /** The final property updater. */
-    private static final MethodHandle registrationUpdater = updater("registration");
+    private static final Field registrationField = updater("registration");
+
+    /** The fast final property updater. */
+    private static final MethodHandle registrationUpdater = handler(registrationField);
 
     /** The final property updater. */
-    private static final MethodHandle locationUpdater = updater("location");
+    private static final Field locationField = updater("location");
+
+    /** The fast final property updater. */
+    private static final MethodHandle locationUpdater = handler(locationField);
 
     /** The final property updater. */
-    private static final MethodHandle initialViewUpdater = updater("initialView");
+    private static final Field initialViewField = updater("initialView");
+
+    /** The fast final property updater. */
+    private static final MethodHandle initialViewUpdater = handler(initialViewField);
 
     /** The exposed property. */
     public final Class<? extends View> view;
@@ -242,7 +271,11 @@ public class Dock extends DockModel<Dock> {
      */
     private final void setInitialView(boolean value) {
         try {
-            initialViewUpdater.invoke(this, value);
+            if (NATIVE) {
+                initialViewField.setBoolean(this, (boolean) value);
+            } else {
+                initialViewUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

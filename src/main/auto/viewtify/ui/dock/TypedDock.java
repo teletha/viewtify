@@ -22,6 +22,9 @@ import viewtify.ui.dock.TypedDock;
  */
 public class TypedDock<T> extends TypedDockModel<T> {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -40,10 +43,24 @@ public class TypedDock<T> extends TypedDockModel<T> {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = TypedDock.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -51,16 +68,28 @@ public class TypedDock<T> extends TypedDockModel<T> {
     }
 
     /** The final property updater. */
-    private static final MethodHandle idUpdater = updater("id");
+    private static final Field idField = updater("id");
+
+    /** The fast final property updater. */
+    private static final MethodHandle idUpdater = handler(idField);
 
     /** The final property updater. */
-    private static final MethodHandle registrationUpdater = updater("registration");
+    private static final Field registrationField = updater("registration");
+
+    /** The fast final property updater. */
+    private static final MethodHandle registrationUpdater = handler(registrationField);
 
     /** The final property updater. */
-    private static final MethodHandle locationUpdater = updater("location");
+    private static final Field locationField = updater("location");
+
+    /** The fast final property updater. */
+    private static final MethodHandle locationUpdater = handler(locationField);
 
     /** The final property updater. */
-    private static final MethodHandle showOnInitialUpdater = updater("showOnInitial");
+    private static final Field showOnInitialField = updater("showOnInitial");
+
+    /** The fast final property updater. */
+    private static final MethodHandle showOnInitialUpdater = handler(showOnInitialField);
 
     /** The exposed property. */
     public final String id;
