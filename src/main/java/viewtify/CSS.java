@@ -9,12 +9,10 @@
  */
 package viewtify;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import io.github.toolfactory.narcissus.Narcissus;
 import javafx.css.CssMetaData;
 import javafx.css.StyleConverter;
 import javafx.css.StyleOrigin;
@@ -34,6 +32,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
 import kiss.I;
 import kiss.WiseBiConsumer;
 
@@ -178,19 +177,11 @@ final class CSS {
      * Enhance CSS implemetation.
      */
     static void enhance() {
-        try {
-            Class properties = Class.forName("javafx.scene.Node$StyleableProperties");
-            Field styleables = properties.getDeclaredField("STYLEABLES");
-            styleables.setAccessible(true);
+        List enhanced = new ArrayList();
+        enhanced.addAll(Node.StyleableProperties.STYLEABLES);
+        enhanced.addAll(I.signal(CSS.class.getDeclaredFields()).take(f -> f.getType() == Meta.class).map(f -> f.get(null)).toList());
 
-            List enhanced = new ArrayList();
-            enhanced.addAll((List) styleables.get(null));
-            enhanced.addAll(I.signal(CSS.class.getDeclaredFields()).take(f -> f.getType() == Meta.class).map(f -> f.get(null)).toList());
-
-            Narcissus.setStaticObjectField(styleables, enhanced);
-        } catch (Throwable e) {
-            throw I.quiet(e);
-        }
+        Node.StyleableProperties.STYLEABLES = enhanced;
     }
 
     /**
