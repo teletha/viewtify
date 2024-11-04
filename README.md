@@ -126,6 +126,7 @@ If you think something might be a bug, but you're not sure, ask on StackOverflow
 
 ## Dependency
 Viewtify depends on the following products on runtime.
+* [altfx-1.3.0](https://mvnrepository.com/artifact/com.github.teletha/altfx/1.3.0)
 * [conjure-1.1.1](https://mvnrepository.com/artifact/com.github.teletha/conjure/1.1.1)
 * [controlsfx-11.2.1](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.2.1)
 * [javafx-base-24-ea+15](https://mvnrepository.com/artifact/org.openjfx/javafx-base/24-ea+15)
@@ -139,10 +140,9 @@ Viewtify depends on the following products on runtime.
 * [javafx-web-24-ea+15](https://mvnrepository.com/artifact/org.openjfx/javafx-web/24-ea+15)
 * [javafx-web-24-ea+15-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-web/24-ea+15)
 * [lycoris-1.0.0](https://mvnrepository.com/artifact/com.github.teletha/lycoris/1.0.0)
-* [narcissus-1.0.7](https://mvnrepository.com/artifact/io.github.toolfactory/narcissus/1.0.7)
 * [openjfx-monocle-jdk-12.0.1+2](https://mvnrepository.com/artifact/org.testfx/openjfx-monocle/jdk-12.0.1+2)
 * [psychopath-2.0.1](https://mvnrepository.com/artifact/com.github.teletha/psychopath/2.0.1)
-* [sinobu-4.2.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/4.2.0)
+* [sinobu-4.3.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/4.3.0)
 * [stylist-1.10.0](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.10.0)
 <p align="right"><a href="#top">back to top</a></p>
 

@@ -35,6 +35,13 @@ Additional useful functions and widgets that do not exist in JavaFX.
 	<dependencies>
 		<dependency>
 			<groupId>com.github.teletha</groupId>
+			<artifactId>altfx</artifactId>
+			<version>1.3.0</version>
+			<scope>compile</scope>
+			<exclusions/>
+		</dependency>
+		<dependency>
+			<groupId>com.github.teletha</groupId>
 			<artifactId>antibug</artifactId>
 			<version>1.12.0</version>
 			<scope>test</scope>
@@ -57,7 +64,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>icymanipulator</artifactId>
-			<version>1.5.1</version>
+			<version>1.6.0</version>
 			<scope>provided</scope>
 			<exclusions/>
 		</dependency>
@@ -104,13 +111,6 @@ Additional useful functions and widgets that do not exist in JavaFX.
 			<exclusions/>
 		</dependency>
 		<dependency>
-			<groupId>io.github.toolfactory</groupId>
-			<artifactId>narcissus</artifactId>
-			<version>1.0.7</version>
-			<scope>compile</scope>
-			<exclusions/>
-		</dependency>
-		<dependency>
 			<groupId>org.testfx</groupId>
 			<artifactId>openjfx-monocle</artifactId>
 			<version>jdk-12.0.1+2</version>
@@ -127,7 +127,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>sinobu</artifactId>
-			<version>4.2.0</version>
+			<version>4.3.0</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
