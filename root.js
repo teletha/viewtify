@@ -531,6 +531,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "NativeBlueprint",
+			"packageName": "viewtify.update",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "PlaceholderHelper",
 			"packageName": "viewtify.ui.helper",
 			"type": "Functional"
