@@ -26,13 +26,20 @@ public abstract class Blueprint implements Serializable {
     public Directory root = Locator.directory("").absolutize();
 
     /** The JRE direcotry. */
-    public Directory jre = Locator.directory(System.getProperty("java.home")).absolutize();
+    public Directory jre;
 
     /** The application classpath. */
     public String classPath = System.getProperty("java.class.path");
 
     /** The environment variables. */
     private Map<String, String> env = new HashMap();
+
+    protected Blueprint() {
+        String home = System.getProperty("java.home");
+        if (home != null) {
+            jre = Locator.directory(home).absolutize();
+        }
+    }
 
     /**
      * Boot this application.
@@ -98,6 +105,10 @@ public abstract class Blueprint implements Serializable {
      * @return
      */
     public static Blueprint detect() {
+        if (System.getProperty("org.graalvm.nativeimage.imagecode") != null) {
+            return new NativeBlueprint();
+        }
+
         String directory = System.getProperty("java.application.path");
         String name = System.getProperty("java.application.name");
 
