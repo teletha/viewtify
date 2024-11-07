@@ -259,7 +259,7 @@ public final class Viewtify {
     /**
      * Check headless mode.
      */
-    private static void checkHeadlessMode() {
+    static void checkHeadlessMode() {
         if (isHeadless()) {
             // ====================================
             // Support for JavaFX

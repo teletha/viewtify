@@ -12,9 +12,6 @@ package viewtify.ui.helper;
 import java.io.InputStream;
 import java.util.Objects;
 
-import org.controlsfx.glyphfont.Glyph;
-import org.controlsfx.glyphfont.INamedCharacter;
-
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -27,11 +24,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.INamedCharacter;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
 import stylist.Style;
 import stylist.value.Color;
+import viewtify.CSSManipulator;
 import viewtify.Viewtify;
 import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
@@ -146,7 +148,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     }
 
     /**
-     * Set the specifie {@link Node} as literal component.
+     * Set the specified {@link Node} as literal component.
      * 
      * @param text A literal component to set.
      * @return Chainable API.
@@ -156,7 +158,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     }
 
     /**
-     * Set the specifie {@link Node} as literal component.
+     * Set the specified {@link Node} as literal component.
      * 
      * @param text A literal component to set.
      * @return Chainable API.
@@ -168,12 +170,29 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     }
 
     /**
+     * Get the graphic of this component.
+     * 
+     * @return
+     */
+    default Node graphic() {
+        return property(Type.Graphic).getValue();
+    }
+
+    /**
      * Get font color.
      * 
      * @return A current font color.
      */
     default Paint color() {
-        return property(Type.TextFill).getValue();
+        try {
+            return property(Type.TextFill).getValue();
+        } catch (Exception e) {
+            String value = CSSManipulator.get(this, "-fx-text-fill");
+            if (value != null) {
+                return javafx.scene.paint.Color.web(value);
+            }
+            return null;
+        }
     }
 
     /**
@@ -182,8 +201,12 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @param color A color to set.
      * @return Chainable API.
      */
-    default <P extends Paint> Self color(P color) {
-        property(Type.TextFill).setValue(color);
+    default Self color(javafx.scene.paint.Color color) {
+        try {
+            property(Type.TextFill).setValue(color);
+        } catch (Exception e) {
+            CSSManipulator.set(this, "-fx-text-fill", FXUtils.color(color).toRGB());
+        }
         return (Self) this;
     }
 

@@ -51,6 +51,7 @@ public class Project extends bee.api.Project {
         require("com.github.teletha", "altfx");
         require("com.github.teletha", "icymanipulator").atAnnotation();
         require("com.github.teletha", "antibug").atTest();
+        require("org.testfx", "testfx-junit5").atTest();
         require("org.openjfx", "javafx-base");
         require("org.openjfx", "javafx-controls");
         require("org.openjfx", "javafx-graphics");

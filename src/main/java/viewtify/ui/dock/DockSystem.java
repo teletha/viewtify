@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
-import org.controlsfx.glyphfont.FontAwesome;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,6 +48,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import org.controlsfx.glyphfont.FontAwesome;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
