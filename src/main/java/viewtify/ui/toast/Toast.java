@@ -18,8 +18,6 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import org.controlsfx.glyphfont.FontAwesome;
-
 import javafx.beans.value.WritableDoubleValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,7 +27,9 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
-import javafx.stage.Window;
+
+import org.controlsfx.glyphfont.FontAwesome;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -404,7 +404,7 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
                     Anime.define().effect(notify, y, setting.animation.v).run();
                 } else {
                     popup.setOpacity(0);
-                    popup.show(Window.getWindows().get(0));
+                    popup.show(Viewtify.phantomWindow());
                     if (!isTopSide) y -= popup.getHeight() + gap;
                     popup.setX(x);
                     popup.setY(y);

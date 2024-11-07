@@ -39,8 +39,6 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -71,11 +69,16 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -190,6 +193,9 @@ public final class Viewtify {
 
     /** The main stage. */
     private static volatile Stage mainStage;
+
+    /** The hidden stage. */
+    private static volatile Stage phantomStage;
 
     /** The configurable setting. */
     private ActivationPolicy activationPolicy = ActivationPolicy.Latest;
@@ -877,16 +883,6 @@ public final class Viewtify {
     }
 
     /**
-     * Check whether the given stage is application's main window or not.
-     * 
-     * @param stage
-     * @return
-     */
-    public final static boolean isMainWindow(Stage stage) {
-        return mainStage == stage;
-    }
-
-    /**
      * Create the general dialog builder.
      * 
      * @return
@@ -1419,6 +1415,47 @@ public final class Viewtify {
                 }
             }
         }
+    }
+
+    /**
+     * Check whether the given stage is application's main window or not.
+     * 
+     * @param stage
+     * @return
+     */
+    public static boolean isMainWindow(Stage stage) {
+        return mainStage == stage;
+    }
+
+    /**
+     * Get the root window.
+     * 
+     * @return
+     */
+    public static Stage mainWindow() {
+        return mainStage;
+    }
+
+    /**
+     * Get the hidden root window.
+     * 
+     * @return
+     */
+    public static Stage phantomWindow() {
+        if (phantomStage == null) {
+            phantomStage = new Stage();
+            phantomStage.initModality(Modality.NONE);
+            phantomStage.initStyle(StageStyle.UTILITY);
+            phantomStage.setOpacity(0);
+            phantomStage.setWidth(0);
+            phantomStage.setHeight(0);
+            phantomStage.setX(-1000);
+            phantomStage.setY(-1000);
+            phantomStage.setScene(new Scene(new VBox()));
+            phantomStage.getScene().getStylesheets().addAll(stylesheets);
+            phantomStage.show();
+        }
+        return phantomStage;
     }
 
     /**
