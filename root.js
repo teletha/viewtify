@@ -125,6 +125,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "CSSManipulator",
+			"packageName": "viewtify",
+			"type": "Class"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "CalendarMarker",
 			"packageName": "viewtify.ui.calendar",
 			"type": "Interface"
