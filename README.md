@@ -126,6 +126,7 @@ If you think something might be a bug, but you're not sure, ask on StackOverflow
 
 ## Dependency
 Viewtify depends on the following products on runtime.
+* [BorderlessSceneFX-1.0.0](https://mvnrepository.com/artifact/com.catwithawand/BorderlessSceneFX/1.0.0)
 * [altfx-1.3.0](https://mvnrepository.com/artifact/com.github.teletha/altfx/1.3.0)
 * [conjure-1.1.1](https://mvnrepository.com/artifact/com.github.teletha/conjure/1.1.1)
 * [controlsfx-11.2.1](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.2.1)
@@ -139,6 +140,8 @@ Viewtify depends on the following products on runtime.
 * [javafx-media-24-ea+15-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-media/24-ea+15)
 * [javafx-web-24-ea+15](https://mvnrepository.com/artifact/org.openjfx/javafx-web/24-ea+15)
 * [javafx-web-24-ea+15-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-web/24-ea+15)
+* [jna-5.12.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.12.1)
+* [jna-platform-5.12.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.12.1)
 * [lycoris-1.0.0](https://mvnrepository.com/artifact/com.github.teletha/lycoris/1.0.0)
 * [openjfx-monocle-jdk-12.0.1+2](https://mvnrepository.com/artifact/org.testfx/openjfx-monocle/jdk-12.0.1+2)
 * [psychopath-2.0.1](https://mvnrepository.com/artifact/com.github.teletha/psychopath/2.0.1)
