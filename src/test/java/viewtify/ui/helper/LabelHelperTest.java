@@ -34,6 +34,13 @@ public class LabelHelperTest extends JavaFXTester {
 
     @ParameterizedTest
     @ArgumentsSource(Providers.LabelHelpers.class)
+    void textNull(LabelHelper ui) {
+        ui.text((String) null);
+        assert ui.text() == null;
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(Providers.LabelHelpers.class)
     void textVariable(LabelHelper ui) {
         Variable text = Variable.of("TEST");
         ui.text(text);
@@ -46,9 +53,71 @@ public class LabelHelperTest extends JavaFXTester {
         text.set(10);
         assert ui.text().equals("10");
 
-        // sync from ui
-        // ui.text("FROM UI");
-        // assert text.get().equals("FROM UI");
+        // disconnect
+        ui.text((Variable) null);
+        text.set("STOP");
+        assert ui.text().equals("10");
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(Providers.LabelHelpers.class)
+    void textVariableDiscadedByOtherVariable(LabelHelper ui) {
+        Variable text1 = Variable.of("TEST");
+        ui.text(text1);
+        assert ui.text().equals("TEST");
+
+        // sync from model
+        text1.set("UPDATE");
+        assert ui.text().equals("UPDATE");
+
+        // change model
+        Variable text2 = Variable.of("NEW");
+        ui.text(text2);
+        assert ui.text().equals("NEW");
+
+        // old model was discarded
+        text1.set("FROM OLD");
+        assert ui.text().equals("NEW");
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(Providers.LabelHelpers.class)
+    void textVariableDiscadedByText(LabelHelper ui) {
+        Variable text = Variable.of("TEST");
+        ui.text(text);
+        assert ui.text().equals("TEST");
+
+        // sync from model
+        text.set("UPDATE");
+        assert ui.text().equals("UPDATE");
+
+        // update by text model
+        ui.text("NEW");
+        assert ui.text().equals("NEW");
+
+        // old model was discarded
+        text.set("FROM OLD");
+        assert ui.text().equals("NEW");
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(Providers.LabelHelpers.class)
+    void textVariableDiscadedByProperty(LabelHelper ui) {
+        Variable text = Variable.of("TEST");
+        ui.text(text);
+        assert ui.text().equals("TEST");
+
+        // sync from model
+        text.set("UPDATE");
+        assert ui.text().equals("UPDATE");
+
+        // update by text model
+        ui.text(new SimpleStringProperty("NEW"));
+        assert ui.text().equals("NEW");
+
+        // old model was discarded
+        text.set("FROM OLD");
+        assert ui.text().equals("NEW");
     }
 
     @ParameterizedTest
@@ -81,5 +150,19 @@ public class LabelHelperTest extends JavaFXTester {
     void color(LabelHelper<?> ui) {
         ui.color(Color.RED);
         assert ui.color().equals(Color.RED);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(Providers.LabelHelpers.class)
+    void fontSize(LabelHelper<?> ui) {
+        ui.font(10);
+        assert ui.font().getSize() == 10;
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(Providers.LabelHelpers.class)
+    void fontName(LabelHelper<?> ui) {
+        ui.font("System");
+        assert ui.font().getFamily().equals("System");
     }
 }

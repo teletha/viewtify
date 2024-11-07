@@ -14,7 +14,7 @@ import javafx.beans.property.Property;
 import viewtify.ui.helper.PropertyAccessHelper;
 import viewtify.ui.helper.PropertyAccessHelper.Type;
 
-public class CSSManipulator {
+public class StyleManipulator {
 
     public static String get(PropertyAccessHelper css, String name) {
         return get(css.property(Type.Style), name);

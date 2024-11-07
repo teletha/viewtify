@@ -10,7 +10,6 @@
 package viewtify.ui.helper;
 
 import java.io.InputStream;
-import java.util.Objects;
 
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
@@ -33,7 +32,7 @@ import kiss.I;
 import kiss.Variable;
 import stylist.Style;
 import stylist.value.Color;
-import viewtify.CSSManipulator;
+import viewtify.StyleManipulator;
 import viewtify.Viewtify;
 import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
@@ -57,10 +56,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Object text) {
-        Viewtify.inUI(() -> {
-            property(Type.Text).setValue(Objects.toString(text));
-        });
-        return (Self) this;
+        return text(Variable.of(text).fix());
     }
 
     /**
@@ -70,11 +66,15 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Variable text) {
-        Disposable disposable = text.observing().on(Viewtify.UIThread).to(v -> {
-            property(Type.Text).setValue(I.transform(v, String.class));
-        });
+        if (text == null) {
+            FXUtils.disposeAssociation(ui(), Disposable.class);
+        } else {
+            Disposable disposable = text.observing().on(Viewtify.UIThread).to(v -> {
+                property(Type.Text).setValue(I.transform(v, String.class));
+            });
 
-        FXUtils.replaceAssociation(ui(), Disposable.class, disposable);
+            FXUtils.replaceAssociation(ui(), Disposable.class, disposable);
+        }
 
         return (Self) this;
     }
@@ -86,6 +86,8 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Property text) {
+        FXUtils.disposeAssociation(ui(), Disposable.class);
+
         property(Type.Text).bindBidirectional(text);
         return (Self) this;
     }
@@ -164,6 +166,8 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Node text) {
+        FXUtils.disposeAssociation(ui(), Disposable.class);
+
         property(Type.Text).setValue(null);
         property(Type.Graphic).setValue(text);
         return (Self) this;
@@ -187,7 +191,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
         try {
             return property(Type.TextFill).getValue();
         } catch (Exception e) {
-            String value = CSSManipulator.get(this, "-fx-text-fill");
+            String value = StyleManipulator.get(this, "-fx-text-fill");
             if (value != null) {
                 return javafx.scene.paint.Color.web(value);
             }
@@ -205,7 +209,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
         try {
             property(Type.TextFill).setValue(color);
         } catch (Exception e) {
-            CSSManipulator.set(this, "-fx-text-fill", FXUtils.color(color).toRGB());
+            StyleManipulator.set(this, "-fx-text-fill", FXUtils.color(color).toRGB());
         }
         return (Self) this;
     }
@@ -237,7 +241,16 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return A current font.
      */
     default Font font() {
-        return property(Type.Font).getValue();
+        try {
+            return property(Type.Font).getValue();
+        } catch (Exception e) {
+            String css = StyleManipulator.get(this, "-fx-font");
+            if (css != null) {
+                int i = css.indexOf(' ');
+                return Font.font(css.substring(i + 2, css.length() - 1), Double.parseDouble(css.substring(0, i)));
+            }
+            return null;
+        }
     }
 
     /**
@@ -247,7 +260,11 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self font(Font font) {
-        property(Type.Font).setValue(font);
+        try {
+            property(Type.Font).setValue(font);
+        } catch (Exception e) {
+            StyleManipulator.set(this, "-fx-font", font.getSize() + " \"" + font.getFamily() + "\"");
+        }
         return (Self) this;
     }
 
