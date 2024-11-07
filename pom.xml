@@ -145,6 +145,13 @@ Additional useful functions and widgets that do not exist in JavaFX.
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
+		<dependency>
+			<groupId>org.testfx</groupId>
+			<artifactId>testfx-junit5</artifactId>
+			<version>4.0.18</version>
+			<scope>test</scope>
+			<exclusions/>
+		</dependency>
 	</dependencies>
 	<licenses>
 		<license>
