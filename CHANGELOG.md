@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.30.0](https://github.com/teletha/viewtify/compare/v2.29.0...v2.30.0) (2024-11-08)
+
+
+### Features
+
+* support LabelHelper#icon ([3248803](https://github.com/teletha/viewtify/commit/32488032dab31546333e17c7424d7da595e05f1c))
+
 ## [2.29.0](https://github.com/teletha/viewtify/compare/v2.28.0...v2.29.0) (2024-11-08)
 
 
