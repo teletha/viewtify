@@ -11,12 +11,6 @@ package viewtify.ui.helper;
 
 import java.io.InputStream;
 
-import org.controlsfx.glyphfont.Glyph;
-import org.controlsfx.glyphfont.INamedCharacter;
-import org.kordamp.ikonli.Ikon;
-import org.kordamp.ikonli.javafx.FontIcon;
-
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -26,6 +20,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import org.kordamp.ikonli.Ikon;
+import org.kordamp.ikonli.javafx.FontIcon;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -272,22 +270,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     }
 
     /**
-     * Set icon.
-     * 
-     * @param icon An icon font.
-     * @return Chainable API.
-     */
-    default Self icon(Ikon icon) {
-        if (icon != null) {
-            FontIcon font = new FontIcon(icon);
-            font.iconColorProperty().bind(property(Type.TextFill));
-            property(Type.Graphic).setValue(font);
-        }
-        return (Self) this;
-    }
-
-    /**
-     * Set icon.
+     * Set the specified icon using icon font.
      * 
      * @param icon An icon font.
      * @return Chainable API.
@@ -295,37 +278,13 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     default Self icon(Ikon icon, Style... styles) {
         if (icon != null) {
             FontIcon font = new FontIcon(icon);
-            font.iconColorProperty().bind(property(Type.TextFill));
-
-            ObservableList<String> classes = font.getStyleClass();
-            classes.clear();
-            for (Style style : styles) {
-                classes.addAll(style.className());
+            if (styles == null || styles.length == 0) {
+                font.iconColorProperty().bind(property(Type.TextFill));
+            } else {
+                StyleHelper.of(font).style(styles);
             }
-            StyleHelper.of(font).style(styles);
-
             property(Type.Graphic).setValue(font);
         }
-        return (Self) this;
-    }
-
-    /**
-     * Set icon.
-     * 
-     * @param icon
-     * @param styles
-     * @return
-     */
-    default Self icon(INamedCharacter icon, Style... styles) {
-        Glyph glyph = new Glyph("FontAwesome", icon);
-
-        ObservableList<String> classes = glyph.getStyleClass();
-        classes.clear();
-        for (Style style : styles) {
-            classes.addAll(style.className());
-        }
-
-        property(Type.Graphic).setValue(glyph);
         return (Self) this;
     }
 
