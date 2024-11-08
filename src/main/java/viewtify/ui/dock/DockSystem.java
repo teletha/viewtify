@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,9 +50,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import org.controlsfx.glyphfont.FontAwesome;
-
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -326,7 +325,7 @@ public final class DockSystem {
      */
     public static void initialize() {
         initialize(icon -> {
-            icon.text(FontAwesome.Glyph.BARS).behaveLikeButton().context(menus -> {
+            icon.text(FontAwesomeSolid.BARS).behaveLikeButton().context(menus -> {
                 menus.menu(I.translate("Open new page"), sub -> {
                     for (DockProvider provider : I.find(DockProvider.class)) {
                         for (Dock item : provider.findDocks()) {

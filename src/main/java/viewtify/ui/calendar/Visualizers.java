@@ -9,7 +9,7 @@
  */
 package viewtify.ui.calendar;
 
-import org.controlsfx.glyphfont.FontAwesome;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 
 import javafx.scene.Node;
 import kiss.Managed;
@@ -230,9 +230,9 @@ class Visualizers {
              */
             @Override
             protected void initialize() {
-                edit.text(FontAwesome.Glyph.PENCIL).tooltip(en("Edit")).enable(event.isEditable());
-                delete.text(FontAwesome.Glyph.TRASH).tooltip(en("Delete")).enable(event.isEditable());
-                close.text(FontAwesome.Glyph.CLOSE).tooltip(en("Close")).when(User.LeftClick, ViewtyDialog::close);
+                edit.text(FontAwesomeSolid.PEN).tooltip(en("Edit")).enable(event.isEditable());
+                delete.text(FontAwesomeSolid.TRASH).tooltip(en("Delete")).enable(event.isEditable());
+                close.text(FontAwesomeSolid.CROSS).tooltip(en("Close")).when(User.LeftClick, ViewtyDialog::close);
             }
         }
     }

@@ -60,6 +60,8 @@ public class Project extends bee.api.Project {
         require("org.testfx", "openjfx-monocle", "jdk-12.0.1+2");
         require("org.controlsfx", "controlsfx");
         require("com.catwithawand", "BorderlessSceneFX");
+        require("org.kordamp.ikonli", "ikonli-javafx");
+        require("org.kordamp.ikonli", "ikonli-fontawesome5-pack");
 
         versionControlSystem("https://github.com/teletha/viewtify");
     }

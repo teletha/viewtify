@@ -13,6 +13,8 @@ import java.io.InputStream;
 
 import org.controlsfx.glyphfont.Glyph;
 import org.controlsfx.glyphfont.INamedCharacter;
+import org.kordamp.ikonli.Ikon;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -32,7 +34,6 @@ import stylist.Style;
 import stylist.value.Color;
 import viewtify.StyleManipulator;
 import viewtify.Viewtify;
-import viewtify.ui.UILabel;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.util.FXUtils;
 
@@ -78,58 +79,32 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     }
 
     /**
-     * Set text.
+     * Set icon.
      * 
-     * @param text A text {@link Variable} to set.
+     * @param icon An icon font.
      * @return Chainable API.
      */
-    default Self text(INamedCharacter text) {
-        return text(text, (Style[]) null);
-    }
-
-    /**
-     * Set text.
-     * 
-     * @param text A text {@link Variable} to set.
-     * @return Chainable API.
-     */
-    default Self text(INamedCharacter text, Style... iconStyle) {
-        if (text != null) {
-            Glyph glyph = new Glyph("FontAwesome", text);
-            StyleHelper.of(glyph).style(iconStyle);
-            text(glyph);
+    default Self text(Ikon icon) {
+        if (icon != null) {
+            FontIcon font = new FontIcon(icon);
+            font.iconColorProperty().bind(property(Type.TextFill));
+            text(font);
         }
         return (Self) this;
     }
 
     /**
-     * Set honrizontal styled text.
+     * Set the specified {@link Node} as literal component.
      * 
-     * @param texts The text list.
+     * @param items A literal component to set.
      * @return Chainable API.
      */
-    default Self text(UILabel... texts) {
+    default Self text(UserInterfaceProvider<? extends Node>... items) {
         HBox box = new HBox();
         box.setAlignment(Pos.CENTER);
 
-        for (int i = 0; i < texts.length; i++) {
-            box.getChildren().add(texts[i].ui);
-        }
-        return text(box);
-    }
-
-    /**
-     * Set vertical styled text.
-     * 
-     * @param texts The text list.
-     * @return Chainable API.
-     */
-    default Self textV(UILabel... texts) {
-        VBox box = new VBox();
-        box.setAlignment(Pos.CENTER);
-
-        for (int i = 0; i < texts.length; i++) {
-            box.getChildren().add(texts[i].ui);
+        for (UserInterfaceProvider<? extends Node> item : items) {
+            box.getChildren().add(item.ui().getStyleableNode());
         }
         return text(box);
     }
@@ -137,11 +112,17 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     /**
      * Set the specified {@link Node} as literal component.
      * 
-     * @param text A literal component to set.
+     * @param items A literal component to set.
      * @return Chainable API.
      */
-    default Self text(UserInterfaceProvider text) {
-        return text(text.ui().getStyleableNode());
+    default Self textV(UserInterfaceProvider<? extends Node>... items) {
+        VBox box = new VBox();
+        box.setAlignment(Pos.CENTER);
+
+        for (UserInterfaceProvider<? extends Node> item : items) {
+            box.getChildren().add(item.ui());
+        }
+        return text(box);
     }
 
     /**

@@ -18,6 +18,8 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+
 import javafx.beans.value.WritableDoubleValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,9 +29,6 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
-
-import org.controlsfx.glyphfont.FontAwesome;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -487,7 +486,8 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
          * @return
          */
         private Node showCloseButton(Node node) {
-            UILabel label = new UILabel(null).text(FontAwesome.Glyph.CLOSE, styles.icon)
+            UILabel label = new UILabel(null).text(FontAwesomeSolid.TIMES)
+                    .style(styles.icon)
                     .tooltip(I.translate("Stop this task."))
                     .when(User.LeftClick, () -> {
                         remove(this);
@@ -529,6 +529,7 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
 
         Style icon = () -> {
             cursor.pointer();
+            padding.size(2, px);
 
             $.hover(() -> {
                 font.color("-fx-focus-color");

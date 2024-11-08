@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.controlsfx.glyphfont.FontAwesome;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -80,8 +81,8 @@ public class PreferenceView extends View {
                     });
                     $(vbox, style.right, () -> {
                         $(hbox, style.bar, () -> {
-                            $(importer);
-                            $(exporter);
+                            $(importer, style.icon);
+                            $(exporter, style.icon);
                             $(search, FormStyles.Column5, style.search);
                         });
                         $(scroll, FormStyles.Preferences, () -> {
@@ -143,7 +144,7 @@ public class PreferenceView extends View {
         };
 
         Style icon = () -> {
-            font.size(18, px).family("FontAwesome").color("-fx-mid-text-color");
+            font.size(13, px).color("-fx-mid-text-color");
             padding.size(6, px);
             cursor.pointer();
 
@@ -158,12 +159,8 @@ public class PreferenceView extends View {
      */
     @Override
     protected void initialize() {
-        importer.text(FontAwesome.Glyph.DOWNLOAD, style.icon)
-                .tooltip(en("Import preferences from file"))
-                .when(User.LeftClick, this::importPrefernces);
-        exporter.text(FontAwesome.Glyph.UPLOAD, style.icon)
-                .tooltip(en("Export the current preferences"))
-                .when(User.LeftClick, this::exportPreferences);
+        importer.text(FontAwesomeSolid.DOWNLOAD).tooltip(en("Import preferences from file")).when(User.LeftClick, this::importPrefernces);
+        exporter.text(FontAwesomeSolid.UPLOAD).tooltip(en("Export the current preferences")).when(User.LeftClick, this::exportPreferences);
 
         search.placeholder(en("Search from preferences")).clearable().prefix(FontAwesome.Glyph.SEARCH).observe().to(text -> {
             text = text.strip().toLowerCase();

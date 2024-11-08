@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import org.controlsfx.glyphfont.FontAwesome;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 
 import kiss.I;
 import kiss.Managed;
@@ -78,9 +78,9 @@ public class CalendarView extends View {
                         $(selectToday, Styles.today, FormStyles.Column2);
 
                         $(hbox, Styles.headerCenter, () -> {
-                            $(selectPrevious);
+                            $(selectPrevious, Styles.selector);
                             $(current, Styles.current);
-                            $(selectNext);
+                            $(selectNext, Styles.selector);
                         });
 
                         $(hbox, Styles.headerRight, () -> {
@@ -106,8 +106,8 @@ public class CalendarView extends View {
         };
 
         Style selector = () -> {
-            font.size(20, px).color("-fx-mid-text-color").family("FontAwesome");
-            padding.horizontal(6, px).top(-4, px);
+            font.color("-fx-mid-text-color").size(14, px);
+            padding.horizontal(8, px).vertical(2, px);
         };
 
         Style current = () -> {
@@ -154,8 +154,8 @@ public class CalendarView extends View {
     protected void initialize() {
         CalendarSetting setting = Preferences.of(CalendarSetting.class);
 
-        selectNext.text(FontAwesome.Glyph.ANGLE_RIGHT, Styles.selector).action(() -> currentView.next());
-        selectPrevious.text(FontAwesome.Glyph.ANGLE_LEFT, Styles.selector).action(() -> currentView.previous());
+        selectNext.text(FontAwesomeSolid.ANGLE_RIGHT).action(() -> currentView.next());
+        selectPrevious.text(FontAwesomeSolid.ANGLE_LEFT).action(() -> currentView.previous());
         selectToday.text(I.translate("Today")).action(() -> currentView.today());
 
         switchToDay.text(I.translate("Day")).action(() -> show(DayView.class, currentDate));
@@ -163,7 +163,7 @@ public class CalendarView extends View {
         switchToMonth.text(I.translate("Month")).action(() -> show(MonthView.class, currentDate));
         switchToYear.text(I.translate("Year")).action(() -> show(YearView.class, currentDate));
 
-        preference.text(FontAwesome.Glyph.GEAR).popup(CalendarSettingView::new);
+        preference.text(FontAwesomeSolid.COG).popup(CalendarSettingView::new);
 
         show(setting.initialView.v, LocalDate.now());
 
