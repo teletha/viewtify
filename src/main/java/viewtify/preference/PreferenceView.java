@@ -17,15 +17,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.controlsfx.glyphfont.FontAwesome;
-import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Labeled;
 import javafx.stage.FileChooser.ExtensionFilter;
+
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+
 import kiss.I;
 import kiss.Variable;
 import psychopath.Directory;
@@ -162,7 +162,7 @@ public class PreferenceView extends View {
         importer.icon(FontAwesomeSolid.DOWNLOAD).tooltip(en("Import preferences from file")).when(User.LeftClick, this::importPrefernces);
         exporter.icon(FontAwesomeSolid.UPLOAD).tooltip(en("Export the current preferences")).when(User.LeftClick, this::exportPreferences);
 
-        search.placeholder(en("Search from preferences")).clearable().prefix(FontAwesome.Glyph.SEARCH).observe().to(text -> {
+        search.placeholder(en("Search from preferences")).clearable().prefix(FontAwesomeSolid.SEARCH).observe().to(text -> {
             text = text.strip().toLowerCase();
 
             for (View base : bases) {

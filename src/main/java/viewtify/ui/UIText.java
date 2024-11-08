@@ -18,13 +18,6 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-import org.controlsfx.control.textfield.AutoCompletionBinding.ISuggestionRequest;
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
-import org.controlsfx.glyphfont.Glyph;
-import org.controlsfx.glyphfont.INamedCharacter;
-
-import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
@@ -34,8 +27,17 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+
+import org.controlsfx.control.textfield.AutoCompletionBinding.ISuggestionRequest;
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
+import org.kordamp.ikonli.Ikon;
+import org.kordamp.ikonli.javafx.StackedFontIcon;
+
+import impl.org.controlsfx.skin.CustomTextFieldSkin;
 import kiss.I;
 import viewtify.Viewtify;
 import viewtify.property.SmartProperty;
@@ -293,11 +295,8 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
      * @param prefix
      * @return Chainable API.
      */
-    public final UIText<V> prefix(INamedCharacter prefix) {
-        Glyph icon = new Glyph("FontAwesome", prefix);
-        icon.setPadding(new Insets(0, 4, 0, 4));
-        icon.setColor(Color.GRAY);
-        ui.setLeft(icon);
+    public final UIText<V> prefix(Ikon prefix) {
+        ui.setLeft(icon(prefix));
         return this;
     }
 
@@ -318,12 +317,24 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
      * @param suffix
      * @return Chainable API.
      */
-    public final UIText<V> suffix(INamedCharacter suffix) {
-        Glyph icon = new Glyph("FontAwesome", suffix);
-        icon.setPadding(new Insets(0, 4, 0, 4));
-        icon.setColor(Color.GRAY);
-        ui.setRight(icon);
+    public final UIText<V> suffix(Ikon suffix) {
+        ui.setRight(icon(suffix));
         return this;
+    }
+
+    /**
+     * Build icon pane.
+     * 
+     * @param ikon
+     * @return
+     */
+    private Node icon(Ikon ikon) {
+        StackedFontIcon icon = new StackedFontIcon();
+        icon.setIconCodes(ikon);
+        icon.setColors(Color.GRAY);
+        icon.iconSizeProperty().bind(ui.fontProperty().map(Font::getSize));
+        icon.setPadding(new Insets(0, 4, 0, 4));
+        return icon;
     }
 
     /**
