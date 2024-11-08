@@ -76,6 +76,20 @@ Additional useful functions and widgets that do not exist in JavaFX.
 			<exclusions/>
 		</dependency>
 		<dependency>
+			<groupId>org.kordamp.ikonli</groupId>
+			<artifactId>ikonli-fontawesome5-pack</artifactId>
+			<version>12.3.1</version>
+			<scope>compile</scope>
+			<exclusions/>
+		</dependency>
+		<dependency>
+			<groupId>org.kordamp.ikonli</groupId>
+			<artifactId>ikonli-javafx</artifactId>
+			<version>12.3.1</version>
+			<scope>compile</scope>
+			<exclusions/>
+		</dependency>
+		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-base</artifactId>
 			<version>24-ea+15</version>
