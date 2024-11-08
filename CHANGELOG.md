@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.31.0](https://github.com/teletha/viewtify/compare/v2.30.0...v2.31.0) (2024-11-08)
+
+
+### Features
+
+* add UIText#prefix(Ikon) and #suffix(Ikon) ([0be80f5](https://github.com/teletha/viewtify/commit/0be80f5de91f6a2565d8f2d5ce145ce8a5163a87))
+* drop LabelHelper#icon(INamedCharcter) ([ca9825d](https://github.com/teletha/viewtify/commit/ca9825d6f72d15188f6fc8361a13ae8058845b32))
+
 ## [2.30.0](https://github.com/teletha/viewtify/compare/v2.29.0...v2.30.0) (2024-11-08)
 
 
