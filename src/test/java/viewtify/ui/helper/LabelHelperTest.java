@@ -102,42 +102,6 @@ public class LabelHelperTest extends JavaFXTester {
 
     @ParameterizedTest
     @ArgumentsSource(Providers.LabelHelpers.class)
-    void textVariableDiscadedByProperty(LabelHelper ui) {
-        Variable text = Variable.of("TEST");
-        ui.text(text);
-        assert ui.text().equals("TEST");
-
-        // sync from model
-        text.set("UPDATE");
-        assert ui.text().equals("UPDATE");
-
-        // update by text model
-        ui.text(new SimpleStringProperty("NEW"));
-        assert ui.text().equals("NEW");
-
-        // old model was discarded
-        text.set("FROM OLD");
-        assert ui.text().equals("NEW");
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(Providers.LabelHelpers.class)
-    void textProperty(LabelHelper ui) {
-        SimpleStringProperty text = new SimpleStringProperty("TEST");
-        ui.text(text);
-        assert ui.text().equals("TEST");
-
-        // sync from model
-        text.set("UPDATE");
-        assert ui.text().equals("UPDATE");
-
-        // sync from ui
-        ui.text("FROM UI");
-        assert text.get().equals("FROM UI");
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(Providers.LabelHelpers.class)
     void textNode(LabelHelper<?> ui) {
         Label text = new Label("TEST");
         ui.text(text);

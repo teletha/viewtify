@@ -11,7 +11,9 @@ package viewtify.ui.helper;
 
 import java.io.InputStream;
 
-import javafx.beans.property.Property;
+import org.controlsfx.glyphfont.Glyph;
+import org.controlsfx.glyphfont.INamedCharacter;
+
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,10 +25,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import org.controlsfx.glyphfont.Glyph;
-import org.controlsfx.glyphfont.INamedCharacter;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Variable;
@@ -56,7 +54,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Object text) {
-        return text(Variable.of(text).fix());
+        return text(Variable.of(text));
     }
 
     /**
@@ -76,19 +74,6 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
             FXUtils.replaceAssociation(ui(), Disposable.class, disposable);
         }
 
-        return (Self) this;
-    }
-
-    /**
-     * Set text.
-     * 
-     * @param text A text {@link Variable} to set.
-     * @return Chainable API.
-     */
-    default Self text(Property text) {
-        FXUtils.disposeAssociation(ui(), Disposable.class);
-
-        property(Type.Text).bindBidirectional(text);
         return (Self) this;
     }
 
