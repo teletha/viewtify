@@ -75,23 +75,6 @@ class CSSProcessor implements Consumer<Properties> {
      * 
      * @param properties
      */
-    private void icon(Properties properties) {
-        int indexForColor = properties.name("color");
-        if (indexForColor != -1) {
-            properties.set("icon-color", properties.value(indexForColor));
-        }
-
-        int indexForSize = properties.name("font-size");
-        if (indexForSize != -1) {
-            properties.set("icon-size", properties.value(indexForSize));
-        }
-    }
-
-    /**
-     * Configure alignment.
-     * 
-     * @param properties
-     */
     private void alignment(Properties properties) {
         Variable<CSSValue> horizontal = properties.remove("text-align");
         Variable<CSSValue> vertical = properties.remove("vertical-align");
@@ -159,6 +142,23 @@ class CSSProcessor implements Consumer<Properties> {
             } else {
                 properties.set("height", height.v);
             }
+        }
+    }
+
+    /**
+     * Configure icon-color and icon-size.
+     * 
+     * @param properties
+     */
+    private void icon(Properties properties) {
+        int indexForColor = properties.name("color");
+        if (indexForColor != -1) {
+            properties.set("icon-color", properties.value(indexForColor));
+        }
+
+        int indexForSize = properties.name("font-size");
+        if (indexForSize != -1) {
+            properties.set("icon-size", properties.value(indexForSize));
         }
     }
 
