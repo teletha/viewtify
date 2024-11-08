@@ -1,5 +1,27 @@
 # Changelog
 
+## [2.29.0](https://github.com/teletha/viewtify/compare/v2.28.0...v2.29.0) (2024-11-08)
+
+
+### Features
+
+* Drop LabelHelper#text(Property) ([1bf5231](https://github.com/teletha/viewtify/commit/1bf5231b9338d72b3d20b55a0d485ae56d7eeeb7))
+* drop LabelHelper#text(UILabel) ([4330513](https://github.com/teletha/viewtify/commit/4330513162123e85ba708d64da5d1c1a5476c971))
+* LabelHelper#text discard the old sync properly ([12e4e6b](https://github.com/teletha/viewtify/commit/12e4e6b7363ba264a824f0f677b29b4276bfd712))
+* revert to altfx ([bf76ab1](https://github.com/teletha/viewtify/commit/bf76ab1a49ae96cb70dbe3db6e9e5a2d484c5b8a))
+* support LabelHelper#graphic and #color properly ([13aef6b](https://github.com/teletha/viewtify/commit/13aef6b471b1a1b8c6782857f6f810df459c9c61))
+* support reboot on native image ([0ac0dbe](https://github.com/teletha/viewtify/commit/0ac0dbedbb1f82e67a82e794a92ae161af2f2642))
+* use Narcissus to bypass module encapsulation ([6a12264](https://github.com/teletha/viewtify/commit/6a122647cb9b8292ddfa62256e91b97b32097a4c))
+
+
+### Bug Fixes
+
+* remove deprecated api ([deedd0c](https://github.com/teletha/viewtify/commit/deedd0c929df7de4ff4ee8fbb609cfd53e3d836d))
+* simplify api ([392e959](https://github.com/teletha/viewtify/commit/392e959ef07831557e5ca30f1a665cd0f034e6cf))
+* toast should not active owner window ([3d75041](https://github.com/teletha/viewtify/commit/3d75041fa7d65b9bd9f953ff384e61a3c35dc342))
+* update icy manipulator ([980aeb1](https://github.com/teletha/viewtify/commit/980aeb18bd8a0ba162d6c495158441f52a3f3f07))
+* update icy manipulator ([3a56b03](https://github.com/teletha/viewtify/commit/3a56b03187a2c2de5f6beb62071077cc80bfc6e8))
+
 ## [2.28.0](https://github.com/teletha/viewtify/compare/v2.27.1...v2.28.0) (2024-09-28)
 
 
