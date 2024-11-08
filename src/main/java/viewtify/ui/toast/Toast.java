@@ -486,7 +486,7 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
          * @return
          */
         private Node showCloseButton(Node node) {
-            UILabel label = new UILabel(null).text(FontAwesomeSolid.TIMES)
+            UILabel label = new UILabel(null).icon(FontAwesomeSolid.TIMES)
                     .style(styles.icon)
                     .tooltip(I.translate("Stop this task."))
                     .when(User.LeftClick, () -> {

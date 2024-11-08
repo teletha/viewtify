@@ -17,7 +17,6 @@ import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -75,21 +74,6 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
             FXUtils.replaceAssociation(ui(), Disposable.class, disposable);
         }
 
-        return (Self) this;
-    }
-
-    /**
-     * Set icon.
-     * 
-     * @param icon An icon font.
-     * @return Chainable API.
-     */
-    default Self text(Ikon icon) {
-        if (icon != null) {
-            FontIcon font = new FontIcon(icon);
-            font.iconColorProperty().bind(property(Type.TextFill));
-            text(font);
-        }
         return (Self) this;
     }
 
@@ -290,13 +274,50 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     /**
      * Set icon.
      * 
+     * @param icon An icon font.
+     * @return Chainable API.
+     */
+    default Self icon(Ikon icon) {
+        if (icon != null) {
+            FontIcon font = new FontIcon(icon);
+            font.iconColorProperty().bind(property(Type.TextFill));
+            property(Type.Graphic).setValue(font);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Set icon.
+     * 
+     * @param icon An icon font.
+     * @return Chainable API.
+     */
+    default Self icon(Ikon icon, Style... styles) {
+        if (icon != null) {
+            FontIcon font = new FontIcon(icon);
+            // font.iconColorProperty().bind(property(Type.TextFill));
+
+            ObservableList<String> classes = font.getStyleClass();
+            classes.clear();
+            for (Style style : styles) {
+                classes.addAll(style.className());
+            }
+            StyleHelper.of(font).style(styles);
+
+            property(Type.Graphic).setValue(font);
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Set icon.
+     * 
      * @param icon
      * @param styles
      * @return
      */
     default Self icon(INamedCharacter icon, Style... styles) {
         Glyph glyph = new Glyph("FontAwesome", icon);
-        glyph.setPadding(new Insets(0, 2, 0, 2));
 
         ObservableList<String> classes = glyph.getStyleClass();
         classes.clear();

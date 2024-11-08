@@ -325,7 +325,7 @@ public final class DockSystem {
      */
     public static void initialize() {
         initialize(icon -> {
-            icon.text(FontAwesomeSolid.BARS).behaveLikeButton().context(menus -> {
+            icon.icon(FontAwesomeSolid.BARS).behaveLikeButton().context(menus -> {
                 menus.menu(I.translate("Open new page"), sub -> {
                     for (DockProvider provider : I.find(DockProvider.class)) {
                         for (Dock item : provider.findDocks()) {

@@ -230,9 +230,9 @@ class Visualizers {
              */
             @Override
             protected void initialize() {
-                edit.text(FontAwesomeSolid.PEN).tooltip(en("Edit")).enable(event.isEditable());
-                delete.text(FontAwesomeSolid.TRASH).tooltip(en("Delete")).enable(event.isEditable());
-                close.text(FontAwesomeSolid.CROSS).tooltip(en("Close")).when(User.LeftClick, ViewtyDialog::close);
+                edit.icon(FontAwesomeSolid.PEN).tooltip(en("Edit")).enable(event.isEditable());
+                delete.icon(FontAwesomeSolid.TRASH).tooltip(en("Delete")).enable(event.isEditable());
+                close.icon(FontAwesomeSolid.CROSS).tooltip(en("Close")).when(User.LeftClick, ViewtyDialog::close);
             }
         }
     }

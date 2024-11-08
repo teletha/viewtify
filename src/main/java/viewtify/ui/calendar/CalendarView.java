@@ -154,8 +154,8 @@ public class CalendarView extends View {
     protected void initialize() {
         CalendarSetting setting = Preferences.of(CalendarSetting.class);
 
-        selectNext.text(FontAwesomeSolid.ANGLE_RIGHT).action(() -> currentView.next());
-        selectPrevious.text(FontAwesomeSolid.ANGLE_LEFT).action(() -> currentView.previous());
+        selectNext.icon(FontAwesomeSolid.ANGLE_RIGHT).action(() -> currentView.next());
+        selectPrevious.icon(FontAwesomeSolid.ANGLE_LEFT).action(() -> currentView.previous());
         selectToday.text(I.translate("Today")).action(() -> currentView.today());
 
         switchToDay.text(I.translate("Day")).action(() -> show(DayView.class, currentDate));
@@ -163,7 +163,7 @@ public class CalendarView extends View {
         switchToMonth.text(I.translate("Month")).action(() -> show(MonthView.class, currentDate));
         switchToYear.text(I.translate("Year")).action(() -> show(YearView.class, currentDate));
 
-        preference.text(FontAwesomeSolid.COG).popup(CalendarSettingView::new);
+        preference.icon(FontAwesomeSolid.COG).popup(CalendarSettingView::new);
 
         show(setting.initialView.v, LocalDate.now());
 

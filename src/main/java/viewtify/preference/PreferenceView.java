@@ -159,8 +159,8 @@ public class PreferenceView extends View {
      */
     @Override
     protected void initialize() {
-        importer.text(FontAwesomeSolid.DOWNLOAD).tooltip(en("Import preferences from file")).when(User.LeftClick, this::importPrefernces);
-        exporter.text(FontAwesomeSolid.UPLOAD).tooltip(en("Export the current preferences")).when(User.LeftClick, this::exportPreferences);
+        importer.icon(FontAwesomeSolid.DOWNLOAD).tooltip(en("Import preferences from file")).when(User.LeftClick, this::importPrefernces);
+        exporter.icon(FontAwesomeSolid.UPLOAD).tooltip(en("Export the current preferences")).when(User.LeftClick, this::exportPreferences);
 
         search.placeholder(en("Search from preferences")).clearable().prefix(FontAwesome.Glyph.SEARCH).observe().to(text -> {
             text = text.strip().toLowerCase();
