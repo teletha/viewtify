@@ -56,25 +56,35 @@ class CSSProcessor implements Consumer<Properties> {
         borderRadius(properties);
         fontSmooth(properties);
         height(properties);
+        icon(properties);
         textIndent(properties);
         userSelect(properties);
         width(properties);
 
         // assign prefix and map special name
-        properties.rename(this::rename);
+        properties.rename(propertyName -> {
+            String name = propertyName.toString();
+            String renamed = propertyNames.getOrDefault(name, name);
+
+            return name.equals("visibility") ? propertyName : CSSValue.of("-fx-" + renamed);
+        });
     }
 
     /**
-     * Rename property names for JavaFX.
+     * Configure alignment.
      * 
-     * @param name
-     * @return
+     * @param properties
      */
-    private CSSValue rename(CSSValue propertyName) {
-        String name = propertyName.toString();
-        String renamed = propertyNames.getOrDefault(name, name);
+    private void icon(Properties properties) {
+        int indexForColor = properties.name("color");
+        if (indexForColor != -1) {
+            properties.set("icon-color", properties.value(indexForColor));
+        }
 
-        return name.equals("visibility") ? propertyName : CSSValue.of("-fx-" + renamed);
+        int indexForSize = properties.name("font-size");
+        if (indexForSize != -1) {
+            properties.set("icon-size", properties.value(indexForSize));
+        }
     }
 
     /**
