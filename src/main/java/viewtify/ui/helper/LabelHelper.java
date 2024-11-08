@@ -295,7 +295,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     default Self icon(Ikon icon, Style... styles) {
         if (icon != null) {
             FontIcon font = new FontIcon(icon);
-            // font.iconColorProperty().bind(property(Type.TextFill));
+            font.iconColorProperty().bind(property(Type.TextFill));
 
             ObservableList<String> classes = font.getStyleClass();
             classes.clear();
