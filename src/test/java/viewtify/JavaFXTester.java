@@ -17,6 +17,11 @@ import org.junit.jupiter.api.BeforeAll;
 
 public abstract class JavaFXTester {
 
+    static {
+        Viewtify.inHeadless();
+        Viewtify.checkHeadlessMode();
+    }
+
     private static boolean started = false;
 
     @BeforeAll
