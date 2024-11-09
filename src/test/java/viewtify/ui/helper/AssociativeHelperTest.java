@@ -11,10 +11,8 @@ package viewtify.ui.helper;
 
 import java.util.Map;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled
 class AssociativeHelperTest {
 
     private AssociativeHelper ui = AssociativeHelper.of(this);
