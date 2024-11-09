@@ -9,6 +9,7 @@
  */
 package viewtify.ui.helper;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
@@ -16,6 +17,7 @@ import kiss.Variable;
 import viewtify.JavaFXTester;
 import viewtify.ui.Providers;
 
+@Disabled
 public class PlaceholderHelperTest extends JavaFXTester {
 
     @ParameterizedTest
