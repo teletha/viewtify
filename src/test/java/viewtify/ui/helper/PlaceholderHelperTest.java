@@ -17,7 +17,6 @@ import kiss.Variable;
 import viewtify.JavaFXTester;
 import viewtify.ui.Providers;
 
-@Disabled
 public class PlaceholderHelperTest extends JavaFXTester {
 
     @ParameterizedTest
@@ -40,6 +39,7 @@ public class PlaceholderHelperTest extends JavaFXTester {
         assert ui.placeholderProperty().getValue().equals("UPDATE");
     }
 
+    @Disabled
     @ParameterizedTest
     @ArgumentsSource(Providers.PlaceholderHelpers.class)
     void textVariableDiscadedByOtherVariable(PlaceholderHelper ui) {
@@ -61,6 +61,7 @@ public class PlaceholderHelperTest extends JavaFXTester {
         assert ui.placeholderProperty().getValue().equals("NEW");
     }
 
+    @Disabled
     @ParameterizedTest
     @ArgumentsSource(Providers.PlaceholderHelpers.class)
     void textVariableDiscadedByText(PlaceholderHelper ui) {
