@@ -125,10 +125,13 @@ public interface PropertyAccessHelper {
         public static final Type<Double> Opacity = new Type("opacity");
 
         /** The defined property type. */
-        public static final Type Orientation = new Type("orientation");;
+        public static final Type Orientation = new Type("orientation");
 
         /** The defined property type. */
         public static final Type<Node> Placeholder = new Type("placeholder");
+
+        /** The defined property type. */
+        public static final Type<String> PromptText = new Type("promptText");
 
         /** The defined property type. */
         public static final Type<SelectionModel> SelectionModel = new Type("selectionModel");

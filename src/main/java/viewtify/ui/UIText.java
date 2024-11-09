@@ -14,13 +14,13 @@ import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -369,34 +369,8 @@ public class UIText<V> extends UserInterface<UIText<V>, CustomTextField>
      * {@inheritDoc}
      */
     @Override
-    public UIText<V> placeholder(Object text) {
-        ui.setPromptText(Objects.toString(text));
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UIText<V> placeholder(Property text) {
-        ui.promptTextProperty().bind(text);
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UIText<V> placeholder(UserInterfaceProvider text) {
-        throw new UnsupportedOperationException("Text field doesn't support the placeholder by node.");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UIText<V> placeholder(Node node) {
-        throw new UnsupportedOperationException("Text field doesn't support the placeholder by node.");
+    public StringProperty placeholderProperty() {
+        return ui.promptTextProperty();
     }
 
     /**

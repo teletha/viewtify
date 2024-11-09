@@ -9,13 +9,12 @@
  */
 package viewtify.ui;
 
-import java.util.Objects;
-
-import javafx.beans.property.Property;
+import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.skin.ComboBoxListViewSkin;
+
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PlaceholderHelper;
@@ -83,33 +82,7 @@ public abstract class AbstractComboBox<T, Self extends AbstractComboBox<T, Self,
      * {@inheritDoc}
      */
     @Override
-    public Self placeholder(Object text) {
-        comboBox().setPromptText(Objects.toString(text));
-        return (Self) this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Self placeholder(Property text) {
-        comboBox().promptTextProperty().bind(text);
-        return (Self) this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Self placeholder(UserInterfaceProvider text) {
-        throw new UnsupportedOperationException("Text field doesn't support the placeholder by node.");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Self placeholder(Node node) {
-        throw new UnsupportedOperationException("Text field doesn't support the placeholder by node.");
+    public StringProperty placeholderProperty() {
+        return comboBox().promptTextProperty();
     }
 }

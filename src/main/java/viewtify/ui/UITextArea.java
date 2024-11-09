@@ -12,16 +12,15 @@ package viewtify.ui;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.scene.control.TextArea;
+
 import viewtify.ui.helper.BlockHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.EditableHelper;
-import viewtify.ui.helper.PlaceholderHelper;
 import viewtify.ui.helper.ValueHelper;
 import viewtify.util.MonkeyPatch;
 
 public class UITextArea extends UserInterface<UITextArea, TextArea>
-        implements ValueHelper<UITextArea, String>, BlockHelper<UITextArea>, ContextMenuHelper<UITextArea>, EditableHelper<UITextArea>,
-        PlaceholderHelper<UITextArea> {
+        implements ValueHelper<UITextArea, String>, BlockHelper<UITextArea>, ContextMenuHelper<UITextArea>, EditableHelper<UITextArea> {
 
     /**
      * Enchanced view.

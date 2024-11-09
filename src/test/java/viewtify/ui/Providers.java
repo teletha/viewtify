@@ -22,6 +22,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 
 import viewtify.ui.helper.LabelHelper;
+import viewtify.ui.helper.PlaceholderHelper;
 
 public class Providers {
 
@@ -89,4 +90,13 @@ public class Providers {
         }
     }
 
+    public static class PlaceholderHelpers implements ArgumentsProvider {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return collect(PlaceholderHelper.class);
+        }
+    }
 }

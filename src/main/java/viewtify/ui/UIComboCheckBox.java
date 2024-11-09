@@ -10,6 +10,7 @@
 package viewtify.ui;
 
 import javafx.beans.property.Property;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
@@ -66,5 +67,13 @@ public class UIComboCheckBox<T> extends AbstractComboBox<T, UIComboCheckBox<T>, 
     @Override
     protected ComboBox<T> comboBox() {
         return (ComboBox) ui.getChildrenUnmodifiable().get(0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public StringProperty placeholderProperty() {
+        return ui.titleProperty();
     }
 }

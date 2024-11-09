@@ -9,7 +9,12 @@
  */
 package viewtify.ui;
 
+import javafx.beans.property.Property;
+import javafx.beans.property.StringProperty;
+import javafx.scene.Node;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+
 import viewtify.ui.helper.CollectableHelper;
 import viewtify.ui.helper.ContextMenuHelper;
 import viewtify.ui.helper.PlaceholderHelper;
@@ -31,5 +36,19 @@ abstract class UITableBase<RowV, FXTable extends Control, Self extends UITableBa
      */
     protected UITableBase(FXTable ui, View view) {
         super(ui, view);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public StringProperty placeholderProperty() {
+        Property<Node> property = property(Type.Placeholder);
+        Label label = (Label) property.getValue();
+        if (label == null) {
+            label = new Label();
+            property.setValue(label);
+        }
+        return label.textProperty();
     }
 }
