@@ -21,47 +21,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 
-import viewtify.ui.UIButton;
-import viewtify.ui.UICheckBox;
-import viewtify.ui.UICheckMenuItem;
-import viewtify.ui.UICheckSwitch;
-import viewtify.ui.UIChoiceBox;
-import viewtify.ui.UIColorPicker;
-import viewtify.ui.UIComboBox;
-import viewtify.ui.UIComboCheckBox;
-import viewtify.ui.UIDatePicker;
-import viewtify.ui.UIFlowView;
-import viewtify.ui.UIFontPicker;
-import viewtify.ui.UIGridView;
-import viewtify.ui.UIHBox;
-import viewtify.ui.UIImage;
-import viewtify.ui.UILabel;
-import viewtify.ui.UILineChart;
-import viewtify.ui.UIListView;
-import viewtify.ui.UIMenuItem;
-import viewtify.ui.UIPane;
-import viewtify.ui.UIPieChart;
-import viewtify.ui.UIProgressBar;
-import viewtify.ui.UIScrollPane;
-import viewtify.ui.UISegmentedButton;
-import viewtify.ui.UISelectPane;
-import viewtify.ui.UISlidePane;
-import viewtify.ui.UISpinner;
-import viewtify.ui.UISplitPane;
-import viewtify.ui.UIStackPane;
-import viewtify.ui.UITab;
-import viewtify.ui.UITabPane;
-import viewtify.ui.UITableCheckBoxColumn;
-import viewtify.ui.UITableColumn;
-import viewtify.ui.UITableView;
-import viewtify.ui.UIText;
-import viewtify.ui.UITextArea;
-import viewtify.ui.UITileView;
-import viewtify.ui.UIToggleButton;
-import viewtify.ui.UIToolBar;
-import viewtify.ui.UITreeTableView;
-import viewtify.ui.UIVBox;
-
 public class HelperProvider implements ArgumentsProvider {
 
     private static final Map<Class, Supplier> builders = new HashMap();
@@ -107,7 +66,7 @@ public class HelperProvider implements ArgumentsProvider {
         builders.put(UIToolBar.class, () -> new UIToolBar(null));
         builders.put(UITreeTableView.class, () -> new UITreeTableView(null));
         builders.put(UIVBox.class, () -> new UIVBox(null));
-        // builders.put(UIWeb.class, () -> new UIWeb(null));
+        builders.put(UIWeb.class, () -> new UIWeb(null));
     }
 
     private static <T> Stream<Arguments> collect(Class<T> type) {
