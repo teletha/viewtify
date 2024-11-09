@@ -10,19 +10,37 @@
 package viewtify.ui.helper;
 
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import kiss.Variable;
 import viewtify.JavaFXTester;
 import viewtify.ui.Providers;
+import viewtify.ui.UIComboBox;
+import viewtify.ui.UIText;
 
 public class PlaceholderHelperTest extends JavaFXTester {
+    @Test
+    void text1() {
+        UIComboBox ui = new UIComboBox(null);
+        System.out.println("text1");
+        ui.placeholder("TEST");
+        assert ui.placeholderProperty().getValue().equals("TEST");
+    }
 
+    @Test
+    void text2() {
+        UIText ui = new UIText(null, String.class);
+        System.out.println("text2");
+        ui.placeholder("TEST");
+        assert ui.placeholderProperty().getValue().equals("TEST");
+    }
+
+    @Disabled
     @ParameterizedTest
     @ArgumentsSource(Providers.PlaceholderHelpers.class)
     void text(PlaceholderHelper<?> ui) {
-        System.out.println(ui);
         ui.placeholder("TEST");
         assert ui.placeholderProperty().getValue().equals("TEST");
     }
