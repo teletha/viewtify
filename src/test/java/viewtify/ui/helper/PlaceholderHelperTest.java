@@ -14,19 +14,19 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import kiss.Variable;
 import viewtify.JavaFXTester;
-import viewtify.ui.Providers;
+import viewtify.ui.HelperProvider;
 
 public class PlaceholderHelperTest extends JavaFXTester {
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.PlaceholderHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void text(PlaceholderHelper<?> ui) {
         ui.placeholder("TEST");
         assert ui.placeholderProperty().getValue().equals("TEST");
     }
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.PlaceholderHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void variable(PlaceholderHelper<?> ui) {
         Variable<String> text = Variable.of("TEST");
 
@@ -39,7 +39,7 @@ public class PlaceholderHelperTest extends JavaFXTester {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.PlaceholderHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void textVariableDiscadedByOtherVariable(PlaceholderHelper ui) {
         Variable text1 = Variable.of("TEST");
         ui.placeholder(text1);
@@ -60,7 +60,7 @@ public class PlaceholderHelperTest extends JavaFXTester {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.PlaceholderHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void textVariableDiscadedByText(PlaceholderHelper ui) {
         Variable text1 = Variable.of("TEST");
         ui.placeholder(text1);

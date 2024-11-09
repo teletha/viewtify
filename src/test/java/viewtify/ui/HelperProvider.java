@@ -21,11 +21,48 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 
-import viewtify.ui.helper.AssociativeHelper;
-import viewtify.ui.helper.LabelHelper;
-import viewtify.ui.helper.PlaceholderHelper;
+import viewtify.ui.UIButton;
+import viewtify.ui.UICheckBox;
+import viewtify.ui.UICheckMenuItem;
+import viewtify.ui.UICheckSwitch;
+import viewtify.ui.UIChoiceBox;
+import viewtify.ui.UIColorPicker;
+import viewtify.ui.UIComboBox;
+import viewtify.ui.UIComboCheckBox;
+import viewtify.ui.UIDatePicker;
+import viewtify.ui.UIFlowView;
+import viewtify.ui.UIFontPicker;
+import viewtify.ui.UIGridView;
+import viewtify.ui.UIHBox;
+import viewtify.ui.UIImage;
+import viewtify.ui.UILabel;
+import viewtify.ui.UILineChart;
+import viewtify.ui.UIListView;
+import viewtify.ui.UIMenuItem;
+import viewtify.ui.UIPane;
+import viewtify.ui.UIPieChart;
+import viewtify.ui.UIProgressBar;
+import viewtify.ui.UIScrollPane;
+import viewtify.ui.UISegmentedButton;
+import viewtify.ui.UISelectPane;
+import viewtify.ui.UISlidePane;
+import viewtify.ui.UISpinner;
+import viewtify.ui.UISplitPane;
+import viewtify.ui.UIStackPane;
+import viewtify.ui.UITab;
+import viewtify.ui.UITabPane;
+import viewtify.ui.UITableCheckBoxColumn;
+import viewtify.ui.UITableColumn;
+import viewtify.ui.UITableView;
+import viewtify.ui.UIText;
+import viewtify.ui.UITextArea;
+import viewtify.ui.UITileView;
+import viewtify.ui.UIToggleButton;
+import viewtify.ui.UIToolBar;
+import viewtify.ui.UITreeTableView;
+import viewtify.ui.UIVBox;
 
-public class Providers {
+public class HelperProvider implements ArgumentsProvider {
 
     private static final Map<Class, Supplier> builders = new HashMap();
 
@@ -81,24 +118,11 @@ public class Providers {
                 .map(Arguments::of);
     }
 
-    public static class LabelHelpers implements ArgumentsProvider {
-        @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-            return collect(LabelHelper.class);
-        }
-    }
-
-    public static class PlaceholderHelpers implements ArgumentsProvider {
-        @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-            return collect(PlaceholderHelper.class);
-        }
-    }
-
-    public static class AssociativeHelpers implements ArgumentsProvider {
-        @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-            return collect(AssociativeHelper.class);
-        }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+        return collect(context.getRequiredTestMethod().getParameterTypes()[0]);
     }
 }

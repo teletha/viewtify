@@ -17,12 +17,12 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import kiss.Variable;
 import viewtify.JavaFXTester;
-import viewtify.ui.Providers;
+import viewtify.ui.HelperProvider;
 
 public class LabelHelperTest extends JavaFXTester {
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.LabelHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void text(LabelHelper ui) {
         ui.text("TEST");
         assert ui.text().equals("TEST");
@@ -32,14 +32,14 @@ public class LabelHelperTest extends JavaFXTester {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.LabelHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void textNull(LabelHelper ui) {
         ui.text((String) null);
         assert ui.text() == null;
     }
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.LabelHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void textVariable(LabelHelper ui) {
         Variable text = Variable.of("TEST");
         ui.text(text);
@@ -59,7 +59,7 @@ public class LabelHelperTest extends JavaFXTester {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.LabelHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void textVariableDiscadedByOtherVariable(LabelHelper ui) {
         Variable text1 = Variable.of("TEST");
         ui.text(text1);
@@ -80,7 +80,7 @@ public class LabelHelperTest extends JavaFXTester {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.LabelHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void textVariableDiscadedByText(LabelHelper ui) {
         Variable text = Variable.of("TEST");
         ui.text(text);
@@ -100,7 +100,7 @@ public class LabelHelperTest extends JavaFXTester {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.LabelHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void textNode(LabelHelper<?> ui) {
         Label text = new Label("TEST");
         ui.text(text);
@@ -109,21 +109,21 @@ public class LabelHelperTest extends JavaFXTester {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.LabelHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void color(LabelHelper<?> ui) {
         ui.color(Color.RED);
         assert ui.color().equals(Color.RED);
     }
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.LabelHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void fontSize(LabelHelper<?> ui) {
         ui.font(10);
         assert ui.font().getSize() == 10;
     }
 
     @ParameterizedTest
-    @ArgumentsSource(Providers.LabelHelpers.class)
+    @ArgumentsSource(HelperProvider.class)
     void fontName(LabelHelper<?> ui) {
         ui.font("System");
         assert ui.font().getFamily().equals("System");
