@@ -21,6 +21,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 
+import viewtify.ui.helper.AssociativeHelper;
 import viewtify.ui.helper.LabelHelper;
 import viewtify.ui.helper.PlaceholderHelper;
 
@@ -81,9 +82,6 @@ public class Providers {
     }
 
     public static class LabelHelpers implements ArgumentsProvider {
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return collect(LabelHelper.class);
@@ -91,12 +89,16 @@ public class Providers {
     }
 
     public static class PlaceholderHelpers implements ArgumentsProvider {
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             return collect(PlaceholderHelper.class);
+        }
+    }
+
+    public static class AssociativeHelpers implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return collect(AssociativeHelper.class);
         }
     }
 }

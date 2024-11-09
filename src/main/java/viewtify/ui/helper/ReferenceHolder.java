@@ -9,7 +9,14 @@
  */
 package viewtify.ui.helper;
 
+import java.util.WeakHashMap;
+
+import javafx.collections.ObservableMap;
+
 public abstract class ReferenceHolder {
+
+    /** The weakable KVS. */
+    static final WeakHashMap<Object, ObservableMap> ASSOCIATIVE = new WeakHashMap();
 
     /** The reference holder. */
     volatile CollectableHelper.Ð collectable;

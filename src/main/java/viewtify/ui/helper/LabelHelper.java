@@ -34,7 +34,7 @@ import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.util.FXUtils;
 
-public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHelper {
+public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHelper, AssociativeHelper {
 
     /**
      * Get text.
@@ -62,16 +62,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Variable text) {
-        if (text == null) {
-            FXUtils.disposeAssociation(ui(), Disposable.class);
-        } else {
-            Disposable disposable = text.observing().on(Viewtify.UIThread).to(v -> {
-                property(Type.Text).setValue(I.transform(v, String.class));
-            });
-
-            FXUtils.replaceAssociation(ui(), Disposable.class, disposable);
-        }
-
+        bind(property(Type.Text), text, x -> I.transform(x, String.class));
         return (Self) this;
     }
 
@@ -114,7 +105,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Node text) {
-        FXUtils.disposeAssociation(ui(), Disposable.class);
+        delete(Disposable.class);
 
         property(Type.Text).setValue(null);
         property(Type.Graphic).setValue(text);

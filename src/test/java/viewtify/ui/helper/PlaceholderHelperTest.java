@@ -37,4 +37,45 @@ public class PlaceholderHelperTest extends JavaFXTester {
         text.set("UPDATE");
         assert ui.placeholderProperty().getValue().equals("UPDATE");
     }
+
+    @ParameterizedTest
+    @ArgumentsSource(Providers.PlaceholderHelpers.class)
+    void textVariableDiscadedByOtherVariable(PlaceholderHelper ui) {
+        Variable text1 = Variable.of("TEST");
+        ui.placeholder(text1);
+        assert ui.placeholderProperty().getValue().equals("TEST");
+
+        // sync from model
+        text1.set("UPDATE");
+        assert ui.placeholderProperty().getValue().equals("UPDATE");
+
+        // change model
+        Variable text2 = Variable.of("NEW");
+        ui.placeholder(text2);
+        assert ui.placeholderProperty().getValue().equals("NEW");
+
+        // old model was discarded
+        text1.set("FROM OLD");
+        assert ui.placeholderProperty().getValue().equals("NEW");
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(Providers.PlaceholderHelpers.class)
+    void textVariableDiscadedByText(PlaceholderHelper ui) {
+        Variable text1 = Variable.of("TEST");
+        ui.placeholder(text1);
+        assert ui.placeholderProperty().getValue().equals("TEST");
+
+        // sync from model
+        text1.set("UPDATE");
+        assert ui.placeholderProperty().getValue().equals("UPDATE");
+
+        // change by text model
+        ui.placeholder("NEW");
+        assert ui.placeholderProperty().getValue().equals("NEW");
+
+        // old model was discarded
+        text1.set("FROM OLD");
+        assert ui.placeholderProperty().getValue().equals("NEW");
+    }
 }

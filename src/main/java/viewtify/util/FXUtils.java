@@ -12,24 +12,18 @@ package viewtify.util;
 import static java.lang.Double.parseDouble;
 
 import java.util.Objects;
-import java.util.WeakHashMap;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
 import kiss.Decoder;
-import kiss.Disposable;
 import kiss.Encoder;
-import kiss.I;
 import kiss.Variable;
-import kiss.WiseSupplier;
 import stylist.Style;
 import stylist.value.CSSValue;
 
@@ -377,138 +371,6 @@ public class FXUtils {
                 nextListener.changed(next, null, next.getValue());
             }
         }
-    }
-
-    /** The weakable KVS. */
-    private static final WeakHashMap<Object, UserData> WEAK = new WeakHashMap();
-
-    private static UserData data(Object object) {
-        if (object instanceof Node node) {
-            Object data = node.getUserData();
-
-            if (data == null) {
-                UserData user = new UserData();
-                node.setUserData(user);
-                return user;
-            } else if (data instanceof UserData user) {
-                return user;
-            } else {
-                throw new IllegalStateException("Other user data is already assigned. [" + object + "]");
-            }
-        } else {
-            return WEAK.computeIfAbsent(object, key -> new UserData());
-        }
-    }
-
-    /**
-     * Get the user data.
-     * 
-     * @param <T>
-     * @param object
-     * @param key
-     */
-    public static synchronized <T> Variable<T> getAssociation(Object object, Class<T> key) {
-        if (object == null || key == null) {
-            return Variable.empty();
-        }
-        return Variable.of((T) data(object).get(key));
-    }
-
-    /**
-     * Dispose the user data.
-     * 
-     * @param <T>
-     * @param object
-     * @param key
-     */
-    public static synchronized <T> void disposeAssociation(Object object, Class<T> key) {
-        if (object != null && key != null) {
-            UserData data = data(object);
-            Object removed = data.remove(key);
-            if (removed instanceof Disposable disposable) {
-                disposable.dispose();
-            }
-        }
-    }
-
-    /**
-     * Replace the user data.
-     * 
-     * @param <T>
-     * @param object
-     * @param key
-     */
-    public static synchronized <T> void replaceAssociation(Object object, Class<T> key, T value) {
-        disposeAssociation(object, key);
-        setAssociation(object, key, value);
-    }
-
-    /**
-     * Store the user data.
-     * 
-     * @param <T>
-     * @param object
-     * @param key
-     * @param value
-     */
-    public static synchronized <T> void setAssociation(Object object, Class<T> key, Object value) {
-        if (key.isInstance(value)) {
-            ensureAssociation(object, key, () -> (T) value, true);
-        }
-    }
-
-    /**
-     * Store the user data.
-     * 
-     * @param <T>
-     * @param object
-     * @param key
-     */
-    public static synchronized <T> T ensureAssociation(Object object, Class<T> key) {
-        return ensureAssociation(object, key, () -> I.make(key), false);
-    }
-
-    /**
-     * Store the user data.
-     * 
-     * @param <T>
-     * @param object
-     * @param key
-     * @param supplier
-     */
-    public static synchronized <T> T ensureAssociation(Object object, Class<T> key, WiseSupplier<T> supplier) {
-        return ensureAssociation(object, key, supplier, false);
-    }
-
-    /**
-     * Store the user data.
-     * 
-     * @param <T>
-     * @param object
-     * @param key
-     * @param supplier
-     * @param override
-     * @return
-     */
-    private static <T> T ensureAssociation(Object object, Class<T> key, WiseSupplier<T> supplier, boolean override) {
-        Objects.requireNonNull(object, "Target node is required.");
-        Objects.requireNonNull(key, "Key type is required.");
-        Objects.requireNonNull(supplier, "Value supplier is required.");
-
-        UserData data = data(object);
-        Object value = data.get(key);
-        if (value == null || override) {
-            value = supplier.get();
-            if (!key.isInstance(value)) {
-                throw new IllegalStateException("Assigned value [" + value + "] is not instance of " + key + ".");
-            }
-            data.put(key, value);
-        }
-        return (T) value;
-    }
-
-    @SuppressWarnings("serial")
-    private static class UserData extends ConcurrentHashMap<Class, Object> {
     }
 
     /**

@@ -26,9 +26,8 @@ import kiss.Variable;
 import kiss.WiseConsumer;
 import kiss.WiseFunction;
 import viewtify.Viewtify;
-import viewtify.util.FXUtils;
 
-public interface DisableHelper<Self extends DisableHelper> extends PropertyAccessHelper {
+public interface DisableHelper<Self extends DisableHelper> extends PropertyAccessHelper, AssociativeHelper {
 
     /**
      * Get the disable property.
@@ -422,8 +421,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * @return
      */
     default Self showLoader() {
-        Region pane = (Region) ui();
-        FXUtils.ensureAssociation(pane, LoaderEffect.class).show(pane);
+        exact(LoaderEffect.class).show((Region) ui());
 
         return disableNow();
     }
@@ -434,8 +432,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
      * @return
      */
     default Self hideLoader() {
-        Region pane = (Region) ui();
-        FXUtils.getAssociation(pane, LoaderEffect.class).to(LoaderEffect::hide);
+        get(LoaderEffect.class).to(LoaderEffect::hide);
 
         return enableNow();
     }

@@ -13,9 +13,8 @@ import javafx.beans.property.StringProperty;
 
 import kiss.I;
 import kiss.Variable;
-import viewtify.Viewtify;
 
-public interface PlaceholderHelper<Self extends PlaceholderHelper> extends PropertyAccessHelper {
+public interface PlaceholderHelper<Self extends PlaceholderHelper> extends PropertyAccessHelper, AssociativeHelper {
 
     /**
      * Get the placeholder property.
@@ -41,9 +40,7 @@ public interface PlaceholderHelper<Self extends PlaceholderHelper> extends Prope
      * @return Chainable API.
      */
     default Self placeholder(Variable text) {
-        text.observing().on(Viewtify.UIThread).to(v -> {
-            placeholderProperty().set(I.transform(text, String.class));
-        });
+        bind(placeholderProperty(), text, v -> I.transform(v, String.class));
         return (Self) this;
     }
 }

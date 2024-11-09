@@ -12,12 +12,12 @@ package viewtify.ui.helper;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+
 import kiss.Disposable;
 import kiss.Variable;
 import kiss.WiseRunnable;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.ui.anime.SwapAnime;
-import viewtify.util.FXUtils;
 
 public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> extends UserInterfaceProvider<P> {
 
@@ -30,7 +30,7 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
     default Self content(UserInterfaceProvider<? extends Node> provider, SwapAnime... anime) {
         if (provider != null) {
             Node after = provider.ui();
-            FXUtils.setAssociation(after, Disposable.class, provider);
+            AssociativeHelper.of(after).set(Disposable.class, ContainerHelper.class.getName(), provider);
 
             P parent = ui();
             ObservableList<Node> children = parent.getChildren();
@@ -43,7 +43,7 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
                     anime[0].run(parent, before, after, () -> {
                         children.set(0, after);
 
-                        FXUtils.getAssociation(before, Disposable.class).to(Disposable::dispose);
+                        AssociativeHelper.of(before).get(Disposable.class, ContainerHelper.class.getName()).to(Disposable::dispose);
                     });
                 }
             }
@@ -60,7 +60,7 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
     default Self content(UserInterfaceProvider<? extends Node> provider, WiseRunnable finisher, SwapAnime... anime) {
         if (provider != null) {
             Node after = provider.ui();
-            FXUtils.setAssociation(after, Disposable.class, provider);
+            AssociativeHelper.of(after).set(Disposable.class, ContainerHelper.class.getName(), provider);
 
             P parent = ui();
             ObservableList<Node> children = parent.getChildren();
@@ -73,7 +73,7 @@ public interface ContainerHelper<Self extends ContainerHelper, P extends Pane> e
                     anime[0].run(parent, before, after, () -> {
                         children.set(0, after);
 
-                        FXUtils.getAssociation(before, Disposable.class).to(Disposable::dispose);
+                        AssociativeHelper.of(before).get(Disposable.class, ContainerHelper.class.getName()).to(Disposable::dispose);
                     });
                 }
             }
