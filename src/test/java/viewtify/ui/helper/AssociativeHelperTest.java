@@ -11,17 +11,14 @@ package viewtify.ui.helper;
 
 import java.util.Map;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.api.Test;
 
-import viewtify.JavaFXTester;
-import viewtify.ui.Providers;
+class AssociativeHelperTest {
 
-class AssociativeHelperTest extends JavaFXTester {
+    private AssociativeHelper ui = AssociativeHelper.of(this);
 
-    @ParameterizedTest
-    @ArgumentsSource(Providers.AssociativeHelpers.class)
-    void get(AssociativeHelper ui) {
+    @Test
+    void get() {
         assert ui.get(String.class).isAbsent();
 
         ui.set(String.class, "TEST");
@@ -29,15 +26,13 @@ class AssociativeHelperTest extends JavaFXTester {
         assert ui.get(Class.class).isAbsent();
     }
 
-    @ParameterizedTest
-    @ArgumentsSource(Providers.AssociativeHelpers.class)
-    void getNullKey(AssociativeHelper ui) {
+    @Test
+    void getNullKey() {
         assert ui.get(null).isAbsent();
     }
 
-    @ParameterizedTest
-    @ArgumentsSource(Providers.AssociativeHelpers.class)
-    void getWithName(AssociativeHelper ui) {
+    @Test
+    void getWithName() {
         ui.set(String.class, "1", "value1");
         ui.set(String.class, "2", "value2");
 
@@ -47,9 +42,8 @@ class AssociativeHelperTest extends JavaFXTester {
         assert ui.get(Class.class, "1").isAbsent();
     }
 
-    @ParameterizedTest
-    @ArgumentsSource(Providers.AssociativeHelpers.class)
-    void getWithNullName(AssociativeHelper ui) {
+    @Test
+    void getWithNullName() {
         ui.set(String.class, "1", "value1");
         ui.set(String.class, null, "valueNull");
 
@@ -58,41 +52,35 @@ class AssociativeHelperTest extends JavaFXTester {
         assert ui.get(String.class).is("valueNull");
     }
 
-    @ParameterizedTest
-    @ArgumentsSource(Providers.AssociativeHelpers.class)
-    void exact(AssociativeHelper ui) {
+    @Test
+    void exact() {
         assert ui.exact(Map.class) instanceof Map;
     }
 
-    @ParameterizedTest
-    @ArgumentsSource(Providers.AssociativeHelpers.class)
-    void exactNullKey(AssociativeHelper ui) {
+    @Test
+    void exactNullKey() {
         assert ui.exact(null) == null;
     }
 
-    @ParameterizedTest
-    @ArgumentsSource(Providers.AssociativeHelpers.class)
-    void set(AssociativeHelper ui) {
+    @Test
+    void set() {
         ui.set(String.class, "TEST");
         assert ui.get(String.class).is("TEST");
     }
 
-    @ParameterizedTest
-    @ArgumentsSource(Providers.AssociativeHelpers.class)
-    void setNullKey(AssociativeHelper ui) {
+    @Test
+    void setNullKey() {
         ui.set(null, "TEST");
         assert ui.get(null).isAbsent();
     }
 
-    @ParameterizedTest
-    @ArgumentsSource(Providers.AssociativeHelpers.class)
-    void delete(AssociativeHelper ui) {
+    @Test
+    void delete() {
         ui.delete(String.class);
     }
 
-    @ParameterizedTest
-    @ArgumentsSource(Providers.AssociativeHelpers.class)
-    void deleteNullKey(AssociativeHelper ui) {
+    @Test
+    void deleteNullKey() {
         ui.set(null, "TEST");
         assert ui.get(null).isAbsent();
     }
