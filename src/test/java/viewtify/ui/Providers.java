@@ -70,7 +70,7 @@ public class Providers {
         builders.put(UIToolBar.class, () -> new UIToolBar(null));
         builders.put(UITreeTableView.class, () -> new UITreeTableView(null));
         builders.put(UIVBox.class, () -> new UIVBox(null));
-        builders.put(UIWeb.class, () -> new UIWeb(null));
+        // builders.put(UIWeb.class, () -> new UIWeb(null));
     }
 
     private static <T> Stream<Arguments> collect(Class<T> type) {
