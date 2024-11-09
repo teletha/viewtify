@@ -76,7 +76,7 @@ class AssociativeHelperTest {
 
     @Test
     void delete() {
-        ui.delete(String.class);
+        ui.dispose(String.class);
     }
 
     @Test

@@ -122,7 +122,7 @@ public interface AssociativeHelper {
      * @param key
      */
     default <T> void replace(Class<T> key, String name, T value) {
-        delete(key, name);
+        dispose(key, name);
         set(key, name, value);
     }
 
@@ -131,8 +131,8 @@ public interface AssociativeHelper {
      * 
      * @param key
      */
-    default void delete(Class key) {
-        delete(key, null);
+    default void dispose(Class key) {
+        dispose(key, null);
     }
 
     /**
@@ -140,7 +140,7 @@ public interface AssociativeHelper {
      * 
      * @param key
      */
-    default void delete(Class key, String name) {
+    default void dispose(Class key, String name) {
         if (key != null) {
             ObservableMap data = map(ui());
             Object removed = data.remove(Objects.hash(key, name));
@@ -193,7 +193,7 @@ public interface AssociativeHelper {
 
     default <S, V> void bind(Property<V> property, Variable<S> source, WiseFunction<S, V> converter) {
         if (source == null) {
-            delete(Disposable.class, property.getName());
+            dispose(Disposable.class, property.getName());
         } else {
             Disposable disposable = source.observing().on(Viewtify.UIThread).map(converter).to(property::setValue);
             replace(Disposable.class, property.getName(), disposable);

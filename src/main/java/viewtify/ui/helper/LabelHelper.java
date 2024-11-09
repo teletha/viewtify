@@ -105,7 +105,7 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self text(Node text) {
-        delete(Disposable.class);
+        dispose(Disposable.class);
 
         property(Type.Text).setValue(null);
         property(Type.Graphic).setValue(text);
