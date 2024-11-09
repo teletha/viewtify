@@ -104,6 +104,13 @@ const root = {
 		{
 			"modifiers": {
 				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AssociativeHelper",
+			"packageName": "viewtify.ui.helper",
+			"type": "Functional"
+		},
+		{
+			"modifiers": {
+				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "AutoDisposable",
 			"packageName": "viewtify.ui",
 			"type": "Functional"
@@ -540,7 +547,7 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "PlaceholderHelper",
 			"packageName": "viewtify.ui.helper",
-			"type": "Functional"
+			"type": "Interface"
 		},
 		{
 			"modifiers": {
