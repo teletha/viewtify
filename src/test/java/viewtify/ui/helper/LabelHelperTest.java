@@ -16,10 +16,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import kiss.Variable;
-import viewtify.JavaFXTester;
+import viewtify.JavaFXHeadlessTester;
 import viewtify.ui.Providers;
 
-public class LabelHelperTest extends JavaFXTester {
+public class LabelHelperTest extends JavaFXHeadlessTester {
 
     @ParameterizedTest
     @ArgumentsSource(Providers.LabelHelpers.class)

@@ -15,11 +15,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import kiss.Variable;
-import viewtify.JavaFXTester;
+import viewtify.JavaFXHeadlessTester;
 import viewtify.ui.Providers;
 import viewtify.ui.UIComboBox;
 
-public class PlaceholderHelperTest extends JavaFXTester {
+public class PlaceholderHelperTest extends JavaFXHeadlessTester {
     @Test
     void text1() {
         System.out.println("OK");
