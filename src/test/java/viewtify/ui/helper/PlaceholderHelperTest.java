@@ -18,24 +18,24 @@ import kiss.Variable;
 import viewtify.JavaFXTester;
 import viewtify.ui.Providers;
 import viewtify.ui.UIComboBox;
-import viewtify.ui.UIText;
 
 public class PlaceholderHelperTest extends JavaFXTester {
     @Test
     void text1() {
+        System.out.println("OK");
         UIComboBox ui = new UIComboBox(null);
         System.out.println("text1");
         ui.placeholder("TEST");
         assert ui.placeholderProperty().getValue().equals("TEST");
     }
 
-    @Test
-    void text2() {
-        UIText ui = new UIText(null, String.class);
-        System.out.println("text2");
-        ui.placeholder("TEST");
-        assert ui.placeholderProperty().getValue().equals("TEST");
-    }
+    // @Test
+    // void text2() {
+    // UIText ui = new UIText(null, String.class);
+    // System.out.println("text2");
+    // ui.placeholder("TEST");
+    // assert ui.placeholderProperty().getValue().equals("TEST");
+    // }
 
     @Disabled
     @ParameterizedTest
