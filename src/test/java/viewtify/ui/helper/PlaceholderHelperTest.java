@@ -9,36 +9,15 @@
  */
 package viewtify.ui.helper;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import kiss.Variable;
-import viewtify.JavaFXHeadlessTester;
+import viewtify.JavaFXTester;
 import viewtify.ui.Providers;
-import viewtify.ui.UIComboBox;
 
-@Disabled
-public class PlaceholderHelperTest extends JavaFXHeadlessTester {
-    @Test
-    void text1() {
-        System.out.println("OK");
-        UIComboBox ui = new UIComboBox(null);
-        System.out.println("text1");
-        ui.placeholder("TEST");
-        assert ui.placeholderProperty().getValue().equals("TEST");
-    }
+public class PlaceholderHelperTest extends JavaFXTester {
 
-    // @Test
-    // void text2() {
-    // UIText ui = new UIText(null, String.class);
-    // System.out.println("text2");
-    // ui.placeholder("TEST");
-    // assert ui.placeholderProperty().getValue().equals("TEST");
-    // }
-
-    @Disabled
     @ParameterizedTest
     @ArgumentsSource(Providers.PlaceholderHelpers.class)
     void text(PlaceholderHelper<?> ui) {
@@ -46,7 +25,6 @@ public class PlaceholderHelperTest extends JavaFXHeadlessTester {
         assert ui.placeholderProperty().getValue().equals("TEST");
     }
 
-    @Disabled
     @ParameterizedTest
     @ArgumentsSource(Providers.PlaceholderHelpers.class)
     void variable(PlaceholderHelper<?> ui) {
@@ -60,7 +38,6 @@ public class PlaceholderHelperTest extends JavaFXHeadlessTester {
         assert ui.placeholderProperty().getValue().equals("UPDATE");
     }
 
-    @Disabled
     @ParameterizedTest
     @ArgumentsSource(Providers.PlaceholderHelpers.class)
     void textVariableDiscadedByOtherVariable(PlaceholderHelper ui) {
@@ -82,7 +59,6 @@ public class PlaceholderHelperTest extends JavaFXHeadlessTester {
         assert ui.placeholderProperty().getValue().equals("NEW");
     }
 
-    @Disabled
     @ParameterizedTest
     @ArgumentsSource(Providers.PlaceholderHelpers.class)
     void textVariableDiscadedByText(PlaceholderHelper ui) {
