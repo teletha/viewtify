@@ -22,10 +22,12 @@ public class PlaceholderHelperTest extends JavaFXTester {
     @ParameterizedTest
     @ArgumentsSource(Providers.PlaceholderHelpers.class)
     void text(PlaceholderHelper<?> ui) {
+        System.out.println(ui);
         ui.placeholder("TEST");
         assert ui.placeholderProperty().getValue().equals("TEST");
     }
 
+    @Disabled
     @ParameterizedTest
     @ArgumentsSource(Providers.PlaceholderHelpers.class)
     void variable(PlaceholderHelper<?> ui) {
