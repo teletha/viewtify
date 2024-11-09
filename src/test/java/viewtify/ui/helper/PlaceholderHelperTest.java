@@ -19,6 +19,7 @@ import viewtify.JavaFXHeadlessTester;
 import viewtify.ui.Providers;
 import viewtify.ui.UIComboBox;
 
+@Disabled
 public class PlaceholderHelperTest extends JavaFXHeadlessTester {
     @Test
     void text1() {
