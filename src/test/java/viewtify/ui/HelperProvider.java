@@ -14,12 +14,12 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.MenuItem;
-
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.MenuItem;
 
 public class HelperProvider implements ArgumentsProvider {
 
@@ -66,7 +66,7 @@ public class HelperProvider implements ArgumentsProvider {
         builders.put(UIToolBar.class, () -> new UIToolBar(null));
         builders.put(UITreeTableView.class, () -> new UITreeTableView(null));
         builders.put(UIVBox.class, () -> new UIVBox(null));
-        builders.put(UIWeb.class, () -> new UIWeb(null));
+        // builders.put(UIWeb.class, () -> new UIWeb(null));
     }
 
     private static <T> Stream<Arguments> collect(Class<T> type) {

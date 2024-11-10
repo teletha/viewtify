@@ -18,7 +18,6 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.Region;
-
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -263,7 +262,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Enables itself when the specified condition is True, and enables it when False.
+     * Enables itself when the specified condition is True, and disables it when False.
      * 
      * @param condition A timing condition.
      * @return Chainable API.
@@ -276,7 +275,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Enables itself when the specified condition is True, and enables it when False.
+     * Enables itself when the specified condition is True, and disables it when False.
      * 
      * @param conditions A list of timing conditions.
      * @return Chainable API.
@@ -300,7 +299,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Enables itself when the specified condition is True, and enables it when False.
+     * Enables itself when the specified condition is True, and disables it when False.
      * 
      * @param condition A timing condition.
      * @param conditions Additional timing conditions.
@@ -314,7 +313,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Enables itself when any specified condition is True, and enables it when False.
+     * Enables itself when any specified condition is True, and disables it when False.
      * 
      * @param conditions A list of timing conditions.
      * @return Chainable API.
@@ -338,7 +337,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Enables itself when any specified condition is True, and enables it when False.
+     * Enables itself when any specified condition is True, and disables it when False.
      * 
      * @param condition A timing condition.
      * @param conditions Additional timing conditions.
@@ -352,7 +351,7 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Enables itself when the specified condition is True, and enables it when False.
+     * Enables itself when the specified condition is True, and disables it when False.
      * 
      * @param condition A timing condition.
      * @return Chainable API.
@@ -365,7 +364,21 @@ public interface DisableHelper<Self extends DisableHelper> extends PropertyAcces
     }
 
     /**
-     * Enables itself when the specified condition is True, and enables it when False.
+     * Enables itself when the specified condition is True, and disables it when False.
+     * 
+     * @param target A target value to test.
+     * @param condition A condition.
+     * @return Chainable API.
+     */
+    default <V> Self enableWhen(Variable<V> target, Predicate<V> condition) {
+        if (target != null && condition != null) {
+            enableWhen(target.observing().is(condition));
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Enables itself when the specified condition is True, and disables it when False.
      * 
      * @param condition A timing condition.
      * @return Chainable API.
