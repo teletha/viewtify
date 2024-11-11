@@ -9,6 +9,8 @@
  */
 package viewtify;
 
+import javax.lang.model.SourceVersion;
+
 public class Project extends bee.api.Project {
 
     {
@@ -42,6 +44,8 @@ public class Project extends bee.api.Project {
                 * Headless UI
                 * Browser manipulation
                 """);
+
+        require(SourceVersion.latest(), SourceVersion.RELEASE_21);
 
         require("com.github.teletha", "sinobu");
         require("com.github.teletha", "psychopath");
