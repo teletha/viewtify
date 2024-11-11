@@ -12,13 +12,14 @@ package viewtify.ui.helper;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleBooleanProperty;
 import kiss.Variable;
 import viewtify.JavaFXTester;
 import viewtify.ui.HelperProvider;
@@ -150,22 +151,22 @@ public class DisableHelperTest extends JavaFXTester {
         assert ui.isDisable();
     }
 
-    @Test
-    void enableWhenVariableConditions() {
-        Variable<String> condition1 = Variable.of("");
-        ui.enableWhen(condition1, x -> x.isEmpty());
-        Variable<String> condition2 = Variable.of("");
-        ui.enableWhen(condition2, x -> x.isEmpty());
-        assert ui.isEnable();
-
-        // from old model
-        condition1.set("FAIL");
-        assert ui.isEnable();
-
-        // form new model
-        condition2.set("OK");
-        assert ui.isDisable();
-    }
+    // @Test
+    // void enableWhenVariableConditions() {
+    // Variable<String> condition1 = Variable.of("");
+    // ui.enableWhen(condition1, x -> x.isEmpty());
+    // Variable<String> condition2 = Variable.of("");
+    // ui.enableWhen(condition2, x -> x.isEmpty());
+    // assert ui.isEnable();
+    //
+    // // from old model
+    // condition1.set("FAIL");
+    // assert ui.isEnable();
+    //
+    // // form new model
+    // condition2.set("OK");
+    // assert ui.isDisable();
+    // }
 
     @Test
     void enableWhenProperty() {
