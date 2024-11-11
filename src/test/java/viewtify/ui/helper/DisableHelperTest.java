@@ -17,6 +17,8 @@ import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
@@ -24,13 +26,14 @@ import kiss.Variable;
 import viewtify.JavaFXTester;
 import viewtify.ui.HelperProvider;
 
+@Execution(value = ExecutionMode.SAME_THREAD)
 public class DisableHelperTest extends JavaFXTester {
 
     private final Helper ui = new Helper();
 
     @ParameterizedTest
     @ArgumentsSource(HelperProvider.class)
-    void disable(DisableHelper ui) {
+    void disable(DisableHelper ui) throws InterruptedException {
         assert ui.isEnable();
 
         ui.disable(true);

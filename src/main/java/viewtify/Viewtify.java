@@ -727,7 +727,9 @@ public final class Viewtify {
         File css = Locator.file(prefs + "/font.css");
 
         // write font rule
-        css.text(".root { -fx-font-family : \"" + font.getName() + "\"; -fx-font-size : " + font.getSize() + "px;}");
+        if (!inTest) {
+            css.text(".root { -fx-font-family : \"" + font.getName() + "\"; -fx-font-size : " + font.getSize() + "px;}");
+        }
 
         return css.externalForm();
     }
