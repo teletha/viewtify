@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.32.0](https://github.com/teletha/viewtify/compare/v2.31.0...v2.32.0) (2024-11-11)
+
+
+### Features
+
+* add AssociativeHelper ([3646a82](https://github.com/teletha/viewtify/commit/3646a82906211b55d04ec3b8adcbbe544539fb15))
+* remake PlaceholderHelper ([292d10c](https://github.com/teletha/viewtify/commit/292d10c23d2b221d85005afece039d7494399c1b))
+* update sinobu ([c3a1b98](https://github.com/teletha/viewtify/commit/c3a1b983df5f35f3ab596d64515b4ae68ce37e42))
+
+
+### Bug Fixes
+
+* require Java 21 ([66e2c14](https://github.com/teletha/viewtify/commit/66e2c1400f3f12648a51f8e36052e57ad7f2e633))
+
 ## [2.31.0](https://github.com/teletha/viewtify/compare/v2.30.0...v2.31.0) (2024-11-08)
 
 
