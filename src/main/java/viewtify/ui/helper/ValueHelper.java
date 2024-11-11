@@ -958,7 +958,7 @@ public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
      */
     default Self observe(WiseBiConsumer<V, V> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observe().pair(value()).to(v -> listener.accept(v.ⅰ, v.ⅱ));
+            Disposable stop = observing().buffer(2, 1).to(v -> listener.accept(v.get(0), v.get(1)));
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
@@ -1090,7 +1090,7 @@ public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
      */
     default Self observing(WiseBiConsumer<V, V> listener, Disposable disposer) {
         if (listener != null) {
-            Disposable stop = observe().pair(value()).to(v -> listener.accept(v.ⅰ, v.ⅱ));
+            Disposable stop = observing().buffer(2, 1).to(v -> listener.accept(v.get(0), v.get(1)));
             if (disposer != null) disposer.add(stop);
         }
         return (Self) this;
