@@ -11,10 +11,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="b">
-			<h1 class="m" date="2024-11-11" ver="2.32.0"><code>Viewtify</code></h1>
-			<nav class="j"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="P">
+		<header class="Y">
+			<h1 class="L" date="2024-11-11" ver="2.32.0"><code>Viewtify</code></h1>
+			<nav class="m"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -23,7 +23,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="P" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="S" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -31,14 +31,14 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="I">
-			<nav class="f">
+		<main class="c">
+			<nav class="b">
 				<div></div>
 			</nav>
-			<article class="R" id="Article">
-				<section class="S"><code class="V">viewtify.ui.toast</code>
-					<h2 class="Class h"><code class="L">Toast</code><code class="i">&#60;<code>T</code>&#62;</code></h2>
-					<div class="H">
+			<article class="k" id="Article">
+				<section class="Z"><code class="N">viewtify.ui.toast</code>
+					<h2 class="Class a"><code class="Q">Toast</code><code class="f">&#60;<code>T</code>&#62;</code></h2>
+					<div class="K">
 						<ul class="C D">
 							<li><code>T</code></li>
 						</ul>
@@ -49,234 +49,211 @@
 							<li><code>kiss.WiseFunction<code class="parameters"><code>kiss.Signal<code class="parameters"><code>T</code></code></code>, <code>kiss.Signal<code class="parameters"><code>T</code></code></code></code></code></li>
 						</ul>
 					</div><span class="B"><p>Represents a Toast notification utility class that provides methods to show various types of
-notifications. Notifications are displayed as transient messages to the user.</p>
-</span></section>
-				<section class="S" id="setting">
-					<h2 class="K"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="L">setting</code><i class="l"><code class="return"><a href="api/viewtify.ui.toast.ToastSetting.html">ToastSetting</a></code></i></h2>
+notifications. Notifications are displayed as transient messages to the user.</p></span></section>
+				<section class="Z" id="setting">
+					<h2 class="M"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Q">setting</code><i class="J"><code class="return"><a href="api/viewtify.ui.toast.ToastSetting.html">ToastSetting</a></code></i></h2>
 				</section>
-				<section class="S" id="show(java.lang.Object,kiss.WiseRunnable...)">
-					<h2 class="K"><i class="PUBLIC STATIC"></i><code class="L">show</code><code class="i">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code> <code class="parameterName">actions</code>)</code><i class="l"><code>void</code></i></h2>
-					<table class="g">
-						<tr class="J">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code> <code>message</code></td>
-							<td><span><p>The message to be displayed in the notification.</p>
-</span></td>
+				<section class="Z" id="show(java.lang.Object,kiss.WiseRunnable...)">
+					<h2 class="M"><i class="PUBLIC STATIC"></i><code class="Q">show</code><code class="f">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code><code class="parameterName">actions</code>)</code><i class="J"><code>void</code></i></h2>
+					<table class="h">
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code>message</code></td>
+							<td><span><p>The message to be displayed in the notification.</p></span></td>
 						</tr>
-						<tr class="J">
-							<td><code array="var">kiss.WiseRunnable</code> <code>actions</code></td>
+						<tr class="H">
+							<td><code array="var">kiss.WiseRunnable</code><code>actions</code></td>
 							<td><span><p>Optional actions (WiseRunnable) to be performed when the notification is
-interacted with.</p>
-</span></td>
+interacted with.</p></span></td>
 						</tr>
-					</table><span class="B"><p>Shows a Toast notification with the specified message and optional actions.</p>
-</span></section>
-				<section class="S" id="show(java.lang.String,kiss.WiseRunnable...)">
-					<h2 class="K"><i class="PUBLIC STATIC"></i><code class="L">show</code><code class="i">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code> <code class="parameterName">actions</code>)</code><i class="l"><code>void</code></i></h2>
-					<table class="g">
-						<tr class="J">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
-							<td><span><p>The message to be displayed in the notification.</p>
-</span></td>
+					</table><span class="B"><p>Shows a Toast notification with the specified message and optional actions.</p></span></section>
+				<section class="Z" id="show(java.lang.String,kiss.WiseRunnable...)">
+					<h2 class="M"><i class="PUBLIC STATIC"></i><code class="Q">show</code><code class="f">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code><code class="parameterName">actions</code>)</code><i class="J"><code>void</code></i></h2>
+					<table class="h">
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>message</code></td>
+							<td><span><p>The message to be displayed in the notification.</p></span></td>
 						</tr>
-						<tr class="J">
-							<td><code array="var">kiss.WiseRunnable</code> <code>actions</code></td>
+						<tr class="H">
+							<td><code array="var">kiss.WiseRunnable</code><code>actions</code></td>
 							<td><span><p>Optional actions (WiseRunnable) to be performed when the notification is
-interacted with.</p>
-</span></td>
+interacted with.</p></span></td>
 						</tr>
-					</table><span class="B"><p>Shows a Toast notification with the specified message and optional actions.</p>
-</span></section>
-				<section class="S" id="show(kiss.Variable,kiss.WiseRunnable...)">
-					<h2 class="K"><i class="PUBLIC STATIC"></i><code class="L">show</code><code class="i">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code> <code class="parameterName">actions</code>)</code><i class="l"><code>void</code></i></h2>
-					<table class="g">
-						<tr class="J">
-							<td><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code>message</code></td>
-							<td><span><p>The dynamic message variable to be displayed in the notification.</p>
-</span></td>
+					</table><span class="B"><p>Shows a Toast notification with the specified message and optional actions.</p></span></section>
+				<section class="Z" id="show(kiss.Variable,kiss.WiseRunnable...)">
+					<h2 class="M"><i class="PUBLIC STATIC"></i><code class="Q">show</code><code class="f">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code><code class="parameterName">actions</code>)</code><i class="J"><code>void</code></i></h2>
+					<table class="h">
+						<tr class="H">
+							<td><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code>message</code></td>
+							<td><span><p>The dynamic message variable to be displayed in the notification.</p></span></td>
 						</tr>
-						<tr class="J">
-							<td><code array="var">kiss.WiseRunnable</code> <code>actions</code></td>
+						<tr class="H">
+							<td><code array="var">kiss.WiseRunnable</code><code>actions</code></td>
 							<td><span><p>Optional actions (WiseRunnable) to be performed when the notification is
-interacted with.</p>
-</span></td>
+interacted with.</p></span></td>
 						</tr>
-					</table><span class="B"><p>Shows a Toast notification with the specified dynamic message variable and optional actions.</p>
-</span></section>
-				<section class="S" id="title(java.lang.String)">
-					<h2 class="K"><i class="PUBLIC STATIC"></i><code class="L">title</code><code class="i">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">title</code>)</code><i class="l"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="g">
-						<tr class="e">
+					</table><span class="B"><p>Shows a Toast notification with the specified dynamic message variable and optional actions.</p></span></section>
+				<section class="Z" id="title(java.lang.String)">
+					<h2 class="M"><i class="PUBLIC STATIC"></i><code class="Q">title</code><code class="f">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">title</code>)</code><i class="J"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="h">
+						<tr class="d">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="J">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>title</code></td>
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>title</code></td>
 							<td></td>
 						</tr>
-						<tr class="T">
+						<tr class="W">
 							<td><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Create <code><a href="api/viewtify.ui.toast.Toast.html">Toast</a></code> with the specified title.</p>
-</span></section>
-				<section class="S" id="title(kiss.Variable)">
-					<h2 class="K"><i class="PUBLIC STATIC"></i><code class="L">title</code><code class="i">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">title</code>)</code><i class="l"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="g">
-						<tr class="e">
+					</table><span class="B"><p>Create <code><a href="api/viewtify.ui.toast.Toast.html">Toast</a></code> with the specified title.</p></span></section>
+				<section class="Z" id="title(kiss.Variable)">
+					<h2 class="M"><i class="PUBLIC STATIC"></i><code class="Q">title</code><code class="f">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">title</code>)</code><i class="J"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="h">
+						<tr class="d">
 							<td><code>T</code></td>
 							<td></td>
 						</tr>
-						<tr class="J">
-							<td><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code>title</code></td>
+						<tr class="H">
+							<td><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code>title</code></td>
 							<td></td>
 						</tr>
-						<tr class="T">
+						<tr class="W">
 							<td><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Create <code><a href="api/viewtify.ui.toast.Toast.html">Toast</a></code> with the specified title.</p>
-</span></section>
-				<section class="S" id="message(java.lang.String)">
-					<h2 class="K"><i class="PUBLIC"></i><code class="L">message</code><code class="i">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="l"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="g">
-						<tr class="J">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code>message</code></td>
+					</table><span class="B"><p>Create <code><a href="api/viewtify.ui.toast.Toast.html">Toast</a></code> with the specified title.</p></span></section>
+				<section class="Z" id="message(java.lang.String)">
+					<h2 class="M"><i class="PUBLIC"></i><code class="Q">message</code><code class="f">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>)</code><i class="J"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="h">
+						<tr class="H">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>message</code></td>
 							<td></td>
 						</tr>
-						<tr class="T">
+						<tr class="W">
 							<td><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Set message.</p>
-</span></section>
-				<section class="S" id="totalProgress(int)">
-					<h2 class="K"><i class="PUBLIC"></i><code class="L">totalProgress</code><code class="i">(<code>int</code> <code class="parameterName">size</code>)</code><i class="l"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="g">
-						<tr class="J">
-							<td><code>int</code> <code>size</code></td>
+					</table><span class="B"><p>Set message.</p></span></section>
+				<section class="Z" id="totalProgress(int)">
+					<h2 class="M"><i class="PUBLIC"></i><code class="Q">totalProgress</code><code class="f">(<code>int</code><code class="parameterName">size</code>)</code><i class="J"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="h">
+						<tr class="H">
+							<td><code>int</code><code>size</code></td>
 							<td></td>
 						</tr>
-						<tr class="T">
+						<tr class="W">
 							<td><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Set total progress.</p>
-</span></section>
-				<section class="S" id="incrementProgress()">
-					<h2 class="K"><i class="PUBLIC"></i><code class="L">incrementProgress</code><code class="i">()</code><i class="l"><code>void</code></i></h2><span class="B"><p>Increment progress.</p>
-</span></section>
-				<section class="S" id="decrementProgress()">
-					<h2 class="K"><i class="PUBLIC"></i><code class="L">decrementProgress</code><code class="i">()</code><i class="l"><code>void</code></i></h2><span class="B"><p>Increment progress.</p>
-</span></section>
-				<section class="S" id="setProgress(int)">
-					<h2 class="K"><i class="PUBLIC"></i><code class="L">setProgress</code><code class="i">(<code>int</code> <code class="parameterName">progress</code>)</code><i class="l"><code>void</code></i></h2>
-					<table class="g">
-						<tr class="J">
-							<td><code>int</code> <code>progress</code></td>
+					</table><span class="B"><p>Set total progress.</p></span></section>
+				<section class="Z" id="incrementProgress()">
+					<h2 class="M"><i class="PUBLIC"></i><code class="Q">incrementProgress</code><code class="f">()</code><i class="J"><code>void</code></i></h2><span class="B"><p>Increment progress.</p></span></section>
+				<section class="Z" id="decrementProgress()">
+					<h2 class="M"><i class="PUBLIC"></i><code class="Q">decrementProgress</code><code class="f">()</code><i class="J"><code>void</code></i></h2><span class="B"><p>Increment progress.</p></span></section>
+				<section class="Z" id="setProgress(int)">
+					<h2 class="M"><i class="PUBLIC"></i><code class="Q">setProgress</code><code class="f">(<code>int</code><code class="parameterName">progress</code>)</code><i class="J"><code>void</code></i></h2>
+					<table class="h">
+						<tr class="H">
+							<td><code>int</code><code>progress</code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Set progress</p>
-</span></section>
-				<section class="S" id="resetProgress()">
-					<h2 class="K"><i class="PUBLIC"></i><code class="L">resetProgress</code><code class="i">()</code><i class="l"><code>void</code></i></h2><span class="B"><p>Reset progress.</p>
-</span></section>
-				<section class="S" id="completeProgress()">
-					<h2 class="K"><i class="PUBLIC"></i><code class="L">completeProgress</code><code class="i">()</code><i class="l"><code>void</code></i></h2><span class="B"><p>Complete progress</p>
-</span></section>
-				<section class="S" id="whenProgressed(kiss.WiseBiConsumer)">
-					<h2 class="K"><i class="PUBLIC"></i><code class="L">whenProgressed</code><code class="i">(<code>kiss.WiseBiConsumer<code class="parameters"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code>, <code>T</code></code></code> <code class="parameterName">action</code>)</code><i class="l"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="g">
-						<tr class="J">
-							<td><code>kiss.WiseBiConsumer<code class="parameters"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code>, <code>T</code></code></code> <code>action</code></td>
+					</table><span class="B"><p>Set progress</p></span></section>
+				<section class="Z" id="resetProgress()">
+					<h2 class="M"><i class="PUBLIC"></i><code class="Q">resetProgress</code><code class="f">()</code><i class="J"><code>void</code></i></h2><span class="B"><p>Reset progress.</p></span></section>
+				<section class="Z" id="completeProgress()">
+					<h2 class="M"><i class="PUBLIC"></i><code class="Q">completeProgress</code><code class="f">()</code><i class="J"><code>void</code></i></h2><span class="B"><p>Complete progress</p></span></section>
+				<section class="Z" id="whenProgressed(kiss.WiseBiConsumer)">
+					<h2 class="M"><i class="PUBLIC"></i><code class="Q">whenProgressed</code><code class="f">(<code>kiss.WiseBiConsumer<code class="parameters"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code>, <code>T</code></code></code><code class="parameterName">action</code>)</code><i class="J"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="h">
+						<tr class="H">
+							<td><code>kiss.WiseBiConsumer<code class="parameters"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code>, <code>T</code></code></code><code>action</code></td>
 							<td></td>
 						</tr>
-						<tr class="T">
+						<tr class="W">
 							<td><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Register progress action.</p>
-</span></section>
-				<section class="S" id="whenCanceled(kiss.WiseRunnable)">
-					<h2 class="K"><i class="PUBLIC"></i><code class="L">whenCanceled</code><code class="i">(<code>kiss.WiseRunnable</code> <code class="parameterName">action</code>)</code><i class="l"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="g">
-						<tr class="J">
-							<td><code>kiss.WiseRunnable</code> <code>action</code></td>
+					</table><span class="B"><p>Register progress action.</p></span></section>
+				<section class="Z" id="whenCanceled(kiss.WiseRunnable)">
+					<h2 class="M"><i class="PUBLIC"></i><code class="Q">whenCanceled</code><code class="f">(<code>kiss.WiseRunnable</code><code class="parameterName">action</code>)</code><i class="J"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="h">
+						<tr class="H">
+							<td><code>kiss.WiseRunnable</code><code>action</code></td>
 							<td></td>
 						</tr>
-						<tr class="T">
+						<tr class="W">
 							<td><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Register cancel action.</p>
-</span></section>
-				<section class="S" id="whenCompleted(kiss.WiseRunnable)">
-					<h2 class="K"><i class="PUBLIC"></i><code class="L">whenCompleted</code><code class="i">(<code>kiss.WiseRunnable</code> <code class="parameterName">action</code>)</code><i class="l"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="g">
-						<tr class="J">
-							<td><code>kiss.WiseRunnable</code> <code>action</code></td>
+					</table><span class="B"><p>Register cancel action.</p></span></section>
+				<section class="Z" id="whenCompleted(kiss.WiseRunnable)">
+					<h2 class="M"><i class="PUBLIC"></i><code class="Q">whenCompleted</code><code class="f">(<code>kiss.WiseRunnable</code><code class="parameterName">action</code>)</code><i class="J"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="h">
+						<tr class="H">
+							<td><code>kiss.WiseRunnable</code><code>action</code></td>
 							<td></td>
 						</tr>
-						<tr class="T">
+						<tr class="W">
 							<td><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Register complete action.</p>
-</span></section>
-				<section class="S" id="show(kiss.Signal)">
-					<h2 class="K"><i class="PUBLIC"></i><code class="L">show</code><code class="i">(<code>kiss.Signal<code class="parameters"><code>T</code></code></code> <code class="parameterName">signal</code>)</code><i class="l"><code>void</code></i></h2>
-					<table class="g">
-						<tr class="J">
-							<td><code>kiss.Signal<code class="parameters"><code>T</code></code></code> <code>signal</code></td>
+					</table><span class="B"><p>Register complete action.</p></span></section>
+				<section class="Z" id="show(kiss.Signal)">
+					<h2 class="M"><i class="PUBLIC"></i><code class="Q">show</code><code class="f">(<code>kiss.Signal<code class="parameters"><code>T</code></code></code><code class="parameterName">signal</code>)</code><i class="J"><code>void</code></i></h2>
+					<table class="h">
+						<tr class="H">
+							<td><code>kiss.Signal<code class="parameters"><code>T</code></code></code><code>signal</code></td>
 							<td></td>
 						</tr>
-					</table><span class="B"><p>Shows a Toast notification for the specified data stream.</p>
-</span></section>
-				<section class="S" id="APPLY(kiss.Signal)">
-					<h2 class="K"><i class="OVERRIDE PUBLIC"></i><code class="L">APPLY</code><code class="i">(<code>kiss.Signal<code class="parameters"><code>T</code></code></code> <code class="parameterName">task</code>)</code><i class="l"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="g">
-						<tr class="J">
-							<td><code>kiss.Signal<code class="parameters"><code>T</code></code></code> <code>task</code></td>
+					</table><span class="B"><p>Shows a Toast notification for the specified data stream.</p></span></section>
+				<section class="Z" id="APPLY(kiss.Signal)">
+					<h2 class="M"><i class="OVERRIDE PUBLIC"></i><code class="Q">APPLY</code><code class="f">(<code>kiss.Signal<code class="parameters"><code>T</code></code></code><code class="parameterName">task</code>)</code><i class="J"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></h2>
+					<table class="h">
+						<tr class="H">
+							<td><code>kiss.Signal<code class="parameters"><code>T</code></code></code><code>task</code></td>
 							<td></td>
 						</tr>
-						<tr class="T">
+						<tr class="W">
 							<td><code>kiss.Signal<code class="parameters"><code>T</code></code></code></td>
 							<td></td>
 						</tr>
-						<tr class="X">
+						<tr class="O">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Throwable.html">Throwable</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
 			</article>
-			<aside class="d" id="SubNavi">
-				<div class="c">
-					<h5 class="W">Static Fields</h5>
+			<aside class="R" id="SubNavi">
+				<div class="g">
+					<h5 class="T">Static Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ui.toast.Toast.html#setting">setting</a></code><i class="k"><code class="return"><a href="api/viewtify.ui.toast.ToastSetting.html">ToastSetting</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ui.toast.Toast.html#setting">setting</a></code><i class="V"><code class="return"><a href="api/viewtify.ui.toast.ToastSetting.html">ToastSetting</a></code></i></li>
 					</ul>
-					<h5 class="W">Static Methods</h5>
+					<h5 class="T">Static Methods</h5>
 					<ul>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#show(java.lang.Object,kiss.WiseRunnable...)">show</a></code><code class="i">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code> <code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code> <code class="parameterName">actions</code>)</code><i class="k"><code>void</code></i></li>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#show(java.lang.String,kiss.WiseRunnable...)">show</a></code><code class="i">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code> <code class="parameterName">actions</code>)</code><i class="k"><code>void</code></i></li>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#show(kiss.Variable,kiss.WiseRunnable...)">show</a></code><code class="i">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code> <code class="parameterName">actions</code>)</code><i class="k"><code>void</code></i></li>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#title(java.lang.String)">title</a></code><code class="i">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">title</code>)</code><i class="k"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#title(kiss.Variable)">title</a></code><code class="i">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code> <code class="parameterName">title</code>)</code><i class="k"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#show(java.lang.Object,kiss.WiseRunnable...)">show</a></code><code class="f">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code><code class="parameterName">actions</code>)</code><i class="V"><code>void</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#show(java.lang.String,kiss.WiseRunnable...)">show</a></code><code class="f">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code><code class="parameterName">actions</code>)</code><i class="V"><code>void</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#show(kiss.Variable,kiss.WiseRunnable...)">show</a></code><code class="f">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">message</code>, <code array="var">kiss.WiseRunnable</code><code class="parameterName">actions</code>)</code><i class="V"><code>void</code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#title(java.lang.String)">title</a></code><code class="f">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">title</code>)</code><i class="V"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#title(kiss.Variable)">title</a></code><code class="f">(<code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">title</code>)</code><i class="V"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
 					</ul>
-					<h5 class="W">Methods</h5>
+					<h5 class="T">Methods</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#message(java.lang.String)">message</a></code><code class="i">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code> <code class="parameterName">message</code>)</code><i class="k"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#totalProgress(int)">totalProgress</a></code><code class="i">(<code>int</code> <code class="parameterName">size</code>)</code><i class="k"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#incrementProgress()">incrementProgress</a></code><code class="i">()</code><i class="k"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#decrementProgress()">decrementProgress</a></code><code class="i">()</code><i class="k"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#setProgress(int)">setProgress</a></code><code class="i">(<code>int</code> <code class="parameterName">progress</code>)</code><i class="k"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#resetProgress()">resetProgress</a></code><code class="i">()</code><i class="k"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#completeProgress()">completeProgress</a></code><code class="i">()</code><i class="k"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#whenProgressed(kiss.WiseBiConsumer)">whenProgressed</a></code><code class="i">(<code>kiss.WiseBiConsumer<code class="parameters"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code>, <code>T</code></code></code> <code class="parameterName">action</code>)</code><i class="k"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#whenCanceled(kiss.WiseRunnable)">whenCanceled</a></code><code class="i">(<code>kiss.WiseRunnable</code> <code class="parameterName">action</code>)</code><i class="k"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#whenCompleted(kiss.WiseRunnable)">whenCompleted</a></code><code class="i">(<code>kiss.WiseRunnable</code> <code class="parameterName">action</code>)</code><i class="k"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#show(kiss.Signal)">show</a></code><code class="i">(<code>kiss.Signal<code class="parameters"><code>T</code></code></code> <code class="parameterName">signal</code>)</code><i class="k"><code>void</code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#APPLY(kiss.Signal)">APPLY</a></code><code class="i">(<code>kiss.Signal<code class="parameters"><code>T</code></code></code> <code class="parameterName">task</code>)</code><i class="k"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#message(java.lang.String)">message</a></code><code class="f">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>)</code><i class="V"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#totalProgress(int)">totalProgress</a></code><code class="f">(<code>int</code><code class="parameterName">size</code>)</code><i class="V"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#incrementProgress()">incrementProgress</a></code><code class="f">()</code><i class="V"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#decrementProgress()">decrementProgress</a></code><code class="f">()</code><i class="V"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#setProgress(int)">setProgress</a></code><code class="f">(<code>int</code><code class="parameterName">progress</code>)</code><i class="V"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#resetProgress()">resetProgress</a></code><code class="f">()</code><i class="V"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#completeProgress()">completeProgress</a></code><code class="f">()</code><i class="V"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#whenProgressed(kiss.WiseBiConsumer)">whenProgressed</a></code><code class="f">(<code>kiss.WiseBiConsumer<code class="parameters"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code>, <code>T</code></code></code><code class="parameterName">action</code>)</code><i class="V"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#whenCanceled(kiss.WiseRunnable)">whenCanceled</a></code><code class="f">(<code>kiss.WiseRunnable</code><code class="parameterName">action</code>)</code><i class="V"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#whenCompleted(kiss.WiseRunnable)">whenCompleted</a></code><code class="f">(<code>kiss.WiseRunnable</code><code class="parameterName">action</code>)</code><i class="V"><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a><code class="parameters"><code>T</code></code></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#show(kiss.Signal)">show</a></code><code class="f">(<code>kiss.Signal<code class="parameters"><code>T</code></code></code><code class="parameterName">signal</code>)</code><i class="V"><code>void</code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.toast.Toast.html#APPLY(kiss.Signal)">APPLY</a></code><code class="f">(<code>kiss.Signal<code class="parameters"><code>T</code></code></code><code class="parameterName">task</code>)</code><i class="V"><code>kiss.Signal<code class="parameters"><code>T</code></code></code></i></li>
 					</ul>
 				</div>
 			</aside>
