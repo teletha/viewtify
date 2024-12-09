@@ -1004,7 +1004,6 @@ public final class Viewtify {
 
         // apply icon
         if (viewtify.icon.length() != 0) {
-            System.out.println(viewtify.icon);
             stage.getIcons().add(new Image(viewtify.icon));
         }
 

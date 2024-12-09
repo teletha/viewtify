@@ -18,6 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -27,6 +29,7 @@ import kiss.I;
 import kiss.Variable;
 import stylist.Style;
 import stylist.value.Color;
+import viewtify.StyleManipulator;
 import viewtify.Viewtify;
 import viewtify.ui.UserInterfaceProvider;
 import viewtify.util.FXUtils;
@@ -124,7 +127,15 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return A current font color.
      */
     default Paint color() {
-        return property(Type.TextFill).getValue();
+        try {
+            return property(Type.TextFill).getValue();
+        } catch (Exception e) {
+            String value = StyleManipulator.get(this, "-fx-text-fill");
+            if (value != null) {
+                return javafx.scene.paint.Color.web(value);
+            }
+            return null;
+        }
     }
 
     /**
@@ -134,7 +145,11 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
      * @return Chainable API.
      */
     default Self color(javafx.scene.paint.Color color) {
-        property(Type.TextFill).setValue(color);
+        try {
+            property(Type.TextFill).setValue(color);
+        } catch (Exception e) {
+            StyleManipulator.set(this, "-fx-text-fill", FXUtils.color(color).toRGB());
+        }
         return (Self) this;
     }
 
@@ -157,6 +172,92 @@ public interface LabelHelper<Self extends LabelHelper> extends PropertyAccessHel
     default Self color(Variable<? extends Paint> color) {
         property(Type.TextFill).bind(Viewtify.property(color));
         return (Self) this;
+    }
+
+    /**
+     * Get font.
+     * 
+     * @return A current font.
+     */
+    default Font font() {
+        try {
+            return property(Type.Font).getValue();
+        } catch (Exception e) {
+            String css = StyleManipulator.get(this, "-fx-font");
+            if (css != null) {
+                int i = css.indexOf(' ');
+                return Font.font(css.substring(i + 2, css.length() - 1), Double.parseDouble(css.substring(0, i)));
+            }
+            return null;
+        }
+    }
+
+    /**
+     * Set font.
+     * 
+     * @param font A font to set.
+     * @return Chainable API.
+     */
+    default Self font(Font font) {
+        try {
+            property(Type.Font).setValue(font);
+        } catch (Exception e) {
+            StyleManipulator.set(this, "-fx-font", font.getSize() + " \"" + font.getFamily() + "\"");
+        }
+        return (Self) this;
+    }
+
+    /**
+     * Set font by name.
+     * 
+     * @param name A font name to set.
+     * @return Chainable API.
+     */
+    default Self font(String name) {
+        return font(Font.font(name));
+    }
+
+    /**
+     * Set font by size.
+     * 
+     * @param size A font size to set.
+     * @return Chainable API.
+     */
+    default Self font(double size) {
+        return font(Font.font(size));
+    }
+
+    /**
+     * Set font by weight.
+     * 
+     * @param weight A font weight to set.
+     * @return Chainable API.
+     */
+    default Self font(FontWeight weight) {
+        return font(Font.font(null, weight, -1));
+    }
+
+    /**
+     * Set font by size and weight.
+     * 
+     * @param size A font size to set.
+     * @param weight A font weight to set.
+     * @return Chainable API.
+     */
+    default Self font(double size, FontWeight weight) {
+        return font(Font.font(null, weight, size));
+    }
+
+    /**
+     * Set font by name, size and weight.
+     * 
+     * @param name A font name to set.
+     * @param size A font size to set.
+     * @param weight A font weight to set.
+     * @return Chainable API.
+     */
+    default Self font(String name, double size, FontWeight weight) {
+        return font(Font.font(name, weight, size));
     }
 
     /**
