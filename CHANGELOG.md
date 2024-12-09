@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.32.1](https://github.com/teletha/viewtify/compare/v2.32.0...v2.32.1) (2024-12-09)
+
+
+### Bug Fixes
+
+* update javafx ([63beb63](https://github.com/teletha/viewtify/commit/63beb6325d80f5e3293de30e9e8ca1147b7d5e88))
+
 ## [2.32.0](https://github.com/teletha/viewtify/compare/v2.31.0...v2.32.0) (2024-11-11)
 
 
