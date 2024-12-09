@@ -7,7 +7,7 @@
 </p>
 
 ## Summary
-Viewtify provides an API for using [JavaFX](https://openjfx.io/) more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML.
+Viewtify provides API for using [JavaFX](https://openjfx.io/) more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML.
 
 Declarative and Reactive API
 * UI tree definition
@@ -128,28 +128,28 @@ If you think something might be a bug, but you're not sure, ask on StackOverflow
 Viewtify depends on the following products on runtime.
 * [BorderlessSceneFX-1.0.0](https://mvnrepository.com/artifact/com.catwithawand/BorderlessSceneFX/1.0.0)
 * [altfx-1.5.0](https://mvnrepository.com/artifact/com.github.teletha/altfx/1.5.0)
-* [conjure-1.2.0](https://mvnrepository.com/artifact/com.github.teletha/conjure/1.2.0)
+* [conjure-1.2.1](https://mvnrepository.com/artifact/com.github.teletha/conjure/1.2.1)
 * [controlsfx-11.2.1](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.2.1)
 * [ikonli-core-12.3.1](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-core/12.3.1)
 * [ikonli-fontawesome5-pack-12.3.1](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-fontawesome5-pack/12.3.1)
 * [ikonli-javafx-12.3.1](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-javafx/12.3.1)
-* [javafx-base-24-ea+15](https://mvnrepository.com/artifact/org.openjfx/javafx-base/24-ea+15)
-* [javafx-base-24-ea+15-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-base/24-ea+15)
-* [javafx-controls-24-ea+15](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/24-ea+15)
-* [javafx-controls-24-ea+15-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/24-ea+15)
-* [javafx-graphics-24-ea+15](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/24-ea+15)
-* [javafx-graphics-24-ea+15-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/24-ea+15)
-* [javafx-media-24-ea+15](https://mvnrepository.com/artifact/org.openjfx/javafx-media/24-ea+15)
-* [javafx-media-24-ea+15-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-media/24-ea+15)
-* [javafx-web-24-ea+15](https://mvnrepository.com/artifact/org.openjfx/javafx-web/24-ea+15)
-* [javafx-web-24-ea+15-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-web/24-ea+15)
+* [javafx-base-24-ea+19](https://mvnrepository.com/artifact/org.openjfx/javafx-base/24-ea+19)
+* [javafx-base-24-ea+19-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-base/24-ea+19)
+* [javafx-controls-24-ea+19](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/24-ea+19)
+* [javafx-controls-24-ea+19-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/24-ea+19)
+* [javafx-graphics-24-ea+19](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/24-ea+19)
+* [javafx-graphics-24-ea+19-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/24-ea+19)
+* [javafx-media-24-ea+19](https://mvnrepository.com/artifact/org.openjfx/javafx-media/24-ea+19)
+* [javafx-media-24-ea+19-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-media/24-ea+19)
+* [javafx-web-24-ea+19](https://mvnrepository.com/artifact/org.openjfx/javafx-web/24-ea+19)
+* [javafx-web-24-ea+19-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-web/24-ea+19)
 * [jna-5.12.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.12.1)
 * [jna-platform-5.12.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.12.1)
-* [lycoris-1.0.1](https://mvnrepository.com/artifact/com.github.teletha/lycoris/1.0.1)
+* [lycoris-1.1.0](https://mvnrepository.com/artifact/com.github.teletha/lycoris/1.1.0)
 * [openjfx-monocle-jdk-12.0.1+2](https://mvnrepository.com/artifact/org.testfx/openjfx-monocle/jdk-12.0.1+2)
 * [psychopath-2.0.2](https://mvnrepository.com/artifact/com.github.teletha/psychopath/2.0.2)
-* [sinobu-4.5.0](https://mvnrepository.com/artifact/com.github.teletha/sinobu/4.5.0)
-* [stylist-1.11.0](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.11.0)
+* [sinobu-4.5.2](https://mvnrepository.com/artifact/com.github.teletha/sinobu/4.5.2)
+* [stylist-1.12.0](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.12.0)
 <p align="right"><a href="#top">back to top</a></p>
 
 

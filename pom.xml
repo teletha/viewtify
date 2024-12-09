@@ -5,7 +5,7 @@
 	<version>2.32.0</version>
 	<packaging>jar</packaging>
 	<name>viewtify</name>
-	<description>Viewtify provides an API for using [JavaFX](https://openjfx.io/) more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML.
+	<description>Viewtify provides API for using [JavaFX](https://openjfx.io/) more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML.
 
 Declarative and Reactive API
 * UI tree definition
@@ -63,7 +63,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>conjure</artifactId>
-			<version>1.2.0</version>
+			<version>1.2.1</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
@@ -77,7 +77,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>icymanipulator</artifactId>
-			<version>1.6.1</version>
+			<version>1.6.2</version>
 			<scope>provided</scope>
 			<exclusions/>
 		</dependency>
@@ -98,42 +98,42 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-base</artifactId>
-			<version>24-ea+15</version>
+			<version>24-ea+19</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-controls</artifactId>
-			<version>24-ea+15</version>
+			<version>24-ea+19</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-graphics</artifactId>
-			<version>24-ea+15</version>
+			<version>24-ea+19</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-media</artifactId>
-			<version>24-ea+15</version>
+			<version>24-ea+19</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-web</artifactId>
-			<version>24-ea+15</version>
+			<version>24-ea+19</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>lycoris</artifactId>
-			<version>1.0.1</version>
+			<version>1.1.0</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
@@ -154,14 +154,14 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>sinobu</artifactId>
-			<version>4.5.0</version>
+			<version>4.5.2</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>stylist</artifactId>
-			<version>1.11.0</version>
+			<version>1.12.0</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
@@ -215,7 +215,6 @@ Additional useful functions and widgets that do not exist in JavaFX.
 					<compilerId>javac</compilerId>
 					<compilerArgs>
 						<arg>-parameters</arg>
-						<arg>-warn:none</arg>
 					</compilerArgs>
 				</configuration>
 			</plugin>
@@ -235,7 +234,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 					<dependency>
 						<groupId>me.fabriciorby</groupId>
 						<artifactId>maven-surefire-junit5-tree-reporter</artifactId>
-						<version>1.3.0</version>
+						<version>1.4.0</version>
 					</dependency>
 				</dependencies>
 			</plugin>
