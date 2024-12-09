@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.33.0](https://github.com/teletha/viewtify/compare/v2.32.1...v2.33.0) (2024-12-09)
+
+
+### Features
+
+* remove StyleManipulator ([7302c53](https://github.com/teletha/viewtify/commit/7302c53bc881ea62852486dee45f2729970a7869))
+
 ## [2.32.1](https://github.com/teletha/viewtify/compare/v2.32.0...v2.32.1) (2024-12-09)
 
 
