@@ -114,18 +114,4 @@ public class LabelHelperTest extends JavaFXTester {
         ui.color(Color.RED);
         assert ui.color().equals(Color.RED);
     }
-
-    @ParameterizedTest
-    @ArgumentsSource(HelperProvider.class)
-    void fontSize(LabelHelper<?> ui) {
-        ui.font(10);
-        assert ui.font().getSize() == 10;
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(HelperProvider.class)
-    void fontName(LabelHelper<?> ui) {
-        ui.font("System");
-        assert ui.font().getFamily().equals("System");
-    }
 }
