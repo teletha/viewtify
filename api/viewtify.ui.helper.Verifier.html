@@ -4,17 +4,26 @@
 		<meta charset="UTF-8"/>
 		<meta content="width=device-width, initial-scale=1" name="viewport"/>
 		<meta content="Explains how to use Viewtify and its API. " name="description"/>
-		<link href="https://fonts.googleapis.com" rel="preconnect"/>
 		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Inter" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="P">
-		<header class="Y">
-			<h1 class="L" date="2024-11-11" ver="2.32.0"><code>Viewtify</code></h1>
-			<nav class="m"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="c">
+		<header class="m">
+			<h1 class="T" date="2024-11-11" ver="2.32.0"><code>Viewtify</code></h1>
+			<nav class="N"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -23,7 +32,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="S" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="U" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -31,156 +40,156 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="c">
-			<nav class="b">
+		<main class="O">
+			<nav class="j">
 				<div></div>
 			</nav>
-			<article class="k" id="Article">
-				<section class="Z"><code class="N">viewtify.ui.helper</code>
-					<h2 class="Class a"><code class="Q">Verifier</code></h2>
-					<div class="K">
+			<article class="P" id="Article">
+				<section class="M"><code class="a">viewtify.ui.helper</code>
+					<h2 class="Class g"><code class="I">Verifier</code></h2>
+					<div class="l">
 						<ul class="C F">
 							<li><code>kiss.Disposable</code></li>
 						</ul>
 					</div>
 				</section>
-				<section class="Z" id="message">
-					<h2 class="M"><i class="FINAL"><i class="PUBLIC"></i></i><code class="Q">message</code><i class="J"><code class="return">kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2><span class="B"><p>The validation message.</p></span></section>
-				<section class="Z" id="valid">
-					<h2 class="M"><i class="FINAL"><i class="PUBLIC"></i></i><code class="Q">valid</code><i class="J"><code class="return">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2><span class="B"><p>The exposed validation result.</p></span></section>
-				<section class="Z" id="invalid">
-					<h2 class="M"><i class="FINAL"><i class="PUBLIC"></i></i><code class="Q">invalid</code><i class="J"><code class="return">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2><span class="B"><p>The exposed validation result.</p></span></section>
-				<section class="Z" id="Number">
-					<h2 class="M"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Q">Number</code><i class="J"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></h2><span class="B"><p>Builtin verifier.</p></span></section>
-				<section class="Z" id="PositiveNumber">
-					<h2 class="M"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Q">PositiveNumber</code><i class="J"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></h2><span class="B"><p>Builtin verifier.</p></span></section>
-				<section class="Z" id="Text">
-					<h2 class="M"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Q">Text</code><i class="J"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></h2><span class="B"><p>Builtin verifier.</p></span></section>
-				<section class="Z" id="Verifier()">
-					<h2 class="M"><i class="PUBLIC"></i><code class="Q">Verifier</code><code class="f">()</code></h2>
+				<section class="M" id="message">
+					<h2 class="b"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">message</code><i class="e"><code class="return">kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2><span class="B"><p>The validation message.</p></span></section>
+				<section class="M" id="valid">
+					<h2 class="b"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">valid</code><i class="e"><code class="return">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2><span class="B"><p>The exposed validation result.</p></span></section>
+				<section class="M" id="invalid">
+					<h2 class="b"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">invalid</code><i class="e"><code class="return">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2><span class="B"><p>The exposed validation result.</p></span></section>
+				<section class="M" id="Number">
+					<h2 class="b"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="I">Number</code><i class="e"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></h2><span class="B"><p>Builtin verifier.</p></span></section>
+				<section class="M" id="PositiveNumber">
+					<h2 class="b"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="I">PositiveNumber</code><i class="e"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></h2><span class="B"><p>Builtin verifier.</p></span></section>
+				<section class="M" id="Text">
+					<h2 class="b"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="I">Text</code><i class="e"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></h2><span class="B"><p>Builtin verifier.</p></span></section>
+				<section class="M" id="Verifier()">
+					<h2 class="b"><i class="PUBLIC"></i><code class="I">Verifier</code><code class="L">()</code></h2>
 				</section>
-				<section class="Z" id="vandalize()">
-					<h2 class="M"><i class="OVERRIDE PUBLIC"></i><code class="Q">vandalize</code><code class="f">()</code><i class="J"><code>void</code></i></h2>
+				<section class="M" id="vandalize()">
+					<h2 class="b"><i class="OVERRIDE PUBLIC"></i><code class="I">vandalize</code><code class="L">()</code><i class="e"><code>void</code></i></h2>
 				</section>
-				<section class="Z" id="isValid()">
-					<h2 class="M"><i class="PUBLIC"></i><code class="Q">isValid</code><code class="f">()</code><i class="J"><code>boolean</code></i></h2>
-					<table class="h">
-						<tr class="W">
+				<section class="M" id="isValid()">
+					<h2 class="b"><i class="PUBLIC"></i><code class="I">isValid</code><code class="L">()</code><i class="e"><code>boolean</code></i></h2>
+					<table class="H">
+						<tr class="Z">
 							<td><code>boolean</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>The current state of validation.</p></span></section>
-				<section class="Z" id="isInvalid()">
-					<h2 class="M"><i class="PUBLIC"></i><code class="Q">isInvalid</code><code class="f">()</code><i class="J"><code>boolean</code></i></h2>
-					<table class="h">
-						<tr class="W">
+				<section class="M" id="isInvalid()">
+					<h2 class="b"><i class="PUBLIC"></i><code class="I">isInvalid</code><code class="L">()</code><i class="e"><code>boolean</code></i></h2>
+					<table class="H">
+						<tr class="Z">
 							<td><code>boolean</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>The current state of validation.</p></span></section>
-				<section class="Z" id="makeValid()">
-					<h2 class="M"><i class="PUBLIC"></i><code class="Q">makeValid</code><code class="f">()</code><i class="J"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
-					<table class="h">
-						<tr class="W">
+				<section class="M" id="makeValid()">
+					<h2 class="b"><i class="PUBLIC"></i><code class="I">makeValid</code><code class="L">()</code><i class="e"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
+					<table class="H">
+						<tr class="Z">
 							<td><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Make this verifier valid.</p></span></section>
-				<section class="Z" id="makeInvalid()">
-					<h2 class="M"><i class="PUBLIC"></i><code class="Q">makeInvalid</code><code class="f">()</code><i class="J"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
-					<table class="h">
-						<tr class="W">
+				<section class="M" id="makeInvalid()">
+					<h2 class="b"><i class="PUBLIC"></i><code class="I">makeInvalid</code><code class="L">()</code><i class="e"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
+					<table class="H">
+						<tr class="Z">
 							<td><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Make this verifier invalid.</p></span></section>
-				<section class="Z" id="verifyBy(kiss.WiseRunnable)">
-					<h2 class="M"><i class="PUBLIC"></i><code class="Q">verifyBy</code><code class="f">(<code>kiss.WiseRunnable</code><code class="parameterName">verifier</code>)</code><i class="J"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
-					<table class="h">
-						<tr class="H">
+				<section class="M" id="verifyBy(kiss.WiseRunnable)">
+					<h2 class="b"><i class="PUBLIC"></i><code class="I">verifyBy</code><code class="L">(<code>kiss.WiseRunnable</code><code class="parameterName">verifier</code>)</code><i class="e"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
+					<table class="H">
+						<tr class="f">
 							<td><code>kiss.WiseRunnable</code><code>verifier</code></td>
 							<td></td>
 						</tr>
-						<tr class="W">
+						<tr class="Z">
 							<td><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Register the self verifier.</p></span></section>
-				<section class="Z" id="verifyWhen(kiss.Signal)">
-					<h2 class="M"><i class="PUBLIC"></i><code class="Q">verifyWhen</code><code class="f">(<code>kiss.Signal<code class="parameters"><code>?</code></code></code><code class="parameterName">timing</code>)</code><i class="J"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
-					<table class="h">
-						<tr class="H">
+				<section class="M" id="verifyWhen(kiss.Signal)">
+					<h2 class="b"><i class="PUBLIC"></i><code class="I">verifyWhen</code><code class="L">(<code>kiss.Signal<code class="parameters"><code>?</code></code></code><code class="parameterName">timing</code>)</code><i class="e"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
+					<table class="H">
+						<tr class="f">
 							<td><code>kiss.Signal<code class="parameters"><code>?</code></code></code><code>timing</code></td>
 							<td></td>
 						</tr>
-						<tr class="W">
+						<tr class="Z">
 							<td><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Register the validation timing.</p></span></section>
-				<section class="Z" id="merge(viewtify.ui.helper.VerifyHelper)">
-					<h2 class="M"><i class="PUBLIC"></i><code class="Q">merge</code><code class="f">(<code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>?</code></code></code><code class="parameterName">other</code>)</code><i class="J"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
-					<table class="h">
-						<tr class="H">
+				<section class="M" id="merge(viewtify.ui.helper.VerifyHelper)">
+					<h2 class="b"><i class="PUBLIC"></i><code class="I">merge</code><code class="L">(<code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>?</code></code></code><code class="parameterName">other</code>)</code><i class="e"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
+					<table class="H">
+						<tr class="f">
 							<td><code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>?</code></code></code><code>other</code></td>
 							<td></td>
 						</tr>
-						<tr class="W">
+						<tr class="Z">
 							<td><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Z" id="Integer(int,int)">
-					<h2 class="M"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Q">Integer</code><code class="f">(<code>int</code><code class="parameterName">start</code>, <code>int</code><code class="parameterName">end</code>)</code><i class="J"><code>kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></code></code></i></h2>
-					<table class="h">
-						<tr class="H">
+				<section class="M" id="Integer(int,int)">
+					<h2 class="b"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="I">Integer</code><code class="L">(<code>int</code><code class="parameterName">start</code>, <code>int</code><code class="parameterName">end</code>)</code><i class="e"><code>kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></code></code></i></h2>
+					<table class="H">
+						<tr class="f">
 							<td><code>int</code><code>start</code></td>
 							<td></td>
 						</tr>
-						<tr class="H">
+						<tr class="f">
 							<td><code>int</code><code>end</code></td>
 							<td></td>
 						</tr>
-						<tr class="W">
+						<tr class="Z">
 							<td><code>kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></code></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
 			</article>
-			<aside class="R" id="SubNavi">
-				<div class="g">
-					<h5 class="T">Constructors</h5>
+			<aside class="X" id="SubNavi">
+				<div class="K">
+					<h5 class="S">Constructors</h5>
 					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#Verifier()">Verifier</a></code><code class="f">()</code></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#Verifier()">Verifier</a></code><code class="L">()</code></li>
 					</ul>
-					<h5 class="T">Static Fields</h5>
+					<h5 class="S">Static Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#Number">Number</a></code><i class="V"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#PositiveNumber">PositiveNumber</a></code><i class="V"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#Text">Text</a></code><i class="V"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></li>
+						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#Number">Number</a></code><i class="d"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></li>
+						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#PositiveNumber">PositiveNumber</a></code><i class="d"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></li>
+						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#Text">Text</a></code><i class="d"><code class="return">kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code></i></li>
 					</ul>
-					<h5 class="T">Fields</h5>
+					<h5 class="S">Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#message">message</a></code><i class="V"><code class="return">kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#valid">valid</a></code><i class="V"><code class="return">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#invalid">invalid</a></code><i class="V"><code class="return">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#message">message</a></code><i class="d"><code class="return">kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#valid">valid</a></code><i class="d"><code class="return">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#invalid">invalid</a></code><i class="d"><code class="return">kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
 					</ul>
-					<h5 class="T">Static Methods</h5>
+					<h5 class="S">Static Methods</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#Integer(int,int)">Integer</a></code><code class="f">(<code>int</code><code class="parameterName">start</code>, <code>int</code><code class="parameterName">end</code>)</code><i class="V"><code>kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></code></code></i></li>
+						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.Verifier.html#Integer(int,int)">Integer</a></code><code class="L">(<code>int</code><code class="parameterName">start</code>, <code>int</code><code class="parameterName">end</code>)</code><i class="d"><code>kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>?</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></code></code></i></li>
 					</ul>
-					<h5 class="T">Methods</h5>
+					<h5 class="S">Methods</h5>
 					<ul>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#vandalize()">vandalize</a></code><code class="f">()</code><i class="V"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#isValid()">isValid</a></code><code class="f">()</code><i class="V"><code>boolean</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#isInvalid()">isInvalid</a></code><code class="f">()</code><i class="V"><code>boolean</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#makeValid()">makeValid</a></code><code class="f">()</code><i class="V"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#makeInvalid()">makeInvalid</a></code><code class="f">()</code><i class="V"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#verifyBy(kiss.WiseRunnable)">verifyBy</a></code><code class="f">(<code>kiss.WiseRunnable</code><code class="parameterName">verifier</code>)</code><i class="V"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#verifyWhen(kiss.Signal)">verifyWhen</a></code><code class="f">(<code>kiss.Signal<code class="parameters"><code>?</code></code></code><code class="parameterName">timing</code>)</code><i class="V"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#merge(viewtify.ui.helper.VerifyHelper)">merge</a></code><code class="f">(<code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>?</code></code></code><code class="parameterName">other</code>)</code><i class="V"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#vandalize()">vandalize</a></code><code class="L">()</code><i class="d"><code>void</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#isValid()">isValid</a></code><code class="L">()</code><i class="d"><code>boolean</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#isInvalid()">isInvalid</a></code><code class="L">()</code><i class="d"><code>boolean</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#makeValid()">makeValid</a></code><code class="L">()</code><i class="d"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#makeInvalid()">makeInvalid</a></code><code class="L">()</code><i class="d"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#verifyBy(kiss.WiseRunnable)">verifyBy</a></code><code class="L">(<code>kiss.WiseRunnable</code><code class="parameterName">verifier</code>)</code><i class="d"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#verifyWhen(kiss.Signal)">verifyWhen</a></code><code class="L">(<code>kiss.Signal<code class="parameters"><code>?</code></code></code><code class="parameterName">timing</code>)</code><i class="d"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Verifier.html#merge(viewtify.ui.helper.VerifyHelper)">merge</a></code><code class="L">(<code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>?</code></code></code><code class="parameterName">other</code>)</code><i class="d"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
 					</ul>
 				</div>
 			</aside>

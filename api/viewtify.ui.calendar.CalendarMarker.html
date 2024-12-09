@@ -4,17 +4,26 @@
 		<meta charset="UTF-8"/>
 		<meta content="width=device-width, initial-scale=1" name="viewport"/>
 		<meta content="Explains how to use Viewtify and its API. " name="description"/>
-		<link href="https://fonts.googleapis.com" rel="preconnect"/>
 		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Inter" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="P">
-		<header class="Y">
-			<h1 class="L" date="2024-11-11" ver="2.32.0"><code>Viewtify</code></h1>
-			<nav class="m"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="c">
+		<header class="m">
+			<h1 class="T" date="2024-11-11" ver="2.32.0"><code>Viewtify</code></h1>
+			<nav class="N"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -23,7 +32,7 @@
 					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="S" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="U" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -31,52 +40,52 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="c">
-			<nav class="b">
+		<main class="O">
+			<nav class="j">
 				<div></div>
 			</nav>
-			<article class="k" id="Article">
-				<section class="Z"><code class="N">viewtify.ui.calendar</code>
-					<h2 class="Interface a"><code class="Q">CalendarMarker</code></h2>
-					<div class="K">
+			<article class="P" id="Article">
+				<section class="M"><code class="a">viewtify.ui.calendar</code>
+					<h2 class="Interface g"><code class="I">CalendarMarker</code></h2>
+					<div class="l">
 						<ul class="C F">
 							<li><code>kiss.Extensible</code></li>
 						</ul>
 					</div>
 				</section>
-				<section class="Z" id="None">
-					<h2 class="M"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Q">None</code><i class="J"><code class="return"><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></i></h2><span class="B"><p>The empty mark.</p></span></section>
-				<section class="Z" id="name()">
-					<h2 class="M"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="Q">name</code><code class="f">()</code><i class="J"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="h">
-						<tr class="W">
+				<section class="M" id="None">
+					<h2 class="b"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="I">None</code><i class="e"><code class="return"><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></i></h2><span class="B"><p>The empty mark.</p></span></section>
+				<section class="M" id="name()">
+					<h2 class="b"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="I">name</code><code class="L">()</code><i class="e"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="H">
+						<tr class="Z">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Define the name of this marker.</p></span></section>
-				<section class="Z" id="detect(java.time.LocalDate)">
-					<h2 class="M"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="Q">detect</code><code class="f">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code><code class="parameterName">date</code>)</code><i class="J"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></code></code></i></h2>
-					<table class="h">
-						<tr class="H">
+				<section class="M" id="detect(java.time.LocalDate)">
+					<h2 class="b"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="I">detect</code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code><code class="parameterName">date</code>)</code><i class="e"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></code></code></i></h2>
+					<table class="H">
+						<tr class="f">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code><code>date</code></td>
 							<td></td>
 						</tr>
-						<tr class="W">
+						<tr class="Z">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Test whether the specified date is marked or not.</p></span></section>
 			</article>
-			<aside class="R" id="SubNavi">
-				<div class="g">
-					<h5 class="T">Static Fields</h5>
+			<aside class="X" id="SubNavi">
+				<div class="K">
+					<h5 class="S">Static Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/viewtify.ui.calendar.CalendarMarker.html#None">None</a></code><i class="V"><code class="return"><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></i></li>
+						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ui.calendar.CalendarMarker.html#None">None</a></code><i class="d"><code class="return"><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></i></li>
 					</ul>
-					<h5 class="T">Methods</h5>
+					<h5 class="S">Methods</h5>
 					<ul>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.calendar.CalendarMarker.html#name()">name</a></code><code class="f">()</code><i class="V"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.calendar.CalendarMarker.html#detect(java.time.LocalDate)">detect</a></code><code class="f">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code><code class="parameterName">date</code>)</code><i class="V"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></code></code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.calendar.CalendarMarker.html#name()">name</a></code><code class="L">()</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.calendar.CalendarMarker.html#detect(java.time.LocalDate)">detect</a></code><code class="L">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code><code class="parameterName">date</code>)</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">Mark</a></code></code></code></i></li>
 					</ul>
 				</div>
 			</aside>
