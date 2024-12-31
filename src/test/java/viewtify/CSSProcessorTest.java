@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import stylist.Style;
 import stylist.StyleDSL;
+import stylist.StyleExtractor;
 import stylist.util.Properties;
 import stylist.value.Color;
 
@@ -25,7 +26,7 @@ class CSSProcessorTest implements StyleDSL {
      * @return
      */
     private Properties writeStyle(Style style) {
-        Properties properties = style.properties();
+        Properties properties = StyleExtractor.extract(style);
 
         new CSSProcessor().accept(properties);
 
