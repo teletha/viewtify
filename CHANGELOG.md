@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.33.0](https://github.com/teletha/viewtify/compare/v2.32.1...v2.33.0) (2024-12-31)
+
+
+### Features
+
+* remove Style's value extractor ([17c7cd4](https://github.com/teletha/viewtify/commit/17c7cd4bc2f256538761a0711ffe4201140517a1))
+* remove StyleManipulator ([7302c53](https://github.com/teletha/viewtify/commit/7302c53bc881ea62852486dee45f2729970a7869))
+
+
+### Bug Fixes
+
+* remove Style#value and #properties ([c8664c3](https://github.com/teletha/viewtify/commit/c8664c366037c89e240e318e4caba00b6b24b519))
+
 ## [2.32.1](https://github.com/teletha/viewtify/compare/v2.32.0...v2.32.1) (2024-12-09)
 
 
