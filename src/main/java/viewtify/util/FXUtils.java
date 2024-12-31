@@ -9,7 +9,7 @@
  */
 package viewtify.util;
 
-import static java.lang.Double.parseDouble;
+import static java.lang.Double.*;
 
 import java.util.Objects;
 import java.util.function.Function;
@@ -24,119 +24,8 @@ import javafx.util.Duration;
 import kiss.Decoder;
 import kiss.Encoder;
 import kiss.Variable;
-import stylist.Style;
-import stylist.value.CSSValue;
 
 public class FXUtils {
-
-    /**
-     * Compute length property.
-     * 
-     * @param style A target style.
-     * @param propertyName A target property name.
-     * @return A computed JavaFX value.
-     */
-    public static double length(Style style, String propertyName) {
-        return length(style, propertyName, 0);
-    }
-
-    /**
-     * Compute length property.
-     * 
-     * @param style A target style.
-     * @param propertyName A target property name.
-     * @param defaultValue A default value when the propoerty is not defined.
-     * @return A computed JavaFX value.
-     */
-    public static double length(Style style, String propertyName, double defaultValue) {
-        Variable<CSSValue> value = style.value(propertyName);
-
-        if (value.isPresent()) {
-            return Double.parseDouble(value.v.toString().replaceAll("[a-z]", ""));
-        } else {
-            return defaultValue;
-        }
-    }
-
-    /**
-     * Compute length array property.
-     * 
-     * @param style A target style.
-     * @param propertyName A target property name.
-     * @return A computed JavaFX value.
-     */
-    public static double[] lengths(Style style, String propertyName) {
-        return lengths(style, propertyName, new double[0]);
-    }
-
-    /**
-     * Compute length array property.
-     * 
-     * @param style A target style.
-     * @param propertyName A target property name.
-     * @param defaultValue A default value when the propoerty is not defined.
-     * @return A computed JavaFX value.
-     */
-    public static double[] lengths(Style style, String propertyName, double[] defaultValue) {
-        Variable<CSSValue> value = style.value(propertyName);
-
-        if (value.isPresent()) {
-            String[] values = value.get().toString().split(" ");
-            double[] convert = new double[values.length];
-
-            for (int i = 0; i < convert.length; i++) {
-                convert[i] = Double.parseDouble(values[i]);
-            }
-            return convert;
-        } else {
-            return defaultValue;
-        }
-    }
-
-    /**
-     * Compute color property.
-     * 
-     * @param style A target style.
-     * @param propertyName A target property name.
-     * @return A computed JavaFX value.
-     */
-    public static Color color(Style style, String propertyName) {
-        return color(style, propertyName, Color.TRANSPARENT);
-    }
-
-    /**
-     * Compute color property.
-     * 
-     * @param style A target style.
-     * @param propertyName A target property name.
-     * @param defaultValue A default value when the propoerty is not defined.
-     * @return A computed JavaFX value.
-     */
-    public static Color color(Style style, String propertyName, Color defaultValue) {
-        String[] names;
-
-        if (propertyName.equals("color") || propertyName.equals("fill") || propertyName.equals("stroke")) {
-            names = new String[] {"stroke", "fill", "color"};
-        } else {
-            names = new String[] {propertyName};
-        }
-
-        for (String name : names) {
-            Variable<CSSValue> color = style.value(name);
-
-            if (color.isAbsent()) {
-                continue;
-            }
-            CSSValue value = color.get();
-
-            if (value instanceof stylist.value.Color) {
-                return Color.web(((stylist.value.Color) value).toRGB());
-            } else {
-                return Color.web(color.toString());
-            }
-        }
-        return defaultValue;
-    }
 
     /**
      * Convert from Stylist color to JavaFX color.
