@@ -28,7 +28,7 @@ class CSSProcessorTest implements StyleDSL {
     private Properties writeStyle(Style style) {
         Properties properties = StyleExtractor.extract(style);
 
-        new CSSProcessor().accept(properties);
+        new CSSProcessor().accept(style.selector(), properties);
 
         return properties;
     }

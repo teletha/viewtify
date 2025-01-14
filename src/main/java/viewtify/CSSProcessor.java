@@ -10,23 +10,23 @@
 package viewtify;
 
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import kiss.Variable;
+import stylist.PostProcessor;
 import stylist.Stylist;
 import stylist.util.Properties;
 import stylist.value.CSSValue;
 import stylist.value.Color;
 
-class CSSProcessor implements Consumer<Properties> {
+class CSSProcessor implements PostProcessor {
 
     /** The digit pattern. */
     private static final Pattern HasDigit = Pattern.compile("[-\\.]?\\d+.+");
 
     /** The special formatter for JavaFX. */
     public static final Stylist pretty() {
-        return Stylist.pretty().color(Color::toRGB).postProcessor(new CSSProcessor());
+        return Stylist.pretty().color(Color::toRGB);
     }
 
     /** The property name mapping. */
@@ -43,7 +43,7 @@ class CSSProcessor implements Consumer<Properties> {
      * {@inheritDoc}
      */
     @Override
-    public void accept(Properties properties) {
+    public void accept(String selector, Properties properties) {
         properties.compactTo("padding", "0", sides("padding-*"));
         properties.compactTo("margin", "0", sides("margin-*"));
         properties.compactTo("border-width", "0", sides("border-*-width"));
