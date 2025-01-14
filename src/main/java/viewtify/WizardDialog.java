@@ -14,6 +14,7 @@ import java.util.List;
 
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.ColumnConstraints;
+
 import kiss.I;
 import kiss.Signal;
 import kiss.Variable;
@@ -140,7 +141,7 @@ class WizardDialog<V> extends DialogView<V> {
 
         String active = "-fx-edit-color";
 
-        Numeric circle = Numeric.of(28, px);
+        Numeric circle = Numeric.num(28, px);
 
         Style main = () -> {
             padding.horizontal(circle.multiply(1.2)).vertical(circle.divide(3));

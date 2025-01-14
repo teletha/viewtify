@@ -18,6 +18,7 @@ import javafx.geometry.HPos;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+
 import kiss.I;
 import stylist.Style;
 import stylist.StyleDSL;
@@ -53,9 +54,9 @@ public class YearMonthView extends View {
 
     interface Styles extends StyleDSL {
 
-        Numeric dayWidth = Numeric.of(2, em);
+        Numeric dayWidth = Numeric.num(2, em);
 
-        Numeric dayHeight = Numeric.of(2, em);
+        Numeric dayHeight = Numeric.num(2, em);
 
         Style root = () -> {
             display.width.fill().height.fill().grid().columnGap(2, px).rowGap(2, px);
