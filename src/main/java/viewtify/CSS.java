@@ -28,11 +28,11 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.skin.TableColumnHeader;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import kiss.I;
 import kiss.WiseBiConsumer;
 
@@ -56,6 +56,33 @@ final class CSS {
 
             if (node instanceof ProgressBar bar) {
                 bar.setMaxWidth(Double.MAX_VALUE);
+            }
+        }
+    });
+
+    /** The extra property. */
+    private static final Meta<Node, Number> PrefWidthKeyword = new Meta<>("-fx-pref-width", SizeConverter.getInstance(), (node, value) -> {
+        if (value != null) {
+            if (node instanceof TableColumnHeader header) {
+                header.getTableColumn().setPrefWidth(value.doubleValue());
+            }
+        }
+    });
+
+    /** The extra property. */
+    private static final Meta<Node, Number> MaxWidthKeyword = new Meta<>("-fx-max-width", SizeConverter.getInstance(), (node, value) -> {
+        if (value != null) {
+            if (node instanceof TableColumnHeader header) {
+                header.getTableColumn().setMaxWidth(value.doubleValue());
+            }
+        }
+    });
+
+    /** The extra property. */
+    private static final Meta<Node, Number> MinWidthKeyword = new Meta<>("-fx-min-width", SizeConverter.getInstance(), (node, value) -> {
+        if (value != null) {
+            if (node instanceof TableColumnHeader header) {
+                header.getTableColumn().setMinWidth(value.doubleValue());
             }
         }
     });
