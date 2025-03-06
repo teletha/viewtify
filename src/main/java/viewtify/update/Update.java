@@ -13,6 +13,7 @@ import java.util.List;
 
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.Side;
+
 import kiss.I;
 import psychopath.Directory;
 import psychopath.File;
@@ -98,9 +99,7 @@ public class Update {
             // unpack archive
             // ====================================
             monitor.message("Prepare to update.", 2);
-            System.out.println(file + " unpack to " + updateDir);
             file.trackUnpackingTo(updateDir, option -> option).to(monitor.spawn(98));
-            System.out.println(4);
             monitor.message("Ready for update.", 100);
         };
 

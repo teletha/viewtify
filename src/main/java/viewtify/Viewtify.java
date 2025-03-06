@@ -836,6 +836,8 @@ public final class Viewtify {
      * @param process
      */
     public final static void inWorker(Runnable process) {
+        process = handleError(process);
+
         if (Platform.isFxApplicationThread()) {
             pool.submit(process);
         } else {
@@ -858,6 +860,8 @@ public final class Viewtify {
      * @param process
      */
     public final static void inUI(Runnable process) {
+        process = handleError(process);
+
         if (Platform.isFxApplicationThread() || inTest) {
             process.run();
         } else {
@@ -882,6 +886,23 @@ public final class Viewtify {
         inUI(() -> {
             Terminator.add(process.get());
         });
+    }
+
+    /**
+     * Error handling in viewtify.
+     * 
+     * @param runnable
+     * @return
+     */
+    private static Runnable handleError(Runnable runnable) {
+        return () -> {
+            try {
+                runnable.run();
+            } catch (Throwable e) {
+                UncaughtExceptionHandler handler = Thread.getDefaultUncaughtExceptionHandler();
+                handler.uncaughtException(Thread.currentThread(), e);
+            }
+        };
     }
 
     /**
