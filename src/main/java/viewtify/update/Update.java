@@ -98,8 +98,9 @@ public class Update {
             // unpack archive
             // ====================================
             monitor.message("Prepare to update.", 2);
-            file.trackUnpackingTo(updateDir, option -> option.sync().replaceDifferent()).to(monitor.spawn(98));
-
+            System.out.println(file + " unpack to " + updateDir);
+            file.trackUnpackingTo(updateDir, option -> option).to(monitor.spawn(98));
+            System.out.println(4);
             monitor.message("Ready for update.", 100);
         };
 

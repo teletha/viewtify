@@ -19,8 +19,9 @@ import psychopath.Progress;
 import viewtify.Viewtify;
 import viewtify.task.MonitorableTask;
 
-@SuppressWarnings("serial")
 public abstract class Blueprint implements Serializable {
+
+    private static final long serialVersionUID = 5951700339922276873L;
 
     /** The application root directory. */
     public Directory root = Locator.directory("").absolutize();
