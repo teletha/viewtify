@@ -133,28 +133,28 @@ Viewtify depends on the following products on runtime.
 * [ikonli-core-12.3.1](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-core/12.3.1)
 * [ikonli-fontawesome5-pack-12.3.1](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-fontawesome5-pack/12.3.1)
 * [ikonli-javafx-12.3.1](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-javafx/12.3.1)
-* [javafx-base-24-ea+19](https://mvnrepository.com/artifact/org.openjfx/javafx-base/24-ea+19)
-* [javafx-base-24-ea+19-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-base/24-ea+19)
-* [javafx-controls-24-ea+19](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/24-ea+19)
-* [javafx-controls-24-ea+19-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/24-ea+19)
-* [javafx-graphics-24-ea+19](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/24-ea+19)
-* [javafx-graphics-24-ea+19-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/24-ea+19)
-* [javafx-media-24-ea+19](https://mvnrepository.com/artifact/org.openjfx/javafx-media/24-ea+19)
-* [javafx-media-24-ea+19-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-media/24-ea+19)
-* [javafx-web-24-ea+19](https://mvnrepository.com/artifact/org.openjfx/javafx-web/24-ea+19)
-* [javafx-web-24-ea+19-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-web/24-ea+19)
+* [javafx-base-25-ea+6](https://mvnrepository.com/artifact/org.openjfx/javafx-base/25-ea+6)
+* [javafx-base-25-ea+6-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/25-ea+6)
+* [javafx-controls-25-ea+6](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/25-ea+6)
+* [javafx-controls-25-ea+6-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/25-ea+6)
+* [javafx-graphics-25-ea+6](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/25-ea+6)
+* [javafx-graphics-25-ea+6-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/25-ea+6)
+* [javafx-media-25-ea+6](https://mvnrepository.com/artifact/org.openjfx/javafx-media/25-ea+6)
+* [javafx-media-25-ea+6-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/25-ea+6)
+* [javafx-web-25-ea+6](https://mvnrepository.com/artifact/org.openjfx/javafx-web/25-ea+6)
+* [javafx-web-25-ea+6-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/25-ea+6)
 * [jna-5.12.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.12.1)
 * [jna-platform-5.12.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.12.1)
 * [lycoris-1.1.0](https://mvnrepository.com/artifact/com.github.teletha/lycoris/1.1.0)
 * [openjfx-monocle-jdk-12.0.1+2](https://mvnrepository.com/artifact/org.testfx/openjfx-monocle/jdk-12.0.1+2)
-* [psychopath-2.0.2](https://mvnrepository.com/artifact/com.github.teletha/psychopath/2.0.2)
+* [psychopath-2.0.3](https://mvnrepository.com/artifact/com.github.teletha/psychopath/2.0.3)
 * [sinobu-4.5.2](https://mvnrepository.com/artifact/com.github.teletha/sinobu/4.5.2)
-* [stylist-1.12.0](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.12.0)
+* [stylist-1.14.0](https://mvnrepository.com/artifact/com.github.teletha/stylist/1.14.0)
 <p align="right"><a href="#top">back to top</a></p>
 
 
 ## License
-Copyright (C) 2024 The VIEWTIFY Development Team
+Copyright (C) 2025 The VIEWTIFY Development Team
 
 MIT License
 
