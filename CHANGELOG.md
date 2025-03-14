@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.34.0](https://github.com/teletha/viewtify/compare/v2.33.0...v2.34.0) (2025-03-14)
+
+
+### Features
+
+* handle error correctly in worker and ui thread ([8bc5d83](https://github.com/teletha/viewtify/commit/8bc5d83ffbb2dab4877cce92a6eeef7de619a1c7))
+
+
+### Bug Fixes
+
+* TableColumn's width is not calculated on javafx-25-ea+3 ([efe41f6](https://github.com/teletha/viewtify/commit/efe41f60a94a507cfa8e3986874e3123a51dbabd))
+* update stylist ([c63a139](https://github.com/teletha/viewtify/commit/c63a13927d6f0333fb4f17fc19f24515d2665489))
+
 ## [2.33.0](https://github.com/teletha/viewtify/compare/v2.32.1...v2.33.0) (2024-12-31)
 
 
