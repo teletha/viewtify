@@ -49,7 +49,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>altfx</artifactId>
-			<version>1.5.0</version>
+			<version>1.6.0</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
@@ -98,35 +98,35 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-base</artifactId>
-			<version>24-ea+19</version>
+			<version>25-ea+6</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-controls</artifactId>
-			<version>24-ea+19</version>
+			<version>25-ea+6</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-graphics</artifactId>
-			<version>24-ea+19</version>
+			<version>25-ea+6</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-media</artifactId>
-			<version>24-ea+19</version>
+			<version>25-ea+6</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-web</artifactId>
-			<version>24-ea+19</version>
+			<version>25-ea+6</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
@@ -161,7 +161,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>stylist</artifactId>
-			<version>1.12.0</version>
+			<version>1.14.0</version>
 			<scope>compile</scope>
 			<exclusions/>
 		</dependency>
@@ -207,10 +207,9 @@ Additional useful functions and widgets that do not exist in JavaFX.
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.13.0</version>
+				<version>3.14.0</version>
 				<configuration>
-					<source>23</source>
-					<target>21</target>
+					<release>23</release>
 					<encoding>UTF-8</encoding>
 					<compilerId>javac</compilerId>
 					<compilerArgs>
@@ -237,6 +236,32 @@ Additional useful functions and widgets that do not exist in JavaFX.
 						<version>1.4.0</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.11.2</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
