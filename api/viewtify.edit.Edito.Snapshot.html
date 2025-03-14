@@ -13,135 +13,134 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="M">
-			<h1 class="b" date="2024-12-09" ver="2.33.0"><code>Viewtify</code></h1>
-			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2024-12-31" ver="2.33.0">
+			<h1 class="Z"><code>Viewtify</code></h1>
+			<nav class="f"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="e" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="J">
-			<nav class="i">
-				<div></div>
-			</nav>
-			<article class="d" id="Article">
-				<section class="S"><code class="U">viewtify.edit</code>
-					<h2 class="Class I"><code class="V">Edito.Snapshot</code><code class="Y">&#60;<code>T</code>&#62;</code></h2>
-					<div class="H">
-						<ul class="C D">
-							<li><code>T</code></li>
-						</ul>
-					</div><span class="B"><p>Snapshot object.</p></span></section>
-				<section class="S" id="initial">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">initial</code><i class="k"><code class="return">T</code></i></h2><span class="B"><p>The snapshoted value. This is immutable.</p></span></section>
-				<section class="S" id="latest">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">latest</code><i class="k"><code class="return">T</code></i></h2><span class="B"><p>The latest value.</p></span></section>
-				<section class="S" id="Snapshot(java.lang.Object,kiss.WiseConsumer,kiss.WiseConsumer)">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">Snapshot</code><code class="Y">(<code>T</code><code class="parameterName">initial</code>, <code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code class="parameterName">revert</code>, <code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code class="parameterName">save</code>)</code></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>T</code><code>initial</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code>revert</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code>save</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Hide constructor.</p></span></section>
-				<section class="S" id="update(java.lang.Object)">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">update</code><code class="Y">(<code>T</code><code class="parameterName">value</code>)</code><i class="k"><code><a href="api/viewtify.edit.Edito.Snapshot.html">Snapshot</a><code class="parameters"><code>T</code></code></code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>T</code><code>value</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code><a href="api/viewtify.edit.Edito.Snapshot.html">Snapshot</a><code class="parameters"><code>T</code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Update the latest value.</p></span></section>
-				<section class="S" id="match()">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">match</code><code class="Y">()</code><i class="k"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Verify if the target object and this snapshotted object have the same value.</p></span></section>
-				<section class="S" id="revert()">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">revert</code><code class="Y">()</code><i class="k"><code>void</code></i></h2><span class="B"><p>Revet to the stored value.</p></span></section>
-				<section class="S" id="save()">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">save</code><code class="Y">()</code><i class="k"><code>void</code></i></h2><span class="B"><p>Save data to the backend storage.</p></span></section>
-				<section class="S" id="clone(java.lang.Object)">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">clone</code><code class="Y">(<code>T</code><code class="parameterName">value</code>)</code><i class="k"><code>T</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>T</code><code>value</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>T</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Clone object.</p></span></section>
-				<section class="S" id="toString()">
-					<h2 class="f"><i class="OVERRIDE PUBLIC"></i><code class="V">toString</code><code class="Y">()</code><i class="k"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-			</article>
-			<aside class="T" id="SubNavi">
-				<div class="j">
-					<h5 class="h">Constructors</h5>
-					<ul>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#Snapshot(java.lang.Object,kiss.WiseConsumer,kiss.WiseConsumer)">Snapshot</a></code><code class="Y">(<code>T</code><code class="parameterName">initial</code>, <code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code class="parameterName">revert</code>, <code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code class="parameterName">save</code>)</code></li>
+		<nav class="V"></nav>
+		<article class="U" id="Article">
+			<section class="q"><code class="H">viewtify.edit</code>
+				<h2 class="Class r"><code class="h">Edito.Snapshot</code><code class="X">&#60;<code>T</code>&#62;</code></h2>
+				<div class="e">
+					<ul class="C D">
+						<li><code>T</code></li>
 					</ul>
-					<h5 class="h">Fields</h5>
-					<ul>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#initial">initial</a></code><i class="X"><code class="return">T</code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#latest">latest</a></code><i class="X"><code class="return">T</code></i></li>
-					</ul>
-					<h5 class="h">Methods</h5>
-					<ul>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#update(java.lang.Object)">update</a></code><code class="Y">(<code>T</code><code class="parameterName">value</code>)</code><i class="X"><code><a href="api/viewtify.edit.Edito.Snapshot.html">Snapshot</a><code class="parameters"><code>T</code></code></code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#match()">match</a></code><code class="Y">()</code><i class="X"><code>boolean</code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#revert()">revert</a></code><code class="Y">()</code><i class="X"><code>void</code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#save()">save</a></code><code class="Y">()</code><i class="X"><code>void</code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#clone(java.lang.Object)">clone</a></code><code class="Y">(<code>T</code><code class="parameterName">value</code>)</code><i class="X"><code>T</code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#toString()">toString</a></code><code class="Y">()</code><i class="X"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					</ul>
-				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+				</div><span class="B"><p>Snapshot object.</p></span></section>
+			<section class="q" id="initial">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">initial</code><i class="P"><code class="return">T</code></i></h2><span class="B"><p>The snapshoted value. This is immutable.</p></span></section>
+			<section class="q" id="latest">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">latest</code><i class="P"><code class="return">T</code></i></h2><span class="B"><p>The latest value.</p></span></section>
+			<section class="q" id="Snapshot(java.lang.Object,kiss.WiseConsumer,kiss.WiseConsumer)">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">Snapshot</code><code class="X">(<code>T</code><code class="parameterName">initial</code>, <code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code class="parameterName">revert</code>, <code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code class="parameterName">save</code>)</code></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>T</code><code class="parameterName">initial</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code class="parameterName">revert</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code class="parameterName">save</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Hide constructor.</p></span></section>
+			<section class="q" id="update(java.lang.Object)">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">update</code><code class="X">(<code>T</code><code class="parameterName">value</code>)</code><i class="P"><code><a aria-label="viewtify.edit.Edito.Snapshot" href="api/viewtify.edit.Edito.Snapshot.html">Snapshot</a><code class="parameters"><code>T</code></code></code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>T</code><code class="parameterName">value</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code><a aria-label="viewtify.edit.Edito.Snapshot" href="api/viewtify.edit.Edito.Snapshot.html">Snapshot</a><code class="parameters"><code>T</code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Update the latest value.</p></span></section>
+			<section class="q" id="match()">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">match</code><code class="X">()</code><i class="P"><code>boolean</code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Verify if the target object and this snapshotted object have the same value.</p></span></section>
+			<section class="q" id="revert()">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">revert</code><code class="X">()</code><i class="P"><code>void</code></i></h2><span class="B"><p>Revet to the stored value.</p></span></section>
+			<section class="q" id="save()">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">save</code><code class="X">()</code><i class="P"><code>void</code></i></h2><span class="B"><p>Save data to the backend storage.</p></span></section>
+			<section class="q" id="clone(java.lang.Object)">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">clone</code><code class="X">(<code>T</code><code class="parameterName">value</code>)</code><i class="P"><code>T</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>T</code><code class="parameterName">value</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>T</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Clone object.</p></span></section>
+			<section class="q" id="toString()">
+				<h2 class="R"><i class="OVERRIDE PUBLIC"></i><code class="h">toString</code><code class="X">()</code><i class="P"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+		</article>
+		<aside class="W">
+			<div class="I">
+				<h5 class="M">Constructors</h5>
+				<ul>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#Snapshot(java.lang.Object,kiss.WiseConsumer,kiss.WiseConsumer)">Snapshot</a></code><code class="X">(<code>T</code><code class="parameterName">initial</code>, <code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code class="parameterName">revert</code>, <code>kiss.WiseConsumer<code class="parameters"><code>T</code></code></code><code class="parameterName">save</code>)</code></li>
+				</ul>
+				<h5 class="M">Fields</h5>
+				<ul>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#initial">initial</a></code><i class="Y"><code class="return">T</code></i></li>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#latest">latest</a></code><i class="Y"><code class="return">T</code></i></li>
+				</ul>
+				<h5 class="M">Methods</h5>
+				<ul>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#update(java.lang.Object)">update</a></code><code class="X">(<code>T</code><code class="parameterName">value</code>)</code><i class="Y"><code><a aria-label="viewtify.edit.Edito.Snapshot" href="api/viewtify.edit.Edito.Snapshot.html">Snapshot</a><code class="parameters"><code>T</code></code></code></i></li>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#match()">match</a></code><code class="X">()</code><i class="Y"><code>boolean</code></i></li>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#revert()">revert</a></code><code class="X">()</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#save()">save</a></code><code class="X">()</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#clone(java.lang.Object)">clone</a></code><code class="X">(<code>T</code><code class="parameterName">value</code>)</code><i class="Y"><code>T</code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.edit.Edito.Snapshot.html#toString()">toString</a></code><code class="X">()</code><i class="Y"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="d"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>

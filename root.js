@@ -141,7 +141,7 @@ const root = {
 				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "CalendarMarker.Mark",
 			"packageName": "viewtify.ui.calendar",
-			"type": "Class"
+			"type": "Record"
 		},
 		{
 			"modifiers": {

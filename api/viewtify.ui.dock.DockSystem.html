@@ -13,158 +13,157 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="M">
-			<h1 class="b" date="2024-12-09" ver="2.33.0"><code>Viewtify</code></h1>
-			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2024-12-31" ver="2.33.0">
+			<h1 class="Z"><code>Viewtify</code></h1>
+			<nav class="f"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="e" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="J">
-			<nav class="i">
-				<div></div>
-			</nav>
-			<article class="d" id="Article">
-				<section class="S"><code class="U">viewtify.ui.dock</code>
-					<h2 class="Class I"><code class="V">DockSystem</code></h2>
-					<div class="H"></div><span class="B"><p>Handles the full window management with fully customizable layout and drag into new not
+		<nav class="V"></nav>
+		<article class="U" id="Article">
+			<section class="q"><code class="H">viewtify.ui.dock</code>
+				<h2 class="Class r"><code class="h">DockSystem</code></h2>
+				<div class="e"></div><span class="B"><p>Handles the full window management with fully customizable layout and drag into new not
 existing windows.</p></span></section>
-				<section class="S" id="UI">
-					<h2 class="f"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="V">UI</code><i class="k"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Parent.html">Parent</a></code></code></code></i></h2><span class="B"><p>The root user interface for the docking system.</p></span></section>
-				<section class="S" id="ui()">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">ui</code><code class="Y">()</code><i class="k"><code><a href="api/viewtify.ui.UIPane.html">UIPane</a></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code><a href="api/viewtify.ui.UIPane.html">UIPane</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>The root user interface for the docking system.</p></span></section>
-				<section class="S" id="has(java.lang.String)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">has</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="k"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>id</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Test whether the specified view has already opend or not.</p></span></section>
-				<section class="S" id="isOpened(java.lang.String)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">isOpened</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="k"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>id</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Test whether the specified view has already opend or not.</p></span></section>
-				<section class="S" id="selected()">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">selected</code><code class="Y">()</code><i class="k"><code><a href="api/javafx.scene.control.Tab.html">Tab</a></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code><a href="api/javafx.scene.control.Tab.html">Tab</a></code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="S" id="select(java.lang.String)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">select</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="k"><code>void</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>id</code></td>
-							<td><span><p>A tab ID to select.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Select the specified tab.</p></span></section>
-				<section class="S" id="register(java.lang.String)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">register</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="k"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>id</code></td>
-							<td><span><p>The view to register.</p></span></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Register a new view within this dock system.</p><p/>
+			<section class="q" id="UI">
+				<h2 class="R"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">UI</code><i class="P"><code class="return"><a aria-label="viewtify.ui.UserInterfaceProvider" href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a aria-label="javafx.scene.Parent" href="api/javafx.scene.Parent.html">Parent</a></code></code></code></i></h2><span class="B"><p>The root user interface for the docking system.</p></span></section>
+			<section class="q" id="ui()">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">ui</code><code class="X">()</code><i class="P"><code><a aria-label="viewtify.ui.UIPane" href="api/viewtify.ui.UIPane.html">UIPane</a></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code><a aria-label="viewtify.ui.UIPane" href="api/viewtify.ui.UIPane.html">UIPane</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>The root user interface for the docking system.</p></span></section>
+			<section class="q" id="has(java.lang.String)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">has</code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="P"><code>boolean</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Test whether the specified view has already opend or not.</p></span></section>
+			<section class="q" id="isOpened(java.lang.String)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">isOpened</code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="P"><code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Test whether the specified view has already opend or not.</p></span></section>
+			<section class="q" id="selected()">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">selected</code><code class="X">()</code><i class="P"><code><a aria-label="javafx.scene.control.Tab" href="api/javafx.scene.control.Tab.html">Tab</a></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code><a aria-label="javafx.scene.control.Tab" href="api/javafx.scene.control.Tab.html">Tab</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="q" id="select(java.lang.String)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">select</code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="P"><code>void</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code></td>
+						<td><span><p>A tab ID to select.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Select the specified tab.</p></span></section>
+			<section class="q" id="register(java.lang.String)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">register</code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="P"><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UITab" href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code></td>
+						<td><span><p>The view to register.</p></span></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UITab" href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Register a new view within this dock system.</p><p/>
  The Position will give an advice where this view should be placed.
 </span></section>
-				<section class="S" id="register(java.lang.String,java.util.function.UnaryOperator)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">register</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><code class="parameters"><code><a href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></code></code><code class="parameterName">option</code>)</code><i class="k"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>id</code></td>
-							<td><span><p>The view to register.</p></span></td>
-						</tr>
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><code class="parameters"><code><a href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></code></code><code>option</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Register a new view within this dock system.</p><p/>
+			<section class="q" id="register(java.lang.String,java.util.function.UnaryOperator)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">register</code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>, <code><a aria-label="java.util.function.UnaryOperator 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><code class="parameters"><code><a aria-label="viewtify.ui.dock.DockRecommendedLocation" href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></code></code><code class="parameterName">option</code>)</code><i class="P"><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UITab" href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code></td>
+						<td><span><p>The view to register.</p></span></td>
+					</tr>
+					<tr class="n">
+						<td><code><a aria-label="java.util.function.UnaryOperator 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><code class="parameters"><code><a aria-label="viewtify.ui.dock.DockRecommendedLocation" href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></code></code><code class="parameterName">option</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UITab" href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Register a new view within this dock system.</p><p/>
  The Position will give an advice where this view should be placed.
 </span></section>
-				<section class="S" id="initialize()">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">initialize</code><code class="Y">()</code><i class="k"><code>void</code></i></h2><span class="B"><p>Initialize dock system with default menu.</p></span></section>
-				<section class="S" id="initialize(kiss.WiseConsumer)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">initialize</code><code class="Y">(<code>kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.UILabel.html">UILabel</a></code></code></code><code class="parameterName">menuBuilder</code>)</code><i class="k"><code>void</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.UILabel.html">UILabel</a></code></code></code><code>menuBuilder</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Initialize dock system with your menu builder.</p></span></section>
-			</article>
-			<aside class="T" id="SubNavi">
-				<div class="j">
-					<h5 class="h">Static Fields</h5>
-					<ul>
-						<li><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ui.dock.DockSystem.html#UI">UI</a></code><i class="X"><code class="return"><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Parent.html">Parent</a></code></code></code></i></li>
-					</ul>
-					<h5 class="h">Static Methods</h5>
-					<ul>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#ui()">ui</a></code><code class="Y">()</code><i class="X"><code><a href="api/viewtify.ui.UIPane.html">UIPane</a></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#has(java.lang.String)">has</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="X"><code>boolean</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#isOpened(java.lang.String)">isOpened</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="X"><code>kiss.Signal<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#selected()">selected</a></code><code class="Y">()</code><i class="X"><code><a href="api/javafx.scene.control.Tab.html">Tab</a></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#select(java.lang.String)">select</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="X"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#register(java.lang.String)">register</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="X"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#register(java.lang.String,java.util.function.UnaryOperator)">register</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><code class="parameters"><code><a href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></code></code><code class="parameterName">option</code>)</code><i class="X"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#initialize()">initialize</a></code><code class="Y">()</code><i class="X"><code>void</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#initialize(kiss.WiseConsumer)">initialize</a></code><code class="Y">(<code>kiss.WiseConsumer<code class="parameters"><code><a href="api/viewtify.ui.UILabel.html">UILabel</a></code></code></code><code class="parameterName">menuBuilder</code>)</code><i class="X"><code>void</code></i></li>
-					</ul>
-				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+			<section class="q" id="initialize()">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">initialize</code><code class="X">()</code><i class="P"><code>void</code></i></h2><span class="B"><p>Initialize dock system with default menu.</p></span></section>
+			<section class="q" id="initialize(kiss.WiseConsumer)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">initialize</code><code class="X">(<code>kiss.WiseConsumer<code class="parameters"><code><a aria-label="viewtify.ui.UILabel" href="api/viewtify.ui.UILabel.html">UILabel</a></code></code></code><code class="parameterName">menuBuilder</code>)</code><i class="P"><code>void</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>kiss.WiseConsumer<code class="parameters"><code><a aria-label="viewtify.ui.UILabel" href="api/viewtify.ui.UILabel.html">UILabel</a></code></code></code><code class="parameterName">menuBuilder</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Initialize dock system with your menu builder.</p></span></section>
+		</article>
+		<aside class="W">
+			<div class="I">
+				<h5 class="M">Static Fields</h5>
+				<ul>
+					<li class="J"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.ui.dock.DockSystem.html#UI">UI</a></code><i class="Y"><code class="return"><a aria-label="viewtify.ui.UserInterfaceProvider" href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a aria-label="javafx.scene.Parent" href="api/javafx.scene.Parent.html">Parent</a></code></code></code></i></li>
+				</ul>
+				<h5 class="M">Static Methods</h5>
+				<ul>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#ui()">ui</a></code><code class="X">()</code><i class="Y"><code><a aria-label="viewtify.ui.UIPane" href="api/viewtify.ui.UIPane.html">UIPane</a></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#has(java.lang.String)">has</a></code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="Y"><code>boolean</code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#isOpened(java.lang.String)">isOpened</a></code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="Y"><code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#selected()">selected</a></code><code class="X">()</code><i class="Y"><code><a aria-label="javafx.scene.control.Tab" href="api/javafx.scene.control.Tab.html">Tab</a></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#select(java.lang.String)">select</a></code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#register(java.lang.String)">register</a></code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>)</code><i class="Y"><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UITab" href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#register(java.lang.String,java.util.function.UnaryOperator)">register</a></code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">id</code>, <code><a aria-label="java.util.function.UnaryOperator 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/UnaryOperator.html">UnaryOperator</a><code class="parameters"><code><a aria-label="viewtify.ui.dock.DockRecommendedLocation" href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></code></code><code class="parameterName">option</code>)</code><i class="Y"><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UITab" href="api/viewtify.ui.UITab.html">UITab</a></code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#initialize()">initialize</a></code><code class="X">()</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.dock.DockSystem.html#initialize(kiss.WiseConsumer)">initialize</a></code><code class="X">(<code>kiss.WiseConsumer<code class="parameters"><code><a aria-label="viewtify.ui.UILabel" href="api/viewtify.ui.UILabel.html">UILabel</a></code></code></code><code class="parameterName">menuBuilder</code>)</code><i class="Y"><code>void</code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="d"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>

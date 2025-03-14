@@ -13,137 +13,136 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="M">
-			<h1 class="b" date="2024-12-09" ver="2.33.0"><code>Viewtify</code></h1>
-			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2024-12-31" ver="2.33.0">
+			<h1 class="Z"><code>Viewtify</code></h1>
+			<nav class="f"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="e" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="J">
-			<nav class="i">
-				<div></div>
-			</nav>
-			<article class="d" id="Article">
-				<section class="S"><code class="U">viewtify.ui.calendar</code>
-					<h2 class="AbstractClass I"><code class="V">TemporalView</code></h2>
-					<div class="H">
-						<ul class="C E">
-							<li><code><a href="api/viewtify.ui.View.html">View</a></code></li>
-						</ul>
-						<ul class="C F">
-							<li><code><a href="api/viewtify.ui.AutoDisposable.html">AutoDisposable</a></code></li>
-							<li><code>kiss.Disposable</code></li>
-							<li><code>kiss.Extensible</code></li>
-							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
-						</ul>
-						<ul class="C G">
-							<li><code><a href="api/viewtify.ui.calendar.DayView.html">DayView</a></code></li>
-							<li><code><a href="api/viewtify.ui.calendar.MonthView.html">MonthView</a></code></li>
-							<li><code><a href="api/viewtify.ui.calendar.WeekView.html">WeekView</a></code></li>
-							<li><code><a href="api/viewtify.ui.calendar.YearView.html">YearView</a></code></li>
-						</ul>
-					</div>
-				</section>
-				<section class="S" id="calendar">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">calendar</code><i class="k"><code class="return"><a href="api/viewtify.ui.calendar.CalendarView.html">CalendarView</a></code></i></h2><span class="B"><p>The base view.</p></span></section>
-				<section class="S" id="currentDate">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">currentDate</code><i class="k"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></i></h2><span class="B"><p>The processing local date.</p></span></section>
-				<section class="S" id="TemporalView()">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">TemporalView</code><code class="Y">()</code></h2>
-				</section>
-				<section class="S" id="initialize()">
-					<h2 class="f"><i class="OVERRIDE PROTECTED"></i><code class="V">initialize</code><code class="Y">()</code><i class="k"><code>void</code></i></h2>
-				</section>
-				<section class="S" id="next()">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">next</code><code class="Y">()</code><i class="k"><code>void</code></i></h2><span class="B"><p>Select next temporal location.</p></span></section>
-				<section class="S" id="previous()">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">previous</code><code class="Y">()</code><i class="k"><code>void</code></i></h2><span class="B"><p>Select previous temporal location.</p></span></section>
-				<section class="S" id="today()">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">today</code><code class="Y">()</code><i class="k"><code>void</code></i></h2><span class="B"><p>Select today.</p></span></section>
-				<section class="S" id="temporalUnit()">
-					<h2 class="f"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="V">temporalUnit</code><code class="Y">()</code><i class="k"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Detect the associated termporal unit.</p></span></section>
-				<section class="S" id="formatter(java.util.Locale)">
-					<h2 class="f"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="V">formatter</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="k"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code>locale</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Find the associated date formatter.</p></span></section>
-				<section class="S" id="set(java.time.LocalDate)">
-					<h2 class="f"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="V">set</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code><code class="parameterName">date</code>)</code><i class="k"><code>void</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code><code>date</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Set the specified temporal location.</p></span></section>
-				<section class="S" id="set(java.util.Locale)">
-					<h2 class="f"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="V">set</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="k"><code>void</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code>locale</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Set the specified locale.</p></span></section>
-			</article>
-			<aside class="T" id="SubNavi">
-				<div class="j">
-					<h5 class="h">Constructors</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#TemporalView()">TemporalView</a></code><code class="Y">()</code></li>
+		<nav class="V"></nav>
+		<article class="U" id="Article">
+			<section class="q"><code class="H">viewtify.ui.calendar</code>
+				<h2 class="AbstractClass r"><code class="h">TemporalView</code></h2>
+				<div class="e">
+					<ul class="C E">
+						<li><code><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code></li>
 					</ul>
-					<h5 class="h">Fields</h5>
-					<ul>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#calendar">calendar</a></code><i class="X"><code class="return"><a href="api/viewtify.ui.calendar.CalendarView.html">CalendarView</a></code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#currentDate">currentDate</a></code><i class="X"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></i></li>
+					<ul class="C F">
+						<li><code><a aria-label="viewtify.ui.AutoDisposable" href="api/viewtify.ui.AutoDisposable.html">AutoDisposable</a></code></li>
+						<li><code>kiss.Disposable</code></li>
+						<li><code>kiss.Extensible</code></li>
+						<li><code><a aria-label="viewtify.ui.UserInterfaceProvider" href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
 					</ul>
-					<h5 class="h">Methods</h5>
-					<ul>
-						<li><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#initialize()">initialize</a></code><code class="Y">()</code><i class="X"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#next()">next</a></code><code class="Y">()</code><i class="X"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#previous()">previous</a></code><code class="Y">()</code><i class="X"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#today()">today</a></code><code class="Y">()</code><i class="X"><code>void</code></i></li>
-						<li><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#temporalUnit()">temporalUnit</a></code><code class="Y">()</code><i class="X"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code></i></li>
-						<li><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#formatter(java.util.Locale)">formatter</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="X"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></li>
-						<li><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#set(java.time.LocalDate)">set</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code><code class="parameterName">date</code>)</code><i class="X"><code>void</code></i></li>
-						<li><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#set(java.util.Locale)">set</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="X"><code>void</code></i></li>
+					<ul class="C G">
+						<li><code><a aria-label="viewtify.ui.calendar.DayView" href="api/viewtify.ui.calendar.DayView.html">DayView</a></code></li>
+						<li><code><a aria-label="viewtify.ui.calendar.MonthView" href="api/viewtify.ui.calendar.MonthView.html">MonthView</a></code></li>
+						<li><code><a aria-label="viewtify.ui.calendar.WeekView" href="api/viewtify.ui.calendar.WeekView.html">WeekView</a></code></li>
+						<li><code><a aria-label="viewtify.ui.calendar.YearView" href="api/viewtify.ui.calendar.YearView.html">YearView</a></code></li>
 					</ul>
 				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+			</section>
+			<section class="q" id="calendar">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">calendar</code><i class="P"><code class="return"><a aria-label="viewtify.ui.calendar.CalendarView" href="api/viewtify.ui.calendar.CalendarView.html">CalendarView</a></code></i></h2><span class="B"><p>The base view.</p></span></section>
+			<section class="q" id="currentDate">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">currentDate</code><i class="P"><code class="return"><a aria-label="java.time.LocalDate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></i></h2><span class="B"><p>The processing local date.</p></span></section>
+			<section class="q" id="TemporalView()">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">TemporalView</code><code class="X">()</code></h2>
+			</section>
+			<section class="q" id="initialize()">
+				<h2 class="R"><i class="OVERRIDE PROTECTED"></i><code class="h">initialize</code><code class="X">()</code><i class="P"><code>void</code></i></h2>
+			</section>
+			<section class="q" id="next()">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">next</code><code class="X">()</code><i class="P"><code>void</code></i></h2><span class="B"><p>Select next temporal location.</p></span></section>
+			<section class="q" id="previous()">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">previous</code><code class="X">()</code><i class="P"><code>void</code></i></h2><span class="B"><p>Select previous temporal location.</p></span></section>
+			<section class="q" id="today()">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">today</code><code class="X">()</code><i class="P"><code>void</code></i></h2><span class="B"><p>Select today.</p></span></section>
+			<section class="q" id="temporalUnit()">
+				<h2 class="R"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="h">temporalUnit</code><code class="X">()</code><i class="P"><code><a aria-label="java.time.temporal.ChronoUnit 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code><a aria-label="java.time.temporal.ChronoUnit 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Detect the associated termporal unit.</p></span></section>
+			<section class="q" id="formatter(java.util.Locale)">
+				<h2 class="R"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="h">formatter</code><code class="X">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="P"><code><a aria-label="java.time.format.DateTimeFormatter 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code><a aria-label="java.time.format.DateTimeFormatter 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Find the associated date formatter.</p></span></section>
+			<section class="q" id="set(java.time.LocalDate)">
+				<h2 class="R"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="h">set</code><code class="X">(<code><a aria-label="java.time.LocalDate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code><code class="parameterName">date</code>)</code><i class="P"><code>void</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.time.LocalDate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code><code class="parameterName">date</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Set the specified temporal location.</p></span></section>
+			<section class="q" id="set(java.util.Locale)">
+				<h2 class="R"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="h">set</code><code class="X">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="P"><code>void</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Set the specified locale.</p></span></section>
+		</article>
+		<aside class="W">
+			<div class="I">
+				<h5 class="M">Constructors</h5>
+				<ul>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#TemporalView()">TemporalView</a></code><code class="X">()</code></li>
+				</ul>
+				<h5 class="M">Fields</h5>
+				<ul>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#calendar">calendar</a></code><i class="Y"><code class="return"><a aria-label="viewtify.ui.calendar.CalendarView" href="api/viewtify.ui.calendar.CalendarView.html">CalendarView</a></code></i></li>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#currentDate">currentDate</a></code><i class="Y"><code class="return"><a aria-label="java.time.LocalDate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></i></li>
+				</ul>
+				<h5 class="M">Methods</h5>
+				<ul>
+					<li class="J"><i class="OVERRIDE PROTECTED"></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#initialize()">initialize</a></code><code class="X">()</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#next()">next</a></code><code class="X">()</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#previous()">previous</a></code><code class="X">()</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#today()">today</a></code><code class="X">()</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#temporalUnit()">temporalUnit</a></code><code class="X">()</code><i class="Y"><code><a aria-label="java.time.temporal.ChronoUnit 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/temporal/ChronoUnit.html">ChronoUnit</a></code></i></li>
+					<li class="J"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#formatter(java.util.Locale)">formatter</a></code><code class="X">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="Y"><code><a aria-label="java.time.format.DateTimeFormatter 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/format/DateTimeFormatter.html">DateTimeFormatter</a></code></i></li>
+					<li class="J"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#set(java.time.LocalDate)">set</a></code><code class="X">(<code><a aria-label="java.time.LocalDate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code><code class="parameterName">date</code>)</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.calendar.TemporalView.html#set(java.util.Locale)">set</a></code><code class="X">(<code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code><code class="parameterName">locale</code>)</code><i class="Y"><code>void</code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="d"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>

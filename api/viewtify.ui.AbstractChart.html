@@ -13,293 +13,292 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="M">
-			<h1 class="b" date="2024-12-09" ver="2.33.0"><code>Viewtify</code></h1>
-			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2024-12-31" ver="2.33.0">
+			<h1 class="Z"><code>Viewtify</code></h1>
+			<nav class="f"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="e" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="J">
-			<nav class="i">
-				<div></div>
-			</nav>
-			<article class="d" id="Article">
-				<section class="S"><code class="U">viewtify.ui</code>
-					<h2 class="AbstractClass I"><code class="V">AbstractChart</code><code class="Y">&#60;<code>Self</code>, <code>C</code>, <code>D</code>&#62;</code></h2>
-					<div class="H">
-						<ul class="C D">
-							<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.AbstractChart.html">AbstractChart</a><code class="parameters"><code>Self</code>, <code>C</code>, <code>D</code></code></code></code></li>
-							<li><code>C</code><code class="extends"><code>javafx.scene.chart.Chart</code></code></li>
-							<li><code>D</code></li>
-						</ul>
-						<ul class="C E">
-							<li><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.ReferenceHolder.html">ReferenceHolder</a></code></li>
-						</ul>
-						<ul class="C F">
-							<li><code><a href="api/viewtify.ui.helper.AnimateHelper.html">AnimateHelper</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.AssociativeHelper.html">AssociativeHelper</a></code></li>
-							<li><code><a href="api/viewtify.ui.helper.DecorationHelper.html">DecorationHelper</a><code class="parameters"><code>Self</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.DisableHelper.html">DisableHelper</a><code class="parameters"><code>Self</code></code></code></li>
-							<li><code>kiss.Disposable</code></li>
-							<li><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.html">PropertyAccessHelper</a></code></li>
-							<li><code><a href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.TooltipHelper.html">TooltipHelper</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a><code class="parameters"><code>Self</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>C</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>Self</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.VisibleHelper.html">VisibleHelper</a><code class="parameters"><code>Self</code></code></code></li>
-						</ul>
-						<ul class="C G">
-							<li><code><a href="api/viewtify.ui.UILineChart.html">UILineChart</a><code class="parameters"><code>X</code>, <code>Y</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></li>
-						</ul>
-					</div>
-				</section>
-				<section class="S" id="root">
-					<h2 class="f"><i class="FINAL"><i class="PROTECTED"></i></i><code class="V">root</code><i class="k"><code class="return">javafx.scene.layout.VBox</code></i></h2><span class="B"><p>The tooltip pane.</p></span></section>
-				<section class="S" id="AbstractChart(java.lang.Object,viewtify.ui.View)">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">AbstractChart</code><code class="Y">(<code>C</code><code class="parameterName">chart</code>, <code><a href="api/viewtify.ui.View.html">View</a></code><code class="parameterName">view</code>)</code></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>C</code><code>chart</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code><a href="api/viewtify.ui.View.html">View</a></code><code>view</code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="S" id="title(java.lang.String)">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">title</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">title</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>title</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Set title.</p></span></section>
-				<section class="S" id="title(javafx.geometry.Side)">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">title</code><code class="Y">(<code>javafx.geometry.Side</code><code class="parameterName">side</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>javafx.geometry.Side</code><code>side</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Set title location.</p></span></section>
-				<section class="S" id="legend(boolean)">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">legend</code><code class="Y">(<code>boolean</code><code class="parameterName">enable</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>boolean</code><code>enable</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Set legends.</p></span></section>
-				<section class="S" id="legend(javafx.geometry.Side)">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">legend</code><code class="Y">(<code>javafx.geometry.Side</code><code class="parameterName">side</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>javafx.geometry.Side</code><code>side</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Set legends location.</p></span></section>
-				<section class="S" id="limitLabel(int)">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">limitLabel</code><code class="Y">(<code>int</code><code class="parameterName">size</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>int</code><code>size</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Limit the number of tooltip labels.</p></span></section>
-				<section class="S" id="data(java.lang.Object)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">data</code><code class="Y">(<code>D</code><code class="parameterName">data</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>D</code><code>data</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Provide new data.</p></span></section>
-				<section class="S" id="data(java.lang.Iterable)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">data</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code>data</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Provide new data.</p></span></section>
-				<section class="S" id="data(kiss.Signal)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">data</code><code class="Y">(<code>kiss.Signal<code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>kiss.Signal<code class="parameters"><code>D</code></code></code><code>data</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Provide new data.</p></span></section>
-				<section class="S" id="data(java.lang.String,java.lang.Object)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">data</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code>D</code><code class="parameterName">data</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>name</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>D</code><code>data</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Provide new data.</p></span></section>
-				<section class="S" id="data(java.lang.String,java.lang.Iterable)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">data</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>name</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code>data</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Provide new data.</p></span></section>
-				<section class="S" id="data(java.lang.String,kiss.Signal)">
-					<h2 class="f"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="V">data</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code>kiss.Signal<code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>name</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>kiss.Signal<code class="parameters"><code>D</code></code></code><code>data</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Provide new data.</p></span></section>
-				<section class="S" id="showTooltip(javafx.scene.input.MouseEvent)">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">showTooltip</code><code class="Y">(<code>javafx.scene.input.MouseEvent</code><code class="parameterName">e</code>)</code><i class="k"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>javafx.scene.input.MouseEvent</code><code>e</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Show tooltip.</p></span></section>
-				<section class="S" id="hideTooltip(javafx.scene.input.MouseEvent)">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">hideTooltip</code><code class="Y">(<code>javafx.scene.input.MouseEvent</code><code class="parameterName">e</code>)</code><i class="k"><code>void</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>javafx.scene.input.MouseEvent</code><code>e</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Hide tooltip.</p></span></section>
-				<section class="S" id="createTooltipLabel(int)">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">createTooltipLabel</code><code class="Y">(<code>int</code><code class="parameterName">colorId</code>)</code><i class="k"><code><a href="api/javafx.scene.control.Label.html">Label</a></code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>int</code><code>colorId</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code><a href="api/javafx.scene.control.Label.html">Label</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Create tooltip label.</p></span></section>
-			</article>
-			<aside class="T" id="SubNavi">
-				<div class="j">
-					<h5 class="h">Constructors</h5>
-					<ul>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.AbstractChart.html#AbstractChart(java.lang.Object,viewtify.ui.View)">AbstractChart</a></code><code class="Y">(<code>C</code><code class="parameterName">chart</code>, <code><a href="api/viewtify.ui.View.html">View</a></code><code class="parameterName">view</code>)</code></li>
+		<nav class="V"></nav>
+		<article class="U" id="Article">
+			<section class="q"><code class="H">viewtify.ui</code>
+				<h2 class="AbstractClass r"><code class="h">AbstractChart</code><code class="X">&#60;<code>Self</code>, <code>C</code>, <code>D</code>&#62;</code></h2>
+				<div class="e">
+					<ul class="C D">
+						<li><code>Self</code><code class="extends"><code><a aria-label="viewtify.ui.AbstractChart" href="api/viewtify.ui.AbstractChart.html">AbstractChart</a><code class="parameters"><code>Self</code>, <code>C</code>, <code>D</code></code></code></code></li>
+						<li><code>C</code><code class="extends"><code>javafx.scene.chart.Chart</code></code></li>
+						<li><code>D</code></li>
 					</ul>
-					<h5 class="h">Fields</h5>
-					<ul>
-						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#root">root</a></code><i class="X"><code class="return">javafx.scene.layout.VBox</code></i></li>
+					<ul class="C E">
+						<li><code><a aria-label="viewtify.ui.UserInterface" href="api/viewtify.ui.UserInterface.html">UserInterface</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.ReferenceHolder" href="api/viewtify.ui.helper.ReferenceHolder.html">ReferenceHolder</a></code></li>
 					</ul>
-					<h5 class="h">Methods</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#title(java.lang.String)">title</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">title</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#title(javafx.geometry.Side)">title</a></code><code class="Y">(<code>javafx.geometry.Side</code><code class="parameterName">side</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#legend(boolean)">legend</a></code><code class="Y">(<code>boolean</code><code class="parameterName">enable</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#legend(javafx.geometry.Side)">legend</a></code><code class="Y">(<code>javafx.geometry.Side</code><code class="parameterName">side</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#limitLabel(int)">limitLabel</a></code><code class="Y">(<code>int</code><code class="parameterName">size</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(java.lang.Object)">data</a></code><code class="Y">(<code>D</code><code class="parameterName">data</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(java.lang.Iterable)">data</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(kiss.Signal)">data</a></code><code class="Y">(<code>kiss.Signal<code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(java.lang.String,java.lang.Object)">data</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code>D</code><code class="parameterName">data</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(java.lang.String,java.lang.Iterable)">data</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(java.lang.String,kiss.Signal)">data</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code>kiss.Signal<code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.AbstractChart.html#showTooltip(javafx.scene.input.MouseEvent)">showTooltip</a></code><code class="Y">(<code>javafx.scene.input.MouseEvent</code><code class="parameterName">e</code>)</code><i class="X"><code>boolean</code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.AbstractChart.html#hideTooltip(javafx.scene.input.MouseEvent)">hideTooltip</a></code><code class="Y">(<code>javafx.scene.input.MouseEvent</code><code class="parameterName">e</code>)</code><i class="X"><code>void</code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ui.AbstractChart.html#createTooltipLabel(int)">createTooltipLabel</a></code><code class="Y">(<code>int</code><code class="parameterName">colorId</code>)</code><i class="X"><code><a href="api/javafx.scene.control.Label.html">Label</a></code></i></li>
+					<ul class="C F">
+						<li><code><a aria-label="viewtify.ui.helper.AnimateHelper" href="api/viewtify.ui.helper.AnimateHelper.html">AnimateHelper</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.AssociativeHelper" href="api/viewtify.ui.helper.AssociativeHelper.html">AssociativeHelper</a></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.DecorationHelper" href="api/viewtify.ui.helper.DecorationHelper.html">DecorationHelper</a><code class="parameters"><code>Self</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.DisableHelper" href="api/viewtify.ui.helper.DisableHelper.html">DisableHelper</a><code class="parameters"><code>Self</code></code></code></li>
+						<li><code>kiss.Disposable</code></li>
+						<li><code><a aria-label="viewtify.ui.helper.PropertyAccessHelper" href="api/viewtify.ui.helper.PropertyAccessHelper.html">PropertyAccessHelper</a></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.StyleHelper" href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.TooltipHelper" href="api/viewtify.ui.helper.TooltipHelper.html">TooltipHelper</a><code class="parameters"><code>Self</code>, <code>C</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.UserActionHelper" href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a><code class="parameters"><code>Self</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UserInterfaceProvider" href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>C</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.VerifyHelper" href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>Self</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.VisibleHelper" href="api/viewtify.ui.helper.VisibleHelper.html">VisibleHelper</a><code class="parameters"><code>Self</code></code></code></li>
+					</ul>
+					<ul class="C G">
+						<li><code><a aria-label="viewtify.ui.UILineChart" href="api/viewtify.ui.UILineChart.html">UILineChart</a><code class="parameters"><code>X</code>, <code>Y</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UIPieChart" href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></li>
 					</ul>
 				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+			</section>
+			<section class="q" id="root">
+				<h2 class="R"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">root</code><i class="P"><code class="return">javafx.scene.layout.VBox</code></i></h2><span class="B"><p>The tooltip pane.</p></span></section>
+			<section class="q" id="AbstractChart(java.lang.Object,viewtify.ui.View)">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">AbstractChart</code><code class="X">(<code>C</code><code class="parameterName">chart</code>, <code><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code><code class="parameterName">view</code>)</code></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>C</code><code class="parameterName">chart</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code><code class="parameterName">view</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="q" id="title(java.lang.String)">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">title</code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">title</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">title</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Set title.</p></span></section>
+			<section class="q" id="title(javafx.geometry.Side)">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">title</code><code class="X">(<code>javafx.geometry.Side</code><code class="parameterName">side</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>javafx.geometry.Side</code><code class="parameterName">side</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Set title location.</p></span></section>
+			<section class="q" id="legend(boolean)">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">legend</code><code class="X">(<code>boolean</code><code class="parameterName">enable</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>boolean</code><code class="parameterName">enable</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Set legends.</p></span></section>
+			<section class="q" id="legend(javafx.geometry.Side)">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">legend</code><code class="X">(<code>javafx.geometry.Side</code><code class="parameterName">side</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>javafx.geometry.Side</code><code class="parameterName">side</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Set legends location.</p></span></section>
+			<section class="q" id="limitLabel(int)">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">limitLabel</code><code class="X">(<code>int</code><code class="parameterName">size</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>int</code><code class="parameterName">size</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Limit the number of tooltip labels.</p></span></section>
+			<section class="q" id="data(java.lang.Object)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">data</code><code class="X">(<code>D</code><code class="parameterName">data</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>D</code><code class="parameterName">data</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Provide new data.</p></span></section>
+			<section class="q" id="data(java.lang.Iterable)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">data</code><code class="X">(<code><a aria-label="java.lang.Iterable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.Iterable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code class="parameterName">data</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Provide new data.</p></span></section>
+			<section class="q" id="data(kiss.Signal)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">data</code><code class="X">(<code>kiss.Signal<code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>kiss.Signal<code class="parameters"><code>D</code></code></code><code class="parameterName">data</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Provide new data.</p></span></section>
+			<section class="q" id="data(java.lang.String,java.lang.Object)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">data</code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code>D</code><code class="parameterName">data</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>D</code><code class="parameterName">data</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Provide new data.</p></span></section>
+			<section class="q" id="data(java.lang.String,java.lang.Iterable)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">data</code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code><a aria-label="java.lang.Iterable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code><a aria-label="java.lang.Iterable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code class="parameterName">data</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Provide new data.</p></span></section>
+			<section class="q" id="data(java.lang.String,kiss.Signal)">
+				<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="h">data</code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code>kiss.Signal<code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>kiss.Signal<code class="parameters"><code>D</code></code></code><code class="parameterName">data</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Provide new data.</p></span></section>
+			<section class="q" id="showTooltip(javafx.scene.input.MouseEvent)">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">showTooltip</code><code class="X">(<code>javafx.scene.input.MouseEvent</code><code class="parameterName">e</code>)</code><i class="P"><code>boolean</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>javafx.scene.input.MouseEvent</code><code class="parameterName">e</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Show tooltip.</p></span></section>
+			<section class="q" id="hideTooltip(javafx.scene.input.MouseEvent)">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">hideTooltip</code><code class="X">(<code>javafx.scene.input.MouseEvent</code><code class="parameterName">e</code>)</code><i class="P"><code>void</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>javafx.scene.input.MouseEvent</code><code class="parameterName">e</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Hide tooltip.</p></span></section>
+			<section class="q" id="createTooltipLabel(int)">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">createTooltipLabel</code><code class="X">(<code>int</code><code class="parameterName">colorId</code>)</code><i class="P"><code><a aria-label="javafx.scene.control.Label" href="api/javafx.scene.control.Label.html">Label</a></code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>int</code><code class="parameterName">colorId</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code><a aria-label="javafx.scene.control.Label" href="api/javafx.scene.control.Label.html">Label</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Create tooltip label.</p></span></section>
+		</article>
+		<aside class="W">
+			<div class="I">
+				<h5 class="M">Constructors</h5>
+				<ul>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.ui.AbstractChart.html#AbstractChart(java.lang.Object,viewtify.ui.View)">AbstractChart</a></code><code class="X">(<code>C</code><code class="parameterName">chart</code>, <code><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code><code class="parameterName">view</code>)</code></li>
+				</ul>
+				<h5 class="M">Fields</h5>
+				<ul>
+					<li class="J"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#root">root</a></code><i class="Y"><code class="return">javafx.scene.layout.VBox</code></i></li>
+				</ul>
+				<h5 class="M">Methods</h5>
+				<ul>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#title(java.lang.String)">title</a></code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">title</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#title(javafx.geometry.Side)">title</a></code><code class="X">(<code>javafx.geometry.Side</code><code class="parameterName">side</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#legend(boolean)">legend</a></code><code class="X">(<code>boolean</code><code class="parameterName">enable</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#legend(javafx.geometry.Side)">legend</a></code><code class="X">(<code>javafx.geometry.Side</code><code class="parameterName">side</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.AbstractChart.html#limitLabel(int)">limitLabel</a></code><code class="X">(<code>int</code><code class="parameterName">size</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(java.lang.Object)">data</a></code><code class="X">(<code>D</code><code class="parameterName">data</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(java.lang.Iterable)">data</a></code><code class="X">(<code><a aria-label="java.lang.Iterable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(kiss.Signal)">data</a></code><code class="X">(<code>kiss.Signal<code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(java.lang.String,java.lang.Object)">data</a></code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code>D</code><code class="parameterName">data</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(java.lang.String,java.lang.Iterable)">data</a></code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code><a aria-label="java.lang.Iterable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.AbstractChart.html#data(java.lang.String,kiss.Signal)">data</a></code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code>kiss.Signal<code class="parameters"><code>D</code></code></code><code class="parameterName">data</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.ui.AbstractChart.html#showTooltip(javafx.scene.input.MouseEvent)">showTooltip</a></code><code class="X">(<code>javafx.scene.input.MouseEvent</code><code class="parameterName">e</code>)</code><i class="Y"><code>boolean</code></i></li>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.ui.AbstractChart.html#hideTooltip(javafx.scene.input.MouseEvent)">hideTooltip</a></code><code class="X">(<code>javafx.scene.input.MouseEvent</code><code class="parameterName">e</code>)</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.ui.AbstractChart.html#createTooltipLabel(int)">createTooltipLabel</a></code><code class="X">(<code>int</code><code class="parameterName">colorId</code>)</code><i class="Y"><code><a aria-label="javafx.scene.control.Label" href="api/javafx.scene.control.Label.html">Label</a></code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="d"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>

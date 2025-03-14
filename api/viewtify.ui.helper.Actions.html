@@ -13,239 +13,238 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="M">
-			<h1 class="b" date="2024-12-09" ver="2.33.0"><code>Viewtify</code></h1>
-			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2024-12-31" ver="2.33.0">
+			<h1 class="Z"><code>Viewtify</code></h1>
+			<nav class="f"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="e" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="J">
-			<nav class="i">
-				<div></div>
-			</nav>
-			<article class="d" id="Article">
-				<section class="S"><code class="U">viewtify.ui.helper</code>
-					<h2 class="Class I"><code class="V">Actions</code></h2>
-					<div class="H"></div>
-				</section>
-				<section class="S" id="Actions()">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">Actions</code><code class="Y">()</code></h2>
-				</section>
-				<section class="S" id="inside(java.util.function.Supplier)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">inside</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code><code class="parameterName">node</code>)</code><i class="k"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>javafx.scene.input.GestureEvent</code></code></code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code><code>node</code></td>
-							<td><span><p>A target node.</p></span></td>
-						</tr>
-						<tr class="a">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>javafx.scene.input.GestureEvent</code></code></code></td>
-							<td><span><p>A filter.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Create new filter to take the mouse event only inside the specified <code><a href="api/javafx.scene.Node.html">Node</a></code>.</p></span></section>
-				<section class="S" id="selectNext(javafx.scene.control.SelectionModel)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">selectNext</code><code class="Y">(<code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="k"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code>model</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Select the next item. (skip disabled item)</p></span></section>
-				<section class="S" id="selectPrev(javafx.scene.control.SelectionModel)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">selectPrev</code><code class="Y">(<code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="k"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code>model</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Select the previous item. (skip disabled item)</p></span></section>
-				<section class="S" id="traverse(javafx.scene.control.SelectionModel)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">traverse</code><code class="Y">(<code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="k"><code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code></code></code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code>model</code></td>
-							<td><span><p>A selection model to traverse.</p></span></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code></code></code></td>
-							<td><span><p>New action.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
-				<section class="S" id="traverseInt()">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">traverseInt</code><code class="Y">()</code><i class="k"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
-					<table class="N">
-						<tr class="l">
-							<td><code>X</code><code class="extends"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
-							<td><span><p>New action.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
-				<section class="S" id="traverseInt(int)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">traverseInt</code><code class="Y">(<code>int</code><code class="parameterName">step</code>)</code><i class="k"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
-					<table class="N">
-						<tr class="l">
-							<td><code>X</code><code class="extends"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>int</code><code>step</code></td>
-							<td><span><p>Difference value when increasing or decreasing the value.</p></span></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
-							<td><span><p>New action.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
-				<section class="S" id="traverseInt(java.util.function.Supplier)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">traverseInt</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code><code class="parameterName">step</code>)</code><i class="k"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
-					<table class="N">
-						<tr class="l">
-							<td><code>X</code><code class="extends"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code><code>step</code></td>
-							<td><span><p>Difference value when increasing or decreasing the value.</p></span></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
-							<td><span><p>New action.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
-				<section class="S" id="traverseDouble()">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">traverseDouble</code><code class="Y">()</code><i class="k"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
-					<table class="N">
-						<tr class="l">
-							<td><code>X</code><code class="extends"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
-							<td><span><p>New action.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
-				<section class="S" id="traverseDouble(double)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">traverseDouble</code><code class="Y">(<code>double</code><code class="parameterName">step</code>)</code><i class="k"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
-					<table class="N">
-						<tr class="l">
-							<td><code>X</code><code class="extends"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>double</code><code>step</code></td>
-							<td><span><p>Difference value when increasing or decreasing the value.</p></span></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
-							<td><span><p>New action.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
-				<section class="S" id="traverseDouble(java.util.function.Supplier)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">traverseDouble</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code><code class="parameterName">step</code>)</code><i class="k"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
-					<table class="N">
-						<tr class="l">
-							<td><code>X</code><code class="extends"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code><code>step</code></td>
-							<td><span><p>Difference value when increasing or decreasing the value.</p></span></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
-							<td><span><p>New action.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
-				<section class="S" id="traverseLocalDate()">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">traverseLocalDate</code><code class="Y">()</code><i class="k"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
-					<table class="N">
-						<tr class="l">
-							<td><code>X</code><code class="extends"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
-							<td><span><p>New action.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
-				<section class="S" id="traverse(kiss.WiseTriFunction)">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">traverse</code><code class="Y">(<code>kiss.WiseTriFunction<code class="parameters"><code>V</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code>, <code>V</code></code></code><code class="parameterName">traverser</code>)</code><i class="k"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
-					<table class="N">
-						<tr class="l">
-							<td><code>X</code><code class="extends"><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code>V</code></code></code></code></td>
-							<td></td>
-						</tr>
-						<tr class="l">
-							<td><code>V</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>kiss.WiseTriFunction<code class="parameters"><code>V</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code>, <code>V</code></code></code><code>traverser</code></td>
-							<td><span><p>A value traverser with value difference and amplifier.</p></span></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
-							<td><span><p>New action.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
-			</article>
-			<aside class="T" id="SubNavi">
-				<div class="j">
-					<h5 class="h">Constructors</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#Actions()">Actions</a></code><code class="Y">()</code></li>
-					</ul>
-					<h5 class="h">Static Methods</h5>
-					<ul>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#inside(java.util.function.Supplier)">inside</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code><code class="parameterName">node</code>)</code><i class="X"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>javafx.scene.input.GestureEvent</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#selectNext(javafx.scene.control.SelectionModel)">selectNext</a></code><code class="Y">(<code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="X"><code>boolean</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#selectPrev(javafx.scene.control.SelectionModel)">selectPrev</a></code><code class="Y">(<code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="X"><code>boolean</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverse(javafx.scene.control.SelectionModel)">traverse</a></code><code class="Y">(<code><a href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="X"><code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseInt()">traverseInt</a></code><code class="Y">()</code><i class="X"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseInt(int)">traverseInt</a></code><code class="Y">(<code>int</code><code class="parameterName">step</code>)</code><i class="X"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseInt(java.util.function.Supplier)">traverseInt</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code><code class="parameterName">step</code>)</code><i class="X"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseDouble()">traverseDouble</a></code><code class="Y">()</code><i class="X"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseDouble(double)">traverseDouble</a></code><code class="Y">(<code>double</code><code class="parameterName">step</code>)</code><i class="X"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseDouble(java.util.function.Supplier)">traverseDouble</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code><code class="parameterName">step</code>)</code><i class="X"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseLocalDate()">traverseLocalDate</a></code><code class="Y">()</code><i class="X"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverse(kiss.WiseTriFunction)">traverse</a></code><code class="Y">(<code>kiss.WiseTriFunction<code class="parameters"><code>V</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code>, <code>V</code></code></code><code class="parameterName">traverser</code>)</code><i class="X"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
-					</ul>
-				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+		<nav class="V"></nav>
+		<article class="U" id="Article">
+			<section class="q"><code class="H">viewtify.ui.helper</code>
+				<h2 class="Class r"><code class="h">Actions</code></h2>
+				<div class="e"></div>
+			</section>
+			<section class="q" id="Actions()">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">Actions</code><code class="X">()</code></h2>
+			</section>
+			<section class="q" id="inside(java.util.function.Supplier)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">inside</code><code class="X">(<code><a aria-label="java.util.function.Supplier 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code></code></code><code class="parameterName">node</code>)</code><i class="P"><code><a aria-label="java.util.function.Predicate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>javafx.scene.input.GestureEvent</code></code></code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.util.function.Supplier 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code></code></code><code class="parameterName">node</code></td>
+						<td><span><p>A target node.</p></span></td>
+					</tr>
+					<tr class="i">
+						<td><code><a aria-label="java.util.function.Predicate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>javafx.scene.input.GestureEvent</code></code></code></td>
+						<td><span><p>A filter.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Create new filter to take the mouse event only inside the specified <code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code>.</p></span></section>
+			<section class="q" id="selectNext(javafx.scene.control.SelectionModel)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">selectNext</code><code class="X">(<code><a aria-label="javafx.scene.control.SelectionModel" href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="P"><code>boolean</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="javafx.scene.control.SelectionModel" href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Select the next item. (skip disabled item)</p></span></section>
+			<section class="q" id="selectPrev(javafx.scene.control.SelectionModel)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">selectPrev</code><code class="X">(<code><a aria-label="javafx.scene.control.SelectionModel" href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="P"><code>boolean</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="javafx.scene.control.SelectionModel" href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Select the previous item. (skip disabled item)</p></span></section>
+			<section class="q" id="traverse(javafx.scene.control.SelectionModel)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">traverse</code><code class="X">(<code><a aria-label="javafx.scene.control.SelectionModel" href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="P"><code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code></code></code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="javafx.scene.control.SelectionModel" href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code></td>
+						<td><span><p>A selection model to traverse.</p></span></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code></code></code></td>
+						<td><span><p>New action.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
+			<section class="q" id="traverseInt()">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">traverseInt</code><code class="X">()</code><i class="P"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
+				<table class="g">
+					<tr class="a">
+						<td><code>X</code><code class="extends"><code><a aria-label="viewtify.ui.helper.ValueHelper" href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
+						<td><span><p>New action.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
+			<section class="q" id="traverseInt(int)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">traverseInt</code><code class="X">(<code>int</code><code class="parameterName">step</code>)</code><i class="P"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
+				<table class="g">
+					<tr class="a">
+						<td><code>X</code><code class="extends"><code><a aria-label="viewtify.ui.helper.ValueHelper" href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>int</code><code class="parameterName">step</code></td>
+						<td><span><p>Difference value when increasing or decreasing the value.</p></span></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
+						<td><span><p>New action.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
+			<section class="q" id="traverseInt(java.util.function.Supplier)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">traverseInt</code><code class="X">(<code><a aria-label="java.util.function.Supplier 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code><code class="parameterName">step</code>)</code><i class="P"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
+				<table class="g">
+					<tr class="a">
+						<td><code>X</code><code class="extends"><code><a aria-label="viewtify.ui.helper.ValueHelper" href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code><a aria-label="java.util.function.Supplier 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code><code class="parameterName">step</code></td>
+						<td><span><p>Difference value when increasing or decreasing the value.</p></span></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
+						<td><span><p>New action.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
+			<section class="q" id="traverseDouble()">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">traverseDouble</code><code class="X">()</code><i class="P"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
+				<table class="g">
+					<tr class="a">
+						<td><code>X</code><code class="extends"><code><a aria-label="viewtify.ui.helper.ValueHelper" href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a aria-label="java.lang.Double 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
+						<td><span><p>New action.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
+			<section class="q" id="traverseDouble(double)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">traverseDouble</code><code class="X">(<code>double</code><code class="parameterName">step</code>)</code><i class="P"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
+				<table class="g">
+					<tr class="a">
+						<td><code>X</code><code class="extends"><code><a aria-label="viewtify.ui.helper.ValueHelper" href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a aria-label="java.lang.Double 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>double</code><code class="parameterName">step</code></td>
+						<td><span><p>Difference value when increasing or decreasing the value.</p></span></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
+						<td><span><p>New action.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
+			<section class="q" id="traverseDouble(java.util.function.Supplier)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">traverseDouble</code><code class="X">(<code><a aria-label="java.util.function.Supplier 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a aria-label="java.lang.Double 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code><code class="parameterName">step</code>)</code><i class="P"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
+				<table class="g">
+					<tr class="a">
+						<td><code>X</code><code class="extends"><code><a aria-label="viewtify.ui.helper.ValueHelper" href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a aria-label="java.lang.Double 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code><a aria-label="java.util.function.Supplier 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a aria-label="java.lang.Double 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code><code class="parameterName">step</code></td>
+						<td><span><p>Difference value when increasing or decreasing the value.</p></span></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
+						<td><span><p>New action.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
+			<section class="q" id="traverseLocalDate()">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">traverseLocalDate</code><code class="X">()</code><i class="P"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
+				<table class="g">
+					<tr class="a">
+						<td><code>X</code><code class="extends"><code><a aria-label="viewtify.ui.helper.ValueHelper" href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code><a aria-label="java.time.LocalDate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/time/LocalDate.html">LocalDate</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
+						<td><span><p>New action.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
+			<section class="q" id="traverse(kiss.WiseTriFunction)">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">traverse</code><code class="X">(<code>kiss.WiseTriFunction<code class="parameters"><code>V</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code>, <code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code>, <code>V</code></code></code><code class="parameterName">traverser</code>)</code><i class="P"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></h2>
+				<table class="g">
+					<tr class="a">
+						<td><code>X</code><code class="extends"><code><a aria-label="viewtify.ui.helper.ValueHelper" href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a><code class="parameters"><code>X</code>, <code>V</code></code></code></code></td>
+						<td></td>
+					</tr>
+					<tr class="a">
+						<td><code>V</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>kiss.WiseTriFunction<code class="parameters"><code>V</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code>, <code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code>, <code>V</code></code></code><code class="parameterName">traverser</code></td>
+						<td><span><p>A value traverser with value difference and amplifier.</p></span></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></td>
+						<td><span><p>New action.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Creates an action that changes the value when a scroll event occurs.</p></span></section>
+		</article>
+		<aside class="W">
+			<div class="I">
+				<h5 class="M">Constructors</h5>
+				<ul>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#Actions()">Actions</a></code><code class="X">()</code></li>
+				</ul>
+				<h5 class="M">Static Methods</h5>
+				<ul>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#inside(java.util.function.Supplier)">inside</a></code><code class="X">(<code><a aria-label="java.util.function.Supplier 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code></code></code><code class="parameterName">node</code>)</code><i class="Y"><code><a aria-label="java.util.function.Predicate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code>javafx.scene.input.GestureEvent</code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#selectNext(javafx.scene.control.SelectionModel)">selectNext</a></code><code class="X">(<code><a aria-label="javafx.scene.control.SelectionModel" href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="Y"><code>boolean</code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#selectPrev(javafx.scene.control.SelectionModel)">selectPrev</a></code><code class="X">(<code><a aria-label="javafx.scene.control.SelectionModel" href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="Y"><code>boolean</code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverse(javafx.scene.control.SelectionModel)">traverse</a></code><code class="X">(<code><a aria-label="javafx.scene.control.SelectionModel" href="api/javafx.scene.control.SelectionModel.html">SelectionModel</a></code><code class="parameterName">model</code>)</code><i class="Y"><code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseInt()">traverseInt</a></code><code class="X">()</code><i class="Y"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseInt(int)">traverseInt</a></code><code class="X">(<code>int</code><code class="parameterName">step</code>)</code><i class="Y"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseInt(java.util.function.Supplier)">traverseInt</a></code><code class="X">(<code><a aria-label="java.util.function.Supplier 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code><code class="parameterName">step</code>)</code><i class="Y"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseDouble()">traverseDouble</a></code><code class="X">()</code><i class="Y"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseDouble(double)">traverseDouble</a></code><code class="X">(<code>double</code><code class="parameterName">step</code>)</code><i class="Y"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseDouble(java.util.function.Supplier)">traverseDouble</a></code><code class="X">(<code><a aria-label="java.util.function.Supplier 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Supplier.html">Supplier</a><code class="parameters"><code><a aria-label="java.lang.Double 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Double.html">Double</a></code></code></code><code class="parameterName">step</code>)</code><i class="Y"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverseLocalDate()">traverseLocalDate</a></code><code class="X">()</code><i class="Y"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.ui.helper.Actions.html#traverse(kiss.WiseTriFunction)">traverse</a></code><code class="X">(<code>kiss.WiseTriFunction<code class="parameters"><code>V</code>, <code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code>, <code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code>, <code>V</code></code></code><code class="parameterName">traverser</code>)</code><i class="Y"><code>kiss.WiseBiConsumer<code class="parameters"><code>javafx.scene.input.ScrollEvent</code>, <code>X</code></code></code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="d"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>

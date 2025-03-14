@@ -13,353 +13,352 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="M">
-			<h1 class="b" date="2024-12-09" ver="2.33.0"><code>Viewtify</code></h1>
-			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2024-12-31" ver="2.33.0">
+			<h1 class="Z"><code>Viewtify</code></h1>
+			<nav class="f"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="e" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="J">
-			<nav class="i">
-				<div></div>
-			</nav>
-			<article class="d" id="Article">
-				<section class="S"><code class="U">viewtify.ui</code>
-					<h2 class="Class I"><code class="V">UserInterface</code><code class="Y">&#60;<code>Self</code>, <code>W</code>&#62;</code></h2>
-					<div class="H">
-						<ul class="C D">
-							<li><code>Self</code><code class="extends"><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></code></li>
-							<li><code>W</code><code class="extends"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></li>
-						</ul>
-						<ul class="C E">
-							<li><code><a href="api/viewtify.ui.helper.ReferenceHolder.html">ReferenceHolder</a></code></li>
-						</ul>
-						<ul class="C F">
-							<li><code><a href="api/viewtify.ui.helper.AnimateHelper.html">AnimateHelper</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.AssociativeHelper.html">AssociativeHelper</a></code></li>
-							<li><code><a href="api/viewtify.ui.helper.DecorationHelper.html">DecorationHelper</a><code class="parameters"><code>Self</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.DisableHelper.html">DisableHelper</a><code class="parameters"><code>Self</code></code></code></li>
-							<li><code>kiss.Disposable</code></li>
-							<li><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.html">PropertyAccessHelper</a></code></li>
-							<li><code><a href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.TooltipHelper.html">TooltipHelper</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a><code class="parameters"><code>Self</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>W</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>Self</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.helper.VisibleHelper.html">VisibleHelper</a><code class="parameters"><code>Self</code></code></code></li>
-						</ul>
-						<ul class="C G">
-							<li><code><a href="api/viewtify.ui.AbstractChart.html">AbstractChart</a><code class="parameters"><code>Self</code>, <code>C</code>, <code>D</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.AbstractComboBox.html">AbstractComboBox</a><code class="parameters"><code>T</code>, <code>Self</code>, <code>W</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.AbstractPane.html">AbstractPane</a><code class="parameters"><code>E</code>, <code>P</code>, <code>Self</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></li>
-							<li><code><a href="api/viewtify.ui.UICheckBox.html">UICheckBox</a></code></li>
-							<li><code><a href="api/viewtify.ui.UICheckSwitch.html">UICheckSwitch</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIChoiceBox.html">UIChoiceBox</a><code class="parameters"><code>T</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UIColorPicker.html">UIColorPicker</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIComboBox.html">UIComboBox</a><code class="parameters"><code>T</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UIComboCheckBox.html">UIComboCheckBox</a><code class="parameters"><code>T</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UIDatePicker.html">UIDatePicker</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIFlowView.html">UIFlowView</a><code class="parameters"><code>E</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UIFontPicker.html">UIFontPicker</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIGridView.html">UIGridView</a><code class="parameters"><code>E</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UIHBox.html">UIHBox</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIImage.html">UIImage</a></code></li>
-							<li><code><a href="api/viewtify.ui.UILabel.html">UILabel</a></code></li>
-							<li><code><a href="api/viewtify.ui.UILineChart.html">UILineChart</a><code class="parameters"><code>X</code>, <code>Y</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UIListView.html">UIListView</a><code class="parameters"><code>E</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UIPane.html">UIPane</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIProgressBar.html">UIProgressBar</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIScrollPane.html">UIScrollPane</a></code></li>
-							<li><code><a href="api/viewtify.ui.UISegmentedButton.html">UISegmentedButton</a></code></li>
-							<li><code><a href="api/viewtify.ui.UISelectPane.html">UISelectPane</a></code></li>
-							<li><code><a href="api/viewtify.ui.UISlidePane.html">UISlidePane</a></code></li>
-							<li><code><a href="api/viewtify.ui.UISlider.html">UISlider</a></code></li>
-							<li><code><a href="api/viewtify.ui.UISpinner.html">UISpinner</a><code class="parameters"><code>T</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UISplitPane.html">UISplitPane</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIStackPane.html">UIStackPane</a></code></li>
-							<li><code><a href="api/viewtify.ui.UITabPane.html">UITabPane</a></code></li>
-							<li><code><a href="api/viewtify.ui.UITableView.html">UITableView</a><code class="parameters"><code>RowV</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UITextArea.html">UITextArea</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIText.html">UIText</a><code class="parameters"><code>V</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UITileView.html">UITileView</a><code class="parameters"><code>E</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UIToggleButton.html">UIToggleButton</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIToolBar.html">UIToolBar</a></code></li>
-							<li><code><a href="api/viewtify.ui.UITreeTableView.html">UITreeTableView</a><code class="parameters"><code>RowV</code></code></code></li>
-							<li><code><a href="api/viewtify.ui.UIVBox.html">UIVBox</a></code></li>
-							<li><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></li>
-						</ul>
-					</div>
-				</section>
-				<section class="S" id="ui">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">ui</code><i class="k"><code class="return">W</code></i></h2><span class="B"><p>The actual view.</p></span></section>
-				<section class="S" id="view">
-					<h2 class="f"><i class="FINAL"><i class="PROTECTED"></i></i><code class="V">view</code><i class="k"><code class="return"><a href="api/viewtify.ui.View.html">View</a></code></i></h2><span class="B"><p>The associated view.</p></span></section>
-				<section class="S" id="UserInterface(java.lang.Object,viewtify.ui.View)">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">UserInterface</code><code class="Y">(<code>W</code><code class="parameterName">ui</code>, <code><a href="api/viewtify.ui.View.html">View</a></code><code class="parameterName">view</code>)</code></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>W</code><code>ui</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code><a href="api/viewtify.ui.View.html">View</a></code><code>view</code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="S" id="vandalize()">
-					<h2 class="f"><i class="OVERRIDE PUBLIC"></i><code class="V">vandalize</code><code class="Y">()</code><i class="k"><code>void</code></i></h2>
-				</section>
-				<section class="S" id="ui()">
-					<h2 class="f"><i class="OVERRIDE PUBLIC"></i><code class="V">ui</code><code class="Y">()</code><i class="k"><code>W</code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code>W</code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="S" id="stage()">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">stage</code><code class="Y">()</code><i class="k"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code>javafx.stage.Stage</code></code></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code>javafx.stage.Stage</code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Gets the A to which this UI currently belongs.</p></span></section>
-				<section class="S" id="keybind(viewtify.keys.Key,kiss.WiseRunnable)">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">keybind</code><code class="Y">(<code><a href="api/viewtify.keys.Key.html">Key</a></code><code class="parameterName">key</code>, <code>kiss.WiseRunnable</code><code class="parameterName">action</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="api/viewtify.keys.Key.html">Key</a></code><code>key</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>kiss.WiseRunnable</code><code>action</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Register keyborad shortcut.</p></span></section>
-				<section class="S" id="keybind(viewtify.keys.Key,kiss.WiseConsumer)">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">keybind</code><code class="Y">(<code><a href="api/viewtify.keys.Key.html">Key</a></code><code class="parameterName">key</code>, <code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.KeyEvent</code></code></code><code class="parameterName">action</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="api/viewtify.keys.Key.html">Key</a></code><code>key</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.KeyEvent</code></code></code><code>action</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Register keyborad shortcut.</p></span></section>
-				<section class="S" id="parent()">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">parent</code><code class="Y">()</code><i class="k"><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Select parent <code><a href="api/javafx.scene.Node.html">Node</a></code>.</p></span></section>
-				<section class="S" id="visible(boolean)">
-					<h2 class="f"><i class="OVERRIDE PUBLIC"></i><code class="V">visible</code><code class="Y">(<code>boolean</code><code class="parameterName">visible</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>boolean</code><code>visible</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Specifies whether this <code>Node</code> and any subnodes should be rendered as part of the scene
+		<nav class="V"></nav>
+		<article class="U" id="Article">
+			<section class="q"><code class="H">viewtify.ui</code>
+				<h2 class="Class r"><code class="h">UserInterface</code><code class="X">&#60;<code>Self</code>, <code>W</code>&#62;</code></h2>
+				<div class="e">
+					<ul class="C D">
+						<li><code>Self</code><code class="extends"><code><a aria-label="viewtify.ui.UserInterface" href="api/viewtify.ui.UserInterface.html">UserInterface</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></code></li>
+						<li><code>W</code><code class="extends"><code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code></code></li>
+					</ul>
+					<ul class="C E">
+						<li><code><a aria-label="viewtify.ui.helper.ReferenceHolder" href="api/viewtify.ui.helper.ReferenceHolder.html">ReferenceHolder</a></code></li>
+					</ul>
+					<ul class="C F">
+						<li><code><a aria-label="viewtify.ui.helper.AnimateHelper" href="api/viewtify.ui.helper.AnimateHelper.html">AnimateHelper</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.AssociativeHelper" href="api/viewtify.ui.helper.AssociativeHelper.html">AssociativeHelper</a></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.DecorationHelper" href="api/viewtify.ui.helper.DecorationHelper.html">DecorationHelper</a><code class="parameters"><code>Self</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.DisableHelper" href="api/viewtify.ui.helper.DisableHelper.html">DisableHelper</a><code class="parameters"><code>Self</code></code></code></li>
+						<li><code>kiss.Disposable</code></li>
+						<li><code><a aria-label="viewtify.ui.helper.PropertyAccessHelper" href="api/viewtify.ui.helper.PropertyAccessHelper.html">PropertyAccessHelper</a></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.StyleHelper" href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.TooltipHelper" href="api/viewtify.ui.helper.TooltipHelper.html">TooltipHelper</a><code class="parameters"><code>Self</code>, <code>W</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.UserActionHelper" href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a><code class="parameters"><code>Self</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UserInterfaceProvider" href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code>W</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.VerifyHelper" href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a><code class="parameters"><code>Self</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.helper.VisibleHelper" href="api/viewtify.ui.helper.VisibleHelper.html">VisibleHelper</a><code class="parameters"><code>Self</code></code></code></li>
+					</ul>
+					<ul class="C G">
+						<li><code><a aria-label="viewtify.ui.AbstractChart" href="api/viewtify.ui.AbstractChart.html">AbstractChart</a><code class="parameters"><code>Self</code>, <code>C</code>, <code>D</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.AbstractComboBox" href="api/viewtify.ui.AbstractComboBox.html">AbstractComboBox</a><code class="parameters"><code>T</code>, <code>Self</code>, <code>W</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.AbstractPane" href="api/viewtify.ui.AbstractPane.html">AbstractPane</a><code class="parameters"><code>E</code>, <code>P</code>, <code>Self</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UIButton" href="api/viewtify.ui.UIButton.html">UIButton</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UICheckBox" href="api/viewtify.ui.UICheckBox.html">UICheckBox</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UICheckSwitch" href="api/viewtify.ui.UICheckSwitch.html">UICheckSwitch</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIChoiceBox" href="api/viewtify.ui.UIChoiceBox.html">UIChoiceBox</a><code class="parameters"><code>T</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UIColorPicker" href="api/viewtify.ui.UIColorPicker.html">UIColorPicker</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIComboBox" href="api/viewtify.ui.UIComboBox.html">UIComboBox</a><code class="parameters"><code>T</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UIComboCheckBox" href="api/viewtify.ui.UIComboCheckBox.html">UIComboCheckBox</a><code class="parameters"><code>T</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UIDatePicker" href="api/viewtify.ui.UIDatePicker.html">UIDatePicker</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIFlowView" href="api/viewtify.ui.UIFlowView.html">UIFlowView</a><code class="parameters"><code>E</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UIFontPicker" href="api/viewtify.ui.UIFontPicker.html">UIFontPicker</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIGridView" href="api/viewtify.ui.UIGridView.html">UIGridView</a><code class="parameters"><code>E</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UIHBox" href="api/viewtify.ui.UIHBox.html">UIHBox</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIImage" href="api/viewtify.ui.UIImage.html">UIImage</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UILabel" href="api/viewtify.ui.UILabel.html">UILabel</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UILineChart" href="api/viewtify.ui.UILineChart.html">UILineChart</a><code class="parameters"><code>X</code>, <code>Y</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UIListView" href="api/viewtify.ui.UIListView.html">UIListView</a><code class="parameters"><code>E</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UIPane" href="api/viewtify.ui.UIPane.html">UIPane</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIPieChart" href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIProgressBar" href="api/viewtify.ui.UIProgressBar.html">UIProgressBar</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIScrollPane" href="api/viewtify.ui.UIScrollPane.html">UIScrollPane</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UISegmentedButton" href="api/viewtify.ui.UISegmentedButton.html">UISegmentedButton</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UISelectPane" href="api/viewtify.ui.UISelectPane.html">UISelectPane</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UISlidePane" href="api/viewtify.ui.UISlidePane.html">UISlidePane</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UISlider" href="api/viewtify.ui.UISlider.html">UISlider</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UISpinner" href="api/viewtify.ui.UISpinner.html">UISpinner</a><code class="parameters"><code>T</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UISplitPane" href="api/viewtify.ui.UISplitPane.html">UISplitPane</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIStackPane" href="api/viewtify.ui.UIStackPane.html">UIStackPane</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UITabPane" href="api/viewtify.ui.UITabPane.html">UITabPane</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UITableView" href="api/viewtify.ui.UITableView.html">UITableView</a><code class="parameters"><code>RowV</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UITextArea" href="api/viewtify.ui.UITextArea.html">UITextArea</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIText" href="api/viewtify.ui.UIText.html">UIText</a><code class="parameters"><code>V</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UITileView" href="api/viewtify.ui.UITileView.html">UITileView</a><code class="parameters"><code>E</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UIToggleButton" href="api/viewtify.ui.UIToggleButton.html">UIToggleButton</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIToolBar" href="api/viewtify.ui.UIToolBar.html">UIToolBar</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UITreeTableView" href="api/viewtify.ui.UITreeTableView.html">UITreeTableView</a><code class="parameters"><code>RowV</code></code></code></li>
+						<li><code><a aria-label="viewtify.ui.UIVBox" href="api/viewtify.ui.UIVBox.html">UIVBox</a></code></li>
+						<li><code><a aria-label="viewtify.ui.UIWeb" href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></li>
+					</ul>
+				</div>
+			</section>
+			<section class="q" id="ui">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">ui</code><i class="P"><code class="return">W</code></i></h2><span class="B"><p>The actual view.</p></span></section>
+			<section class="q" id="view">
+				<h2 class="R"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">view</code><i class="P"><code class="return"><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code></i></h2><span class="B"><p>The associated view.</p></span></section>
+			<section class="q" id="UserInterface(java.lang.Object,viewtify.ui.View)">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">UserInterface</code><code class="X">(<code>W</code><code class="parameterName">ui</code>, <code><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code><code class="parameterName">view</code>)</code></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>W</code><code class="parameterName">ui</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code><code class="parameterName">view</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="q" id="vandalize()">
+				<h2 class="R"><i class="OVERRIDE PUBLIC"></i><code class="h">vandalize</code><code class="X">()</code><i class="P"><code>void</code></i></h2>
+			</section>
+			<section class="q" id="ui()">
+				<h2 class="R"><i class="OVERRIDE PUBLIC"></i><code class="h">ui</code><code class="X">()</code><i class="P"><code>W</code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code>W</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="q" id="stage()">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">stage</code><code class="X">()</code><i class="P"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code>javafx.stage.Stage</code></code></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code>javafx.stage.Stage</code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Gets the A to which this UI currently belongs.</p></span></section>
+			<section class="q" id="keybind(viewtify.keys.Key,kiss.WiseRunnable)">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">keybind</code><code class="X">(<code><a aria-label="viewtify.keys.Key" href="api/viewtify.keys.Key.html">Key</a></code><code class="parameterName">key</code>, <code>kiss.WiseRunnable</code><code class="parameterName">action</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="viewtify.keys.Key" href="api/viewtify.keys.Key.html">Key</a></code><code class="parameterName">key</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>kiss.WiseRunnable</code><code class="parameterName">action</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Register keyborad shortcut.</p></span></section>
+			<section class="q" id="keybind(viewtify.keys.Key,kiss.WiseConsumer)">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">keybind</code><code class="X">(<code><a aria-label="viewtify.keys.Key" href="api/viewtify.keys.Key.html">Key</a></code><code class="parameterName">key</code>, <code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.KeyEvent</code></code></code><code class="parameterName">action</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="viewtify.keys.Key" href="api/viewtify.keys.Key.html">Key</a></code><code class="parameterName">key</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.KeyEvent</code></code></code><code class="parameterName">action</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Register keyborad shortcut.</p></span></section>
+			<section class="q" id="parent()">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">parent</code><code class="X">()</code><i class="P"><code><a aria-label="viewtify.ui.UserInterface" href="api/viewtify.ui.UserInterface.html">UserInterface</a></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code><a aria-label="viewtify.ui.UserInterface" href="api/viewtify.ui.UserInterface.html">UserInterface</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Select parent <code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code>.</p></span></section>
+			<section class="q" id="visible(boolean)">
+				<h2 class="R"><i class="OVERRIDE PUBLIC"></i><code class="h">visible</code><code class="X">(<code>boolean</code><code class="parameterName">visible</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>boolean</code><code class="parameterName">visible</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Specifies whether this <code>Node</code> and any subnodes should be rendered as part of the scene
 graph. A node may be visible and yet not be shown in the rendered scene if, for instance, it
 is off the screen or obscured by another Node. Invisible nodes never receive mouse events or
 keyboard focus and never maintain keyboard focus when they become invisible.</p></span></section>
-				<section class="S" id="focus()">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">focus</code><code class="Y">()</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Requests that this <code>Node</code> get the input focus, and that this <code>Node</code>&#39;s top-level
+			<section class="q" id="focus()">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">focus</code><code class="X">()</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Requests that this <code>Node</code> get the input focus, and that this <code>Node</code>&#39;s top-level
 ancestor become the focused window. To be eligible to receive the focus, the node must be
 part of a scene, it and all of its ancestors must be visible, and it must not be disabled. If
 this node is eligible, this function will cause it to become this <code>Scene</code>&#39;s &#38;quot;focus
 owner&#38;quot;. Each scene has at most one focus owner node. The focus owner will not actually have
 the input focus, however, unless the scene belongs to a <code>Stage</code> that is both visible
 and active.</p></span></section>
-				<section class="S" id="focusable(boolean)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">focusable</code><code class="Y">(<code>boolean</code><code class="parameterName">enable</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>boolean</code><code>enable</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Specifies whether this <code>Node</code> should be a part of focus traversal cycle. When this
+			<section class="q" id="focusable(boolean)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">focusable</code><code class="X">(<code>boolean</code><code class="parameterName">enable</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>boolean</code><code class="parameterName">enable</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Specifies whether this <code>Node</code> should be a part of focus traversal cycle. When this
 property is <code>true</code> focus can be moved to this <code>Node</code> and from this <code>Node</code>
 using regular focus traversal keys. On a desktop such keys are usually <code>TAB</code> for moving
 focus forward and <code>SHIFT+TAB</code> for moving focus backward. When a <code>Scene</code> is
 created, the system gives focus to a <code>Node</code> whose <code>focusTraversable</code> variable is
 true and that is eligible to receive the focus, unless the focus had been set explicitly via
-a call to <code><a href="api/javafx.scene.Node.html#requestFocus()">Node#requestFocus()</a></code>.</p></span></section>
-				<section class="S" id="whenFocus(java.lang.Runnable)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">whenFocus</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">action</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code>action</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Define the user action when this UI is focused.</p></span></section>
-				<section class="S" id="whenFocus(kiss.WiseConsumer)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">whenFocus</code><code class="Y">(<code>kiss.WiseConsumer<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">action</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code>kiss.WiseConsumer<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code>action</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Define the user action when this UI is focused.</p></span></section>
-				<section class="S" id="whenUnfocus(java.lang.Runnable)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">whenUnfocus</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">action</code>)</code><i class="k"><code>Self</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code>action</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>Self</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Define the user action when this UI is unfocused.</p></span></section>
-				<section class="S" id="verifier()">
-					<h2 class="f"><i class="FINAL SYNCHRONIZED"><i class="OVERRIDE PUBLIC"></i></i><code class="V">verifier</code><code class="Y">()</code><i class="k"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="S" id="restore(javafx.beans.property.Property,java.lang.Object)">
-					<h2 class="f"><i class="FINAL"><i class="PROTECTED"></i></i><code class="V">restore</code><code class="Y">(<code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code><code class="parameterName">property</code>, <code>T</code><code class="parameterName">defaultValue</code>)</code><i class="k"><code>T</code></i></h2>
-					<table class="N">
-						<tr class="l">
-							<td><code>T</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code><code>property</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>T</code><code>defaultValue</code></td>
-							<td><span><p>The default property value.</p></span></td>
-						</tr>
-						<tr class="a">
-							<td><code>T</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Restore UI related settings.</p></span></section>
-				<section class="S" id="restore(javafx.beans.property.ReadOnlyProperty,java.util.function.Consumer,java.lang.Object)">
-					<h2 class="f"><i class="FINAL"><i class="PROTECTED"></i></i><code class="V">restore</code><code class="Y">(<code>javafx.beans.property.ReadOnlyProperty<code class="parameters"><code>T</code></code></code><code class="parameterName">getterAndObserver</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>T</code></code></code><code class="parameterName">setter</code>, <code>T</code><code class="parameterName">defaultValue</code>)</code><i class="k"><code>T</code></i></h2>
-					<table class="N">
-						<tr class="l">
-							<td><code>T</code></td>
-							<td></td>
-						</tr>
-						<tr class="m">
-							<td><code>javafx.beans.property.ReadOnlyProperty<code class="parameters"><code>T</code></code></code><code>getterAndObserver</code></td>
-							<td><span><p>A property value getter and observer.</p></span></td>
-						</tr>
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>T</code></code></code><code>setter</code></td>
-							<td><span><p>A property value setter.</p></span></td>
-						</tr>
-						<tr class="m">
-							<td><code>T</code><code>defaultValue</code></td>
-							<td><span><p>The default property value.</p></span></td>
-						</tr>
-						<tr class="a">
-							<td><code>T</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Restore UI related settings.</p></span></section>
-			</article>
-			<aside class="T" id="SubNavi">
-				<div class="j">
-					<h5 class="h">Constructors</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#UserInterface(java.lang.Object,viewtify.ui.View)">UserInterface</a></code><code class="Y">(<code>W</code><code class="parameterName">ui</code>, <code><a href="api/viewtify.ui.View.html">View</a></code><code class="parameterName">view</code>)</code></li>
-					</ul>
-					<h5 class="h">Fields</h5>
-					<ul>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#ui">ui</a></code><i class="X"><code class="return">W</code></i></li>
-						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.UserInterface.html#view">view</a></code><i class="X"><code class="return"><a href="api/viewtify.ui.View.html">View</a></code></i></li>
-					</ul>
-					<h5 class="h">Methods</h5>
-					<ul>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#vandalize()">vandalize</a></code><code class="Y">()</code><i class="X"><code>void</code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#ui()">ui</a></code><code class="Y">()</code><i class="X"><code>W</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#stage()">stage</a></code><code class="Y">()</code><i class="X"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code>javafx.stage.Stage</code></code></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#keybind(viewtify.keys.Key,kiss.WiseRunnable)">keybind</a></code><code class="Y">(<code><a href="api/viewtify.keys.Key.html">Key</a></code><code class="parameterName">key</code>, <code>kiss.WiseRunnable</code><code class="parameterName">action</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#keybind(viewtify.keys.Key,kiss.WiseConsumer)">keybind</a></code><code class="Y">(<code><a href="api/viewtify.keys.Key.html">Key</a></code><code class="parameterName">key</code>, <code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.KeyEvent</code></code></code><code class="parameterName">action</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#parent()">parent</a></code><code class="Y">()</code><i class="X"><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#visible(boolean)">visible</a></code><code class="Y">(<code>boolean</code><code class="parameterName">visible</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#focus()">focus</a></code><code class="Y">()</code><i class="X"><code>Self</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#focusable(boolean)">focusable</a></code><code class="Y">(<code>boolean</code><code class="parameterName">enable</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#whenFocus(java.lang.Runnable)">whenFocus</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">action</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#whenFocus(kiss.WiseConsumer)">whenFocus</a></code><code class="Y">(<code>kiss.WiseConsumer<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">action</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#whenUnfocus(java.lang.Runnable)">whenUnfocus</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">action</code>)</code><i class="X"><code>Self</code></i></li>
-						<li><i class="FINAL SYNCHRONIZED"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#verifier()">verifier</a></code><code class="Y">()</code><i class="X"><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
-						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.UserInterface.html#restore(javafx.beans.property.Property,java.lang.Object)">restore</a></code><code class="Y">(<code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code><code class="parameterName">property</code>, <code>T</code><code class="parameterName">defaultValue</code>)</code><i class="X"><code>T</code></i></li>
-						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.UserInterface.html#restore(javafx.beans.property.ReadOnlyProperty,java.util.function.Consumer,java.lang.Object)">restore</a></code><code class="Y">(<code>javafx.beans.property.ReadOnlyProperty<code class="parameters"><code>T</code></code></code><code class="parameterName">getterAndObserver</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>T</code></code></code><code class="parameterName">setter</code>, <code>T</code><code class="parameterName">defaultValue</code>)</code><i class="X"><code>T</code></i></li>
-					</ul>
-				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+a call to <code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html#requestFocus()">Node#requestFocus()</a></code>.</p></span></section>
+			<section class="q" id="whenFocus(java.lang.Runnable)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">whenFocus</code><code class="X">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">action</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">action</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Define the user action when this UI is focused.</p></span></section>
+			<section class="q" id="whenFocus(kiss.WiseConsumer)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">whenFocus</code><code class="X">(<code>kiss.WiseConsumer<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">action</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code>kiss.WiseConsumer<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">action</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Define the user action when this UI is focused.</p></span></section>
+			<section class="q" id="whenUnfocus(java.lang.Runnable)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">whenUnfocus</code><code class="X">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">action</code>)</code><i class="P"><code>Self</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">action</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>Self</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Define the user action when this UI is unfocused.</p></span></section>
+			<section class="q" id="verifier()">
+				<h2 class="R"><i class="SYNCHRONIZED FINAL"><i class="OVERRIDE PUBLIC"></i></i><code class="h">verifier</code><code class="X">()</code><i class="P"><code><a aria-label="viewtify.ui.helper.Verifier" href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code><a aria-label="viewtify.ui.helper.Verifier" href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="q" id="restore(javafx.beans.property.Property,java.lang.Object)">
+				<h2 class="R"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">restore</code><code class="X">(<code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code><code class="parameterName">property</code>, <code>T</code><code class="parameterName">defaultValue</code>)</code><i class="P"><code>T</code></i></h2>
+				<table class="g">
+					<tr class="a">
+						<td><code>T</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code><code class="parameterName">property</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>T</code><code class="parameterName">defaultValue</code></td>
+						<td><span><p>The default property value.</p></span></td>
+					</tr>
+					<tr class="i">
+						<td><code>T</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Restore UI related settings.</p></span></section>
+			<section class="q" id="restore(javafx.beans.property.ReadOnlyProperty,java.util.function.Consumer,java.lang.Object)">
+				<h2 class="R"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">restore</code><code class="X">(<code>javafx.beans.property.ReadOnlyProperty<code class="parameters"><code>T</code></code></code><code class="parameterName">getterAndObserver</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>T</code></code></code><code class="parameterName">setter</code>, <code>T</code><code class="parameterName">defaultValue</code>)</code><i class="P"><code>T</code></i></h2>
+				<table class="g">
+					<tr class="a">
+						<td><code>T</code></td>
+						<td></td>
+					</tr>
+					<tr class="n">
+						<td><code>javafx.beans.property.ReadOnlyProperty<code class="parameters"><code>T</code></code></code><code class="parameterName">getterAndObserver</code></td>
+						<td><span><p>A property value getter and observer.</p></span></td>
+					</tr>
+					<tr class="n">
+						<td><code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>T</code></code></code><code class="parameterName">setter</code></td>
+						<td><span><p>A property value setter.</p></span></td>
+					</tr>
+					<tr class="n">
+						<td><code>T</code><code class="parameterName">defaultValue</code></td>
+						<td><span><p>The default property value.</p></span></td>
+					</tr>
+					<tr class="i">
+						<td><code>T</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Restore UI related settings.</p></span></section>
+		</article>
+		<aside class="W">
+			<div class="I">
+				<h5 class="M">Constructors</h5>
+				<ul>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#UserInterface(java.lang.Object,viewtify.ui.View)">UserInterface</a></code><code class="X">(<code>W</code><code class="parameterName">ui</code>, <code><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code><code class="parameterName">view</code>)</code></li>
+				</ul>
+				<h5 class="M">Fields</h5>
+				<ul>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#ui">ui</a></code><i class="Y"><code class="return">W</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.UserInterface.html#view">view</a></code><i class="Y"><code class="return"><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code></i></li>
+				</ul>
+				<h5 class="M">Methods</h5>
+				<ul>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#vandalize()">vandalize</a></code><code class="X">()</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#ui()">ui</a></code><code class="X">()</code><i class="Y"><code>W</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#stage()">stage</a></code><code class="X">()</code><i class="Y"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code>javafx.stage.Stage</code></code></code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#keybind(viewtify.keys.Key,kiss.WiseRunnable)">keybind</a></code><code class="X">(<code><a aria-label="viewtify.keys.Key" href="api/viewtify.keys.Key.html">Key</a></code><code class="parameterName">key</code>, <code>kiss.WiseRunnable</code><code class="parameterName">action</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#keybind(viewtify.keys.Key,kiss.WiseConsumer)">keybind</a></code><code class="X">(<code><a aria-label="viewtify.keys.Key" href="api/viewtify.keys.Key.html">Key</a></code><code class="parameterName">key</code>, <code>kiss.WiseConsumer<code class="parameters"><code>javafx.scene.input.KeyEvent</code></code></code><code class="parameterName">action</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#parent()">parent</a></code><code class="X">()</code><i class="Y"><code><a aria-label="viewtify.ui.UserInterface" href="api/viewtify.ui.UserInterface.html">UserInterface</a></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.UserInterface.html#visible(boolean)">visible</a></code><code class="X">(<code>boolean</code><code class="parameterName">visible</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#focus()">focus</a></code><code class="X">()</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#focusable(boolean)">focusable</a></code><code class="X">(<code>boolean</code><code class="parameterName">enable</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#whenFocus(java.lang.Runnable)">whenFocus</a></code><code class="X">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">action</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#whenFocus(kiss.WiseConsumer)">whenFocus</a></code><code class="X">(<code>kiss.WiseConsumer<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">action</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#whenUnfocus(java.lang.Runnable)">whenUnfocus</a></code><code class="X">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">action</code>)</code><i class="Y"><code>Self</code></i></li>
+					<li class="J"><i class="SYNCHRONIZED FINAL"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/viewtify.ui.UserInterface.html#verifier()">verifier</a></code><code class="X">()</code><i class="Y"><code><a aria-label="viewtify.ui.helper.Verifier" href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.UserInterface.html#restore(javafx.beans.property.Property,java.lang.Object)">restore</a></code><code class="X">(<code>javafx.beans.property.Property<code class="parameters"><code>T</code></code></code><code class="parameterName">property</code>, <code>T</code><code class="parameterName">defaultValue</code>)</code><i class="Y"><code>T</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.UserInterface.html#restore(javafx.beans.property.ReadOnlyProperty,java.util.function.Consumer,java.lang.Object)">restore</a></code><code class="X">(<code>javafx.beans.property.ReadOnlyProperty<code class="parameters"><code>T</code></code></code><code class="parameterName">getterAndObserver</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code>T</code></code></code><code class="parameterName">setter</code>, <code>T</code><code class="parameterName">defaultValue</code>)</code><i class="Y"><code>T</code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="d"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>

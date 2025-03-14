@@ -13,174 +13,173 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="M">
-			<h1 class="b" date="2024-12-09" ver="2.33.0"><code>Viewtify</code></h1>
-			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2024-12-31" ver="2.33.0">
+			<h1 class="Z"><code>Viewtify</code></h1>
+			<nav class="f"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="e" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="J">
-			<nav class="i">
-				<div></div>
-			</nav>
-			<article class="d" id="Article">
-				<section class="S"><code class="U">viewtify.update</code>
-					<h2 class="AbstractClass I"><code class="V">Blueprint</code></h2>
-					<div class="H">
-						<ul class="C F">
-							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></li>
-						</ul>
-						<ul class="C G">
-							<li><code><a href="api/viewtify.update.JavaBlueprint.html">JavaBlueprint</a></code></li>
-							<li><code><a href="api/viewtify.update.NativeBlueprint.html">NativeBlueprint</a></code></li>
-						</ul>
-					</div>
-				</section>
-				<section class="S" id="root">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">root</code><i class="k"><code class="return">psychopath.Directory</code></i></h2><span class="B"><p>The application root directory.</p></span></section>
-				<section class="S" id="jre">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">jre</code><i class="k"><code class="return">psychopath.Directory</code></i></h2><span class="B"><p>The JRE direcotry.</p></span></section>
-				<section class="S" id="classPath">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">classPath</code><i class="k"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The application classpath.</p></span></section>
-				<section class="S" id="Blueprint()">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">Blueprint</code><code class="Y">()</code></h2>
-				</section>
-				<section class="S" id="boot()">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">boot</code><code class="Y">()</code><i class="k"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Boot this application.</p></span></section>
-				<section class="S" id="boot(viewtify.task.MonitorableTask)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">boot</code><code class="Y">(<code><a href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code class="parameterName">task</code>)</code><i class="k"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code>task</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Boot this application.</p></span></section>
-				<section class="S" id="boot(java.util.Map)">
-					<h2 class="f"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="V">boot</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">params</code>)</code><i class="k"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code>params</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Boot this application.</p></span></section>
-				<section class="S" id="reboot()">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">reboot</code><code class="Y">()</code><i class="k"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Deactivate the current application and boot this application.</p></span></section>
-				<section class="S" id="reboot(viewtify.task.MonitorableTask)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">reboot</code><code class="Y">(<code><a href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code class="parameterName">task</code>)</code><i class="k"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code>task</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Deactivate the current application and boot this application.</p></span></section>
-				<section class="S" id="updater()">
-					<h2 class="f"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="V">updater</code><code class="Y">()</code><i class="k"><code><a href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code><a href="api/viewtify.update.Blueprint.html">Blueprint</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Create new updater application.</p></span></section>
-				<section class="S" id="env(java.lang.String,java.lang.String)">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">env</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">key</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">value</code>)</code><i class="k"><code><a href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>key</code></td>
-							<td><span><p>A key.</p></span></td>
-						</tr>
-						<tr class="m">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>value</code></td>
-							<td><span><p>A value.</p></span></td>
-						</tr>
-						<tr class="a">
-							<td><code><a href="api/viewtify.update.Blueprint.html">Blueprint</a></code></td>
-							<td><span><p>Chainable API</p></span></td>
-						</tr>
-					</table><span class="B"><p>Assign environment variable.</p></span></section>
-				<section class="S" id="detect()">
-					<h2 class="f"><i class="STATIC PUBLIC"></i><code class="V">detect</code><code class="Y">()</code><i class="k"><code><a href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code><a href="api/viewtify.update.Blueprint.html">Blueprint</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Detect the current site.</p></span></section>
-			</article>
-			<aside class="T" id="SubNavi">
-				<div class="j">
-					<h5 class="h">Constructors</h5>
-					<ul>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.update.Blueprint.html#Blueprint()">Blueprint</a></code><code class="Y">()</code></li>
+		<nav class="V"></nav>
+		<article class="U" id="Article">
+			<section class="q"><code class="H">viewtify.update</code>
+				<h2 class="AbstractClass r"><code class="h">Blueprint</code></h2>
+				<div class="e">
+					<ul class="C F">
+						<li><code><a aria-label="java.io.Serializable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/io/Serializable.html">Serializable</a></code></li>
 					</ul>
-					<h5 class="h">Fields</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Blueprint.html#root">root</a></code><i class="X"><code class="return">psychopath.Directory</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Blueprint.html#jre">jre</a></code><i class="X"><code class="return">psychopath.Directory</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.update.Blueprint.html#classPath">classPath</a></code><i class="X"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					</ul>
-					<h5 class="h">Static Methods</h5>
-					<ul>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.update.Blueprint.html#detect()">detect</a></code><code class="Y">()</code><i class="X"><code><a href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></li>
-					</ul>
-					<h5 class="h">Methods</h5>
-					<ul>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#boot()">boot</a></code><code class="Y">()</code><i class="X"><code>boolean</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#boot(viewtify.task.MonitorableTask)">boot</a></code><code class="Y">(<code><a href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code class="parameterName">task</code>)</code><i class="X"><code>boolean</code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#boot(java.util.Map)">boot</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">params</code>)</code><i class="X"><code>boolean</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#reboot()">reboot</a></code><code class="Y">()</code><i class="X"><code>boolean</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#reboot(viewtify.task.MonitorableTask)">reboot</a></code><code class="Y">(<code><a href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code class="parameterName">task</code>)</code><i class="X"><code>boolean</code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#updater()">updater</a></code><code class="Y">()</code><i class="X"><code><a href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#env(java.lang.String,java.lang.String)">env</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">key</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">value</code>)</code><i class="X"><code><a href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></li>
+					<ul class="C G">
+						<li><code><a aria-label="viewtify.update.JavaBlueprint" href="api/viewtify.update.JavaBlueprint.html">JavaBlueprint</a></code></li>
+						<li><code><a aria-label="viewtify.update.NativeBlueprint" href="api/viewtify.update.NativeBlueprint.html">NativeBlueprint</a></code></li>
 					</ul>
 				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+			</section>
+			<section class="q" id="root">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">root</code><i class="P"><code class="return">psychopath.Directory</code></i></h2><span class="B"><p>The application root directory.</p></span></section>
+			<section class="q" id="jre">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">jre</code><i class="P"><code class="return">psychopath.Directory</code></i></h2><span class="B"><p>The JRE direcotry.</p></span></section>
+			<section class="q" id="classPath">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">classPath</code><i class="P"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The application classpath.</p></span></section>
+			<section class="q" id="Blueprint()">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">Blueprint</code><code class="X">()</code></h2>
+			</section>
+			<section class="q" id="boot()">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">boot</code><code class="X">()</code><i class="P"><code>boolean</code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Boot this application.</p></span></section>
+			<section class="q" id="boot(viewtify.task.MonitorableTask)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">boot</code><code class="X">(<code><a aria-label="viewtify.task.MonitorableTask" href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code class="parameterName">task</code>)</code><i class="P"><code>boolean</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="viewtify.task.MonitorableTask" href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code class="parameterName">task</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Boot this application.</p></span></section>
+			<section class="q" id="boot(java.util.Map)">
+				<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="h">boot</code><code class="X">(<code><a aria-label="java.util.Map 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">params</code>)</code><i class="P"><code>boolean</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.util.Map 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">params</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Boot this application.</p></span></section>
+			<section class="q" id="reboot()">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">reboot</code><code class="X">()</code><i class="P"><code>boolean</code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Deactivate the current application and boot this application.</p></span></section>
+			<section class="q" id="reboot(viewtify.task.MonitorableTask)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">reboot</code><code class="X">(<code><a aria-label="viewtify.task.MonitorableTask" href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code class="parameterName">task</code>)</code><i class="P"><code>boolean</code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="viewtify.task.MonitorableTask" href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code class="parameterName">task</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Deactivate the current application and boot this application.</p></span></section>
+			<section class="q" id="updater()">
+				<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="h">updater</code><code class="X">()</code><i class="P"><code><a aria-label="viewtify.update.Blueprint" href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code><a aria-label="viewtify.update.Blueprint" href="api/viewtify.update.Blueprint.html">Blueprint</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Create new updater application.</p></span></section>
+			<section class="q" id="env(java.lang.String,java.lang.String)">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">env</code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">key</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">value</code>)</code><i class="P"><code><a aria-label="viewtify.update.Blueprint" href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">key</code></td>
+						<td><span><p>A key.</p></span></td>
+					</tr>
+					<tr class="n">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">value</code></td>
+						<td><span><p>A value.</p></span></td>
+					</tr>
+					<tr class="i">
+						<td><code><a aria-label="viewtify.update.Blueprint" href="api/viewtify.update.Blueprint.html">Blueprint</a></code></td>
+						<td><span><p>Chainable API</p></span></td>
+					</tr>
+				</table><span class="B"><p>Assign environment variable.</p></span></section>
+			<section class="q" id="detect()">
+				<h2 class="R"><i class="STATIC PUBLIC"></i><code class="h">detect</code><code class="X">()</code><i class="P"><code><a aria-label="viewtify.update.Blueprint" href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code><a aria-label="viewtify.update.Blueprint" href="api/viewtify.update.Blueprint.html">Blueprint</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Detect the current site.</p></span></section>
+		</article>
+		<aside class="W">
+			<div class="I">
+				<h5 class="M">Constructors</h5>
+				<ul>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.update.Blueprint.html#Blueprint()">Blueprint</a></code><code class="X">()</code></li>
+				</ul>
+				<h5 class="M">Fields</h5>
+				<ul>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.update.Blueprint.html#root">root</a></code><i class="Y"><code class="return">psychopath.Directory</code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.update.Blueprint.html#jre">jre</a></code><i class="Y"><code class="return">psychopath.Directory</code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.update.Blueprint.html#classPath">classPath</a></code><i class="Y"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+				</ul>
+				<h5 class="M">Static Methods</h5>
+				<ul>
+					<li class="J"><i class="STATIC PUBLIC"></i><code><a href="api/viewtify.update.Blueprint.html#detect()">detect</a></code><code class="X">()</code><i class="Y"><code><a aria-label="viewtify.update.Blueprint" href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></li>
+				</ul>
+				<h5 class="M">Methods</h5>
+				<ul>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#boot()">boot</a></code><code class="X">()</code><i class="Y"><code>boolean</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#boot(viewtify.task.MonitorableTask)">boot</a></code><code class="X">(<code><a aria-label="viewtify.task.MonitorableTask" href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code class="parameterName">task</code>)</code><i class="Y"><code>boolean</code></i></li>
+					<li class="J"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#boot(java.util.Map)">boot</a></code><code class="X">(<code><a aria-label="java.util.Map 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">params</code>)</code><i class="Y"><code>boolean</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#reboot()">reboot</a></code><code class="X">()</code><i class="Y"><code>boolean</code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#reboot(viewtify.task.MonitorableTask)">reboot</a></code><code class="X">(<code><a aria-label="viewtify.task.MonitorableTask" href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a><code class="parameters"><code>psychopath.Progress</code></code></code><code class="parameterName">task</code>)</code><i class="Y"><code>boolean</code></i></li>
+					<li class="J"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#updater()">updater</a></code><code class="X">()</code><i class="Y"><code><a aria-label="viewtify.update.Blueprint" href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.update.Blueprint.html#env(java.lang.String,java.lang.String)">env</a></code><code class="X">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">key</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">value</code>)</code><i class="Y"><code><a aria-label="viewtify.update.Blueprint" href="api/viewtify.update.Blueprint.html">Blueprint</a></code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="d"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>

@@ -13,133 +13,132 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="M">
-			<h1 class="b" date="2024-12-09" ver="2.33.0"><code>Viewtify</code></h1>
-			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2024-12-31" ver="2.33.0">
+			<h1 class="Z"><code>Viewtify</code></h1>
+			<nav class="f"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="e" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="J">
-			<nav class="i">
-				<div></div>
-			</nav>
-			<article class="d" id="Article">
-				<section class="S"><code class="U">viewtify</code>
-					<h2 class="AbstractClass I"><code class="V">ViewtyDialog.DialogView</code><code class="Y">&#60;<code>V</code>&#62;</code></h2>
-					<div class="H">
-						<ul class="C D">
-							<li><code>V</code></li>
-						</ul>
-						<ul class="C E">
-							<li><code><a href="api/viewtify.ui.View.html">View</a></code></li>
-						</ul>
-						<ul class="C F">
-							<li><code><a href="api/viewtify.ui.AutoDisposable.html">AutoDisposable</a></code></li>
-							<li><code>kiss.Disposable</code></li>
-							<li><code>kiss.Extensible</code></li>
-							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
-						</ul>
-						<ul class="C G">
-							<li><code><a href="api/viewtify.ui.view.PrintPreview.html">PrintPreview</a></code></li>
-							<li><code><a href="api/viewtify.update.Updater.html">Updater</a></code></li>
-						</ul>
-					</div><span class="B"><p>Specialized view for dialog.</p></span></section>
-				<section class="S" id="value">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">value</code><i class="k"><code class="return">V</code></i></h2><span class="B"><p>The value holder.</p></span></section>
-				<section class="S" id="pane">
-					<h2 class="f"><i class="PROTECTED"></i><code class="V">pane</code><i class="k"><code class="return"><a href="api/javafx.scene.control.DialogPane.html">DialogPane</a></code></i></h2><span class="B"><p>The associated dialog pane.</p></span></section>
-				<section class="S" id="DialogView()">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">DialogView</code><code class="Y">()</code></h2>
-				</section>
-				<section class="S" id="title()">
-					<h2 class="f"><i class="OVERRIDE PUBLIC"></i><code class="V">title</code><code class="Y">()</code><i class="k"><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>The page title.</p></span></section>
-				<section class="S" id="find(javafx.scene.control.ButtonType)">
-					<h2 class="f"><i class="FINAL"><i class="PROTECTED"></i></i><code class="V">find</code><code class="Y">(<code><a href="api/javafx.scene.control.ButtonType.html">ButtonType</a></code><code class="parameterName">type</code>)</code><i class="k"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="api/javafx.scene.control.ButtonType.html">ButtonType</a></code><code>type</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Find the dialog button.</p></span></section>
-				<section class="S" id="find(javafx.scene.control.ButtonBar.ButtonData)">
-					<h2 class="f"><i class="FINAL"><i class="PROTECTED"></i></i><code class="V">find</code><code class="Y">(<code><a href="api/javafx.scene.control.ButtonBar.ButtonData.html">ButtonData</a></code><code class="parameterName">data</code>)</code><i class="k"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="m">
-							<td><code><a href="api/javafx.scene.control.ButtonBar.ButtonData.html">ButtonData</a></code><code>data</code></td>
-							<td></td>
-						</tr>
-						<tr class="a">
-							<td><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Find the dialog button.</p></span></section>
-				<section class="S" id="dispose()">
-					<h2 class="f"><i class="OVERRIDE PUBLIC"></i><code class="V">dispose</code><code class="Y">()</code><i class="k"><code>void</code></i></h2>
-				</section>
-				<section class="S" id="isInvalid()">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">isInvalid</code><code class="Y">()</code><i class="k"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-			</article>
-			<aside class="T" id="SubNavi">
-				<div class="j">
-					<h5 class="h">Constructors</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#DialogView()">DialogView</a></code><code class="Y">()</code></li>
+		<nav class="V"></nav>
+		<article class="U" id="Article">
+			<section class="q"><code class="H">viewtify</code>
+				<h2 class="AbstractClass r"><code class="h">ViewtyDialog.DialogView</code><code class="X">&#60;<code>V</code>&#62;</code></h2>
+				<div class="e">
+					<ul class="C D">
+						<li><code>V</code></li>
 					</ul>
-					<h5 class="h">Fields</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#value">value</a></code><i class="X"><code class="return">V</code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#pane">pane</a></code><i class="X"><code class="return"><a href="api/javafx.scene.control.DialogPane.html">DialogPane</a></code></i></li>
+					<ul class="C E">
+						<li><code><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code></li>
 					</ul>
-					<h5 class="h">Methods</h5>
-					<ul>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#title()">title</a></code><code class="Y">()</code><i class="X"><code>kiss.Variable<code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#find(javafx.scene.control.ButtonType)">find</a></code><code class="Y">(<code><a href="api/javafx.scene.control.ButtonType.html">ButtonType</a></code><code class="parameterName">type</code>)</code><i class="X"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#find(javafx.scene.control.ButtonBar.ButtonData)">find</a></code><code class="Y">(<code><a href="api/javafx.scene.control.ButtonBar.ButtonData.html">ButtonData</a></code><code class="parameterName">data</code>)</code><i class="X"><code>kiss.Variable<code class="parameters"><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#dispose()">dispose</a></code><code class="Y">()</code><i class="X"><code>void</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#isInvalid()">isInvalid</a></code><code class="Y">()</code><i class="X"><code>boolean</code></i></li>
+					<ul class="C F">
+						<li><code><a aria-label="viewtify.ui.AutoDisposable" href="api/viewtify.ui.AutoDisposable.html">AutoDisposable</a></code></li>
+						<li><code>kiss.Disposable</code></li>
+						<li><code>kiss.Extensible</code></li>
+						<li><code><a aria-label="viewtify.ui.UserInterfaceProvider" href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
 					</ul>
-				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+					<ul class="C G">
+						<li><code><a aria-label="viewtify.ui.view.PrintPreview" href="api/viewtify.ui.view.PrintPreview.html">PrintPreview</a></code></li>
+						<li><code><a aria-label="viewtify.update.Updater" href="api/viewtify.update.Updater.html">Updater</a></code></li>
+					</ul>
+				</div><span class="B"><p>Specialized view for dialog.</p></span></section>
+			<section class="q" id="value">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">value</code><i class="P"><code class="return">V</code></i></h2><span class="B"><p>The value holder.</p></span></section>
+			<section class="q" id="pane">
+				<h2 class="R"><i class="PROTECTED"></i><code class="h">pane</code><i class="P"><code class="return"><a aria-label="javafx.scene.control.DialogPane" href="api/javafx.scene.control.DialogPane.html">DialogPane</a></code></i></h2><span class="B"><p>The associated dialog pane.</p></span></section>
+			<section class="q" id="DialogView()">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">DialogView</code><code class="X">()</code></h2>
+			</section>
+			<section class="q" id="title()">
+				<h2 class="R"><i class="OVERRIDE PUBLIC"></i><code class="h">title</code><code class="X">()</code><i class="P"><code>kiss.Variable<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code>kiss.Variable<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>The page title.</p></span></section>
+			<section class="q" id="find(javafx.scene.control.ButtonType)">
+				<h2 class="R"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">find</code><code class="X">(<code><a aria-label="javafx.scene.control.ButtonType" href="api/javafx.scene.control.ButtonType.html">ButtonType</a></code><code class="parameterName">type</code>)</code><i class="P"><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UIButton" href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="javafx.scene.control.ButtonType" href="api/javafx.scene.control.ButtonType.html">ButtonType</a></code><code class="parameterName">type</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UIButton" href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Find the dialog button.</p></span></section>
+			<section class="q" id="find(javafx.scene.control.ButtonBar.ButtonData)">
+				<h2 class="R"><i class="FINAL"><i class="PROTECTED"></i></i><code class="h">find</code><code class="X">(<code><a aria-label="javafx.scene.control.ButtonBar.ButtonData" href="api/javafx.scene.control.ButtonBar.ButtonData.html">ButtonData</a></code><code class="parameterName">data</code>)</code><i class="P"><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UIButton" href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></i></h2>
+				<table class="g">
+					<tr class="n">
+						<td><code><a aria-label="javafx.scene.control.ButtonBar.ButtonData" href="api/javafx.scene.control.ButtonBar.ButtonData.html">ButtonData</a></code><code class="parameterName">data</code></td>
+						<td></td>
+					</tr>
+					<tr class="i">
+						<td><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UIButton" href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Find the dialog button.</p></span></section>
+			<section class="q" id="dispose()">
+				<h2 class="R"><i class="OVERRIDE PUBLIC"></i><code class="h">dispose</code><code class="X">()</code><i class="P"><code>void</code></i></h2>
+			</section>
+			<section class="q" id="isInvalid()">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">isInvalid</code><code class="X">()</code><i class="P"><code>boolean</code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+		</article>
+		<aside class="W">
+			<div class="I">
+				<h5 class="M">Constructors</h5>
+				<ul>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#DialogView()">DialogView</a></code><code class="X">()</code></li>
+				</ul>
+				<h5 class="M">Fields</h5>
+				<ul>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#value">value</a></code><i class="Y"><code class="return">V</code></i></li>
+					<li class="J"><i class="PROTECTED"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#pane">pane</a></code><i class="Y"><code class="return"><a aria-label="javafx.scene.control.DialogPane" href="api/javafx.scene.control.DialogPane.html">DialogPane</a></code></i></li>
+				</ul>
+				<h5 class="M">Methods</h5>
+				<ul>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#title()">title</a></code><code class="X">()</code><i class="Y"><code>kiss.Variable<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#find(javafx.scene.control.ButtonType)">find</a></code><code class="X">(<code><a aria-label="javafx.scene.control.ButtonType" href="api/javafx.scene.control.ButtonType.html">ButtonType</a></code><code class="parameterName">type</code>)</code><i class="Y"><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UIButton" href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#find(javafx.scene.control.ButtonBar.ButtonData)">find</a></code><code class="X">(<code><a aria-label="javafx.scene.control.ButtonBar.ButtonData" href="api/javafx.scene.control.ButtonBar.ButtonData.html">ButtonData</a></code><code class="parameterName">data</code>)</code><i class="Y"><code>kiss.Variable<code class="parameters"><code><a aria-label="viewtify.ui.UIButton" href="api/viewtify.ui.UIButton.html">UIButton</a></code></code></code></i></li>
+					<li class="J"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#dispose()">dispose</a></code><code class="X">()</code><i class="Y"><code>void</code></i></li>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ViewtyDialog.DialogView.html#isInvalid()">isInvalid</a></code><code class="X">()</code><i class="Y"><code>boolean</code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="d"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>

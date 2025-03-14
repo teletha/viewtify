@@ -13,87 +13,86 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="M">
-			<h1 class="b" date="2024-12-09" ver="2.33.0"><code>Viewtify</code></h1>
-			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2024-12-31" ver="2.33.0">
+			<h1 class="Z"><code>Viewtify</code></h1>
+			<nav class="f"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="e" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="J">
-			<nav class="i">
-				<div></div>
-			</nav>
-			<article class="d" id="Article">
-				<section class="S"><code class="U">viewtify.ui</code>
-					<h2 class="AbstractClass I"><code class="V">ViewForNode</code></h2>
-					<div class="H">
-						<ul class="C E">
-							<li><code><a href="api/viewtify.ui.View.html">View</a></code></li>
-						</ul>
-						<ul class="C F">
-							<li><code><a href="api/viewtify.ui.AutoDisposable.html">AutoDisposable</a></code></li>
-							<li><code>kiss.Disposable</code></li>
-							<li><code>kiss.Extensible</code></li>
-							<li><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
-						</ul>
-					</div><span class="B"><p>A simple wrapper to describe a <code><a href="api/viewtify.ui.View.html">View</a></code> using Javafx&#39;s <code><a href="api/javafx.scene.Node.html">Node</a></code> directly.</p></span></section>
-				<section class="S" id="ViewForNode()">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">ViewForNode</code><code class="Y">()</code></h2>
-				</section>
-				<section class="S" id="declareUI()">
-					<h2 class="f"><i class="FINAL"><i class="OVERRIDE PROTECTED"></i></i><code class="V">declareUI</code><code class="Y">()</code><i class="k"><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="S" id="declareNode()">
-					<h2 class="f"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="V">declareNode</code><code class="Y">()</code><i class="k"><code><a href="api/javafx.scene.Node.html">Node</a></code></i></h2>
-					<table class="N">
-						<tr class="a">
-							<td><code><a href="api/javafx.scene.Node.html">Node</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Declare UI as JavaFX node.</p></span></section>
-			</article>
-			<aside class="T" id="SubNavi">
-				<div class="j">
-					<h5 class="h">Constructors</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.ViewForNode.html#ViewForNode()">ViewForNode</a></code><code class="Y">()</code></li>
+		<nav class="V"></nav>
+		<article class="U" id="Article">
+			<section class="q"><code class="H">viewtify.ui</code>
+				<h2 class="AbstractClass r"><code class="h">ViewForNode</code></h2>
+				<div class="e">
+					<ul class="C E">
+						<li><code><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code></li>
 					</ul>
-					<h5 class="h">Methods</h5>
-					<ul>
-						<li><i class="FINAL"><i class="OVERRIDE PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewForNode.html#declareUI()">declareUI</a></code><code class="Y">()</code><i class="X"><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></li>
-						<li><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewForNode.html#declareNode()">declareNode</a></code><code class="Y">()</code><i class="X"><code><a href="api/javafx.scene.Node.html">Node</a></code></i></li>
+					<ul class="C F">
+						<li><code><a aria-label="viewtify.ui.AutoDisposable" href="api/viewtify.ui.AutoDisposable.html">AutoDisposable</a></code></li>
+						<li><code>kiss.Disposable</code></li>
+						<li><code>kiss.Extensible</code></li>
+						<li><code><a aria-label="viewtify.ui.UserInterfaceProvider" href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a><code class="parameters"><code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code></code></code></li>
 					</ul>
-				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+				</div><span class="B"><p>A simple wrapper to describe a <code><a aria-label="viewtify.ui.View" href="api/viewtify.ui.View.html">View</a></code> using Javafx&#39;s <code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code> directly.</p></span></section>
+			<section class="q" id="ViewForNode()">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">ViewForNode</code><code class="X">()</code></h2>
+			</section>
+			<section class="q" id="declareUI()">
+				<h2 class="R"><i class="FINAL"><i class="OVERRIDE PROTECTED"></i></i><code class="h">declareUI</code><code class="X">()</code><i class="P"><code><a aria-label="viewtify.ui.ViewDSL" href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code><a aria-label="viewtify.ui.ViewDSL" href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="q" id="declareNode()">
+				<h2 class="R"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="h">declareNode</code><code class="X">()</code><i class="P"><code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code></i></h2>
+				<table class="g">
+					<tr class="i">
+						<td><code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Declare UI as JavaFX node.</p></span></section>
+		</article>
+		<aside class="W">
+			<div class="I">
+				<h5 class="M">Constructors</h5>
+				<ul>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.ViewForNode.html#ViewForNode()">ViewForNode</a></code><code class="X">()</code></li>
+				</ul>
+				<h5 class="M">Methods</h5>
+				<ul>
+					<li class="J"><i class="FINAL"><i class="OVERRIDE PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewForNode.html#declareUI()">declareUI</a></code><code class="X">()</code><i class="Y"><code><a aria-label="viewtify.ui.ViewDSL" href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></i></li>
+					<li class="J"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.ui.ViewForNode.html#declareNode()">declareNode</a></code><code class="X">()</code><i class="Y"><code><a aria-label="javafx.scene.Node" href="api/javafx.scene.Node.html">Node</a></code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="d"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>

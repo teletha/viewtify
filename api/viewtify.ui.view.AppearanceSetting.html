@@ -13,94 +13,93 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="O">
-		<header class="M">
-			<h1 class="b" date="2024-12-09" ver="2.33.0"><code>Viewtify</code></h1>
-			<nav class="c"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2024-12-31" ver="2.33.0">
+			<h1 class="Z"><code>Viewtify</code></h1>
+			<nav class="f"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/teletha/viewtify/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/teletha/viewtify" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="e" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="J">
-			<nav class="i">
-				<div></div>
-			</nav>
-			<article class="d" id="Article">
-				<section class="S"><code class="U">viewtify.ui.view</code>
-					<h2 class="Class I"><code class="V">AppearanceSetting</code></h2>
-					<div class="H">
-						<ul class="C E">
-							<li><code><a href="api/viewtify.preference.Preferences.html">Preferences</a></code></li>
-						</ul>
-						<ul class="C F">
-							<li><code>kiss.Extensible</code></li>
-							<li><code>kiss.Storable<code class="parameters"><code><a href="api/viewtify.preference.Preferences.html">Preferences</a></code></code></code></li>
-						</ul>
-					</div><span class="B"><p>Preference for appearance.</p></span></section>
-				<section class="S" id="lang">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">lang</code><i class="k"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code></code></code></i></h2>
-				</section>
-				<section class="S" id="theme">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">theme</code><i class="k"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="api/viewtify.Theme.html">Theme</a></code></code></code></i></h2>
-				</section>
-				<section class="S" id="themeType">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">themeType</code><i class="k"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="api/viewtify.ThemeType.html">ThemeType</a></code></code></code></i></h2>
-				</section>
-				<section class="S" id="font">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">font</code><i class="k"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-				</section>
-				<section class="S" id="fontSize">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">fontSize</code><i class="k"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2>
-				</section>
-				<section class="S" id="smoothScroll">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">smoothScroll</code><i class="k"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
-				</section>
-				<section class="S" id="tabClosingPolicy">
-					<h2 class="f"><i class="FINAL"><i class="PUBLIC"></i></i><code class="V">tabClosingPolicy</code><i class="k"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="api/javafx.scene.control.TabPane.TabClosingPolicy.html">TabClosingPolicy</a></code></code></code></i></h2>
-				</section>
-				<section class="S" id="AppearanceSetting()">
-					<h2 class="f"><i class="PUBLIC"></i><code class="V">AppearanceSetting</code><code class="Y">()</code></h2>
-				</section>
-			</article>
-			<aside class="T" id="SubNavi">
-				<div class="j">
-					<h5 class="h">Constructors</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#AppearanceSetting()">AppearanceSetting</a></code><code class="Y">()</code></li>
+		<nav class="V"></nav>
+		<article class="U" id="Article">
+			<section class="q"><code class="H">viewtify.ui.view</code>
+				<h2 class="Class r"><code class="h">AppearanceSetting</code></h2>
+				<div class="e">
+					<ul class="C E">
+						<li><code><a aria-label="viewtify.preference.Preferences" href="api/viewtify.preference.Preferences.html">Preferences</a></code></li>
 					</ul>
-					<h5 class="h">Fields</h5>
-					<ul>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#lang">lang</a></code><i class="X"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#theme">theme</a></code><i class="X"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="api/viewtify.Theme.html">Theme</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#themeType">themeType</a></code><i class="X"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="api/viewtify.ThemeType.html">ThemeType</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#font">font</a></code><i class="X"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#fontSize">fontSize</a></code><i class="X"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#smoothScroll">smoothScroll</a></code><i class="X"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#tabClosingPolicy">tabClosingPolicy</a></code><i class="X"><code class="return"><a href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a href="api/javafx.scene.control.TabPane.TabClosingPolicy.html">TabClosingPolicy</a></code></code></code></i></li>
+					<ul class="C F">
+						<li><code>kiss.Extensible</code></li>
+						<li><code>kiss.Storable<code class="parameters"><code><a aria-label="viewtify.preference.Preferences" href="api/viewtify.preference.Preferences.html">Preferences</a></code></code></code></li>
 					</ul>
-				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+				</div><span class="B"><p>Preference for appearance.</p></span></section>
+			<section class="q" id="lang">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">lang</code><i class="P"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code></code></code></i></h2>
+			</section>
+			<section class="q" id="theme">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">theme</code><i class="P"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="viewtify.Theme" href="api/viewtify.Theme.html">Theme</a></code></code></code></i></h2>
+			</section>
+			<section class="q" id="themeType">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">themeType</code><i class="P"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="viewtify.ThemeType" href="api/viewtify.ThemeType.html">ThemeType</a></code></code></code></i></h2>
+			</section>
+			<section class="q" id="font">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">font</code><i class="P"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+			</section>
+			<section class="q" id="fontSize">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">fontSize</code><i class="P"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></h2>
+			</section>
+			<section class="q" id="smoothScroll">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">smoothScroll</code><i class="P"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2>
+			</section>
+			<section class="q" id="tabClosingPolicy">
+				<h2 class="R"><i class="FINAL"><i class="PUBLIC"></i></i><code class="h">tabClosingPolicy</code><i class="P"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="javafx.scene.control.TabPane.TabClosingPolicy" href="api/javafx.scene.control.TabPane.TabClosingPolicy.html">TabClosingPolicy</a></code></code></code></i></h2>
+			</section>
+			<section class="q" id="AppearanceSetting()">
+				<h2 class="R"><i class="PUBLIC"></i><code class="h">AppearanceSetting</code><code class="X">()</code></h2>
+			</section>
+		</article>
+		<aside class="W">
+			<div class="I">
+				<h5 class="M">Constructors</h5>
+				<ul>
+					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#AppearanceSetting()">AppearanceSetting</a></code><code class="X">()</code></li>
+				</ul>
+				<h5 class="M">Fields</h5>
+				<ul>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#lang">lang</a></code><i class="Y"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="java.util.Locale 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Locale.html">Locale</a></code></code></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#theme">theme</a></code><i class="Y"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="viewtify.Theme" href="api/viewtify.Theme.html">Theme</a></code></code></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#themeType">themeType</a></code><i class="Y"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="viewtify.ThemeType" href="api/viewtify.ThemeType.html">ThemeType</a></code></code></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#font">font</a></code><i class="Y"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#fontSize">fontSize</a></code><i class="Y"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="java.lang.Integer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html">Integer</a></code></code></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#smoothScroll">smoothScroll</a></code><i class="Y"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+					<li class="J"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.view.AppearanceSetting.html#tabClosingPolicy">tabClosingPolicy</a></code><i class="Y"><code class="return"><a aria-label="viewtify.preference.Preferences.Preference" href="api/viewtify.preference.Preferences.Preference.html">Preference</a><code class="parameters"><code><a aria-label="javafx.scene.control.TabPane.TabClosingPolicy" href="api/javafx.scene.control.TabPane.TabClosingPolicy.html">TabClosingPolicy</a></code></code></code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="d"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>
