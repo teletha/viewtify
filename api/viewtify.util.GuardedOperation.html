@@ -19,10 +19,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="S">
-		<header class="T" date="2024-12-31" ver="2.33.0">
-			<h1 class="Z"><code>Viewtify</code></h1>
-			<nav class="f"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
+	<body class="d">
+		<header class="X" date="2024-12-31" ver="2.33.0">
+			<h1 class="Q"><code>Viewtify</code></h1>
+			<nav class="Y"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
@@ -35,38 +35,38 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="o"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+			<div class="Z"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="V"></nav>
+		<nav class="N"></nav>
 		<article class="U" id="Article">
-			<section class="q"><code class="H">viewtify.util</code>
-				<h2 class="Class r"><code class="h">GuardedOperation</code></h2>
-				<div class="e"></div>
+			<section class="O"><code class="K">viewtify.util</code>
+				<h2 class="Class I"><code class="J">GuardedOperation</code></h2>
+				<div class="g"></div>
 			</section>
-			<section class="q" id="NoOP">
-				<h2 class="R"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="h">NoOP</code><i class="P"><code class="return"><a aria-label="viewtify.util.GuardedOperation" href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></h2><span class="B"><p>The reusable no-operation.</p></span></section>
-			<section class="q" id="GuardedOperation()">
-				<h2 class="R"><i class="PUBLIC"></i><code class="h">GuardedOperation</code><code class="X">()</code></h2>
+			<section class="O" id="NoOP">
+				<h2 class="L"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code class="J">NoOP</code><i class="a"><code class="return"><a aria-label="viewtify.util.GuardedOperation" href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></h2><span class="B"><p>The reusable no-operation.</p></span></section>
+			<section class="O" id="GuardedOperation()">
+				<h2 class="L"><i class="PUBLIC"></i><code class="J">GuardedOperation</code><code class="i">()</code></h2>
 			</section>
-			<section class="q" id="guard(kiss.WiseRunnable)">
-				<h2 class="R"><i class="PUBLIC"></i><code class="h">guard</code><code class="X">(<code>kiss.WiseRunnable</code><code class="parameterName">process</code>)</code><i class="P"><code>void</code></i></h2>
-				<table class="g">
-					<tr class="n">
+			<section class="O" id="guard(kiss.WiseRunnable)">
+				<h2 class="L"><i class="PUBLIC"></i><code class="J">guard</code><code class="i">(<code>kiss.WiseRunnable</code><code class="parameterName">process</code>)</code><i class="a"><code>void</code></i></h2>
+				<table class="n">
+					<tr class="m">
 						<td><code>kiss.WiseRunnable</code><code class="parameterName">process</code></td>
 						<td><span><p>An atomic process.</p></span></td>
 					</tr>
 				</table><span class="B"><p>Guaranteed to be executed only once at a time. The difference with the synchronized block is
 that it does not allow recursive execution by the same thread and if the process is rejected,
 this operator will skip it instead of waiting.</p></span></section>
-			<section class="q" id="protect(java.lang.Runnable)">
-				<h2 class="R"><i class="PUBLIC"></i><code class="h">protect</code><code class="X">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">process</code>)</code><i class="P"><code>void</code></i></h2>
-				<table class="g">
-					<tr class="n">
+			<section class="O" id="protect(java.lang.Runnable)">
+				<h2 class="L"><i class="PUBLIC"></i><code class="J">protect</code><code class="i">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">process</code>)</code><i class="a"><code>void</code></i></h2>
+				<table class="n">
+					<tr class="m">
 						<td><code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">process</code></td>
 						<td><span><p>An atomic process.</p></span></td>
 					</tr>
@@ -76,34 +76,34 @@ this operator will skip it instead of waiting.</p></span></section>
  that it does not allow recursive execution by the same thread and if the process is rejected,
  this operator will skip it instead of waiting.</p>
 				</span></section>
-			<section class="q" id="ignoreError()">
-				<h2 class="R"><i class="PUBLIC"></i><code class="h">ignoreError</code><code class="X">()</code><i class="P"><code><a aria-label="viewtify.util.GuardedOperation" href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></h2>
-				<table class="g">
-					<tr class="i">
+			<section class="O" id="ignoreError()">
+				<h2 class="L"><i class="PUBLIC"></i><code class="J">ignoreError</code><code class="i">()</code><i class="a"><code><a aria-label="viewtify.util.GuardedOperation" href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></h2>
+				<table class="n">
+					<tr class="l">
 						<td><code><a aria-label="viewtify.util.GuardedOperation" href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="B"><p>Ignore error while processing.</p></span></section>
 		</article>
-		<aside class="W">
-			<div class="I">
-				<h5 class="M">Constructors</h5>
+		<aside class="V">
+			<div class="j">
+				<h5 class="r">Constructors</h5>
 				<ul>
-					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#GuardedOperation()">GuardedOperation</a></code><code class="X">()</code></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#GuardedOperation()">GuardedOperation</a></code><code class="i">()</code></li>
 				</ul>
-				<h5 class="M">Static Fields</h5>
+				<h5 class="r">Static Fields</h5>
 				<ul>
-					<li class="J"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.util.GuardedOperation.html#NoOP">NoOP</a></code><i class="Y"><code class="return"><a aria-label="viewtify.util.GuardedOperation" href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></li>
+					<li class="p"><i class="FINAL"><i class="STATIC PUBLIC"></i></i><code><a href="api/viewtify.util.GuardedOperation.html#NoOP">NoOP</a></code><i class="T"><code class="return"><a aria-label="viewtify.util.GuardedOperation" href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></li>
 				</ul>
-				<h5 class="M">Methods</h5>
+				<h5 class="r">Methods</h5>
 				<ul>
-					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#guard(kiss.WiseRunnable)">guard</a></code><code class="X">(<code>kiss.WiseRunnable</code><code class="parameterName">process</code>)</code><i class="Y"><code>void</code></i></li>
-					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#protect(java.lang.Runnable)">protect</a></code><code class="X">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">process</code>)</code><i class="Y"><code>void</code></i></li>
-					<li class="J"><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#ignoreError()">ignoreError</a></code><code class="X">()</code><i class="Y"><code><a aria-label="viewtify.util.GuardedOperation" href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#guard(kiss.WiseRunnable)">guard</a></code><code class="i">(<code>kiss.WiseRunnable</code><code class="parameterName">process</code>)</code><i class="T"><code>void</code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#protect(java.lang.Runnable)">protect</a></code><code class="i">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">process</code>)</code><i class="T"><code>void</code></i></li>
+					<li class="p"><i class="PUBLIC"></i><code><a href="api/viewtify.util.GuardedOperation.html#ignoreError()">ignoreError</a></code><code class="i">()</code><i class="T"><code><a aria-label="viewtify.util.GuardedOperation" href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="d"/>
+		<footer class="W"/>
 	</body>
 	<script src="root.js"></script>
 	<script src="main.js" type="module"></script>
