@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.35.0](https://github.com/teletha/viewtify/compare/2.34.0...2.35.0) (2025-03-21)
+
+
+### Features
+
+* support locale ([6717ce9](https://github.com/teletha/viewtify/commit/6717ce9acfaa4fe0c3752c6bb640660c76f3473f))
+
 ## [2.34.0](https://github.com/teletha/viewtify/compare/v2.33.0...2.34.0) (2025-03-19)
 
 
