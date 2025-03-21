@@ -39,6 +39,8 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -76,9 +78,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -114,6 +113,9 @@ public final class Viewtify {
 
     /** The status of toolkit. */
     private static boolean toolkitInitialized;
+
+    /** The status of toolkit. */
+    private static boolean toolkitDisposed;
 
     /** The dispose on exit. */
     public static final Disposable Terminator = Disposable.empty();
@@ -168,7 +170,9 @@ public final class Viewtify {
                 I.error(error);
 
                 // for UI
-                Toast.show(error);
+                if (!toolkitDisposed) {
+                    Toast.show(error);
+                }
             });
         }
     }
@@ -778,6 +782,8 @@ public final class Viewtify {
      * Deactivate the current application.
      */
     public void deactivate() {
+        toolkitDisposed = true;
+
         Terminator.dispose();
 
         Platform.exit();
