@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.35.0](https://github.com/teletha/viewtify/compare/2.34.0...2.35.0) (2025-03-28)
+
+
+### Features
+
+* support locale ([6717ce9](https://github.com/teletha/viewtify/commit/6717ce9acfaa4fe0c3752c6bb640660c76f3473f))
+
+
+### Bug Fixes
+
+* revert deactivate process ([72121f4](https://github.com/teletha/viewtify/commit/72121f41498c01b13a70d32f1a9eada4457b4da8))
+
 ## [2.34.0](https://github.com/teletha/viewtify/compare/v2.33.0...2.34.0) (2025-03-19)
 
 
