@@ -39,8 +39,6 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.sun.javafx.application.PlatformImpl;
-
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -78,6 +76,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import com.sun.javafx.application.PlatformImpl;
+
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -108,14 +109,12 @@ import viewtify.update.UpdateSetting;
 
 public final class Viewtify {
 
-    /** The runtime info. */
-    private static final boolean inTest;
+    /** Determines if it is being run by Junit. */
+    private static final boolean inTest = StackWalker.getInstance()
+            .walk(frames -> frames.anyMatch(frame -> frame.getClassName().startsWith("org.junit.")));
 
     /** The status of toolkit. */
     private static boolean toolkitInitialized;
-
-    /** The status of toolkit. */
-    private static boolean toolkitDisposed;
 
     /** The dispose on exit. */
     public static final Disposable Terminator = Disposable.empty();
@@ -133,6 +132,7 @@ public final class Viewtify {
     public static final Variable<Directory> UserPreference = Variable.empty();
 
     static {
+        // Javafx logging uses JUL, so we are diverting it to sinobu logging.
         JUL.replace();
 
         // I really want to enable anti-aliasing all the time, but I don't use it because the text
@@ -142,15 +142,6 @@ public final class Viewtify {
         // System.setProperty("prism.lcdtext", "false");
         // System.setProperty("prism.text", "t2k");
         // System.setProperty("prism.subpixeltext", "on native");
-
-        // For Test
-        inTest = I.signal(new Error().getStackTrace())
-                .take(e -> e.getClassName().startsWith("org.junit."))
-                .take(1)
-                .mapTo(true)
-                .startWith(false)
-                .to()
-                .get();
 
         CSS.enhance();
 
@@ -162,19 +153,8 @@ public final class Viewtify {
         // automatic gc
         I.schedule(5, 30, TimeUnit.MINUTES, true).to(System::gc);
 
-        // error handling in UI thread
-        UncaughtExceptionHandler handler = Thread.getDefaultUncaughtExceptionHandler();
-        if (handler == null) {
-            Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {
-                // for system log
-                I.error(error);
-
-                // for UI
-                if (!toolkitDisposed) {
-                    Toast.show(error);
-                }
-            });
-        }
+        // error handling
+        Thread.setDefaultUncaughtExceptionHandler((thread, error) -> I.error(error));
     }
 
     /** The application configurator. */
@@ -782,8 +762,6 @@ public final class Viewtify {
      * Deactivate the current application.
      */
     public void deactivate() {
-        toolkitDisposed = true;
-
         Terminator.dispose();
 
         Platform.exit();
