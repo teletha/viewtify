@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
-import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,6 +48,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+
 import kiss.I;
 import kiss.Managed;
 import kiss.Signal;
@@ -67,8 +68,8 @@ import viewtify.ui.UITab;
 import viewtify.ui.UserInterfaceProvider;
 
 /**
- * Handles the full window management with fully customizable layout and drag&drop into new not
- * existing windows.
+ * Handles the full window management with fully customizable layout and drag &amp; drop into new
+ * not existing windows.
  */
 public final class DockSystem {
 
