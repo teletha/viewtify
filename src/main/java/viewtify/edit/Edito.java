@@ -184,8 +184,9 @@ public class Edito {
 
             @Override
             protected List<V> clone(List<V> value) {
+                List safe = new ArrayList(value);
                 List copy = new ArrayList();
-                for (Object v : value) {
+                for (Object v : safe) {
                     copy.add(Edito.clone(v));
                 }
                 return copy;
