@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<meta content="Explains how to use viewtify and its API. " name="description"/>
+		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<title>viewtify API</title>
+		<base href="../"/>
+		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
+		<link href="main.css" rel="stylesheet"/>
+	</head>
+	<body class="S">
+		<header class="T" date="2025-03-19">
+			<h1 class="f"><a href="index.html"><code>viewtify</code></a></h1>
+			<nav class="g"><a href="api/main.html" id="API"><svg class="package">
+						<use href="main.svg#package"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="h"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon">
+						<use href="main.svg#moon"/>
+					</svg>
+				</a></div>
+		</header>
+		<nav class="W"></nav>
+		<article class="U" id="Article">
+			<div class="n">
+				<section class="A">
+					<h2>viewtify API Overview</h2>
+					<p>This page provides a concise overview of the available APIs, including their purpose, key functionalities, and usage patterns. It serves as a starting point for developers to understand how to integrate and interact with the system effectively.</p>
+					<section class="A">
+						<h4>🛠️ Interface</h4>
+						<table>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.Dock.ÅssignableAll.html">Dock.ÅssignableAll</a></code></td>
+								<td>Internal aggregated API.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.Dock.ÅssignableÅrbitrary.html">Dock.ÅssignableÅrbitrary</a></code></td>
+								<td>Property assignment API.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.Dock.ÅssignableView.html">Dock.ÅssignableView</a></code></td>
+								<td>Property assignment API.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.TypedDock.ÅssignableAll.html">TypedDock.ÅssignableAll</a></code></td>
+								<td>Internal aggregated API.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.TypedDock.ÅssignableÅrbitrary.html">TypedDock.ÅssignableÅrbitrary</a></code></td>
+								<td>Property assignment API.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.TypedDock.ÅssignableRegistration.html">TypedDock.ÅssignableRegistration</a></code></td>
+								<td>Property assignment API.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.TypedDock.ÅssignableId.html">TypedDock.ÅssignableId</a></code></td>
+								<td>Property assignment API.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html">CollectableValuedItemRenderingHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.PlaceholderHelper.html">PlaceholderHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.anime.Slide.html">Slide</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.TimeEvent.html">TimeEvent</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.TimeEventSource.html">TimeEventSource</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.TemporalView.TemporalStyles.html">TemporalView.TemporalStyles</a></code></td>
+								<td>Common style for calendar.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.CalendarMarker.html">CalendarMarker</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.style.ViewtyStyle.html">ViewtyStyle</a></code></td>
+								<td>Built-in CSS.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.style.FormStyles.html">FormStyles</a></code></td>
+								<td>Built-in form CSS</td>
+							</tr>
+						</table>
+					</section>
+					<section class="A">
+						<h4>🛠️ Functional Interface</h4>
+						<table>
+							<tr>
+								<td><code><a href="api/viewtify.task.MonitorableTask.html">MonitorableTask</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.DisableHelper.html">DisableHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.UserActionHelper.html">UserActionHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html">ContextMenuHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.SelectableHelper.html">SelectableHelper</a></code></td>
+								<td>An interface providing methods for handling selection in UI elements.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.DecorationHelper.html">DecorationHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.AnimateHelper.html">AnimateHelper</a></code></td>
+								<td>An interface providing methods for animating UI elements and setting their locations on the x, y,
+and z axes.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.ContainerHelper.html">ContainerHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.EditableHelper.html">EditableHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.VerifyHelper.html">VerifyHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.VisibleHelper.html">VisibleHelper</a></code></td>
+								<td>An interface providing methods for managing the visibility and opacity of a UI element.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.html">PropertyAccessHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.LabelHelper.html">LabelHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.TooltipHelper.html">TooltipHelper</a></code></td>
+								<td>An interface providing methods for managing tooltips and popups for a UI element.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.CollectableHelper.html">CollectableHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.BlockHelper.html">BlockHelper</a></code></td>
+								<td>An interface providing methods to set alignment, orientation, horizontal gap, and vertical gap
+properties.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.CollectableItemRenderingHelper.html">CollectableItemRenderingHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.AssociativeHelper.html">AssociativeHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.AlignmentHelper.html">AlignmentHelper</a></code></td>
+								<td>An interface providing methods to set alignment, orientation, horizontal gap, and vertical gap
+properties.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.ValueHelper.html">ValueHelper</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.anime.ShowAnime.html">ShowAnime</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.anime.SwapAnime.html">SwapAnime</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.anime.AnimePattern.html">AnimePattern</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.anime.HideAnime.html">HideAnime</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UserInterfaceProvider.html">UserInterfaceProvider</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.toast.Toastable.html">Toastable</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.TimeEventVisualizer.html">TimeEventVisualizer</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.MonthEventVisualizer.html">MonthEventVisualizer</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.WeekEventVisualizer.html">WeekEventVisualizer</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.DayEventVisualizer.html">DayEventVisualizer</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.AutoDisposable.html">AutoDisposable</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.keys.Command.html">Command</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.util.Translatable.html">Translatable</a></code></td>
+								<td>no description</td>
+							</tr>
+						</table>
+					</section>
+					<section class="A">
+						<h4>🛠️ Class</h4>
+						<table>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.Dock.html">Dock</a></code></td>
+								<td>Generated model for DockModel.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.Dock.Ìnstantiator.html">Dock.Ìnstantiator</a></code></td>
+								<td>Namespace for Dock  builder methods.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.TypedDock.html">TypedDock</a></code></td>
+								<td>Generated model for TypedDockModel.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.TypedDock.Ìnstantiator.html">TypedDock.Ìnstantiator</a></code></td>
+								<td>Namespace for TypedDock  builder methods.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.task.Monitor.html">Monitor</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.StyleManipulator.html">StyleManipulator</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UITextArea.html">UITextArea</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UITableView.html">UITableView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UITreeItem.html">UITreeItem</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UISlider.html">UISlider</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UITableCheckBoxColumn.html">UITableCheckBoxColumn</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIWeb.html">UIWeb</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIWeb.Operation.html">UIWeb.Operation</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIWeb.Bridge.html">UIWeb.Bridge</a></code></td>
+								<td>A utility that bridges the gap between Java and JS environments.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIListView.html">UIListView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIFontPicker.html">UIFontPicker</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIScrollPane.html">UIScrollPane</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UISelectPane.html">UISelectPane</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UITableColumn.html">UITableColumn</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UITreeTableView.html">UITreeTableView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UICheckSwitch.html">UICheckSwitch</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.view.AppearanceSettingView.html">AppearanceSettingView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.view.PrintPreview.html">PrintPreview</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.view.PrintPreview.PrintInfo.html">PrintPreview.PrintInfo</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.view.AppearanceSetting.html">AppearanceSetting</a></code></td>
+								<td>Preference for appearance.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.canvas.EnhancedCanvas.html">EnhancedCanvas</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIComboCheckBox.html">UIComboCheckBox</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UITileView.html">UITileView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIFlowView.html">UIFlowView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.DockSystem.html">DockSystem</a></code></td>
+								<td>Handles the full window management with fully customizable layout and drag &amp; drop into new
+not existing windows.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.dock.DockRecommendedLocation.html">DockRecommendedLocation</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIHBox.html">UIHBox</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.DnDAssistant.html">DnDAssistant</a></code></td>
+								<td>Drag and Drop supporter.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.Actions.html">Actions</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.Verifier.html">Verifier</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.User.html">User</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.User.GestureEvent.html">User.GestureEvent</a></code></td>
+								<td>Drag event at detail.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.PropertyAccessHelper.Type.html">PropertyAccessHelper.Type</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.CollectableHelper.Ð.html">CollectableHelper.Ð</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.EnhancedContextMenu.html">EnhancedContextMenu</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIPieChart.html">UIPieChart</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.anime.Interpolators.html">Interpolators</a></code></td>
+								<td>Built-in enhanced interpolaters.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.anime.LayoutAnimator.html">LayoutAnimator</a></code></td>
+								<td>Animates an object when its position is changed. For instance, when additional items are added to
+a Region, and the layout has changed, then the layout animator makes the transition by sliding
+each item into its final place.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.anime.Anime.html">Anime</a></code></td>
+								<td>The Anime class provides a fluent API for defining and running animations in JavaFX.
+Animations can be applied to various properties of UI elements, such as opacity, background
+color, and location.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIVBox.html">UIVBox</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIToggleButton.html">UIToggleButton</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.focus.KeyboardNavigation.html">KeyboardNavigation</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UISplitPane.html">UISplitPane</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UICheckMenuItem.html">UICheckMenuItem</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.ViewDSL.html">ViewDSL</a></code></td>
+								<td>Domain specific language for user interface declaration.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UITreeTableColumn.html">UITreeTableColumn</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIImage.html">UIImage</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIColorPicker.html">UIColorPicker</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIPane.html">UIPane</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.toast.ToastSettingView.html">ToastSettingView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.toast.ToastSetting.html">ToastSetting</a></code></td>
+								<td>Preference for Toast.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.toast.Toast.html">Toast</a></code></td>
+								<td>Represents a Toast notification utility class that provides methods to show various types of
+notifications. Notifications are displayed as transient messages to the user.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UILabel.html">UILabel</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UISegmentedButton.html">UISegmentedButton</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UITabPane.html">UITabPane</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIGridView.html">UIGridView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIMenuItem.html">UIMenuItem</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UISpinner.html">UISpinner</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIToolBar.html">UIToolBar</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIChoiceBox.html">UIChoiceBox</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIButton.html">UIButton</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIProgressBar.html">UIProgressBar</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIStackPane.html">UIStackPane</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.DayCell.html">DayCell</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.CalendarSettingView.html">CalendarSettingView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.DayView.html">DayView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.TimeEventSourceSetting.html">TimeEventSourceSetting</a></code></td>
+								<td>Preference for calendar.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.Calendars.html">Calendars</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.YearView.html">YearView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.CalendarSetting.html">CalendarSetting</a></code></td>
+								<td>Preference for calendar.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.YearMonthView.html">YearMonthView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.MonthView.html">MonthView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.CalendarView.html">CalendarView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.WeekView.html">WeekView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UILineChart.html">UILineChart</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UserInterface.html">UserInterface</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIComboBox.html">UIComboBox</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.query.CompoundQuery.html">CompoundQuery</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.query.CompoundQuery.Query.html">CompoundQuery.Query</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.query.CompoundQuery.Tester.html">CompoundQuery.Tester</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.query.QueryView.html">QueryView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UISlidePane.html">UISlidePane</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIDatePicker.html">UIDatePicker</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UIText.html">UIText</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UICheckBox.html">UICheckBox</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ui.UITab.html">UITab</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.keys.KeyBindingSettingView.html">KeyBindingSettingView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.keys.Key.html">Key</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.keys.ShortcutManager.html">ShortcutManager</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ViewtyDialog.html">ViewtyDialog</a></code></td>
+								<td>The specialized dialog builder.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.update.Update.html">Update</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.update.JavaBlueprint.html">JavaBlueprint</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.update.Updater.html">Updater</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.update.UpdateSetting.html">UpdateSetting</a></code></td>
+								<td>Preference for Update.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.update.NativeBlueprint.html">NativeBlueprint</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.update.UpdateSettingView.html">UpdateSettingView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.Viewtify.html">Viewtify</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.Modena.html">Modena</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.preference.PreferenceView.html">PreferenceView</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.preference.Preferences.ComparablePreference.html">Preferences.ComparablePreference</a></code></td>
+								<td>Preference value for Comparable.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.preference.Preferences.DoublePreference.html">Preferences.DoublePreference</a></code></td>
+								<td>Preference value for primitive double.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.preference.Preferences.LongPreference.html">Preferences.LongPreference</a></code></td>
+								<td>Preference value for primitive long.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.preference.Preferences.IntPreference.html">Preferences.IntPreference</a></code></td>
+								<td>Preference value for primitive int.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.preference.Preferences.Preference.html">Preferences.Preference</a></code></td>
+								<td>Preference value.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.util.MonkeyPatch.html">MonkeyPatch</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.util.GuardedOperation.html">GuardedOperation</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.util.DelegatingProperty.html">DelegatingProperty</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.util.TextNotation.html">TextNotation</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.util.Range.html">Range</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.util.FXUtils.html">FXUtils</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.edit.Edito.html">Edito</a></code></td>
+								<td>The editing state manager.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.edit.Edito.Snapshot.html">Edito.Snapshot</a></code></td>
+								<td>Snapshot object.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.property.SmartProperty.html">SmartProperty</a></code></td>
+								<td>High performance and thread-safe Property.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/javafx.scene.control.skin.TabAbuse.html">TabAbuse</a></code></td>
+								<td>no description</td>
+							</tr>
+						</table>
+					</section>
+					<section class="A">
+						<h4>🛠️ Enum</h4>
+						<table>
+							<tr>
+								<td><code><a href="api/viewtify.keys.WindowCommand.html">WindowCommand</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ActivationPolicy.html">ActivationPolicy</a></code></td>
+								<td>Application activation policy.</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.ThemeType.html">ThemeType</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.util.ScreenSelector.html">ScreenSelector</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.util.Corner.html">Corner</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.util.Icon.html">Icon</a></code></td>
+								<td>no description</td>
+							</tr>
+							<tr>
+								<td><code><a href="api/viewtify.Theme.html">Theme</a></code></td>
+								<td>no description</td>
+							</tr>
+						</table>
+					</section>
+					<section class="A">
+						<h4>🛠️ Record</h4>
+						<table>
+							<tr>
+								<td><code><a href="api/viewtify.ui.calendar.CalendarMarker.Mark.html">CalendarMarker.Mark</a></code></td>
+								<td>Calendar mark.</td>
+							</tr>
+						</table>
+					</section>
+				</section>
+			</div>
+		</article>
+		<aside class="X"></aside>
+		<footer class="V">
+			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
+		</footer>
+	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
+</html>

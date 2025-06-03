@@ -3,55 +3,55 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<meta content="width=device-width, initial-scale=1" name="viewport"/>
-		<meta content="Explains how to use Viewtify and its API. " name="description"/>
+		<meta content="Explains how to use viewtify and its API. " name="description"/>
 		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 		<link href="https://fonts.googleapis.com" rel="preconnect"/>
 		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
-		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Inter" rel="preload"/>
-		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Inter" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" rel="preload"/>
-		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
-		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<title>Viewtify API</title>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<title>viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="f">
-		<header class="K" date="2025-03-19" ver="2.34.0">
-			<h1 class="L"><code>Viewtify</code></h1>
-			<nav class="M"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2025-03-19">
+			<h1 class="f"><a href="index.html"><code>viewtify</code></a></h1>
+			<nav class="g"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
-				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>
-				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
 						<use href="main.svg#activity"/>
 					</svg>
-				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github">
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="N"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+			<div class="h"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
-					</svg><svg class="moon A svg" viewBox="0 0 24 24">
+					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="I"></nav>
-		<article class="W" id="Article">
-			<section class="Q"><code class="s">viewtify.util</code>
-				<h2 class="Class j"><code class="l">DelegatingProperty</code><code class="k">&#60;<code>Origin</code>, <code>Wrap</code>&#62;</code></h2>
-				<div class="V">
-					<ul class="C D">
+		<nav class="W"></nav>
+		<article class="U" id="Article">
+			<section class="n"><code class="v">viewtify.util</code>
+				<h2 class="Class R"><code class="JB">DelegatingProperty</code><code class="Z">&lt;<code>Origin</code>, <code>Wrap</code>&gt;</code></h2>
+				<div class="c">
+					<ul class="E F">
 						<li><code>Origin</code></li>
 						<li><code>Wrap</code></li>
 					</ul>
-					<ul class="C F">
+					<ul class="E H">
 						<li><code>javafx.beans.Observable</code></li>
 						<li><code>javafx.beans.value.ObservableValue<code class="parameters"><code>Wrap</code></code></code></li>
 						<li><code>javafx.beans.property.Property<code class="parameters"><code>Wrap</code></code></code></li>
@@ -60,160 +60,162 @@
 					</ul>
 				</div>
 			</section>
-			<section class="Q" id="DelegatingProperty(javafx.beans.property.Property,java.util.function.Function,java.util.function.Function)">
-				<h2 class="h"><i class="PUBLIC"></i><code class="l">DelegatingProperty</code><code class="k">(<code>javafx.beans.property.Property<code class="parameters"><code>Origin</code></code></code><code class="parameterName">origin</code>, <code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Origin</code>, <code>Wrap</code></code></code><code class="parameterName">encoder</code>, <code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Wrap</code>, <code>Origin</code></code></code><code class="parameterName">decoder</code>)</code></h2>
-				<table class="P">
-					<tr class="X">
+			<section class="n" id="DelegatingProperty(javafx.beans.property.Property,java.util.function.Function,java.util.function.Function)">
+				<h2 class="i"><i class="PUBLIC"></i><code class="JB">DelegatingProperty</code><code class="Z">(<code>javafx.beans.property.Property<code class="parameters"><code>Origin</code></code></code><code class="parameterName">origin</code>, <code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Origin</code>, <code>Wrap</code></code></code><code class="parameterName">encoder</code>, <code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Wrap</code>, <code>Origin</code></code></code><code class="parameterName">decoder</code>)</code></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code>javafx.beans.property.Property<code class="parameters"><code>Origin</code></code></code><code class="parameterName">origin</code></td>
 						<td></td>
 					</tr>
-					<tr class="X">
-						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Origin</code>, <code>Wrap</code></code></code><code class="parameterName">encoder</code></td>
+					<tr class="Y">
+						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Origin</code>, <code>Wrap</code></code></code><code class="parameterName">encoder</code></td>
 						<td></td>
 					</tr>
-					<tr class="X">
-						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Wrap</code>, <code>Origin</code></code></code><code class="parameterName">decoder</code></td>
+					<tr class="Y">
+						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Wrap</code>, <code>Origin</code></code></code><code class="parameterName">decoder</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="addListener(javafx.beans.InvalidationListener)">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">addListener</code><code class="k">(<code>javafx.beans.InvalidationListener</code><code class="parameterName">listener</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="P">
-					<tr class="X">
+			<section class="n" id="addListener(javafx.beans.InvalidationListener)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">addListener</code><code class="Z">(<code>javafx.beans.InvalidationListener</code><code class="parameterName">listener</code>)</code><i class="o"><code>void</code></i></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code>javafx.beans.InvalidationListener</code><code class="parameterName">listener</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="removeListener(javafx.beans.InvalidationListener)">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">removeListener</code><code class="k">(<code>javafx.beans.InvalidationListener</code><code class="parameterName">listener</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="P">
-					<tr class="X">
+			<section class="n" id="removeListener(javafx.beans.InvalidationListener)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">removeListener</code><code class="Z">(<code>javafx.beans.InvalidationListener</code><code class="parameterName">listener</code>)</code><i class="o"><code>void</code></i></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code>javafx.beans.InvalidationListener</code><code class="parameterName">listener</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="setValue(java.lang.Object)">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">setValue</code><code class="k">(<code>Wrap</code><code class="parameterName">value</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="P">
-					<tr class="X">
+			<section class="n" id="setValue(java.lang.Object)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">setValue</code><code class="Z">(<code>Wrap</code><code class="parameterName">value</code>)</code><i class="o"><code>void</code></i></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code>Wrap</code><code class="parameterName">value</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="getBean()">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">getBean</code><code class="k">()</code><i class="e"><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code></i></h2>
-				<table class="P">
-					<tr class="r">
-						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code></td>
+			<section class="n" id="getBean()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">getBean</code><code class="Z">()</code><i class="o"><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code></i></h2>
+				<table class="p">
+					<tr class="b">
+						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="getName()">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">getName</code><code class="k">()</code><i class="e"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-				<table class="P">
-					<tr class="r">
-						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
+			<section class="n" id="getName()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">getName</code><code class="Z">()</code><i class="o"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="p">
+					<tr class="b">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="addListener(javafx.beans.value.ChangeListener)">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">addListener</code><code class="k">(<code>javafx.beans.value.ChangeListener<code class="parameters"><code>?</code><code class="super"><code>Wrap</code></code></code></code><code class="parameterName">listener</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="P">
-					<tr class="X">
+			<section class="n" id="addListener(javafx.beans.value.ChangeListener)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">addListener</code><code class="Z">(<code>javafx.beans.value.ChangeListener<code class="parameters"><code>?</code><code class="super"><code>Wrap</code></code></code></code><code class="parameterName">listener</code>)</code><i class="o"><code>void</code></i></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code>javafx.beans.value.ChangeListener<code class="parameters"><code>?</code><code class="super"><code>Wrap</code></code></code></code><code class="parameterName">listener</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="removeListener(javafx.beans.value.ChangeListener)">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">removeListener</code><code class="k">(<code>javafx.beans.value.ChangeListener<code class="parameters"><code>?</code><code class="super"><code>Wrap</code></code></code></code><code class="parameterName">listener</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="P">
-					<tr class="X">
+			<section class="n" id="removeListener(javafx.beans.value.ChangeListener)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">removeListener</code><code class="Z">(<code>javafx.beans.value.ChangeListener<code class="parameters"><code>?</code><code class="super"><code>Wrap</code></code></code></code><code class="parameterName">listener</code>)</code><i class="o"><code>void</code></i></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code>javafx.beans.value.ChangeListener<code class="parameters"><code>?</code><code class="super"><code>Wrap</code></code></code></code><code class="parameterName">listener</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="getValue()">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">getValue</code><code class="k">()</code><i class="e"><code>Wrap</code></i></h2>
-				<table class="P">
-					<tr class="r">
+			<section class="n" id="getValue()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">getValue</code><code class="Z">()</code><i class="o"><code>Wrap</code></i></h2>
+				<table class="p">
+					<tr class="b">
 						<td><code>Wrap</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="bind(javafx.beans.value.ObservableValue)">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">bind</code><code class="k">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>?</code><code class="extends"><code>Wrap</code></code></code></code><code class="parameterName">observable</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="P">
-					<tr class="X">
+			<section class="n" id="bind(javafx.beans.value.ObservableValue)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">bind</code><code class="Z">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>?</code><code class="extends"><code>Wrap</code></code></code></code><code class="parameterName">observable</code>)</code><i class="o"><code>void</code></i></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code>javafx.beans.value.ObservableValue<code class="parameters"><code>?</code><code class="extends"><code>Wrap</code></code></code></code><code class="parameterName">observable</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="unbind()">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">unbind</code><code class="k">()</code><i class="e"><code>void</code></i></h2>
+			<section class="n" id="unbind()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">unbind</code><code class="Z">()</code><i class="o"><code>void</code></i></h2>
 			</section>
-			<section class="Q" id="isBound()">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">isBound</code><code class="k">()</code><i class="e"><code>boolean</code></i></h2>
-				<table class="P">
-					<tr class="r">
+			<section class="n" id="isBound()">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">isBound</code><code class="Z">()</code><i class="o"><code>boolean</code></i></h2>
+				<table class="p">
+					<tr class="b">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="bindBidirectional(javafx.beans.property.Property)">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">bindBidirectional</code><code class="k">(<code>javafx.beans.property.Property<code class="parameters"><code>Wrap</code></code></code><code class="parameterName">other</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="P">
-					<tr class="X">
+			<section class="n" id="bindBidirectional(javafx.beans.property.Property)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">bindBidirectional</code><code class="Z">(<code>javafx.beans.property.Property<code class="parameters"><code>Wrap</code></code></code><code class="parameterName">other</code>)</code><i class="o"><code>void</code></i></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code>javafx.beans.property.Property<code class="parameters"><code>Wrap</code></code></code><code class="parameterName">other</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="Q" id="unbindBidirectional(javafx.beans.property.Property)">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">unbindBidirectional</code><code class="k">(<code>javafx.beans.property.Property<code class="parameters"><code>Wrap</code></code></code><code class="parameterName">other</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="P">
-					<tr class="X">
+			<section class="n" id="unbindBidirectional(javafx.beans.property.Property)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">unbindBidirectional</code><code class="Z">(<code>javafx.beans.property.Property<code class="parameters"><code>Wrap</code></code></code><code class="parameterName">other</code>)</code><i class="o"><code>void</code></i></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code>javafx.beans.property.Property<code class="parameters"><code>Wrap</code></code></code><code class="parameterName">other</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="g">
-			<div class="m">
-				<h5 class="O">Constructors</h5>
+		<aside class="X">
+			<div class="O">
+				<h5 class="AB">Constructors</h5>
 				<ul>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#DelegatingProperty(javafx.beans.property.Property,java.util.function.Function,java.util.function.Function)">DelegatingProperty</a></code><code class="k">(<code>javafx.beans.property.Property<code class="parameters"><code>Origin</code></code></code><code class="parameterName">origin</code>, <code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Origin</code>, <code>Wrap</code></code></code><code class="parameterName">encoder</code>, <code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Wrap</code>, <code>Origin</code></code></code><code class="parameterName">decoder</code>)</code></li>
+					<li class="x"><i class="PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#DelegatingProperty(javafx.beans.property.Property,java.util.function.Function,java.util.function.Function)">DelegatingProperty</a></code><code class="Z">(<code>javafx.beans.property.Property<code class="parameters"><code>Origin</code></code></code><code class="parameterName">origin</code>, <code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Origin</code>, <code>Wrap</code></code></code><code class="parameterName">encoder</code>, <code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>Wrap</code>, <code>Origin</code></code></code><code class="parameterName">decoder</code>)</code></li>
 				</ul>
-				<h5 class="O">Methods</h5>
+				<h5 class="AB">Methods</h5>
 				<ul>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#addListener(javafx.beans.InvalidationListener)">addListener</a></code><code class="k">(<code>javafx.beans.InvalidationListener</code><code class="parameterName">listener</code>)</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#removeListener(javafx.beans.InvalidationListener)">removeListener</a></code><code class="k">(<code>javafx.beans.InvalidationListener</code><code class="parameterName">listener</code>)</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#setValue(java.lang.Object)">setValue</a></code><code class="k">(<code>Wrap</code><code class="parameterName">value</code>)</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#getBean()">getBean</a></code><code class="k">()</code><i class="H"><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#getName()">getName</a></code><code class="k">()</code><i class="H"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#addListener(javafx.beans.value.ChangeListener)">addListener</a></code><code class="k">(<code>javafx.beans.value.ChangeListener<code class="parameters"><code>?</code><code class="super"><code>Wrap</code></code></code></code><code class="parameterName">listener</code>)</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#removeListener(javafx.beans.value.ChangeListener)">removeListener</a></code><code class="k">(<code>javafx.beans.value.ChangeListener<code class="parameters"><code>?</code><code class="super"><code>Wrap</code></code></code></code><code class="parameterName">listener</code>)</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#getValue()">getValue</a></code><code class="k">()</code><i class="H"><code>Wrap</code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#bind(javafx.beans.value.ObservableValue)">bind</a></code><code class="k">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>?</code><code class="extends"><code>Wrap</code></code></code></code><code class="parameterName">observable</code>)</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#unbind()">unbind</a></code><code class="k">()</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#isBound()">isBound</a></code><code class="k">()</code><i class="H"><code>boolean</code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#bindBidirectional(javafx.beans.property.Property)">bindBidirectional</a></code><code class="k">(<code>javafx.beans.property.Property<code class="parameters"><code>Wrap</code></code></code><code class="parameterName">other</code>)</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#unbindBidirectional(javafx.beans.property.Property)">unbindBidirectional</a></code><code class="k">(<code>javafx.beans.property.Property<code class="parameters"><code>Wrap</code></code></code><code class="parameterName">other</code>)</code><i class="H"><code>void</code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#addListener(javafx.beans.InvalidationListener)">addListener</a></code><code class="Z">(<code>javafx.beans.InvalidationListener</code><code class="parameterName">listener</code>)</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#removeListener(javafx.beans.InvalidationListener)">removeListener</a></code><code class="Z">(<code>javafx.beans.InvalidationListener</code><code class="parameterName">listener</code>)</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#setValue(java.lang.Object)">setValue</a></code><code class="Z">(<code>Wrap</code><code class="parameterName">value</code>)</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#getBean()">getBean</a></code><code class="Z">()</code><i class="d"><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#getName()">getName</a></code><code class="Z">()</code><i class="d"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#addListener(javafx.beans.value.ChangeListener)">addListener</a></code><code class="Z">(<code>javafx.beans.value.ChangeListener<code class="parameters"><code>?</code><code class="super"><code>Wrap</code></code></code></code><code class="parameterName">listener</code>)</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#removeListener(javafx.beans.value.ChangeListener)">removeListener</a></code><code class="Z">(<code>javafx.beans.value.ChangeListener<code class="parameters"><code>?</code><code class="super"><code>Wrap</code></code></code></code><code class="parameterName">listener</code>)</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#getValue()">getValue</a></code><code class="Z">()</code><i class="d"><code>Wrap</code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#bind(javafx.beans.value.ObservableValue)">bind</a></code><code class="Z">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>?</code><code class="extends"><code>Wrap</code></code></code></code><code class="parameterName">observable</code>)</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#unbind()">unbind</a></code><code class="Z">()</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#isBound()">isBound</a></code><code class="Z">()</code><i class="d"><code>boolean</code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#bindBidirectional(javafx.beans.property.Property)">bindBidirectional</a></code><code class="Z">(<code>javafx.beans.property.Property<code class="parameters"><code>Wrap</code></code></code><code class="parameterName">other</code>)</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingProperty.html#unbindBidirectional(javafx.beans.property.Property)">unbindBidirectional</a></code><code class="Z">(<code>javafx.beans.property.Property<code class="parameters"><code>Wrap</code></code></code><code class="parameterName">other</code>)</code><i class="d"><code>void</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="d"/>
+		<footer class="V">
+			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
+		</footer>
 	</body>
 	<script src="root.js"></script>
 	<script src="main.js" type="module"></script>

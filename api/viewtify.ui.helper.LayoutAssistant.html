@@ -3,171 +3,173 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<meta content="width=device-width, initial-scale=1" name="viewport"/>
-		<meta content="Explains how to use Viewtify and its API. " name="description"/>
+		<meta content="Explains how to use viewtify and its API. " name="description"/>
 		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 		<link href="https://fonts.googleapis.com" rel="preconnect"/>
 		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
-		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Inter" rel="preload"/>
-		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Inter" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" rel="preload"/>
-		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
-		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<title>Viewtify API</title>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
+		<title>viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="f">
-		<header class="K" date="2025-03-19" ver="2.34.0">
-			<h1 class="L"><code>Viewtify</code></h1>
-			<nav class="M"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
+	<body class="S">
+		<header class="T" date="2025-03-19">
+			<h1 class="f"><a href="index.html"><code>viewtify</code></a></h1>
+			<nav class="g"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
-				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>
-				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
 						<use href="main.svg#activity"/>
 					</svg>
-				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/teletha/viewtify/discussions" id="Community" target="_blank"><svg class="user">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="https://github.com/teletha/viewtify" id="Repository" target="_blank"><svg class="github">
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="N"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+			<div class="h"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
-					</svg><svg class="moon A svg" viewBox="0 0 24 24">
+					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="I"></nav>
-		<article class="W" id="Article">
-			<section class="Q"><code class="s">viewtify.ui.helper</code>
-				<h2 class="Class j"><code class="l">LayoutAssistant</code></h2>
-				<div class="V">
-					<ul class="C F">
+		<nav class="W"></nav>
+		<article class="U" id="Article">
+			<section class="n"><code class="v">viewtify.ui.helper</code>
+				<h2 class="Class R"><code class="JB">LayoutAssistant</code></h2>
+				<div class="c">
+					<ul class="E H">
 						<li><code>javafx.beans.InvalidationListener</code></li>
 					</ul>
 				</div>
 			</section>
-			<section class="Q" id="shouldLayout">
-				<h2 class="h"><i class="PUBLIC"></i><code class="l">shouldLayout</code><i class="e"><code class="return">boolean</code></i></h2><span class="B"><p>Flag whether the node shoud layout on the next rendering phase or not.</p></span></section>
-			<section class="Q" id="canLayout">
-				<h2 class="h"><i class="FINAL"><i class="PUBLIC"></i></i><code class="l">canLayout</code><i class="e"><code class="return">kiss.Variable<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2><span class="B"><p>Flag whether the node is layoutable or not.</p></span></section>
-			<section class="Q" id="LayoutAssistant(javafx.scene.Parent)">
-				<h2 class="h"><i class="PUBLIC"></i><code class="l">LayoutAssistant</code><code class="k">(<code><a aria-label="javafx.scene.Parent" href="api/javafx.scene.Parent.html">Parent</a></code><code class="parameterName">node</code>)</code></h2>
-				<table class="P">
-					<tr class="X">
+			<section class="n" id="shouldLayout">
+				<h2 class="i"><i class="PUBLIC"></i><code class="JB">shouldLayout</code><i class="o"><code class="return">boolean</code></i></h2><span class="A"><p>Flag whether the node shoud layout on the next rendering phase or not.</p></span></section>
+			<section class="n" id="canLayout">
+				<h2 class="i"><i class="FINAL"><i class="PUBLIC"></i></i><code class="JB">canLayout</code><i class="o"><code class="return">kiss.Variable<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></h2><span class="A"><p>Flag whether the node is layoutable or not.</p></span></section>
+			<section class="n" id="LayoutAssistant(javafx.scene.Parent)">
+				<h2 class="i"><i class="PUBLIC"></i><code class="JB">LayoutAssistant</code><code class="Z">(<code><a aria-label="javafx.scene.Parent" href="api/javafx.scene.Parent.html">Parent</a></code><code class="parameterName">node</code>)</code></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code><a aria-label="javafx.scene.Parent" href="api/javafx.scene.Parent.html">Parent</a></code><code class="parameterName">node</code></td>
 						<td></td>
 					</tr>
-				</table><span class="B"><p>Create <code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code>.</p></span></section>
-			<section class="Q" id="requestLayout()">
-				<h2 class="h"><i class="PUBLIC"></i><code class="l">requestLayout</code><code class="k">()</code><i class="e"><code>void</code></i></h2><span class="B"><p>Request layouting ui in the next rendering phase.</p></span></section>
-			<section class="Q" id="registerLayout(java.lang.Runnable)">
-				<h2 class="h"><i class="PUBLIC"></i><code class="l">registerLayout</code><code class="k">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="P">
-					<tr class="X">
-						<td><code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code></td>
+				</table><span class="A"><p>Create <code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code>.</p></span></section>
+			<section class="n" id="requestLayout()">
+				<h2 class="i"><i class="PUBLIC"></i><code class="JB">requestLayout</code><code class="Z">()</code><i class="o"><code>void</code></i></h2><span class="A"><p>Request layouting ui in the next rendering phase.</p></span></section>
+			<section class="n" id="registerLayout(java.lang.Runnable)">
+				<h2 class="i"><i class="PUBLIC"></i><code class="JB">registerLayout</code><code class="Z">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code>)</code><i class="o"><code>void</code></i></h2>
+				<table class="p">
+					<tr class="Y">
+						<td><code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code></td>
 						<td></td>
 					</tr>
-				</table><span class="B"><p>Register the layouting way.</p></span></section>
-			<section class="Q" id="layoutForcely()">
-				<h2 class="h"><i class="PUBLIC"></i><code class="l">layoutForcely</code><code class="k">()</code><i class="e"><code>void</code></i></h2><span class="B"><p>Layout forcely if possible.</p></span></section>
-			<section class="Q" id="layout(java.lang.Runnable)">
-				<h2 class="h"><i class="PUBLIC"></i><code class="l">layout</code><code class="k">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="P">
-					<tr class="X">
-						<td><code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code></td>
+				</table><span class="A"><p>Register the layouting way.</p></span></section>
+			<section class="n" id="layoutForcely()">
+				<h2 class="i"><i class="PUBLIC"></i><code class="JB">layoutForcely</code><code class="Z">()</code><i class="o"><code>void</code></i></h2><span class="A"><p>Layout forcely if possible.</p></span></section>
+			<section class="n" id="layout(java.lang.Runnable)">
+				<h2 class="i"><i class="PUBLIC"></i><code class="JB">layout</code><code class="Z">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code>)</code><i class="o"><code>void</code></i></h2>
+				<table class="p">
+					<tr class="Y">
+						<td><code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code></td>
 						<td></td>
 					</tr>
-				</table><span class="B"><p>Layout actually.</p></span></section>
-			<section class="Q" id="sub()">
-				<h2 class="h"><i class="PUBLIC"></i><code class="l">sub</code><code class="k">()</code><i class="e"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></h2>
-				<table class="P">
-					<tr class="r">
+				</table><span class="A"><p>Layout actually.</p></span></section>
+			<section class="n" id="sub()">
+				<h2 class="i"><i class="PUBLIC"></i><code class="JB">sub</code><code class="Z">()</code><i class="o"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></h2>
+				<table class="p">
+					<tr class="b">
 						<td><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></td>
 						<td></td>
 					</tr>
-				</table><span class="B"><p>Create sub <code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code>.</p></span></section>
-			<section class="Q" id="layoutBy(javafx.beans.Observable...)">
-				<h2 class="h"><i class="PUBLIC"></i><code class="l">layoutBy</code><code class="k">(<code array="var">javafx.beans.Observable</code><code class="parameterName">observables</code>)</code><i class="e"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></h2>
-				<table class="P">
-					<tr class="X">
+				</table><span class="A"><p>Create sub <code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code>.</p></span></section>
+			<section class="n" id="layoutBy(javafx.beans.Observable...)">
+				<h2 class="i"><i class="PUBLIC"></i><code class="JB">layoutBy</code><code class="Z">(<code array="var">javafx.beans.Observable</code><code class="parameterName">observables</code>)</code><i class="o"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code array="var">javafx.beans.Observable</code><code class="parameterName">observables</code></td>
 						<td></td>
 					</tr>
-					<tr class="r">
+					<tr class="b">
 						<td><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
-				</table><span class="B"><p>Register relayout action.</p></span></section>
-			<section class="Q" id="layoutBy(kiss.Signal...)">
-				<h2 class="h"><i class="PUBLIC"></i><code class="l">layoutBy</code><code class="k">(<code array="var">kiss.Signal</code><code class="parameterName">signals</code>)</code><i class="e"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></h2>
-				<table class="P">
-					<tr class="X">
+				</table><span class="A"><p>Register relayout action.</p></span></section>
+			<section class="n" id="layoutBy(kiss.Signal...)">
+				<h2 class="i"><i class="PUBLIC"></i><code class="JB">layoutBy</code><code class="Z">(<code array="var">kiss.Signal</code><code class="parameterName">signals</code>)</code><i class="o"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code array="var">kiss.Signal</code><code class="parameterName">signals</code></td>
 						<td></td>
 					</tr>
-					<tr class="r">
+					<tr class="b">
 						<td><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
-				</table><span class="B"><p>Register relayout action.</p></span></section>
-			<section class="Q" id="layoutWhile(kiss.Signal,kiss.Signal...)">
-				<h2 class="h"><i class="PUBLIC"></i><code class="l">layoutWhile</code><code class="k">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var">kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timings</code>)</code><i class="e"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></h2>
-				<table class="P">
-					<tr class="X">
-						<td><code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code></td>
+				</table><span class="A"><p>Register relayout action.</p></span></section>
+			<section class="n" id="layoutWhile(kiss.Signal,kiss.Signal...)">
+				<h2 class="i"><i class="PUBLIC"></i><code class="JB">layoutWhile</code><code class="Z">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var">kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timings</code>)</code><i class="o"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></h2>
+				<table class="p">
+					<tr class="Y">
+						<td><code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code></td>
 						<td><span><p>A condition signal.</p></span></td>
 					</tr>
-					<tr class="X">
-						<td><code array="var">kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timings</code></td>
+					<tr class="Y">
+						<td><code array="var">kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timings</code></td>
 						<td></td>
 					</tr>
-					<tr class="r">
+					<tr class="b">
 						<td><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
-				</table><span class="B"><p>Register relayout condition.</p></span></section>
-			<section class="Q" id="invalidated(javafx.beans.Observable)">
-				<h2 class="h"><i class="OVERRIDE PUBLIC"></i><code class="l">invalidated</code><code class="k">(<code>javafx.beans.Observable</code><code class="parameterName">observable</code>)</code><i class="e"><code>void</code></i></h2>
-				<table class="P">
-					<tr class="X">
+				</table><span class="A"><p>Register relayout condition.</p></span></section>
+			<section class="n" id="invalidated(javafx.beans.Observable)">
+				<h2 class="i"><i class="OVERRIDE PUBLIC"></i><code class="JB">invalidated</code><code class="Z">(<code>javafx.beans.Observable</code><code class="parameterName">observable</code>)</code><i class="o"><code>void</code></i></h2>
+				<table class="p">
+					<tr class="Y">
 						<td><code>javafx.beans.Observable</code><code class="parameterName">observable</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="g">
-			<div class="m">
-				<h5 class="O">Constructors</h5>
+		<aside class="X">
+			<div class="O">
+				<h5 class="AB">Constructors</h5>
 				<ul>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#LayoutAssistant(javafx.scene.Parent)">LayoutAssistant</a></code><code class="k">(<code><a aria-label="javafx.scene.Parent" href="api/javafx.scene.Parent.html">Parent</a></code><code class="parameterName">node</code>)</code></li>
+					<li class="x"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#LayoutAssistant(javafx.scene.Parent)">LayoutAssistant</a></code><code class="Z">(<code><a aria-label="javafx.scene.Parent" href="api/javafx.scene.Parent.html">Parent</a></code><code class="parameterName">node</code>)</code></li>
 				</ul>
-				<h5 class="O">Fields</h5>
+				<h5 class="AB">Fields</h5>
 				<ul>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#shouldLayout">shouldLayout</a></code><i class="H"><code class="return">boolean</code></i></li>
-					<li class="o"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#canLayout">canLayout</a></code><i class="H"><code class="return">kiss.Variable<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
+					<li class="x"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#shouldLayout">shouldLayout</a></code><i class="d"><code class="return">boolean</code></i></li>
+					<li class="x"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#canLayout">canLayout</a></code><i class="d"><code class="return">kiss.Variable<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code></i></li>
 				</ul>
-				<h5 class="O">Methods</h5>
+				<h5 class="AB">Methods</h5>
 				<ul>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#requestLayout()">requestLayout</a></code><code class="k">()</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#registerLayout(java.lang.Runnable)">registerLayout</a></code><code class="k">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code>)</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#layoutForcely()">layoutForcely</a></code><code class="k">()</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#layout(java.lang.Runnable)">layout</a></code><code class="k">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code>)</code><i class="H"><code>void</code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#sub()">sub</a></code><code class="k">()</code><i class="H"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#layoutBy(javafx.beans.Observable...)">layoutBy</a></code><code class="k">(<code array="var">javafx.beans.Observable</code><code class="parameterName">observables</code>)</code><i class="H"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#layoutBy(kiss.Signal...)">layoutBy</a></code><code class="k">(<code array="var">kiss.Signal</code><code class="parameterName">signals</code>)</code><i class="H"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></li>
-					<li class="o"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#layoutWhile(kiss.Signal,kiss.Signal...)">layoutWhile</a></code><code class="k">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var">kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timings</code>)</code><i class="H"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></li>
-					<li class="o"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#invalidated(javafx.beans.Observable)">invalidated</a></code><code class="k">(<code>javafx.beans.Observable</code><code class="parameterName">observable</code>)</code><i class="H"><code>void</code></i></li>
+					<li class="x"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#requestLayout()">requestLayout</a></code><code class="Z">()</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#registerLayout(java.lang.Runnable)">registerLayout</a></code><code class="Z">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code>)</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#layoutForcely()">layoutForcely</a></code><code class="Z">()</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#layout(java.lang.Runnable)">layout</a></code><code class="Z">(<code><a aria-label="java.lang.Runnable 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Runnable.html">Runnable</a></code><code class="parameterName">layout</code>)</code><i class="d"><code>void</code></i></li>
+					<li class="x"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#sub()">sub</a></code><code class="Z">()</code><i class="d"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></li>
+					<li class="x"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#layoutBy(javafx.beans.Observable...)">layoutBy</a></code><code class="Z">(<code array="var">javafx.beans.Observable</code><code class="parameterName">observables</code>)</code><i class="d"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></li>
+					<li class="x"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#layoutBy(kiss.Signal...)">layoutBy</a></code><code class="Z">(<code array="var">kiss.Signal</code><code class="parameterName">signals</code>)</code><i class="d"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></li>
+					<li class="x"><i class="PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#layoutWhile(kiss.Signal,kiss.Signal...)">layoutWhile</a></code><code class="Z">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var">kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timings</code>)</code><i class="d"><code><a aria-label="viewtify.ui.helper.LayoutAssistant" href="api/viewtify.ui.helper.LayoutAssistant.html">LayoutAssistant</a></code></i></li>
+					<li class="x"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.ui.helper.LayoutAssistant.html#invalidated(javafx.beans.Observable)">invalidated</a></code><code class="Z">(<code>javafx.beans.Observable</code><code class="parameterName">observable</code>)</code><i class="d"><code>void</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="d"/>
+		<footer class="V">
+			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
+		</footer>
 	</body>
 	<script src="root.js"></script>
 	<script src="main.js" type="module"></script>
