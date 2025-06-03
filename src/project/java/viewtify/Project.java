@@ -67,6 +67,7 @@ public class Project extends bee.api.Project {
         require("org.kordamp.ikonli", "ikonli-javafx");
         require("org.kordamp.ikonli", "ikonli-fontawesome5-pack");
 
+        unrequire("org.openjfx", "jdk-jsobject");
         versionControlSystem("https://github.com/teletha/viewtify");
     }
 }
