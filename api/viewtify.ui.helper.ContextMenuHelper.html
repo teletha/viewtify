@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<meta content="width=device-width, initial-scale=1" name="viewport"/>
-		<meta content="Explains how to use viewtify and its API. " name="description"/>
+		<meta content="Explains how to use Viewtify and its API. Viewtify provides an API for using JavaFX more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML." name="description"/>
 		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 		<link href="https://fonts.googleapis.com" rel="preconnect"/>
 		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -13,16 +13,16 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
-		<title>viewtify API</title>
+		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="V">
-		<header class="R" date="2025-03-19">
-			<h1 class="S"><a href="index.html"><code>viewtify</code></a></h1>
-			<nav class="T"><a href="api/main.html" id="API"><svg class="package">
+	<body class="c">
+		<header class="d" date="2025-06-03">
+			<h1 class="n"><a href="index.html"><code>Viewtify</code></a></h1>
+			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="U"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="Z"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="K"></nav>
-		<article class="W" id="Article">
-			<section class="i"><code class="J">viewtify.ui.helper</code>
-				<h2 class="Functional KB"><code class="d">ContextMenuHelper</code><code class="Q">&lt;<code>Self</code>&gt;</code></h2>
-				<div class="JB">
+		<nav class="M"></nav>
+		<article class="e" id="Article">
+			<section class="w"><code class="BB">viewtify.ui.helper</code>
+				<h2 class="Functional Q"><code class="W">ContextMenuHelper</code><code class="j">&lt;<code>Self</code>&gt;</code></h2>
+				<div class="U">
 					<ul class="E F">
 						<li><code>Self</code><code class="extends"><code><a aria-label="viewtify.ui.helper.ContextMenuHelper" href="api/viewtify.ui.helper.ContextMenuHelper.html">ContextMenuHelper</a></code></code></li>
 					</ul>
@@ -85,31 +85,31 @@
 					</ul>
 				</div>
 			</section>
-			<section class="i" id="context(java.util.function.Consumer)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">context</code><code class="Q">(<code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="context(java.util.function.Consumer)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">context</code><code class="j">(<code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code></td>
 						<td><span><p>A consumer that builds the UIContextMenu for the context menu.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>A chainable API for further configuration.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Defines the context menu for the UI component. The menu is not generated until it is actually
 needed. This method allows you to specify a context menu using a builder function.</p></span></section>
-			<section class="i" id="context(java.lang.Object,java.util.function.Consumer)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">context</code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="context(java.lang.Object,java.util.function.Consumer)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">context</code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code></td>
 						<td><span><p>An identifier for the context menu.</p></span></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code></td>
 						<td><span><p>A consumer that builds the UIContextMenu for the context menu.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>A chainable API for further configuration.</p></span></td>
 					</tr>
@@ -117,89 +117,89 @@ needed. This method allows you to specify a context menu using a builder functio
 generated until it is actually needed. If the specified ID already exists, the menu will be
 overwritten instead of added. This method allows you to specify a context menu using a
 builder function.</p></span></section>
-			<section class="i" id="context(boolean,java.util.function.Consumer)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">context</code><code class="Q">(<code>boolean</code><code class="parameterName">rebuildable</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="context(boolean,java.util.function.Consumer)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">context</code><code class="j">(<code>boolean</code><code class="parameterName">rebuildable</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>boolean</code><code class="parameterName">rebuildable</code></td>
 						<td><span><p>If true, the context menu will be generated on every popup.</p></span></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code></td>
 						<td><span><p>A consumer that builds the UIContextMenu for the context menu.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>A chainable API for further configuration.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Define the context menu with the option to specify whether it should be generated lazily.
 This method allows you to specify a context menu using a builder function.</p></span></section>
-			<section class="i" id="context(java.lang.Object,boolean,java.util.function.Consumer)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">context</code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>, <code>boolean</code><code class="parameterName">rebuildable</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="context(java.lang.Object,boolean,java.util.function.Consumer)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">context</code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>, <code>boolean</code><code class="parameterName">rebuildable</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code></td>
 						<td><span><p>An identifier for the context menu.</p></span></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code>boolean</code><code class="parameterName">rebuildable</code></td>
 						<td><span><p>If true, the context menu will be generated on every popup.</p></span></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code></td>
 						<td><span><p>A consumer that builds the UIContextMenu for the context menu.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>A chainable API for further configuration.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Define the context menu with the option to specify whether it should be generated lazily. If
 the specified ID already exists, the menu will be overwritten instead of added. This method
 allows you to specify a context menu using a builder function.</p></span></section>
-			<section class="i" id="removeContext()">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">removeContext</code><code class="Q">()</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="removeContext()">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">removeContext</code><code class="j">()</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Deletes all context menus associated with the this instance.</p></span></section>
-			<section class="i" id="removeContext(java.lang.Object)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">removeContext</code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="removeContext(java.lang.Object)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">removeContext</code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code></td>
 						<td><span><p>An identifier of context menu.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Deletes all context menus associated with the specified ID.</p></span></section>
-			<section class="i" id="showContext()">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">showContext</code><code class="Q">()</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="showContext()">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">showContext</code><code class="j">()</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Show the associated context menu.</p></span></section>
-			<section class="i" id="showContext(javafx.geometry.Side,double,double)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">showContext</code><code class="Q">(<code>javafx.geometry.Side</code><code class="parameterName">location</code>, <code>double</code><code class="parameterName">dx</code>, <code>double</code><code class="parameterName">dy</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="showContext(javafx.geometry.Side,double,double)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">showContext</code><code class="j">(<code>javafx.geometry.Side</code><code class="parameterName">location</code>, <code>double</code><code class="parameterName">dx</code>, <code>double</code><code class="parameterName">dy</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>javafx.geometry.Side</code><code class="parameterName">location</code></td>
 						<td><span><p>the side</p></span></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code>double</code><code class="parameterName">dx</code></td>
 						<td><span><p>the dx value for the x-axis</p></span></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code>double</code><code class="parameterName">dy</code></td>
 						<td><span><p>the dy value for the y-axis</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td></td>
 					</tr>
@@ -207,56 +207,56 @@ allows you to specify a context menu using a builder function.</p></span></secti
 and offset by the given <code>dx</code> and <code>dy</code> values for the x-axis and y-axis,
 respectively. If there is not enough room, the menu is moved to the opposite side and the
 offset is not applied.</p><p>
- To clarify the purpose of the <code>side</code> parameter, consider that it is relative to the
- anchor node. As such, a <code>side</code> of <code>TOP</code> would mean that the ContextMenu&apos;s bottom
- left corner is set to the top left corner of the anchor.
- 
+To clarify the purpose of the <code>side</code> parameter, consider that it is relative to the
+anchor node. As such, a <code>side</code> of <code>TOP</code> would mean that the ContextMenu&apos;s bottom
+left corner is set to the top left corner of the anchor.
+
 						<p>
- This function is useful for finely tuning the position of a menu, relative to the parent node
- to ensure close alignment.
+This function is useful for finely tuning the position of a menu, relative to the parent node
+to ensure close alignment.
 </p>
 					</p>
 				</span></section>
-			<section class="i" id="hideContext()">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">hideContext</code><code class="Q">()</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="hideContext()">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">hideContext</code><code class="j">()</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Hide the associated context menu.</p></span></section>
-			<section class="i" id="toggleContext()">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">toggleContext</code><code class="Q">()</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="toggleContext()">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">toggleContext</code><code class="j">()</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Show the associated context menu.</p></span></section>
-			<section class="i" id="toggleContext(javafx.geometry.Side,double,double)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">toggleContext</code><code class="Q">(<code>javafx.geometry.Side</code><code class="parameterName">location</code>, <code>double</code><code class="parameterName">dx</code>, <code>double</code><code class="parameterName">dy</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="toggleContext(javafx.geometry.Side,double,double)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">toggleContext</code><code class="j">(<code>javafx.geometry.Side</code><code class="parameterName">location</code>, <code>double</code><code class="parameterName">dx</code>, <code>double</code><code class="parameterName">dy</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>javafx.geometry.Side</code><code class="parameterName">location</code></td>
 						<td><span><p>the side</p></span></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code>double</code><code class="parameterName">dx</code></td>
 						<td><span><p>the dx value for the x-axis</p></span></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code>double</code><code class="parameterName">dy</code></td>
 						<td><span><p>the dy value for the y-axis</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Toggle the context menu.</p></span></section>
-			<section class="i" id="isContextShowing()">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">isContextShowing</code><code class="Q">()</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="isContextShowing()">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">isContextShowing</code><code class="j">()</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td><span><p>A result.</p></span></td>
 					</tr>
@@ -264,90 +264,90 @@ offset is not applied.</p><p>
 menu might be &quot;showing&quot;, yet the user might not be able to see it due to the context menu
 being rendered behind another context menu or due to the context menu being positioned off
 the monitor.</p></span></section>
-			<section class="i" id="behaveLikeButton()">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">behaveLikeButton</code><code class="Q">()</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="behaveLikeButton()">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">behaveLikeButton</code><code class="j">()</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Change the control of showing and hiding the context menu from right-click to left-click and
 ignore native context requesting.</p></span></section>
-			<section class="i" id="enableContext()">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">enableContext</code><code class="Q">()</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="enableContext()">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">enableContext</code><code class="j">()</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Enable the context menu.</p></span></section>
-			<section class="i" id="disableContext()">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">disableContext</code><code class="Q">()</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="disableContext()">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">disableContext</code><code class="j">()</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Enable the context menu.</p></span></section>
-			<section class="i" id="enableNativeContextRequest()">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">enableNativeContextRequest</code><code class="Q">()</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="enableNativeContextRequest()">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">enableNativeContextRequest</code><code class="j">()</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Enable the context menu.</p></span></section>
-			<section class="i" id="disableNativeContextRequest()">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">disableNativeContextRequest</code><code class="Q">()</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="disableNativeContextRequest()">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">disableNativeContextRequest</code><code class="j">()</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Disable the context menu.</p></span></section>
-			<section class="i" id="hookContext(kiss.WiseRunnable,kiss.WiseRunnable)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">hookContext</code><code class="Q">(<code>kiss.WiseRunnable</code><code class="parameterName">beforeShowing</code>, <code>kiss.WiseRunnable</code><code class="parameterName">afterHidden</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="hookContext(kiss.WiseRunnable,kiss.WiseRunnable)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">hookContext</code><code class="j">(<code>kiss.WiseRunnable</code><code class="parameterName">beforeShowing</code>, <code>kiss.WiseRunnable</code><code class="parameterName">afterHidden</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>kiss.WiseRunnable</code><code class="parameterName">beforeShowing</code></td>
 						<td></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code>kiss.WiseRunnable</code><code class="parameterName">afterHidden</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Hook context event.</p></span></section>
 		</article>
-		<aside class="Y">
-			<div class="r">
-				<h5 class="k">Methods</h5>
+		<aside class="g">
+			<div class="J">
+				<h5 class="s">Methods</h5>
 				<ul>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#context(java.util.function.Consumer)">context</a></code><code class="Q">(<code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#context(java.lang.Object,java.util.function.Consumer)">context</a></code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#context(boolean,java.util.function.Consumer)">context</a></code><code class="Q">(<code>boolean</code><code class="parameterName">rebuildable</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#context(java.lang.Object,boolean,java.util.function.Consumer)">context</a></code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>, <code>boolean</code><code class="parameterName">rebuildable</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#removeContext()">removeContext</a></code><code class="Q">()</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#removeContext(java.lang.Object)">removeContext</a></code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#showContext()">showContext</a></code><code class="Q">()</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#showContext(javafx.geometry.Side,double,double)">showContext</a></code><code class="Q">(<code>javafx.geometry.Side</code><code class="parameterName">location</code>, <code>double</code><code class="parameterName">dx</code>, <code>double</code><code class="parameterName">dy</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#hideContext()">hideContext</a></code><code class="Q">()</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#toggleContext()">toggleContext</a></code><code class="Q">()</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#toggleContext(javafx.geometry.Side,double,double)">toggleContext</a></code><code class="Q">(<code>javafx.geometry.Side</code><code class="parameterName">location</code>, <code>double</code><code class="parameterName">dx</code>, <code>double</code><code class="parameterName">dy</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#isContextShowing()">isContextShowing</a></code><code class="Q">()</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#behaveLikeButton()">behaveLikeButton</a></code><code class="Q">()</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#enableContext()">enableContext</a></code><code class="Q">()</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#disableContext()">disableContext</a></code><code class="Q">()</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#enableNativeContextRequest()">enableNativeContextRequest</a></code><code class="Q">()</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#disableNativeContextRequest()">disableNativeContextRequest</a></code><code class="Q">()</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#hookContext(kiss.WiseRunnable,kiss.WiseRunnable)">hookContext</a></code><code class="Q">(<code>kiss.WiseRunnable</code><code class="parameterName">beforeShowing</code>, <code>kiss.WiseRunnable</code><code class="parameterName">afterHidden</code>)</code><i class="y"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#context(java.util.function.Consumer)">context</a></code><code class="j">(<code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#context(java.lang.Object,java.util.function.Consumer)">context</a></code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#context(boolean,java.util.function.Consumer)">context</a></code><code class="j">(<code>boolean</code><code class="parameterName">rebuildable</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#context(java.lang.Object,boolean,java.util.function.Consumer)">context</a></code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>, <code>boolean</code><code class="parameterName">rebuildable</code>, <code><a aria-label="java.util.function.Consumer 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Consumer.html">Consumer</a><code class="parameters"><code><a aria-label="viewtify.ui.UIContextMenu" href="api/viewtify.ui.UIContextMenu.html">UIContextMenu</a></code></code></code><code class="parameterName">builder</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#removeContext()">removeContext</a></code><code class="j">()</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#removeContext(java.lang.Object)">removeContext</a></code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">id</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#showContext()">showContext</a></code><code class="j">()</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#showContext(javafx.geometry.Side,double,double)">showContext</a></code><code class="j">(<code>javafx.geometry.Side</code><code class="parameterName">location</code>, <code>double</code><code class="parameterName">dx</code>, <code>double</code><code class="parameterName">dy</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#hideContext()">hideContext</a></code><code class="j">()</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#toggleContext()">toggleContext</a></code><code class="j">()</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#toggleContext(javafx.geometry.Side,double,double)">toggleContext</a></code><code class="j">(<code>javafx.geometry.Side</code><code class="parameterName">location</code>, <code>double</code><code class="parameterName">dx</code>, <code>double</code><code class="parameterName">dy</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#isContextShowing()">isContextShowing</a></code><code class="j">()</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#behaveLikeButton()">behaveLikeButton</a></code><code class="j">()</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#enableContext()">enableContext</a></code><code class="j">()</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#disableContext()">disableContext</a></code><code class="j">()</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#enableNativeContextRequest()">enableNativeContextRequest</a></code><code class="j">()</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#disableNativeContextRequest()">disableNativeContextRequest</a></code><code class="j">()</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.ContextMenuHelper.html#hookContext(kiss.WiseRunnable,kiss.WiseRunnable)">hookContext</a></code><code class="j">(<code>kiss.WiseRunnable</code><code class="parameterName">beforeShowing</code>, <code>kiss.WiseRunnable</code><code class="parameterName">afterHidden</code>)</code><i class="r"><code>Self</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="X">
+		<footer class="f">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<meta content="width=device-width, initial-scale=1" name="viewport"/>
-		<meta content="Explains how to use viewtify and its API. " name="description"/>
+		<meta content="Explains how to use Viewtify and its API. Viewtify provides an API for using JavaFX more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML." name="description"/>
 		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 		<link href="https://fonts.googleapis.com" rel="preconnect"/>
 		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -13,16 +13,16 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
-		<title>viewtify API</title>
+		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="V">
-		<header class="R" date="2025-03-19">
-			<h1 class="S"><a href="index.html"><code>viewtify</code></a></h1>
-			<nav class="T"><a href="api/main.html" id="API"><svg class="package">
+	<body class="c">
+		<header class="d" date="2025-06-03">
+			<h1 class="n"><a href="index.html"><code>Viewtify</code></a></h1>
+			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="U"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="Z"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="K"></nav>
-		<article class="W" id="Article">
-			<section class="i"><code class="J">viewtify.ui.helper</code>
-				<h2 class="Functional KB"><code class="d">StyleHelper</code><code class="Q">&lt;<code>Self</code>, <code>S</code>&gt;</code></h2>
-				<div class="JB">
+		<nav class="M"></nav>
+		<article class="e" id="Article">
+			<section class="w"><code class="BB">viewtify.ui.helper</code>
+				<h2 class="Functional Q"><code class="W">StyleHelper</code><code class="j">&lt;<code>Self</code>, <code>S</code>&gt;</code></h2>
+				<div class="U">
 					<ul class="E F">
 						<li><code>Self</code><code class="extends"><code><a aria-label="viewtify.ui.helper.StyleHelper" href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a></code></code></li>
 						<li><code>S</code><code class="extends"><code>javafx.css.Styleable</code></code></li>
@@ -105,234 +105,234 @@
 					</ul>
 				</div>
 			</section>
-			<section class="i" id="ui()">
-				<h2 class="t"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="d">ui</code><code class="Q">()</code><i class="n"><code>S</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="ui()">
+				<h2 class="DB"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="W">ui</code><code class="j">()</code><i class="u"><code>S</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>S</code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Return the associated user interface.</p></span></section>
-			<section class="i" id="hasStyle(java.lang.String)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">hasStyle</code><code class="Q">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">className</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="hasStyle(java.lang.String)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">hasStyle</code><code class="j">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">className</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">className</code></td>
 						<td><span><p>A target class name.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td><span><p>Result.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Checks if the specified class has already been applied to this UI.</p></span></section>
-			<section class="i" id="style(java.lang.String...)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">style</code><code class="Q">(<code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="style(java.lang.String...)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">style</code><code class="j">(<code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code></td>
 						<td><span><p>A list of class names to assign.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Apply style class name to user interface.</p></span></section>
-			<section class="i" id="style(boolean,java.lang.String...)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">style</code><code class="Q">(<code>boolean</code><code class="parameterName">add</code>, <code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="style(boolean,java.lang.String...)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">style</code><code class="j">(<code>boolean</code><code class="parameterName">add</code>, <code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>boolean</code><code class="parameterName">add</code></td>
 						<td></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code></td>
 						<td><span><p>A list of class names to apply or unapply.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Apply or unapply style class name to user interface.</p></span></section>
-			<section class="i" id="style(stylist.Style...)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">style</code><code class="Q">(<code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="style(stylist.Style...)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">style</code><code class="j">(<code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code array="var">stylist.Style</code><code class="parameterName">styles</code></td>
 						<td><span><p>A list of Styles to apply.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Apply Style to user interface;</p></span></section>
-			<section class="i" id="style(boolean,stylist.Style...)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">style</code><code class="Q">(<code>boolean</code><code class="parameterName">add</code>, <code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="style(boolean,stylist.Style...)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">style</code><code class="j">(<code>boolean</code><code class="parameterName">add</code>, <code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>boolean</code><code class="parameterName">add</code></td>
 						<td></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code array="var">stylist.Style</code><code class="parameterName">styles</code></td>
 						<td><span><p>A list of class names to apply or unapply.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Apply or unapply style class name to user interface.</p></span></section>
-			<section class="i" id="styleOnly(stylist.Style)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">styleOnly</code><code class="Q">(<code>stylist.Style</code><code class="parameterName">style</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="styleOnly(stylist.Style)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">styleOnly</code><code class="j">(<code>stylist.Style</code><code class="parameterName">style</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>stylist.Style</code><code class="parameterName">style</code></td>
 						<td><span><p>A list of Styles to apply.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Apply Style to user interface;</p></span></section>
-			<section class="i" id="styleOnly(javafx.beans.value.ObservableValue)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">styleOnly</code><code class="Q">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="styleOnly(javafx.beans.value.ObservableValue)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">styleOnly</code><code class="j">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>javafx.beans.value.ObservableValue<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code></td>
 						<td><span><p>A Style to apply.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Apply Style to user interface;</p></span></section>
-			<section class="i" id="styleOnly(kiss.Variable)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">styleOnly</code><code class="Q">(<code>kiss.Variable<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="styleOnly(kiss.Variable)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">styleOnly</code><code class="j">(<code>kiss.Variable<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>kiss.Variable<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code></td>
 						<td><span><p>A Style to apply.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Apply Style to user interface;</p></span></section>
-			<section class="i" id="styleOnly(kiss.Signal)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">styleOnly</code><code class="Q">(<code>kiss.Signal<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="styleOnly(kiss.Signal)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">styleOnly</code><code class="j">(<code>kiss.Signal<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>kiss.Signal<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code></td>
 						<td><span><p>A Style to apply.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Apply Style to user interface;</p></span></section>
-			<section class="i" id="styleWhile(kiss.Signal,java.lang.String...)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">styleWhile</code><code class="Q">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">className</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="styleWhile(kiss.Signal,java.lang.String...)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">styleWhile</code><code class="j">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">className</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code></td>
 						<td><span><p>Assignment timing.</p></span></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">className</code></td>
 						<td><span><p>A list of class names to assign.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Assign style class name to user interface.</p></span></section>
-			<section class="i" id="styleWhile(kiss.Signal,stylist.Style...)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">styleWhile</code><code class="Q">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="styleWhile(kiss.Signal,stylist.Style...)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">styleWhile</code><code class="j">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code></td>
 						<td><span><p>Apply timing.</p></span></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code array="var">stylist.Style</code><code class="parameterName">styles</code></td>
 						<td><span><p>A list of Styles to apply.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Apply Style to user interface;</p></span></section>
-			<section class="i" id="unstyle(stylist.Style...)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">unstyle</code><code class="Q">(<code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="unstyle(stylist.Style...)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">unstyle</code><code class="j">(<code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code array="var">stylist.Style</code><code class="parameterName">styles</code></td>
 						<td><span><p>A list of Styles to unapply.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Unapply Style from user interface;</p></span></section>
-			<section class="i" id="unstyle(java.lang.String...)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">unstyle</code><code class="Q">(<code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="unstyle(java.lang.String...)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">unstyle</code><code class="j">(<code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code></td>
 						<td><span><p>A list of class names to unapply.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Unapply class name from user interface;</p></span></section>
-			<section class="i" id="unstyleAll()">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">unstyleAll</code><code class="Q">()</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="unstyleAll()">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">unstyleAll</code><code class="j">()</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API</p></span></td>
 					</tr>
 				</table><span class="A"><p>Remove all styles.</p></span></section>
-			<section class="i" id="of(javafx.css.Styleable)">
-				<h2 class="t"><i class="PUBLIC STATIC"></i><code class="d">of</code><code class="Q">(<code>javafx.css.Styleable</code><code class="parameterName">styleable</code>)</code><i class="n"><code><a aria-label="viewtify.ui.helper.StyleHelper" href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a></code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="of(javafx.css.Styleable)">
+				<h2 class="DB"><i class="PUBLIC STATIC"></i><code class="W">of</code><code class="j">(<code>javafx.css.Styleable</code><code class="parameterName">styleable</code>)</code><i class="u"><code><a aria-label="viewtify.ui.helper.StyleHelper" href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a></code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>javafx.css.Styleable</code><code class="parameterName">styleable</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code><a aria-label="viewtify.ui.helper.StyleHelper" href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a></code></td>
 						<td></td>
 					</tr>
 				</table><span class="A"><p>Create temporary <code><a aria-label="viewtify.ui.helper.StyleHelper" href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a></code>.</p></span></section>
 		</article>
-		<aside class="Y">
-			<div class="r">
-				<h5 class="k">Static Methods</h5>
+		<aside class="g">
+			<div class="J">
+				<h5 class="s">Static Methods</h5>
 				<ul>
-					<li class="GB"><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#of(javafx.css.Styleable)">of</a></code><code class="Q">(<code>javafx.css.Styleable</code><code class="parameterName">styleable</code>)</code><i class="y"><code><a aria-label="viewtify.ui.helper.StyleHelper" href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a></code></i></li>
+					<li class="K"><i class="PUBLIC STATIC"></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#of(javafx.css.Styleable)">of</a></code><code class="j">(<code>javafx.css.Styleable</code><code class="parameterName">styleable</code>)</code><i class="r"><code><a aria-label="viewtify.ui.helper.StyleHelper" href="api/viewtify.ui.helper.StyleHelper.html">StyleHelper</a></code></i></li>
 				</ul>
-				<h5 class="k">Methods</h5>
+				<h5 class="s">Methods</h5>
 				<ul>
-					<li class="GB"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#ui()">ui</a></code><code class="Q">()</code><i class="y"><code>S</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#hasStyle(java.lang.String)">hasStyle</a></code><code class="Q">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">className</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#style(java.lang.String...)">style</a></code><code class="Q">(<code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#style(boolean,java.lang.String...)">style</a></code><code class="Q">(<code>boolean</code><code class="parameterName">add</code>, <code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#style(stylist.Style...)">style</a></code><code class="Q">(<code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#style(boolean,stylist.Style...)">style</a></code><code class="Q">(<code>boolean</code><code class="parameterName">add</code>, <code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleOnly(stylist.Style)">styleOnly</a></code><code class="Q">(<code>stylist.Style</code><code class="parameterName">style</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleOnly(javafx.beans.value.ObservableValue)">styleOnly</a></code><code class="Q">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleOnly(kiss.Variable)">styleOnly</a></code><code class="Q">(<code>kiss.Variable<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleOnly(kiss.Signal)">styleOnly</a></code><code class="Q">(<code>kiss.Signal<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleWhile(kiss.Signal,java.lang.String...)">styleWhile</a></code><code class="Q">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">className</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleWhile(kiss.Signal,stylist.Style...)">styleWhile</a></code><code class="Q">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#unstyle(stylist.Style...)">unstyle</a></code><code class="Q">(<code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#unstyle(java.lang.String...)">unstyle</a></code><code class="Q">(<code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#unstyleAll()">unstyleAll</a></code><code class="Q">()</code><i class="y"><code>Self</code></i></li>
+					<li class="K"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#ui()">ui</a></code><code class="j">()</code><i class="r"><code>S</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#hasStyle(java.lang.String)">hasStyle</a></code><code class="j">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">className</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#style(java.lang.String...)">style</a></code><code class="j">(<code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#style(boolean,java.lang.String...)">style</a></code><code class="j">(<code>boolean</code><code class="parameterName">add</code>, <code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#style(stylist.Style...)">style</a></code><code class="j">(<code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#style(boolean,stylist.Style...)">style</a></code><code class="j">(<code>boolean</code><code class="parameterName">add</code>, <code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleOnly(stylist.Style)">styleOnly</a></code><code class="j">(<code>stylist.Style</code><code class="parameterName">style</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleOnly(javafx.beans.value.ObservableValue)">styleOnly</a></code><code class="j">(<code>javafx.beans.value.ObservableValue<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleOnly(kiss.Variable)">styleOnly</a></code><code class="j">(<code>kiss.Variable<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleOnly(kiss.Signal)">styleOnly</a></code><code class="j">(<code>kiss.Signal<code class="parameters"><code>stylist.Style</code></code></code><code class="parameterName">style</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleWhile(kiss.Signal,java.lang.String...)">styleWhile</a></code><code class="j">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">className</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#styleWhile(kiss.Signal,stylist.Style...)">styleWhile</a></code><code class="j">(<code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.Boolean 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Boolean.html">Boolean</a></code></code></code><code class="parameterName">timing</code>, <code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#unstyle(stylist.Style...)">unstyle</a></code><code class="j">(<code array="var">stylist.Style</code><code class="parameterName">styles</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#unstyle(java.lang.String...)">unstyle</a></code><code class="j">(<code array="var"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">classNames</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.StyleHelper.html#unstyleAll()">unstyleAll</a></code><code class="j">()</code><i class="r"><code>Self</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="X">
+		<footer class="f">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

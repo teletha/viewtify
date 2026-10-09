@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<meta content="width=device-width, initial-scale=1" name="viewport"/>
-		<meta content="Explains how to use viewtify and its API. " name="description"/>
+		<meta content="Explains how to use Viewtify and its API. Viewtify provides an API for using JavaFX more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML." name="description"/>
 		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 		<link href="https://fonts.googleapis.com" rel="preconnect"/>
 		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -13,16 +13,16 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
-		<title>viewtify API</title>
+		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="V">
-		<header class="R" date="2025-03-19">
-			<h1 class="S"><a href="index.html"><code>viewtify</code></a></h1>
-			<nav class="T"><a href="api/main.html" id="API"><svg class="package">
+	<body class="c">
+		<header class="d" date="2025-06-03">
+			<h1 class="n"><a href="index.html"><code>Viewtify</code></a></h1>
+			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="U"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="Z"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="K"></nav>
-		<article class="W" id="Article">
-			<section class="i"><code class="J">viewtify.ui.helper</code>
-				<h2 class="Interface KB"><code class="d">CollectableValuedItemRenderingHelper</code><code class="Q">&lt;<code>Self</code>, <code>V</code>&gt;</code></h2>
-				<div class="JB">
+		<nav class="M"></nav>
+		<article class="e" id="Article">
+			<section class="w"><code class="BB">viewtify.ui.helper</code>
+				<h2 class="Interface Q"><code class="W">CollectableValuedItemRenderingHelper</code><code class="j">&lt;<code>Self</code>, <code>V</code>&gt;</code></h2>
+				<div class="U">
 					<ul class="E F">
 						<li><code>Self</code><code class="extends"><code><a aria-label="viewtify.ui.helper.CollectableValuedItemRenderingHelper" href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html">CollectableValuedItemRenderingHelper</a></code></code></li>
 						<li><code>V</code></li>
@@ -61,54 +61,54 @@
 					</ul>
 				</div>
 			</section>
-			<section class="i" id="renderSelected(java.util.function.Function)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">renderSelected</code><code class="Q">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">text</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="renderSelected(java.util.function.Function)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">renderSelected</code><code class="j">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">text</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">text</code></td>
 						<td><span><p>A text to set.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Set text for the current value.</p></span></section>
-			<section class="i" id="renderSelectedByVariable(java.util.function.Function)">
-				<h2 class="t"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="d">renderSelectedByVariable</code><code class="Q">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Variable<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code><code class="parameterName">text</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="renderSelectedByVariable(java.util.function.Function)">
+				<h2 class="DB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code class="W">renderSelectedByVariable</code><code class="j">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Variable<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code><code class="parameterName">text</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Variable<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code><code class="parameterName">text</code></td>
 						<td><span><p>A text to set.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Set text for the current value.</p></span></section>
-			<section class="i" id="renderSelectedWhen(java.util.function.Function)">
-				<h2 class="t"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="d">renderSelectedWhen</code><code class="Q">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>kiss.Signal<code class="parameters"><code>V</code></code></code>, <code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code><code class="parameterName">text</code>)</code><i class="n"><code>Self</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="renderSelectedWhen(java.util.function.Function)">
+				<h2 class="DB"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="W">renderSelectedWhen</code><code class="j">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>kiss.Signal<code class="parameters"><code>V</code></code></code>, <code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code><code class="parameterName">text</code>)</code><i class="u"><code>Self</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>kiss.Signal<code class="parameters"><code>V</code></code></code>, <code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code><code class="parameterName">text</code></td>
 						<td><span><p>A text to set.</p></span></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>Self</code></td>
 						<td><span><p>Chainable API.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Set text for the current value.</p></span></section>
 		</article>
-		<aside class="Y">
-			<div class="r">
-				<h5 class="k">Methods</h5>
+		<aside class="g">
+			<div class="J">
+				<h5 class="s">Methods</h5>
 				<ul>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelected(java.util.function.Function)">renderSelected</a></code><code class="Q">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">text</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelectedByVariable(java.util.function.Function)">renderSelectedByVariable</a></code><code class="Q">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Variable<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code><code class="parameterName">text</code>)</code><i class="y"><code>Self</code></i></li>
-					<li class="GB"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelectedWhen(java.util.function.Function)">renderSelectedWhen</a></code><code class="Q">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>kiss.Signal<code class="parameters"><code>V</code></code></code>, <code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code><code class="parameterName">text</code>)</code><i class="y"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelected(java.util.function.Function)">renderSelected</a></code><code class="j">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code><code class="parameterName">text</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="DEFAULT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelectedByVariable(java.util.function.Function)">renderSelectedByVariable</a></code><code class="j">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>V</code>, <code>kiss.Variable<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code><code class="parameterName">text</code>)</code><i class="r"><code>Self</code></i></li>
+					<li class="K"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/viewtify.ui.helper.CollectableValuedItemRenderingHelper.html#renderSelectedWhen(java.util.function.Function)">renderSelectedWhen</a></code><code class="j">(<code><a aria-label="java.util.function.Function 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/function/Function.html">Function</a><code class="parameters"><code>kiss.Signal<code class="parameters"><code>V</code></code></code>, <code>kiss.Signal<code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/String.html">String</a></code></code></code></code></code><code class="parameterName">text</code>)</code><i class="r"><code>Self</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="X">
+		<footer class="f">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>

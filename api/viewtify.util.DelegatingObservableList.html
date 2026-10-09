@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<meta content="width=device-width, initial-scale=1" name="viewport"/>
-		<meta content="Explains how to use viewtify and its API. " name="description"/>
+		<meta content="Explains how to use Viewtify and its API. Viewtify provides an API for using JavaFX more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML." name="description"/>
 		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 		<link href="https://fonts.googleapis.com" rel="preconnect"/>
 		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -13,16 +13,16 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Material+Icons" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Vollkorn" media="print" onload="this.media=&apos;all&apos;" rel="stylesheet"/>
-		<title>viewtify API</title>
+		<title>Viewtify API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
 		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="V">
-		<header class="R" date="2025-03-19">
-			<h1 class="S"><a href="index.html"><code>viewtify</code></a></h1>
-			<nav class="T"><a href="api/main.html" id="API"><svg class="package">
+	<body class="c">
+		<header class="d" date="2025-06-03">
+			<h1 class="n"><a href="index.html"><code>Viewtify</code></a></h1>
+			<nav class="p"><a href="api/main.html" id="API"><svg class="package">
 						<use href="main.svg#package"/>
 					</svg>
 				</a><a href="doc/changelog.html" id="Activity"><svg class="activity">
@@ -35,18 +35,18 @@
 						<use href="main.svg#github"/>
 					</svg>
 				</a></nav>
-			<div class="U"><a aria-label="Change color scheme" id="theme"><svg class="sun">
+			<div class="Z"><a aria-label="Change color scheme" id="theme"><svg class="sun">
 						<use href="main.svg#sun"/>
 					</svg><svg class="moon">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<nav class="K"></nav>
-		<article class="W" id="Article">
-			<section class="i"><code class="J">viewtify.util</code>
-				<h2 class="AbstractClass KB"><code class="d">DelegatingObservableList</code><code class="Q">&lt;<code>E</code>&gt;</code></h2>
-				<div class="JB">
+		<nav class="M"></nav>
+		<article class="e" id="Article">
+			<section class="w"><code class="BB">viewtify.util</code>
+				<h2 class="AbstractClass Q"><code class="W">DelegatingObservableList</code><code class="j">&lt;<code>E</code>&gt;</code></h2>
+				<div class="U">
 					<ul class="E F">
 						<li><code>E</code></li>
 					</ul>
@@ -65,435 +65,435 @@
 					</ul>
 				</div>
 			</section>
-			<section class="i" id="delegate">
-				<h2 class="t"><i class="FINAL"><i class="PROTECTED"></i></i><code class="d">delegate</code><i class="n"><code class="return">javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></i></h2><span class="A"><p>The actual list.</p></span></section>
-			<section class="i" id="DelegatingObservableList(javafx.collections.ObservableList)">
-				<h2 class="t"><i class="PUBLIC"></i><code class="d">DelegatingObservableList</code><code class="Q">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code><code class="parameterName">delegate</code>)</code></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="delegate">
+				<h2 class="DB"><i class="FINAL"><i class="PROTECTED"></i></i><code class="W">delegate</code><i class="u"><code class="return">javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></i></h2><span class="A"><p>The actual list.</p></span></section>
+			<section class="w" id="DelegatingObservableList(javafx.collections.ObservableList)">
+				<h2 class="DB"><i class="PUBLIC"></i><code class="W">DelegatingObservableList</code><code class="j">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code><code class="parameterName">delegate</code>)</code></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code><code class="parameterName">delegate</code></td>
 						<td><span><p>A target ObservableList to delegate.</p></span></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="sourceChanged(javafx.collections.ListChangeListener.Change)">
-				<h2 class="t"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="d">sourceChanged</code><code class="Q">(<code>javafx.collections.ListChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">change</code>)</code><i class="n"><code>void</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="sourceChanged(javafx.collections.ListChangeListener.Change)">
+				<h2 class="DB"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code class="W">sourceChanged</code><code class="j">(<code>javafx.collections.ListChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">change</code>)</code><i class="u"><code>void</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>javafx.collections.ListChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">change</code></td>
 						<td><span><p>A source change event.</p></span></td>
 					</tr>
 				</table><span class="A"><p>Notify source change event.</p></span></section>
-			<section class="i" id="removeAll(java.lang.Object...)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">removeAll</code><code class="Q">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="removeAll(java.lang.Object...)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">removeAll</code><code class="j">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code array="var">E</code><code class="parameterName">elements</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="remove(int,int)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">remove</code><code class="Q">(<code>int</code><code class="parameterName">from</code>, <code>int</code><code class="parameterName">to</code>)</code><i class="n"><code>void</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="remove(int,int)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">remove</code><code class="j">(<code>int</code><code class="parameterName">from</code>, <code>int</code><code class="parameterName">to</code>)</code><i class="u"><code>void</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">from</code></td>
 						<td></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">to</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="remove(int)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">remove</code><code class="Q">(<code>int</code><code class="parameterName">index</code>)</code><i class="n"><code>E</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="remove(int)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">remove</code><code class="j">(<code>int</code><code class="parameterName">index</code>)</code><i class="u"><code>E</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>E</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="size()">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">size</code><code class="Q">()</code><i class="n"><code>int</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="size()">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">size</code><code class="j">()</code><i class="u"><code>int</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="lastIndexOf(java.lang.Object)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">lastIndexOf</code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="n"><code>int</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="lastIndexOf(java.lang.Object)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">lastIndexOf</code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="u"><code>int</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="isEmpty()">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">isEmpty</code><code class="Q">()</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="isEmpty()">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">isEmpty</code><code class="j">()</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="addAll(java.lang.Object...)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">addAll</code><code class="Q">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="addAll(java.lang.Object...)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">addAll</code><code class="j">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code array="var">E</code><code class="parameterName">elements</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="subList(int,int)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">subList</code><code class="Q">(<code>int</code><code class="parameterName">fromIndex</code>, <code>int</code><code class="parameterName">toIndex</code>)</code><i class="n"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>E</code></code></code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="subList(int,int)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">subList</code><code class="j">(<code>int</code><code class="parameterName">fromIndex</code>, <code>int</code><code class="parameterName">toIndex</code>)</code><i class="u"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>E</code></code></code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">fromIndex</code></td>
 						<td></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">toIndex</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>E</code></code></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="set(int,java.lang.Object)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">set</code><code class="Q">(<code>int</code><code class="parameterName">index</code>, <code>E</code><code class="parameterName">element</code>)</code><i class="n"><code>E</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="set(int,java.lang.Object)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">set</code><code class="j">(<code>int</code><code class="parameterName">index</code>, <code>E</code><code class="parameterName">element</code>)</code><i class="u"><code>E</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code>E</code><code class="parameterName">element</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>E</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="add(int,java.lang.Object)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">add</code><code class="Q">(<code>int</code><code class="parameterName">index</code>, <code>E</code><code class="parameterName">element</code>)</code><i class="n"><code>void</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="add(int,java.lang.Object)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">add</code><code class="j">(<code>int</code><code class="parameterName">index</code>, <code>E</code><code class="parameterName">element</code>)</code><i class="u"><code>void</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code>E</code><code class="parameterName">element</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="containsAll(java.util.Collection)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">containsAll</code><code class="Q">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="containsAll(java.util.Collection)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">containsAll</code><code class="j">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="clear()">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">clear</code><code class="Q">()</code><i class="n"><code>void</code></i></h2>
+			<section class="w" id="clear()">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">clear</code><code class="j">()</code><i class="u"><code>void</code></i></h2>
 			</section>
-			<section class="i" id="iterator()">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">iterator</code><code class="Q">()</code><i class="n"><code><a aria-label="java.util.Iterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Iterator.html">Iterator</a><code class="parameters"><code>E</code></code></code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="iterator()">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">iterator</code><code class="j">()</code><i class="u"><code><a aria-label="java.util.Iterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Iterator.html">Iterator</a><code class="parameters"><code>E</code></code></code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code><a aria-label="java.util.Iterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Iterator.html">Iterator</a><code class="parameters"><code>E</code></code></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="removeAll(java.util.Collection)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">removeAll</code><code class="Q">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="removeAll(java.util.Collection)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">removeAll</code><code class="j">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="toArray(java.lang.Object[])">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">toArray</code><code class="Q">(<code array="fix">T</code><code class="parameterName">a</code>)</code><i class="n"><code array="fix">T</code></i></h2>
-				<table class="DB">
-					<tr class="HB">
+			<section class="w" id="toArray(java.lang.Object[])">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">toArray</code><code class="j">(<code array="fix">T</code><code class="parameterName">a</code>)</code><i class="u"><code array="fix">T</code></i></h2>
+				<table class="L">
+					<tr class="m">
 						<td><code>T</code></td>
 						<td></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code array="fix">T</code><code class="parameterName">a</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code array="fix">T</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="remove(java.lang.Object)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">remove</code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="remove(java.lang.Object)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">remove</code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="addAll(java.util.Collection)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">addAll</code><code class="Q">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">c</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="addAll(java.util.Collection)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">addAll</code><code class="j">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">c</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">c</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="retainAll(java.lang.Object...)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">retainAll</code><code class="Q">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="retainAll(java.lang.Object...)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">retainAll</code><code class="j">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code array="var">E</code><code class="parameterName">elements</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="retainAll(java.util.Collection)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">retainAll</code><code class="Q">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="retainAll(java.util.Collection)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">retainAll</code><code class="j">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="contains(java.lang.Object)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">contains</code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="contains(java.lang.Object)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">contains</code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="setAll(java.util.Collection)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">setAll</code><code class="Q">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">col</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="setAll(java.util.Collection)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">setAll</code><code class="j">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">col</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">col</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="listIterator(int)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">listIterator</code><code class="Q">(<code>int</code><code class="parameterName">index</code>)</code><i class="n"><code><a aria-label="java.util.ListIterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ListIterator.html">ListIterator</a><code class="parameters"><code>E</code></code></code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="listIterator(int)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">listIterator</code><code class="j">(<code>int</code><code class="parameterName">index</code>)</code><i class="u"><code><a aria-label="java.util.ListIterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ListIterator.html">ListIterator</a><code class="parameters"><code>E</code></code></code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code><a aria-label="java.util.ListIterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ListIterator.html">ListIterator</a><code class="parameters"><code>E</code></code></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="add(java.lang.Object)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">add</code><code class="Q">(<code>E</code><code class="parameterName">e</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="add(java.lang.Object)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">add</code><code class="j">(<code>E</code><code class="parameterName">e</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>E</code><code class="parameterName">e</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="addAll(int,java.util.Collection)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">addAll</code><code class="Q">(<code>int</code><code class="parameterName">index</code>, <code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">c</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="addAll(int,java.util.Collection)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">addAll</code><code class="j">(<code>int</code><code class="parameterName">index</code>, <code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">c</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td></td>
 					</tr>
-					<tr class="Z">
+					<tr class="b">
 						<td><code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">c</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="toArray()">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">toArray</code><code class="Q">()</code><i class="n"><code array="fix"><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="toArray()">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">toArray</code><code class="j">()</code><i class="u"><code array="fix"><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code array="fix"><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="listIterator()">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">listIterator</code><code class="Q">()</code><i class="n"><code><a aria-label="java.util.ListIterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ListIterator.html">ListIterator</a><code class="parameters"><code>E</code></code></code></i></h2>
-				<table class="DB">
-					<tr class="a">
+			<section class="w" id="listIterator()">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">listIterator</code><code class="j">()</code><i class="u"><code><a aria-label="java.util.ListIterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ListIterator.html">ListIterator</a><code class="parameters"><code>E</code></code></code></i></h2>
+				<table class="L">
+					<tr class="LB">
 						<td><code><a aria-label="java.util.ListIterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ListIterator.html">ListIterator</a><code class="parameters"><code>E</code></code></code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="get(int)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">get</code><code class="Q">(<code>int</code><code class="parameterName">index</code>)</code><i class="n"><code>E</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="get(int)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">get</code><code class="j">(<code>int</code><code class="parameterName">index</code>)</code><i class="u"><code>E</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code>int</code><code class="parameterName">index</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>E</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="setAll(java.lang.Object...)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">setAll</code><code class="Q">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="n"><code>boolean</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="setAll(java.lang.Object...)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">setAll</code><code class="j">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="u"><code>boolean</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code array="var">E</code><code class="parameterName">elements</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>boolean</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section class="i" id="indexOf(java.lang.Object)">
-				<h2 class="t"><i class="OVERRIDE PUBLIC"></i><code class="d">indexOf</code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="n"><code>int</code></i></h2>
-				<table class="DB">
-					<tr class="Z">
+			<section class="w" id="indexOf(java.lang.Object)">
+				<h2 class="DB"><i class="OVERRIDE PUBLIC"></i><code class="W">indexOf</code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="u"><code>int</code></i></h2>
+				<table class="L">
+					<tr class="b">
 						<td><code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code></td>
 						<td></td>
 					</tr>
-					<tr class="a">
+					<tr class="LB">
 						<td><code>int</code></td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
 		</article>
-		<aside class="Y">
-			<div class="r">
-				<h5 class="k">Constructors</h5>
+		<aside class="g">
+			<div class="J">
+				<h5 class="s">Constructors</h5>
 				<ul>
-					<li class="GB"><i class="PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#DelegatingObservableList(javafx.collections.ObservableList)">DelegatingObservableList</a></code><code class="Q">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code><code class="parameterName">delegate</code>)</code></li>
+					<li class="K"><i class="PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#DelegatingObservableList(javafx.collections.ObservableList)">DelegatingObservableList</a></code><code class="j">(<code>javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code><code class="parameterName">delegate</code>)</code></li>
 				</ul>
-				<h5 class="k">Fields</h5>
+				<h5 class="s">Fields</h5>
 				<ul>
-					<li class="GB"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.util.DelegatingObservableList.html#delegate">delegate</a></code><i class="y"><code class="return">javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></i></li>
+					<li class="K"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/viewtify.util.DelegatingObservableList.html#delegate">delegate</a></code><i class="r"><code class="return">javafx.collections.ObservableList<code class="parameters"><code>E</code></code></code></i></li>
 				</ul>
-				<h5 class="k">Methods</h5>
+				<h5 class="s">Methods</h5>
 				<ul>
-					<li class="GB"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.util.DelegatingObservableList.html#sourceChanged(javafx.collections.ListChangeListener.Change)">sourceChanged</a></code><code class="Q">(<code>javafx.collections.ListChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">change</code>)</code><i class="y"><code>void</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#removeAll(java.lang.Object...)">removeAll</a></code><code class="Q">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#remove(int,int)">remove</a></code><code class="Q">(<code>int</code><code class="parameterName">from</code>, <code>int</code><code class="parameterName">to</code>)</code><i class="y"><code>void</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#remove(int)">remove</a></code><code class="Q">(<code>int</code><code class="parameterName">index</code>)</code><i class="y"><code>E</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#size()">size</a></code><code class="Q">()</code><i class="y"><code>int</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#lastIndexOf(java.lang.Object)">lastIndexOf</a></code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="y"><code>int</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#isEmpty()">isEmpty</a></code><code class="Q">()</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#addAll(java.lang.Object...)">addAll</a></code><code class="Q">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#subList(int,int)">subList</a></code><code class="Q">(<code>int</code><code class="parameterName">fromIndex</code>, <code>int</code><code class="parameterName">toIndex</code>)</code><i class="y"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>E</code></code></code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#set(int,java.lang.Object)">set</a></code><code class="Q">(<code>int</code><code class="parameterName">index</code>, <code>E</code><code class="parameterName">element</code>)</code><i class="y"><code>E</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#add(int,java.lang.Object)">add</a></code><code class="Q">(<code>int</code><code class="parameterName">index</code>, <code>E</code><code class="parameterName">element</code>)</code><i class="y"><code>void</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#containsAll(java.util.Collection)">containsAll</a></code><code class="Q">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#clear()">clear</a></code><code class="Q">()</code><i class="y"><code>void</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#iterator()">iterator</a></code><code class="Q">()</code><i class="y"><code><a aria-label="java.util.Iterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Iterator.html">Iterator</a><code class="parameters"><code>E</code></code></code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#removeAll(java.util.Collection)">removeAll</a></code><code class="Q">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#toArray(java.lang.Object[])">toArray</a></code><code class="Q">(<code array="fix">T</code><code class="parameterName">a</code>)</code><i class="y"><code array="fix">T</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#remove(java.lang.Object)">remove</a></code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#addAll(java.util.Collection)">addAll</a></code><code class="Q">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">c</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#retainAll(java.lang.Object...)">retainAll</a></code><code class="Q">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#retainAll(java.util.Collection)">retainAll</a></code><code class="Q">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#contains(java.lang.Object)">contains</a></code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#setAll(java.util.Collection)">setAll</a></code><code class="Q">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">col</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#listIterator(int)">listIterator</a></code><code class="Q">(<code>int</code><code class="parameterName">index</code>)</code><i class="y"><code><a aria-label="java.util.ListIterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ListIterator.html">ListIterator</a><code class="parameters"><code>E</code></code></code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#add(java.lang.Object)">add</a></code><code class="Q">(<code>E</code><code class="parameterName">e</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#addAll(int,java.util.Collection)">addAll</a></code><code class="Q">(<code>int</code><code class="parameterName">index</code>, <code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">c</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#toArray()">toArray</a></code><code class="Q">()</code><i class="y"><code array="fix"><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#listIterator()">listIterator</a></code><code class="Q">()</code><i class="y"><code><a aria-label="java.util.ListIterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ListIterator.html">ListIterator</a><code class="parameters"><code>E</code></code></code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#get(int)">get</a></code><code class="Q">(<code>int</code><code class="parameterName">index</code>)</code><i class="y"><code>E</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#setAll(java.lang.Object...)">setAll</a></code><code class="Q">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="y"><code>boolean</code></i></li>
-					<li class="GB"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#indexOf(java.lang.Object)">indexOf</a></code><code class="Q">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="y"><code>int</code></i></li>
+					<li class="K"><i class="ABSTRACT"><i class="PROTECTED"></i></i><code><a href="api/viewtify.util.DelegatingObservableList.html#sourceChanged(javafx.collections.ListChangeListener.Change)">sourceChanged</a></code><code class="j">(<code>javafx.collections.ListChangeListener.Change<code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">change</code>)</code><i class="r"><code>void</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#removeAll(java.lang.Object...)">removeAll</a></code><code class="j">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#remove(int,int)">remove</a></code><code class="j">(<code>int</code><code class="parameterName">from</code>, <code>int</code><code class="parameterName">to</code>)</code><i class="r"><code>void</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#remove(int)">remove</a></code><code class="j">(<code>int</code><code class="parameterName">index</code>)</code><i class="r"><code>E</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#size()">size</a></code><code class="j">()</code><i class="r"><code>int</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#lastIndexOf(java.lang.Object)">lastIndexOf</a></code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="r"><code>int</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#isEmpty()">isEmpty</a></code><code class="j">()</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#addAll(java.lang.Object...)">addAll</a></code><code class="j">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#subList(int,int)">subList</a></code><code class="j">(<code>int</code><code class="parameterName">fromIndex</code>, <code>int</code><code class="parameterName">toIndex</code>)</code><i class="r"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>E</code></code></code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#set(int,java.lang.Object)">set</a></code><code class="j">(<code>int</code><code class="parameterName">index</code>, <code>E</code><code class="parameterName">element</code>)</code><i class="r"><code>E</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#add(int,java.lang.Object)">add</a></code><code class="j">(<code>int</code><code class="parameterName">index</code>, <code>E</code><code class="parameterName">element</code>)</code><i class="r"><code>void</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#containsAll(java.util.Collection)">containsAll</a></code><code class="j">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#clear()">clear</a></code><code class="j">()</code><i class="r"><code>void</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#iterator()">iterator</a></code><code class="j">()</code><i class="r"><code><a aria-label="java.util.Iterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Iterator.html">Iterator</a><code class="parameters"><code>E</code></code></code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#removeAll(java.util.Collection)">removeAll</a></code><code class="j">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#toArray(java.lang.Object[])">toArray</a></code><code class="j">(<code array="fix">T</code><code class="parameterName">a</code>)</code><i class="r"><code array="fix">T</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#remove(java.lang.Object)">remove</a></code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#addAll(java.util.Collection)">addAll</a></code><code class="j">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">c</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#retainAll(java.lang.Object...)">retainAll</a></code><code class="j">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#retainAll(java.util.Collection)">retainAll</a></code><code class="j">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code></code></code><code class="parameterName">c</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#contains(java.lang.Object)">contains</a></code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#setAll(java.util.Collection)">setAll</a></code><code class="j">(<code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">col</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#listIterator(int)">listIterator</a></code><code class="j">(<code>int</code><code class="parameterName">index</code>)</code><i class="r"><code><a aria-label="java.util.ListIterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ListIterator.html">ListIterator</a><code class="parameters"><code>E</code></code></code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#add(java.lang.Object)">add</a></code><code class="j">(<code>E</code><code class="parameterName">e</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#addAll(int,java.util.Collection)">addAll</a></code><code class="j">(<code>int</code><code class="parameterName">index</code>, <code><a aria-label="java.util.Collection 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/Collection.html">Collection</a><code class="parameters"><code>?</code><code class="extends"><code>E</code></code></code></code><code class="parameterName">c</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#toArray()">toArray</a></code><code class="j">()</code><i class="r"><code array="fix"><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#listIterator()">listIterator</a></code><code class="j">()</code><i class="r"><code><a aria-label="java.util.ListIterator 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/util/ListIterator.html">ListIterator</a><code class="parameters"><code>E</code></code></code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#get(int)">get</a></code><code class="j">(<code>int</code><code class="parameterName">index</code>)</code><i class="r"><code>E</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#setAll(java.lang.Object...)">setAll</a></code><code class="j">(<code array="var">E</code><code class="parameterName">elements</code>)</code><i class="r"><code>boolean</code></i></li>
+					<li class="K"><i class="OVERRIDE PUBLIC"></i><code><a href="api/viewtify.util.DelegatingObservableList.html#indexOf(java.lang.Object)">indexOf</a></code><code class="j">(<code><a aria-label="java.lang.Object 🚀" href="https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">o</code>)</code><i class="r"><code>int</code></i></li>
 				</ul>
 			</div>
 		</aside>
-		<footer class="X">
+		<footer class="f">
 			<p>Powered by <a href="https://github.com/teletha/evergarden" target="_">Evergarden</a></p>
 		</footer>
 	</body>
