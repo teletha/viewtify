@@ -298,7 +298,7 @@ public class UserInterface<Self extends UserInterface<Self, W>, W extends Node> 
          */
         @Override
         public Path locate() {
-            return Viewtify.UserPreference.v.file(Preference.class.getName() + ".json").asJavaPath();
+            return Viewtify.UserPreference.get().file(Preference.class.getName() + ".json").asJavaPath();
         }
     }
 }

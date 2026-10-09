@@ -82,7 +82,7 @@ public class Calendars {
      * @return
      */
     public static LocalDate calculateStartingWeekDay(LocalDate date) {
-        return date.minusDays((date.getDayOfWeek().getValue() + 7 - setting.firstDoW.v.getValue()) % 7);
+        return date.minusDays((date.getDayOfWeek().getValue() + 7 - setting.firstDoW.get().getValue()) % 7);
     }
 
     /**
@@ -90,7 +90,7 @@ public class Calendars {
      * @return
      */
     public static DayOfWeek calculateDoW(int index) {
-        return setting.firstDoW.v.plus(index);
+        return setting.firstDoW.get().plus(index);
     }
 
     /**

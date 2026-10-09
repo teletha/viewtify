@@ -116,7 +116,7 @@ public abstract class Preferences implements Storable<Preferences>, Extensible {
      * @return A created new {@link Preference}.
      */
     protected final <V> Preference<V> initialize(Variable<V> defaultValue) {
-        Preference<V> preference = new Preference(defaultValue.v);
+        Preference<V> preference = new Preference(defaultValue.get());
 
         return preference;
     }

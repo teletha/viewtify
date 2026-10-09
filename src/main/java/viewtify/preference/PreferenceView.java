@@ -326,7 +326,7 @@ public class PreferenceView extends View {
         }
 
         for (String clazz : classes) {
-            for (Node node : description.v.lookupAll(clazz)) {
+            for (Node node : description.get().lookupAll(clazz)) {
                 if (node instanceof Labeled labeled && labeled.getText().toLowerCase().contains(text)) {
                     return true;
                 }

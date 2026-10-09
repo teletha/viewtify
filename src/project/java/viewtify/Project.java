@@ -14,7 +14,7 @@ import javax.lang.model.SourceVersion;
 public class Project extends bee.api.Project {
 
     {
-        product("com.github.teletha", "viewtify", ref("version.txt"));
+        product("io.github.teletha", "viewtify", ref("version.txt"));
         describe("""
                 Viewtify provides API for using [JavaFX](https://openjfx.io/) more declaratively and reactively. It also provides refactoring and type safety by eliminating FXML.
 
@@ -45,16 +45,16 @@ public class Project extends bee.api.Project {
                 * Browser manipulation
                 """);
 
-        require(SourceVersion.latest(), SourceVersion.RELEASE_21);
+        require(SourceVersion.latest(), SourceVersion.RELEASE_24);
 
-        require("com.github.teletha", "sinobu");
-        require("com.github.teletha", "psychopath");
-        require("com.github.teletha", "stylist");
-        require("com.github.teletha", "lycoris");
-        require("com.github.teletha", "conjure");
-        require("com.github.teletha", "altfx");
+        require("io.github.teletha", "sinobu");
+        require("io.github.teletha", "psychopath");
+        require("io.github.teletha", "stylist");
+        require("io.github.teletha", "lycoris");
+        require("io.github.teletha", "conjure");
+        require("io.github.teletha", "altfx");
         require("com.github.teletha", "icymanipulator").atAnnotation();
-        require("com.github.teletha", "antibug").atTest();
+        require("io.github.teletha", "antibug").atTest();
         require("org.testfx", "testfx-junit5").atTest();
         require("org.openjfx", "javafx-base");
         require("org.openjfx", "javafx-controls");

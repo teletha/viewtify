@@ -37,6 +37,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -589,7 +590,7 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
      * @return Chainable API.
      */
     default Self replaceItemAt(Variable<E> target, E replacer) {
-        return replaceItemAt(target.v, replacer);
+        return replaceItemAt(target.get(), replacer);
     }
 
     /**
@@ -1033,8 +1034,8 @@ public interface CollectableHelper<Self extends ReferenceHolder & CollectableHel
 
             Viewtify.observing(items).skipNull().to(v -> {
                 updating.guard(() -> {
-                    filtered = new FilteredList(v, filter.v);
-                    sorted.setValue(new SortedList(filtered, sorter.v));
+                    filtered = new FilteredList(v, filter.get());
+                    sorted.setValue(new SortedList(filtered, sorter.get()));
 
                     helper.itemsProperty().setValue(sorted.getValue());
                 });

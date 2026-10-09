@@ -183,7 +183,7 @@ public final class DockSystem {
     }
 
     public static Tab selected() {
-        return selected.v;
+        return selected.get();
     }
 
     /**
@@ -234,7 +234,7 @@ public final class DockSystem {
         // add the view there.
         Variable<TabArea> area = layout.find(TabArea.class).take(x -> x.hasView(id)).first().to();
         if (area.isPresent()) {
-            area.v.add(tab, PositionRestore);
+            area.get().add(tab, PositionRestore);
             openedTabs.add(id);
             return Variable.of(tab);
         }
@@ -263,7 +263,7 @@ public final class DockSystem {
         // add the view there.
         area = Variable.of(latestMenuActivatedTabArea);
         if (area.isPresent()) {
-            area.v.add(tab, PositionCenter, true);
+            area.get().add(tab, PositionCenter, true);
             openedTabs.add(id);
             return Variable.of(tab);
         }
@@ -272,7 +272,7 @@ public final class DockSystem {
         // add the view there.
         area = layout.find(TabArea.class).take(v -> v.location == o.recommendedArea).first().to();
         if (area.isPresent()) {
-            area.v.add(tab, PositionCenter);
+            area.get().add(tab, PositionCenter);
             openedTabs.add(id);
             return Variable.of(tab);
         }
@@ -623,7 +623,7 @@ public final class DockSystem {
                     area.add(dragedTab, position);
                 } else {
                     // switch operation
-                    UITab tab = area.node.first().v;
+                    UITab tab = area.node.first().get();
                     int dragedIndex = dragedTabArea.node.indexOf(dragedTab);
 
                     // remove each tab

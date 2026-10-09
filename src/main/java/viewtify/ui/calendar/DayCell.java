@@ -14,6 +14,7 @@ import java.time.LocalTime;
 
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+
 import kiss.Extensible;
 import kiss.I;
 import stylist.Style;
@@ -108,7 +109,7 @@ public class DayCell extends View {
             Node ui = visualizer.visualize(event).ui();
 
             if (enableTimeGap) {
-                int minHeight = Calendars.setting.eventHeight.v;
+                int minHeight = Calendars.setting.eventHeight.get();
                 long interval = Math.max(0, (startTime.toSecondOfDay() - latestUsedTime) / 60 * minHeight / 60 * 2);
                 ui.setStyle("-fx-margin: " + interval + " 0 0 0; -fx-min-height: " + minHeight + ";");
                 latestUsedTime = event.endTime().toSecondOfDay();

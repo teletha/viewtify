@@ -107,7 +107,7 @@ class CSSProcessor implements PostProcessor {
         Variable<CSSValue> value = properties.get("border-radius");
 
         if (value.isPresent()) {
-            properties.set("background-radius", value.v);
+            properties.set("background-radius", value.get());
         }
     }
 
@@ -120,9 +120,9 @@ class CSSProcessor implements PostProcessor {
         Variable<CSSValue> value = properties.get("font-smooth");
 
         if (value.isPresent()) {
-            if (value.v.match("antialiased")) {
+            if (value.get().match("antialiased")) {
                 properties.set("font-smoothing-type", "lcd");
-            } else if (value.v.match("grayscale")) {
+            } else if (value.get().match("grayscale")) {
                 properties.set("font-smoothing-type", "gray");
             }
         }
@@ -137,10 +137,10 @@ class CSSProcessor implements PostProcessor {
         Variable<CSSValue> height = properties.remove("height");
 
         if (height.isPresent()) {
-            if (HasDigit.matcher(height.v.toString()).matches()) {
-                properties.set("pref-height", height.v);
+            if (HasDigit.matcher(height.get().toString()).matches()) {
+                properties.set("pref-height", height.get());
             } else {
-                properties.set("height", height.v);
+                properties.set("height", height.get());
             }
         }
     }
@@ -197,10 +197,10 @@ class CSSProcessor implements PostProcessor {
         Variable<CSSValue> width = properties.remove("width");
 
         if (width.isPresent()) {
-            if (HasDigit.matcher(width.v.toString()).matches()) {
-                properties.set("pref-width", width.v);
+            if (HasDigit.matcher(width.get().toString()).matches()) {
+                properties.set("pref-width", width.get());
             } else {
-                properties.set("width", width.v);
+                properties.set("width", width.get());
             }
         }
     }

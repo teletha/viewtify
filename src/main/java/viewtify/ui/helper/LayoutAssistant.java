@@ -94,7 +94,7 @@ public final class LayoutAssistant implements InvalidationListener {
      * @param layout
      */
     public void layout(Runnable layout) {
-        if (canLayout.v && (shouldLayout || parent.shouldLayout)) {
+        if (canLayout.get() && (shouldLayout || parent.shouldLayout)) {
             layout.run();
             shouldLayout = false;
             previousLayout = layout;

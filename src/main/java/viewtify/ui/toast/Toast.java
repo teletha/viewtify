@@ -18,8 +18,6 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
-
 import javafx.beans.value.WritableDoubleValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,6 +27,9 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
+
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -101,7 +102,7 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
             Notification notification = new Notification();
             WiseRunnable hide = () -> remove(notification);
             notification.builder = () -> TextNotation
-                    .parse(message, setting.width.v - styles.pad * 2, I.signal(actions).map(x -> I.bundle(hide, x)).toList());
+                    .parse(message, setting.width.get() - styles.pad * 2, I.signal(actions).map(x -> I.bundle(hide, x)).toList());
 
             add(notification);
         }
@@ -119,7 +120,7 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
             Notification notification = new Notification();
             WiseRunnable hide = () -> remove(notification);
             notification.builder = () -> TextNotation
-                    .parse(message, setting.width.v - styles.pad * 2, I.signal(actions).map(x -> I.bundle(hide, x)).toList());
+                    .parse(message, setting.width.get() - styles.pad * 2, I.signal(actions).map(x -> I.bundle(hide, x)).toList());
 
             add(notification);
         }
@@ -160,8 +161,8 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
      */
     private static void add(Notification notification) {
         notifications.add(notification);
-        if (setting.max.v < notifications.size()) {
-            while (setting.max.v < notifications.size()) {
+        if (setting.max.get() < notifications.size()) {
+            while (setting.max.get() < notifications.size()) {
                 remove(notifications.peekFirst());
             }
         } else {
@@ -182,7 +183,7 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
             }
 
             // UI effect
-            Anime.define().effect(notification.ui().opacityProperty(), 0, setting.animation.v).run(() -> {
+            Anime.define().effect(notification.ui().opacityProperty(), 0, setting.animation.get()).run(() -> {
                 notification.ui().hide();
                 notification.ui().getContent().clear();
             });
@@ -385,11 +386,11 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
     private static void layoutNotifications() {
         Viewtify.inUI(() -> {
             double gap = setting.gap.exact();
-            Rectangle2D rect = setting.screen.v.select();
+            Rectangle2D rect = setting.screen.get().select();
 
             // use viewtify notification
-            boolean isTopSide = setting.area.v.isTopSide();
-            double x = setting.area.v.isLeftSide() ? rect.getMinX() + gap : rect.getMaxX() - setting.width.v - gap;
+            boolean isTopSide = setting.area.get().isTopSide();
+            double x = setting.area.get().isLeftSide() ? rect.getMinX() + gap : rect.getMaxX() - setting.width.get() - gap;
             double y = isTopSide ? rect.getMinY() + gap : rect.getMaxY();
 
             Iterator<Notification> iterator = isTopSide ? notifications.descendingIterator() : notifications.iterator();
@@ -400,7 +401,7 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
                 if (popup.isShowing()) {
                     if (!isTopSide) y -= popup.getHeight() + gap;
                     popup.setX(x);
-                    Anime.define().effect(notify, y, setting.animation.v).run();
+                    Anime.define().effect(notify, y, setting.animation.get()).run();
                 } else {
                     popup.setOpacity(0);
                     popup.show(Viewtify.phantomWindow());
@@ -408,7 +409,7 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
                     popup.setX(x);
                     popup.setY(y);
 
-                    Anime.define().effect(popup.opacityProperty(), 1, setting.animation.v).run();
+                    Anime.define().effect(popup.opacityProperty(), 1, setting.animation.get()).run();
                 }
 
                 if (isTopSide) y += popup.getHeight() + gap;
@@ -460,16 +461,16 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
                 ui = new Popup();
                 VBox box = new VBox(builder.get());
                 StyleHelper.of(box).style(styles.popup);
-                box.setMaxWidth(setting.width.v);
-                box.setMinWidth(setting.width.v);
-                box.setOpacity(setting.opacity.v / 100d);
+                box.setMaxWidth(setting.width.get());
+                box.setMinWidth(setting.width.get());
+                box.setOpacity(setting.opacity.get() / 100d);
 
                 ui.setX(0);
                 ui.getContent().add(monitor == null ? box : showCloseButton(box));
                 if (monitor == null) {
                     UserActionHelper.of(ui).when(User.MouseClick).to(() -> remove(this));
-                    if (0 < setting.autoHide.v * 1000) {
-                        disposer = I.schedule(setting.autoHide.v.longValue(), TimeUnit.SECONDS)
+                    if (0 < setting.autoHide.get() * 1000) {
+                        disposer = I.schedule(setting.autoHide.get().longValue(), TimeUnit.SECONDS)
                                 .first()
                                 .on(Viewtify.UIThread)
                                 .to(() -> remove(this));
@@ -583,7 +584,7 @@ public class Toast<T> implements WiseFunction<Signal<T>, Signal<T>> {
          */
         @Override
         protected void initialize() {
-            int width = setting.width.v - styles.pad * 2 - 32;
+            int width = setting.width.get() - styles.pad * 2 - 32;
             title.ui.setMaxWidth(width);
             title.ui.setWrapText(true);
             message.ui.setMaxWidth(width);

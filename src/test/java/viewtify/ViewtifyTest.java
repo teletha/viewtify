@@ -66,7 +66,7 @@ class ViewtifyTest {
         assert proeprty.getValue() == false;
 
         proeprty.setValue(true);
-        assert variable.v == true;
+        assert variable.get() == true;
     }
 
     @Test
@@ -80,7 +80,7 @@ class ViewtifyTest {
         assert proeprty.getValue() == 2;
 
         proeprty.setValue(3);
-        assert variable.v == 3;
+        assert variable.get() == 3;
     }
 
     @Test

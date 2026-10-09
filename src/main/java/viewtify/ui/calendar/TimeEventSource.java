@@ -38,7 +38,7 @@ public interface TimeEventSource extends Extensible {
      * @return
      */
     default boolean isEnabled() {
-        return Preferences.of(TimeEventSourceSetting.class, name()).enable.v;
+        return Preferences.of(TimeEventSourceSetting.class, name()).enable.get();
     }
 
     /**
@@ -47,7 +47,7 @@ public interface TimeEventSource extends Extensible {
      * @return
      */
     default Color color() {
-        return Preferences.of(TimeEventSourceSetting.class, name()).color.v;
+        return Preferences.of(TimeEventSourceSetting.class, name()).color.get();
     }
 
     /**

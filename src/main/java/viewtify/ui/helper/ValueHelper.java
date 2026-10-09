@@ -19,6 +19,7 @@ import java.util.function.Supplier;
 import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Signal;
@@ -100,7 +101,7 @@ public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
      * @return A preference value.
      */
     default <T> T valueOr(Variable<T> defaultValue) {
-        return valueOr(defaultValue.v);
+        return valueOr(defaultValue.get());
     }
 
     /**
@@ -121,7 +122,7 @@ public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
      * @return Chainable API.
      */
     default Self value(Variable<V> value) {
-        return value(value.v);
+        return value(value.get());
     }
 
     /**
@@ -170,7 +171,7 @@ public interface ValueHelper<Self extends ValueHelper, V> extends Supplier<V> {
      * @return Chainable API.
      */
     default Self initialize(Variable<V> initialValue) {
-        return initialize(initialValue.v);
+        return initialize(initialValue.get());
     }
 
     /**

@@ -165,7 +165,7 @@ public class CalendarView extends View {
 
         preference.icon(FontAwesomeSolid.COG).popup(CalendarSettingView::new);
 
-        show(setting.initialView.v, LocalDate.now());
+        show(setting.initialView.get(), LocalDate.now());
 
         I.signal(I.find(TimeEventSource.class))
                 .subscribeOn(Viewtify.WorkerThread)

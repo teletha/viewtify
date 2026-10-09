@@ -117,10 +117,10 @@ public class Update {
 
                     origin.updater()
                             .env("Icon", Viewtify.application().icon())
-                            .env("Theme", appearance.theme.v.name())
-                            .env("ThemeType", appearance.themeType.v.name())
-                            .env("Font", appearance.font.v)
-                            .env("FontSize", appearance.fontSize.v.toString())
+                            .env("Theme", appearance.theme.get().name())
+                            .env("ThemeType", appearance.themeType.get().name())
+                            .env("Font", appearance.font.get())
+                            .env("FontSize", appearance.fontSize.get().toString())
                             .env("LocationX", String.valueOf(bounds.getMinX() + bounds.getWidth() / 2 - 190))
                             .env("LocationY", String.valueOf(bounds.getMinY() + bounds.getHeight() / 2 - 60))
                             .reboot(monitor -> {

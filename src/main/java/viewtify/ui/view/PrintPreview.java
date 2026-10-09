@@ -9,13 +9,11 @@
  */
 package viewtify.ui.view;
 
-import static javafx.print.PageOrientation.PORTRAIT;
+import static javafx.print.PageOrientation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.controlsfx.control.SegmentedButton;
 
 import javafx.event.Event;
 import javafx.geometry.Bounds;
@@ -36,6 +34,9 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import org.controlsfx.control.SegmentedButton;
+
 import kiss.I;
 import kiss.WiseSupplier;
 import stylist.Style;
@@ -200,7 +201,7 @@ public class PrintPreview extends DialogView<PrintInfo> {
 
         pager.placeholder(en("all pages")).disable(true);
         printer.items(Printer.getAllPrinters()).value(Printer.getDefaultPrinter()).render(Printer::getName);
-        paper.items(PaperSet.getOrDefault(I.Lang.v, JP)).placeholder(en("Default")).renderByVariable(x -> en(x.getName()));
+        paper.items(PaperSet.getOrDefault(I.Lang.get(), JP)).placeholder(en("Default")).renderByVariable(x -> en(x.getName()));
         color.items(PrintColor.values()).value(PrintColor.COLOR).renderByVariable(x -> en(x.name()));
         orientation.items(PageOrientation.values()).placeholder(en("Default")).renderByVariable(x -> en(x.name()));
         side.items(PrintSides.values()).value(PrintSides.ONE_SIDED).renderByVariable(x -> en(x.name()));

@@ -151,7 +151,7 @@ public abstract class View implements Extensible, UserInterfaceProvider<Node>, A
      * @return The root view.
      */
     public final View findRootView() {
-        return findAncestorView(view -> view.parent == null).v;
+        return findAncestorView(view -> view.parent == null).get();
     }
 
     /**

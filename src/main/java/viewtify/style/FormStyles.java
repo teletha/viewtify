@@ -23,7 +23,7 @@ public interface FormStyles extends ViewtyStyle {
 
     Style Row = () -> {
         display.minHeight(29, px);
-        margin.vertical(Gap.v, px);
+        margin.vertical(Gap.get(), px);
         text.verticalAlign.middle();
     };
 
@@ -45,7 +45,7 @@ public interface FormStyles extends ViewtyStyle {
     };
 
     Style Description = () -> {
-        margin.vertical(Gap.v, px);
+        margin.vertical(Gap.get(), px);
     };
 
     Style DescriptionTitle = () -> {
@@ -118,7 +118,7 @@ public interface FormStyles extends ViewtyStyle {
     };
 
     Style Sequencial = () -> {
-        margin.right(Gap.v, px);
+        margin.right(Gap.get(), px);
     };
 
     Style Combined = () -> {
@@ -147,7 +147,7 @@ public interface FormStyles extends ViewtyStyle {
      * @return
      */
     static int calculateColumnWidth(int columns) {
-        return Column.v * columns + Gap.v * (columns - 1);
+        return Column.get() * columns + Gap.get() * (columns - 1);
     }
 
     private static Style colum(int size) {

@@ -526,7 +526,7 @@ public final class Viewtify {
             }
         });
 
-        View mainView = isOperner ? I.make(opener.v) : application;
+        View mainView = isOperner ? I.make(opener.get()) : application;
         Scene mainScene = new Scene((Parent) mainView.ui());
 
         if (isOperner) {
@@ -632,8 +632,8 @@ public final class Viewtify {
             // collect stylesheets for application
             AppearanceSetting appearance = Preferences.of(AppearanceSetting.class);
             stylesheets.add(Theme.locate("ui"));
-            stylesheets.add(appearance.theme.v.location);
-            stylesheets.add(appearance.themeType.v.location);
+            stylesheets.add(appearance.theme.get().location);
+            stylesheets.add(appearance.themeType.get().location);
             stylesheets.add(Locator.file(CSSProcessor.pretty().scheme(scheme).formatTo(prefs + "/application.css")).externalForm());
             stylesheets.add(writeFontStylesheet(null));
 
@@ -1542,7 +1542,7 @@ public final class Viewtify {
          */
         @Override
         public V getValue() {
-            return variable.v;
+            return variable.get();
         }
 
         /**

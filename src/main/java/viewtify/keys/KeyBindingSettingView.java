@@ -112,7 +112,7 @@ public class KeyBindingSettingView extends View {
      */
     private class Change extends DialogView<Key> {
 
-        private Command command = table.selectedItem().v;
+        private Command command = table.selectedItem().get();
 
         private UIText<String> input;
 

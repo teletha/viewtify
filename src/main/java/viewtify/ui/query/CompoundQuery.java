@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+
 import kiss.Disposable;
 import kiss.I;
 import kiss.Managed;
@@ -301,7 +302,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          */
         @Override
         public String toString() {
-            return description.v;
+            return description.get();
         }
 
         /** The builtin set. */
@@ -434,7 +435,7 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
         /** The associated {@link Matcher}. */
         public final Variable<Tester<V>> tester = Variable.<Tester<V>> empty().intercept((oldTester, newTester) -> {
             // normalize the current input
-            normalized = newTester.apply(input.v);
+            normalized = newTester.apply(input.get());
 
             // normalize the input in future
             input.intercept((oldInput, newInput) -> {
@@ -469,10 +470,10 @@ public class CompoundQuery<M> implements Predicate<M>, Disposable {
          */
         @Override
         public boolean test(M model) {
-            if (model == null || tester.v == null || input.v == null) {
+            if (model == null || tester.get() == null || input.get() == null) {
                 return true;
             } else {
-                return tester.v.test(normalized, extractor.apply(model));
+                return tester.get().test(normalized, extractor.apply(model));
             }
         }
     }
