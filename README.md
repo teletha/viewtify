@@ -61,7 +61,7 @@ Add it into in the dependencies element like so:
 <dependency>
     <groupId>io.github.teletha</groupId>
     <artifactId>viewtify</artifactId>
-    <version>2.35.0</version>
+    <version>2.35.1</version>
 </dependency>
 ```
 #### [Gradle](https://gradle.org/)
@@ -74,7 +74,7 @@ repositories {
 Add it into the dependencies section like so:
 ```gradle
 dependencies {
-    implementation 'io.github.teletha:viewtify:2.35.0'
+    implementation 'io.github.teletha:viewtify:2.35.1'
 }
 ```
 #### [SBT](https://www.scala-sbt.org/)
@@ -84,7 +84,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add it into the libraryDependencies section like so:
 ```scala
-libraryDependencies += "io.github.teletha" % "viewtify" % "2.35.0"
+libraryDependencies += "io.github.teletha" % "viewtify" % "2.35.1"
 ```
 #### [Leiningen](https://leiningen.org/)
 Add JitPack repository at the end of repositories in your project().clj:
@@ -93,12 +93,12 @@ Add JitPack repository at the end of repositories in your project().clj:
 ```
 Add it into the dependencies section like so:
 ```clj
-:dependencies [[io.github.teletha/viewtify "2.35.0"]]
+:dependencies [[io.github.teletha/viewtify "2.35.1"]]
 ```
 #### [Bee](https://teletha.github.io/bee)
 Add it into your project definition class like so:
 ```java
-require("io.github.teletha", "viewtify", "2.35.0");
+require("io.github.teletha", "viewtify", "2.35.1");
 ```
 <p align="right"><a href="#top">back to top</a></p>
 
@@ -133,16 +133,16 @@ Viewtify depends on the following products on runtime.
 * [ikonli-core-12.4.0](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-core/12.4.0)
 * [ikonli-fontawesome5-pack-12.4.0](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-fontawesome5-pack/12.4.0)
 * [ikonli-javafx-12.4.0](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-javafx/12.4.0)
-* [javafx-base-28-ea+12](https://mvnrepository.com/artifact/org.openjfx/javafx-base/28-ea+12)
-* [javafx-base-28-ea+12-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-base/28-ea+12)
-* [javafx-controls-28-ea+12](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/28-ea+12)
-* [javafx-controls-28-ea+12-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/28-ea+12)
-* [javafx-graphics-28-ea+12](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/28-ea+12)
-* [javafx-graphics-28-ea+12-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/28-ea+12)
-* [javafx-media-28-ea+12](https://mvnrepository.com/artifact/org.openjfx/javafx-media/28-ea+12)
-* [javafx-media-28-ea+12-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-media/28-ea+12)
-* [javafx-web-28-ea+12](https://mvnrepository.com/artifact/org.openjfx/javafx-web/28-ea+12)
-* [javafx-web-28-ea+12-linux](https://mvnrepository.com/artifact/org.openjfx/javafx-web/28-ea+12)
+* [javafx-base-25-ea+6](https://mvnrepository.com/artifact/org.openjfx/javafx-base/25-ea+6)
+* [javafx-base-25-ea+6-win](https://mvnrepository.com/artifact/org.openjfx/javafx-base/25-ea+6)
+* [javafx-controls-25-ea+6](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/25-ea+6)
+* [javafx-controls-25-ea+6-win](https://mvnrepository.com/artifact/org.openjfx/javafx-controls/25-ea+6)
+* [javafx-graphics-25-ea+6](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/25-ea+6)
+* [javafx-graphics-25-ea+6-win](https://mvnrepository.com/artifact/org.openjfx/javafx-graphics/25-ea+6)
+* [javafx-media-25-ea+6](https://mvnrepository.com/artifact/org.openjfx/javafx-media/25-ea+6)
+* [javafx-media-25-ea+6-win](https://mvnrepository.com/artifact/org.openjfx/javafx-media/25-ea+6)
+* [javafx-web-25-ea+6](https://mvnrepository.com/artifact/org.openjfx/javafx-web/25-ea+6)
+* [javafx-web-25-ea+6-win](https://mvnrepository.com/artifact/org.openjfx/javafx-web/25-ea+6)
 * [jna-5.12.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna/5.12.1)
 * [jna-platform-5.12.1](https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.12.1)
 * [lycoris-1.1.1](https://mvnrepository.com/artifact/io.github.teletha/lycoris/1.1.1)
