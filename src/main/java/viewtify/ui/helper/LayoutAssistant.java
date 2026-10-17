@@ -59,8 +59,14 @@ public final class LayoutAssistant implements InvalidationListener {
      * Request layouting ui in the next rendering phase.
      */
     public void requestLayout() {
-        if (shouldLayout == false) {
-            shouldLayout = true;
+        shouldLayout = true;
+        if (node != null) {
+            // The request has to be sent to the node every time. A rendering phase may
+            // silently drop this layout (canLayout is false in layout(Runnable)), in which
+            // case shouldLayout stays true and skipping the request here would never ask the
+            // node for layout again, freezing the repainting of the node forever. JavaFX
+            // coalesces the requests in the same rendering phase, so sending a redundant
+            // request is harmless.
             node.requestLayout();
         }
     }
@@ -143,7 +149,16 @@ public final class LayoutAssistant implements InvalidationListener {
      * @return Chainable API.
      */
     public LayoutAssistant layoutWhile(Signal<Boolean> timing, Signal<Boolean>... timings) {
-        timing.combineLatest(timings, (one, other) -> one && other).to(canLayout::set);
+        timing.combineLatest(timings, (one, other) -> one && other).to(condition -> {
+            canLayout.set(condition);
+            if (condition) {
+                // Layout requests made while this assistant is not layoutable are dropped in
+                // layout(Runnable), so the pending layout has to be requested again when the
+                // condition opens. Otherwise the node stays unpainted until an unrelated
+                // rendering phase happens.
+                requestLayout();
+            }
+        });
         return this;
     }
 
