@@ -54,7 +54,7 @@ Additional useful functions and widgets that do not exist in JavaFX.
 		<dependency>
 			<groupId>io.github.teletha</groupId>
 			<artifactId>altfx</artifactId>
-			<version>1.6.2</version>
+			<version>1.6.3</version>
 			<scope>compile</scope>
 			<exclusions>
 				<exclusion>
