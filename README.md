@@ -129,7 +129,7 @@ Viewtify depends on the following products on runtime.
 * [BorderlessSceneFX-1.0.0](https://mvnrepository.com/artifact/com.catwithawand/BorderlessSceneFX/1.0.0)
 * [altfx-1.6.3](https://mvnrepository.com/artifact/io.github.teletha/altfx/1.6.3)
 * [conjure-1.2.2](https://mvnrepository.com/artifact/io.github.teletha/conjure/1.2.2)
-* [controlsfx-11.2.6](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.2.6)
+* [controlsfx-11.2.7](https://mvnrepository.com/artifact/org.controlsfx/controlsfx/11.2.7)
 * [ikonli-core-12.4.0](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-core/12.4.0)
 * [ikonli-fontawesome5-pack-12.4.0](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-fontawesome5-pack/12.4.0)
 * [ikonli-javafx-12.4.0](https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-javafx/12.4.0)
@@ -148,7 +148,7 @@ Viewtify depends on the following products on runtime.
 * [lycoris-1.1.1](https://mvnrepository.com/artifact/io.github.teletha/lycoris/1.1.1)
 * [openjfx-monocle-jdk-12.0.1+2](https://mvnrepository.com/artifact/org.testfx/openjfx-monocle/jdk-12.0.1+2)
 * [psychopath-2.3.0](https://mvnrepository.com/artifact/io.github.teletha/psychopath/2.3.0)
-* [sinobu-4.14.0](https://mvnrepository.com/artifact/io.github.teletha/sinobu/4.14.0)
+* [sinobu-4.16.0](https://mvnrepository.com/artifact/io.github.teletha/sinobu/4.16.0)
 * [stylist-1.16.1](https://mvnrepository.com/artifact/io.github.teletha/stylist/1.16.1)
 <p align="right"><a href="#top">back to top</a></p>
 
