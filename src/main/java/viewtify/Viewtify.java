@@ -39,6 +39,8 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.application.PlatformImpl;
+
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleExpression;
@@ -76,9 +78,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import com.sun.javafx.application.PlatformImpl;
-
 import kiss.Decoder;
 import kiss.Disposable;
 import kiss.Encoder;
@@ -95,9 +94,7 @@ import psychopath.Locator;
 import stylist.design.DesignScheme;
 import viewtify.keys.ShortcutManager;
 import viewtify.preference.Preferences;
-import viewtify.ui.UIWeb;
 import viewtify.ui.View;
-import viewtify.ui.ViewDSL;
 import viewtify.ui.anime.Anime;
 import viewtify.ui.helper.User;
 import viewtify.ui.helper.UserActionHelper;
@@ -773,45 +770,6 @@ public final class Viewtify {
     public void reactivate() {
         Blueprint.detect().boot();
         deactivate();
-    }
-
-    /**
-     * Generates a separate window with only {@link UIWeb}. If the application is not running, it
-     * will automatically launch an anonymous application.
-     */
-    public static synchronized void browser(Consumer<UIWeb> browser) {
-        if (!toolkitInitialized) {
-            checkHeadlessMode();
-            Platform.startup(() -> toolkitInitialized = true);
-        }
-
-        Viewtify.inUI(() -> {
-            AnonyBrowser anon = new AnonyBrowser();
-            application().activate(anon);
-            Platform.runLater(() -> browser.accept(anon.web));
-        });
-    }
-
-    /**
-     * 
-     */
-    @SuppressWarnings("unused")
-    private static class AnonyBrowser extends View {
-
-        UIWeb web;
-
-        class view extends ViewDSL {
-            {
-                $(web);
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected void initialize() {
-        }
     }
 
     /**
