@@ -27,4 +27,43 @@ public class UISplitPane extends UserInterface<UISplitPane, SplitPane>
         ui.setOrientation(Orientation.VERTICAL);
     }
 
+    /**
+     * Set {@link Orientation}.
+     * 
+     * @param orientation
+     * @return
+     */
+    public UISplitPane set(Orientation orientation) {
+        ui.setOrientation(orientation);
+        return this;
+    }
+
+    /**
+     * Make this splitter horizontal.
+     * 
+     * @return
+     */
+    public UISplitPane horizontal() {
+        return set(Orientation.HORIZONTAL);
+    }
+
+    /**
+     * Make this splitter vertical.
+     * 
+     * @return
+     */
+    public UISplitPane vertical() {
+        return set(Orientation.VERTICAL);
+    }
+
+    /**
+     * Set the divider position.
+     * 
+     * @param ratios
+     * @return
+     */
+    public UISplitPane positions(double... ratios) {
+        ui.setDividerPositions(ratios);
+        return this;
+    }
 }
